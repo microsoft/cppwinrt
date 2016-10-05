@@ -1,0 +1,184 @@
+// C++ for the Windows Runtime v1.0.161012.5
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+
+#pragma once
+
+
+WINRT_EXPORT namespace winrt {
+
+namespace ABI::Windows::Devices::Perception {
+
+struct IKnownCameraIntrinsicsPropertiesStatics;
+struct IKnownPerceptionColorFrameSourcePropertiesStatics;
+struct IKnownPerceptionDepthFrameSourcePropertiesStatics;
+struct IKnownPerceptionFrameSourcePropertiesStatics;
+struct IKnownPerceptionFrameSourcePropertiesStatics2;
+struct IKnownPerceptionInfraredFrameSourcePropertiesStatics;
+struct IKnownPerceptionVideoFrameSourcePropertiesStatics;
+struct IKnownPerceptionVideoProfilePropertiesStatics;
+struct IPerceptionColorFrame;
+struct IPerceptionColorFrameArrivedEventArgs;
+struct IPerceptionColorFrameReader;
+struct IPerceptionColorFrameSource;
+struct IPerceptionColorFrameSource2;
+struct IPerceptionColorFrameSourceAddedEventArgs;
+struct IPerceptionColorFrameSourceRemovedEventArgs;
+struct IPerceptionColorFrameSourceStatics;
+struct IPerceptionColorFrameSourceWatcher;
+struct IPerceptionControlSession;
+struct IPerceptionDepthCorrelatedCameraIntrinsics;
+struct IPerceptionDepthCorrelatedCoordinateMapper;
+struct IPerceptionDepthFrame;
+struct IPerceptionDepthFrameArrivedEventArgs;
+struct IPerceptionDepthFrameReader;
+struct IPerceptionDepthFrameSource;
+struct IPerceptionDepthFrameSource2;
+struct IPerceptionDepthFrameSourceAddedEventArgs;
+struct IPerceptionDepthFrameSourceRemovedEventArgs;
+struct IPerceptionDepthFrameSourceStatics;
+struct IPerceptionDepthFrameSourceWatcher;
+struct IPerceptionFrameSourcePropertiesChangedEventArgs;
+struct IPerceptionFrameSourcePropertyChangeResult;
+struct IPerceptionInfraredFrame;
+struct IPerceptionInfraredFrameArrivedEventArgs;
+struct IPerceptionInfraredFrameReader;
+struct IPerceptionInfraredFrameSource;
+struct IPerceptionInfraredFrameSource2;
+struct IPerceptionInfraredFrameSourceAddedEventArgs;
+struct IPerceptionInfraredFrameSourceRemovedEventArgs;
+struct IPerceptionInfraredFrameSourceStatics;
+struct IPerceptionInfraredFrameSourceWatcher;
+struct IPerceptionVideoProfile;
+struct PerceptionColorFrame;
+struct PerceptionColorFrameArrivedEventArgs;
+struct PerceptionColorFrameReader;
+struct PerceptionColorFrameSource;
+struct PerceptionColorFrameSourceAddedEventArgs;
+struct PerceptionColorFrameSourceRemovedEventArgs;
+struct PerceptionColorFrameSourceWatcher;
+struct PerceptionControlSession;
+struct PerceptionDepthCorrelatedCameraIntrinsics;
+struct PerceptionDepthCorrelatedCoordinateMapper;
+struct PerceptionDepthFrame;
+struct PerceptionDepthFrameArrivedEventArgs;
+struct PerceptionDepthFrameReader;
+struct PerceptionDepthFrameSource;
+struct PerceptionDepthFrameSourceAddedEventArgs;
+struct PerceptionDepthFrameSourceRemovedEventArgs;
+struct PerceptionDepthFrameSourceWatcher;
+struct PerceptionFrameSourcePropertiesChangedEventArgs;
+struct PerceptionFrameSourcePropertyChangeResult;
+struct PerceptionInfraredFrame;
+struct PerceptionInfraredFrameArrivedEventArgs;
+struct PerceptionInfraredFrameReader;
+struct PerceptionInfraredFrameSource;
+struct PerceptionInfraredFrameSourceAddedEventArgs;
+struct PerceptionInfraredFrameSourceRemovedEventArgs;
+struct PerceptionInfraredFrameSourceWatcher;
+struct PerceptionVideoProfile;
+
+}
+
+namespace Windows::Devices::Perception {
+
+struct IKnownCameraIntrinsicsPropertiesStatics;
+struct IKnownPerceptionColorFrameSourcePropertiesStatics;
+struct IKnownPerceptionDepthFrameSourcePropertiesStatics;
+struct IKnownPerceptionFrameSourcePropertiesStatics;
+struct IKnownPerceptionFrameSourcePropertiesStatics2;
+struct IKnownPerceptionInfraredFrameSourcePropertiesStatics;
+struct IKnownPerceptionVideoFrameSourcePropertiesStatics;
+struct IKnownPerceptionVideoProfilePropertiesStatics;
+struct IPerceptionColorFrame;
+struct IPerceptionColorFrameArrivedEventArgs;
+struct IPerceptionColorFrameReader;
+struct IPerceptionColorFrameSource;
+struct IPerceptionColorFrameSource2;
+struct IPerceptionColorFrameSourceAddedEventArgs;
+struct IPerceptionColorFrameSourceRemovedEventArgs;
+struct IPerceptionColorFrameSourceStatics;
+struct IPerceptionColorFrameSourceWatcher;
+struct IPerceptionControlSession;
+struct IPerceptionDepthCorrelatedCameraIntrinsics;
+struct IPerceptionDepthCorrelatedCoordinateMapper;
+struct IPerceptionDepthFrame;
+struct IPerceptionDepthFrameArrivedEventArgs;
+struct IPerceptionDepthFrameReader;
+struct IPerceptionDepthFrameSource;
+struct IPerceptionDepthFrameSource2;
+struct IPerceptionDepthFrameSourceAddedEventArgs;
+struct IPerceptionDepthFrameSourceRemovedEventArgs;
+struct IPerceptionDepthFrameSourceStatics;
+struct IPerceptionDepthFrameSourceWatcher;
+struct IPerceptionFrameSourcePropertiesChangedEventArgs;
+struct IPerceptionFrameSourcePropertyChangeResult;
+struct IPerceptionInfraredFrame;
+struct IPerceptionInfraredFrameArrivedEventArgs;
+struct IPerceptionInfraredFrameReader;
+struct IPerceptionInfraredFrameSource;
+struct IPerceptionInfraredFrameSource2;
+struct IPerceptionInfraredFrameSourceAddedEventArgs;
+struct IPerceptionInfraredFrameSourceRemovedEventArgs;
+struct IPerceptionInfraredFrameSourceStatics;
+struct IPerceptionInfraredFrameSourceWatcher;
+struct IPerceptionVideoProfile;
+struct KnownCameraIntrinsicsProperties;
+struct KnownPerceptionColorFrameSourceProperties;
+struct KnownPerceptionDepthFrameSourceProperties;
+struct KnownPerceptionFrameSourceProperties;
+struct KnownPerceptionInfraredFrameSourceProperties;
+struct KnownPerceptionVideoFrameSourceProperties;
+struct KnownPerceptionVideoProfileProperties;
+struct PerceptionColorFrame;
+struct PerceptionColorFrameArrivedEventArgs;
+struct PerceptionColorFrameReader;
+struct PerceptionColorFrameSource;
+struct PerceptionColorFrameSourceAddedEventArgs;
+struct PerceptionColorFrameSourceRemovedEventArgs;
+struct PerceptionColorFrameSourceWatcher;
+struct PerceptionControlSession;
+struct PerceptionDepthCorrelatedCameraIntrinsics;
+struct PerceptionDepthCorrelatedCoordinateMapper;
+struct PerceptionDepthFrame;
+struct PerceptionDepthFrameArrivedEventArgs;
+struct PerceptionDepthFrameReader;
+struct PerceptionDepthFrameSource;
+struct PerceptionDepthFrameSourceAddedEventArgs;
+struct PerceptionDepthFrameSourceRemovedEventArgs;
+struct PerceptionDepthFrameSourceWatcher;
+struct PerceptionFrameSourcePropertiesChangedEventArgs;
+struct PerceptionFrameSourcePropertyChangeResult;
+struct PerceptionInfraredFrame;
+struct PerceptionInfraredFrameArrivedEventArgs;
+struct PerceptionInfraredFrameReader;
+struct PerceptionInfraredFrameSource;
+struct PerceptionInfraredFrameSourceAddedEventArgs;
+struct PerceptionInfraredFrameSourceRemovedEventArgs;
+struct PerceptionInfraredFrameSourceWatcher;
+struct PerceptionVideoProfile;
+
+}
+
+namespace Windows::Devices::Perception {
+
+enum class PerceptionFrameSourceAccessStatus
+{
+    Unspecified = 0,
+    Allowed = 1,
+    DeniedByUser = 2,
+    DeniedBySystem = 3,
+};
+
+enum class PerceptionFrameSourcePropertyChangeStatus
+{
+    Unknown = 0,
+    Accepted = 1,
+    LostControl = 2,
+    PropertyNotSupported = 3,
+    PropertyReadOnly = 4,
+    ValueOutOfRange = 5,
+};
+
+}
+
+}

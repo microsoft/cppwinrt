@@ -1,0 +1,167 @@
+// C++ for the Windows Runtime v1.0.161012.5
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+
+#pragma once
+
+
+WINRT_EXPORT namespace winrt {
+
+namespace ABI::Windows::UI::WebUI {
+
+struct ActivatedEventHandler;
+struct EnteredBackgroundEventHandler;
+struct IActivatedDeferral;
+struct IActivatedEventArgsDeferral;
+struct IActivatedOperation;
+struct IHtmlPrintDocumentSource;
+struct IWebUIActivationStatics;
+struct IWebUIActivationStatics2;
+struct IWebUIBackgroundTaskInstance;
+struct IWebUIBackgroundTaskInstanceStatics;
+struct IWebUINavigatedDeferral;
+struct IWebUINavigatedEventArgs;
+struct IWebUINavigatedOperation;
+struct LeavingBackgroundEventHandler;
+struct NavigatedEventHandler;
+struct ResumingEventHandler;
+struct SuspendingEventHandler;
+struct ActivatedDeferral;
+struct ActivatedOperation;
+struct EnteredBackgroundEventArgs;
+struct HtmlPrintDocumentSource;
+struct LeavingBackgroundEventArgs;
+struct SuspendingDeferral;
+struct SuspendingEventArgs;
+struct SuspendingOperation;
+struct WebUIAppointmentsProviderAddAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs;
+struct WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs;
+struct WebUIBackgroundTaskInstanceRuntimeClass;
+struct WebUICachedFileUpdaterActivatedEventArgs;
+struct WebUICameraSettingsActivatedEventArgs;
+struct WebUIContactCallActivatedEventArgs;
+struct WebUIContactMapActivatedEventArgs;
+struct WebUIContactMessageActivatedEventArgs;
+struct WebUIContactPickerActivatedEventArgs;
+struct WebUIContactPostActivatedEventArgs;
+struct WebUIContactVideoCallActivatedEventArgs;
+struct WebUIDeviceActivatedEventArgs;
+struct WebUIDevicePairingActivatedEventArgs;
+struct WebUIDialReceiverActivatedEventArgs;
+struct WebUIFileActivatedEventArgs;
+struct WebUIFileOpenPickerActivatedEventArgs;
+struct WebUIFileOpenPickerContinuationEventArgs;
+struct WebUIFileSavePickerActivatedEventArgs;
+struct WebUIFileSavePickerContinuationEventArgs;
+struct WebUIFolderPickerContinuationEventArgs;
+struct WebUILaunchActivatedEventArgs;
+struct WebUILockScreenActivatedEventArgs;
+struct WebUILockScreenCallActivatedEventArgs;
+struct WebUINavigatedDeferral;
+struct WebUINavigatedEventArgs;
+struct WebUINavigatedOperation;
+struct WebUIPrint3DWorkflowActivatedEventArgs;
+struct WebUIPrintTaskSettingsActivatedEventArgs;
+struct WebUIProtocolActivatedEventArgs;
+struct WebUIProtocolForResultsActivatedEventArgs;
+struct WebUIRestrictedLaunchActivatedEventArgs;
+struct WebUISearchActivatedEventArgs;
+struct WebUIShareTargetActivatedEventArgs;
+struct WebUIToastNotificationActivatedEventArgs;
+struct WebUIUserDataAccountProviderActivatedEventArgs;
+struct WebUIVoiceCommandActivatedEventArgs;
+struct WebUIWalletActionActivatedEventArgs;
+struct WebUIWebAccountProviderActivatedEventArgs;
+struct WebUIWebAuthenticationBrokerContinuationEventArgs;
+
+}
+
+namespace Windows::UI::WebUI {
+
+struct ActivatedEventHandler;
+struct EnteredBackgroundEventHandler;
+struct LeavingBackgroundEventHandler;
+struct NavigatedEventHandler;
+struct ResumingEventHandler;
+struct SuspendingEventHandler;
+struct IActivatedDeferral;
+struct IActivatedEventArgsDeferral;
+struct IActivatedOperation;
+struct IHtmlPrintDocumentSource;
+struct IWebUIActivationStatics;
+struct IWebUIActivationStatics2;
+struct IWebUIBackgroundTaskInstance;
+struct IWebUIBackgroundTaskInstanceStatics;
+struct IWebUINavigatedDeferral;
+struct IWebUINavigatedEventArgs;
+struct IWebUINavigatedOperation;
+struct ActivatedDeferral;
+struct ActivatedOperation;
+struct EnteredBackgroundEventArgs;
+struct HtmlPrintDocumentSource;
+struct LeavingBackgroundEventArgs;
+struct SuspendingDeferral;
+struct SuspendingEventArgs;
+struct SuspendingOperation;
+struct WebUIApplication;
+struct WebUIAppointmentsProviderAddAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs;
+struct WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs;
+struct WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs;
+struct WebUIBackgroundTaskInstance;
+struct WebUIBackgroundTaskInstanceRuntimeClass;
+struct WebUICachedFileUpdaterActivatedEventArgs;
+struct WebUICameraSettingsActivatedEventArgs;
+struct WebUIContactCallActivatedEventArgs;
+struct WebUIContactMapActivatedEventArgs;
+struct WebUIContactMessageActivatedEventArgs;
+struct WebUIContactPickerActivatedEventArgs;
+struct WebUIContactPostActivatedEventArgs;
+struct WebUIContactVideoCallActivatedEventArgs;
+struct WebUIDeviceActivatedEventArgs;
+struct WebUIDevicePairingActivatedEventArgs;
+struct WebUIDialReceiverActivatedEventArgs;
+struct WebUIFileActivatedEventArgs;
+struct WebUIFileOpenPickerActivatedEventArgs;
+struct WebUIFileOpenPickerContinuationEventArgs;
+struct WebUIFileSavePickerActivatedEventArgs;
+struct WebUIFileSavePickerContinuationEventArgs;
+struct WebUIFolderPickerContinuationEventArgs;
+struct WebUILaunchActivatedEventArgs;
+struct WebUILockScreenActivatedEventArgs;
+struct WebUILockScreenCallActivatedEventArgs;
+struct WebUINavigatedDeferral;
+struct WebUINavigatedEventArgs;
+struct WebUINavigatedOperation;
+struct WebUIPrint3DWorkflowActivatedEventArgs;
+struct WebUIPrintTaskSettingsActivatedEventArgs;
+struct WebUIProtocolActivatedEventArgs;
+struct WebUIProtocolForResultsActivatedEventArgs;
+struct WebUIRestrictedLaunchActivatedEventArgs;
+struct WebUISearchActivatedEventArgs;
+struct WebUIShareTargetActivatedEventArgs;
+struct WebUIToastNotificationActivatedEventArgs;
+struct WebUIUserDataAccountProviderActivatedEventArgs;
+struct WebUIVoiceCommandActivatedEventArgs;
+struct WebUIWalletActionActivatedEventArgs;
+struct WebUIWebAccountProviderActivatedEventArgs;
+struct WebUIWebAuthenticationBrokerContinuationEventArgs;
+
+}
+
+namespace Windows::UI::WebUI {
+
+enum class PrintContent
+{
+    AllPages = 0,
+    CurrentPage = 1,
+    CustomPageRange = 2,
+    CurrentSelection = 3,
+};
+
+}
+
+}
