@@ -58,7 +58,7 @@ When a Windows Runtime API returns a WinRT array, C++/WinRT provides the necessa
 
   auto it = std::find(data.begin(), data.end(), 2);
 
-  assert(\*it == 2);
+  assert(*it == 2);
 ```
 
 Similarly, when you have STL containers, you can pass them as parameters to WinRT APIs expecting a semantically equivalent collection.
@@ -99,9 +99,9 @@ A Windows Runtime collection works as a C++ container so you can use standard it
 
   for (auto && item : feed.Items()) {
 
-  auto title = item.Title().Text();
+    auto title = item.Title().Text();
 
-  printf("%ls\\n", title.c\_str());
+    printf("%ls\\n", title.c\_str());
 
   }
 ```
@@ -114,17 +114,17 @@ You can continue to use PPL when calling WinRT asynchronous methods. However, in
 ```C++
   future<hstring> OcrOperation() {
 
-    auto file = co\_await StorageFile::GetFileFromPathAsync(L"…");
+    auto file = co_await StorageFile::GetFileFromPathAsync(L"…");
 
-    auto stream = co\_await file.OpenAsync(FileAccessMode::Read);
+    auto stream = co_await file.OpenAsync(FileAccessMode::Read);
 
-    auto decoder = co\_await BitmapDecoder::CreateAsync(stream);
+    auto decoder = co_await BitmapDecoder::CreateAsync(stream);
 
-    auto bitmap = co\_await decoder.GetSoftwareBitmapAsync();
+    auto bitmap = co_await decoder.GetSoftwareBitmapAsync();
 
     auto engine = OcrEngine::TryCreateFromUserProfileLanguages();
 
-    auto result = co\_await engine.RecognizeAsync(bitmap);
+    auto result = co_await engine.RecognizeAsync(bitmap);
 
     return result.Text();
 
