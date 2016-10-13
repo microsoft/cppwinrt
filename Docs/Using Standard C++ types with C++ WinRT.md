@@ -11,7 +11,7 @@ Using string types with C++/WinRT APIs
 ---------------------------------------------------
 
 ```C++
-  #include "winrt\\Windows.Foundation.h"
+  #include "winrt\Windows.Foundation.h"
 
   using namespace winrt::Windows::Foundation;
 
@@ -29,9 +29,9 @@ Using string types with C++/WinRT APIs
 
   std::wstring fullpath = combined.ToString();
 
-  // WinRT string type has many std:wstring accessors, e.g. c\_str()
+  // WinRT string type has many std:wstring accessors, e.g. c_str()
 
-  printf("%ls\\n", combined.ToString().c\_str());
+  printf("%ls\n", combined.ToString().c_str());
 ```
 
 Using STL data types with C++/WinRT APIs
@@ -93,7 +93,7 @@ A Windows Runtime collection works as a C++ container so you can use standard it
 
   // Returns a Windows Runtime collection
 
-  auto feed = co\_await client.RetrieveFeedAsync(uri);
+  auto feed = co_await client.RetrieveFeedAsync(uri);
 
   // WinRT collections "just work" as C++ containers
 
@@ -101,7 +101,7 @@ A Windows Runtime collection works as a C++ container so you can use standard it
 
     auto title = item.Title().Text();
 
-    printf("%ls\\n", title.c\_str());
+    printf("%ls\n", title.c_str());
 
   }
 ```
