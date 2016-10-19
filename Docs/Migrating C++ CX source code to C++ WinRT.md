@@ -334,7 +334,7 @@ Basically, in the preceding, you use the += operator to add the heap allocated d
 You can simplify it considerably when using C++/WinRT. Here's the equivalent. You basically call the event method passing the lambda as the argument:
 
 ```C++
-  User::SignInCompleted( [=] (auto const && , auto const &&)
+  User::SignInCompleted( [=] (auto && , auto &&)
     {
       UpdateUsers();
     });
@@ -385,7 +385,7 @@ Note that in the preceding, we've use the winrt::Windows::IInspectable type in p
 Finally, we simplify the C++/WinRT code even more using type inference for the lambda function parameter types, like this:
 
 ```C++
-  [=]( auto const && , auto const &&)
+  [=]( auto && , auto &&)
 ```
 
 Putting it all together, this C++/CX code:
@@ -401,7 +401,7 @@ Putting it all together, this C++/CX code:
 Converts to this much simpler, but equivalent, C++/WinRT code:
 
 ```C++
-  User::SignInCompleted([=]( auto const && , auto const &&)
+  User::SignInCompleted([=]( auto && , auto &&)
         {
           UpdateUsers();
         });
@@ -472,7 +472,7 @@ As a result, to convert to C++/WinRT, you typically change all code that uses `P
 This C++/CX code:
 
 ```C++
-  void LogWrapLine(Platform::String\^ str)
+  void LogWrapLine(Platform::String^ str)
 ```
 
 converts to the standard C++ code:
