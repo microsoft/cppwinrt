@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>microsoft.cppwinrt</id>
+    <version>0.0.0</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://github.com/Microsoft/cppwinrt/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/microsoft/cppwinrt</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C++/WinRT is a standard C++ language projection for the Windows Runtime.</description>
+    <tags>windows utility native winrt c++ cpp</tags>
+  </metadata>
+  <files>
+    <file src="..\10.0.14393.0\winrt\**" target="inc\winrt" />
+    <file src="microsoft.cppwinrt.targets" target="build\native\" />
+  </files>
+</package>
