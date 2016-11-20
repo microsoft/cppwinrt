@@ -32,7 +32,7 @@ This is valid code but it's not as efficient as passing by const reference.
 
 > Therefore, if all you do is simply remove the hat (\^) in the function declaration, you produce working, but unnecessarily slower code.
 
-> Pass a C++/WinRT type by const reference avoids the copy, which eliminates the AddRef and Release calls.
+> Passing a C++/WinRT type by const reference avoids the copy, which eliminates the AddRef and Release calls.
 
 Variable and Field references
 -----------------------------
@@ -49,7 +49,7 @@ For example:
     for (UINT32 iUser = 0; iUser < userList->Size; iUser++)
     . . .
 ```
-When converting to the equivalent C++/WinRT code, you basically remove the hats and change the arrow operator (-&gt;) to the dot operator (.). Our projected types are values and not pointers, therefore you deference them using the dot operator, not the arrow operator.
+When converting to the equivalent C++/WinRT code, you basically remove the hats and change the arrow operator (-&gt;) to the dot operator (.). Our projected types are values and not pointers, therefore you dereference them using the dot operator, not the arrow operator.
 
 For example, the equivalent to the preceding code is:
 
@@ -65,7 +65,7 @@ For example, the equivalent to the preceding code is:
 Properties
 ----------
 
-The C++/CX Windows Runtime language extensions include the concept of properties. When writing C++/CX source code, you can properties of a Windows Runtime object as if it were a field. However standard C++ does not have the concept of a property. As a result, in C++/WinRT all calls to retrieve or set a Windows Runtime property translates to a call to the respective get or set method.
+The C++/CX Windows Runtime language extensions include the concept of properties. When writing C++/CX source code, you can access properties of a Windows Runtime object as if it were a field. However standard C++ does not have the concept of a property. As a result, in C++/WinRT all calls to retrieve or set a Windows Runtime property translates to a call to the respective get or set method.
 
 In the following, XboxUserId, UserState, PresenceDeviceRecords and Size are all properties.
 
@@ -259,7 +259,7 @@ Here's another example where in C++/CX, we have a field of a class (m\_xboxLiveC
   };
 ```
 
-Subsequently, the field could subsequently by initialized like this:
+Subsequently, the field could subsequently be initialized like this:
 
 ```C++
   m_xboxLiveContext = ref new XboxLiveContext(m_user);
@@ -322,7 +322,7 @@ Registering for events using a lambda
 The C++/CX syntax for registering for an event notification is rather verbose. Here's an example:
 
 ```C++
-  User::SignInCompleted +=  ref new EventHandler<SignInCompletedEventArgs^> (
+  User::SignInCompleted += ref new EventHandler<SignInCompletedEventArgs^> (
     [=] (Platform::Object^, SignInCompletedEventArgs^ args)
     {
       UpdateUsers();
@@ -340,7 +340,7 @@ You can simplify it considerably when using C++/WinRT. Here's the equivalent. Yo
     });
 ```
 
-It's a big jump from the C++/CX example to the preceding C++/WinRT example so let's examime the example part by part.
+It's a big jump from the C++/CX example to the preceding C++/WinRT example so let's examine the example part by part.
 
 ### The registration method
 
@@ -368,7 +368,7 @@ With C++/WinRT, the compiler understands the type of the delegate parameter to t
 ```C++
                                                  ( . . . );
 ```
-Now we passed a lambda as the function that the C++/CX EventHandler encapsulates. So we needed to declared the signature of the lambda, which must match that expected by the SignInCompleted event:
+Now we passed a lambda as the function that the C++/CX EventHandler encapsulates. So we needed to declare the signature of the lambda, which must match that expected by the SignInCompleted event:
 
 ```C++
   [=] (Platform::Object^, SignInCompletedEventArgs^ args)
@@ -443,7 +443,7 @@ Therefore, the C++/WinRT revocation call is:
 Mapping C++/CX Platform types to C++/WinRT types
 ------------------------------------------------
 
-The C++ Windows Runtime language extensions provides several C++/CX specific data types. These reside in the Platform namespace. When you disable Windows Runtime language extensions, you can't use the Platform types (as they aren't standard C++). Therefore, for each, we provide an equivalent type defined using standard C++.
+The C++ Windows Runtime language extensions provide several C++/CX specific data types. These reside in the Platform namespace. When you disable Windows Runtime language extensions, you can't use the Platform types (as they aren't standard C++). Therefore, for each, we provide an equivalent type defined using standard C++.
 
 | C++/CX | CX++/WinRT |
 | ---- | ---- |
@@ -455,7 +455,7 @@ The C++ Windows Runtime language extensions provides several C++/CX specific dat
 
 `Platform::Object^` is the C++ Windows Runtime language extension type equivalent to the Windows Runtime IInspectable interface pointer. For C++/WinRT, the equivalent is `winrt::Windows::IInspectable`.
 
-Like all C++/WinRT types, `winrt::Windows::IInspectable' is a value. Therefore, to declare a variable of that type to null, you write:
+Like all C++/WinRT types, `winrt::Windows::IInspectable` is a value. Therefore, to declare a variable of that type to null, you write:
 
 ```C++
  winrt::Windows::IInspectable var = nullptr;
@@ -463,7 +463,7 @@ Like all C++/WinRT types, `winrt::Windows::IInspectable' is a value. Therefore, 
 
 ### Platform::String\^
 
-`Platform::String^` is the C++ Windows Runtime language extension type equivalent to the Windows Runtime HSTRING type. For C++/WiNRT, the equivalent is `winrt::hstring`.
+`Platform::String^` is the C++ Windows Runtime language extension type equivalent to the Windows Runtime HSTRING type. For C++/WinRT, the equivalent is `winrt::hstring`.
 
 However, you rarely need to define variables of type `winrt::hstring`. Generally, you can just use a C++ wide string type (i.e. std::wstring or a L"literal") and pass it directly to APIs that previously required a Platform::String.
 
@@ -600,7 +600,7 @@ The only remaining change is the change of:
 to
 
 ```C++
-  task<adapter>; const & resultTask
+  task<adapter> const & resultTask
 ```
 
 Eliminating the hat and const reference changes, already discussed, we simply changed task&lt;XboxSocialRelationShipResult&gt; to task&lt;adapter&gt;.
