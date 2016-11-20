@@ -33,7 +33,7 @@ The 'winrt' folder contains a header file for each WinRT namespace. The header f
 Example: To use the C++/WinRT projection for the `Windows.Foundation.Collections.PropertySet` runtime class, you realize that the Windows Runtime defines it in the `Windows.Foundation.Collections` namespace. Therefore you include the respective header file by writing:
 
 ```C++
-    #include "winrt/Windows.Foundation.Collections.h"`.
+    #include "winrt/Windows.Foundation.Collections.h"
 ```
 
 Every namespace header includes its parent
@@ -44,7 +44,7 @@ It's common for types in a subordinate namespace to reference types in its immed
 Let’s walk through one example.
 
 * The Universal API Contract defines types in the `Windows.Security.Cryptography.Certificates` namespace.
-* The equivalent C++/WinRT type definitions reside in the `winrt\\Windows.Security.Cryptography.Certificates.h` header file.
+* The equivalent C++/WinRT type definitions reside in the `winrt\Windows.Security.Cryptography.Certificates.h` header file.
 * Types in the `Windows.Security.Cryptography.Certificates` namespace require types in the parent `Windows.Security.Cryptography` namespace.
 * Additionally, types in that namespace could require types in its parent `Windows.Security` namespace, and so on.
 
@@ -55,7 +55,7 @@ When you include `Windows.Security.Cryptography.Certificates.h`, it includes `Wi
 Every namespace header includes its dependencies' declarations
 --------------------------------------------------------------
 
-Additionally, members of types in a namespace can reference one or more types in other, unrelated namespaces. In order for the compile to compile these member definitions successfully, the compiler needs to see the type declaractions for all the referenced types that reside in other, unrelated namespaces. You, however, don't need to worry about this. Each C++/WinRT header file will include the namespace headers it needs to *declare* any dependent types.
+Additionally, members of types in a namespace can reference one or more types in other, unrelated namespaces. In order for the compiler to compile these member definitions successfully, the compiler needs to see the type declarations for all the referenced types that reside in other, unrelated namespaces. You, however, don't need to worry about this. Each C++/WinRT header file will include the namespace headers it needs to *declare* any dependent types.
 
 However, note that this process does not pull in the *implementations* for referenced types that reside in another, unrelated namespace.
 
