@@ -118,4 +118,4 @@ Unlike C++/CX, with C++/WinRT you typically pass and receive familar C++ data ty
 
 For information about how to migrate existing C++/CX code to C++/WinRT, read [Migrating C++ CX source code to C++ WinRT] (./Docs/Migrating C++ CX source code to C++ WinRT.md).
 
-When you need to write code that works directly with COM and WinRT interfaces, you'll find the necessary infromation in [Interoperability Helper Functions] (./Docs/Interoperability Helper Functions.md).
+When you need to write code that works directly with COM and WinRT interfaces, you'll find the necessary information in [Interoperability Helper Functions] (./Docs/Interoperability Helper Functions.md).
