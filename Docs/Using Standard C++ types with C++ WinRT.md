@@ -1,7 +1,7 @@
 Using standard C++ with C++/WinRT APIs
 ======================================
 
-You use standard C++ data types, algorithms, and keywords when using the C++/WinRT projection of Windows Runtime APIs. This differs considerably from the C++/CX approach that requires you to learn and use its customs types, e.g. Platform::String\^, Platform::Vector\^ and others, custom keywords and syntax.
+You use standard C++ data types, algorithms, and keywords when using the C++/WinRT projection of Windows Runtime APIs. This differs considerably from the C++/CX approach that requires you to learn and use its custom types, e.g. Platform::String\^, Platform::Vector\^ and others, custom keywords and syntax.
 
 While C++/WinRT has its own custom data types, in most cases, you do not need to learn them as they provide appropriate conversions to/from standard C++ data types.
 

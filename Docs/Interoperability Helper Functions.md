@@ -54,7 +54,7 @@ int main()
 }
 ```
 
-Even though the `GetAsyncInfo` function knowns nothing of the projected `IAsyncInfo` type used within the main function, capturing the resulting value is simple and reliable. It works equally well with other types like `winrt::hstring`:
+Even though the `GetAsyncInfo` function knows nothing of the projected `IAsyncInfo` type used within the main function, capturing the resulting value is simple and reliable. It works equally well with other types like `winrt::hstring`:
 
 ```C++
 HRESULT GetMessage(HSTRING * value);
@@ -70,7 +70,7 @@ int main()
 `winrt::attach` & `winrt::detach`
 ---------------
 
-The `attach` function takes ownership of an ABI value. Assuming you have a value, such as a COM interface pointer that is not owned, you can use the `attach` function to given ownership of it to a C++/WinRT type. The `attach` function is complemented by the `detach` function that does the inverse. For example:
+The `attach` function takes ownership of an ABI value. Assuming you have a value, such as a COM interface pointer that is not owned, you can use the `attach` function to give ownership of it to a C++/WinRT type. The `attach` function is complemented by the `detach` function that does the inverse. For example:
 
 ```C++
 IAsyncInfo info = ...
@@ -95,7 +95,7 @@ assert(message.size() == size);
 `winrt::copy_to` & `winrt::copy_from`
 -------------------
 
-The `copy_to` and `copy_from` functions are similar to `attach` and `detach` except that they don’t transfer ownership. Instead, they copy the underlying reference effectively calling `AddRef` or some equivalent. This is useful if you need to hold on to a reference but also need to return a reference-counted object to the caller. For example:
+The `copy_to` and `copy_from` functions are similar to `attach` and `detach` except that they don't transfer ownership. Instead, they copy the underlying reference effectively calling `AddRef` or some equivalent. This is useful if you need to hold on to a reference but also need to return a reference-counted object to the caller. For example:
 
 ```C++
 abi<IAsyncInfo> * ptr = ...
