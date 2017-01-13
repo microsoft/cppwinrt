@@ -445,7 +445,7 @@ Mapping C++/CX Platform types to C++/WinRT types
 
 The C++ Windows Runtime language extensions provide several C++/CX specific data types. These reside in the Platform namespace. When you disable Windows Runtime language extensions, you can't use the Platform types (as they aren't standard C++). Therefore, for each, we provide an equivalent type defined using standard C++.
 
-| C++/CX | CX++/WinRT |
+| C++/CX | C++/WinRT |
 | ---- | ---- |
 | `Platform::String^`  | `winrt::hstring` |
 | `Platform::InvalidArgumentException^` | `winrt::hresult_invalid_argument` |
@@ -595,7 +595,7 @@ Most of the changes you've already seen. We change arrows (-&gt;) to dots (.). W
 The only remaining change is the change of:
 
 ```C++
- task<XboxSocialRelationshipResult^> esultTask
+ task<XboxSocialRelationshipResult^> resultTask
 ```
 to
 
