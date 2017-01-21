@@ -78,7 +78,7 @@ First let's look at how to get property values. Here's the C++/CX code:
 
     auto id = record->XboxUserId;
 
-    auto state = record->UserState,
+    auto state = record->UserState;
 
     auto size = record->PresenceDeviceRecords->Size;
  
@@ -92,7 +92,7 @@ The equivalent C++/WinRT source code to retrieve the value for a Windows Runtime
 
     auto id = record.XboxUserId();
 
-    auto state = record.UserState(),
+    auto state = record.UserState();
 
     auto size = record.PresenceDeviceRecords().Size();
 
@@ -197,7 +197,7 @@ When we allocate the structure, let's use a different constructor for the 'mySet
 
 This change invokes the PropertySet(nullptr\_t) constructor rather than the PropertySet() default constructor. The nullptr\_t constructor does not call into the Windows Runtime to create the backing type. Instead, the 'mySet' field is not connected to any backing object until you assign it a value.
 
-Whenever you want to lazily initialize a C++/WinRT class variable, assign nullptr to the value when declaring the instance. Later you can then assign the appropriately constructed object to the variable.
+Whenever you want to lazily initialize a C++/WinRT class variable, assign nullptr to the value when declaring the instance. Later you can assign the appropriately constructed object to the variable.
 
 Just say no to 'ref new'
 ------------------------
@@ -297,7 +297,7 @@ As described previously, such a field declaration invokes the default constructo
 
 But the XboxLiveContext class has no default constructor. It has a constructor that requires a User object parameter to the constructor. And we won't have the necessary User object until later, when we make the assignment to the field.
 
-How can I tell the compile to \*not\* use the default constructor? The same as shown previously. Assign nullptr to the field:
+How can I tell the compiler to \*not\* use the default constructor? The same as shown previously. Assign nullptr to the field:
 
 ```C++
   class Sample : . . . {
@@ -603,7 +603,7 @@ to
   task<adapter> const & resultTask
 ```
 
-Eliminating the hat and const reference changes, already discussed, we simply changed task&lt;XboxSocialRelationShipResult&gt; to task&lt;adapter&gt;.
+Eliminating the hat and const reference changes, already discussed, we simply changed task&lt;XboxSocialRelationshipResult&gt; to task&lt;adapter&gt;.
 
 Why? Unfortunately, the current implementation of PPL does not support types without a default constructor. As described previously, many Windows Runtime types do not have a default constructor. As such, the C++/WinRT projection of those types also do not have a default constructor. Therefore, these projected types don't work, as is, with PPL. 
 
