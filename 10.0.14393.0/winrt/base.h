@@ -1997,13 +1997,13 @@ struct array_ref
 
 protected:
 
-    array_ref(pointer data, uint32_t size) :
+    array_ref(pointer data, size_type size) :
         m_data(data),
         m_size(size)
     {}
 
     pointer m_data = nullptr;
-    uint32_t m_size = 0;
+    size_type m_size = 0;
 };
 
 template <typename T>
