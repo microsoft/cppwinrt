@@ -22,3 +22,4 @@
 #include <DirectXMath.h>
 #include <memory>
 #include <concrt.h>
+#include <future>

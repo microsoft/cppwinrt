@@ -13,6 +13,7 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 	m_tracking(false),
 	m_deviceResources(deviceResources)
 {
+	//std::async(std::launch::async, [this] { CreateDeviceDependentResourcesAsync(); });
 	CreateDeviceDependentResourcesAsync();
 	CreateWindowSizeDependentResources();
 }
@@ -292,7 +293,7 @@ void Sample3DSceneRenderer::CreateCube() {
 	);
 }
 
-concurrency::task<void> Sample3DSceneRenderer::CreateDeviceDependentResourcesAsync()
+std::future<void> Sample3DSceneRenderer::CreateDeviceDependentResourcesAsync()
 {
 	// Load shaders asynchronously.
 	auto vsFileData = co_await DX::ReadDataAsync(L"SampleVertexShader.cso");

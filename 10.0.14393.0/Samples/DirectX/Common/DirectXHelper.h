@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#include <ppltasks.h>	// For create_task
-#include <future>
-
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage;
 using namespace winrt::Windows::Storage::Streams;

@@ -100,8 +100,7 @@ WINRT_EXPORT namespace DirectX {
 			// the app will be forced to exit.
 			SuspendingDeferral deferral = args.SuspendingOperation().GetDeferral();
 
-			concurrency::create_task([this, deferral]()
-			{
+			std::async(std::launch::async, [this, deferral] {
 				m_deviceResources->Trim();
 
 				// Insert your code here.
