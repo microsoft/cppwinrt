@@ -7395,104 +7395,15 @@ struct resumable_io
     }
 
     template <typename F>
-    auto start(F callback)
+    auto start(F &&callback)
     {
-        struct awaitable : awaitable_base, F
-        {
-            awaitable(PTP_IO io, F callback) noexcept :
-                m_io(io),
-                F(callback)
-            {}
-
-            bool await_ready() const noexcept
-            {
-                return false;
-            }
-
-            void await_suspend(std::experimental::coroutine_handle<> resume_handle)
-            {
-                m_resume = resume_handle;
-                StartThreadpoolIo(m_io);
-
-                try
-                {
-                    (*this)(m_overlapped);
-                }
-                catch (...)
-                {
-                    CancelThreadpoolIo(m_io);
-                    throw;
-                }
-            }
-
-            uint32_t await_resume() const
-            {
-                if (m_result != NO_ERROR && m_result != ERROR_HANDLE_EOF)
-                {
-                    throw hresult_error(HRESULT_FROM_WIN32(m_result));
-                }
-
-                return static_cast<uint32_t>(m_overlapped.InternalHigh);
-            }
-
-            PTP_IO m_io = nullptr;
-        };
-
-        return awaitable(get(), callback);
+        return awaitable<F>(get(), std::forward<F>(callback));
     }
 
     template <typename F>
-    auto start_pending(F callback)
+    auto start_pending(F &&callback)
     {
-        struct awaitable : awaitable_base, F
-        {
-            awaitable(PTP_IO io, F callback) noexcept :
-                m_io(io),
-                F(callback)
-            {}
-
-            bool await_ready() const noexcept
-            {
-                return false;
-            }
-
-            bool await_suspend(std::experimental::coroutine_handle<> resume_handle)
-            {
-                m_resume = resume_handle;
-                StartThreadpoolIo(m_io);
-
-                try
-                {
-                    const bool pending = (*this)(m_overlapped);
-
-                    if (!pending)
-                    {
-                        CancelThreadpoolIo(m_io);
-                    }
-
-                    return pending;
-                }
-                catch (...)
-                {
-                    CancelThreadpoolIo(m_io);
-                    throw;
-                }
-            }
-
-            uint32_t await_resume() const
-            {
-                if (m_result != NO_ERROR && m_result != ERROR_HANDLE_EOF)
-                {
-                    throw hresult_error(HRESULT_FROM_WIN32(m_result));
-                }
-
-                return static_cast<uint32_t>(m_overlapped.InternalHigh);
-            }
-
-            PTP_IO m_io = nullptr;
-        };
-
-        return awaitable(get(), callback);
+        return start(std::forward<F>(callback));
     }
 
     PTP_IO get() const noexcept
@@ -7501,6 +7412,63 @@ struct resumable_io
     }
 
 private:
+    template<class F>
+    struct awaitable : awaitable_base, F
+    {
+        awaitable(PTP_IO io, F &&callback) noexcept :
+        m_io(io),
+            F(std::forward<F>(callback))
+        {}
+
+        bool await_ready() const noexcept
+        {
+            return false;
+        }
+
+        auto await_suspend(std::experimental::coroutine_handle<> resume_handle)
+        {
+            m_resume = resume_handle;
+            StartThreadpoolIo(m_io);
+
+            try
+            {
+                return call(std::is_same<void, decltype((*this)(std::declval<OVERLAPPED &>()))>{});
+            }
+            catch (...)
+            {
+                CancelThreadpoolIo(m_io);
+                throw;
+            }
+        }
+
+        void call(std::true_type)
+        {
+            (*this)(m_overlapped);
+        }
+
+        bool call(std::false_type)
+        {
+            if ((*this)(m_overlapped))
+                return true;
+            else
+            {
+                CancelThreadpoolIo(m_io);
+                return false;
+            }
+        }
+
+        uint32_t await_resume() const
+        {
+            if (m_result != NO_ERROR && m_result != ERROR_HANDLE_EOF)
+            {
+                throw hresult_error(HRESULT_FROM_WIN32(m_result));
+            }
+
+            return static_cast<uint32_t>(m_overlapped.InternalHigh);
+        }
+
+        PTP_IO m_io = nullptr;
+    };
 
     struct io_traits : handle_traits<PTP_IO>
     {
