@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -141,6 +141,43 @@ struct EmailMailboxUpdateMeetingResponseRequest;
 struct EmailMailboxUpdateMeetingResponseRequestEventArgs;
 struct EmailMailboxValidateCertificatesRequest;
 struct EmailMailboxValidateCertificatesRequestEventArgs;
+
+}
+
+namespace Windows::ApplicationModel::Email::DataProvider {
+
+template <typename T> struct impl_IEmailDataProviderConnection;
+template <typename T> struct impl_IEmailDataProviderTriggerDetails;
+template <typename T> struct impl_IEmailMailboxCreateFolderRequest;
+template <typename T> struct impl_IEmailMailboxCreateFolderRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxDeleteFolderRequest;
+template <typename T> struct impl_IEmailMailboxDeleteFolderRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxDownloadAttachmentRequest;
+template <typename T> struct impl_IEmailMailboxDownloadAttachmentRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxDownloadMessageRequest;
+template <typename T> struct impl_IEmailMailboxDownloadMessageRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxEmptyFolderRequest;
+template <typename T> struct impl_IEmailMailboxEmptyFolderRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxForwardMeetingRequest;
+template <typename T> struct impl_IEmailMailboxForwardMeetingRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxGetAutoReplySettingsRequest;
+template <typename T> struct impl_IEmailMailboxGetAutoReplySettingsRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxMoveFolderRequest;
+template <typename T> struct impl_IEmailMailboxMoveFolderRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxProposeNewTimeForMeetingRequest;
+template <typename T> struct impl_IEmailMailboxProposeNewTimeForMeetingRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxResolveRecipientsRequest;
+template <typename T> struct impl_IEmailMailboxResolveRecipientsRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxServerSearchReadBatchRequest;
+template <typename T> struct impl_IEmailMailboxServerSearchReadBatchRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxSetAutoReplySettingsRequest;
+template <typename T> struct impl_IEmailMailboxSetAutoReplySettingsRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxSyncManagerSyncRequest;
+template <typename T> struct impl_IEmailMailboxSyncManagerSyncRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxUpdateMeetingResponseRequest;
+template <typename T> struct impl_IEmailMailboxUpdateMeetingResponseRequestEventArgs;
+template <typename T> struct impl_IEmailMailboxValidateCertificatesRequest;
+template <typename T> struct impl_IEmailMailboxValidateCertificatesRequestEventArgs;
 
 }
 

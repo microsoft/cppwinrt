@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -42,12 +42,12 @@ using MouseDelta = ABI::Windows::Devices::Input::MouseDelta;
 
 namespace ABI::Windows::Devices::Input {
 
-struct __declspec(uuid("3a3f9b56-6798-4bbc-833e-0f34b17c65ff")) __declspec(novtable) IKeyboardCapabilities : Windows::IInspectable
+struct __declspec(uuid("3a3f9b56-6798-4bbc-833e-0f34b17c65ff")) __declspec(novtable) IKeyboardCapabilities : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_KeyboardPresent(int32_t * value) = 0;
 };
 
-struct __declspec(uuid("bca5e023-7dd9-4b6b-9a92-55d43cb38f73")) __declspec(novtable) IMouseCapabilities : Windows::IInspectable
+struct __declspec(uuid("bca5e023-7dd9-4b6b-9a92-55d43cb38f73")) __declspec(novtable) IMouseCapabilities : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MousePresent(int32_t * value) = 0;
     virtual HRESULT __stdcall get_VerticalWheelPresent(int32_t * value) = 0;
@@ -56,23 +56,23 @@ struct __declspec(uuid("bca5e023-7dd9-4b6b-9a92-55d43cb38f73")) __declspec(novta
     virtual HRESULT __stdcall get_NumberOfButtons(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("88edf458-f2c8-49f4-be1f-c256b388bc11")) __declspec(novtable) IMouseDevice : Windows::IInspectable
+struct __declspec(uuid("88edf458-f2c8-49f4-be1f-c256b388bc11")) __declspec(novtable) IMouseDevice : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_MouseMoved(Windows::Foundation::TypedEventHandler<Windows::Devices::Input::MouseDevice, Windows::Devices::Input::MouseEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_MouseMoved(event_token cookie) = 0;
 };
 
-struct __declspec(uuid("484a9045-6d70-49db-8e68-46ffbd17d38d")) __declspec(novtable) IMouseDeviceStatics : Windows::IInspectable
+struct __declspec(uuid("484a9045-6d70-49db-8e68-46ffbd17d38d")) __declspec(novtable) IMouseDeviceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::Devices::Input::IMouseDevice ** mouseDevice) = 0;
 };
 
-struct __declspec(uuid("f625aa5d-2354-4cc7-9230-96941c969fde")) __declspec(novtable) IMouseEventArgs : Windows::IInspectable
+struct __declspec(uuid("f625aa5d-2354-4cc7-9230-96941c969fde")) __declspec(novtable) IMouseEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MouseDelta(Windows::Devices::Input::MouseDelta * value) = 0;
 };
 
-struct __declspec(uuid("93c9bafc-ebcb-467e-82c6-276feae36b5a")) __declspec(novtable) IPointerDevice : Windows::IInspectable
+struct __declspec(uuid("93c9bafc-ebcb-467e-82c6-276feae36b5a")) __declspec(novtable) IPointerDevice : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_IsIntegrated(bool * value) = 0;
@@ -82,18 +82,18 @@ struct __declspec(uuid("93c9bafc-ebcb-467e-82c6-276feae36b5a")) __declspec(novta
     virtual HRESULT __stdcall get_SupportedUsages(Windows::Foundation::Collections::IVectorView<Windows::Devices::Input::PointerDeviceUsage> ** value) = 0;
 };
 
-struct __declspec(uuid("f8a6d2a0-c484-489f-ae3e-30d2ee1ffd3e")) __declspec(novtable) IPointerDevice2 : Windows::IInspectable
+struct __declspec(uuid("f8a6d2a0-c484-489f-ae3e-30d2ee1ffd3e")) __declspec(novtable) IPointerDevice2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MaxPointersWithZDistance(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("d8b89aa1-d1c6-416e-bd8d-5790914dc563")) __declspec(novtable) IPointerDeviceStatics : Windows::IInspectable
+struct __declspec(uuid("d8b89aa1-d1c6-416e-bd8d-5790914dc563")) __declspec(novtable) IPointerDeviceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetPointerDevice(uint32_t pointerId, Windows::Devices::Input::IPointerDevice ** pointerDevice) = 0;
     virtual HRESULT __stdcall abi_GetPointerDevices(Windows::Foundation::Collections::IVectorView<Windows::Devices::Input::PointerDevice> ** pointerDevices) = 0;
 };
 
-struct __declspec(uuid("20dd55f9-13f1-46c8-9285-2c05fa3eda6f")) __declspec(novtable) ITouchCapabilities : Windows::IInspectable
+struct __declspec(uuid("20dd55f9-13f1-46c8-9285-2c05fa3eda6f")) __declspec(novtable) ITouchCapabilities : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TouchPresent(int32_t * value) = 0;
     virtual HRESULT __stdcall get_Contacts(uint32_t * value) = 0;
@@ -114,15 +114,73 @@ template <> struct traits<Windows::Devices::Input::TouchCapabilities> { using de
 
 namespace Windows::Devices::Input {
 
-template <typename T> struct impl_IKeyboardCapabilities;
-template <typename T> struct impl_IMouseCapabilities;
-template <typename T> struct impl_IMouseDevice;
-template <typename T> struct impl_IMouseDeviceStatics;
-template <typename T> struct impl_IMouseEventArgs;
-template <typename T> struct impl_IPointerDevice;
-template <typename T> struct impl_IPointerDevice2;
-template <typename T> struct impl_IPointerDeviceStatics;
-template <typename T> struct impl_ITouchCapabilities;
+template <typename D>
+struct WINRT_EBO impl_IKeyboardCapabilities
+{
+    int32_t KeyboardPresent() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMouseCapabilities
+{
+    int32_t MousePresent() const;
+    int32_t VerticalWheelPresent() const;
+    int32_t HorizontalWheelPresent() const;
+    int32_t SwapButtons() const;
+    uint32_t NumberOfButtons() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMouseDevice
+{
+    event_token MouseMoved(const Windows::Foundation::TypedEventHandler<Windows::Devices::Input::MouseDevice, Windows::Devices::Input::MouseEventArgs> & handler) const;
+    using MouseMoved_revoker = event_revoker<IMouseDevice>;
+    MouseMoved_revoker MouseMoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Input::MouseDevice, Windows::Devices::Input::MouseEventArgs> & handler) const;
+    void MouseMoved(event_token cookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMouseDeviceStatics
+{
+    Windows::Devices::Input::MouseDevice GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMouseEventArgs
+{
+    Windows::Devices::Input::MouseDelta MouseDelta() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerDevice
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    bool IsIntegrated() const;
+    uint32_t MaxContacts() const;
+    Windows::Foundation::Rect PhysicalDeviceRect() const;
+    Windows::Foundation::Rect ScreenRect() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Input::PointerDeviceUsage> SupportedUsages() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerDevice2
+{
+    uint32_t MaxPointersWithZDistance() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerDeviceStatics
+{
+    Windows::Devices::Input::PointerDevice GetPointerDevice(uint32_t pointerId) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Input::PointerDevice> GetPointerDevices() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITouchCapabilities
+{
+    int32_t TouchPresent() const;
+    uint32_t Contacts() const;
+};
 
 }
 

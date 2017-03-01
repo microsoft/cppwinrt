@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -26,6 +26,16 @@ struct IPhoneCallOriginManagerStatics;
 struct IPhoneCallOriginManagerStatics2;
 struct PhoneCallOrigin;
 struct PhoneCallOriginManager;
+
+}
+
+namespace Windows::ApplicationModel::Calls::Provider {
+
+template <typename T> struct impl_IPhoneCallOrigin;
+template <typename T> struct impl_IPhoneCallOrigin2;
+template <typename T> struct impl_IPhoneCallOrigin3;
+template <typename T> struct impl_IPhoneCallOriginManagerStatics;
+template <typename T> struct impl_IPhoneCallOriginManagerStatics2;
 
 }
 

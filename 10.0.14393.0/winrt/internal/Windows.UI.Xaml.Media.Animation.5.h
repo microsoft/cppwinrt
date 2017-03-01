@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@ WINRT_EXPORT namespace winrt {
 namespace Windows::UI::Xaml::Media::Animation {
 
 template <typename D, typename ... Interfaces> struct ColorKeyFrameT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::Animation::IColorKeyFrame>
 {
     using composable = ColorKeyFrame;
@@ -23,7 +23,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DoubleKeyFrameT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::Animation::IDoubleKeyFrame>
 {
     using composable = DoubleKeyFrame;
@@ -51,7 +51,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct ObjectKeyFrameT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::Animation::IObjectKeyFrame>
 {
     using composable = ObjectKeyFrame;
@@ -65,7 +65,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct PointKeyFrameT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::Animation::IPointKeyFrame>
 {
     using composable = PointKeyFrame;
@@ -79,7 +79,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct TimelineT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::Animation::ITimeline>
 {
     using composable = Timeline;

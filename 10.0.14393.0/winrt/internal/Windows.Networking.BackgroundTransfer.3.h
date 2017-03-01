@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -17,9 +17,9 @@ struct WINRT_EBO BackgroundDownloader :
     BackgroundDownloader();
     BackgroundDownloader(const Windows::Networking::BackgroundTransfer::BackgroundTransferCompletionGroup & completionGroup);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::DownloadOperation>> GetCurrentDownloadsAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::DownloadOperation>> GetCurrentDownloadsAsync(hstring_ref group);
+    [[deprecated("GetCurrentDownloadsAsync(group) may be altered or unavailable for releases after Windows 8.1. Instead, use GetCurrentDownloadsForTransferGroupAsync.")]] static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::DownloadOperation>> GetCurrentDownloadsAsync(hstring_view group);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::DownloadOperation>> GetCurrentDownloadsForTransferGroupAsync(const Windows::Networking::BackgroundTransfer::BackgroundTransferGroup & group);
-    static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedDownloadsAsync(const Windows::Foundation::Collections::IIterable<Windows::Networking::BackgroundTransfer::DownloadOperation> & operations);
+    [[deprecated("RequestUnconstrainedDownloadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedDownloadsAsync(iterable<Windows::Networking::BackgroundTransfer::DownloadOperation> operations);
 };
 
 struct WINRT_EBO BackgroundTransferCompletionGroup :
@@ -40,8 +40,8 @@ struct WINRT_EBO BackgroundTransferContentPart :
 {
     BackgroundTransferContentPart(std::nullptr_t) noexcept {}
     BackgroundTransferContentPart();
-    BackgroundTransferContentPart(hstring_ref name);
-    BackgroundTransferContentPart(hstring_ref name, hstring_ref fileName);
+    BackgroundTransferContentPart(hstring_view name);
+    BackgroundTransferContentPart(hstring_view name, hstring_view fileName);
 };
 
 struct BackgroundTransferError
@@ -54,7 +54,7 @@ struct WINRT_EBO BackgroundTransferGroup :
     Windows::Networking::BackgroundTransfer::IBackgroundTransferGroup
 {
     BackgroundTransferGroup(std::nullptr_t) noexcept {}
-    static Windows::Networking::BackgroundTransfer::BackgroundTransferGroup CreateGroup(hstring_ref name);
+    static Windows::Networking::BackgroundTransfer::BackgroundTransferGroup CreateGroup(hstring_view name);
 };
 
 struct WINRT_EBO BackgroundUploader :
@@ -65,9 +65,9 @@ struct WINRT_EBO BackgroundUploader :
     BackgroundUploader();
     BackgroundUploader(const Windows::Networking::BackgroundTransfer::BackgroundTransferCompletionGroup & completionGroup);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::UploadOperation>> GetCurrentUploadsAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::UploadOperation>> GetCurrentUploadsAsync(hstring_ref group);
+    [[deprecated("GetCurrentUploadsAsync(group) may be altered or unavailable for releases after Windows 8.1. Instead, use GetCurrentUploadsForTransferGroupAsync.")]] static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::UploadOperation>> GetCurrentUploadsAsync(hstring_view group);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::UploadOperation>> GetCurrentUploadsForTransferGroupAsync(const Windows::Networking::BackgroundTransfer::BackgroundTransferGroup & group);
-    static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedUploadsAsync(const Windows::Foundation::Collections::IIterable<Windows::Networking::BackgroundTransfer::UploadOperation> & operations);
+    [[deprecated("RequestUnconstrainedUploadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedUploadsAsync(iterable<Windows::Networking::BackgroundTransfer::UploadOperation> operations);
 };
 
 struct ContentPrefetcher
@@ -92,7 +92,7 @@ struct WINRT_EBO ResponseInformation :
     ResponseInformation(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO UnconstrainedTransferRequestResult :
+struct [[deprecated("UnconstrainedTransferRequestResult is deprecated and may not work on all platforms. For more info, see MSDN.")]] WINRT_EBO UnconstrainedTransferRequestResult :
     Windows::Networking::BackgroundTransfer::IUnconstrainedTransferRequestResult
 {
     UnconstrainedTransferRequestResult(std::nullptr_t) noexcept {}

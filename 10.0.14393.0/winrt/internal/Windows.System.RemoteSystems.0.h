@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -64,6 +64,27 @@ struct RemoteSystemRemovedEventArgs;
 struct RemoteSystemStatusTypeFilter;
 struct RemoteSystemUpdatedEventArgs;
 struct RemoteSystemWatcher;
+
+}
+
+namespace Windows::System::RemoteSystems {
+
+template <typename T> struct impl_IRemoteSystem;
+template <typename T> struct impl_IRemoteSystemAddedEventArgs;
+template <typename T> struct impl_IRemoteSystemConnectionRequest;
+template <typename T> struct impl_IRemoteSystemConnectionRequestFactory;
+template <typename T> struct impl_IRemoteSystemDiscoveryTypeFilter;
+template <typename T> struct impl_IRemoteSystemDiscoveryTypeFilterFactory;
+template <typename T> struct impl_IRemoteSystemFilter;
+template <typename T> struct impl_IRemoteSystemKindFilter;
+template <typename T> struct impl_IRemoteSystemKindFilterFactory;
+template <typename T> struct impl_IRemoteSystemKindStatics;
+template <typename T> struct impl_IRemoteSystemRemovedEventArgs;
+template <typename T> struct impl_IRemoteSystemStatics;
+template <typename T> struct impl_IRemoteSystemStatusTypeFilter;
+template <typename T> struct impl_IRemoteSystemStatusTypeFilterFactory;
+template <typename T> struct impl_IRemoteSystemUpdatedEventArgs;
+template <typename T> struct impl_IRemoteSystemWatcher;
 
 }
 

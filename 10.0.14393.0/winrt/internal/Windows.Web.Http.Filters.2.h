@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Web.Http.Filters.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -28,6 +28,11 @@ template <> struct __declspec(uuid("cb383486-c2bc-5756-912d-6a708a07e5bd")) __de
 #ifndef WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
 #define WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
 template <> struct __declspec(uuid("d7828cf7-4301-58d3-aab5-06e5eefcf79f")) __declspec(novtable) IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> : impl_IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> {};
+#endif
+
+#ifndef WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+#define WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+template <> struct __declspec(uuid("36282c0f-2f1f-57f4-b2b1-867af90c3d13")) __declspec(novtable) IVector<Windows::Security::Cryptography::Certificates::Certificate> : impl_IVector<Windows::Security::Cryptography::Certificates::Certificate> {};
 #endif
 
 
@@ -85,140 +90,58 @@ template <> struct __declspec(uuid("beadb572-f9a3-5e93-b6ca-e311b65933fc")) __de
 
 namespace Windows::Web::Http::Filters {
 
-template <typename D>
-struct WINRT_EBO impl_IHttpBaseProtocolFilter
-{
-    bool AllowAutoRedirect() const;
-    void AllowAutoRedirect(bool value) const;
-    bool AllowUI() const;
-    void AllowUI(bool value) const;
-    bool AutomaticDecompression() const;
-    void AutomaticDecompression(bool value) const;
-    Windows::Web::Http::Filters::HttpCacheControl CacheControl() const;
-    Windows::Web::Http::HttpCookieManager CookieManager() const;
-    Windows::Security::Cryptography::Certificates::Certificate ClientCertificate() const;
-    void ClientCertificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-    Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> IgnorableServerCertificateErrors() const;
-    uint32_t MaxConnectionsPerServer() const;
-    void MaxConnectionsPerServer(uint32_t value) const;
-    Windows::Security::Credentials::PasswordCredential ProxyCredential() const;
-    void ProxyCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    Windows::Security::Credentials::PasswordCredential ServerCredential() const;
-    void ServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    bool UseProxy() const;
-    void UseProxy(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpBaseProtocolFilter2
-{
-    Windows::Web::Http::HttpVersion MaxVersion() const;
-    void MaxVersion(Windows::Web::Http::HttpVersion value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpBaseProtocolFilter3
-{
-    Windows::Web::Http::Filters::HttpCookieUsageBehavior CookieUsageBehavior() const;
-    void CookieUsageBehavior(Windows::Web::Http::Filters::HttpCookieUsageBehavior value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpBaseProtocolFilter4
-{
-    event_token ServerCustomValidationRequested(const Windows::Foundation::TypedEventHandler<Windows::Web::Http::Filters::HttpBaseProtocolFilter, Windows::Web::Http::Filters::HttpServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    using ServerCustomValidationRequested_revoker = event_revoker<IHttpBaseProtocolFilter4>;
-    ServerCustomValidationRequested_revoker ServerCustomValidationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Web::Http::Filters::HttpBaseProtocolFilter, Windows::Web::Http::Filters::HttpServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    void ServerCustomValidationRequested(event_token eventCookie) const;
-    void ClearAuthenticationCache() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCacheControl
-{
-    Windows::Web::Http::Filters::HttpCacheReadBehavior ReadBehavior() const;
-    void ReadBehavior(Windows::Web::Http::Filters::HttpCacheReadBehavior value) const;
-    Windows::Web::Http::Filters::HttpCacheWriteBehavior WriteBehavior() const;
-    void WriteBehavior(Windows::Web::Http::Filters::HttpCacheWriteBehavior value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpFilter
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> SendRequestAsync(const Windows::Web::Http::HttpRequestMessage & request) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpServerCustomValidationRequestedEventArgs
-{
-    Windows::Web::Http::HttpRequestMessage RequestMessage() const;
-    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
-    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
-    void Reject() const;
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
 struct IHttpBaseProtocolFilter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpBaseProtocolFilter>,
     impl::require<IHttpBaseProtocolFilter, Windows::Foundation::IClosable, Windows::Web::Http::Filters::IHttpFilter>
 {
     IHttpBaseProtocolFilter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpBaseProtocolFilter>(m_ptr); }
 };
 
 struct IHttpBaseProtocolFilter2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpBaseProtocolFilter2>,
     impl::require<IHttpBaseProtocolFilter2, Windows::Foundation::IClosable, Windows::Web::Http::Filters::IHttpFilter>
 {
     IHttpBaseProtocolFilter2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpBaseProtocolFilter2>(m_ptr); }
 };
 
 struct IHttpBaseProtocolFilter3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpBaseProtocolFilter3>,
     impl::require<IHttpBaseProtocolFilter3, Windows::Foundation::IClosable, Windows::Web::Http::Filters::IHttpFilter>
 {
     IHttpBaseProtocolFilter3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpBaseProtocolFilter3>(m_ptr); }
 };
 
 struct IHttpBaseProtocolFilter4 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpBaseProtocolFilter4>,
     impl::require<IHttpBaseProtocolFilter4, Windows::Foundation::IClosable, Windows::Web::Http::Filters::IHttpFilter>
 {
     IHttpBaseProtocolFilter4(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpBaseProtocolFilter4>(m_ptr); }
 };
 
 struct IHttpCacheControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCacheControl>
 {
     IHttpCacheControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCacheControl>(m_ptr); }
 };
 
 struct IHttpFilter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpFilter>,
     impl::require<IHttpFilter, Windows::Foundation::IClosable>
 {
     IHttpFilter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpFilter>(m_ptr); }
 };
 
 struct IHttpServerCustomValidationRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpServerCustomValidationRequestedEventArgs>
 {
     IHttpServerCustomValidationRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpServerCustomValidationRequestedEventArgs>(m_ptr); }
 };
 
 }

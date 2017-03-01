@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -22,6 +22,14 @@ struct IGameService2;
 struct IGameServicePropertyCollection;
 struct GameService;
 struct GameServicePropertyCollection;
+
+}
+
+namespace Windows::Phone::System::UserProfile::GameServices::Core {
+
+template <typename T> struct impl_IGameService;
+template <typename T> struct impl_IGameService2;
+template <typename T> struct impl_IGameServicePropertyCollection;
 
 }
 

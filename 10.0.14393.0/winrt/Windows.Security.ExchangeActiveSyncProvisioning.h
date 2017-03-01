@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Security.ExchangeActiveSyncProvisioning.3.h"
@@ -17,7 +20,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -26,25 +30,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
         }
     }
 
-    HRESULT __stdcall get_OperatingSystem(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_OperatingSystem(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OperatingSystem());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_FriendlyName(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().FriendlyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OperatingSystem());
             return S_OK;
         }
         catch (...)
@@ -54,11 +45,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
         }
     }
 
-    HRESULT __stdcall get_SystemManufacturer(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FriendlyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SystemManufacturer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FriendlyName());
             return S_OK;
         }
         catch (...)
@@ -68,11 +60,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
         }
     }
 
-    HRESULT __stdcall get_SystemProductName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SystemManufacturer(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SystemProductName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemManufacturer());
             return S_OK;
         }
         catch (...)
@@ -82,11 +75,27 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
         }
     }
 
-    HRESULT __stdcall get_SystemSku(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SystemProductName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SystemSku());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemProductName());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_SystemSku(impl::abi_arg_out<hstring> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemSku());
             return S_OK;
         }
         catch (...)
@@ -100,11 +109,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
 template <typename D>
 struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation2> : produce_base<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation2>
 {
-    HRESULT __stdcall get_SystemHardwareVersion(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SystemHardwareVersion(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SystemHardwareVersion());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemHardwareVersion());
             return S_OK;
         }
         catch (...)
@@ -114,11 +124,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientD
         }
     }
 
-    HRESULT __stdcall get_SystemFirmwareVersion(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SystemFirmwareVersion(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SystemFirmwareVersion());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemFirmwareVersion());
             return S_OK;
         }
         catch (...)
@@ -136,7 +147,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().RequireEncryption());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RequireEncryption());
             return S_OK;
         }
         catch (...)
@@ -149,6 +161,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RequireEncryption(value);
             return S_OK;
         }
@@ -162,7 +175,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().MinPasswordLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinPasswordLength());
             return S_OK;
         }
         catch (...)
@@ -175,6 +189,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MinPasswordLength(value);
             return S_OK;
         }
@@ -188,7 +203,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().DisallowConvenienceLogon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisallowConvenienceLogon());
             return S_OK;
         }
         catch (...)
@@ -201,6 +217,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisallowConvenienceLogon(value);
             return S_OK;
         }
@@ -214,7 +231,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().MinPasswordComplexCharacters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinPasswordComplexCharacters());
             return S_OK;
         }
         catch (...)
@@ -227,6 +245,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MinPasswordComplexCharacters(value);
             return S_OK;
         }
@@ -236,11 +255,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall get_PasswordExpiration(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_PasswordExpiration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PasswordExpiration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PasswordExpiration());
             return S_OK;
         }
         catch (...)
@@ -249,10 +269,11 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall put_PasswordExpiration(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_PasswordExpiration(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PasswordExpiration(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -266,7 +287,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().PasswordHistory());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PasswordHistory());
             return S_OK;
         }
         catch (...)
@@ -279,6 +301,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PasswordHistory(value);
             return S_OK;
         }
@@ -292,7 +315,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
-            *value = detach(this->shim().MaxPasswordFailedAttempts());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxPasswordFailedAttempts());
             return S_OK;
         }
         catch (...)
@@ -305,6 +329,7 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MaxPasswordFailedAttempts(value);
             return S_OK;
         }
@@ -314,11 +339,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall get_MaxInactivityTimeLock(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_MaxInactivityTimeLock(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MaxInactivityTimeLock());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxInactivityTimeLock());
             return S_OK;
         }
         catch (...)
@@ -327,10 +353,11 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall put_MaxInactivityTimeLock(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_MaxInactivityTimeLock(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MaxInactivityTimeLock(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -340,11 +367,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall abi_CheckCompliance(abi_arg_out<Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults> result) noexcept override
+    HRESULT __stdcall abi_CheckCompliance(impl::abi_arg_out<Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().CheckCompliance());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CheckCompliance());
             return S_OK;
         }
         catch (...)
@@ -354,11 +382,12 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasClientS
         }
     }
 
-    HRESULT __stdcall abi_ApplyAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults>> operation) noexcept override
+    HRESULT __stdcall abi_ApplyAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ApplyAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ApplyAsync());
             return S_OK;
         }
         catch (...)
@@ -376,7 +405,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().Compliant());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Compliant());
             return S_OK;
         }
         catch (...)
@@ -389,7 +419,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().RequireEncryptionResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RequireEncryptionResult());
             return S_OK;
         }
         catch (...)
@@ -402,7 +433,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().MinPasswordLengthResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinPasswordLengthResult());
             return S_OK;
         }
         catch (...)
@@ -415,7 +447,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().DisallowConvenienceLogonResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisallowConvenienceLogonResult());
             return S_OK;
         }
         catch (...)
@@ -428,7 +461,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().MinPasswordComplexCharactersResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinPasswordComplexCharactersResult());
             return S_OK;
         }
         catch (...)
@@ -441,7 +475,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().PasswordExpirationResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PasswordExpirationResult());
             return S_OK;
         }
         catch (...)
@@ -454,7 +489,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().PasswordHistoryResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PasswordHistoryResult());
             return S_OK;
         }
         catch (...)
@@ -467,7 +503,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().MaxPasswordFailedAttemptsResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxPasswordFailedAttemptsResult());
             return S_OK;
         }
         catch (...)
@@ -480,7 +517,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().MaxInactivityTimeLockResult());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxInactivityTimeLockResult());
             return S_OK;
         }
         catch (...)
@@ -497,7 +535,8 @@ struct produce<D, Windows::Security::ExchangeActiveSyncProvisioning::IEasComplia
     {
         try
         {
-            *value = detach(this->shim().EncryptionProviderType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EncryptionProviderType());
             return S_OK;
         }
         catch (...)
@@ -514,236 +553,236 @@ namespace Windows::Security::ExchangeActiveSyncProvisioning {
 template <typename D> GUID impl_IEasClientDeviceInformation<D>::Id() const
 {
     GUID value {};
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_Id(&value));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation<D>::OperatingSystem() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_OperatingSystem(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_OperatingSystem(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation<D>::FriendlyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_FriendlyName(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_FriendlyName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation<D>::SystemManufacturer() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_SystemManufacturer(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_SystemManufacturer(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation<D>::SystemProductName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_SystemProductName(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_SystemProductName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation<D>::SystemSku() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation &>(static_cast<const D &>(*this))->get_SystemSku(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation)->get_SystemSku(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation2<D>::SystemHardwareVersion() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation2 &>(static_cast<const D &>(*this))->get_SystemHardwareVersion(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation2)->get_SystemHardwareVersion(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEasClientDeviceInformation2<D>::SystemFirmwareVersion() const
 {
     hstring value;
-    check_hresult(static_cast<const IEasClientDeviceInformation2 &>(static_cast<const D &>(*this))->get_SystemFirmwareVersion(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientDeviceInformation2)->get_SystemFirmwareVersion(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IEasClientSecurityPolicy<D>::RequireEncryption() const
 {
     bool value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_RequireEncryption(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_RequireEncryption(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::RequireEncryption(bool value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_RequireEncryption(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_RequireEncryption(value));
 }
 
 template <typename D> uint8_t impl_IEasClientSecurityPolicy<D>::MinPasswordLength() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_MinPasswordLength(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_MinPasswordLength(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::MinPasswordLength(uint8_t value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_MinPasswordLength(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_MinPasswordLength(value));
 }
 
 template <typename D> bool impl_IEasClientSecurityPolicy<D>::DisallowConvenienceLogon() const
 {
     bool value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_DisallowConvenienceLogon(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_DisallowConvenienceLogon(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::DisallowConvenienceLogon(bool value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_DisallowConvenienceLogon(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_DisallowConvenienceLogon(value));
 }
 
 template <typename D> uint8_t impl_IEasClientSecurityPolicy<D>::MinPasswordComplexCharacters() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_MinPasswordComplexCharacters(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_MinPasswordComplexCharacters(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::MinPasswordComplexCharacters(uint8_t value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_MinPasswordComplexCharacters(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_MinPasswordComplexCharacters(value));
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IEasClientSecurityPolicy<D>::PasswordExpiration() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_PasswordExpiration(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_PasswordExpiration(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::PasswordExpiration(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_PasswordExpiration(get(value)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_PasswordExpiration(get_abi(value)));
 }
 
 template <typename D> uint32_t impl_IEasClientSecurityPolicy<D>::PasswordHistory() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_PasswordHistory(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_PasswordHistory(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::PasswordHistory(uint32_t value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_PasswordHistory(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_PasswordHistory(value));
 }
 
 template <typename D> uint8_t impl_IEasClientSecurityPolicy<D>::MaxPasswordFailedAttempts() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_MaxPasswordFailedAttempts(&value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_MaxPasswordFailedAttempts(&value));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::MaxPasswordFailedAttempts(uint8_t value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_MaxPasswordFailedAttempts(value));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_MaxPasswordFailedAttempts(value));
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IEasClientSecurityPolicy<D>::MaxInactivityTimeLock() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->get_MaxInactivityTimeLock(put(value)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->get_MaxInactivityTimeLock(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IEasClientSecurityPolicy<D>::MaxInactivityTimeLock(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->put_MaxInactivityTimeLock(get(value)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->put_MaxInactivityTimeLock(get_abi(value)));
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults impl_IEasClientSecurityPolicy<D>::CheckCompliance() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults result { nullptr };
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->abi_CheckCompliance(put(result)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->abi_CheckCompliance(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults> impl_IEasClientSecurityPolicy<D>::ApplyAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults> operation;
-    check_hresult(static_cast<const IEasClientSecurityPolicy &>(static_cast<const D &>(*this))->abi_ApplyAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IEasClientSecurityPolicy)->abi_ApplyAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_IEasComplianceResults<D>::Compliant() const
 {
     bool value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_Compliant(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_Compliant(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasRequireEncryptionResult impl_IEasComplianceResults<D>::RequireEncryptionResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasRequireEncryptionResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_RequireEncryptionResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_RequireEncryptionResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasMinPasswordLengthResult impl_IEasComplianceResults<D>::MinPasswordLengthResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasMinPasswordLengthResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_MinPasswordLengthResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_MinPasswordLengthResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasDisallowConvenienceLogonResult impl_IEasComplianceResults<D>::DisallowConvenienceLogonResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasDisallowConvenienceLogonResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_DisallowConvenienceLogonResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_DisallowConvenienceLogonResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasMinPasswordComplexCharactersResult impl_IEasComplianceResults<D>::MinPasswordComplexCharactersResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasMinPasswordComplexCharactersResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_MinPasswordComplexCharactersResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_MinPasswordComplexCharactersResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasPasswordExpirationResult impl_IEasComplianceResults<D>::PasswordExpirationResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasPasswordExpirationResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_PasswordExpirationResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_PasswordExpirationResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasPasswordHistoryResult impl_IEasComplianceResults<D>::PasswordHistoryResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasPasswordHistoryResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_PasswordHistoryResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_PasswordHistoryResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasMaxPasswordFailedAttemptsResult impl_IEasComplianceResults<D>::MaxPasswordFailedAttemptsResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasMaxPasswordFailedAttemptsResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_MaxPasswordFailedAttemptsResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_MaxPasswordFailedAttemptsResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasMaxInactivityTimeLockResult impl_IEasComplianceResults<D>::MaxInactivityTimeLockResult() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasMaxInactivityTimeLockResult value {};
-    check_hresult(static_cast<const IEasComplianceResults &>(static_cast<const D &>(*this))->get_MaxInactivityTimeLockResult(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults)->get_MaxInactivityTimeLockResult(&value));
     return value;
 }
 
 template <typename D> Windows::Security::ExchangeActiveSyncProvisioning::EasEncryptionProviderType impl_IEasComplianceResults2<D>::EncryptionProviderType() const
 {
     Windows::Security::ExchangeActiveSyncProvisioning::EasEncryptionProviderType value {};
-    check_hresult(static_cast<const IEasComplianceResults2 &>(static_cast<const D &>(*this))->get_EncryptionProviderType(&value));
+    check_hresult(WINRT_SHIM(IEasComplianceResults2)->get_EncryptionProviderType(&value));
     return value;
 }
 
@@ -758,3 +797,77 @@ inline EasClientSecurityPolicy::EasClientSecurityPolicy() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation2>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientDeviceInformation2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientSecurityPolicy>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasClientSecurityPolicy & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults2>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::IEasComplianceResults2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasClientDeviceInformation>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasClientDeviceInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasClientSecurityPolicy>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasClientSecurityPolicy & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults>
+{
+    size_t operator()(const winrt::Windows::Security::ExchangeActiveSyncProvisioning::EasComplianceResults & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

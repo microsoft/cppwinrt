@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.ApplicationModel.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::IAppListEntry> : produce_base<D, Windows::ApplicationModel::Core::IAppListEntry>
 {
-    HRESULT __stdcall get_DisplayInfo(abi_arg_out<Windows::ApplicationModel::IAppDisplayInfo> value) noexcept override
+    HRESULT __stdcall get_DisplayInfo(impl::abi_arg_out<Windows::ApplicationModel::IAppDisplayInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayInfo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayInfo());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::ApplicationModel::Core::IAppListEntry> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_LaunchAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_LaunchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().LaunchAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().LaunchAsync());
             return S_OK;
         }
         catch (...)
@@ -49,11 +54,12 @@ struct produce<D, Windows::ApplicationModel::Core::IAppListEntry> : produce_base
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_base<D, Windows::ApplicationModel::Core::ICoreApplication>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -63,11 +69,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall add_Suspending(abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Suspending(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Suspending(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Suspending(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -80,6 +87,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Suspending(token);
             return S_OK;
         }
@@ -89,11 +97,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall add_Resuming(abi_arg_in<Windows::Foundation::EventHandler<Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Resuming(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Resuming(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Resuming(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -106,6 +115,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Resuming(token);
             return S_OK;
         }
@@ -115,11 +125,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -129,11 +140,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetCurrentView(abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentView(impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentView());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentView());
             return S_OK;
         }
         catch (...)
@@ -143,10 +155,11 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_Run(abi_arg_in<Windows::ApplicationModel::Core::IFrameworkViewSource> viewSource) noexcept override
+    HRESULT __stdcall abi_Run(impl::abi_arg_in<Windows::ApplicationModel::Core::IFrameworkViewSource> viewSource) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Run(*reinterpret_cast<const Windows::ApplicationModel::Core::IFrameworkViewSource *>(&viewSource));
             return S_OK;
         }
@@ -156,10 +169,11 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_RunWithActivationFactories(abi_arg_in<Windows::Foundation::IGetActivationFactory> activationFactoryCallback) noexcept override
+    HRESULT __stdcall abi_RunWithActivationFactories(impl::abi_arg_in<Windows::Foundation::IGetActivationFactory> activationFactoryCallback) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RunWithActivationFactories(*reinterpret_cast<const Windows::Foundation::IGetActivationFactory *>(&activationFactoryCallback));
             return S_OK;
         }
@@ -173,11 +187,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication> : produce_b
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_base<D, Windows::ApplicationModel::Core::ICoreApplication2>
 {
-    HRESULT __stdcall add_BackgroundActivated(abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_BackgroundActivated(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().BackgroundActivated(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().BackgroundActivated(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -190,6 +205,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BackgroundActivated(token);
             return S_OK;
         }
@@ -199,11 +215,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
         }
     }
 
-    HRESULT __stdcall add_LeavingBackground(abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LeavingBackground(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().LeavingBackground(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().LeavingBackground(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -216,6 +233,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LeavingBackground(token);
             return S_OK;
         }
@@ -225,11 +243,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
         }
     }
 
-    HRESULT __stdcall add_EnteredBackground(abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_EnteredBackground(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().EnteredBackground(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().EnteredBackground(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -242,6 +261,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnteredBackground(token);
             return S_OK;
         }
@@ -255,6 +275,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplication2> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnablePrelaunch(value);
             return S_OK;
         }
@@ -272,6 +293,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationExit> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Exit();
             return S_OK;
         }
@@ -281,11 +303,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationExit> : produ
         }
     }
 
-    HRESULT __stdcall add_Exiting(abi_arg_in<Windows::Foundation::EventHandler<Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Exiting(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Exiting(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Exiting(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -298,6 +321,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationExit> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Exiting(token);
             return S_OK;
         }
@@ -311,11 +335,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationExit> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationUnhandledError> : produce_base<D, Windows::ApplicationModel::Core::ICoreApplicationUnhandledError>
 {
-    HRESULT __stdcall add_UnhandledErrorDetected(abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_UnhandledErrorDetected(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().UnhandledErrorDetected(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().UnhandledErrorDetected(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -328,6 +353,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationUnhandledErro
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().UnhandledErrorDetected(token);
             return S_OK;
         }
@@ -345,6 +371,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationUseCount> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IncrementApplicationUseCount();
             return S_OK;
         }
@@ -358,6 +385,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationUseCount> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DecrementApplicationUseCount();
             return S_OK;
         }
@@ -371,11 +399,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationUseCount> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produce_base<D, Windows::ApplicationModel::Core::ICoreApplicationView>
 {
-    HRESULT __stdcall get_CoreWindow(abi_arg_out<Windows::UI::Core::ICoreWindow> value) noexcept override
+    HRESULT __stdcall get_CoreWindow(impl::abi_arg_out<Windows::UI::Core::ICoreWindow> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CoreWindow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CoreWindow());
             return S_OK;
         }
         catch (...)
@@ -385,11 +414,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produ
         }
     }
 
-    HRESULT __stdcall add_Activated(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Activated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Activated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Activated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -402,6 +432,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Activated(token);
             return S_OK;
         }
@@ -415,7 +446,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produ
     {
         try
         {
-            *value = detach(this->shim().IsMain());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsMain());
             return S_OK;
         }
         catch (...)
@@ -428,7 +460,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produ
     {
         try
         {
-            *value = detach(this->shim().IsHosted());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsHosted());
             return S_OK;
         }
         catch (...)
@@ -441,11 +474,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView2> : produce_base<D, Windows::ApplicationModel::Core::ICoreApplicationView2>
 {
-    HRESULT __stdcall get_Dispatcher(abi_arg_out<Windows::UI::Core::ICoreDispatcher> value) noexcept override
+    HRESULT __stdcall get_Dispatcher(impl::abi_arg_out<Windows::UI::Core::ICoreDispatcher> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Dispatcher());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Dispatcher());
             return S_OK;
         }
         catch (...)
@@ -463,7 +497,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView3> : prod
     {
         try
         {
-            *value = detach(this->shim().IsComponent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsComponent());
             return S_OK;
         }
         catch (...)
@@ -472,11 +507,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView3> : prod
         }
     }
 
-    HRESULT __stdcall get_TitleBar(abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar> value) noexcept override
+    HRESULT __stdcall get_TitleBar(impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TitleBar());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TitleBar());
             return S_OK;
         }
         catch (...)
@@ -486,11 +522,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView3> : prod
         }
     }
 
-    HRESULT __stdcall add_HostedViewClosing(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_HostedViewClosing(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().HostedViewClosing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().HostedViewClosing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -503,6 +540,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationView3> : prod
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().HostedViewClosing(token);
             return S_OK;
         }
@@ -520,6 +558,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ExtendViewIntoTitleBar(value);
             return S_OK;
         }
@@ -533,7 +572,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
-            *value = detach(this->shim().ExtendViewIntoTitleBar());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExtendViewIntoTitleBar());
             return S_OK;
         }
         catch (...)
@@ -546,7 +586,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
-            *value = detach(this->shim().SystemOverlayLeftInset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemOverlayLeftInset());
             return S_OK;
         }
         catch (...)
@@ -559,7 +600,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
-            *value = detach(this->shim().SystemOverlayRightInset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemOverlayRightInset());
             return S_OK;
         }
         catch (...)
@@ -572,7 +614,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
-            *value = detach(this->shim().Height());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Height());
             return S_OK;
         }
         catch (...)
@@ -581,11 +624,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
         }
     }
 
-    HRESULT __stdcall add_LayoutMetricsChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LayoutMetricsChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().LayoutMetricsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().LayoutMetricsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -598,6 +642,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LayoutMetricsChanged(token);
             return S_OK;
         }
@@ -611,7 +656,8 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
-            *value = detach(this->shim().IsVisible());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsVisible());
             return S_OK;
         }
         catch (...)
@@ -620,11 +666,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
         }
     }
 
-    HRESULT __stdcall add_IsVisibleChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_IsVisibleChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().IsVisibleChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().IsVisibleChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -637,6 +684,7 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsVisibleChanged(token);
             return S_OK;
         }
@@ -650,11 +698,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication> : produce_base<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication>
 {
-    HRESULT __stdcall get_Views(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::CoreApplicationView>> value) noexcept override
+    HRESULT __stdcall get_Views(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::CoreApplicationView>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Views());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Views());
             return S_OK;
         }
         catch (...)
@@ -664,11 +713,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication> : 
         }
     }
 
-    HRESULT __stdcall abi_CreateNewView(abi_arg_in<hstring> runtimeType, abi_arg_in<hstring> entryPoint, abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
+    HRESULT __stdcall abi_CreateNewView(impl::abi_arg_in<hstring> runtimeType, impl::abi_arg_in<hstring> entryPoint, impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
     {
         try
         {
-            *view = detach(this->shim().CreateNewView(*reinterpret_cast<const hstring *>(&runtimeType), *reinterpret_cast<const hstring *>(&entryPoint)));
+            typename D::abi_guard guard(this->shim());
+            *view = detach_abi(this->shim().CreateNewView(*reinterpret_cast<const hstring *>(&runtimeType), *reinterpret_cast<const hstring *>(&entryPoint)));
             return S_OK;
         }
         catch (...)
@@ -678,11 +728,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication> : 
         }
     }
 
-    HRESULT __stdcall get_MainView(abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> value) noexcept override
+    HRESULT __stdcall get_MainView(impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MainView());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MainView());
             return S_OK;
         }
         catch (...)
@@ -696,11 +747,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication2> : produce_base<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication2>
 {
-    HRESULT __stdcall abi_CreateNewViewFromMainView(abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
+    HRESULT __stdcall abi_CreateNewViewFromMainView(impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
     {
         try
         {
-            *view = detach(this->shim().CreateNewView());
+            typename D::abi_guard guard(this->shim());
+            *view = detach_abi(this->shim().CreateNewView());
             return S_OK;
         }
         catch (...)
@@ -714,11 +766,12 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication2> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication3> : produce_base<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication3>
 {
-    HRESULT __stdcall abi_CreateNewViewWithViewSource(abi_arg_in<Windows::ApplicationModel::Core::IFrameworkViewSource> viewSource, abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
+    HRESULT __stdcall abi_CreateNewViewWithViewSource(impl::abi_arg_in<Windows::ApplicationModel::Core::IFrameworkViewSource> viewSource, impl::abi_arg_out<Windows::ApplicationModel::Core::ICoreApplicationView> view) noexcept override
     {
         try
         {
-            *view = detach(this->shim().CreateNewView(*reinterpret_cast<const Windows::ApplicationModel::Core::IFrameworkViewSource *>(&viewSource)));
+            typename D::abi_guard guard(this->shim());
+            *view = detach_abi(this->shim().CreateNewView(*reinterpret_cast<const Windows::ApplicationModel::Core::IFrameworkViewSource *>(&viewSource)));
             return S_OK;
         }
         catch (...)
@@ -732,10 +785,11 @@ struct produce<D, Windows::ApplicationModel::Core::ICoreImmersiveApplication3> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_base<D, Windows::ApplicationModel::Core::IFrameworkView>
 {
-    HRESULT __stdcall abi_Initialize(abi_arg_in<Windows::ApplicationModel::Core::ICoreApplicationView> applicationView) noexcept override
+    HRESULT __stdcall abi_Initialize(impl::abi_arg_in<Windows::ApplicationModel::Core::ICoreApplicationView> applicationView) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Initialize(*reinterpret_cast<const Windows::ApplicationModel::Core::CoreApplicationView *>(&applicationView));
             return S_OK;
         }
@@ -745,10 +799,11 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_SetWindow(abi_arg_in<Windows::UI::Core::ICoreWindow> window) noexcept override
+    HRESULT __stdcall abi_SetWindow(impl::abi_arg_in<Windows::UI::Core::ICoreWindow> window) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetWindow(*reinterpret_cast<const Windows::UI::Core::CoreWindow *>(&window));
             return S_OK;
         }
@@ -758,10 +813,11 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_Load(abi_arg_in<hstring> entryPoint) noexcept override
+    HRESULT __stdcall abi_Load(impl::abi_arg_in<hstring> entryPoint) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Load(*reinterpret_cast<const hstring *>(&entryPoint));
             return S_OK;
         }
@@ -775,6 +831,7 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Run();
             return S_OK;
         }
@@ -788,6 +845,7 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Uninitialize();
             return S_OK;
         }
@@ -801,11 +859,12 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkView> : produce_bas
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::IFrameworkViewSource> : produce_base<D, Windows::ApplicationModel::Core::IFrameworkViewSource>
 {
-    HRESULT __stdcall abi_CreateView(abi_arg_out<Windows::ApplicationModel::Core::IFrameworkView> viewProvider) noexcept override
+    HRESULT __stdcall abi_CreateView(impl::abi_arg_out<Windows::ApplicationModel::Core::IFrameworkView> viewProvider) noexcept override
     {
         try
         {
-            *viewProvider = detach(this->shim().CreateView());
+            typename D::abi_guard guard(this->shim());
+            *viewProvider = detach_abi(this->shim().CreateView());
             return S_OK;
         }
         catch (...)
@@ -819,11 +878,12 @@ struct produce<D, Windows::ApplicationModel::Core::IFrameworkViewSource> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::IHostedViewClosingEventArgs> : produce_base<D, Windows::ApplicationModel::Core::IHostedViewClosingEventArgs>
 {
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::Foundation::IDeferral> result) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Foundation::IDeferral> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -841,7 +901,8 @@ struct produce<D, Windows::ApplicationModel::Core::IUnhandledError> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().Handled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Handled());
             return S_OK;
         }
         catch (...)
@@ -854,6 +915,7 @@ struct produce<D, Windows::ApplicationModel::Core::IUnhandledError> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Propagate();
             return S_OK;
         }
@@ -867,11 +929,12 @@ struct produce<D, Windows::ApplicationModel::Core::IUnhandledError> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Core::IUnhandledErrorDetectedEventArgs> : produce_base<D, Windows::ApplicationModel::Core::IUnhandledErrorDetectedEventArgs>
 {
-    HRESULT __stdcall get_UnhandledError(abi_arg_out<Windows::ApplicationModel::Core::IUnhandledError> value) noexcept override
+    HRESULT __stdcall get_UnhandledError(impl::abi_arg_out<Windows::ApplicationModel::Core::IUnhandledError> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UnhandledError());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnhandledError());
             return S_OK;
         }
         catch (...)
@@ -889,60 +952,60 @@ namespace Windows::ApplicationModel::Core {
 template <typename D> Windows::ApplicationModel::AppDisplayInfo impl_IAppListEntry<D>::DisplayInfo() const
 {
     Windows::ApplicationModel::AppDisplayInfo value { nullptr };
-    check_hresult(static_cast<const IAppListEntry &>(static_cast<const D &>(*this))->get_DisplayInfo(put(value)));
+    check_hresult(WINRT_SHIM(IAppListEntry)->get_DisplayInfo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppListEntry<D>::LaunchAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppListEntry &>(static_cast<const D &>(*this))->abi_LaunchAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IAppListEntry)->abi_LaunchAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> void impl_IFrameworkView<D>::Initialize(const Windows::ApplicationModel::Core::CoreApplicationView & applicationView) const
 {
-    check_hresult(static_cast<const IFrameworkView &>(static_cast<const D &>(*this))->abi_Initialize(get(applicationView)));
+    check_hresult(WINRT_SHIM(IFrameworkView)->abi_Initialize(get_abi(applicationView)));
 }
 
 template <typename D> void impl_IFrameworkView<D>::SetWindow(const Windows::UI::Core::CoreWindow & window) const
 {
-    check_hresult(static_cast<const IFrameworkView &>(static_cast<const D &>(*this))->abi_SetWindow(get(window)));
+    check_hresult(WINRT_SHIM(IFrameworkView)->abi_SetWindow(get_abi(window)));
 }
 
-template <typename D> void impl_IFrameworkView<D>::Load(hstring_ref entryPoint) const
+template <typename D> void impl_IFrameworkView<D>::Load(hstring_view entryPoint) const
 {
-    check_hresult(static_cast<const IFrameworkView &>(static_cast<const D &>(*this))->abi_Load(get(entryPoint)));
+    check_hresult(WINRT_SHIM(IFrameworkView)->abi_Load(get_abi(entryPoint)));
 }
 
 template <typename D> void impl_IFrameworkView<D>::Run() const
 {
-    check_hresult(static_cast<const IFrameworkView &>(static_cast<const D &>(*this))->abi_Run());
+    check_hresult(WINRT_SHIM(IFrameworkView)->abi_Run());
 }
 
 template <typename D> void impl_IFrameworkView<D>::Uninitialize() const
 {
-    check_hresult(static_cast<const IFrameworkView &>(static_cast<const D &>(*this))->abi_Uninitialize());
+    check_hresult(WINRT_SHIM(IFrameworkView)->abi_Uninitialize());
 }
 
 template <typename D> Windows::ApplicationModel::Core::IFrameworkView impl_IFrameworkViewSource<D>::CreateView() const
 {
     Windows::ApplicationModel::Core::IFrameworkView viewProvider;
-    check_hresult(static_cast<const IFrameworkViewSource &>(static_cast<const D &>(*this))->abi_CreateView(put(viewProvider)));
+    check_hresult(WINRT_SHIM(IFrameworkViewSource)->abi_CreateView(put_abi(viewProvider)));
     return viewProvider;
 }
 
 template <typename D> hstring impl_ICoreApplication<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplication)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_ICoreApplication<D>::Suspending(const Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->add_Suspending(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplication)->add_Suspending(get_abi(handler), &token));
     return token;
 }
 
@@ -953,86 +1016,86 @@ template <typename D> event_revoker<ICoreApplication> impl_ICoreApplication<D>::
 
 template <typename D> void impl_ICoreApplication<D>::Suspending(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->remove_Suspending(token));
+    check_hresult(WINRT_SHIM(ICoreApplication)->remove_Suspending(token));
 }
 
-template <typename D> event_token impl_ICoreApplication<D>::Resuming(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const
+template <typename D> event_token impl_ICoreApplication<D>::Resuming(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->add_Resuming(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplication)->add_Resuming(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICoreApplication> impl_ICoreApplication<D>::Resuming(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const
+template <typename D> event_revoker<ICoreApplication> impl_ICoreApplication<D>::Resuming(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, ICoreApplication>(this, &ABI::Windows::ApplicationModel::Core::ICoreApplication::remove_Resuming, Resuming(handler));
 }
 
 template <typename D> void impl_ICoreApplication<D>::Resuming(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->remove_Resuming(token));
+    check_hresult(WINRT_SHIM(ICoreApplication)->remove_Resuming(token));
 }
 
 template <typename D> Windows::Foundation::Collections::IPropertySet impl_ICoreApplication<D>::Properties() const
 {
     Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplication)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreApplication<D>::GetCurrentView() const
 {
     Windows::ApplicationModel::Core::CoreApplicationView value { nullptr };
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->abi_GetCurrentView(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplication)->abi_GetCurrentView(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ICoreApplication<D>::Run(const Windows::ApplicationModel::Core::IFrameworkViewSource & viewSource) const
 {
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->abi_Run(get(viewSource)));
+    check_hresult(WINRT_SHIM(ICoreApplication)->abi_Run(get_abi(viewSource)));
 }
 
 template <typename D> void impl_ICoreApplication<D>::RunWithActivationFactories(const Windows::Foundation::IGetActivationFactory & activationFactoryCallback) const
 {
-    check_hresult(static_cast<const ICoreApplication &>(static_cast<const D &>(*this))->abi_RunWithActivationFactories(get(activationFactoryCallback)));
+    check_hresult(WINRT_SHIM(ICoreApplication)->abi_RunWithActivationFactories(get_abi(activationFactoryCallback)));
 }
 
 template <typename D> void impl_ICoreApplicationUseCount<D>::IncrementApplicationUseCount() const
 {
-    check_hresult(static_cast<const ICoreApplicationUseCount &>(static_cast<const D &>(*this))->abi_IncrementApplicationUseCount());
+    check_hresult(WINRT_SHIM(ICoreApplicationUseCount)->abi_IncrementApplicationUseCount());
 }
 
 template <typename D> void impl_ICoreApplicationUseCount<D>::DecrementApplicationUseCount() const
 {
-    check_hresult(static_cast<const ICoreApplicationUseCount &>(static_cast<const D &>(*this))->abi_DecrementApplicationUseCount());
+    check_hresult(WINRT_SHIM(ICoreApplicationUseCount)->abi_DecrementApplicationUseCount());
 }
 
 template <typename D> void impl_ICoreApplicationExit<D>::Exit() const
 {
-    check_hresult(static_cast<const ICoreApplicationExit &>(static_cast<const D &>(*this))->abi_Exit());
+    check_hresult(WINRT_SHIM(ICoreApplicationExit)->abi_Exit());
 }
 
-template <typename D> event_token impl_ICoreApplicationExit<D>::Exiting(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const
+template <typename D> event_token impl_ICoreApplicationExit<D>::Exiting(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationExit &>(static_cast<const D &>(*this))->add_Exiting(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationExit)->add_Exiting(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICoreApplicationExit> impl_ICoreApplicationExit<D>::Exiting(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const
+template <typename D> event_revoker<ICoreApplicationExit> impl_ICoreApplicationExit<D>::Exiting(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, ICoreApplicationExit>(this, &ABI::Windows::ApplicationModel::Core::ICoreApplicationExit::remove_Exiting, Exiting(handler));
 }
 
 template <typename D> void impl_ICoreApplicationExit<D>::Exiting(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationExit &>(static_cast<const D &>(*this))->remove_Exiting(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationExit)->remove_Exiting(token));
 }
 
 template <typename D> event_token impl_ICoreApplication2<D>::BackgroundActivated(const Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->add_BackgroundActivated(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->add_BackgroundActivated(get_abi(handler), &token));
     return token;
 }
 
@@ -1043,13 +1106,13 @@ template <typename D> event_revoker<ICoreApplication2> impl_ICoreApplication2<D>
 
 template <typename D> void impl_ICoreApplication2<D>::BackgroundActivated(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->remove_BackgroundActivated(token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->remove_BackgroundActivated(token));
 }
 
 template <typename D> event_token impl_ICoreApplication2<D>::LeavingBackground(const Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->add_LeavingBackground(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->add_LeavingBackground(get_abi(handler), &token));
     return token;
 }
 
@@ -1060,13 +1123,13 @@ template <typename D> event_revoker<ICoreApplication2> impl_ICoreApplication2<D>
 
 template <typename D> void impl_ICoreApplication2<D>::LeavingBackground(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->remove_LeavingBackground(token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->remove_LeavingBackground(token));
 }
 
 template <typename D> event_token impl_ICoreApplication2<D>::EnteredBackground(const Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->add_EnteredBackground(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->add_EnteredBackground(get_abi(handler), &token));
     return token;
 }
 
@@ -1077,53 +1140,53 @@ template <typename D> event_revoker<ICoreApplication2> impl_ICoreApplication2<D>
 
 template <typename D> void impl_ICoreApplication2<D>::EnteredBackground(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->remove_EnteredBackground(token));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->remove_EnteredBackground(token));
 }
 
 template <typename D> void impl_ICoreApplication2<D>::EnablePrelaunch(bool value) const
 {
-    check_hresult(static_cast<const ICoreApplication2 &>(static_cast<const D &>(*this))->abi_EnablePrelaunch(value));
+    check_hresult(WINRT_SHIM(ICoreApplication2)->abi_EnablePrelaunch(value));
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::CoreApplicationView> impl_ICoreImmersiveApplication<D>::Views() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::CoreApplicationView> value;
-    check_hresult(static_cast<const ICoreImmersiveApplication &>(static_cast<const D &>(*this))->get_Views(put(value)));
+    check_hresult(WINRT_SHIM(ICoreImmersiveApplication)->get_Views(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreImmersiveApplication<D>::CreateNewView(hstring_ref runtimeType, hstring_ref entryPoint) const
+template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreImmersiveApplication<D>::CreateNewView(hstring_view runtimeType, hstring_view entryPoint) const
 {
     Windows::ApplicationModel::Core::CoreApplicationView view { nullptr };
-    check_hresult(static_cast<const ICoreImmersiveApplication &>(static_cast<const D &>(*this))->abi_CreateNewView(get(runtimeType), get(entryPoint), put(view)));
+    check_hresult(WINRT_SHIM(ICoreImmersiveApplication)->abi_CreateNewView(get_abi(runtimeType), get_abi(entryPoint), put_abi(view)));
     return view;
 }
 
 template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreImmersiveApplication<D>::MainView() const
 {
     Windows::ApplicationModel::Core::CoreApplicationView value { nullptr };
-    check_hresult(static_cast<const ICoreImmersiveApplication &>(static_cast<const D &>(*this))->get_MainView(put(value)));
+    check_hresult(WINRT_SHIM(ICoreImmersiveApplication)->get_MainView(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreImmersiveApplication2<D>::CreateNewView() const
 {
     Windows::ApplicationModel::Core::CoreApplicationView view { nullptr };
-    check_hresult(static_cast<const ICoreImmersiveApplication2 &>(static_cast<const D &>(*this))->abi_CreateNewViewFromMainView(put(view)));
+    check_hresult(WINRT_SHIM(ICoreImmersiveApplication2)->abi_CreateNewViewFromMainView(put_abi(view)));
     return view;
 }
 
 template <typename D> Windows::ApplicationModel::Core::CoreApplicationView impl_ICoreImmersiveApplication3<D>::CreateNewView(const Windows::ApplicationModel::Core::IFrameworkViewSource & viewSource) const
 {
     Windows::ApplicationModel::Core::CoreApplicationView view { nullptr };
-    check_hresult(static_cast<const ICoreImmersiveApplication3 &>(static_cast<const D &>(*this))->abi_CreateNewViewWithViewSource(get(viewSource), put(view)));
+    check_hresult(WINRT_SHIM(ICoreImmersiveApplication3)->abi_CreateNewViewWithViewSource(get_abi(viewSource), put_abi(view)));
     return view;
 }
 
 template <typename D> event_token impl_ICoreApplicationUnhandledError<D>::UnhandledErrorDetected(const Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationUnhandledError &>(static_cast<const D &>(*this))->add_UnhandledErrorDetected(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationUnhandledError)->add_UnhandledErrorDetected(get_abi(handler), &token));
     return token;
 }
 
@@ -1134,20 +1197,20 @@ template <typename D> event_revoker<ICoreApplicationUnhandledError> impl_ICoreAp
 
 template <typename D> void impl_ICoreApplicationUnhandledError<D>::UnhandledErrorDetected(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationUnhandledError &>(static_cast<const D &>(*this))->remove_UnhandledErrorDetected(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationUnhandledError)->remove_UnhandledErrorDetected(token));
 }
 
 template <typename D> Windows::UI::Core::CoreWindow impl_ICoreApplicationView<D>::CoreWindow() const
 {
     Windows::UI::Core::CoreWindow value { nullptr };
-    check_hresult(static_cast<const ICoreApplicationView &>(static_cast<const D &>(*this))->get_CoreWindow(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplicationView)->get_CoreWindow(put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_ICoreApplicationView<D>::Activated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationView &>(static_cast<const D &>(*this))->add_Activated(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationView)->add_Activated(get_abi(handler), &token));
     return token;
 }
 
@@ -1158,48 +1221,48 @@ template <typename D> event_revoker<ICoreApplicationView> impl_ICoreApplicationV
 
 template <typename D> void impl_ICoreApplicationView<D>::Activated(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationView &>(static_cast<const D &>(*this))->remove_Activated(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationView)->remove_Activated(token));
 }
 
 template <typename D> bool impl_ICoreApplicationView<D>::IsMain() const
 {
     bool value {};
-    check_hresult(static_cast<const ICoreApplicationView &>(static_cast<const D &>(*this))->get_IsMain(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationView)->get_IsMain(&value));
     return value;
 }
 
 template <typename D> bool impl_ICoreApplicationView<D>::IsHosted() const
 {
     bool value {};
-    check_hresult(static_cast<const ICoreApplicationView &>(static_cast<const D &>(*this))->get_IsHosted(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationView)->get_IsHosted(&value));
     return value;
 }
 
 template <typename D> Windows::UI::Core::CoreDispatcher impl_ICoreApplicationView2<D>::Dispatcher() const
 {
     Windows::UI::Core::CoreDispatcher value { nullptr };
-    check_hresult(static_cast<const ICoreApplicationView2 &>(static_cast<const D &>(*this))->get_Dispatcher(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplicationView2)->get_Dispatcher(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_ICoreApplicationView3<D>::IsComponent() const
 {
     bool value {};
-    check_hresult(static_cast<const ICoreApplicationView3 &>(static_cast<const D &>(*this))->get_IsComponent(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationView3)->get_IsComponent(&value));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Core::CoreApplicationViewTitleBar impl_ICoreApplicationView3<D>::TitleBar() const
 {
     Windows::ApplicationModel::Core::CoreApplicationViewTitleBar value { nullptr };
-    check_hresult(static_cast<const ICoreApplicationView3 &>(static_cast<const D &>(*this))->get_TitleBar(put(value)));
+    check_hresult(WINRT_SHIM(ICoreApplicationView3)->get_TitleBar(put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_ICoreApplicationView3<D>::HostedViewClosing(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationView3 &>(static_cast<const D &>(*this))->add_HostedViewClosing(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationView3)->add_HostedViewClosing(get_abi(handler), &token));
     return token;
 }
 
@@ -1210,107 +1273,107 @@ template <typename D> event_revoker<ICoreApplicationView3> impl_ICoreApplication
 
 template <typename D> void impl_ICoreApplicationView3<D>::HostedViewClosing(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationView3 &>(static_cast<const D &>(*this))->remove_HostedViewClosing(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationView3)->remove_HostedViewClosing(token));
 }
 
 template <typename D> Windows::Foundation::Deferral impl_IHostedViewClosingEventArgs<D>::GetDeferral() const
 {
     Windows::Foundation::Deferral result { nullptr };
-    check_hresult(static_cast<const IHostedViewClosingEventArgs &>(static_cast<const D &>(*this))->abi_GetDeferral(put(result)));
+    check_hresult(WINRT_SHIM(IHostedViewClosingEventArgs)->abi_GetDeferral(put_abi(result)));
     return result;
 }
 
 template <typename D> void impl_ICoreApplicationViewTitleBar<D>::ExtendViewIntoTitleBar(bool value) const
 {
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->put_ExtendViewIntoTitleBar(value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->put_ExtendViewIntoTitleBar(value));
 }
 
 template <typename D> bool impl_ICoreApplicationViewTitleBar<D>::ExtendViewIntoTitleBar() const
 {
     bool value {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->get_ExtendViewIntoTitleBar(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->get_ExtendViewIntoTitleBar(&value));
     return value;
 }
 
 template <typename D> double impl_ICoreApplicationViewTitleBar<D>::SystemOverlayLeftInset() const
 {
     double value {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->get_SystemOverlayLeftInset(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->get_SystemOverlayLeftInset(&value));
     return value;
 }
 
 template <typename D> double impl_ICoreApplicationViewTitleBar<D>::SystemOverlayRightInset() const
 {
     double value {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->get_SystemOverlayRightInset(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->get_SystemOverlayRightInset(&value));
     return value;
 }
 
 template <typename D> double impl_ICoreApplicationViewTitleBar<D>::Height() const
 {
     double value {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->get_Height(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->get_Height(&value));
     return value;
 }
 
-template <typename D> event_token impl_ICoreApplicationViewTitleBar<D>::LayoutMetricsChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_ICoreApplicationViewTitleBar<D>::LayoutMetricsChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->add_LayoutMetricsChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->add_LayoutMetricsChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICoreApplicationViewTitleBar> impl_ICoreApplicationViewTitleBar<D>::LayoutMetricsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<ICoreApplicationViewTitleBar> impl_ICoreApplicationViewTitleBar<D>::LayoutMetricsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, ICoreApplicationViewTitleBar>(this, &ABI::Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar::remove_LayoutMetricsChanged, LayoutMetricsChanged(handler));
 }
 
 template <typename D> void impl_ICoreApplicationViewTitleBar<D>::LayoutMetricsChanged(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->remove_LayoutMetricsChanged(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->remove_LayoutMetricsChanged(token));
 }
 
 template <typename D> bool impl_ICoreApplicationViewTitleBar<D>::IsVisible() const
 {
     bool value {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->get_IsVisible(&value));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->get_IsVisible(&value));
     return value;
 }
 
-template <typename D> event_token impl_ICoreApplicationViewTitleBar<D>::IsVisibleChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_ICoreApplicationViewTitleBar<D>::IsVisibleChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->add_IsVisibleChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->add_IsVisibleChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICoreApplicationViewTitleBar> impl_ICoreApplicationViewTitleBar<D>::IsVisibleChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<ICoreApplicationViewTitleBar> impl_ICoreApplicationViewTitleBar<D>::IsVisibleChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, ICoreApplicationViewTitleBar>(this, &ABI::Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar::remove_IsVisibleChanged, IsVisibleChanged(handler));
 }
 
 template <typename D> void impl_ICoreApplicationViewTitleBar<D>::IsVisibleChanged(event_token token) const
 {
-    check_hresult(static_cast<const ICoreApplicationViewTitleBar &>(static_cast<const D &>(*this))->remove_IsVisibleChanged(token));
+    check_hresult(WINRT_SHIM(ICoreApplicationViewTitleBar)->remove_IsVisibleChanged(token));
 }
 
 template <typename D> Windows::ApplicationModel::Core::UnhandledError impl_IUnhandledErrorDetectedEventArgs<D>::UnhandledError() const
 {
     Windows::ApplicationModel::Core::UnhandledError value { nullptr };
-    check_hresult(static_cast<const IUnhandledErrorDetectedEventArgs &>(static_cast<const D &>(*this))->get_UnhandledError(put(value)));
+    check_hresult(WINRT_SHIM(IUnhandledErrorDetectedEventArgs)->get_UnhandledError(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IUnhandledError<D>::Handled() const
 {
     bool value {};
-    check_hresult(static_cast<const IUnhandledError &>(static_cast<const D &>(*this))->get_Handled(&value));
+    check_hresult(WINRT_SHIM(IUnhandledError)->get_Handled(&value));
     return value;
 }
 
 template <typename D> void impl_IUnhandledError<D>::Propagate() const
 {
-    check_hresult(static_cast<const IUnhandledError &>(static_cast<const D &>(*this))->abi_Propagate());
+    check_hresult(WINRT_SHIM(IUnhandledError)->abi_Propagate());
 }
 
 inline hstring CoreApplication::Id()
@@ -1334,12 +1397,12 @@ inline void CoreApplication::Suspending(event_token token)
     get_activation_factory<CoreApplication, ICoreApplication>().Suspending(token);
 }
 
-inline event_token CoreApplication::Resuming(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler)
+inline event_token CoreApplication::Resuming(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
 {
     return get_activation_factory<CoreApplication, ICoreApplication>().Resuming(handler);
 }
 
-inline factory_event_revoker<ICoreApplication> CoreApplication::Resuming(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler)
+inline factory_event_revoker<ICoreApplication> CoreApplication::Resuming(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
 {
     auto factory = get_activation_factory<CoreApplication, ICoreApplication>();
     return { factory, &ABI::Windows::ApplicationModel::Core::ICoreApplication::remove_Resuming, factory.Resuming(handler) };
@@ -1428,12 +1491,12 @@ inline void CoreApplication::Exit()
     get_activation_factory<CoreApplication, ICoreApplicationExit>().Exit();
 }
 
-inline event_token CoreApplication::Exiting(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler)
+inline event_token CoreApplication::Exiting(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
 {
     return get_activation_factory<CoreApplication, ICoreApplicationExit>().Exiting(handler);
 }
 
-inline factory_event_revoker<ICoreApplicationExit> CoreApplication::Exiting(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler)
+inline factory_event_revoker<ICoreApplicationExit> CoreApplication::Exiting(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
 {
     auto factory = get_activation_factory<CoreApplication, ICoreApplicationExit>();
     return { factory, &ABI::Windows::ApplicationModel::Core::ICoreApplicationExit::remove_Exiting, factory.Exiting(handler) };
@@ -1475,7 +1538,7 @@ inline Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::
     return get_activation_factory<CoreApplication, ICoreImmersiveApplication>().Views();
 }
 
-inline Windows::ApplicationModel::Core::CoreApplicationView CoreApplication::CreateNewView(hstring_ref runtimeType, hstring_ref entryPoint)
+inline Windows::ApplicationModel::Core::CoreApplicationView CoreApplication::CreateNewView(hstring_view runtimeType, hstring_view entryPoint)
 {
     return get_activation_factory<CoreApplication, ICoreImmersiveApplication>().CreateNewView(runtimeType, entryPoint);
 }
@@ -1498,3 +1561,221 @@ inline Windows::ApplicationModel::Core::CoreApplicationView CoreApplication::Cre
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IAppListEntry>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IAppListEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplication>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplication & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplication2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplication2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationExit>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationExit & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationUnhandledError>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationUnhandledError & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationUseCount>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationUseCount & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationView>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationView & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationView2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationView2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationView3>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationView3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreApplicationViewTitleBar & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication3>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::ICoreImmersiveApplication3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IFrameworkView>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IFrameworkView & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IFrameworkViewSource>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IFrameworkViewSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IHostedViewClosingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IHostedViewClosingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IUnhandledError>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IUnhandledError & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::IUnhandledErrorDetectedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::IUnhandledErrorDetectedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::AppListEntry>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::AppListEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::CoreApplicationView>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::CoreApplicationView & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::CoreApplicationViewTitleBar>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::CoreApplicationViewTitleBar & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::HostedViewClosingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::HostedViewClosingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::UnhandledError>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::UnhandledError & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

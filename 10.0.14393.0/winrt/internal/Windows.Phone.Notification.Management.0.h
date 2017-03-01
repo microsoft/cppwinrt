@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -108,6 +108,39 @@ struct SpeedDialEntry;
 struct TextResponse;
 struct ToastNotificationTriggerDetails;
 struct VolumeInfo;
+
+}
+
+namespace Windows::Phone::Notification::Management {
+
+template <typename T> struct impl_IAccessoryManager;
+template <typename T> struct impl_IAccessoryManager2;
+template <typename T> struct impl_IAccessoryManager3;
+template <typename T> struct impl_IAccessoryNotificationTriggerDetails;
+template <typename T> struct impl_IAlarmNotificationTriggerDetails;
+template <typename T> struct impl_IAlarmNotificationTriggerDetails2;
+template <typename T> struct impl_IAppNotificationInfo;
+template <typename T> struct impl_IBinaryId;
+template <typename T> struct impl_ICalendarChangedNotificationTriggerDetails;
+template <typename T> struct impl_ICortanaTileNotificationTriggerDetails;
+template <typename T> struct impl_IEmailAccountInfo;
+template <typename T> struct impl_IEmailFolderInfo;
+template <typename T> struct impl_IEmailNotificationTriggerDetails;
+template <typename T> struct impl_IEmailNotificationTriggerDetails2;
+template <typename T> struct impl_IEmailReadNotificationTriggerDetails;
+template <typename T> struct impl_IMediaControlsTriggerDetails;
+template <typename T> struct impl_IMediaMetadata;
+template <typename T> struct impl_IPhoneCallDetails;
+template <typename T> struct impl_IPhoneLineDetails;
+template <typename T> struct impl_IPhoneLineDetails2;
+template <typename T> struct impl_IPhoneNotificationTriggerDetails;
+template <typename T> struct impl_IReminderNotificationTriggerDetails;
+template <typename T> struct impl_IReminderNotificationTriggerDetails2;
+template <typename T> struct impl_ISpeedDialEntry;
+template <typename T> struct impl_ITextResponse;
+template <typename T> struct impl_IToastNotificationTriggerDetails;
+template <typename T> struct impl_IToastNotificationTriggerDetails2;
+template <typename T> struct impl_IVolumeInfo;
 
 }
 

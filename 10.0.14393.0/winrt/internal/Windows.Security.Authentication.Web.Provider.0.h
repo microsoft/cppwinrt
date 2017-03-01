@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -78,6 +78,32 @@ struct WebAccountProviderSignOutAccountOperation;
 struct WebAccountProviderTriggerDetails;
 struct WebProviderTokenRequest;
 struct WebProviderTokenResponse;
+
+}
+
+namespace Windows::Security::Authentication::Web::Provider {
+
+template <typename T> struct impl_IWebAccountClientView;
+template <typename T> struct impl_IWebAccountClientViewFactory;
+template <typename T> struct impl_IWebAccountManagerStatics;
+template <typename T> struct impl_IWebAccountManagerStatics2;
+template <typename T> struct impl_IWebAccountMapManagerStatics;
+template <typename T> struct impl_IWebAccountProviderAddAccountOperation;
+template <typename T> struct impl_IWebAccountProviderBaseReportOperation;
+template <typename T> struct impl_IWebAccountProviderDeleteAccountOperation;
+template <typename T> struct impl_IWebAccountProviderManageAccountOperation;
+template <typename T> struct impl_IWebAccountProviderOperation;
+template <typename T> struct impl_IWebAccountProviderRetrieveCookiesOperation;
+template <typename T> struct impl_IWebAccountProviderSignOutAccountOperation;
+template <typename T> struct impl_IWebAccountProviderSilentReportOperation;
+template <typename T> struct impl_IWebAccountProviderTokenObjects;
+template <typename T> struct impl_IWebAccountProviderTokenOperation;
+template <typename T> struct impl_IWebAccountProviderUIReportOperation;
+template <typename T> struct impl_IWebAccountScopeManagerStatics;
+template <typename T> struct impl_IWebProviderTokenRequest;
+template <typename T> struct impl_IWebProviderTokenRequest2;
+template <typename T> struct impl_IWebProviderTokenResponse;
+template <typename T> struct impl_IWebProviderTokenResponseFactory;
 
 }
 

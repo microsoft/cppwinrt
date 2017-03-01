@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.UI.Xaml.3.h"
@@ -32,9 +35,9 @@ template <typename O, typename M> RateChangedRoutedEventHandler::RateChangedRout
     RateChangedRoutedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void RateChangedRoutedEventHandler::operator()(const Windows::IInspectable & sender, const Windows::UI::Xaml::Media::RateChangedRoutedEventArgs & e) const
+inline void RateChangedRoutedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Media::RateChangedRoutedEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<RateChangedRoutedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 template <typename L> TimelineMarkerRoutedEventHandler::TimelineMarkerRoutedEventHandler(L lambda) :
@@ -49,9 +52,9 @@ template <typename O, typename M> TimelineMarkerRoutedEventHandler::TimelineMark
     TimelineMarkerRoutedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void TimelineMarkerRoutedEventHandler::operator()(const Windows::IInspectable & sender, const Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs & e) const
+inline void TimelineMarkerRoutedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<TimelineMarkerRoutedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 }
@@ -61,11 +64,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windows::UI::Xaml::Media::IArcSegment>
 {
-    HRESULT __stdcall get_Point(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point());
             return S_OK;
         }
         catch (...)
@@ -74,10 +78,11 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_Point(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -87,11 +92,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_Size(abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_Size(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Size());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Size());
             return S_OK;
         }
         catch (...)
@@ -100,10 +106,11 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_Size(abi_arg_in<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall put_Size(impl::abi_arg_in<Windows::Foundation::Size> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Size(*reinterpret_cast<const Windows::Foundation::Size *>(&value));
             return S_OK;
         }
@@ -117,7 +124,8 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().RotationAngle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationAngle());
             return S_OK;
         }
         catch (...)
@@ -130,6 +138,7 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RotationAngle(value);
             return S_OK;
         }
@@ -143,7 +152,8 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().IsLargeArc());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsLargeArc());
             return S_OK;
         }
         catch (...)
@@ -156,6 +166,7 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsLargeArc(value);
             return S_OK;
         }
@@ -169,7 +180,8 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().SweepDirection());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SweepDirection());
             return S_OK;
         }
         catch (...)
@@ -182,6 +194,7 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SweepDirection(value);
             return S_OK;
         }
@@ -195,11 +208,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegment> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IArcSegmentStatics>
 {
-    HRESULT __stdcall get_PointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PointProperty());
             return S_OK;
         }
         catch (...)
@@ -209,11 +223,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_SizeProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SizeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SizeProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SizeProperty());
             return S_OK;
         }
         catch (...)
@@ -223,11 +238,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_RotationAngleProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RotationAngleProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationAngleProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationAngleProperty());
             return S_OK;
         }
         catch (...)
@@ -237,11 +253,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_IsLargeArcProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsLargeArcProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IsLargeArcProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsLargeArcProperty());
             return S_OK;
         }
         catch (...)
@@ -251,11 +268,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_SweepDirectionProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SweepDirectionProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SweepDirectionProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SweepDirectionProperty());
             return S_OK;
         }
         catch (...)
@@ -269,11 +287,12 @@ struct produce<D, Windows::UI::Xaml::Media::IArcSegmentStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Windows::UI::Xaml::Media::IBezierSegment>
 {
-    HRESULT __stdcall get_Point1(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point1(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point1());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point1());
             return S_OK;
         }
         catch (...)
@@ -282,10 +301,11 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_Point1(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point1(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point1(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -295,11 +315,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Point2(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point2(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point2());
             return S_OK;
         }
         catch (...)
@@ -308,10 +329,11 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_Point2(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point2(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point2(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -321,11 +343,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Point3(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point3(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point3());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point3());
             return S_OK;
         }
         catch (...)
@@ -334,10 +357,11 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_Point3(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point3(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point3(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -351,11 +375,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegment> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IBezierSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IBezierSegmentStatics>
 {
-    HRESULT __stdcall get_Point1Property(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_Point1Property(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point1Property());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point1Property());
             return S_OK;
         }
         catch (...)
@@ -365,11 +390,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegmentStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Point2Property(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_Point2Property(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point2Property());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point2Property());
             return S_OK;
         }
         catch (...)
@@ -379,11 +405,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBezierSegmentStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Point3Property(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_Point3Property(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point3Property());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point3Property());
             return S_OK;
         }
         catch (...)
@@ -405,7 +432,8 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
     {
         try
         {
-            *value = detach(this->shim().Opacity());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Opacity());
             return S_OK;
         }
         catch (...)
@@ -418,6 +446,7 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Opacity(value);
             return S_OK;
         }
@@ -427,11 +456,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
         }
     }
 
-    HRESULT __stdcall get_Transform(abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall get_Transform(impl::abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Transform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Transform());
             return S_OK;
         }
         catch (...)
@@ -441,10 +471,11 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
         }
     }
 
-    HRESULT __stdcall put_Transform(abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall put_Transform(impl::abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Transform(*reinterpret_cast<const Windows::UI::Xaml::Media::Transform *>(&value));
             return S_OK;
         }
@@ -454,11 +485,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
         }
     }
 
-    HRESULT __stdcall get_RelativeTransform(abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall get_RelativeTransform(impl::abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RelativeTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RelativeTransform());
             return S_OK;
         }
         catch (...)
@@ -468,10 +500,11 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
         }
     }
 
-    HRESULT __stdcall put_RelativeTransform(abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall put_RelativeTransform(impl::abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RelativeTransform(*reinterpret_cast<const Windows::UI::Xaml::Media::Transform *>(&value));
             return S_OK;
         }
@@ -485,11 +518,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrush> : produce_base<D, Windows::U
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IBrushFactory> : produce_base<D, Windows::UI::Xaml::Media::IBrushFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::IBrush> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -504,11 +538,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrushFactory> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::IBrushStatics>
 {
-    HRESULT __stdcall get_OpacityProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_OpacityProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OpacityProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OpacityProperty());
             return S_OK;
         }
         catch (...)
@@ -518,11 +553,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrushStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_TransformProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TransformProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TransformProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TransformProperty());
             return S_OK;
         }
         catch (...)
@@ -532,11 +568,12 @@ struct produce<D, Windows::UI::Xaml::Media::IBrushStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_RelativeTransformProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RelativeTransformProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RelativeTransformProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RelativeTransformProperty());
             return S_OK;
         }
         catch (...)
@@ -554,11 +591,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICacheMode> : produce_base<D, Window
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ICacheModeFactory> : produce_base<D, Windows::UI::Xaml::Media::ICacheModeFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::ICacheMode> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::ICacheMode> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -577,7 +615,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().CenterX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterX());
             return S_OK;
         }
         catch (...)
@@ -590,6 +629,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterX(value);
             return S_OK;
         }
@@ -603,7 +643,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().CenterY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterY());
             return S_OK;
         }
         catch (...)
@@ -616,6 +657,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterY(value);
             return S_OK;
         }
@@ -629,7 +671,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().ScaleX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleX());
             return S_OK;
         }
         catch (...)
@@ -642,6 +685,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ScaleX(value);
             return S_OK;
         }
@@ -655,7 +699,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().ScaleY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleY());
             return S_OK;
         }
         catch (...)
@@ -668,6 +713,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ScaleY(value);
             return S_OK;
         }
@@ -681,7 +727,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().SkewX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SkewX());
             return S_OK;
         }
         catch (...)
@@ -694,6 +741,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SkewX(value);
             return S_OK;
         }
@@ -707,7 +755,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().SkewY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SkewY());
             return S_OK;
         }
         catch (...)
@@ -720,6 +769,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SkewY(value);
             return S_OK;
         }
@@ -733,7 +783,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().Rotation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Rotation());
             return S_OK;
         }
         catch (...)
@@ -746,6 +797,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Rotation(value);
             return S_OK;
         }
@@ -759,7 +811,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().TranslateX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TranslateX());
             return S_OK;
         }
         catch (...)
@@ -772,6 +825,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TranslateX(value);
             return S_OK;
         }
@@ -785,7 +839,8 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().TranslateY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TranslateY());
             return S_OK;
         }
         catch (...)
@@ -798,6 +853,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TranslateY(value);
             return S_OK;
         }
@@ -811,11 +867,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransform> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::ICompositeTransformStatics>
 {
-    HRESULT __stdcall get_CenterXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterXProperty());
             return S_OK;
         }
         catch (...)
@@ -825,11 +882,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_CenterYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterYProperty());
             return S_OK;
         }
         catch (...)
@@ -839,11 +897,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_ScaleXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ScaleXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ScaleXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleXProperty());
             return S_OK;
         }
         catch (...)
@@ -853,11 +912,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_ScaleYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ScaleYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ScaleYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleYProperty());
             return S_OK;
         }
         catch (...)
@@ -867,11 +927,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_SkewXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SkewXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SkewXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SkewXProperty());
             return S_OK;
         }
         catch (...)
@@ -881,11 +942,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_SkewYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SkewYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SkewYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SkewYProperty());
             return S_OK;
         }
         catch (...)
@@ -895,11 +957,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_RotationProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RotationProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationProperty());
             return S_OK;
         }
         catch (...)
@@ -909,11 +972,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_TranslateXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TranslateXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TranslateXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TranslateXProperty());
             return S_OK;
         }
         catch (...)
@@ -923,11 +987,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositeTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_TranslateYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TranslateYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TranslateYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TranslateYProperty());
             return S_OK;
         }
         catch (...)
@@ -945,11 +1010,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositionTarget> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ICompositionTargetStatics> : produce_base<D, Windows::UI::Xaml::Media::ICompositionTargetStatics>
 {
-    HRESULT __stdcall add_Rendering(abi_arg_in<Windows::Foundation::EventHandler<Windows::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Rendering(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Rendering(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::IInspectable> *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Rendering(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -962,6 +1028,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositionTargetStatics> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Rendering(token);
             return S_OK;
         }
@@ -971,11 +1038,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositionTargetStatics> : produce
         }
     }
 
-    HRESULT __stdcall add_SurfaceContentsLost(abi_arg_in<Windows::Foundation::EventHandler<Windows::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_SurfaceContentsLost(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().SurfaceContentsLost(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::IInspectable> *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().SurfaceContentsLost(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -988,6 +1056,7 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositionTargetStatics> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SurfaceContentsLost(token);
             return S_OK;
         }
@@ -1001,11 +1070,12 @@ struct produce<D, Windows::UI::Xaml::Media::ICompositionTargetStatics> : produce
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, Windows::UI::Xaml::Media::IEllipseGeometry>
 {
-    HRESULT __stdcall get_Center(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Center(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Center());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Center());
             return S_OK;
         }
         catch (...)
@@ -1014,10 +1084,11 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_Center(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Center(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Center(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -1031,7 +1102,8 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().RadiusX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RadiusX());
             return S_OK;
         }
         catch (...)
@@ -1044,6 +1116,7 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RadiusX(value);
             return S_OK;
         }
@@ -1057,7 +1130,8 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().RadiusY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RadiusY());
             return S_OK;
         }
         catch (...)
@@ -1070,6 +1144,7 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RadiusY(value);
             return S_OK;
         }
@@ -1083,11 +1158,12 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometry> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometryStatics> : produce_base<D, Windows::UI::Xaml::Media::IEllipseGeometryStatics>
 {
-    HRESULT __stdcall get_CenterProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterProperty());
             return S_OK;
         }
         catch (...)
@@ -1097,11 +1173,12 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometryStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_RadiusXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RadiusXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RadiusXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RadiusXProperty());
             return S_OK;
         }
         catch (...)
@@ -1111,11 +1188,12 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometryStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_RadiusYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RadiusYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RadiusYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RadiusYProperty());
             return S_OK;
         }
         catch (...)
@@ -1129,11 +1207,12 @@ struct produce<D, Windows::UI::Xaml::Media::IEllipseGeometryStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IFontFamily> : produce_base<D, Windows::UI::Xaml::Media::IFontFamily>
 {
-    HRESULT __stdcall get_Source(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Source(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Source());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Source());
             return S_OK;
         }
         catch (...)
@@ -1147,11 +1226,12 @@ struct produce<D, Windows::UI::Xaml::Media::IFontFamily> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IFontFamilyFactory> : produce_base<D, Windows::UI::Xaml::Media::IFontFamilyFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithName(abi_arg_in<hstring> familyName, abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::IFontFamily> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceWithName(impl::abi_arg_in<hstring> familyName, impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::IFontFamily> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceWithName(*reinterpret_cast<const hstring *>(&familyName), *reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceWithName(*reinterpret_cast<const hstring *>(&familyName), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -1166,11 +1246,12 @@ struct produce<D, Windows::UI::Xaml::Media::IFontFamilyFactory> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IFontFamilyStatics2> : produce_base<D, Windows::UI::Xaml::Media::IFontFamilyStatics2>
 {
-    HRESULT __stdcall get_XamlAutoFontFamily(abi_arg_out<Windows::UI::Xaml::Media::IFontFamily> value) noexcept override
+    HRESULT __stdcall get_XamlAutoFontFamily(impl::abi_arg_out<Windows::UI::Xaml::Media::IFontFamily> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().XamlAutoFontFamily());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().XamlAutoFontFamily());
             return S_OK;
         }
         catch (...)
@@ -1184,11 +1265,12 @@ struct produce<D, Windows::UI::Xaml::Media::IFontFamilyStatics2> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeneralTransform> : produce_base<D, Windows::UI::Xaml::Media::IGeneralTransform>
 {
-    HRESULT __stdcall get_Inverse(abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> value) noexcept override
+    HRESULT __stdcall get_Inverse(impl::abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Inverse());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Inverse());
             return S_OK;
         }
         catch (...)
@@ -1198,11 +1280,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransform> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_TransformPoint(abi_arg_in<Windows::Foundation::Point> point, abi_arg_out<Windows::Foundation::Point> returnValue) noexcept override
+    HRESULT __stdcall abi_TransformPoint(impl::abi_arg_in<Windows::Foundation::Point> point, impl::abi_arg_out<Windows::Foundation::Point> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().TransformPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&point)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().TransformPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&point)));
             return S_OK;
         }
         catch (...)
@@ -1211,11 +1294,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransform> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_TryTransform(abi_arg_in<Windows::Foundation::Point> inPoint, abi_arg_out<Windows::Foundation::Point> outPoint, bool * returnValue) noexcept override
+    HRESULT __stdcall abi_TryTransform(impl::abi_arg_in<Windows::Foundation::Point> inPoint, impl::abi_arg_out<Windows::Foundation::Point> outPoint, bool * returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().TryTransform(*reinterpret_cast<const Windows::Foundation::Point *>(&inPoint), *outPoint));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().TryTransform(*reinterpret_cast<const Windows::Foundation::Point *>(&inPoint), *outPoint));
             return S_OK;
         }
         catch (...)
@@ -1224,11 +1308,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransform> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_TransformBounds(abi_arg_in<Windows::Foundation::Rect> rect, abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
+    HRESULT __stdcall abi_TransformBounds(impl::abi_arg_in<Windows::Foundation::Rect> rect, impl::abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().TransformBounds(*reinterpret_cast<const Windows::Foundation::Rect *>(&rect)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().TransformBounds(*reinterpret_cast<const Windows::Foundation::Rect *>(&rect)));
             return S_OK;
         }
         catch (...)
@@ -1241,11 +1326,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransform> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformFactory> : produce_base<D, Windows::UI::Xaml::Media::IGeneralTransformFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -1260,11 +1346,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformFactory> : produce_
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformOverrides> : produce_base<D, Windows::UI::Xaml::Media::IGeneralTransformOverrides>
 {
-    HRESULT __stdcall get_InverseCore(abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> value) noexcept override
+    HRESULT __stdcall get_InverseCore(impl::abi_arg_out<Windows::UI::Xaml::Media::IGeneralTransform> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InverseCore());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InverseCore());
             return S_OK;
         }
         catch (...)
@@ -1274,11 +1361,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformOverrides> : produc
         }
     }
 
-    HRESULT __stdcall abi_TryTransformCore(abi_arg_in<Windows::Foundation::Point> inPoint, abi_arg_out<Windows::Foundation::Point> outPoint, bool * returnValue) noexcept override
+    HRESULT __stdcall abi_TryTransformCore(impl::abi_arg_in<Windows::Foundation::Point> inPoint, impl::abi_arg_out<Windows::Foundation::Point> outPoint, bool * returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().TryTransformCore(*reinterpret_cast<const Windows::Foundation::Point *>(&inPoint), *outPoint));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().TryTransformCore(*reinterpret_cast<const Windows::Foundation::Point *>(&inPoint), *outPoint));
             return S_OK;
         }
         catch (...)
@@ -1287,11 +1375,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformOverrides> : produc
         }
     }
 
-    HRESULT __stdcall abi_TransformBoundsCore(abi_arg_in<Windows::Foundation::Rect> rect, abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
+    HRESULT __stdcall abi_TransformBoundsCore(impl::abi_arg_in<Windows::Foundation::Rect> rect, impl::abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().TransformBoundsCore(*reinterpret_cast<const Windows::Foundation::Rect *>(&rect)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().TransformBoundsCore(*reinterpret_cast<const Windows::Foundation::Rect *>(&rect)));
             return S_OK;
         }
         catch (...)
@@ -1304,11 +1393,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeneralTransformOverrides> : produc
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeometry> : produce_base<D, Windows::UI::Xaml::Media::IGeometry>
 {
-    HRESULT __stdcall get_Transform(abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall get_Transform(impl::abi_arg_out<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Transform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Transform());
             return S_OK;
         }
         catch (...)
@@ -1318,10 +1408,11 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometry> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall put_Transform(abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
+    HRESULT __stdcall put_Transform(impl::abi_arg_in<Windows::UI::Xaml::Media::ITransform> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Transform(*reinterpret_cast<const Windows::UI::Xaml::Media::Transform *>(&value));
             return S_OK;
         }
@@ -1331,11 +1422,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometry> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Bounds(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_Bounds(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Bounds());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Bounds());
             return S_OK;
         }
         catch (...)
@@ -1356,7 +1448,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroup> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().FillRule());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FillRule());
             return S_OK;
         }
         catch (...)
@@ -1369,6 +1462,7 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroup> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FillRule(value);
             return S_OK;
         }
@@ -1378,11 +1472,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroup> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Children(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Geometry>> value) noexcept override
+    HRESULT __stdcall get_Children(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Geometry>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Children());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Children());
             return S_OK;
         }
         catch (...)
@@ -1392,10 +1487,11 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroup> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_Children(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Geometry>> value) noexcept override
+    HRESULT __stdcall put_Children(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Geometry>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Children(*reinterpret_cast<const Windows::UI::Xaml::Media::GeometryCollection *>(&value));
             return S_OK;
         }
@@ -1409,11 +1505,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroup> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeometryGroupStatics> : produce_base<D, Windows::UI::Xaml::Media::IGeometryGroupStatics>
 {
-    HRESULT __stdcall get_FillRuleProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FillRuleProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FillRuleProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FillRuleProperty());
             return S_OK;
         }
         catch (...)
@@ -1423,11 +1520,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroupStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_ChildrenProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ChildrenProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ChildrenProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChildrenProperty());
             return S_OK;
         }
         catch (...)
@@ -1441,11 +1539,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryGroupStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGeometryStatics> : produce_base<D, Windows::UI::Xaml::Media::IGeometryStatics>
 {
-    HRESULT __stdcall get_Empty(abi_arg_out<Windows::UI::Xaml::Media::IGeometry> value) noexcept override
+    HRESULT __stdcall get_Empty(impl::abi_arg_out<Windows::UI::Xaml::Media::IGeometry> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Empty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Empty());
             return S_OK;
         }
         catch (...)
@@ -1459,7 +1558,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryStatics> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().StandardFlatteningTolerance());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StandardFlatteningTolerance());
             return S_OK;
         }
         catch (...)
@@ -1468,11 +1568,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGeometryStatics> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_TransformProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TransformProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TransformProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TransformProperty());
             return S_OK;
         }
         catch (...)
@@ -1490,7 +1591,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().SpreadMethod());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SpreadMethod());
             return S_OK;
         }
         catch (...)
@@ -1503,6 +1605,7 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SpreadMethod(value);
             return S_OK;
         }
@@ -1516,7 +1619,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().MappingMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MappingMode());
             return S_OK;
         }
         catch (...)
@@ -1529,6 +1633,7 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MappingMode(value);
             return S_OK;
         }
@@ -1542,7 +1647,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().ColorInterpolationMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ColorInterpolationMode());
             return S_OK;
         }
         catch (...)
@@ -1555,6 +1661,7 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ColorInterpolationMode(value);
             return S_OK;
         }
@@ -1564,11 +1671,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_GradientStops(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> value) noexcept override
+    HRESULT __stdcall get_GradientStops(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GradientStops());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GradientStops());
             return S_OK;
         }
         catch (...)
@@ -1578,10 +1686,11 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_GradientStops(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> value) noexcept override
+    HRESULT __stdcall put_GradientStops(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GradientStops(*reinterpret_cast<const Windows::UI::Xaml::Media::GradientStopCollection *>(&value));
             return S_OK;
         }
@@ -1595,11 +1704,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrush> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGradientBrushFactory> : produce_base<D, Windows::UI::Xaml::Media::IGradientBrushFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::IGradientBrush> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::IGradientBrush> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -1614,11 +1724,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrushFactory> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGradientBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::IGradientBrushStatics>
 {
-    HRESULT __stdcall get_SpreadMethodProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SpreadMethodProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SpreadMethodProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SpreadMethodProperty());
             return S_OK;
         }
         catch (...)
@@ -1628,11 +1739,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrushStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MappingModeProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_MappingModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MappingModeProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MappingModeProperty());
             return S_OK;
         }
         catch (...)
@@ -1642,11 +1754,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrushStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_ColorInterpolationModeProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ColorInterpolationModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ColorInterpolationModeProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ColorInterpolationModeProperty());
             return S_OK;
         }
         catch (...)
@@ -1656,11 +1769,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrushStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_GradientStopsProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GradientStopsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GradientStopsProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GradientStopsProperty());
             return S_OK;
         }
         catch (...)
@@ -1674,11 +1788,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientBrushStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGradientStop> : produce_base<D, Windows::UI::Xaml::Media::IGradientStop>
 {
-    HRESULT __stdcall get_Color(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Color(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Color());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Color());
             return S_OK;
         }
         catch (...)
@@ -1687,10 +1802,11 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStop> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_Color(abi_arg_in<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall put_Color(impl::abi_arg_in<Windows::UI::Color> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Color(*reinterpret_cast<const Windows::UI::Color *>(&value));
             return S_OK;
         }
@@ -1704,7 +1820,8 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStop> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().Offset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Offset());
             return S_OK;
         }
         catch (...)
@@ -1717,6 +1834,7 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStop> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Offset(value);
             return S_OK;
         }
@@ -1730,11 +1848,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStop> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IGradientStopStatics> : produce_base<D, Windows::UI::Xaml::Media::IGradientStopStatics>
 {
-    HRESULT __stdcall get_ColorProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ColorProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ColorProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ColorProperty());
             return S_OK;
         }
         catch (...)
@@ -1744,11 +1863,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStopStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall get_OffsetProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_OffsetProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OffsetProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OffsetProperty());
             return S_OK;
         }
         catch (...)
@@ -1762,11 +1882,12 @@ struct produce<D, Windows::UI::Xaml::Media::IGradientStopStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windows::UI::Xaml::Media::IImageBrush>
 {
-    HRESULT __stdcall get_ImageSource(abi_arg_out<Windows::UI::Xaml::Media::IImageSource> value) noexcept override
+    HRESULT __stdcall get_ImageSource(impl::abi_arg_out<Windows::UI::Xaml::Media::IImageSource> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ImageSource());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ImageSource());
             return S_OK;
         }
         catch (...)
@@ -1776,10 +1897,11 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_ImageSource(abi_arg_in<Windows::UI::Xaml::Media::IImageSource> value) noexcept override
+    HRESULT __stdcall put_ImageSource(impl::abi_arg_in<Windows::UI::Xaml::Media::IImageSource> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ImageSource(*reinterpret_cast<const Windows::UI::Xaml::Media::ImageSource *>(&value));
             return S_OK;
         }
@@ -1789,11 +1911,12 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ImageFailed(abi_arg_in<Windows::UI::Xaml::ExceptionRoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_ImageFailed(impl::abi_arg_in<Windows::UI::Xaml::ExceptionRoutedEventHandler> value, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ImageFailed(*reinterpret_cast<const Windows::UI::Xaml::ExceptionRoutedEventHandler *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ImageFailed(*reinterpret_cast<const Windows::UI::Xaml::ExceptionRoutedEventHandler *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1806,6 +1929,7 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ImageFailed(token);
             return S_OK;
         }
@@ -1815,11 +1939,12 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ImageOpened(abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_ImageOpened(impl::abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ImageOpened(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ImageOpened(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1832,6 +1957,7 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ImageOpened(token);
             return S_OK;
         }
@@ -1845,11 +1971,12 @@ struct produce<D, Windows::UI::Xaml::Media::IImageBrush> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IImageBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::IImageBrushStatics>
 {
-    HRESULT __stdcall get_ImageSourceProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ImageSourceProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ImageSourceProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ImageSourceProperty());
             return S_OK;
         }
         catch (...)
@@ -1871,11 +1998,12 @@ struct produce<D, Windows::UI::Xaml::Media::IImageSourceFactory> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILineGeometry> : produce_base<D, Windows::UI::Xaml::Media::ILineGeometry>
 {
-    HRESULT __stdcall get_StartPoint(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_StartPoint(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPoint());
             return S_OK;
         }
         catch (...)
@@ -1884,10 +2012,11 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometry> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_StartPoint(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_StartPoint(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StartPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -1897,11 +2026,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometry> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_EndPoint(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_EndPoint(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EndPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EndPoint());
             return S_OK;
         }
         catch (...)
@@ -1910,10 +2040,11 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometry> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_EndPoint(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_EndPoint(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EndPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -1927,11 +2058,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometry> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILineGeometryStatics> : produce_base<D, Windows::UI::Xaml::Media::ILineGeometryStatics>
 {
-    HRESULT __stdcall get_StartPointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_StartPointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPointProperty());
             return S_OK;
         }
         catch (...)
@@ -1941,11 +2073,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometryStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall get_EndPointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_EndPointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EndPointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EndPointProperty());
             return S_OK;
         }
         catch (...)
@@ -1959,11 +2092,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineGeometryStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILineSegment> : produce_base<D, Windows::UI::Xaml::Media::ILineSegment>
 {
-    HRESULT __stdcall get_Point(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point());
             return S_OK;
         }
         catch (...)
@@ -1972,10 +2106,11 @@ struct produce<D, Windows::UI::Xaml::Media::ILineSegment> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall put_Point(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -1989,11 +2124,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineSegment> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILineSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::ILineSegmentStatics>
 {
-    HRESULT __stdcall get_PointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PointProperty());
             return S_OK;
         }
         catch (...)
@@ -2007,11 +2143,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILineSegmentStatics> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrush> : produce_base<D, Windows::UI::Xaml::Media::ILinearGradientBrush>
 {
-    HRESULT __stdcall get_StartPoint(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_StartPoint(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPoint());
             return S_OK;
         }
         catch (...)
@@ -2020,10 +2157,11 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrush> : produce_base
         }
     }
 
-    HRESULT __stdcall put_StartPoint(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_StartPoint(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StartPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -2033,11 +2171,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrush> : produce_base
         }
     }
 
-    HRESULT __stdcall get_EndPoint(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_EndPoint(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EndPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EndPoint());
             return S_OK;
         }
         catch (...)
@@ -2046,10 +2185,11 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrush> : produce_base
         }
     }
 
-    HRESULT __stdcall put_EndPoint(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_EndPoint(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EndPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -2063,11 +2203,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrush> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrushFactory> : produce_base<D, Windows::UI::Xaml::Media::ILinearGradientBrushFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithGradientStopCollectionAndAngle(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> gradientStopCollection, double angle, abi_arg_out<Windows::UI::Xaml::Media::ILinearGradientBrush> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceWithGradientStopCollectionAndAngle(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::GradientStop>> gradientStopCollection, double angle, impl::abi_arg_out<Windows::UI::Xaml::Media::ILinearGradientBrush> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceWithGradientStopCollectionAndAngle(*reinterpret_cast<const Windows::UI::Xaml::Media::GradientStopCollection *>(&gradientStopCollection), angle));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceWithGradientStopCollectionAndAngle(*reinterpret_cast<const Windows::UI::Xaml::Media::GradientStopCollection *>(&gradientStopCollection), angle));
             return S_OK;
         }
         catch (...)
@@ -2081,11 +2222,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrushFactory> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::ILinearGradientBrushStatics>
 {
-    HRESULT __stdcall get_StartPointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_StartPointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPointProperty());
             return S_OK;
         }
         catch (...)
@@ -2095,11 +2237,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrushStatics> : produ
         }
     }
 
-    HRESULT __stdcall get_EndPointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_EndPointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EndPointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EndPointProperty());
             return S_OK;
         }
         catch (...)
@@ -2113,11 +2256,12 @@ struct produce<D, Windows::UI::Xaml::Media::ILinearGradientBrushStatics> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMatrix3DProjection> : produce_base<D, Windows::UI::Xaml::Media::IMatrix3DProjection>
 {
-    HRESULT __stdcall get_ProjectionMatrix(abi_arg_out<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
+    HRESULT __stdcall get_ProjectionMatrix(impl::abi_arg_out<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProjectionMatrix());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProjectionMatrix());
             return S_OK;
         }
         catch (...)
@@ -2126,10 +2270,11 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrix3DProjection> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_ProjectionMatrix(abi_arg_in<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
+    HRESULT __stdcall put_ProjectionMatrix(impl::abi_arg_in<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProjectionMatrix(*reinterpret_cast<const Windows::UI::Xaml::Media::Media3D::Matrix3D *>(&value));
             return S_OK;
         }
@@ -2143,11 +2288,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrix3DProjection> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMatrix3DProjectionStatics> : produce_base<D, Windows::UI::Xaml::Media::IMatrix3DProjectionStatics>
 {
-    HRESULT __stdcall get_ProjectionMatrixProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ProjectionMatrixProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProjectionMatrixProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProjectionMatrixProperty());
             return S_OK;
         }
         catch (...)
@@ -2165,11 +2311,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixHelper> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMatrixHelperStatics> : produce_base<D, Windows::UI::Xaml::Media::IMatrixHelperStatics>
 {
-    HRESULT __stdcall get_Identity(abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
+    HRESULT __stdcall get_Identity(impl::abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Identity());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Identity());
             return S_OK;
         }
         catch (...)
@@ -2178,11 +2325,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixHelperStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_FromElements(double m11, double m12, double m21, double m22, double offsetX, double offsetY, abi_arg_out<Windows::UI::Xaml::Media::Matrix> returnValue) noexcept override
+    HRESULT __stdcall abi_FromElements(double m11, double m12, double m21, double m22, double offsetX, double offsetY, impl::abi_arg_out<Windows::UI::Xaml::Media::Matrix> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().FromElements(m11, m12, m21, m22, offsetX, offsetY));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().FromElements(m11, m12, m21, m22, offsetX, offsetY));
             return S_OK;
         }
         catch (...)
@@ -2191,11 +2339,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixHelperStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetIsIdentity(abi_arg_in<Windows::UI::Xaml::Media::Matrix> target, bool * value) noexcept override
+    HRESULT __stdcall abi_GetIsIdentity(impl::abi_arg_in<Windows::UI::Xaml::Media::Matrix> target, bool * value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetIsIdentity(*reinterpret_cast<const Windows::UI::Xaml::Media::Matrix *>(&target)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetIsIdentity(*reinterpret_cast<const Windows::UI::Xaml::Media::Matrix *>(&target)));
             return S_OK;
         }
         catch (...)
@@ -2204,11 +2353,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixHelperStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_Transform(abi_arg_in<Windows::UI::Xaml::Media::Matrix> target, abi_arg_in<Windows::Foundation::Point> point, abi_arg_out<Windows::Foundation::Point> returnValue) noexcept override
+    HRESULT __stdcall abi_Transform(impl::abi_arg_in<Windows::UI::Xaml::Media::Matrix> target, impl::abi_arg_in<Windows::Foundation::Point> point, impl::abi_arg_out<Windows::Foundation::Point> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().Transform(*reinterpret_cast<const Windows::UI::Xaml::Media::Matrix *>(&target), *reinterpret_cast<const Windows::Foundation::Point *>(&point)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().Transform(*reinterpret_cast<const Windows::UI::Xaml::Media::Matrix *>(&target), *reinterpret_cast<const Windows::Foundation::Point *>(&point)));
             return S_OK;
         }
         catch (...)
@@ -2221,11 +2371,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixHelperStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMatrixTransform> : produce_base<D, Windows::UI::Xaml::Media::IMatrixTransform>
 {
-    HRESULT __stdcall get_Matrix(abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
+    HRESULT __stdcall get_Matrix(impl::abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Matrix());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Matrix());
             return S_OK;
         }
         catch (...)
@@ -2234,10 +2385,11 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixTransform> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_Matrix(abi_arg_in<Windows::UI::Xaml::Media::Matrix> value) noexcept override
+    HRESULT __stdcall put_Matrix(impl::abi_arg_in<Windows::UI::Xaml::Media::Matrix> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Matrix(*reinterpret_cast<const Windows::UI::Xaml::Media::Matrix *>(&value));
             return S_OK;
         }
@@ -2251,11 +2403,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixTransform> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMatrixTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::IMatrixTransformStatics>
 {
-    HRESULT __stdcall get_MatrixProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_MatrixProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MatrixProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MatrixProperty());
             return S_OK;
         }
         catch (...)
@@ -2269,10 +2422,11 @@ struct produce<D, Windows::UI::Xaml::Media::IMatrixTransformStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IMediaTransportControlsThumbnailRequestedEventArgs> : produce_base<D, Windows::UI::Xaml::Media::IMediaTransportControlsThumbnailRequestedEventArgs>
 {
-    HRESULT __stdcall abi_SetThumbnailImage(abi_arg_in<Windows::Storage::Streams::IInputStream> source) noexcept override
+    HRESULT __stdcall abi_SetThumbnailImage(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> source) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetThumbnailImage(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source));
             return S_OK;
         }
@@ -2282,11 +2436,12 @@ struct produce<D, Windows::UI::Xaml::Media::IMediaTransportControlsThumbnailRequ
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::Foundation::IDeferral> returnValue) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Foundation::IDeferral> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -2304,7 +2459,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArg
     {
         try
         {
-            *value = detach(this->shim().StreamKind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StreamKind());
             return S_OK;
         }
         catch (...)
@@ -2321,7 +2477,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArg
     {
         try
         {
-            *value = detach(this->shim().ExtendedError());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExtendedError());
             return S_OK;
         }
         catch (...)
@@ -2334,11 +2491,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArg
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windows::UI::Xaml::Media::IPathFigure>
 {
-    HRESULT __stdcall get_Segments(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathSegment>> value) noexcept override
+    HRESULT __stdcall get_Segments(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathSegment>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Segments());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Segments());
             return S_OK;
         }
         catch (...)
@@ -2348,10 +2506,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_Segments(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathSegment>> value) noexcept override
+    HRESULT __stdcall put_Segments(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathSegment>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Segments(*reinterpret_cast<const Windows::UI::Xaml::Media::PathSegmentCollection *>(&value));
             return S_OK;
         }
@@ -2361,11 +2520,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_StartPoint(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_StartPoint(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPoint());
             return S_OK;
         }
         catch (...)
@@ -2374,10 +2534,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_StartPoint(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_StartPoint(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StartPoint(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -2391,7 +2552,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().IsClosed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsClosed());
             return S_OK;
         }
         catch (...)
@@ -2404,6 +2566,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsClosed(value);
             return S_OK;
         }
@@ -2417,7 +2580,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().IsFilled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsFilled());
             return S_OK;
         }
         catch (...)
@@ -2430,6 +2594,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsFilled(value);
             return S_OK;
         }
@@ -2443,11 +2608,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigure> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPathFigureStatics> : produce_base<D, Windows::UI::Xaml::Media::IPathFigureStatics>
 {
-    HRESULT __stdcall get_SegmentsProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SegmentsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SegmentsProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SegmentsProperty());
             return S_OK;
         }
         catch (...)
@@ -2457,11 +2623,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigureStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_StartPointProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_StartPointProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartPointProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartPointProperty());
             return S_OK;
         }
         catch (...)
@@ -2471,11 +2638,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigureStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_IsClosedProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsClosedProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IsClosedProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsClosedProperty());
             return S_OK;
         }
         catch (...)
@@ -2485,11 +2653,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathFigureStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_IsFilledProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsFilledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IsFilledProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsFilledProperty());
             return S_OK;
         }
         catch (...)
@@ -2507,7 +2676,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometry> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().FillRule());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FillRule());
             return S_OK;
         }
         catch (...)
@@ -2520,6 +2690,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometry> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FillRule(value);
             return S_OK;
         }
@@ -2529,11 +2700,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometry> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_Figures(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathFigure>> value) noexcept override
+    HRESULT __stdcall get_Figures(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathFigure>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Figures());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Figures());
             return S_OK;
         }
         catch (...)
@@ -2543,10 +2715,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometry> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_Figures(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathFigure>> value) noexcept override
+    HRESULT __stdcall put_Figures(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::PathFigure>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Figures(*reinterpret_cast<const Windows::UI::Xaml::Media::PathFigureCollection *>(&value));
             return S_OK;
         }
@@ -2560,11 +2733,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometry> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPathGeometryStatics> : produce_base<D, Windows::UI::Xaml::Media::IPathGeometryStatics>
 {
-    HRESULT __stdcall get_FillRuleProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FillRuleProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FillRuleProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FillRuleProperty());
             return S_OK;
         }
         catch (...)
@@ -2574,11 +2748,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPathGeometryStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall get_FiguresProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FiguresProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FiguresProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FiguresProperty());
             return S_OK;
         }
         catch (...)
@@ -2604,7 +2779,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetX());
             return S_OK;
         }
         catch (...)
@@ -2617,6 +2793,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LocalOffsetX(value);
             return S_OK;
         }
@@ -2630,7 +2807,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetY());
             return S_OK;
         }
         catch (...)
@@ -2643,6 +2821,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LocalOffsetY(value);
             return S_OK;
         }
@@ -2656,7 +2835,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetZ());
             return S_OK;
         }
         catch (...)
@@ -2669,6 +2849,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LocalOffsetZ(value);
             return S_OK;
         }
@@ -2682,7 +2863,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().RotationX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationX());
             return S_OK;
         }
         catch (...)
@@ -2695,6 +2877,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RotationX(value);
             return S_OK;
         }
@@ -2708,7 +2891,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().RotationY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationY());
             return S_OK;
         }
         catch (...)
@@ -2721,6 +2905,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RotationY(value);
             return S_OK;
         }
@@ -2734,7 +2919,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().RotationZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationZ());
             return S_OK;
         }
         catch (...)
@@ -2747,6 +2933,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RotationZ(value);
             return S_OK;
         }
@@ -2760,7 +2947,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationX());
             return S_OK;
         }
         catch (...)
@@ -2773,6 +2961,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterOfRotationX(value);
             return S_OK;
         }
@@ -2786,7 +2975,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationY());
             return S_OK;
         }
         catch (...)
@@ -2799,6 +2989,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterOfRotationY(value);
             return S_OK;
         }
@@ -2812,7 +3003,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationZ());
             return S_OK;
         }
         catch (...)
@@ -2825,6 +3017,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterOfRotationZ(value);
             return S_OK;
         }
@@ -2838,7 +3031,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetX());
             return S_OK;
         }
         catch (...)
@@ -2851,6 +3045,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GlobalOffsetX(value);
             return S_OK;
         }
@@ -2864,7 +3059,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetY());
             return S_OK;
         }
         catch (...)
@@ -2877,6 +3073,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GlobalOffsetY(value);
             return S_OK;
         }
@@ -2890,7 +3087,8 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetZ());
             return S_OK;
         }
         catch (...)
@@ -2903,6 +3101,7 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GlobalOffsetZ(value);
             return S_OK;
         }
@@ -2912,11 +3111,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_ProjectionMatrix(abi_arg_out<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
+    HRESULT __stdcall get_ProjectionMatrix(impl::abi_arg_out<Windows::UI::Xaml::Media::Media3D::Matrix3D> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProjectionMatrix());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProjectionMatrix());
             return S_OK;
         }
         catch (...)
@@ -2929,11 +3129,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjection> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_base<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics>
 {
-    HRESULT __stdcall get_LocalOffsetXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LocalOffsetXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetXProperty());
             return S_OK;
         }
         catch (...)
@@ -2943,11 +3144,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_LocalOffsetYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LocalOffsetYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetYProperty());
             return S_OK;
         }
         catch (...)
@@ -2957,11 +3159,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_LocalOffsetZProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LocalOffsetZProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalOffsetZProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalOffsetZProperty());
             return S_OK;
         }
         catch (...)
@@ -2971,11 +3174,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_RotationXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RotationXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationXProperty());
             return S_OK;
         }
         catch (...)
@@ -2985,11 +3189,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_RotationYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RotationYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationYProperty());
             return S_OK;
         }
         catch (...)
@@ -2999,11 +3204,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_RotationZProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RotationZProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationZProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationZProperty());
             return S_OK;
         }
         catch (...)
@@ -3013,11 +3219,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CenterOfRotationXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterOfRotationXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationXProperty());
             return S_OK;
         }
         catch (...)
@@ -3027,11 +3234,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CenterOfRotationYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterOfRotationYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationYProperty());
             return S_OK;
         }
         catch (...)
@@ -3041,11 +3249,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CenterOfRotationZProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterOfRotationZProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterOfRotationZProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterOfRotationZProperty());
             return S_OK;
         }
         catch (...)
@@ -3055,11 +3264,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_GlobalOffsetXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GlobalOffsetXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetXProperty());
             return S_OK;
         }
         catch (...)
@@ -3069,11 +3279,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_GlobalOffsetYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GlobalOffsetYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetYProperty());
             return S_OK;
         }
         catch (...)
@@ -3083,11 +3294,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_GlobalOffsetZProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GlobalOffsetZProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GlobalOffsetZProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlobalOffsetZProperty());
             return S_OK;
         }
         catch (...)
@@ -3097,11 +3309,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_ProjectionMatrixProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ProjectionMatrixProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProjectionMatrixProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProjectionMatrixProperty());
             return S_OK;
         }
         catch (...)
@@ -3115,11 +3328,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPlaneProjectionStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyBezierSegment> : produce_base<D, Windows::UI::Xaml::Media::IPolyBezierSegment>
 {
-    HRESULT __stdcall get_Points(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall get_Points(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Points());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Points());
             return S_OK;
         }
         catch (...)
@@ -3129,10 +3343,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyBezierSegment> : produce_base<D
         }
     }
 
-    HRESULT __stdcall put_Points(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall put_Points(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Points(*reinterpret_cast<const Windows::UI::Xaml::Media::PointCollection *>(&value));
             return S_OK;
         }
@@ -3146,11 +3361,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyBezierSegment> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyBezierSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IPolyBezierSegmentStatics>
 {
-    HRESULT __stdcall get_PointsProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PointsProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PointsProperty());
             return S_OK;
         }
         catch (...)
@@ -3164,11 +3380,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyBezierSegmentStatics> : produce
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyLineSegment> : produce_base<D, Windows::UI::Xaml::Media::IPolyLineSegment>
 {
-    HRESULT __stdcall get_Points(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall get_Points(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Points());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Points());
             return S_OK;
         }
         catch (...)
@@ -3178,10 +3395,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyLineSegment> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_Points(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall put_Points(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Points(*reinterpret_cast<const Windows::UI::Xaml::Media::PointCollection *>(&value));
             return S_OK;
         }
@@ -3195,11 +3413,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyLineSegment> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyLineSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IPolyLineSegmentStatics>
 {
-    HRESULT __stdcall get_PointsProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PointsProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PointsProperty());
             return S_OK;
         }
         catch (...)
@@ -3213,11 +3432,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyLineSegmentStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment> : produce_base<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment>
 {
-    HRESULT __stdcall get_Points(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall get_Points(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Points());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Points());
             return S_OK;
         }
         catch (...)
@@ -3227,10 +3447,11 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment> : produ
         }
     }
 
-    HRESULT __stdcall put_Points(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall put_Points(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::Point>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Points(*reinterpret_cast<const Windows::UI::Xaml::Media::PointCollection *>(&value));
             return S_OK;
         }
@@ -3244,11 +3465,12 @@ struct produce<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IPolyQuadraticBezierSegmentStatics>
 {
-    HRESULT __stdcall get_PointsProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PointsProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PointsProperty());
             return S_OK;
         }
         catch (...)
@@ -3266,11 +3488,12 @@ struct produce<D, Windows::UI::Xaml::Media::IProjection> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IProjectionFactory> : produce_base<D, Windows::UI::Xaml::Media::IProjectionFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::IProjection> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::IProjection> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -3285,11 +3508,12 @@ struct produce<D, Windows::UI::Xaml::Media::IProjectionFactory> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment> : produce_base<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment>
 {
-    HRESULT __stdcall get_Point1(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point1(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point1());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point1());
             return S_OK;
         }
         catch (...)
@@ -3298,10 +3522,11 @@ struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Point1(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point1(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point1(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -3311,11 +3536,12 @@ struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Point2(abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Point2(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point2());
             return S_OK;
         }
         catch (...)
@@ -3324,10 +3550,11 @@ struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Point2(abi_arg_in<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall put_Point2(impl::abi_arg_in<Windows::Foundation::Point> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Point2(*reinterpret_cast<const Windows::Foundation::Point *>(&value));
             return S_OK;
         }
@@ -3341,11 +3568,12 @@ struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegment> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegmentStatics> : produce_base<D, Windows::UI::Xaml::Media::IQuadraticBezierSegmentStatics>
 {
-    HRESULT __stdcall get_Point1Property(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_Point1Property(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point1Property());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point1Property());
             return S_OK;
         }
         catch (...)
@@ -3355,11 +3583,12 @@ struct produce<D, Windows::UI::Xaml::Media::IQuadraticBezierSegmentStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Point2Property(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_Point2Property(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Point2Property());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Point2Property());
             return S_OK;
         }
         catch (...)
@@ -3377,11 +3606,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRateChangedRoutedEventArgs> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IRectangleGeometry> : produce_base<D, Windows::UI::Xaml::Media::IRectangleGeometry>
 {
-    HRESULT __stdcall get_Rect(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_Rect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Rect());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Rect());
             return S_OK;
         }
         catch (...)
@@ -3390,10 +3620,11 @@ struct produce<D, Windows::UI::Xaml::Media::IRectangleGeometry> : produce_base<D
         }
     }
 
-    HRESULT __stdcall put_Rect(abi_arg_in<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall put_Rect(impl::abi_arg_in<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Rect(*reinterpret_cast<const Windows::Foundation::Rect *>(&value));
             return S_OK;
         }
@@ -3407,11 +3638,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRectangleGeometry> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IRectangleGeometryStatics> : produce_base<D, Windows::UI::Xaml::Media::IRectangleGeometryStatics>
 {
-    HRESULT __stdcall get_RectProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_RectProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RectProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RectProperty());
             return S_OK;
         }
         catch (...)
@@ -3425,11 +3657,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRectangleGeometryStatics> : produce
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IRenderingEventArgs> : produce_base<D, Windows::UI::Xaml::Media::IRenderingEventArgs>
 {
-    HRESULT __stdcall get_RenderingTime(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_RenderingTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RenderingTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RenderingTime());
             return S_OK;
         }
         catch (...)
@@ -3446,7 +3679,8 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().CenterX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterX());
             return S_OK;
         }
         catch (...)
@@ -3459,6 +3693,7 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterX(value);
             return S_OK;
         }
@@ -3472,7 +3707,8 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().CenterY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterY());
             return S_OK;
         }
         catch (...)
@@ -3485,6 +3721,7 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterY(value);
             return S_OK;
         }
@@ -3498,7 +3735,8 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().Angle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Angle());
             return S_OK;
         }
         catch (...)
@@ -3511,6 +3749,7 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Angle(value);
             return S_OK;
         }
@@ -3524,11 +3763,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransform> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IRotateTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::IRotateTransformStatics>
 {
-    HRESULT __stdcall get_CenterXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterXProperty());
             return S_OK;
         }
         catch (...)
@@ -3538,11 +3778,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransformStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CenterYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterYProperty());
             return S_OK;
         }
         catch (...)
@@ -3552,11 +3793,12 @@ struct produce<D, Windows::UI::Xaml::Media::IRotateTransformStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall get_AngleProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AngleProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AngleProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngleProperty());
             return S_OK;
         }
         catch (...)
@@ -3574,7 +3816,8 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().CenterX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterX());
             return S_OK;
         }
         catch (...)
@@ -3587,6 +3830,7 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterX(value);
             return S_OK;
         }
@@ -3600,7 +3844,8 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().CenterY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterY());
             return S_OK;
         }
         catch (...)
@@ -3613,6 +3858,7 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterY(value);
             return S_OK;
         }
@@ -3626,7 +3872,8 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().ScaleX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleX());
             return S_OK;
         }
         catch (...)
@@ -3639,6 +3886,7 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ScaleX(value);
             return S_OK;
         }
@@ -3652,7 +3900,8 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().ScaleY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleY());
             return S_OK;
         }
         catch (...)
@@ -3665,6 +3914,7 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ScaleY(value);
             return S_OK;
         }
@@ -3678,11 +3928,12 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransform> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IScaleTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::IScaleTransformStatics>
 {
-    HRESULT __stdcall get_CenterXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterXProperty());
             return S_OK;
         }
         catch (...)
@@ -3692,11 +3943,12 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransformStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_CenterYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterYProperty());
             return S_OK;
         }
         catch (...)
@@ -3706,11 +3958,12 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransformStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_ScaleXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ScaleXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ScaleXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleXProperty());
             return S_OK;
         }
         catch (...)
@@ -3720,11 +3973,12 @@ struct produce<D, Windows::UI::Xaml::Media::IScaleTransformStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_ScaleYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ScaleYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ScaleYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaleYProperty());
             return S_OK;
         }
         catch (...)
@@ -3742,7 +3996,8 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().CenterX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterX());
             return S_OK;
         }
         catch (...)
@@ -3755,6 +4010,7 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterX(value);
             return S_OK;
         }
@@ -3768,7 +4024,8 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().CenterY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterY());
             return S_OK;
         }
         catch (...)
@@ -3781,6 +4038,7 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CenterY(value);
             return S_OK;
         }
@@ -3794,7 +4052,8 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().AngleX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngleX());
             return S_OK;
         }
         catch (...)
@@ -3807,6 +4066,7 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AngleX(value);
             return S_OK;
         }
@@ -3820,7 +4080,8 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().AngleY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngleY());
             return S_OK;
         }
         catch (...)
@@ -3833,6 +4094,7 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AngleY(value);
             return S_OK;
         }
@@ -3846,11 +4108,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransform> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ISkewTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::ISkewTransformStatics>
 {
-    HRESULT __stdcall get_CenterXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterXProperty());
             return S_OK;
         }
         catch (...)
@@ -3860,11 +4123,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransformStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CenterYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CenterYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CenterYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CenterYProperty());
             return S_OK;
         }
         catch (...)
@@ -3874,11 +4138,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransformStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_AngleXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AngleXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AngleXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngleXProperty());
             return S_OK;
         }
         catch (...)
@@ -3888,11 +4153,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransformStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_AngleYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AngleYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AngleYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngleYProperty());
             return S_OK;
         }
         catch (...)
@@ -3906,11 +4172,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISkewTransformStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrush> : produce_base<D, Windows::UI::Xaml::Media::ISolidColorBrush>
 {
-    HRESULT __stdcall get_Color(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Color(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Color());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Color());
             return S_OK;
         }
         catch (...)
@@ -3919,10 +4186,11 @@ struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrush> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_Color(abi_arg_in<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall put_Color(impl::abi_arg_in<Windows::UI::Color> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Color(*reinterpret_cast<const Windows::UI::Color *>(&value));
             return S_OK;
         }
@@ -3936,11 +4204,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrush> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrushFactory> : produce_base<D, Windows::UI::Xaml::Media::ISolidColorBrushFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithColor(abi_arg_in<Windows::UI::Color> color, abi_arg_out<Windows::UI::Xaml::Media::ISolidColorBrush> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceWithColor(impl::abi_arg_in<Windows::UI::Color> color, impl::abi_arg_out<Windows::UI::Xaml::Media::ISolidColorBrush> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceWithColor(*reinterpret_cast<const Windows::UI::Color *>(&color)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceWithColor(*reinterpret_cast<const Windows::UI::Color *>(&color)));
             return S_OK;
         }
         catch (...)
@@ -3954,11 +4223,12 @@ struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrushFactory> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ISolidColorBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::ISolidColorBrushStatics>
 {
-    HRESULT __stdcall get_ColorProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ColorProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ColorProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ColorProperty());
             return S_OK;
         }
         catch (...)
@@ -3976,7 +4246,8 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
-            *value = detach(this->shim().AlignmentX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlignmentX());
             return S_OK;
         }
         catch (...)
@@ -3989,6 +4260,7 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AlignmentX(value);
             return S_OK;
         }
@@ -4002,7 +4274,8 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
-            *value = detach(this->shim().AlignmentY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlignmentY());
             return S_OK;
         }
         catch (...)
@@ -4015,6 +4288,7 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AlignmentY(value);
             return S_OK;
         }
@@ -4028,7 +4302,8 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
-            *value = detach(this->shim().Stretch());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Stretch());
             return S_OK;
         }
         catch (...)
@@ -4041,6 +4316,7 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Stretch(value);
             return S_OK;
         }
@@ -4054,11 +4330,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrush> : produce_base<D, Window
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITileBrushFactory> : produce_base<D, Windows::UI::Xaml::Media::ITileBrushFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::IInspectable> outer, abi_arg_out<Windows::IInspectable> inner, abi_arg_out<Windows::UI::Xaml::Media::ITileBrush> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Media::ITileBrush> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::IInspectable *>(&outer), *inner));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
             return S_OK;
         }
         catch (...)
@@ -4073,11 +4350,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrushFactory> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITileBrushStatics> : produce_base<D, Windows::UI::Xaml::Media::ITileBrushStatics>
 {
-    HRESULT __stdcall get_AlignmentXProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AlignmentXProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AlignmentXProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlignmentXProperty());
             return S_OK;
         }
         catch (...)
@@ -4087,11 +4365,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrushStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_AlignmentYProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AlignmentYProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AlignmentYProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlignmentYProperty());
             return S_OK;
         }
         catch (...)
@@ -4101,11 +4380,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrushStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_StretchProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_StretchProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StretchProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StretchProperty());
             return S_OK;
         }
         catch (...)
@@ -4119,11 +4399,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITileBrushStatics> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, Windows::UI::Xaml::Media::ITimelineMarker>
 {
-    HRESULT __stdcall get_Time(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Time(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Time());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Time());
             return S_OK;
         }
         catch (...)
@@ -4132,10 +4413,11 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_Time(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_Time(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Time(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -4145,11 +4427,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_Type(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Type(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Type());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Type());
             return S_OK;
         }
         catch (...)
@@ -4159,10 +4442,11 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_Type(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Type(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Type(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -4172,11 +4456,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_Text(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text());
             return S_OK;
         }
         catch (...)
@@ -4186,10 +4471,11 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_Text(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Text(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Text(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -4203,11 +4489,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarker> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs> : produce_base<D, Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs>
 {
-    HRESULT __stdcall get_Marker(abi_arg_out<Windows::UI::Xaml::Media::ITimelineMarker> value) noexcept override
+    HRESULT __stdcall get_Marker(impl::abi_arg_out<Windows::UI::Xaml::Media::ITimelineMarker> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Marker());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Marker());
             return S_OK;
         }
         catch (...)
@@ -4217,10 +4504,11 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs> : pr
         }
     }
 
-    HRESULT __stdcall put_Marker(abi_arg_in<Windows::UI::Xaml::Media::ITimelineMarker> value) noexcept override
+    HRESULT __stdcall put_Marker(impl::abi_arg_in<Windows::UI::Xaml::Media::ITimelineMarker> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Marker(*reinterpret_cast<const Windows::UI::Xaml::Media::TimelineMarker *>(&value));
             return S_OK;
         }
@@ -4234,11 +4522,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs> : pr
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerStatics> : produce_base<D, Windows::UI::Xaml::Media::ITimelineMarkerStatics>
 {
-    HRESULT __stdcall get_TimeProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TimeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TimeProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeProperty());
             return S_OK;
         }
         catch (...)
@@ -4248,11 +4537,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_TypeProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TypeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TypeProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TypeProperty());
             return S_OK;
         }
         catch (...)
@@ -4262,11 +4552,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITimelineMarkerStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_TextProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TextProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TextProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TextProperty());
             return S_OK;
         }
         catch (...)
@@ -4288,11 +4579,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITransformFactory> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITransformGroup> : produce_base<D, Windows::UI::Xaml::Media::ITransformGroup>
 {
-    HRESULT __stdcall get_Children(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Transform>> value) noexcept override
+    HRESULT __stdcall get_Children(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Transform>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Children());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Children());
             return S_OK;
         }
         catch (...)
@@ -4302,10 +4594,11 @@ struct produce<D, Windows::UI::Xaml::Media::ITransformGroup> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_Children(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Transform>> value) noexcept override
+    HRESULT __stdcall put_Children(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Transform>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Children(*reinterpret_cast<const Windows::UI::Xaml::Media::TransformCollection *>(&value));
             return S_OK;
         }
@@ -4315,11 +4608,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITransformGroup> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_Value(abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
+    HRESULT __stdcall get_Value(impl::abi_arg_out<Windows::UI::Xaml::Media::Matrix> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Value());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Value());
             return S_OK;
         }
         catch (...)
@@ -4332,11 +4626,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITransformGroup> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITransformGroupStatics> : produce_base<D, Windows::UI::Xaml::Media::ITransformGroupStatics>
 {
-    HRESULT __stdcall get_ChildrenProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ChildrenProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ChildrenProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChildrenProperty());
             return S_OK;
         }
         catch (...)
@@ -4354,7 +4649,8 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().X());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().X());
             return S_OK;
         }
         catch (...)
@@ -4367,6 +4663,7 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().X(value);
             return S_OK;
         }
@@ -4380,7 +4677,8 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransform> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().Y());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Y());
             return S_OK;
         }
         catch (...)
@@ -4393,6 +4691,7 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransform> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Y(value);
             return S_OK;
         }
@@ -4406,11 +4705,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransform> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::ITranslateTransformStatics> : produce_base<D, Windows::UI::Xaml::Media::ITranslateTransformStatics>
 {
-    HRESULT __stdcall get_XProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_XProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().XProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().XProperty());
             return S_OK;
         }
         catch (...)
@@ -4420,11 +4720,12 @@ struct produce<D, Windows::UI::Xaml::Media::ITranslateTransformStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_YProperty(abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_YProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().YProperty());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().YProperty());
             return S_OK;
         }
         catch (...)
@@ -4442,11 +4743,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelper> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_base<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics>
 {
-    HRESULT __stdcall abi_FindElementsInHostCoordinatesPoint(abi_arg_in<Windows::Foundation::Point> intersectingPoint, abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
+    HRESULT __stdcall abi_FindElementsInHostCoordinatesPoint(impl::abi_arg_in<Windows::Foundation::Point> intersectingPoint, impl::abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
     {
         try
         {
-            *elements = detach(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Point *>(&intersectingPoint), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree)));
+            typename D::abi_guard guard(this->shim());
+            *elements = detach_abi(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Point *>(&intersectingPoint), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree)));
             return S_OK;
         }
         catch (...)
@@ -4456,11 +4758,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FindElementsInHostCoordinatesRect(abi_arg_in<Windows::Foundation::Rect> intersectingRect, abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
+    HRESULT __stdcall abi_FindElementsInHostCoordinatesRect(impl::abi_arg_in<Windows::Foundation::Rect> intersectingRect, impl::abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
     {
         try
         {
-            *elements = detach(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Rect *>(&intersectingRect), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree)));
+            typename D::abi_guard guard(this->shim());
+            *elements = detach_abi(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Rect *>(&intersectingRect), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree)));
             return S_OK;
         }
         catch (...)
@@ -4470,11 +4773,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FindAllElementsInHostCoordinatesPoint(abi_arg_in<Windows::Foundation::Point> intersectingPoint, abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, bool includeAllElements, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
+    HRESULT __stdcall abi_FindAllElementsInHostCoordinatesPoint(impl::abi_arg_in<Windows::Foundation::Point> intersectingPoint, impl::abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, bool includeAllElements, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
     {
         try
         {
-            *elements = detach(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Point *>(&intersectingPoint), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree), includeAllElements));
+            typename D::abi_guard guard(this->shim());
+            *elements = detach_abi(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Point *>(&intersectingPoint), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree), includeAllElements));
             return S_OK;
         }
         catch (...)
@@ -4484,11 +4788,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FindAllElementsInHostCoordinatesRect(abi_arg_in<Windows::Foundation::Rect> intersectingRect, abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, bool includeAllElements, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
+    HRESULT __stdcall abi_FindAllElementsInHostCoordinatesRect(impl::abi_arg_in<Windows::Foundation::Rect> intersectingRect, impl::abi_arg_in<Windows::UI::Xaml::IUIElement> subtree, bool includeAllElements, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement>> elements) noexcept override
     {
         try
         {
-            *elements = detach(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Rect *>(&intersectingRect), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree), includeAllElements));
+            typename D::abi_guard guard(this->shim());
+            *elements = detach_abi(this->shim().FindElementsInHostCoordinates(*reinterpret_cast<const Windows::Foundation::Rect *>(&intersectingRect), *reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&subtree), includeAllElements));
             return S_OK;
         }
         catch (...)
@@ -4498,11 +4803,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetChild(abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, int32_t childIndex, abi_arg_out<Windows::UI::Xaml::IDependencyObject> child) noexcept override
+    HRESULT __stdcall abi_GetChild(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, int32_t childIndex, impl::abi_arg_out<Windows::UI::Xaml::IDependencyObject> child) noexcept override
     {
         try
         {
-            *child = detach(this->shim().GetChild(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference), childIndex));
+            typename D::abi_guard guard(this->shim());
+            *child = detach_abi(this->shim().GetChild(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference), childIndex));
             return S_OK;
         }
         catch (...)
@@ -4512,11 +4818,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetChildrenCount(abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, int32_t * count) noexcept override
+    HRESULT __stdcall abi_GetChildrenCount(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, int32_t * count) noexcept override
     {
         try
         {
-            *count = detach(this->shim().GetChildrenCount(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference)));
+            typename D::abi_guard guard(this->shim());
+            *count = detach_abi(this->shim().GetChildrenCount(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference)));
             return S_OK;
         }
         catch (...)
@@ -4525,11 +4832,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetParent(abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, abi_arg_out<Windows::UI::Xaml::IDependencyObject> parent) noexcept override
+    HRESULT __stdcall abi_GetParent(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> reference, impl::abi_arg_out<Windows::UI::Xaml::IDependencyObject> parent) noexcept override
     {
         try
         {
-            *parent = detach(this->shim().GetParent(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference)));
+            typename D::abi_guard guard(this->shim());
+            *parent = detach_abi(this->shim().GetParent(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&reference)));
             return S_OK;
         }
         catch (...)
@@ -4539,10 +4847,11 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_DisconnectChildrenRecursive(abi_arg_in<Windows::UI::Xaml::IUIElement> element) noexcept override
+    HRESULT __stdcall abi_DisconnectChildrenRecursive(impl::abi_arg_in<Windows::UI::Xaml::IUIElement> element) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisconnectChildrenRecursive(*reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&element));
             return S_OK;
         }
@@ -4556,11 +4865,12 @@ struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics> : produce_
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics2> : produce_base<D, Windows::UI::Xaml::Media::IVisualTreeHelperStatics2>
 {
-    HRESULT __stdcall abi_GetOpenPopups(abi_arg_in<Windows::UI::Xaml::IWindow> window, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Primitives::Popup>> popups) noexcept override
+    HRESULT __stdcall abi_GetOpenPopups(impl::abi_arg_in<Windows::UI::Xaml::IWindow> window, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Primitives::Popup>> popups) noexcept override
     {
         try
         {
-            *popups = detach(this->shim().GetOpenPopups(*reinterpret_cast<const Windows::UI::Xaml::Window *>(&window)));
+            typename D::abi_guard guard(this->shim());
+            *popups = detach_abi(this->shim().GetOpenPopups(*reinterpret_cast<const Windows::UI::Xaml::Window *>(&window)));
             return S_OK;
         }
         catch (...)
@@ -4578,1906 +4888,1906 @@ namespace Windows::UI::Xaml::Media {
 template <typename D> Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> impl_IVisualTreeHelperStatics<D>::FindElementsInHostCoordinates(const Windows::Foundation::Point & intersectingPoint, const Windows::UI::Xaml::UIElement & subtree) const
 {
     Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> elements;
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_FindElementsInHostCoordinatesPoint(get(intersectingPoint), get(subtree), put(elements)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_FindElementsInHostCoordinatesPoint(get_abi(intersectingPoint), get_abi(subtree), put_abi(elements)));
     return elements;
 }
 
 template <typename D> Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> impl_IVisualTreeHelperStatics<D>::FindElementsInHostCoordinates(const Windows::Foundation::Rect & intersectingRect, const Windows::UI::Xaml::UIElement & subtree) const
 {
     Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> elements;
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_FindElementsInHostCoordinatesRect(get(intersectingRect), get(subtree), put(elements)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_FindElementsInHostCoordinatesRect(get_abi(intersectingRect), get_abi(subtree), put_abi(elements)));
     return elements;
 }
 
 template <typename D> Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> impl_IVisualTreeHelperStatics<D>::FindElementsInHostCoordinates(const Windows::Foundation::Point & intersectingPoint, const Windows::UI::Xaml::UIElement & subtree, bool includeAllElements) const
 {
     Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> elements;
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_FindAllElementsInHostCoordinatesPoint(get(intersectingPoint), get(subtree), includeAllElements, put(elements)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_FindAllElementsInHostCoordinatesPoint(get_abi(intersectingPoint), get_abi(subtree), includeAllElements, put_abi(elements)));
     return elements;
 }
 
 template <typename D> Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> impl_IVisualTreeHelperStatics<D>::FindElementsInHostCoordinates(const Windows::Foundation::Rect & intersectingRect, const Windows::UI::Xaml::UIElement & subtree, bool includeAllElements) const
 {
     Windows::Foundation::Collections::IIterable<Windows::UI::Xaml::UIElement> elements;
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_FindAllElementsInHostCoordinatesRect(get(intersectingRect), get(subtree), includeAllElements, put(elements)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_FindAllElementsInHostCoordinatesRect(get_abi(intersectingRect), get_abi(subtree), includeAllElements, put_abi(elements)));
     return elements;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyObject impl_IVisualTreeHelperStatics<D>::GetChild(const Windows::UI::Xaml::DependencyObject & reference, int32_t childIndex) const
 {
     Windows::UI::Xaml::DependencyObject child { nullptr };
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_GetChild(get(reference), childIndex, put(child)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_GetChild(get_abi(reference), childIndex, put_abi(child)));
     return child;
 }
 
 template <typename D> int32_t impl_IVisualTreeHelperStatics<D>::GetChildrenCount(const Windows::UI::Xaml::DependencyObject & reference) const
 {
     int32_t count {};
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_GetChildrenCount(get(reference), &count));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_GetChildrenCount(get_abi(reference), &count));
     return count;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyObject impl_IVisualTreeHelperStatics<D>::GetParent(const Windows::UI::Xaml::DependencyObject & reference) const
 {
     Windows::UI::Xaml::DependencyObject parent { nullptr };
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_GetParent(get(reference), put(parent)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_GetParent(get_abi(reference), put_abi(parent)));
     return parent;
 }
 
 template <typename D> void impl_IVisualTreeHelperStatics<D>::DisconnectChildrenRecursive(const Windows::UI::Xaml::UIElement & element) const
 {
-    check_hresult(static_cast<const IVisualTreeHelperStatics &>(static_cast<const D &>(*this))->abi_DisconnectChildrenRecursive(get(element)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics)->abi_DisconnectChildrenRecursive(get_abi(element)));
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Primitives::Popup> impl_IVisualTreeHelperStatics2<D>::GetOpenPopups(const Windows::UI::Xaml::Window & window) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Primitives::Popup> popups;
-    check_hresult(static_cast<const IVisualTreeHelperStatics2 &>(static_cast<const D &>(*this))->abi_GetOpenPopups(get(window), put(popups)));
+    check_hresult(WINRT_SHIM(IVisualTreeHelperStatics2)->abi_GetOpenPopups(get_abi(window), put_abi(popups)));
     return popups;
 }
 
 template <typename D> Windows::Media::Playback::FailedMediaStreamKind impl_IPartialMediaFailureDetectedEventArgs<D>::StreamKind() const
 {
     Windows::Media::Playback::FailedMediaStreamKind value {};
-    check_hresult(static_cast<const IPartialMediaFailureDetectedEventArgs &>(static_cast<const D &>(*this))->get_StreamKind(&value));
+    check_hresult(WINRT_SHIM(IPartialMediaFailureDetectedEventArgs)->get_StreamKind(&value));
     return value;
 }
 
 template <typename D> HRESULT impl_IPartialMediaFailureDetectedEventArgs2<D>::ExtendedError() const
 {
     HRESULT value {};
-    check_hresult(static_cast<const IPartialMediaFailureDetectedEventArgs2 &>(static_cast<const D &>(*this))->get_ExtendedError(&value));
+    check_hresult(WINRT_SHIM(IPartialMediaFailureDetectedEventArgs2)->get_ExtendedError(&value));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::Matrix impl_IMatrixHelperStatics<D>::Identity() const
 {
     Windows::UI::Xaml::Media::Matrix value {};
-    check_hresult(static_cast<const IMatrixHelperStatics &>(static_cast<const D &>(*this))->get_Identity(put(value)));
+    check_hresult(WINRT_SHIM(IMatrixHelperStatics)->get_Identity(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::Matrix impl_IMatrixHelperStatics<D>::FromElements(double m11, double m12, double m21, double m22, double offsetX, double offsetY) const
 {
     Windows::UI::Xaml::Media::Matrix returnValue {};
-    check_hresult(static_cast<const IMatrixHelperStatics &>(static_cast<const D &>(*this))->abi_FromElements(m11, m12, m21, m22, offsetX, offsetY, put(returnValue)));
+    check_hresult(WINRT_SHIM(IMatrixHelperStatics)->abi_FromElements(m11, m12, m21, m22, offsetX, offsetY, put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> bool impl_IMatrixHelperStatics<D>::GetIsIdentity(const Windows::UI::Xaml::Media::Matrix & target) const
 {
     bool value {};
-    check_hresult(static_cast<const IMatrixHelperStatics &>(static_cast<const D &>(*this))->abi_GetIsIdentity(get(target), &value));
+    check_hresult(WINRT_SHIM(IMatrixHelperStatics)->abi_GetIsIdentity(get_abi(target), &value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IMatrixHelperStatics<D>::Transform(const Windows::UI::Xaml::Media::Matrix & target, const Windows::Foundation::Point & point) const
 {
     Windows::Foundation::Point returnValue {};
-    check_hresult(static_cast<const IMatrixHelperStatics &>(static_cast<const D &>(*this))->abi_Transform(get(target), get(point), put(returnValue)));
+    check_hresult(WINRT_SHIM(IMatrixHelperStatics)->abi_Transform(get_abi(target), get_abi(point), put_abi(returnValue)));
     return returnValue;
 }
 
-template <typename D> event_token impl_ICompositionTargetStatics<D>::Rendering(const Windows::Foundation::EventHandler<Windows::IInspectable> & value) const
+template <typename D> event_token impl_ICompositionTargetStatics<D>::Rendering(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICompositionTargetStatics &>(static_cast<const D &>(*this))->add_Rendering(get(value), &token));
+    check_hresult(WINRT_SHIM(ICompositionTargetStatics)->add_Rendering(get_abi(value), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICompositionTargetStatics> impl_ICompositionTargetStatics<D>::Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value) const
+template <typename D> event_revoker<ICompositionTargetStatics> impl_ICompositionTargetStatics<D>::Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
 {
     return impl::make_event_revoker<D, ICompositionTargetStatics>(this, &ABI::Windows::UI::Xaml::Media::ICompositionTargetStatics::remove_Rendering, Rendering(value));
 }
 
 template <typename D> void impl_ICompositionTargetStatics<D>::Rendering(event_token token) const
 {
-    check_hresult(static_cast<const ICompositionTargetStatics &>(static_cast<const D &>(*this))->remove_Rendering(token));
+    check_hresult(WINRT_SHIM(ICompositionTargetStatics)->remove_Rendering(token));
 }
 
-template <typename D> event_token impl_ICompositionTargetStatics<D>::SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::IInspectable> & value) const
+template <typename D> event_token impl_ICompositionTargetStatics<D>::SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICompositionTargetStatics &>(static_cast<const D &>(*this))->add_SurfaceContentsLost(get(value), &token));
+    check_hresult(WINRT_SHIM(ICompositionTargetStatics)->add_SurfaceContentsLost(get_abi(value), &token));
     return token;
 }
 
-template <typename D> event_revoker<ICompositionTargetStatics> impl_ICompositionTargetStatics<D>::SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value) const
+template <typename D> event_revoker<ICompositionTargetStatics> impl_ICompositionTargetStatics<D>::SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
 {
     return impl::make_event_revoker<D, ICompositionTargetStatics>(this, &ABI::Windows::UI::Xaml::Media::ICompositionTargetStatics::remove_SurfaceContentsLost, SurfaceContentsLost(value));
 }
 
 template <typename D> void impl_ICompositionTargetStatics<D>::SurfaceContentsLost(event_token token) const
 {
-    check_hresult(static_cast<const ICompositionTargetStatics &>(static_cast<const D &>(*this))->remove_SurfaceContentsLost(token));
+    check_hresult(WINRT_SHIM(ICompositionTargetStatics)->remove_SurfaceContentsLost(token));
 }
 
 template <typename D> hstring impl_IFontFamily<D>::Source() const
 {
     hstring value;
-    check_hresult(static_cast<const IFontFamily &>(static_cast<const D &>(*this))->get_Source(put(value)));
+    check_hresult(WINRT_SHIM(IFontFamily)->get_Source(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::UI::Xaml::Media::FontFamily impl_IFontFamilyFactory<D>::CreateInstanceWithName(hstring_ref familyName, const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::FontFamily impl_IFontFamilyFactory<D>::CreateInstanceWithName(hstring_view familyName, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::FontFamily instance { nullptr };
-    check_hresult(static_cast<const IFontFamilyFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceWithName(get(familyName), get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(IFontFamilyFactory)->abi_CreateInstanceWithName(get_abi(familyName), get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::UI::Xaml::Media::FontFamily impl_IFontFamilyStatics2<D>::XamlAutoFontFamily() const
 {
     Windows::UI::Xaml::Media::FontFamily value { nullptr };
-    check_hresult(static_cast<const IFontFamilyStatics2 &>(static_cast<const D &>(*this))->get_XamlAutoFontFamily(put(value)));
+    check_hresult(WINRT_SHIM(IFontFamilyStatics2)->get_XamlAutoFontFamily(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IMediaTransportControlsThumbnailRequestedEventArgs<D>::SetThumbnailImage(const Windows::Storage::Streams::IInputStream & source) const
 {
-    check_hresult(static_cast<const IMediaTransportControlsThumbnailRequestedEventArgs &>(static_cast<const D &>(*this))->abi_SetThumbnailImage(get(source)));
+    check_hresult(WINRT_SHIM(IMediaTransportControlsThumbnailRequestedEventArgs)->abi_SetThumbnailImage(get_abi(source)));
 }
 
 template <typename D> Windows::Foundation::Deferral impl_IMediaTransportControlsThumbnailRequestedEventArgs<D>::GetDeferral() const
 {
     Windows::Foundation::Deferral returnValue { nullptr };
-    check_hresult(static_cast<const IMediaTransportControlsThumbnailRequestedEventArgs &>(static_cast<const D &>(*this))->abi_GetDeferral(put(returnValue)));
+    check_hresult(WINRT_SHIM(IMediaTransportControlsThumbnailRequestedEventArgs)->abi_GetDeferral(put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IRenderingEventArgs<D>::RenderingTime() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IRenderingEventArgs &>(static_cast<const D &>(*this))->get_RenderingTime(put(value)));
+    check_hresult(WINRT_SHIM(IRenderingEventArgs)->get_RenderingTime(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IBrush<D>::Opacity() const
 {
     double value {};
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->get_Opacity(&value));
+    check_hresult(WINRT_SHIM(IBrush)->get_Opacity(&value));
     return value;
 }
 
 template <typename D> void impl_IBrush<D>::Opacity(double value) const
 {
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->put_Opacity(value));
+    check_hresult(WINRT_SHIM(IBrush)->put_Opacity(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Transform impl_IBrush<D>::Transform() const
 {
     Windows::UI::Xaml::Media::Transform value { nullptr };
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->get_Transform(put(value)));
+    check_hresult(WINRT_SHIM(IBrush)->get_Transform(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IBrush<D>::Transform(const Windows::UI::Xaml::Media::Transform & value) const
 {
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->put_Transform(get(value)));
+    check_hresult(WINRT_SHIM(IBrush)->put_Transform(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Transform impl_IBrush<D>::RelativeTransform() const
 {
     Windows::UI::Xaml::Media::Transform value { nullptr };
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->get_RelativeTransform(put(value)));
+    check_hresult(WINRT_SHIM(IBrush)->get_RelativeTransform(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IBrush<D>::RelativeTransform(const Windows::UI::Xaml::Media::Transform & value) const
 {
-    check_hresult(static_cast<const IBrush &>(static_cast<const D &>(*this))->put_RelativeTransform(get(value)));
+    check_hresult(WINRT_SHIM(IBrush)->put_RelativeTransform(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBrushStatics<D>::OpacityProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBrushStatics &>(static_cast<const D &>(*this))->get_OpacityProperty(put(value)));
+    check_hresult(WINRT_SHIM(IBrushStatics)->get_OpacityProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBrushStatics<D>::TransformProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBrushStatics &>(static_cast<const D &>(*this))->get_TransformProperty(put(value)));
+    check_hresult(WINRT_SHIM(IBrushStatics)->get_TransformProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBrushStatics<D>::RelativeTransformProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBrushStatics &>(static_cast<const D &>(*this))->get_RelativeTransformProperty(put(value)));
+    check_hresult(WINRT_SHIM(IBrushStatics)->get_RelativeTransformProperty(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IBrushFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::Brush impl_IBrushFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::Brush instance { nullptr };
-    check_hresult(static_cast<const IBrushFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(IBrushFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
-template <typename D> Windows::UI::Xaml::Media::CacheMode impl_ICacheModeFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::CacheMode impl_ICacheModeFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::CacheMode instance { nullptr };
-    check_hresult(static_cast<const ICacheModeFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(ICacheModeFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::UI::Xaml::Media::GeneralTransform impl_IGeneralTransform<D>::Inverse() const
 {
     Windows::UI::Xaml::Media::GeneralTransform value { nullptr };
-    check_hresult(static_cast<const IGeneralTransform &>(static_cast<const D &>(*this))->get_Inverse(put(value)));
+    check_hresult(WINRT_SHIM(IGeneralTransform)->get_Inverse(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IGeneralTransform<D>::TransformPoint(const Windows::Foundation::Point & point) const
 {
     Windows::Foundation::Point returnValue {};
-    check_hresult(static_cast<const IGeneralTransform &>(static_cast<const D &>(*this))->abi_TransformPoint(get(point), put(returnValue)));
+    check_hresult(WINRT_SHIM(IGeneralTransform)->abi_TransformPoint(get_abi(point), put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> bool impl_IGeneralTransform<D>::TryTransform(const Windows::Foundation::Point & inPoint, Windows::Foundation::Point & outPoint) const
 {
     bool returnValue {};
-    check_hresult(static_cast<const IGeneralTransform &>(static_cast<const D &>(*this))->abi_TryTransform(get(inPoint), put(outPoint), &returnValue));
+    check_hresult(WINRT_SHIM(IGeneralTransform)->abi_TryTransform(get_abi(inPoint), put_abi(outPoint), &returnValue));
     return returnValue;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IGeneralTransform<D>::TransformBounds(const Windows::Foundation::Rect & rect) const
 {
     Windows::Foundation::Rect returnValue {};
-    check_hresult(static_cast<const IGeneralTransform &>(static_cast<const D &>(*this))->abi_TransformBounds(get(rect), put(returnValue)));
+    check_hresult(WINRT_SHIM(IGeneralTransform)->abi_TransformBounds(get_abi(rect), put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> Windows::UI::Xaml::Media::GeneralTransform impl_IGeneralTransformOverrides<D>::InverseCore() const
 {
     Windows::UI::Xaml::Media::GeneralTransform value { nullptr };
-    check_hresult(static_cast<const IGeneralTransformOverrides &>(static_cast<const D &>(*this))->get_InverseCore(put(value)));
+    check_hresult(WINRT_SHIM(IGeneralTransformOverrides)->get_InverseCore(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IGeneralTransformOverrides<D>::TryTransformCore(const Windows::Foundation::Point & inPoint, Windows::Foundation::Point & outPoint) const
 {
     bool returnValue {};
-    check_hresult(static_cast<const IGeneralTransformOverrides &>(static_cast<const D &>(*this))->abi_TryTransformCore(get(inPoint), put(outPoint), &returnValue));
+    check_hresult(WINRT_SHIM(IGeneralTransformOverrides)->abi_TryTransformCore(get_abi(inPoint), put_abi(outPoint), &returnValue));
     return returnValue;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IGeneralTransformOverrides<D>::TransformBoundsCore(const Windows::Foundation::Rect & rect) const
 {
     Windows::Foundation::Rect returnValue {};
-    check_hresult(static_cast<const IGeneralTransformOverrides &>(static_cast<const D &>(*this))->abi_TransformBoundsCore(get(rect), put(returnValue)));
+    check_hresult(WINRT_SHIM(IGeneralTransformOverrides)->abi_TransformBoundsCore(get_abi(rect), put_abi(returnValue)));
     return returnValue;
 }
 
-template <typename D> Windows::UI::Xaml::Media::GeneralTransform impl_IGeneralTransformFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::GeneralTransform impl_IGeneralTransformFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::GeneralTransform instance { nullptr };
-    check_hresult(static_cast<const IGeneralTransformFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(IGeneralTransformFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::UI::Xaml::Media::Transform impl_IGeometry<D>::Transform() const
 {
     Windows::UI::Xaml::Media::Transform value { nullptr };
-    check_hresult(static_cast<const IGeometry &>(static_cast<const D &>(*this))->get_Transform(put(value)));
+    check_hresult(WINRT_SHIM(IGeometry)->get_Transform(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IGeometry<D>::Transform(const Windows::UI::Xaml::Media::Transform & value) const
 {
-    check_hresult(static_cast<const IGeometry &>(static_cast<const D &>(*this))->put_Transform(get(value)));
+    check_hresult(WINRT_SHIM(IGeometry)->put_Transform(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Rect impl_IGeometry<D>::Bounds() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IGeometry &>(static_cast<const D &>(*this))->get_Bounds(put(value)));
+    check_hresult(WINRT_SHIM(IGeometry)->get_Bounds(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::Geometry impl_IGeometryStatics<D>::Empty() const
 {
     Windows::UI::Xaml::Media::Geometry value { nullptr };
-    check_hresult(static_cast<const IGeometryStatics &>(static_cast<const D &>(*this))->get_Empty(put(value)));
+    check_hresult(WINRT_SHIM(IGeometryStatics)->get_Empty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IGeometryStatics<D>::StandardFlatteningTolerance() const
 {
     double value {};
-    check_hresult(static_cast<const IGeometryStatics &>(static_cast<const D &>(*this))->get_StandardFlatteningTolerance(&value));
+    check_hresult(WINRT_SHIM(IGeometryStatics)->get_StandardFlatteningTolerance(&value));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGeometryStatics<D>::TransformProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGeometryStatics &>(static_cast<const D &>(*this))->get_TransformProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGeometryStatics)->get_TransformProperty(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::UI::Xaml::Media::Projection impl_IProjectionFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::Projection impl_IProjectionFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::Projection instance { nullptr };
-    check_hresult(static_cast<const IProjectionFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(IProjectionFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_ITimelineMarker<D>::Time() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->get_Time(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->get_Time(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ITimelineMarker<D>::Time(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->put_Time(get(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->put_Time(get_abi(value)));
 }
 
 template <typename D> hstring impl_ITimelineMarker<D>::Type() const
 {
     hstring value;
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->get_Type(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->get_Type(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ITimelineMarker<D>::Type(hstring_ref value) const
+template <typename D> void impl_ITimelineMarker<D>::Type(hstring_view value) const
 {
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->put_Type(get(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->put_Type(get_abi(value)));
 }
 
 template <typename D> hstring impl_ITimelineMarker<D>::Text() const
 {
     hstring value;
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->get_Text(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->get_Text(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ITimelineMarker<D>::Text(hstring_ref value) const
+template <typename D> void impl_ITimelineMarker<D>::Text(hstring_view value) const
 {
-    check_hresult(static_cast<const ITimelineMarker &>(static_cast<const D &>(*this))->put_Text(get(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarker)->put_Text(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITimelineMarkerStatics<D>::TimeProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITimelineMarkerStatics &>(static_cast<const D &>(*this))->get_TimeProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarkerStatics)->get_TimeProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITimelineMarkerStatics<D>::TypeProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITimelineMarkerStatics &>(static_cast<const D &>(*this))->get_TypeProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarkerStatics)->get_TypeProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITimelineMarkerStatics<D>::TextProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITimelineMarkerStatics &>(static_cast<const D &>(*this))->get_TextProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarkerStatics)->get_TextProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::TimelineMarker impl_ITimelineMarkerRoutedEventArgs<D>::Marker() const
 {
     Windows::UI::Xaml::Media::TimelineMarker value { nullptr };
-    check_hresult(static_cast<const ITimelineMarkerRoutedEventArgs &>(static_cast<const D &>(*this))->get_Marker(put(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarkerRoutedEventArgs)->get_Marker(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ITimelineMarkerRoutedEventArgs<D>::Marker(const Windows::UI::Xaml::Media::TimelineMarker & value) const
 {
-    check_hresult(static_cast<const ITimelineMarkerRoutedEventArgs &>(static_cast<const D &>(*this))->put_Marker(get(value)));
+    check_hresult(WINRT_SHIM(ITimelineMarkerRoutedEventArgs)->put_Marker(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Media3D::Matrix3D impl_IMatrix3DProjection<D>::ProjectionMatrix() const
 {
     Windows::UI::Xaml::Media::Media3D::Matrix3D value {};
-    check_hresult(static_cast<const IMatrix3DProjection &>(static_cast<const D &>(*this))->get_ProjectionMatrix(put(value)));
+    check_hresult(WINRT_SHIM(IMatrix3DProjection)->get_ProjectionMatrix(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IMatrix3DProjection<D>::ProjectionMatrix(const Windows::UI::Xaml::Media::Media3D::Matrix3D & value) const
 {
-    check_hresult(static_cast<const IMatrix3DProjection &>(static_cast<const D &>(*this))->put_ProjectionMatrix(get(value)));
+    check_hresult(WINRT_SHIM(IMatrix3DProjection)->put_ProjectionMatrix(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IMatrix3DProjectionStatics<D>::ProjectionMatrixProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IMatrix3DProjectionStatics &>(static_cast<const D &>(*this))->get_ProjectionMatrixProperty(put(value)));
+    check_hresult(WINRT_SHIM(IMatrix3DProjectionStatics)->get_ProjectionMatrixProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IPlaneProjection<D>::LocalOffsetX() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_LocalOffsetX(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_LocalOffsetX(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::LocalOffsetX(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_LocalOffsetX(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_LocalOffsetX(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::LocalOffsetY() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_LocalOffsetY(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_LocalOffsetY(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::LocalOffsetY(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_LocalOffsetY(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_LocalOffsetY(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::LocalOffsetZ() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_LocalOffsetZ(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_LocalOffsetZ(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::LocalOffsetZ(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_LocalOffsetZ(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_LocalOffsetZ(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::RotationX() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_RotationX(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_RotationX(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::RotationX(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_RotationX(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_RotationX(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::RotationY() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_RotationY(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_RotationY(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::RotationY(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_RotationY(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_RotationY(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::RotationZ() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_RotationZ(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_RotationZ(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::RotationZ(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_RotationZ(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_RotationZ(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::CenterOfRotationX() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_CenterOfRotationX(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_CenterOfRotationX(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::CenterOfRotationX(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_CenterOfRotationX(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_CenterOfRotationX(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::CenterOfRotationY() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_CenterOfRotationY(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_CenterOfRotationY(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::CenterOfRotationY(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_CenterOfRotationY(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_CenterOfRotationY(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::CenterOfRotationZ() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_CenterOfRotationZ(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_CenterOfRotationZ(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::CenterOfRotationZ(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_CenterOfRotationZ(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_CenterOfRotationZ(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::GlobalOffsetX() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_GlobalOffsetX(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_GlobalOffsetX(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::GlobalOffsetX(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_GlobalOffsetX(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_GlobalOffsetX(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::GlobalOffsetY() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_GlobalOffsetY(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_GlobalOffsetY(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::GlobalOffsetY(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_GlobalOffsetY(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_GlobalOffsetY(value));
 }
 
 template <typename D> double impl_IPlaneProjection<D>::GlobalOffsetZ() const
 {
     double value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_GlobalOffsetZ(&value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_GlobalOffsetZ(&value));
     return value;
 }
 
 template <typename D> void impl_IPlaneProjection<D>::GlobalOffsetZ(double value) const
 {
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->put_GlobalOffsetZ(value));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->put_GlobalOffsetZ(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Media3D::Matrix3D impl_IPlaneProjection<D>::ProjectionMatrix() const
 {
     Windows::UI::Xaml::Media::Media3D::Matrix3D value {};
-    check_hresult(static_cast<const IPlaneProjection &>(static_cast<const D &>(*this))->get_ProjectionMatrix(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjection)->get_ProjectionMatrix(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::LocalOffsetXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_LocalOffsetXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_LocalOffsetXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::LocalOffsetYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_LocalOffsetYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_LocalOffsetYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::LocalOffsetZProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_LocalOffsetZProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_LocalOffsetZProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::RotationXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_RotationXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_RotationXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::RotationYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_RotationYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_RotationYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::RotationZProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_RotationZProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_RotationZProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::CenterOfRotationXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_CenterOfRotationXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_CenterOfRotationXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::CenterOfRotationYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_CenterOfRotationYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_CenterOfRotationYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::CenterOfRotationZProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_CenterOfRotationZProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_CenterOfRotationZProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::GlobalOffsetXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_GlobalOffsetXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_GlobalOffsetXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::GlobalOffsetYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_GlobalOffsetYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_GlobalOffsetYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::GlobalOffsetZProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_GlobalOffsetZProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_GlobalOffsetZProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPlaneProjectionStatics<D>::ProjectionMatrixProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPlaneProjectionStatics &>(static_cast<const D &>(*this))->get_ProjectionMatrixProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPlaneProjectionStatics)->get_ProjectionMatrixProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IRectangleGeometry<D>::Rect() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IRectangleGeometry &>(static_cast<const D &>(*this))->get_Rect(put(value)));
+    check_hresult(WINRT_SHIM(IRectangleGeometry)->get_Rect(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IRectangleGeometry<D>::Rect(const Windows::Foundation::Rect & value) const
 {
-    check_hresult(static_cast<const IRectangleGeometry &>(static_cast<const D &>(*this))->put_Rect(get(value)));
+    check_hresult(WINRT_SHIM(IRectangleGeometry)->put_Rect(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRectangleGeometryStatics<D>::RectProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IRectangleGeometryStatics &>(static_cast<const D &>(*this))->get_RectProperty(put(value)));
+    check_hresult(WINRT_SHIM(IRectangleGeometryStatics)->get_RectProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_ISolidColorBrush<D>::Color() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const ISolidColorBrush &>(static_cast<const D &>(*this))->get_Color(put(value)));
+    check_hresult(WINRT_SHIM(ISolidColorBrush)->get_Color(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISolidColorBrush<D>::Color(const Windows::UI::Color & value) const
 {
-    check_hresult(static_cast<const ISolidColorBrush &>(static_cast<const D &>(*this))->put_Color(get(value)));
+    check_hresult(WINRT_SHIM(ISolidColorBrush)->put_Color(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISolidColorBrushStatics<D>::ColorProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ISolidColorBrushStatics &>(static_cast<const D &>(*this))->get_ColorProperty(put(value)));
+    check_hresult(WINRT_SHIM(ISolidColorBrushStatics)->get_ColorProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::SolidColorBrush impl_ISolidColorBrushFactory<D>::CreateInstanceWithColor(const Windows::UI::Color & color) const
 {
     Windows::UI::Xaml::Media::SolidColorBrush instance { nullptr };
-    check_hresult(static_cast<const ISolidColorBrushFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceWithColor(get(color), put(instance)));
+    check_hresult(WINRT_SHIM(ISolidColorBrushFactory)->abi_CreateInstanceWithColor(get_abi(color), put_abi(instance)));
     return instance;
 }
 
 template <typename D> double impl_ICompositeTransform<D>::CenterX() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_CenterX(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_CenterX(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::CenterX(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_CenterX(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_CenterX(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::CenterY() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_CenterY(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_CenterY(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::CenterY(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_CenterY(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_CenterY(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::ScaleX() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_ScaleX(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_ScaleX(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::ScaleX(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_ScaleX(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_ScaleX(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::ScaleY() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_ScaleY(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_ScaleY(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::ScaleY(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_ScaleY(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_ScaleY(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::SkewX() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_SkewX(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_SkewX(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::SkewX(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_SkewX(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_SkewX(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::SkewY() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_SkewY(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_SkewY(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::SkewY(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_SkewY(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_SkewY(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::Rotation() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_Rotation(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_Rotation(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::Rotation(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_Rotation(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_Rotation(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::TranslateX() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_TranslateX(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_TranslateX(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::TranslateX(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_TranslateX(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_TranslateX(value));
 }
 
 template <typename D> double impl_ICompositeTransform<D>::TranslateY() const
 {
     double value {};
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->get_TranslateY(&value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->get_TranslateY(&value));
     return value;
 }
 
 template <typename D> void impl_ICompositeTransform<D>::TranslateY(double value) const
 {
-    check_hresult(static_cast<const ICompositeTransform &>(static_cast<const D &>(*this))->put_TranslateY(value));
+    check_hresult(WINRT_SHIM(ICompositeTransform)->put_TranslateY(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::CenterXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_CenterXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_CenterXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::CenterYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_CenterYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_CenterYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::ScaleXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_ScaleXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_ScaleXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::ScaleYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_ScaleYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_ScaleYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::SkewXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_SkewXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_SkewXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::SkewYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_SkewYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_SkewYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::RotationProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_RotationProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_RotationProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::TranslateXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_TranslateXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_TranslateXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ICompositeTransformStatics<D>::TranslateYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ICompositeTransformStatics &>(static_cast<const D &>(*this))->get_TranslateYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ICompositeTransformStatics)->get_TranslateYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::Matrix impl_IMatrixTransform<D>::Matrix() const
 {
     Windows::UI::Xaml::Media::Matrix value {};
-    check_hresult(static_cast<const IMatrixTransform &>(static_cast<const D &>(*this))->get_Matrix(put(value)));
+    check_hresult(WINRT_SHIM(IMatrixTransform)->get_Matrix(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IMatrixTransform<D>::Matrix(const Windows::UI::Xaml::Media::Matrix & value) const
 {
-    check_hresult(static_cast<const IMatrixTransform &>(static_cast<const D &>(*this))->put_Matrix(get(value)));
+    check_hresult(WINRT_SHIM(IMatrixTransform)->put_Matrix(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IMatrixTransformStatics<D>::MatrixProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IMatrixTransformStatics &>(static_cast<const D &>(*this))->get_MatrixProperty(put(value)));
+    check_hresult(WINRT_SHIM(IMatrixTransformStatics)->get_MatrixProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IRotateTransform<D>::CenterX() const
 {
     double value {};
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->get_CenterX(&value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->get_CenterX(&value));
     return value;
 }
 
 template <typename D> void impl_IRotateTransform<D>::CenterX(double value) const
 {
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->put_CenterX(value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->put_CenterX(value));
 }
 
 template <typename D> double impl_IRotateTransform<D>::CenterY() const
 {
     double value {};
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->get_CenterY(&value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->get_CenterY(&value));
     return value;
 }
 
 template <typename D> void impl_IRotateTransform<D>::CenterY(double value) const
 {
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->put_CenterY(value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->put_CenterY(value));
 }
 
 template <typename D> double impl_IRotateTransform<D>::Angle() const
 {
     double value {};
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->get_Angle(&value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->get_Angle(&value));
     return value;
 }
 
 template <typename D> void impl_IRotateTransform<D>::Angle(double value) const
 {
-    check_hresult(static_cast<const IRotateTransform &>(static_cast<const D &>(*this))->put_Angle(value));
+    check_hresult(WINRT_SHIM(IRotateTransform)->put_Angle(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRotateTransformStatics<D>::CenterXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IRotateTransformStatics &>(static_cast<const D &>(*this))->get_CenterXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IRotateTransformStatics)->get_CenterXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRotateTransformStatics<D>::CenterYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IRotateTransformStatics &>(static_cast<const D &>(*this))->get_CenterYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IRotateTransformStatics)->get_CenterYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRotateTransformStatics<D>::AngleProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IRotateTransformStatics &>(static_cast<const D &>(*this))->get_AngleProperty(put(value)));
+    check_hresult(WINRT_SHIM(IRotateTransformStatics)->get_AngleProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IScaleTransform<D>::CenterX() const
 {
     double value {};
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->get_CenterX(&value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->get_CenterX(&value));
     return value;
 }
 
 template <typename D> void impl_IScaleTransform<D>::CenterX(double value) const
 {
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->put_CenterX(value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->put_CenterX(value));
 }
 
 template <typename D> double impl_IScaleTransform<D>::CenterY() const
 {
     double value {};
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->get_CenterY(&value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->get_CenterY(&value));
     return value;
 }
 
 template <typename D> void impl_IScaleTransform<D>::CenterY(double value) const
 {
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->put_CenterY(value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->put_CenterY(value));
 }
 
 template <typename D> double impl_IScaleTransform<D>::ScaleX() const
 {
     double value {};
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->get_ScaleX(&value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->get_ScaleX(&value));
     return value;
 }
 
 template <typename D> void impl_IScaleTransform<D>::ScaleX(double value) const
 {
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->put_ScaleX(value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->put_ScaleX(value));
 }
 
 template <typename D> double impl_IScaleTransform<D>::ScaleY() const
 {
     double value {};
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->get_ScaleY(&value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->get_ScaleY(&value));
     return value;
 }
 
 template <typename D> void impl_IScaleTransform<D>::ScaleY(double value) const
 {
-    check_hresult(static_cast<const IScaleTransform &>(static_cast<const D &>(*this))->put_ScaleY(value));
+    check_hresult(WINRT_SHIM(IScaleTransform)->put_ScaleY(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScaleTransformStatics<D>::CenterXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IScaleTransformStatics &>(static_cast<const D &>(*this))->get_CenterXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IScaleTransformStatics)->get_CenterXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScaleTransformStatics<D>::CenterYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IScaleTransformStatics &>(static_cast<const D &>(*this))->get_CenterYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IScaleTransformStatics)->get_CenterYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScaleTransformStatics<D>::ScaleXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IScaleTransformStatics &>(static_cast<const D &>(*this))->get_ScaleXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IScaleTransformStatics)->get_ScaleXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScaleTransformStatics<D>::ScaleYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IScaleTransformStatics &>(static_cast<const D &>(*this))->get_ScaleYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IScaleTransformStatics)->get_ScaleYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_ISkewTransform<D>::CenterX() const
 {
     double value {};
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->get_CenterX(&value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->get_CenterX(&value));
     return value;
 }
 
 template <typename D> void impl_ISkewTransform<D>::CenterX(double value) const
 {
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->put_CenterX(value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->put_CenterX(value));
 }
 
 template <typename D> double impl_ISkewTransform<D>::CenterY() const
 {
     double value {};
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->get_CenterY(&value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->get_CenterY(&value));
     return value;
 }
 
 template <typename D> void impl_ISkewTransform<D>::CenterY(double value) const
 {
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->put_CenterY(value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->put_CenterY(value));
 }
 
 template <typename D> double impl_ISkewTransform<D>::AngleX() const
 {
     double value {};
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->get_AngleX(&value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->get_AngleX(&value));
     return value;
 }
 
 template <typename D> void impl_ISkewTransform<D>::AngleX(double value) const
 {
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->put_AngleX(value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->put_AngleX(value));
 }
 
 template <typename D> double impl_ISkewTransform<D>::AngleY() const
 {
     double value {};
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->get_AngleY(&value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->get_AngleY(&value));
     return value;
 }
 
 template <typename D> void impl_ISkewTransform<D>::AngleY(double value) const
 {
-    check_hresult(static_cast<const ISkewTransform &>(static_cast<const D &>(*this))->put_AngleY(value));
+    check_hresult(WINRT_SHIM(ISkewTransform)->put_AngleY(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISkewTransformStatics<D>::CenterXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ISkewTransformStatics &>(static_cast<const D &>(*this))->get_CenterXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ISkewTransformStatics)->get_CenterXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISkewTransformStatics<D>::CenterYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ISkewTransformStatics &>(static_cast<const D &>(*this))->get_CenterYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ISkewTransformStatics)->get_CenterYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISkewTransformStatics<D>::AngleXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ISkewTransformStatics &>(static_cast<const D &>(*this))->get_AngleXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ISkewTransformStatics)->get_AngleXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISkewTransformStatics<D>::AngleYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ISkewTransformStatics &>(static_cast<const D &>(*this))->get_AngleYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ISkewTransformStatics)->get_AngleYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::TransformCollection impl_ITransformGroup<D>::Children() const
 {
     Windows::UI::Xaml::Media::TransformCollection value { nullptr };
-    check_hresult(static_cast<const ITransformGroup &>(static_cast<const D &>(*this))->get_Children(put(value)));
+    check_hresult(WINRT_SHIM(ITransformGroup)->get_Children(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ITransformGroup<D>::Children(const Windows::UI::Xaml::Media::TransformCollection & value) const
 {
-    check_hresult(static_cast<const ITransformGroup &>(static_cast<const D &>(*this))->put_Children(get(value)));
+    check_hresult(WINRT_SHIM(ITransformGroup)->put_Children(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Matrix impl_ITransformGroup<D>::Value() const
 {
     Windows::UI::Xaml::Media::Matrix value {};
-    check_hresult(static_cast<const ITransformGroup &>(static_cast<const D &>(*this))->get_Value(put(value)));
+    check_hresult(WINRT_SHIM(ITransformGroup)->get_Value(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITransformGroupStatics<D>::ChildrenProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITransformGroupStatics &>(static_cast<const D &>(*this))->get_ChildrenProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITransformGroupStatics)->get_ChildrenProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_ITranslateTransform<D>::X() const
 {
     double value {};
-    check_hresult(static_cast<const ITranslateTransform &>(static_cast<const D &>(*this))->get_X(&value));
+    check_hresult(WINRT_SHIM(ITranslateTransform)->get_X(&value));
     return value;
 }
 
 template <typename D> void impl_ITranslateTransform<D>::X(double value) const
 {
-    check_hresult(static_cast<const ITranslateTransform &>(static_cast<const D &>(*this))->put_X(value));
+    check_hresult(WINRT_SHIM(ITranslateTransform)->put_X(value));
 }
 
 template <typename D> double impl_ITranslateTransform<D>::Y() const
 {
     double value {};
-    check_hresult(static_cast<const ITranslateTransform &>(static_cast<const D &>(*this))->get_Y(&value));
+    check_hresult(WINRT_SHIM(ITranslateTransform)->get_Y(&value));
     return value;
 }
 
 template <typename D> void impl_ITranslateTransform<D>::Y(double value) const
 {
-    check_hresult(static_cast<const ITranslateTransform &>(static_cast<const D &>(*this))->put_Y(value));
+    check_hresult(WINRT_SHIM(ITranslateTransform)->put_Y(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITranslateTransformStatics<D>::XProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITranslateTransformStatics &>(static_cast<const D &>(*this))->get_XProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITranslateTransformStatics)->get_XProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITranslateTransformStatics<D>::YProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITranslateTransformStatics &>(static_cast<const D &>(*this))->get_YProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITranslateTransformStatics)->get_YProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IGradientStop<D>::Color() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IGradientStop &>(static_cast<const D &>(*this))->get_Color(put(value)));
+    check_hresult(WINRT_SHIM(IGradientStop)->get_Color(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IGradientStop<D>::Color(const Windows::UI::Color & value) const
 {
-    check_hresult(static_cast<const IGradientStop &>(static_cast<const D &>(*this))->put_Color(get(value)));
+    check_hresult(WINRT_SHIM(IGradientStop)->put_Color(get_abi(value)));
 }
 
 template <typename D> double impl_IGradientStop<D>::Offset() const
 {
     double value {};
-    check_hresult(static_cast<const IGradientStop &>(static_cast<const D &>(*this))->get_Offset(&value));
+    check_hresult(WINRT_SHIM(IGradientStop)->get_Offset(&value));
     return value;
 }
 
 template <typename D> void impl_IGradientStop<D>::Offset(double value) const
 {
-    check_hresult(static_cast<const IGradientStop &>(static_cast<const D &>(*this))->put_Offset(value));
+    check_hresult(WINRT_SHIM(IGradientStop)->put_Offset(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientStopStatics<D>::ColorProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientStopStatics &>(static_cast<const D &>(*this))->get_ColorProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientStopStatics)->get_ColorProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientStopStatics<D>::OffsetProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientStopStatics &>(static_cast<const D &>(*this))->get_OffsetProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientStopStatics)->get_OffsetProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::PathSegmentCollection impl_IPathFigure<D>::Segments() const
 {
     Windows::UI::Xaml::Media::PathSegmentCollection value { nullptr };
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->get_Segments(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigure)->get_Segments(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPathFigure<D>::Segments(const Windows::UI::Xaml::Media::PathSegmentCollection & value) const
 {
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->put_Segments(get(value)));
+    check_hresult(WINRT_SHIM(IPathFigure)->put_Segments(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_IPathFigure<D>::StartPoint() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->get_StartPoint(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigure)->get_StartPoint(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPathFigure<D>::StartPoint(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->put_StartPoint(get(value)));
+    check_hresult(WINRT_SHIM(IPathFigure)->put_StartPoint(get_abi(value)));
 }
 
 template <typename D> bool impl_IPathFigure<D>::IsClosed() const
 {
     bool value {};
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->get_IsClosed(&value));
+    check_hresult(WINRT_SHIM(IPathFigure)->get_IsClosed(&value));
     return value;
 }
 
 template <typename D> void impl_IPathFigure<D>::IsClosed(bool value) const
 {
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->put_IsClosed(value));
+    check_hresult(WINRT_SHIM(IPathFigure)->put_IsClosed(value));
 }
 
 template <typename D> bool impl_IPathFigure<D>::IsFilled() const
 {
     bool value {};
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->get_IsFilled(&value));
+    check_hresult(WINRT_SHIM(IPathFigure)->get_IsFilled(&value));
     return value;
 }
 
 template <typename D> void impl_IPathFigure<D>::IsFilled(bool value) const
 {
-    check_hresult(static_cast<const IPathFigure &>(static_cast<const D &>(*this))->put_IsFilled(value));
+    check_hresult(WINRT_SHIM(IPathFigure)->put_IsFilled(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathFigureStatics<D>::SegmentsProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathFigureStatics &>(static_cast<const D &>(*this))->get_SegmentsProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigureStatics)->get_SegmentsProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathFigureStatics<D>::StartPointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathFigureStatics &>(static_cast<const D &>(*this))->get_StartPointProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigureStatics)->get_StartPointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathFigureStatics<D>::IsClosedProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathFigureStatics &>(static_cast<const D &>(*this))->get_IsClosedProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigureStatics)->get_IsClosedProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathFigureStatics<D>::IsFilledProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathFigureStatics &>(static_cast<const D &>(*this))->get_IsFilledProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathFigureStatics)->get_IsFilledProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IArcSegment<D>::Point() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->get_Point(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegment)->get_Point(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IArcSegment<D>::Point(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->put_Point(get(value)));
+    check_hresult(WINRT_SHIM(IArcSegment)->put_Point(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Size impl_IArcSegment<D>::Size() const
 {
     Windows::Foundation::Size value {};
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->get_Size(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegment)->get_Size(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IArcSegment<D>::Size(const Windows::Foundation::Size & value) const
 {
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->put_Size(get(value)));
+    check_hresult(WINRT_SHIM(IArcSegment)->put_Size(get_abi(value)));
 }
 
 template <typename D> double impl_IArcSegment<D>::RotationAngle() const
 {
     double value {};
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->get_RotationAngle(&value));
+    check_hresult(WINRT_SHIM(IArcSegment)->get_RotationAngle(&value));
     return value;
 }
 
 template <typename D> void impl_IArcSegment<D>::RotationAngle(double value) const
 {
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->put_RotationAngle(value));
+    check_hresult(WINRT_SHIM(IArcSegment)->put_RotationAngle(value));
 }
 
 template <typename D> bool impl_IArcSegment<D>::IsLargeArc() const
 {
     bool value {};
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->get_IsLargeArc(&value));
+    check_hresult(WINRT_SHIM(IArcSegment)->get_IsLargeArc(&value));
     return value;
 }
 
 template <typename D> void impl_IArcSegment<D>::IsLargeArc(bool value) const
 {
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->put_IsLargeArc(value));
+    check_hresult(WINRT_SHIM(IArcSegment)->put_IsLargeArc(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::SweepDirection impl_IArcSegment<D>::SweepDirection() const
 {
     Windows::UI::Xaml::Media::SweepDirection value {};
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->get_SweepDirection(&value));
+    check_hresult(WINRT_SHIM(IArcSegment)->get_SweepDirection(&value));
     return value;
 }
 
 template <typename D> void impl_IArcSegment<D>::SweepDirection(Windows::UI::Xaml::Media::SweepDirection value) const
 {
-    check_hresult(static_cast<const IArcSegment &>(static_cast<const D &>(*this))->put_SweepDirection(value));
+    check_hresult(WINRT_SHIM(IArcSegment)->put_SweepDirection(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IArcSegmentStatics<D>::PointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IArcSegmentStatics &>(static_cast<const D &>(*this))->get_PointProperty(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegmentStatics)->get_PointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IArcSegmentStatics<D>::SizeProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IArcSegmentStatics &>(static_cast<const D &>(*this))->get_SizeProperty(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegmentStatics)->get_SizeProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IArcSegmentStatics<D>::RotationAngleProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IArcSegmentStatics &>(static_cast<const D &>(*this))->get_RotationAngleProperty(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegmentStatics)->get_RotationAngleProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IArcSegmentStatics<D>::IsLargeArcProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IArcSegmentStatics &>(static_cast<const D &>(*this))->get_IsLargeArcProperty(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegmentStatics)->get_IsLargeArcProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IArcSegmentStatics<D>::SweepDirectionProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IArcSegmentStatics &>(static_cast<const D &>(*this))->get_SweepDirectionProperty(put(value)));
+    check_hresult(WINRT_SHIM(IArcSegmentStatics)->get_SweepDirectionProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IBezierSegment<D>::Point1() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->get_Point1(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->get_Point1(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IBezierSegment<D>::Point1(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->put_Point1(get(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->put_Point1(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_IBezierSegment<D>::Point2() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->get_Point2(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->get_Point2(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IBezierSegment<D>::Point2(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->put_Point2(get(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->put_Point2(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_IBezierSegment<D>::Point3() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->get_Point3(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->get_Point3(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IBezierSegment<D>::Point3(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IBezierSegment &>(static_cast<const D &>(*this))->put_Point3(get(value)));
+    check_hresult(WINRT_SHIM(IBezierSegment)->put_Point3(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBezierSegmentStatics<D>::Point1Property() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBezierSegmentStatics &>(static_cast<const D &>(*this))->get_Point1Property(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegmentStatics)->get_Point1Property(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBezierSegmentStatics<D>::Point2Property() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBezierSegmentStatics &>(static_cast<const D &>(*this))->get_Point2Property(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegmentStatics)->get_Point2Property(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IBezierSegmentStatics<D>::Point3Property() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IBezierSegmentStatics &>(static_cast<const D &>(*this))->get_Point3Property(put(value)));
+    check_hresult(WINRT_SHIM(IBezierSegmentStatics)->get_Point3Property(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IEllipseGeometry<D>::Center() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->get_Center(put(value)));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->get_Center(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IEllipseGeometry<D>::Center(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->put_Center(get(value)));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->put_Center(get_abi(value)));
 }
 
 template <typename D> double impl_IEllipseGeometry<D>::RadiusX() const
 {
     double value {};
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->get_RadiusX(&value));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->get_RadiusX(&value));
     return value;
 }
 
 template <typename D> void impl_IEllipseGeometry<D>::RadiusX(double value) const
 {
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->put_RadiusX(value));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->put_RadiusX(value));
 }
 
 template <typename D> double impl_IEllipseGeometry<D>::RadiusY() const
 {
     double value {};
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->get_RadiusY(&value));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->get_RadiusY(&value));
     return value;
 }
 
 template <typename D> void impl_IEllipseGeometry<D>::RadiusY(double value) const
 {
-    check_hresult(static_cast<const IEllipseGeometry &>(static_cast<const D &>(*this))->put_RadiusY(value));
+    check_hresult(WINRT_SHIM(IEllipseGeometry)->put_RadiusY(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IEllipseGeometryStatics<D>::CenterProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IEllipseGeometryStatics &>(static_cast<const D &>(*this))->get_CenterProperty(put(value)));
+    check_hresult(WINRT_SHIM(IEllipseGeometryStatics)->get_CenterProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IEllipseGeometryStatics<D>::RadiusXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IEllipseGeometryStatics &>(static_cast<const D &>(*this))->get_RadiusXProperty(put(value)));
+    check_hresult(WINRT_SHIM(IEllipseGeometryStatics)->get_RadiusXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IEllipseGeometryStatics<D>::RadiusYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IEllipseGeometryStatics &>(static_cast<const D &>(*this))->get_RadiusYProperty(put(value)));
+    check_hresult(WINRT_SHIM(IEllipseGeometryStatics)->get_RadiusYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::FillRule impl_IGeometryGroup<D>::FillRule() const
 {
     Windows::UI::Xaml::Media::FillRule value {};
-    check_hresult(static_cast<const IGeometryGroup &>(static_cast<const D &>(*this))->get_FillRule(&value));
+    check_hresult(WINRT_SHIM(IGeometryGroup)->get_FillRule(&value));
     return value;
 }
 
 template <typename D> void impl_IGeometryGroup<D>::FillRule(Windows::UI::Xaml::Media::FillRule value) const
 {
-    check_hresult(static_cast<const IGeometryGroup &>(static_cast<const D &>(*this))->put_FillRule(value));
+    check_hresult(WINRT_SHIM(IGeometryGroup)->put_FillRule(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::GeometryCollection impl_IGeometryGroup<D>::Children() const
 {
     Windows::UI::Xaml::Media::GeometryCollection value { nullptr };
-    check_hresult(static_cast<const IGeometryGroup &>(static_cast<const D &>(*this))->get_Children(put(value)));
+    check_hresult(WINRT_SHIM(IGeometryGroup)->get_Children(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IGeometryGroup<D>::Children(const Windows::UI::Xaml::Media::GeometryCollection & value) const
 {
-    check_hresult(static_cast<const IGeometryGroup &>(static_cast<const D &>(*this))->put_Children(get(value)));
+    check_hresult(WINRT_SHIM(IGeometryGroup)->put_Children(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGeometryGroupStatics<D>::FillRuleProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGeometryGroupStatics &>(static_cast<const D &>(*this))->get_FillRuleProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGeometryGroupStatics)->get_FillRuleProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGeometryGroupStatics<D>::ChildrenProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGeometryGroupStatics &>(static_cast<const D &>(*this))->get_ChildrenProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGeometryGroupStatics)->get_ChildrenProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::GradientSpreadMethod impl_IGradientBrush<D>::SpreadMethod() const
 {
     Windows::UI::Xaml::Media::GradientSpreadMethod value {};
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->get_SpreadMethod(&value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->get_SpreadMethod(&value));
     return value;
 }
 
 template <typename D> void impl_IGradientBrush<D>::SpreadMethod(Windows::UI::Xaml::Media::GradientSpreadMethod value) const
 {
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->put_SpreadMethod(value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->put_SpreadMethod(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::BrushMappingMode impl_IGradientBrush<D>::MappingMode() const
 {
     Windows::UI::Xaml::Media::BrushMappingMode value {};
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->get_MappingMode(&value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->get_MappingMode(&value));
     return value;
 }
 
 template <typename D> void impl_IGradientBrush<D>::MappingMode(Windows::UI::Xaml::Media::BrushMappingMode value) const
 {
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->put_MappingMode(value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->put_MappingMode(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::ColorInterpolationMode impl_IGradientBrush<D>::ColorInterpolationMode() const
 {
     Windows::UI::Xaml::Media::ColorInterpolationMode value {};
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->get_ColorInterpolationMode(&value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->get_ColorInterpolationMode(&value));
     return value;
 }
 
 template <typename D> void impl_IGradientBrush<D>::ColorInterpolationMode(Windows::UI::Xaml::Media::ColorInterpolationMode value) const
 {
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->put_ColorInterpolationMode(value));
+    check_hresult(WINRT_SHIM(IGradientBrush)->put_ColorInterpolationMode(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::GradientStopCollection impl_IGradientBrush<D>::GradientStops() const
 {
     Windows::UI::Xaml::Media::GradientStopCollection value { nullptr };
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->get_GradientStops(put(value)));
+    check_hresult(WINRT_SHIM(IGradientBrush)->get_GradientStops(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IGradientBrush<D>::GradientStops(const Windows::UI::Xaml::Media::GradientStopCollection & value) const
 {
-    check_hresult(static_cast<const IGradientBrush &>(static_cast<const D &>(*this))->put_GradientStops(get(value)));
+    check_hresult(WINRT_SHIM(IGradientBrush)->put_GradientStops(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientBrushStatics<D>::SpreadMethodProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientBrushStatics &>(static_cast<const D &>(*this))->get_SpreadMethodProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientBrushStatics)->get_SpreadMethodProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientBrushStatics<D>::MappingModeProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientBrushStatics &>(static_cast<const D &>(*this))->get_MappingModeProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientBrushStatics)->get_MappingModeProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientBrushStatics<D>::ColorInterpolationModeProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientBrushStatics &>(static_cast<const D &>(*this))->get_ColorInterpolationModeProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientBrushStatics)->get_ColorInterpolationModeProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGradientBrushStatics<D>::GradientStopsProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IGradientBrushStatics &>(static_cast<const D &>(*this))->get_GradientStopsProperty(put(value)));
+    check_hresult(WINRT_SHIM(IGradientBrushStatics)->get_GradientStopsProperty(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::UI::Xaml::Media::GradientBrush impl_IGradientBrushFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::GradientBrush impl_IGradientBrushFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::GradientBrush instance { nullptr };
-    check_hresult(static_cast<const IGradientBrushFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(IGradientBrushFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Foundation::Point impl_ILineGeometry<D>::StartPoint() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const ILineGeometry &>(static_cast<const D &>(*this))->get_StartPoint(put(value)));
+    check_hresult(WINRT_SHIM(ILineGeometry)->get_StartPoint(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILineGeometry<D>::StartPoint(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const ILineGeometry &>(static_cast<const D &>(*this))->put_StartPoint(get(value)));
+    check_hresult(WINRT_SHIM(ILineGeometry)->put_StartPoint(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_ILineGeometry<D>::EndPoint() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const ILineGeometry &>(static_cast<const D &>(*this))->get_EndPoint(put(value)));
+    check_hresult(WINRT_SHIM(ILineGeometry)->get_EndPoint(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILineGeometry<D>::EndPoint(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const ILineGeometry &>(static_cast<const D &>(*this))->put_EndPoint(get(value)));
+    check_hresult(WINRT_SHIM(ILineGeometry)->put_EndPoint(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILineGeometryStatics<D>::StartPointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ILineGeometryStatics &>(static_cast<const D &>(*this))->get_StartPointProperty(put(value)));
+    check_hresult(WINRT_SHIM(ILineGeometryStatics)->get_StartPointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILineGeometryStatics<D>::EndPointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ILineGeometryStatics &>(static_cast<const D &>(*this))->get_EndPointProperty(put(value)));
+    check_hresult(WINRT_SHIM(ILineGeometryStatics)->get_EndPointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_ILineSegment<D>::Point() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const ILineSegment &>(static_cast<const D &>(*this))->get_Point(put(value)));
+    check_hresult(WINRT_SHIM(ILineSegment)->get_Point(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILineSegment<D>::Point(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const ILineSegment &>(static_cast<const D &>(*this))->put_Point(get(value)));
+    check_hresult(WINRT_SHIM(ILineSegment)->put_Point(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILineSegmentStatics<D>::PointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ILineSegmentStatics &>(static_cast<const D &>(*this))->get_PointProperty(put(value)));
+    check_hresult(WINRT_SHIM(ILineSegmentStatics)->get_PointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::FillRule impl_IPathGeometry<D>::FillRule() const
 {
     Windows::UI::Xaml::Media::FillRule value {};
-    check_hresult(static_cast<const IPathGeometry &>(static_cast<const D &>(*this))->get_FillRule(&value));
+    check_hresult(WINRT_SHIM(IPathGeometry)->get_FillRule(&value));
     return value;
 }
 
 template <typename D> void impl_IPathGeometry<D>::FillRule(Windows::UI::Xaml::Media::FillRule value) const
 {
-    check_hresult(static_cast<const IPathGeometry &>(static_cast<const D &>(*this))->put_FillRule(value));
+    check_hresult(WINRT_SHIM(IPathGeometry)->put_FillRule(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::PathFigureCollection impl_IPathGeometry<D>::Figures() const
 {
     Windows::UI::Xaml::Media::PathFigureCollection value { nullptr };
-    check_hresult(static_cast<const IPathGeometry &>(static_cast<const D &>(*this))->get_Figures(put(value)));
+    check_hresult(WINRT_SHIM(IPathGeometry)->get_Figures(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPathGeometry<D>::Figures(const Windows::UI::Xaml::Media::PathFigureCollection & value) const
 {
-    check_hresult(static_cast<const IPathGeometry &>(static_cast<const D &>(*this))->put_Figures(get(value)));
+    check_hresult(WINRT_SHIM(IPathGeometry)->put_Figures(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathGeometryStatics<D>::FillRuleProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathGeometryStatics &>(static_cast<const D &>(*this))->get_FillRuleProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathGeometryStatics)->get_FillRuleProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPathGeometryStatics<D>::FiguresProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPathGeometryStatics &>(static_cast<const D &>(*this))->get_FiguresProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPathGeometryStatics)->get_FiguresProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::PointCollection impl_IPolyBezierSegment<D>::Points() const
 {
     Windows::UI::Xaml::Media::PointCollection value { nullptr };
-    check_hresult(static_cast<const IPolyBezierSegment &>(static_cast<const D &>(*this))->get_Points(put(value)));
+    check_hresult(WINRT_SHIM(IPolyBezierSegment)->get_Points(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPolyBezierSegment<D>::Points(const Windows::UI::Xaml::Media::PointCollection & value) const
 {
-    check_hresult(static_cast<const IPolyBezierSegment &>(static_cast<const D &>(*this))->put_Points(get(value)));
+    check_hresult(WINRT_SHIM(IPolyBezierSegment)->put_Points(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPolyBezierSegmentStatics<D>::PointsProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPolyBezierSegmentStatics &>(static_cast<const D &>(*this))->get_PointsProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPolyBezierSegmentStatics)->get_PointsProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::PointCollection impl_IPolyLineSegment<D>::Points() const
 {
     Windows::UI::Xaml::Media::PointCollection value { nullptr };
-    check_hresult(static_cast<const IPolyLineSegment &>(static_cast<const D &>(*this))->get_Points(put(value)));
+    check_hresult(WINRT_SHIM(IPolyLineSegment)->get_Points(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPolyLineSegment<D>::Points(const Windows::UI::Xaml::Media::PointCollection & value) const
 {
-    check_hresult(static_cast<const IPolyLineSegment &>(static_cast<const D &>(*this))->put_Points(get(value)));
+    check_hresult(WINRT_SHIM(IPolyLineSegment)->put_Points(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPolyLineSegmentStatics<D>::PointsProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPolyLineSegmentStatics &>(static_cast<const D &>(*this))->get_PointsProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPolyLineSegmentStatics)->get_PointsProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::PointCollection impl_IPolyQuadraticBezierSegment<D>::Points() const
 {
     Windows::UI::Xaml::Media::PointCollection value { nullptr };
-    check_hresult(static_cast<const IPolyQuadraticBezierSegment &>(static_cast<const D &>(*this))->get_Points(put(value)));
+    check_hresult(WINRT_SHIM(IPolyQuadraticBezierSegment)->get_Points(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPolyQuadraticBezierSegment<D>::Points(const Windows::UI::Xaml::Media::PointCollection & value) const
 {
-    check_hresult(static_cast<const IPolyQuadraticBezierSegment &>(static_cast<const D &>(*this))->put_Points(get(value)));
+    check_hresult(WINRT_SHIM(IPolyQuadraticBezierSegment)->put_Points(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPolyQuadraticBezierSegmentStatics<D>::PointsProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IPolyQuadraticBezierSegmentStatics &>(static_cast<const D &>(*this))->get_PointsProperty(put(value)));
+    check_hresult(WINRT_SHIM(IPolyQuadraticBezierSegmentStatics)->get_PointsProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_IQuadraticBezierSegment<D>::Point1() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IQuadraticBezierSegment &>(static_cast<const D &>(*this))->get_Point1(put(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegment)->get_Point1(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IQuadraticBezierSegment<D>::Point1(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IQuadraticBezierSegment &>(static_cast<const D &>(*this))->put_Point1(get(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegment)->put_Point1(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_IQuadraticBezierSegment<D>::Point2() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const IQuadraticBezierSegment &>(static_cast<const D &>(*this))->get_Point2(put(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegment)->get_Point2(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IQuadraticBezierSegment<D>::Point2(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const IQuadraticBezierSegment &>(static_cast<const D &>(*this))->put_Point2(get(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegment)->put_Point2(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IQuadraticBezierSegmentStatics<D>::Point1Property() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IQuadraticBezierSegmentStatics &>(static_cast<const D &>(*this))->get_Point1Property(put(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegmentStatics)->get_Point1Property(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IQuadraticBezierSegmentStatics<D>::Point2Property() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IQuadraticBezierSegmentStatics &>(static_cast<const D &>(*this))->get_Point2Property(put(value)));
+    check_hresult(WINRT_SHIM(IQuadraticBezierSegmentStatics)->get_Point2Property(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::AlignmentX impl_ITileBrush<D>::AlignmentX() const
 {
     Windows::UI::Xaml::Media::AlignmentX value {};
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->get_AlignmentX(&value));
+    check_hresult(WINRT_SHIM(ITileBrush)->get_AlignmentX(&value));
     return value;
 }
 
 template <typename D> void impl_ITileBrush<D>::AlignmentX(Windows::UI::Xaml::Media::AlignmentX value) const
 {
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->put_AlignmentX(value));
+    check_hresult(WINRT_SHIM(ITileBrush)->put_AlignmentX(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::AlignmentY impl_ITileBrush<D>::AlignmentY() const
 {
     Windows::UI::Xaml::Media::AlignmentY value {};
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->get_AlignmentY(&value));
+    check_hresult(WINRT_SHIM(ITileBrush)->get_AlignmentY(&value));
     return value;
 }
 
 template <typename D> void impl_ITileBrush<D>::AlignmentY(Windows::UI::Xaml::Media::AlignmentY value) const
 {
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->put_AlignmentY(value));
+    check_hresult(WINRT_SHIM(ITileBrush)->put_AlignmentY(value));
 }
 
 template <typename D> Windows::UI::Xaml::Media::Stretch impl_ITileBrush<D>::Stretch() const
 {
     Windows::UI::Xaml::Media::Stretch value {};
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->get_Stretch(&value));
+    check_hresult(WINRT_SHIM(ITileBrush)->get_Stretch(&value));
     return value;
 }
 
 template <typename D> void impl_ITileBrush<D>::Stretch(Windows::UI::Xaml::Media::Stretch value) const
 {
-    check_hresult(static_cast<const ITileBrush &>(static_cast<const D &>(*this))->put_Stretch(value));
+    check_hresult(WINRT_SHIM(ITileBrush)->put_Stretch(value));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITileBrushStatics<D>::AlignmentXProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITileBrushStatics &>(static_cast<const D &>(*this))->get_AlignmentXProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITileBrushStatics)->get_AlignmentXProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITileBrushStatics<D>::AlignmentYProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITileBrushStatics &>(static_cast<const D &>(*this))->get_AlignmentYProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITileBrushStatics)->get_AlignmentYProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITileBrushStatics<D>::StretchProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ITileBrushStatics &>(static_cast<const D &>(*this))->get_StretchProperty(put(value)));
+    check_hresult(WINRT_SHIM(ITileBrushStatics)->get_StretchProperty(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::UI::Xaml::Media::TileBrush impl_ITileBrushFactory<D>::CreateInstance(const Windows::IInspectable & outer, Windows::IInspectable & inner) const
+template <typename D> Windows::UI::Xaml::Media::TileBrush impl_ITileBrushFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
 {
     Windows::UI::Xaml::Media::TileBrush instance { nullptr };
-    check_hresult(static_cast<const ITileBrushFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(outer), put(inner), put(instance)));
+    check_hresult(WINRT_SHIM(ITileBrushFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::UI::Xaml::Media::ImageSource impl_IImageBrush<D>::ImageSource() const
 {
     Windows::UI::Xaml::Media::ImageSource value { nullptr };
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->get_ImageSource(put(value)));
+    check_hresult(WINRT_SHIM(IImageBrush)->get_ImageSource(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IImageBrush<D>::ImageSource(const Windows::UI::Xaml::Media::ImageSource & value) const
 {
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->put_ImageSource(get(value)));
+    check_hresult(WINRT_SHIM(IImageBrush)->put_ImageSource(get_abi(value)));
 }
 
 template <typename D> event_token impl_IImageBrush<D>::ImageFailed(const Windows::UI::Xaml::ExceptionRoutedEventHandler & value) const
 {
     event_token token {};
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->add_ImageFailed(get(value), &token));
+    check_hresult(WINRT_SHIM(IImageBrush)->add_ImageFailed(get_abi(value), &token));
     return token;
 }
 
@@ -6488,13 +6798,13 @@ template <typename D> event_revoker<IImageBrush> impl_IImageBrush<D>::ImageFaile
 
 template <typename D> void impl_IImageBrush<D>::ImageFailed(event_token token) const
 {
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->remove_ImageFailed(token));
+    check_hresult(WINRT_SHIM(IImageBrush)->remove_ImageFailed(token));
 }
 
 template <typename D> event_token impl_IImageBrush<D>::ImageOpened(const Windows::UI::Xaml::RoutedEventHandler & value) const
 {
     event_token token {};
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->add_ImageOpened(get(value), &token));
+    check_hresult(WINRT_SHIM(IImageBrush)->add_ImageOpened(get_abi(value), &token));
     return token;
 }
 
@@ -6505,58 +6815,58 @@ template <typename D> event_revoker<IImageBrush> impl_IImageBrush<D>::ImageOpene
 
 template <typename D> void impl_IImageBrush<D>::ImageOpened(event_token token) const
 {
-    check_hresult(static_cast<const IImageBrush &>(static_cast<const D &>(*this))->remove_ImageOpened(token));
+    check_hresult(WINRT_SHIM(IImageBrush)->remove_ImageOpened(token));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_IImageBrushStatics<D>::ImageSourceProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const IImageBrushStatics &>(static_cast<const D &>(*this))->get_ImageSourceProperty(put(value)));
+    check_hresult(WINRT_SHIM(IImageBrushStatics)->get_ImageSourceProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Point impl_ILinearGradientBrush<D>::StartPoint() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const ILinearGradientBrush &>(static_cast<const D &>(*this))->get_StartPoint(put(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrush)->get_StartPoint(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILinearGradientBrush<D>::StartPoint(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const ILinearGradientBrush &>(static_cast<const D &>(*this))->put_StartPoint(get(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrush)->put_StartPoint(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::Point impl_ILinearGradientBrush<D>::EndPoint() const
 {
     Windows::Foundation::Point value {};
-    check_hresult(static_cast<const ILinearGradientBrush &>(static_cast<const D &>(*this))->get_EndPoint(put(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrush)->get_EndPoint(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILinearGradientBrush<D>::EndPoint(const Windows::Foundation::Point & value) const
 {
-    check_hresult(static_cast<const ILinearGradientBrush &>(static_cast<const D &>(*this))->put_EndPoint(get(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrush)->put_EndPoint(get_abi(value)));
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILinearGradientBrushStatics<D>::StartPointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ILinearGradientBrushStatics &>(static_cast<const D &>(*this))->get_StartPointProperty(put(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrushStatics)->get_StartPointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILinearGradientBrushStatics<D>::EndPointProperty() const
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(static_cast<const ILinearGradientBrushStatics &>(static_cast<const D &>(*this))->get_EndPointProperty(put(value)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrushStatics)->get_EndPointProperty(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Xaml::Media::LinearGradientBrush impl_ILinearGradientBrushFactory<D>::CreateInstanceWithGradientStopCollectionAndAngle(const Windows::UI::Xaml::Media::GradientStopCollection & gradientStopCollection, double angle) const
 {
     Windows::UI::Xaml::Media::LinearGradientBrush instance { nullptr };
-    check_hresult(static_cast<const ILinearGradientBrushFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceWithGradientStopCollectionAndAngle(get(gradientStopCollection), angle, put(instance)));
+    check_hresult(WINRT_SHIM(ILinearGradientBrushFactory)->abi_CreateInstanceWithGradientStopCollectionAndAngle(get_abi(gradientStopCollection), angle, put_abi(instance)));
     return instance;
 }
 
@@ -6680,12 +6990,12 @@ inline Windows::UI::Xaml::DependencyProperty CompositeTransform::TranslateYPrope
     return get_activation_factory<CompositeTransform, ICompositeTransformStatics>().TranslateYProperty();
 }
 
-inline event_token CompositionTarget::Rendering(const Windows::Foundation::EventHandler<Windows::IInspectable> & value)
+inline event_token CompositionTarget::Rendering(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value)
 {
     return get_activation_factory<CompositionTarget, ICompositionTargetStatics>().Rendering(value);
 }
 
-inline factory_event_revoker<ICompositionTargetStatics> CompositionTarget::Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value)
+inline factory_event_revoker<ICompositionTargetStatics> CompositionTarget::Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value)
 {
     auto factory = get_activation_factory<CompositionTarget, ICompositionTargetStatics>();
     return { factory, &ABI::Windows::UI::Xaml::Media::ICompositionTargetStatics::remove_Rendering, factory.Rendering(value) };
@@ -6696,12 +7006,12 @@ inline void CompositionTarget::Rendering(event_token token)
     get_activation_factory<CompositionTarget, ICompositionTargetStatics>().Rendering(token);
 }
 
-inline event_token CompositionTarget::SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::IInspectable> & value)
+inline event_token CompositionTarget::SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value)
 {
     return get_activation_factory<CompositionTarget, ICompositionTargetStatics>().SurfaceContentsLost(value);
 }
 
-inline factory_event_revoker<ICompositionTargetStatics> CompositionTarget::SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value)
+inline factory_event_revoker<ICompositionTargetStatics> CompositionTarget::SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value)
 {
     auto factory = get_activation_factory<CompositionTarget, ICompositionTargetStatics>();
     return { factory, &ABI::Windows::UI::Xaml::Media::ICompositionTargetStatics::remove_SurfaceContentsLost, factory.SurfaceContentsLost(value) };
@@ -6735,9 +7045,9 @@ inline Windows::UI::Xaml::DependencyProperty EllipseGeometry::RadiusYProperty()
     return get_activation_factory<EllipseGeometry, IEllipseGeometryStatics>().RadiusYProperty();
 }
 
-inline FontFamily::FontFamily(hstring_ref familyName)
+inline FontFamily::FontFamily(hstring_view familyName)
 {
-    Windows::IInspectable outer, inner;
+    Windows::Foundation::IInspectable outer, inner;
     impl_move(get_activation_factory<FontFamily, IFontFamilyFactory>().CreateInstanceWithName(familyName, outer, inner));
 }
 
@@ -7279,3 +7589,1391 @@ inline Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IArcSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IArcSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IArcSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IArcSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBezierSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBezierSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBitmapCache>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBitmapCache & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBrushFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBrushFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICacheMode>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICacheMode & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICacheModeFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICacheModeFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICompositeTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICompositeTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICompositeTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICompositeTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICompositionTarget>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICompositionTarget & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ICompositionTargetStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ICompositionTargetStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IEllipseGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IEllipseGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IEllipseGeometryStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IEllipseGeometryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IFontFamily>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IFontFamily & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IFontFamilyFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IFontFamilyFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IFontFamilyStatics2>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IFontFamilyStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeneralTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeneralTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeneralTransformFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeneralTransformFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeneralTransformOverrides>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeneralTransformOverrides & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeometryFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeometryFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeometryGroup>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeometryGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeometryGroupStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeometryGroupStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGeometryStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGeometryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGradientBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGradientBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGradientBrushFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGradientBrushFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGradientBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGradientBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGradientStop>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGradientStop & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IGradientStopStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IGradientStopStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IImageBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IImageBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IImageBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IImageBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IImageSource>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IImageSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IImageSourceFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IImageSourceFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILineGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILineGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILineGeometryStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILineGeometryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILineSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILineSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILineSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILineSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILinearGradientBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILinearGradientBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILinearGradientBrushFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILinearGradientBrushFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ILinearGradientBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ILinearGradientBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrix3DProjection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrix3DProjection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrix3DProjectionStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrix3DProjectionStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrixHelper>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrixHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrixHelperStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrixHelperStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrixTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrixTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMatrixTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMatrixTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IMediaTransportControlsThumbnailRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IMediaTransportControlsThumbnailRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArgs2>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPartialMediaFailureDetectedEventArgs2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathFigure>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathFigure & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathFigureStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathFigureStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathGeometryStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathGeometryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPathSegmentFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPathSegmentFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPlaneProjection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPlaneProjection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPlaneProjectionStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPlaneProjectionStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyBezierSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyBezierSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyLineSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyLineSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyLineSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyLineSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyQuadraticBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IPolyQuadraticBezierSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IPolyQuadraticBezierSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IProjection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IProjection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IProjectionFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IProjectionFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IQuadraticBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IQuadraticBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IQuadraticBezierSegmentStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IQuadraticBezierSegmentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRateChangedRoutedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRateChangedRoutedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRectangleGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRectangleGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRectangleGeometryStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRectangleGeometryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRenderingEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRenderingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRotateTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRotateTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IRotateTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IRotateTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IScaleTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IScaleTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IScaleTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IScaleTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ISkewTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ISkewTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ISkewTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ISkewTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ISolidColorBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ISolidColorBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ISolidColorBrushFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ISolidColorBrushFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ISolidColorBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ISolidColorBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITileBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITileBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITileBrushFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITileBrushFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITileBrushStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITileBrushStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITimelineMarker>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITimelineMarker & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITimelineMarkerStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITimelineMarkerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITransformFactory>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITransformFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITransformGroup>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITransformGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITransformGroupStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITransformGroupStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITranslateTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITranslateTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ITranslateTransformStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ITranslateTransformStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IVisualTreeHelper>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IVisualTreeHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IVisualTreeHelperStatics>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IVisualTreeHelperStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::IVisualTreeHelperStatics2>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::IVisualTreeHelperStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ArcSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ArcSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::BezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::BezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::BitmapCache>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::BitmapCache & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::Brush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::Brush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::BrushCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::BrushCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::CacheMode>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::CacheMode & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::CompositeTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::CompositeTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::CompositionTarget>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::CompositionTarget & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::DoubleCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::DoubleCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::EllipseGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::EllipseGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::FontFamily>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::FontFamily & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GeneralTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GeneralTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::Geometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::Geometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GeometryCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GeometryCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GeometryGroup>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GeometryGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GradientBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GradientBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GradientStop>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GradientStop & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::GradientStopCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::GradientStopCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ImageBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ImageBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ImageSource>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ImageSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::LineGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::LineGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::LineSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::LineSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::LinearGradientBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::LinearGradientBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::Matrix3DProjection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::Matrix3DProjection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::MatrixHelper>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::MatrixHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::MatrixTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::MatrixTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::MediaTransportControlsThumbnailRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::MediaTransportControlsThumbnailRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PartialMediaFailureDetectedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PartialMediaFailureDetectedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PathFigure>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PathFigure & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PathFigureCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PathFigureCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PathGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PathGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PathSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PathSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PathSegmentCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PathSegmentCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PlaneProjection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PlaneProjection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PointCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PointCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PolyBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PolyBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PolyLineSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PolyLineSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::PolyQuadraticBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::PolyQuadraticBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::Projection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::Projection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::QuadraticBezierSegment>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::QuadraticBezierSegment & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::RateChangedRoutedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::RateChangedRoutedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::RectangleGeometry>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::RectangleGeometry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::RenderingEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::RenderingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::RotateTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::RotateTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::ScaleTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::ScaleTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::SkewTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::SkewTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::SolidColorBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::SolidColorBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TileBrush>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TileBrush & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TimelineMarker>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TimelineMarker & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TimelineMarkerCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TimelineMarkerCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::Transform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::Transform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TransformCollection>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TransformCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TransformGroup>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TransformGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::TranslateTransform>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::TranslateTransform & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Xaml::Media::VisualTreeHelper>
+{
+    size_t operator()(const winrt::Windows::UI::Xaml::Media::VisualTreeHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,11 +14,11 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::Search::Core {
 
-struct __declspec(uuid("a1195f27-b1a7-41a2-879d-6a68687e5985")) __declspec(novtable) IRequestingFocusOnKeyboardInputEventArgs : Windows::IInspectable
+struct __declspec(uuid("a1195f27-b1a7-41a2-879d-6a68687e5985")) __declspec(novtable) IRequestingFocusOnKeyboardInputEventArgs : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("5b5554b0-1527-437b-95c5-8d18d2b8af55")) __declspec(novtable) ISearchSuggestion : Windows::IInspectable
+struct __declspec(uuid("5b5554b0-1527-437b-95c5-8d18d2b8af55")) __declspec(novtable) ISearchSuggestion : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Kind(winrt::Windows::ApplicationModel::Search::Core::SearchSuggestionKind * value) = 0;
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
@@ -28,7 +28,7 @@ struct __declspec(uuid("5b5554b0-1527-437b-95c5-8d18d2b8af55")) __declspec(novta
     virtual HRESULT __stdcall get_ImageAlternateText(hstring * value) = 0;
 };
 
-struct __declspec(uuid("3f0c50a1-cb9d-497b-b500-3c04ac959ad2")) __declspec(novtable) ISearchSuggestionManager : Windows::IInspectable
+struct __declspec(uuid("3f0c50a1-cb9d-497b-b500-3c04ac959ad2")) __declspec(novtable) ISearchSuggestionManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SearchHistoryEnabled(bool * value) = 0;
     virtual HRESULT __stdcall put_SearchHistoryEnabled(bool value) = 0;
@@ -48,7 +48,7 @@ struct __declspec(uuid("3f0c50a1-cb9d-497b-b500-3c04ac959ad2")) __declspec(novta
     virtual HRESULT __stdcall remove_RequestingFocusOnKeyboardInput(event_token token) = 0;
 };
 
-struct __declspec(uuid("6fd519e5-9e7e-4ab4-8be3-c76b1bd4344a")) __declspec(novtable) ISearchSuggestionsRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("6fd519e5-9e7e-4ab4-8be3-c76b1bd4344a")) __declspec(novtable) ISearchSuggestionsRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_QueryText(hstring * value) = 0;
     virtual HRESULT __stdcall get_Language(hstring * value) = 0;
@@ -69,10 +69,55 @@ template <> struct traits<Windows::ApplicationModel::Search::Core::SearchSuggest
 
 namespace Windows::ApplicationModel::Search::Core {
 
-template <typename T> struct impl_IRequestingFocusOnKeyboardInputEventArgs;
-template <typename T> struct impl_ISearchSuggestion;
-template <typename T> struct impl_ISearchSuggestionManager;
-template <typename T> struct impl_ISearchSuggestionsRequestedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_IRequestingFocusOnKeyboardInputEventArgs
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISearchSuggestion
+{
+    Windows::ApplicationModel::Search::Core::SearchSuggestionKind Kind() const;
+    hstring Text() const;
+    hstring Tag() const;
+    hstring DetailText() const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Image() const;
+    hstring ImageAlternateText() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISearchSuggestionManager
+{
+    bool SearchHistoryEnabled() const;
+    void SearchHistoryEnabled(bool value) const;
+    hstring SearchHistoryContext() const;
+    void SearchHistoryContext(hstring_view value) const;
+    void SetLocalContentSuggestionSettings(const Windows::ApplicationModel::Search::LocalContentSuggestionSettings & settings) const;
+    void SetQuery(hstring_view queryText) const;
+    void SetQuery(hstring_view queryText, hstring_view language) const;
+    void SetQuery(hstring_view queryText, hstring_view language, const Windows::ApplicationModel::Search::SearchQueryLinguisticDetails & linguisticDetails) const;
+    Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion> Suggestions() const;
+    void AddToHistory(hstring_view queryText) const;
+    void AddToHistory(hstring_view queryText, hstring_view language) const;
+    void ClearHistory() const;
+    event_token SuggestionsRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> & handler) const;
+    using SuggestionsRequested_revoker = event_revoker<ISearchSuggestionManager>;
+    SuggestionsRequested_revoker SuggestionsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> & handler) const;
+    void SuggestionsRequested(event_token token) const;
+    event_token RequestingFocusOnKeyboardInput(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> & handler) const;
+    using RequestingFocusOnKeyboardInput_revoker = event_revoker<ISearchSuggestionManager>;
+    RequestingFocusOnKeyboardInput_revoker RequestingFocusOnKeyboardInput(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> & handler) const;
+    void RequestingFocusOnKeyboardInput(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISearchSuggestionsRequestedEventArgs
+{
+    hstring QueryText() const;
+    hstring Language() const;
+    Windows::ApplicationModel::Search::SearchQueryLinguisticDetails LinguisticDetails() const;
+    Windows::ApplicationModel::Search::SearchSuggestionsRequest Request() const;
+};
 
 }
 

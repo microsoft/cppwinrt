@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -177,6 +177,61 @@ struct UserNotificationChangedEventArgs;
 
 namespace Windows::UI::Notifications {
 
+template <typename T> struct impl_IAdaptiveNotificationContent;
+template <typename T> struct impl_IAdaptiveNotificationText;
+template <typename T> struct impl_IBadgeNotification;
+template <typename T> struct impl_IBadgeNotificationFactory;
+template <typename T> struct impl_IBadgeUpdateManagerForUser;
+template <typename T> struct impl_IBadgeUpdateManagerStatics;
+template <typename T> struct impl_IBadgeUpdateManagerStatics2;
+template <typename T> struct impl_IBadgeUpdater;
+template <typename T> struct impl_IKnownAdaptiveNotificationHintsStatics;
+template <typename T> struct impl_IKnownAdaptiveNotificationTextStylesStatics;
+template <typename T> struct impl_IKnownNotificationBindingsStatics;
+template <typename T> struct impl_INotification;
+template <typename T> struct impl_INotificationBinding;
+template <typename T> struct impl_INotificationVisual;
+template <typename T> struct impl_IScheduledTileNotification;
+template <typename T> struct impl_IScheduledTileNotificationFactory;
+template <typename T> struct impl_IScheduledToastNotification;
+template <typename T> struct impl_IScheduledToastNotification2;
+template <typename T> struct impl_IScheduledToastNotification3;
+template <typename T> struct impl_IScheduledToastNotificationFactory;
+template <typename T> struct impl_IShownTileNotification;
+template <typename T> struct impl_ITileFlyoutNotification;
+template <typename T> struct impl_ITileFlyoutNotificationFactory;
+template <typename T> struct impl_ITileFlyoutUpdateManagerStatics;
+template <typename T> struct impl_ITileFlyoutUpdater;
+template <typename T> struct impl_ITileNotification;
+template <typename T> struct impl_ITileNotificationFactory;
+template <typename T> struct impl_ITileUpdateManagerForUser;
+template <typename T> struct impl_ITileUpdateManagerStatics;
+template <typename T> struct impl_ITileUpdateManagerStatics2;
+template <typename T> struct impl_ITileUpdater;
+template <typename T> struct impl_ITileUpdater2;
+template <typename T> struct impl_IToastActivatedEventArgs;
+template <typename T> struct impl_IToastDismissedEventArgs;
+template <typename T> struct impl_IToastFailedEventArgs;
+template <typename T> struct impl_IToastNotification;
+template <typename T> struct impl_IToastNotification2;
+template <typename T> struct impl_IToastNotification3;
+template <typename T> struct impl_IToastNotificationActionTriggerDetail;
+template <typename T> struct impl_IToastNotificationFactory;
+template <typename T> struct impl_IToastNotificationHistory;
+template <typename T> struct impl_IToastNotificationHistory2;
+template <typename T> struct impl_IToastNotificationHistoryChangedTriggerDetail;
+template <typename T> struct impl_IToastNotificationManagerForUser;
+template <typename T> struct impl_IToastNotificationManagerStatics;
+template <typename T> struct impl_IToastNotificationManagerStatics2;
+template <typename T> struct impl_IToastNotificationManagerStatics4;
+template <typename T> struct impl_IToastNotifier;
+template <typename T> struct impl_IUserNotification;
+template <typename T> struct impl_IUserNotificationChangedEventArgs;
+
+}
+
+namespace Windows::UI::Notifications {
+
 enum class AdaptiveNotificationContentKind
 {
     Text = 0,
@@ -227,52 +282,52 @@ enum class TileFlyoutTemplateType
 
 enum class TileTemplateType
 {
-    TileSquareImage = 0,
-    TileSquareBlock = 1,
-    TileSquareText01 = 2,
-    TileSquareText02 = 3,
-    TileSquareText03 = 4,
-    TileSquareText04 = 5,
-    TileSquarePeekImageAndText01 = 6,
-    TileSquarePeekImageAndText02 = 7,
-    TileSquarePeekImageAndText03 = 8,
-    TileSquarePeekImageAndText04 = 9,
-    TileWideImage = 10,
-    TileWideImageCollection = 11,
-    TileWideImageAndText01 = 12,
-    TileWideImageAndText02 = 13,
-    TileWideBlockAndText01 = 14,
-    TileWideBlockAndText02 = 15,
-    TileWidePeekImageCollection01 = 16,
-    TileWidePeekImageCollection02 = 17,
-    TileWidePeekImageCollection03 = 18,
-    TileWidePeekImageCollection04 = 19,
-    TileWidePeekImageCollection05 = 20,
-    TileWidePeekImageCollection06 = 21,
-    TileWidePeekImageAndText01 = 22,
-    TileWidePeekImageAndText02 = 23,
-    TileWidePeekImage01 = 24,
-    TileWidePeekImage02 = 25,
-    TileWidePeekImage03 = 26,
-    TileWidePeekImage04 = 27,
-    TileWidePeekImage05 = 28,
-    TileWidePeekImage06 = 29,
-    TileWideSmallImageAndText01 = 30,
-    TileWideSmallImageAndText02 = 31,
-    TileWideSmallImageAndText03 = 32,
-    TileWideSmallImageAndText04 = 33,
-    TileWideSmallImageAndText05 = 34,
-    TileWideText01 = 35,
-    TileWideText02 = 36,
-    TileWideText03 = 37,
-    TileWideText04 = 38,
-    TileWideText05 = 39,
-    TileWideText06 = 40,
-    TileWideText07 = 41,
-    TileWideText08 = 42,
-    TileWideText09 = 43,
-    TileWideText10 = 44,
-    TileWideText11 = 45,
+    TileSquareImage [[deprecated("TileSquareImage may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Image.")]] = 0,
+    TileSquareBlock [[deprecated("TileSquareBlock may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Block.")]] = 1,
+    TileSquareText01 [[deprecated("TileSquareText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Text01.")]] = 2,
+    TileSquareText02 [[deprecated("TileSquareText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Text02.")]] = 3,
+    TileSquareText03 [[deprecated("TileSquareText03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Text03.")]] = 4,
+    TileSquareText04 [[deprecated("TileSquareText04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150Text04.")]] = 5,
+    TileSquarePeekImageAndText01 [[deprecated("TileSquarePeekImageAndText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150PeekImageAndText01.")]] = 6,
+    TileSquarePeekImageAndText02 [[deprecated("TileSquarePeekImageAndText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150PeekImageAndText02.")]] = 7,
+    TileSquarePeekImageAndText03 [[deprecated("TileSquarePeekImageAndText03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150PeekImageAndText03.")]] = 8,
+    TileSquarePeekImageAndText04 [[deprecated("TileSquarePeekImageAndText04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileSquare150x150PeekImageAndText04.")]] = 9,
+    TileWideImage [[deprecated("TileWideImage may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Image.")]] = 10,
+    TileWideImageCollection [[deprecated("TileWideImageCollection may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150ImageCollection.")]] = 11,
+    TileWideImageAndText01 [[deprecated("TileWideImageAndText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150ImageAndText01.")]] = 12,
+    TileWideImageAndText02 [[deprecated("TileWideImageAndText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150ImageAndText02.")]] = 13,
+    TileWideBlockAndText01 [[deprecated("TileWideBlockAndText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150BlockAndText01.")]] = 14,
+    TileWideBlockAndText02 [[deprecated("TileWideBlockAndText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150BlockAndText02.")]] = 15,
+    TileWidePeekImageCollection01 [[deprecated("TileWidePeekImageCollection01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection01.")]] = 16,
+    TileWidePeekImageCollection02 [[deprecated("TileWidePeekImageCollection02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection02.")]] = 17,
+    TileWidePeekImageCollection03 [[deprecated("TileWidePeekImageCollection03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection03.")]] = 18,
+    TileWidePeekImageCollection04 [[deprecated("TileWidePeekImageCollection04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection04.")]] = 19,
+    TileWidePeekImageCollection05 [[deprecated("TileWidePeekImageCollection05 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection05.")]] = 20,
+    TileWidePeekImageCollection06 [[deprecated("TileWidePeekImageCollection06 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageCollection06.")]] = 21,
+    TileWidePeekImageAndText01 [[deprecated("TileWidePeekImageAndText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageAndText01.")]] = 22,
+    TileWidePeekImageAndText02 [[deprecated("TileWidePeekImageAndText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImageAndText02.")]] = 23,
+    TileWidePeekImage01 [[deprecated("TileWidePeekImage01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage01.")]] = 24,
+    TileWidePeekImage02 [[deprecated("TileWidePeekImage02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage02.")]] = 25,
+    TileWidePeekImage03 [[deprecated("TileWidePeekImage03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage03.")]] = 26,
+    TileWidePeekImage04 [[deprecated("TileWidePeekImage04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage04.")]] = 27,
+    TileWidePeekImage05 [[deprecated("TileWidePeekImage05 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage05.")]] = 28,
+    TileWidePeekImage06 [[deprecated("TileWidePeekImage06 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150PeekImage06.")]] = 29,
+    TileWideSmallImageAndText01 [[deprecated("TileWideSmallImageAndText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150SmallImageAndText01.")]] = 30,
+    TileWideSmallImageAndText02 [[deprecated("TileWideSmallImageAndText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150SmallImageAndText02.")]] = 31,
+    TileWideSmallImageAndText03 [[deprecated("TileWideSmallImageAndText03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150SmallImageAndText03.")]] = 32,
+    TileWideSmallImageAndText04 [[deprecated("TileWideSmallImageAndText04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150SmallImageAndText04.")]] = 33,
+    TileWideSmallImageAndText05 [[deprecated("TileWideSmallImageAndText05 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150SmallImageAndText05.")]] = 34,
+    TileWideText01 [[deprecated("TileWideText01 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text01.")]] = 35,
+    TileWideText02 [[deprecated("TileWideText02 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text02.")]] = 36,
+    TileWideText03 [[deprecated("TileWideText03 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text03.")]] = 37,
+    TileWideText04 [[deprecated("TileWideText04 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text04.")]] = 38,
+    TileWideText05 [[deprecated("TileWideText05 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text05.")]] = 39,
+    TileWideText06 [[deprecated("TileWideText06 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text06.")]] = 40,
+    TileWideText07 [[deprecated("TileWideText07 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text07.")]] = 41,
+    TileWideText08 [[deprecated("TileWideText08 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text08.")]] = 42,
+    TileWideText09 [[deprecated("TileWideText09 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text09.")]] = 43,
+    TileWideText10 [[deprecated("TileWideText10 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text10.")]] = 44,
+    TileWideText11 [[deprecated("TileWideText11 may be altered or unavailable for releases after Windows 8.1. Instead, use TileWide310x150Text11.")]] = 45,
     TileSquare150x150Image = 0,
     TileSquare150x150Block = 1,
     TileSquare150x150Text01 = 2,

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -49,7 +49,7 @@ template <typename H> struct impl_SizeChangedEventHandler : implements<impl_Size
 {
     impl_SizeChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::WebUI::Core::IWebUICommandBarSizeChangedEventArgs> eventArgs) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::WebUI::Core::IWebUICommandBarSizeChangedEventArgs> eventArgs) noexcept override
     {
         try
         {
@@ -113,7 +113,7 @@ struct WINRT_EBO WebUICommandBarSymbolIcon :
 {
     WebUICommandBarSymbolIcon(std::nullptr_t) noexcept {}
     WebUICommandBarSymbolIcon();
-    WebUICommandBarSymbolIcon(hstring_ref symbol);
+    WebUICommandBarSymbolIcon(hstring_view symbol);
 };
 
 }

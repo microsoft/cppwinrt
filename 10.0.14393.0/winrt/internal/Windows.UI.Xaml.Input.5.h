@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@ WINRT_EXPORT namespace winrt {
 namespace Windows::UI::Xaml::Input {
 
 template <typename D, typename ... Interfaces> struct ManipulationStartedRoutedEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IRoutedEventArgs, Windows::UI::Xaml::Input::IManipulationStartedRoutedEventArgs>
 {
     using composable = ManipulationStartedRoutedEventArgs;

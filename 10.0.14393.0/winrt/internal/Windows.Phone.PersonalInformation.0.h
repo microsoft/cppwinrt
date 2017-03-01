@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -54,6 +54,24 @@ struct ContactQueryResult;
 struct ContactStore;
 struct KnownContactProperties;
 struct StoredContact;
+
+}
+
+namespace Windows::Phone::PersonalInformation {
+
+template <typename T> struct impl_IContactAddress;
+template <typename T> struct impl_IContactChangeRecord;
+template <typename T> struct impl_IContactInformation;
+template <typename T> struct impl_IContactInformation2;
+template <typename T> struct impl_IContactInformationStatics;
+template <typename T> struct impl_IContactQueryOptions;
+template <typename T> struct impl_IContactQueryResult;
+template <typename T> struct impl_IContactStore;
+template <typename T> struct impl_IContactStore2;
+template <typename T> struct impl_IContactStoreStatics;
+template <typename T> struct impl_IKnownContactPropertiesStatics;
+template <typename T> struct impl_IStoredContact;
+template <typename T> struct impl_IStoredContactFactory;
 
 }
 

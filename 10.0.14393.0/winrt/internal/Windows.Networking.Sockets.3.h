@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,8 +14,8 @@ struct WINRT_EBO ControlChannelTrigger :
     impl::require<ControlChannelTrigger, Windows::Networking::Sockets::IControlChannelTrigger2>
 {
     ControlChannelTrigger(std::nullptr_t) noexcept {}
-    ControlChannelTrigger(hstring_ref channelId, uint32_t serverKeepAliveIntervalInMinutes);
-    ControlChannelTrigger(hstring_ref channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType);
+    ControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes);
+    ControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType);
 };
 
 struct WINRT_EBO DatagramSocket :
@@ -26,8 +26,8 @@ struct WINRT_EBO DatagramSocket :
     DatagramSocket();
     using impl_IDatagramSocket::BindServiceNameAsync;
     using impl_IDatagramSocket2::BindServiceNameAsync;
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions);
 };
 
 struct WINRT_EBO DatagramSocketControl :
@@ -113,8 +113,8 @@ struct WINRT_EBO StreamSocket :
     StreamSocket();
     using impl_IStreamSocket::ConnectAsync;
     using impl_IStreamSocket2::ConnectAsync;
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions);
 };
 
 struct WINRT_EBO StreamSocketControl :

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Phone.System.Profile.3.h"
 #include "Windows.Phone.System.h"
@@ -17,7 +20,8 @@ struct produce<D, Windows::Phone::System::Profile::IRetailModeStatics> : produce
     {
         try
         {
-            *value = detach(this->shim().RetailModeEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RetailModeEnabled());
             return S_OK;
         }
         catch (...)
@@ -34,7 +38,7 @@ namespace Windows::Phone::System::Profile {
 template <typename D> bool impl_IRetailModeStatics<D>::RetailModeEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IRetailModeStatics &>(static_cast<const D &>(*this))->get_RetailModeEnabled(&value));
+    check_hresult(WINRT_SHIM(IRetailModeStatics)->get_RetailModeEnabled(&value));
     return value;
 }
 
@@ -46,3 +50,14 @@ inline bool RetailMode::RetailModeEnabled()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Phone::System::Profile::IRetailModeStatics>
+{
+    size_t operator()(const winrt::Windows::Phone::System::Profile::IRetailModeStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

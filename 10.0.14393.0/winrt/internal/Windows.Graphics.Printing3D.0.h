@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -159,6 +159,51 @@ struct Printing3DMultiplePropertyMaterialGroup;
 struct Printing3DTexture2CoordMaterial;
 struct Printing3DTexture2CoordMaterialGroup;
 struct Printing3DTextureResource;
+
+}
+
+namespace Windows::Graphics::Printing3D {
+
+template <typename T> struct impl_IPrint3DManager;
+template <typename T> struct impl_IPrint3DManagerStatics;
+template <typename T> struct impl_IPrint3DTask;
+template <typename T> struct impl_IPrint3DTaskCompletedEventArgs;
+template <typename T> struct impl_IPrint3DTaskRequest;
+template <typename T> struct impl_IPrint3DTaskRequestedEventArgs;
+template <typename T> struct impl_IPrint3DTaskSourceChangedEventArgs;
+template <typename T> struct impl_IPrint3DTaskSourceRequestedArgs;
+template <typename T> struct impl_IPrinting3D3MFPackage;
+template <typename T> struct impl_IPrinting3D3MFPackageStatics;
+template <typename T> struct impl_IPrinting3DBaseMaterial;
+template <typename T> struct impl_IPrinting3DBaseMaterialGroup;
+template <typename T> struct impl_IPrinting3DBaseMaterialGroupFactory;
+template <typename T> struct impl_IPrinting3DBaseMaterialStatics;
+template <typename T> struct impl_IPrinting3DColorMaterial;
+template <typename T> struct impl_IPrinting3DColorMaterial2;
+template <typename T> struct impl_IPrinting3DColorMaterialGroup;
+template <typename T> struct impl_IPrinting3DColorMaterialGroupFactory;
+template <typename T> struct impl_IPrinting3DComponent;
+template <typename T> struct impl_IPrinting3DComponentWithMatrix;
+template <typename T> struct impl_IPrinting3DCompositeMaterial;
+template <typename T> struct impl_IPrinting3DCompositeMaterialGroup;
+template <typename T> struct impl_IPrinting3DCompositeMaterialGroup2;
+template <typename T> struct impl_IPrinting3DCompositeMaterialGroupFactory;
+template <typename T> struct impl_IPrinting3DFaceReductionOptions;
+template <typename T> struct impl_IPrinting3DMaterial;
+template <typename T> struct impl_IPrinting3DMesh;
+template <typename T> struct impl_IPrinting3DMeshVerificationResult;
+template <typename T> struct impl_IPrinting3DModel;
+template <typename T> struct impl_IPrinting3DModel2;
+template <typename T> struct impl_IPrinting3DModelTexture;
+template <typename T> struct impl_IPrinting3DMultiplePropertyMaterial;
+template <typename T> struct impl_IPrinting3DMultiplePropertyMaterialGroup;
+template <typename T> struct impl_IPrinting3DMultiplePropertyMaterialGroupFactory;
+template <typename T> struct impl_IPrinting3DTexture2CoordMaterial;
+template <typename T> struct impl_IPrinting3DTexture2CoordMaterialGroup;
+template <typename T> struct impl_IPrinting3DTexture2CoordMaterialGroup2;
+template <typename T> struct impl_IPrinting3DTexture2CoordMaterialGroupFactory;
+template <typename T> struct impl_IPrinting3DTextureResource;
+template <typename T> struct impl_Print3DTaskSourceRequestedHandler;
 
 }
 

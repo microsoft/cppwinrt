@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -109,6 +109,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("dfdcf091-6e3c-5e5b-a193-03acc414c921")) __declspec(novtable) IVectorView<Windows::UI::Input::Spatial::SpatialInteractionSourceState> : impl_IVectorView<Windows::UI::Input::Spatial::SpatialInteractionSourceState> {};
 #endif
 
+#ifndef WINRT_GENERIC_9e0b64a3_c4fd_5cd8_848e_fa610f276b17
+#define WINRT_GENERIC_9e0b64a3_c4fd_5cd8_848e_fa610f276b17
+template <> struct __declspec(uuid("9e0b64a3-c4fd-5cd8-848e-fa610f276b17")) __declspec(novtable) IVector<Windows::UI::Input::Spatial::SpatialInteractionSourceState> : impl_IVector<Windows::UI::Input::Spatial::SpatialInteractionSourceState> {};
+#endif
+
 #ifndef WINRT_GENERIC_23f50032_907e_5d73_bbdc_f7563de655c4
 #define WINRT_GENERIC_23f50032_907e_5d73_bbdc_f7563de655c4
 template <> struct __declspec(uuid("23f50032-907e-5d73-bbdc-f7563de655c4")) __declspec(novtable) IIterator<Windows::UI::Input::Spatial::SpatialInteractionSourceState> : impl_IIterator<Windows::UI::Input::Spatial::SpatialInteractionSourceState> {};
@@ -124,518 +129,207 @@ template <> struct __declspec(uuid("7ecce0f5-0874-506f-8d42-4c9519156407")) __de
 
 namespace Windows::UI::Input::Spatial {
 
-template <typename D>
-struct WINRT_EBO impl_ISpatialGestureRecognizer
-{
-    event_token RecognitionStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialRecognitionStartedEventArgs> & handler) const;
-    using RecognitionStarted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    RecognitionStarted_revoker RecognitionStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialRecognitionStartedEventArgs> & handler) const;
-    void RecognitionStarted(event_token token) const;
-    event_token RecognitionEnded(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialRecognitionEndedEventArgs> & handler) const;
-    using RecognitionEnded_revoker = event_revoker<ISpatialGestureRecognizer>;
-    RecognitionEnded_revoker RecognitionEnded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialRecognitionEndedEventArgs> & handler) const;
-    void RecognitionEnded(event_token token) const;
-    event_token Tapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialTappedEventArgs> & handler) const;
-    using Tapped_revoker = event_revoker<ISpatialGestureRecognizer>;
-    Tapped_revoker Tapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialTappedEventArgs> & handler) const;
-    void Tapped(event_token token) const;
-    event_token HoldStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldStartedEventArgs> & handler) const;
-    using HoldStarted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    HoldStarted_revoker HoldStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldStartedEventArgs> & handler) const;
-    void HoldStarted(event_token token) const;
-    event_token HoldCompleted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldCompletedEventArgs> & handler) const;
-    using HoldCompleted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    HoldCompleted_revoker HoldCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldCompletedEventArgs> & handler) const;
-    void HoldCompleted(event_token token) const;
-    event_token HoldCanceled(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldCanceledEventArgs> & handler) const;
-    using HoldCanceled_revoker = event_revoker<ISpatialGestureRecognizer>;
-    HoldCanceled_revoker HoldCanceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialHoldCanceledEventArgs> & handler) const;
-    void HoldCanceled(event_token token) const;
-    event_token ManipulationStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationStartedEventArgs> & handler) const;
-    using ManipulationStarted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    ManipulationStarted_revoker ManipulationStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationStartedEventArgs> & handler) const;
-    void ManipulationStarted(event_token token) const;
-    event_token ManipulationUpdated(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationUpdatedEventArgs> & handler) const;
-    using ManipulationUpdated_revoker = event_revoker<ISpatialGestureRecognizer>;
-    ManipulationUpdated_revoker ManipulationUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationUpdatedEventArgs> & handler) const;
-    void ManipulationUpdated(event_token token) const;
-    event_token ManipulationCompleted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationCompletedEventArgs> & handler) const;
-    using ManipulationCompleted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    ManipulationCompleted_revoker ManipulationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationCompletedEventArgs> & handler) const;
-    void ManipulationCompleted(event_token token) const;
-    event_token ManipulationCanceled(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationCanceledEventArgs> & handler) const;
-    using ManipulationCanceled_revoker = event_revoker<ISpatialGestureRecognizer>;
-    ManipulationCanceled_revoker ManipulationCanceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialManipulationCanceledEventArgs> & handler) const;
-    void ManipulationCanceled(event_token token) const;
-    event_token NavigationStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationStartedEventArgs> & handler) const;
-    using NavigationStarted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    NavigationStarted_revoker NavigationStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationStartedEventArgs> & handler) const;
-    void NavigationStarted(event_token token) const;
-    event_token NavigationUpdated(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationUpdatedEventArgs> & handler) const;
-    using NavigationUpdated_revoker = event_revoker<ISpatialGestureRecognizer>;
-    NavigationUpdated_revoker NavigationUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationUpdatedEventArgs> & handler) const;
-    void NavigationUpdated(event_token token) const;
-    event_token NavigationCompleted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationCompletedEventArgs> & handler) const;
-    using NavigationCompleted_revoker = event_revoker<ISpatialGestureRecognizer>;
-    NavigationCompleted_revoker NavigationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationCompletedEventArgs> & handler) const;
-    void NavigationCompleted(event_token token) const;
-    event_token NavigationCanceled(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationCanceledEventArgs> & handler) const;
-    using NavigationCanceled_revoker = event_revoker<ISpatialGestureRecognizer>;
-    NavigationCanceled_revoker NavigationCanceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialGestureRecognizer, Windows::UI::Input::Spatial::SpatialNavigationCanceledEventArgs> & handler) const;
-    void NavigationCanceled(event_token token) const;
-    void CaptureInteraction(const Windows::UI::Input::Spatial::SpatialInteraction & interaction) const;
-    void CancelPendingGestures() const;
-    bool TrySetGestureSettings(Windows::UI::Input::Spatial::SpatialGestureSettings settings) const;
-    Windows::UI::Input::Spatial::SpatialGestureSettings GestureSettings() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialGestureRecognizerFactory
-{
-    Windows::UI::Input::Spatial::SpatialGestureRecognizer Create(Windows::UI::Input::Spatial::SpatialGestureSettings settings) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialHoldCanceledEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialHoldCompletedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialHoldStartedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteraction
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceState SourceState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionDetectedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    Windows::UI::Input::Spatial::SpatialInteraction Interaction() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionManager
-{
-    event_token SourceDetected(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    using SourceDetected_revoker = event_revoker<ISpatialInteractionManager>;
-    SourceDetected_revoker SourceDetected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    void SourceDetected(event_token token) const;
-    event_token SourceLost(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    using SourceLost_revoker = event_revoker<ISpatialInteractionManager>;
-    SourceLost_revoker SourceLost(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    void SourceLost(event_token token) const;
-    event_token SourceUpdated(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    using SourceUpdated_revoker = event_revoker<ISpatialInteractionManager>;
-    SourceUpdated_revoker SourceUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    void SourceUpdated(event_token token) const;
-    event_token SourcePressed(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    using SourcePressed_revoker = event_revoker<ISpatialInteractionManager>;
-    SourcePressed_revoker SourcePressed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    void SourcePressed(event_token token) const;
-    event_token SourceReleased(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    using SourceReleased_revoker = event_revoker<ISpatialInteractionManager>;
-    SourceReleased_revoker SourceReleased(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionSourceEventArgs> & handler) const;
-    void SourceReleased(event_token token) const;
-    event_token InteractionDetected(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionDetectedEventArgs> & handler) const;
-    using InteractionDetected_revoker = event_revoker<ISpatialInteractionManager>;
-    InteractionDetected_revoker InteractionDetected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Spatial::SpatialInteractionManager, Windows::UI::Input::Spatial::SpatialInteractionDetectedEventArgs> & handler) const;
-    void InteractionDetected(event_token token) const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Input::Spatial::SpatialInteractionSourceState> GetDetectedSourcesAtTimestamp(const Windows::Perception::PerceptionTimestamp & timeStamp) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionManagerStatics
-{
-    Windows::UI::Input::Spatial::SpatialInteractionManager GetForCurrentView() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSource
-{
-    uint32_t Id() const;
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind Kind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSourceEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceState State() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSourceLocation
-{
-    Windows::Foundation::IReference<Windows::Foundation::Numerics::float3> Position() const;
-    Windows::Foundation::IReference<Windows::Foundation::Numerics::float3> Velocity() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSourceLocation2
-{
-    Windows::Foundation::IReference<Windows::Foundation::Numerics::quaternion> Orientation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSourceProperties
-{
-    Windows::Foundation::IReference<Windows::Foundation::Numerics::float3> TryGetSourceLossMitigationDirection(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    double SourceLossRisk() const;
-    Windows::UI::Input::Spatial::SpatialInteractionSourceLocation TryGetLocation(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialInteractionSourceState
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSource Source() const;
-    Windows::UI::Input::Spatial::SpatialInteractionSourceProperties Properties() const;
-    bool IsPressed() const;
-    Windows::Perception::PerceptionTimestamp Timestamp() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialManipulationCanceledEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialManipulationCompletedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialManipulationDelta TryGetCumulativeDelta(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialManipulationDelta
-{
-    Windows::Foundation::Numerics::float3 Translation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialManipulationStartedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialManipulationUpdatedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialManipulationDelta TryGetCumulativeDelta(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialNavigationCanceledEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialNavigationCompletedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::Foundation::Numerics::float3 NormalizedOffset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialNavigationStartedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    bool IsNavigatingX() const;
-    bool IsNavigatingY() const;
-    bool IsNavigatingZ() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialNavigationUpdatedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::Foundation::Numerics::float3 NormalizedOffset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialPointerPose
-{
-    Windows::Perception::PerceptionTimestamp Timestamp() const;
-    Windows::Perception::People::HeadPose Head() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialPointerPoseStatics
-{
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetAtTimestamp(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Perception::PerceptionTimestamp & timestamp) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialRecognitionEndedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialRecognitionStartedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    bool IsGesturePossible(Windows::UI::Input::Spatial::SpatialGestureSettings gesture) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialTappedEventArgs
-{
-    Windows::UI::Input::Spatial::SpatialInteractionSourceKind InteractionSourceKind() const;
-    Windows::UI::Input::Spatial::SpatialPointerPose TryGetPointerPose(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    uint32_t TapCount() const;
-};
-
 struct ISpatialGestureRecognizer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialGestureRecognizer>
 {
     ISpatialGestureRecognizer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialGestureRecognizer>(m_ptr); }
 };
 
 struct ISpatialGestureRecognizerFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialGestureRecognizerFactory>
 {
     ISpatialGestureRecognizerFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialGestureRecognizerFactory>(m_ptr); }
 };
 
 struct ISpatialHoldCanceledEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialHoldCanceledEventArgs>
 {
     ISpatialHoldCanceledEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialHoldCanceledEventArgs>(m_ptr); }
 };
 
 struct ISpatialHoldCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialHoldCompletedEventArgs>
 {
     ISpatialHoldCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialHoldCompletedEventArgs>(m_ptr); }
 };
 
 struct ISpatialHoldStartedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialHoldStartedEventArgs>
 {
     ISpatialHoldStartedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialHoldStartedEventArgs>(m_ptr); }
 };
 
 struct ISpatialInteraction :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteraction>
 {
     ISpatialInteraction(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteraction>(m_ptr); }
 };
 
 struct ISpatialInteractionDetectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionDetectedEventArgs>
 {
     ISpatialInteractionDetectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionDetectedEventArgs>(m_ptr); }
 };
 
 struct ISpatialInteractionManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionManager>
 {
     ISpatialInteractionManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionManager>(m_ptr); }
 };
 
 struct ISpatialInteractionManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionManagerStatics>
 {
     ISpatialInteractionManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionManagerStatics>(m_ptr); }
 };
 
 struct ISpatialInteractionSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSource>
 {
     ISpatialInteractionSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSource>(m_ptr); }
 };
 
 struct ISpatialInteractionSourceEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSourceEventArgs>
 {
     ISpatialInteractionSourceEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSourceEventArgs>(m_ptr); }
 };
 
 struct ISpatialInteractionSourceLocation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSourceLocation>
 {
     ISpatialInteractionSourceLocation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSourceLocation>(m_ptr); }
 };
 
 struct ISpatialInteractionSourceLocation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSourceLocation2>
 {
     ISpatialInteractionSourceLocation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSourceLocation2>(m_ptr); }
 };
 
 struct ISpatialInteractionSourceProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSourceProperties>
 {
     ISpatialInteractionSourceProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSourceProperties>(m_ptr); }
 };
 
 struct ISpatialInteractionSourceState :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialInteractionSourceState>
 {
     ISpatialInteractionSourceState(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialInteractionSourceState>(m_ptr); }
 };
 
 struct ISpatialManipulationCanceledEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialManipulationCanceledEventArgs>
 {
     ISpatialManipulationCanceledEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialManipulationCanceledEventArgs>(m_ptr); }
 };
 
 struct ISpatialManipulationCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialManipulationCompletedEventArgs>
 {
     ISpatialManipulationCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialManipulationCompletedEventArgs>(m_ptr); }
 };
 
 struct ISpatialManipulationDelta :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialManipulationDelta>
 {
     ISpatialManipulationDelta(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialManipulationDelta>(m_ptr); }
 };
 
 struct ISpatialManipulationStartedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialManipulationStartedEventArgs>
 {
     ISpatialManipulationStartedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialManipulationStartedEventArgs>(m_ptr); }
 };
 
 struct ISpatialManipulationUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialManipulationUpdatedEventArgs>
 {
     ISpatialManipulationUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialManipulationUpdatedEventArgs>(m_ptr); }
 };
 
 struct ISpatialNavigationCanceledEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialNavigationCanceledEventArgs>
 {
     ISpatialNavigationCanceledEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialNavigationCanceledEventArgs>(m_ptr); }
 };
 
 struct ISpatialNavigationCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialNavigationCompletedEventArgs>
 {
     ISpatialNavigationCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialNavigationCompletedEventArgs>(m_ptr); }
 };
 
 struct ISpatialNavigationStartedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialNavigationStartedEventArgs>
 {
     ISpatialNavigationStartedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialNavigationStartedEventArgs>(m_ptr); }
 };
 
 struct ISpatialNavigationUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialNavigationUpdatedEventArgs>
 {
     ISpatialNavigationUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialNavigationUpdatedEventArgs>(m_ptr); }
 };
 
 struct ISpatialPointerPose :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialPointerPose>
 {
     ISpatialPointerPose(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialPointerPose>(m_ptr); }
 };
 
 struct ISpatialPointerPoseStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialPointerPoseStatics>
 {
     ISpatialPointerPoseStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialPointerPoseStatics>(m_ptr); }
 };
 
 struct ISpatialRecognitionEndedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialRecognitionEndedEventArgs>
 {
     ISpatialRecognitionEndedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialRecognitionEndedEventArgs>(m_ptr); }
 };
 
 struct ISpatialRecognitionStartedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialRecognitionStartedEventArgs>
 {
     ISpatialRecognitionStartedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialRecognitionStartedEventArgs>(m_ptr); }
 };
 
 struct ISpatialTappedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialTappedEventArgs>
 {
     ISpatialTappedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialTappedEventArgs>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -32,7 +32,7 @@ struct WINRT_EBO LocalLocation :
 struct LocalLocationFinder
 {
     LocalLocationFinder() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> FindLocalLocationsAsync(hstring_ref searchTerm, const Windows::Devices::Geolocation::Geocircle & searchArea, hstring_ref localCategory, uint32_t maxResults);
+    static Windows::Foundation::IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> FindLocalLocationsAsync(hstring_view searchTerm, const Windows::Devices::Geolocation::Geocircle & searchArea, hstring_view localCategory, uint32_t maxResults);
 };
 
 struct WINRT_EBO LocalLocationFinderResult :

@@ -1,9 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.UI.ApplicationSettings.1.h"
+#include "Windows.UI.Popups.1.h"
 #include "Windows.UI.Popups.2.h"
 
 WINRT_EXPORT namespace winrt {
@@ -115,159 +116,27 @@ template <> struct __declspec(uuid("67b64d17-4245-5d7c-bfb4-6b68dd525877")) __de
 
 namespace Windows::UI::ApplicationSettings {
 
-template <typename D>
-struct WINRT_EBO impl_IAccountsSettingsPane
-{
-    event_token AccountCommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> & handler) const;
-    using AccountCommandsRequested_revoker = event_revoker<IAccountsSettingsPane>;
-    AccountCommandsRequested_revoker AccountCommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> & handler) const;
-    void AccountCommandsRequested(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAccountsSettingsPaneCommandsRequestedEventArgs
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountProviderCommand> WebAccountProviderCommands() const;
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountCommand> WebAccountCommands() const;
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::CredentialCommand> CredentialCommands() const;
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> Commands() const;
-    hstring HeaderText() const;
-    void HeaderText(hstring_ref value) const;
-    Windows::UI::ApplicationSettings::AccountsSettingsPaneEventDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAccountsSettingsPaneEventDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAccountsSettingsPaneStatics
-{
-    Windows::UI::ApplicationSettings::AccountsSettingsPane GetForCurrentView() const;
-    void Show() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAccountsSettingsPaneStatics2
-{
-    Windows::Foundation::IAsyncAction ShowManageAccountsAsync() const;
-    Windows::Foundation::IAsyncAction ShowAddAccountAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICredentialCommand
-{
-    Windows::Security::Credentials::PasswordCredential PasswordCredential() const;
-    Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler CredentialDeleted() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICredentialCommandFactory
-{
-    Windows::UI::ApplicationSettings::CredentialCommand CreateCredentialCommand(const Windows::Security::Credentials::PasswordCredential & passwordCredential) const;
-    Windows::UI::ApplicationSettings::CredentialCommand CreateCredentialCommandWithHandler(const Windows::Security::Credentials::PasswordCredential & passwordCredential, const Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler & deleted) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsCommandFactory
-{
-    Windows::UI::ApplicationSettings::SettingsCommand CreateSettingsCommand(const Windows::IInspectable & settingsCommandId, hstring_ref label, const Windows::UI::Popups::UICommandInvokedHandler & handler) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsCommandStatics
-{
-    Windows::UI::ApplicationSettings::SettingsCommand AccountsCommand() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsPane
-{
-    event_token CommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const;
-    using CommandsRequested_revoker = event_revoker<ISettingsPane>;
-    CommandsRequested_revoker CommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const;
-    void CommandsRequested(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsPaneCommandsRequest
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> ApplicationCommands() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsPaneCommandsRequestedEventArgs
-{
-    Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISettingsPaneStatics
-{
-    Windows::UI::ApplicationSettings::SettingsPane GetForCurrentView() const;
-    void Show() const;
-    Windows::UI::ApplicationSettings::SettingsEdgeLocation Edge() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountCommand
-{
-    Windows::Security::Credentials::WebAccount WebAccount() const;
-    Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler Invoked() const;
-    Windows::UI::ApplicationSettings::SupportedWebAccountActions Actions() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountCommandFactory
-{
-    Windows::UI::ApplicationSettings::WebAccountCommand CreateWebAccountCommand(const Windows::Security::Credentials::WebAccount & webAccount, const Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler & invoked, Windows::UI::ApplicationSettings::SupportedWebAccountActions actions) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountInvokedArgs
-{
-    Windows::UI::ApplicationSettings::WebAccountAction Action() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProviderCommand
-{
-    Windows::Security::Credentials::WebAccountProvider WebAccountProvider() const;
-    Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler Invoked() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProviderCommandFactory
-{
-    Windows::UI::ApplicationSettings::WebAccountProviderCommand CreateWebAccountProviderCommand(const Windows::Security::Credentials::WebAccountProvider & webAccountProvider, const Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler & invoked) const;
-};
-
-struct CredentialCommandCredentialDeletedHandler : Windows::IUnknown
+struct CredentialCommandCredentialDeletedHandler : Windows::Foundation::IUnknown
 {
     CredentialCommandCredentialDeletedHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<CredentialCommandCredentialDeletedHandler>(m_ptr); }
     template <typename L> CredentialCommandCredentialDeletedHandler(L lambda);
     template <typename F> CredentialCommandCredentialDeletedHandler (F * function);
     template <typename O, typename M> CredentialCommandCredentialDeletedHandler(O * object, M method);
     void operator()(const Windows::UI::ApplicationSettings::CredentialCommand & command) const;
 };
 
-struct WebAccountCommandInvokedHandler : Windows::IUnknown
+struct WebAccountCommandInvokedHandler : Windows::Foundation::IUnknown
 {
     WebAccountCommandInvokedHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<WebAccountCommandInvokedHandler>(m_ptr); }
     template <typename L> WebAccountCommandInvokedHandler(L lambda);
     template <typename F> WebAccountCommandInvokedHandler (F * function);
     template <typename O, typename M> WebAccountCommandInvokedHandler(O * object, M method);
     void operator()(const Windows::UI::ApplicationSettings::WebAccountCommand & command, const Windows::UI::ApplicationSettings::WebAccountInvokedArgs & args) const;
 };
 
-struct WebAccountProviderCommandInvokedHandler : Windows::IUnknown
+struct WebAccountProviderCommandInvokedHandler : Windows::Foundation::IUnknown
 {
     WebAccountProviderCommandInvokedHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<WebAccountProviderCommandInvokedHandler>(m_ptr); }
     template <typename L> WebAccountProviderCommandInvokedHandler(L lambda);
     template <typename F> WebAccountProviderCommandInvokedHandler (F * function);
     template <typename O, typename M> WebAccountProviderCommandInvokedHandler(O * object, M method);
@@ -275,148 +144,134 @@ struct WebAccountProviderCommandInvokedHandler : Windows::IUnknown
 };
 
 struct IAccountsSettingsPane :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAccountsSettingsPane>
 {
     IAccountsSettingsPane(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAccountsSettingsPane>(m_ptr); }
 };
 
 struct IAccountsSettingsPaneCommandsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAccountsSettingsPaneCommandsRequestedEventArgs>
 {
     IAccountsSettingsPaneCommandsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAccountsSettingsPaneCommandsRequestedEventArgs>(m_ptr); }
 };
 
 struct IAccountsSettingsPaneEventDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAccountsSettingsPaneEventDeferral>
 {
     IAccountsSettingsPaneEventDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAccountsSettingsPaneEventDeferral>(m_ptr); }
 };
 
 struct IAccountsSettingsPaneStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAccountsSettingsPaneStatics>
 {
     IAccountsSettingsPaneStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAccountsSettingsPaneStatics>(m_ptr); }
 };
 
 struct IAccountsSettingsPaneStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAccountsSettingsPaneStatics2>,
     impl::require<IAccountsSettingsPaneStatics2, Windows::UI::ApplicationSettings::IAccountsSettingsPaneStatics>
 {
     IAccountsSettingsPaneStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAccountsSettingsPaneStatics2>(m_ptr); }
 };
 
 struct ICredentialCommand :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialCommand>
 {
     ICredentialCommand(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialCommand>(m_ptr); }
 };
 
 struct ICredentialCommandFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialCommandFactory>
 {
     ICredentialCommandFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialCommandFactory>(m_ptr); }
 };
 
 struct ISettingsCommandFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsCommandFactory>
 {
     ISettingsCommandFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsCommandFactory>(m_ptr); }
 };
 
 struct ISettingsCommandStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsCommandStatics>
 {
     ISettingsCommandStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsCommandStatics>(m_ptr); }
 };
 
 struct ISettingsPane :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsPane>
 {
     ISettingsPane(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsPane>(m_ptr); }
 };
+struct [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] ISettingsPane;
 
 struct ISettingsPaneCommandsRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsPaneCommandsRequest>
 {
     ISettingsPaneCommandsRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsPaneCommandsRequest>(m_ptr); }
 };
+struct [[deprecated("SettingsPaneCommandsRequest is deprecated and might not work on all platforms. For more info, see MSDN.")]] ISettingsPaneCommandsRequest;
 
 struct ISettingsPaneCommandsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsPaneCommandsRequestedEventArgs>
 {
     ISettingsPaneCommandsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsPaneCommandsRequestedEventArgs>(m_ptr); }
 };
+struct [[deprecated("SettingsPaneCommandsRequestedEventArgs is deprecated and might not work on all platforms. For more info, see MSDN.")]] ISettingsPaneCommandsRequestedEventArgs;
 
 struct ISettingsPaneStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISettingsPaneStatics>
 {
     ISettingsPaneStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISettingsPaneStatics>(m_ptr); }
 };
+struct [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] ISettingsPaneStatics;
 
 struct IWebAccountCommand :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountCommand>
 {
     IWebAccountCommand(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountCommand>(m_ptr); }
 };
 
 struct IWebAccountCommandFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountCommandFactory>
 {
     IWebAccountCommandFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountCommandFactory>(m_ptr); }
 };
 
 struct IWebAccountInvokedArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountInvokedArgs>
 {
     IWebAccountInvokedArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountInvokedArgs>(m_ptr); }
 };
 
 struct IWebAccountProviderCommand :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProviderCommand>
 {
     IWebAccountProviderCommand(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProviderCommand>(m_ptr); }
 };
 
 struct IWebAccountProviderCommandFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProviderCommandFactory>
 {
     IWebAccountProviderCommandFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProviderCommandFactory>(m_ptr); }
 };
 
 }

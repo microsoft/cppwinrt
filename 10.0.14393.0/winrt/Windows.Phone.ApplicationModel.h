@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Phone.ApplicationModel.3.h"
 
@@ -16,7 +19,8 @@ struct produce<D, Windows::Phone::ApplicationModel::IApplicationProfileStatics> 
     {
         try
         {
-            *value = detach(this->shim().Modes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Modes());
             return S_OK;
         }
         catch (...)
@@ -33,7 +37,7 @@ namespace Windows::Phone::ApplicationModel {
 template <typename D> Windows::Phone::ApplicationModel::ApplicationProfileModes impl_IApplicationProfileStatics<D>::Modes() const
 {
     Windows::Phone::ApplicationModel::ApplicationProfileModes value {};
-    check_hresult(static_cast<const IApplicationProfileStatics &>(static_cast<const D &>(*this))->get_Modes(&value));
+    check_hresult(WINRT_SHIM(IApplicationProfileStatics)->get_Modes(&value));
     return value;
 }
 
@@ -45,3 +49,14 @@ inline Windows::Phone::ApplicationModel::ApplicationProfileModes ApplicationProf
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Phone::ApplicationModel::IApplicationProfileStatics>
+{
+    size_t operator()(const winrt::Windows::Phone::ApplicationModel::IApplicationProfileStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

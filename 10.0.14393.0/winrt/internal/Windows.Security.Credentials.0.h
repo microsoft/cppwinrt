@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -62,6 +62,26 @@ struct PasswordCredentialPropertyStore;
 struct PasswordVault;
 struct WebAccount;
 struct WebAccountProvider;
+
+}
+
+namespace Windows::Security::Credentials {
+
+template <typename T> struct impl_ICredentialFactory;
+template <typename T> struct impl_IKeyCredential;
+template <typename T> struct impl_IKeyCredentialAttestationResult;
+template <typename T> struct impl_IKeyCredentialManagerStatics;
+template <typename T> struct impl_IKeyCredentialOperationResult;
+template <typename T> struct impl_IKeyCredentialRetrievalResult;
+template <typename T> struct impl_IPasswordCredential;
+template <typename T> struct impl_IPasswordVault;
+template <typename T> struct impl_IWebAccount;
+template <typename T> struct impl_IWebAccount2;
+template <typename T> struct impl_IWebAccountFactory;
+template <typename T> struct impl_IWebAccountProvider;
+template <typename T> struct impl_IWebAccountProvider2;
+template <typename T> struct impl_IWebAccountProvider3;
+template <typename T> struct impl_IWebAccountProviderFactory;
 
 }
 

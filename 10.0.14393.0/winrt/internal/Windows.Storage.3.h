@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_ApplicationDataSetVersionHandler : implements<
 {
     impl_ApplicationDataSetVersionHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Storage::ISetVersionRequest> setVersionRequest) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Storage::ISetVersionRequest> setVersionRequest) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_StreamedFileDataRequestedHandler : implements<
 {
     impl_StreamedFileDataRequestedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Storage::Streams::IOutputStream> stream) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> stream) noexcept override
     {
         try
         {
@@ -87,14 +87,14 @@ struct CachedFileManager
 struct DownloadsFolder
 {
     DownloadsFolder() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_view desiredName);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_view desiredName);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option);
 };
 
 struct FileIO
@@ -102,19 +102,19 @@ struct FileIO
     FileIO() = delete;
     static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(const Windows::Storage::IStorageFile & file);
     static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents);
-    static Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents);
-    static Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents);
+    static Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents);
+    static Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(const Windows::Storage::IStorageFile & file);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines);
-    static Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines);
-    static Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines);
+    static Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines);
+    static Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding);
     static Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ReadBufferAsync(const Windows::Storage::IStorageFile & file);
     static Windows::Foundation::IAsyncAction WriteBufferAsync(const Windows::Storage::IStorageFile & file, const Windows::Storage::Streams::IBuffer & buffer);
-    static Windows::Foundation::IAsyncAction WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_ref<const uint8_t> buffer);
+    static Windows::Foundation::IAsyncAction WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_view<const uint8_t> buffer);
 };
 
 struct KnownFolders
@@ -139,21 +139,21 @@ struct KnownFolders
 struct PathIO
 {
     PathIO() = delete;
-    static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_ref absolutePath);
-    static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction WriteTextAsync(hstring_ref absolutePath, hstring_ref contents);
-    static Windows::Foundation::IAsyncAction WriteTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction AppendTextAsync(hstring_ref absolutePath, hstring_ref contents);
-    static Windows::Foundation::IAsyncAction AppendTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_ref absolutePath);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines);
-    static Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines);
-    static Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ReadBufferAsync(hstring_ref absolutePath);
-    static Windows::Foundation::IAsyncAction WriteBufferAsync(hstring_ref absolutePath, const Windows::Storage::Streams::IBuffer & buffer);
-    static Windows::Foundation::IAsyncAction WriteBytesAsync(hstring_ref absolutePath, array_ref<const uint8_t> buffer);
+    static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_view absolutePath);
+    static Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction WriteTextAsync(hstring_view absolutePath, hstring_view contents);
+    static Windows::Foundation::IAsyncAction WriteTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction AppendTextAsync(hstring_view absolutePath, hstring_view contents);
+    static Windows::Foundation::IAsyncAction AppendTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_view absolutePath);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines);
+    static Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines);
+    static Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ReadBufferAsync(hstring_view absolutePath);
+    static Windows::Foundation::IAsyncAction WriteBufferAsync(hstring_view absolutePath, const Windows::Storage::Streams::IBuffer & buffer);
+    static Windows::Foundation::IAsyncAction WriteBytesAsync(hstring_view absolutePath, array_view<const uint8_t> buffer);
 };
 
 struct WINRT_EBO SetVersionDeferral :
@@ -177,11 +177,11 @@ struct WINRT_EBO StorageFile :
     using impl_IStorageFile::OpenTransactedWriteAsync;
     using impl_IStorageFile2::OpenAsync;
     using impl_IStorageFile2::OpenTransactedWriteAsync;
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileFromPathAsync(hstring_ref path);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileFromPathAsync(hstring_view path);
     static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileFromApplicationUriAsync(const Windows::Foundation::Uri & uri);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileAsync(hstring_ref displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileAsync(hstring_view displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
     static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ReplaceWithStreamedFileAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileFromUriAsync(hstring_ref displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileFromUriAsync(hstring_view displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
     static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ReplaceWithStreamedFileFromUriAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail);
 };
 
@@ -196,7 +196,7 @@ struct WINRT_EBO StorageFolder :
     using impl_IStorageFolderQueryOperations::GetFilesAsync;
     using impl_IStorageFolderQueryOperations::GetFoldersAsync;
     using impl_IStorageFolderQueryOperations::GetItemsAsync;
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderFromPathAsync(hstring_ref path);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderFromPathAsync(hstring_view path);
 };
 
 struct WINRT_EBO StorageLibrary :

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -51,21 +51,21 @@ using CrossSlideThresholds = ABI::Windows::UI::Input::CrossSlideThresholds;
 
 namespace ABI::Windows::UI::Input {
 
-struct __declspec(uuid("e9374738-6f88-41d9-8720-78e08e398349")) __declspec(novtable) ICrossSlidingEventArgs : Windows::IInspectable
+struct __declspec(uuid("e9374738-6f88-41d9-8720-78e08e398349")) __declspec(novtable) ICrossSlidingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_CrossSlidingState(winrt::Windows::UI::Input::CrossSlidingState * value) = 0;
 };
 
-struct __declspec(uuid("1c905384-083c-4bd3-b559-179cddeb33ec")) __declspec(novtable) IDraggingEventArgs : Windows::IInspectable
+struct __declspec(uuid("1c905384-083c-4bd3-b559-179cddeb33ec")) __declspec(novtable) IDraggingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_DraggingState(winrt::Windows::UI::Input::DraggingState * value) = 0;
 };
 
-struct __declspec(uuid("580d5292-2ab1-49aa-a7f0-33bd3f8df9f1")) __declspec(novtable) IEdgeGesture : Windows::IInspectable
+struct __declspec(uuid("580d5292-2ab1-49aa-a7f0-33bd3f8df9f1")) __declspec(novtable) IEdgeGesture : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_Starting(Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Starting(event_token token) = 0;
@@ -75,17 +75,17 @@ struct __declspec(uuid("580d5292-2ab1-49aa-a7f0-33bd3f8df9f1")) __declspec(novta
     virtual HRESULT __stdcall remove_Canceled(event_token token) = 0;
 };
 
-struct __declspec(uuid("44fa4a24-2d09-42e1-8b5e-368208796a4c")) __declspec(novtable) IEdgeGestureEventArgs : Windows::IInspectable
+struct __declspec(uuid("44fa4a24-2d09-42e1-8b5e-368208796a4c")) __declspec(novtable) IEdgeGestureEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Kind(winrt::Windows::UI::Input::EdgeGestureKind * value) = 0;
 };
 
-struct __declspec(uuid("bc6a8519-18ee-4043-9839-4fc584d60a14")) __declspec(novtable) IEdgeGestureStatics : Windows::IInspectable
+struct __declspec(uuid("bc6a8519-18ee-4043-9839-4fc584d60a14")) __declspec(novtable) IEdgeGestureStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::Input::IEdgeGesture ** current) = 0;
 };
 
-struct __declspec(uuid("b47a37bf-3d6b-4f88-83e8-6dcb4012ffb0")) __declspec(novtable) IGestureRecognizer : Windows::IInspectable
+struct __declspec(uuid("b47a37bf-3d6b-4f88-83e8-6dcb4012ffb0")) __declspec(novtable) IGestureRecognizer : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_GestureSettings(winrt::Windows::UI::Input::GestureSettings * value) = 0;
     virtual HRESULT __stdcall put_GestureSettings(winrt::Windows::UI::Input::GestureSettings value) = 0;
@@ -147,14 +147,14 @@ struct __declspec(uuid("b47a37bf-3d6b-4f88-83e8-6dcb4012ffb0")) __declspec(novta
     virtual HRESULT __stdcall remove_CrossSliding(event_token cookie) = 0;
 };
 
-struct __declspec(uuid("2bf755c5-e799-41b4-bb40-242f40959b71")) __declspec(novtable) IHoldingEventArgs : Windows::IInspectable
+struct __declspec(uuid("2bf755c5-e799-41b4-bb40-242f40959b71")) __declspec(novtable) IHoldingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_HoldingState(winrt::Windows::UI::Input::HoldingState * value) = 0;
 };
 
-struct __declspec(uuid("b4baf068-8f49-446c-8db5-8c0ffe85cc9e")) __declspec(novtable) IKeyboardDeliveryInterceptor : Windows::IInspectable
+struct __declspec(uuid("b4baf068-8f49-446c-8db5-8c0ffe85cc9e")) __declspec(novtable) IKeyboardDeliveryInterceptor : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsInterceptionEnabledWhenInForeground(bool * value) = 0;
     virtual HRESULT __stdcall put_IsInterceptionEnabledWhenInForeground(bool value) = 0;
@@ -164,12 +164,12 @@ struct __declspec(uuid("b4baf068-8f49-446c-8db5-8c0ffe85cc9e")) __declspec(novta
     virtual HRESULT __stdcall remove_KeyUp(event_token token) = 0;
 };
 
-struct __declspec(uuid("f9f63ba2-ceba-4755-8a7e-14c0ffecd239")) __declspec(novtable) IKeyboardDeliveryInterceptorStatics : Windows::IInspectable
+struct __declspec(uuid("f9f63ba2-ceba-4755-8a7e-14c0ffecd239")) __declspec(novtable) IKeyboardDeliveryInterceptorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::Input::IKeyboardDeliveryInterceptor ** keyboardDeliverySettings) = 0;
 };
 
-struct __declspec(uuid("b34ab22b-d19b-46ff-9f38-dec7754bb9e7")) __declspec(novtable) IManipulationCompletedEventArgs : Windows::IInspectable
+struct __declspec(uuid("b34ab22b-d19b-46ff-9f38-dec7754bb9e7")) __declspec(novtable) IManipulationCompletedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -177,7 +177,7 @@ struct __declspec(uuid("b34ab22b-d19b-46ff-9f38-dec7754bb9e7")) __declspec(novta
     virtual HRESULT __stdcall get_Velocities(Windows::UI::Input::ManipulationVelocities * value) = 0;
 };
 
-struct __declspec(uuid("dd37a898-26bf-467a-9ce5-ccf3fb11371e")) __declspec(novtable) IManipulationInertiaStartingEventArgs : Windows::IInspectable
+struct __declspec(uuid("dd37a898-26bf-467a-9ce5-ccf3fb11371e")) __declspec(novtable) IManipulationInertiaStartingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -186,14 +186,14 @@ struct __declspec(uuid("dd37a898-26bf-467a-9ce5-ccf3fb11371e")) __declspec(novta
     virtual HRESULT __stdcall get_Velocities(Windows::UI::Input::ManipulationVelocities * value) = 0;
 };
 
-struct __declspec(uuid("ddec873e-cfce-4932-8c1d-3c3d011a34c0")) __declspec(novtable) IManipulationStartedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ddec873e-cfce-4932-8c1d-3c3d011a34c0")) __declspec(novtable) IManipulationStartedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_Cumulative(Windows::UI::Input::ManipulationDelta * value) = 0;
 };
 
-struct __declspec(uuid("cb354ce5-abb8-4f9f-b3ce-8181aa61ad82")) __declspec(novtable) IManipulationUpdatedEventArgs : Windows::IInspectable
+struct __declspec(uuid("cb354ce5-abb8-4f9f-b3ce-8181aa61ad82")) __declspec(novtable) IManipulationUpdatedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -202,7 +202,7 @@ struct __declspec(uuid("cb354ce5-abb8-4f9f-b3ce-8181aa61ad82")) __declspec(novta
     virtual HRESULT __stdcall get_Velocities(Windows::UI::Input::ManipulationVelocities * value) = 0;
 };
 
-struct __declspec(uuid("ead0ca44-9ded-4037-8149-5e4cc2564468")) __declspec(novtable) IMouseWheelParameters : Windows::IInspectable
+struct __declspec(uuid("ead0ca44-9ded-4037-8149-5e4cc2564468")) __declspec(novtable) IMouseWheelParameters : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CharTranslation(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall put_CharTranslation(Windows::Foundation::Point value) = 0;
@@ -214,7 +214,7 @@ struct __declspec(uuid("ead0ca44-9ded-4037-8149-5e4cc2564468")) __declspec(novta
     virtual HRESULT __stdcall put_PageTranslation(Windows::Foundation::Point value) = 0;
 };
 
-struct __declspec(uuid("e995317d-7296-42d9-8233-c5be73b74a4a")) __declspec(novtable) IPointerPoint : Windows::IInspectable
+struct __declspec(uuid("e995317d-7296-42d9-8233-c5be73b74a4a")) __declspec(novtable) IPointerPoint : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDevice(Windows::Devices::Input::IPointerDevice ** value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -226,7 +226,7 @@ struct __declspec(uuid("e995317d-7296-42d9-8233-c5be73b74a4a")) __declspec(novta
     virtual HRESULT __stdcall get_Properties(Windows::UI::Input::IPointerPointProperties ** value) = 0;
 };
 
-struct __declspec(uuid("c79d8a4b-c163-4ee7-803f-67ce79f9972d")) __declspec(novtable) IPointerPointProperties : Windows::IInspectable
+struct __declspec(uuid("c79d8a4b-c163-4ee7-803f-67ce79f9972d")) __declspec(novtable) IPointerPointProperties : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Pressure(float * value) = 0;
     virtual HRESULT __stdcall get_IsInverted(bool * value) = 0;
@@ -254,12 +254,12 @@ struct __declspec(uuid("c79d8a4b-c163-4ee7-803f-67ce79f9972d")) __declspec(novta
     virtual HRESULT __stdcall abi_GetUsageValue(uint32_t usagePage, uint32_t usageId, int32_t * value) = 0;
 };
 
-struct __declspec(uuid("22c3433a-c83b-41c0-a296-5e232d64d6af")) __declspec(novtable) IPointerPointProperties2 : Windows::IInspectable
+struct __declspec(uuid("22c3433a-c83b-41c0-a296-5e232d64d6af")) __declspec(novtable) IPointerPointProperties2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ZDistance(Windows::Foundation::IReference<float> ** value) = 0;
 };
 
-struct __declspec(uuid("a506638d-2a1a-413e-bc75-9f38381cc069")) __declspec(novtable) IPointerPointStatics : Windows::IInspectable
+struct __declspec(uuid("a506638d-2a1a-413e-bc75-9f38381cc069")) __declspec(novtable) IPointerPointStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetCurrentPoint(uint32_t pointerId, Windows::UI::Input::IPointerPoint ** pointerPoint) = 0;
     virtual HRESULT __stdcall abi_GetIntermediatePoints(uint32_t pointerId, Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> ** pointerPoints) = 0;
@@ -267,14 +267,14 @@ struct __declspec(uuid("a506638d-2a1a-413e-bc75-9f38381cc069")) __declspec(novta
     virtual HRESULT __stdcall abi_GetIntermediatePointsTransformed(uint32_t pointerId, Windows::UI::Input::IPointerPointTransform * transform, Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> ** pointerPoints) = 0;
 };
 
-struct __declspec(uuid("4d5fe14f-b87c-4028-bc9c-59e9947fb056")) __declspec(novtable) IPointerPointTransform : Windows::IInspectable
+struct __declspec(uuid("4d5fe14f-b87c-4028-bc9c-59e9947fb056")) __declspec(novtable) IPointerPointTransform : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Inverse(Windows::UI::Input::IPointerPointTransform ** value) = 0;
     virtual HRESULT __stdcall abi_TryTransform(Windows::Foundation::Point inPoint, Windows::Foundation::Point * outPoint, bool * returnValue) = 0;
     virtual HRESULT __stdcall abi_TransformBounds(Windows::Foundation::Rect rect, Windows::Foundation::Rect * returnValue) = 0;
 };
 
-struct __declspec(uuid("4d1e6461-84f7-499d-bd91-2a36e2b7aaa2")) __declspec(novtable) IPointerVisualizationSettings : Windows::IInspectable
+struct __declspec(uuid("4d1e6461-84f7-499d-bd91-2a36e2b7aaa2")) __declspec(novtable) IPointerVisualizationSettings : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_IsContactFeedbackEnabled(bool value) = 0;
     virtual HRESULT __stdcall get_IsContactFeedbackEnabled(bool * value) = 0;
@@ -282,12 +282,12 @@ struct __declspec(uuid("4d1e6461-84f7-499d-bd91-2a36e2b7aaa2")) __declspec(novta
     virtual HRESULT __stdcall get_IsBarrelButtonFeedbackEnabled(bool * value) = 0;
 };
 
-struct __declspec(uuid("68870edb-165b-4214-b4f3-584eca8c8a69")) __declspec(novtable) IPointerVisualizationSettingsStatics : Windows::IInspectable
+struct __declspec(uuid("68870edb-165b-4214-b4f3-584eca8c8a69")) __declspec(novtable) IPointerVisualizationSettingsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::Input::IPointerVisualizationSettings ** visualizationSettings) = 0;
 };
 
-struct __declspec(uuid("3055d1c8-df51-43d4-b23b-0e1037467a09")) __declspec(novtable) IRadialController : Windows::IInspectable
+struct __declspec(uuid("3055d1c8-df51-43d4-b23b-0e1037467a09")) __declspec(novtable) IRadialController : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Menu(Windows::UI::Input::IRadialControllerMenu ** value) = 0;
     virtual HRESULT __stdcall get_RotationResolutionInDegrees(double * value) = 0;
@@ -296,11 +296,11 @@ struct __declspec(uuid("3055d1c8-df51-43d4-b23b-0e1037467a09")) __declspec(novta
     virtual HRESULT __stdcall put_UseAutomaticHapticFeedback(bool value) = 0;
     virtual HRESULT __stdcall add_ScreenContactStarted(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactStartedEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_ScreenContactStarted(event_token cookie) = 0;
-    virtual HRESULT __stdcall add_ScreenContactEnded(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::IInspectable> * handler, event_token * cookie) = 0;
+    virtual HRESULT __stdcall add_ScreenContactEnded(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_ScreenContactEnded(event_token cookie) = 0;
     virtual HRESULT __stdcall add_ScreenContactContinued(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactContinuedEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_ScreenContactContinued(event_token cookie) = 0;
-    virtual HRESULT __stdcall add_ControlLost(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::IInspectable> * handler, event_token * cookie) = 0;
+    virtual HRESULT __stdcall add_ControlLost(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_ControlLost(event_token cookie) = 0;
     virtual HRESULT __stdcall add_RotationChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerRotationChangedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RotationChanged(event_token token) = 0;
@@ -310,29 +310,29 @@ struct __declspec(uuid("3055d1c8-df51-43d4-b23b-0e1037467a09")) __declspec(novta
     virtual HRESULT __stdcall remove_ControlAcquired(event_token cookie) = 0;
 };
 
-struct __declspec(uuid("206aa438-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerButtonClickedEventArgs : Windows::IInspectable
+struct __declspec(uuid("206aa438-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerButtonClickedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Contact(Windows::UI::Input::IRadialControllerScreenContact ** value) = 0;
 };
 
-struct __declspec(uuid("a6b79ecb-6a52-4430-910c-56370a9d6b42")) __declspec(novtable) IRadialControllerConfiguration : Windows::IInspectable
+struct __declspec(uuid("a6b79ecb-6a52-4430-910c-56370a9d6b42")) __declspec(novtable) IRadialControllerConfiguration : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SetDefaultMenuItems(Windows::Foundation::Collections::IIterable<winrt::Windows::UI::Input::RadialControllerSystemMenuItemKind> * buttons) = 0;
     virtual HRESULT __stdcall abi_ResetToDefaultMenuItems() = 0;
     virtual HRESULT __stdcall abi_TrySelectDefaultMenuItem(winrt::Windows::UI::Input::RadialControllerSystemMenuItemKind type, bool * result) = 0;
 };
 
-struct __declspec(uuid("79b6b0e5-069a-4486-a99d-8db772b9642f")) __declspec(novtable) IRadialControllerConfigurationStatics : Windows::IInspectable
+struct __declspec(uuid("79b6b0e5-069a-4486-a99d-8db772b9642f")) __declspec(novtable) IRadialControllerConfigurationStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::Input::IRadialControllerConfiguration ** configuration) = 0;
 };
 
-struct __declspec(uuid("206aa439-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerControlAcquiredEventArgs : Windows::IInspectable
+struct __declspec(uuid("206aa439-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerControlAcquiredEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Contact(Windows::UI::Input::IRadialControllerScreenContact ** value) = 0;
 };
 
-struct __declspec(uuid("8506b35d-f640-4412-aba0-bad077e5ea8a")) __declspec(novtable) IRadialControllerMenu : Windows::IInspectable
+struct __declspec(uuid("8506b35d-f640-4412-aba0-bad077e5ea8a")) __declspec(novtable) IRadialControllerMenu : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Items(Windows::Foundation::Collections::IVector<Windows::UI::Input::RadialControllerMenuItem> ** value) = 0;
     virtual HRESULT __stdcall get_IsEnabled(bool * value) = 0;
@@ -342,56 +342,56 @@ struct __declspec(uuid("8506b35d-f640-4412-aba0-bad077e5ea8a")) __declspec(novta
     virtual HRESULT __stdcall abi_TrySelectPreviouslySelectedMenuItem(bool * result) = 0;
 };
 
-struct __declspec(uuid("c80fc98d-ad0b-4c9c-8f2f-136a2373a6ba")) __declspec(novtable) IRadialControllerMenuItem : Windows::IInspectable
+struct __declspec(uuid("c80fc98d-ad0b-4c9c-8f2f-136a2373a6ba")) __declspec(novtable) IRadialControllerMenuItem : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayText(hstring * value) = 0;
-    virtual HRESULT __stdcall get_Tag(Windows::IInspectable ** value) = 0;
-    virtual HRESULT __stdcall put_Tag(Windows::IInspectable * value) = 0;
-    virtual HRESULT __stdcall add_Invoked(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialControllerMenuItem, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall get_Tag(Windows::Foundation::IInspectable ** value) = 0;
+    virtual HRESULT __stdcall put_Tag(Windows::Foundation::IInspectable * value) = 0;
+    virtual HRESULT __stdcall add_Invoked(Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialControllerMenuItem, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Invoked(event_token token) = 0;
 };
 
-struct __declspec(uuid("249e0887-d842-4524-9df8-e0d647edc887")) __declspec(novtable) IRadialControllerMenuItemStatics : Windows::IInspectable
+struct __declspec(uuid("249e0887-d842-4524-9df8-e0d647edc887")) __declspec(novtable) IRadialControllerMenuItemStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateFromIcon(hstring displayText, Windows::Storage::Streams::IRandomAccessStreamReference * icon, Windows::UI::Input::IRadialControllerMenuItem ** result) = 0;
     virtual HRESULT __stdcall abi_CreateFromKnownIcon(hstring displayText, winrt::Windows::UI::Input::RadialControllerMenuKnownIcon value, Windows::UI::Input::IRadialControllerMenuItem ** result) = 0;
 };
 
-struct __declspec(uuid("206aa435-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerRotationChangedEventArgs : Windows::IInspectable
+struct __declspec(uuid("206aa435-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerRotationChangedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RotationDeltaInDegrees(double * value) = 0;
     virtual HRESULT __stdcall get_Contact(Windows::UI::Input::IRadialControllerScreenContact ** value) = 0;
 };
 
-struct __declspec(uuid("206aa434-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContact : Windows::IInspectable
+struct __declspec(uuid("206aa434-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContact : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Bounds(Windows::Foundation::Rect * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
 };
 
-struct __declspec(uuid("206aa437-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContactContinuedEventArgs : Windows::IInspectable
+struct __declspec(uuid("206aa437-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContactContinuedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Contact(Windows::UI::Input::IRadialControllerScreenContact ** value) = 0;
 };
 
-struct __declspec(uuid("206aa436-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContactStartedEventArgs : Windows::IInspectable
+struct __declspec(uuid("206aa436-e651-11e5-bf62-2c27d7404e85")) __declspec(novtable) IRadialControllerScreenContactStartedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Contact(Windows::UI::Input::IRadialControllerScreenContact ** value) = 0;
 };
 
-struct __declspec(uuid("faded0b7-b84c-4894-87aa-8f25aa5f288b")) __declspec(novtable) IRadialControllerStatics : Windows::IInspectable
+struct __declspec(uuid("faded0b7-b84c-4894-87aa-8f25aa5f288b")) __declspec(novtable) IRadialControllerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsSupported(bool * result) = 0;
     virtual HRESULT __stdcall abi_CreateForCurrentView(Windows::UI::Input::IRadialController ** result) = 0;
 };
 
-struct __declspec(uuid("4cbf40bd-af7a-4a36-9476-b1dce141709a")) __declspec(novtable) IRightTappedEventArgs : Windows::IInspectable
+struct __declspec(uuid("4cbf40bd-af7a-4a36-9476-b1dce141709a")) __declspec(novtable) IRightTappedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
 };
 
-struct __declspec(uuid("cfa126e4-253a-4c3c-953b-395c37aed309")) __declspec(novtable) ITappedEventArgs : Windows::IInspectable
+struct __declspec(uuid("cfa126e4-253a-4c3c-953b-395c37aed309")) __declspec(novtable) ITappedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -434,42 +434,432 @@ template <> struct traits<Windows::UI::Input::TappedEventArgs> { using default_i
 
 namespace Windows::UI::Input {
 
-template <typename T> struct impl_ICrossSlidingEventArgs;
-template <typename T> struct impl_IDraggingEventArgs;
-template <typename T> struct impl_IEdgeGesture;
-template <typename T> struct impl_IEdgeGestureEventArgs;
-template <typename T> struct impl_IEdgeGestureStatics;
-template <typename T> struct impl_IGestureRecognizer;
-template <typename T> struct impl_IHoldingEventArgs;
-template <typename T> struct impl_IKeyboardDeliveryInterceptor;
-template <typename T> struct impl_IKeyboardDeliveryInterceptorStatics;
-template <typename T> struct impl_IManipulationCompletedEventArgs;
-template <typename T> struct impl_IManipulationInertiaStartingEventArgs;
-template <typename T> struct impl_IManipulationStartedEventArgs;
-template <typename T> struct impl_IManipulationUpdatedEventArgs;
-template <typename T> struct impl_IMouseWheelParameters;
-template <typename T> struct impl_IPointerPoint;
-template <typename T> struct impl_IPointerPointProperties;
-template <typename T> struct impl_IPointerPointProperties2;
-template <typename T> struct impl_IPointerPointStatics;
-template <typename T> struct impl_IPointerPointTransform;
-template <typename T> struct impl_IPointerVisualizationSettings;
-template <typename T> struct impl_IPointerVisualizationSettingsStatics;
-template <typename T> struct impl_IRadialController;
-template <typename T> struct impl_IRadialControllerButtonClickedEventArgs;
-template <typename T> struct impl_IRadialControllerConfiguration;
-template <typename T> struct impl_IRadialControllerConfigurationStatics;
-template <typename T> struct impl_IRadialControllerControlAcquiredEventArgs;
-template <typename T> struct impl_IRadialControllerMenu;
-template <typename T> struct impl_IRadialControllerMenuItem;
-template <typename T> struct impl_IRadialControllerMenuItemStatics;
-template <typename T> struct impl_IRadialControllerRotationChangedEventArgs;
-template <typename T> struct impl_IRadialControllerScreenContact;
-template <typename T> struct impl_IRadialControllerScreenContactContinuedEventArgs;
-template <typename T> struct impl_IRadialControllerScreenContactStartedEventArgs;
-template <typename T> struct impl_IRadialControllerStatics;
-template <typename T> struct impl_IRightTappedEventArgs;
-template <typename T> struct impl_ITappedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_ICrossSlidingEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::CrossSlidingState CrossSlidingState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDraggingEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::DraggingState DraggingState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEdgeGesture
+{
+    event_token Starting(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    using Starting_revoker = event_revoker<IEdgeGesture>;
+    Starting_revoker Starting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    void Starting(event_token token) const;
+    event_token Completed(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    using Completed_revoker = event_revoker<IEdgeGesture>;
+    Completed_revoker Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    void Completed(event_token token) const;
+    event_token Canceled(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    using Canceled_revoker = event_revoker<IEdgeGesture>;
+    Canceled_revoker Canceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> & handler) const;
+    void Canceled(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEdgeGestureEventArgs
+{
+    Windows::UI::Input::EdgeGestureKind Kind() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEdgeGestureStatics
+{
+    Windows::UI::Input::EdgeGesture GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGestureRecognizer
+{
+    Windows::UI::Input::GestureSettings GestureSettings() const;
+    void GestureSettings(Windows::UI::Input::GestureSettings value) const;
+    bool IsInertial() const;
+    bool IsActive() const;
+    bool ShowGestureFeedback() const;
+    void ShowGestureFeedback(bool value) const;
+    Windows::Foundation::Point PivotCenter() const;
+    void PivotCenter(const Windows::Foundation::Point & value) const;
+    float PivotRadius() const;
+    void PivotRadius(float value) const;
+    float InertiaTranslationDeceleration() const;
+    void InertiaTranslationDeceleration(float value) const;
+    float InertiaRotationDeceleration() const;
+    void InertiaRotationDeceleration(float value) const;
+    float InertiaExpansionDeceleration() const;
+    void InertiaExpansionDeceleration(float value) const;
+    float InertiaTranslationDisplacement() const;
+    void InertiaTranslationDisplacement(float value) const;
+    float InertiaRotationAngle() const;
+    void InertiaRotationAngle(float value) const;
+    float InertiaExpansion() const;
+    void InertiaExpansion(float value) const;
+    bool ManipulationExact() const;
+    void ManipulationExact(bool value) const;
+    Windows::UI::Input::CrossSlideThresholds CrossSlideThresholds() const;
+    void CrossSlideThresholds(const Windows::UI::Input::CrossSlideThresholds & value) const;
+    bool CrossSlideHorizontally() const;
+    void CrossSlideHorizontally(bool value) const;
+    bool CrossSlideExact() const;
+    void CrossSlideExact(bool value) const;
+    bool AutoProcessInertia() const;
+    void AutoProcessInertia(bool value) const;
+    Windows::UI::Input::MouseWheelParameters MouseWheelParameters() const;
+    bool CanBeDoubleTap(const Windows::UI::Input::PointerPoint & value) const;
+    void ProcessDownEvent(const Windows::UI::Input::PointerPoint & value) const;
+    void ProcessMoveEvents(const Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> & value) const;
+    void ProcessUpEvent(const Windows::UI::Input::PointerPoint & value) const;
+    void ProcessMouseWheelEvent(const Windows::UI::Input::PointerPoint & value, bool isShiftKeyDown, bool isControlKeyDown) const;
+    void ProcessInertia() const;
+    void CompleteGesture() const;
+    event_token Tapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::TappedEventArgs> & handler) const;
+    using Tapped_revoker = event_revoker<IGestureRecognizer>;
+    Tapped_revoker Tapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::TappedEventArgs> & handler) const;
+    void Tapped(event_token cookie) const;
+    event_token RightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::RightTappedEventArgs> & handler) const;
+    using RightTapped_revoker = event_revoker<IGestureRecognizer>;
+    RightTapped_revoker RightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::RightTappedEventArgs> & handler) const;
+    void RightTapped(event_token cookie) const;
+    event_token Holding(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::HoldingEventArgs> & handler) const;
+    using Holding_revoker = event_revoker<IGestureRecognizer>;
+    Holding_revoker Holding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::HoldingEventArgs> & handler) const;
+    void Holding(event_token cookie) const;
+    event_token Dragging(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::DraggingEventArgs> & handler) const;
+    using Dragging_revoker = event_revoker<IGestureRecognizer>;
+    Dragging_revoker Dragging(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::DraggingEventArgs> & handler) const;
+    void Dragging(event_token cookie) const;
+    event_token ManipulationStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationStartedEventArgs> & handler) const;
+    using ManipulationStarted_revoker = event_revoker<IGestureRecognizer>;
+    ManipulationStarted_revoker ManipulationStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationStartedEventArgs> & handler) const;
+    void ManipulationStarted(event_token cookie) const;
+    event_token ManipulationUpdated(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationUpdatedEventArgs> & handler) const;
+    using ManipulationUpdated_revoker = event_revoker<IGestureRecognizer>;
+    ManipulationUpdated_revoker ManipulationUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationUpdatedEventArgs> & handler) const;
+    void ManipulationUpdated(event_token cookie) const;
+    event_token ManipulationInertiaStarting(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationInertiaStartingEventArgs> & handler) const;
+    using ManipulationInertiaStarting_revoker = event_revoker<IGestureRecognizer>;
+    ManipulationInertiaStarting_revoker ManipulationInertiaStarting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationInertiaStartingEventArgs> & handler) const;
+    void ManipulationInertiaStarting(event_token cookie) const;
+    event_token ManipulationCompleted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationCompletedEventArgs> & handler) const;
+    using ManipulationCompleted_revoker = event_revoker<IGestureRecognizer>;
+    ManipulationCompleted_revoker ManipulationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::ManipulationCompletedEventArgs> & handler) const;
+    void ManipulationCompleted(event_token cookie) const;
+    event_token CrossSliding(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::CrossSlidingEventArgs> & handler) const;
+    using CrossSliding_revoker = event_revoker<IGestureRecognizer>;
+    CrossSliding_revoker CrossSliding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::GestureRecognizer, Windows::UI::Input::CrossSlidingEventArgs> & handler) const;
+    void CrossSliding(event_token cookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHoldingEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::HoldingState HoldingState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKeyboardDeliveryInterceptor
+{
+    bool IsInterceptionEnabledWhenInForeground() const;
+    void IsInterceptionEnabledWhenInForeground(bool value) const;
+    event_token KeyDown(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::KeyboardDeliveryInterceptor, Windows::UI::Core::KeyEventArgs> & handler) const;
+    using KeyDown_revoker = event_revoker<IKeyboardDeliveryInterceptor>;
+    KeyDown_revoker KeyDown(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::KeyboardDeliveryInterceptor, Windows::UI::Core::KeyEventArgs> & handler) const;
+    void KeyDown(event_token token) const;
+    event_token KeyUp(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::KeyboardDeliveryInterceptor, Windows::UI::Core::KeyEventArgs> & handler) const;
+    using KeyUp_revoker = event_revoker<IKeyboardDeliveryInterceptor>;
+    KeyUp_revoker KeyUp(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::KeyboardDeliveryInterceptor, Windows::UI::Core::KeyEventArgs> & handler) const;
+    void KeyUp(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKeyboardDeliveryInterceptorStatics
+{
+    Windows::UI::Input::KeyboardDeliveryInterceptor GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationCompletedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationInertiaStartingEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::ManipulationDelta Delta() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationStartedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationUpdatedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    Windows::UI::Input::ManipulationDelta Delta() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMouseWheelParameters
+{
+    Windows::Foundation::Point CharTranslation() const;
+    void CharTranslation(const Windows::Foundation::Point & value) const;
+    float DeltaScale() const;
+    void DeltaScale(float value) const;
+    float DeltaRotationAngle() const;
+    void DeltaRotationAngle(float value) const;
+    Windows::Foundation::Point PageTranslation() const;
+    void PageTranslation(const Windows::Foundation::Point & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerPoint
+{
+    Windows::Devices::Input::PointerDevice PointerDevice() const;
+    Windows::Foundation::Point Position() const;
+    Windows::Foundation::Point RawPosition() const;
+    uint32_t PointerId() const;
+    uint32_t FrameId() const;
+    uint64_t Timestamp() const;
+    bool IsInContact() const;
+    Windows::UI::Input::PointerPointProperties Properties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerPointProperties
+{
+    float Pressure() const;
+    bool IsInverted() const;
+    bool IsEraser() const;
+    float Orientation() const;
+    float XTilt() const;
+    float YTilt() const;
+    float Twist() const;
+    Windows::Foundation::Rect ContactRect() const;
+    Windows::Foundation::Rect ContactRectRaw() const;
+    bool TouchConfidence() const;
+    bool IsLeftButtonPressed() const;
+    bool IsRightButtonPressed() const;
+    bool IsMiddleButtonPressed() const;
+    int32_t MouseWheelDelta() const;
+    bool IsHorizontalMouseWheel() const;
+    bool IsPrimary() const;
+    bool IsInRange() const;
+    bool IsCanceled() const;
+    bool IsBarrelButtonPressed() const;
+    bool IsXButton1Pressed() const;
+    bool IsXButton2Pressed() const;
+    Windows::UI::Input::PointerUpdateKind PointerUpdateKind() const;
+    bool HasUsage(uint32_t usagePage, uint32_t usageId) const;
+    int32_t GetUsageValue(uint32_t usagePage, uint32_t usageId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerPointProperties2
+{
+    Windows::Foundation::IReference<float> ZDistance() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerPointStatics
+{
+    Windows::UI::Input::PointerPoint GetCurrentPoint(uint32_t pointerId) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> GetIntermediatePoints(uint32_t pointerId) const;
+    Windows::UI::Input::PointerPoint GetCurrentPoint(uint32_t pointerId, const Windows::UI::Input::IPointerPointTransform & transform) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> GetIntermediatePoints(uint32_t pointerId, const Windows::UI::Input::IPointerPointTransform & transform) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerPointTransform
+{
+    Windows::UI::Input::IPointerPointTransform Inverse() const;
+    bool TryTransform(const Windows::Foundation::Point & inPoint, Windows::Foundation::Point & outPoint) const;
+    Windows::Foundation::Rect TransformBounds(const Windows::Foundation::Rect & rect) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerVisualizationSettings
+{
+    void IsContactFeedbackEnabled(bool value) const;
+    bool IsContactFeedbackEnabled() const;
+    void IsBarrelButtonFeedbackEnabled(bool value) const;
+    bool IsBarrelButtonFeedbackEnabled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerVisualizationSettingsStatics
+{
+    Windows::UI::Input::PointerVisualizationSettings GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialController
+{
+    Windows::UI::Input::RadialControllerMenu Menu() const;
+    double RotationResolutionInDegrees() const;
+    void RotationResolutionInDegrees(double value) const;
+    bool UseAutomaticHapticFeedback() const;
+    void UseAutomaticHapticFeedback(bool value) const;
+    event_token ScreenContactStarted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactStartedEventArgs> & handler) const;
+    using ScreenContactStarted_revoker = event_revoker<IRadialController>;
+    ScreenContactStarted_revoker ScreenContactStarted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactStartedEventArgs> & handler) const;
+    void ScreenContactStarted(event_token cookie) const;
+    event_token ScreenContactEnded(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> & handler) const;
+    using ScreenContactEnded_revoker = event_revoker<IRadialController>;
+    ScreenContactEnded_revoker ScreenContactEnded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> & handler) const;
+    void ScreenContactEnded(event_token cookie) const;
+    event_token ScreenContactContinued(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactContinuedEventArgs> & handler) const;
+    using ScreenContactContinued_revoker = event_revoker<IRadialController>;
+    ScreenContactContinued_revoker ScreenContactContinued(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerScreenContactContinuedEventArgs> & handler) const;
+    void ScreenContactContinued(event_token cookie) const;
+    event_token ControlLost(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> & handler) const;
+    using ControlLost_revoker = event_revoker<IRadialController>;
+    ControlLost_revoker ControlLost(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::Foundation::IInspectable> & handler) const;
+    void ControlLost(event_token cookie) const;
+    event_token RotationChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerRotationChangedEventArgs> & handler) const;
+    using RotationChanged_revoker = event_revoker<IRadialController>;
+    RotationChanged_revoker RotationChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerRotationChangedEventArgs> & handler) const;
+    void RotationChanged(event_token token) const;
+    event_token ButtonClicked(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerButtonClickedEventArgs> & handler) const;
+    using ButtonClicked_revoker = event_revoker<IRadialController>;
+    ButtonClicked_revoker ButtonClicked(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerButtonClickedEventArgs> & handler) const;
+    void ButtonClicked(event_token token) const;
+    event_token ControlAcquired(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerControlAcquiredEventArgs> & handler) const;
+    using ControlAcquired_revoker = event_revoker<IRadialController>;
+    ControlAcquired_revoker ControlAcquired(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialController, Windows::UI::Input::RadialControllerControlAcquiredEventArgs> & handler) const;
+    void ControlAcquired(event_token cookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerButtonClickedEventArgs
+{
+    Windows::UI::Input::RadialControllerScreenContact Contact() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerConfiguration
+{
+    void SetDefaultMenuItems(iterable<winrt::Windows::UI::Input::RadialControllerSystemMenuItemKind> buttons) const;
+    void ResetToDefaultMenuItems() const;
+    bool TrySelectDefaultMenuItem(Windows::UI::Input::RadialControllerSystemMenuItemKind type) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerConfigurationStatics
+{
+    Windows::UI::Input::RadialControllerConfiguration GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerControlAcquiredEventArgs
+{
+    Windows::UI::Input::RadialControllerScreenContact Contact() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerMenu
+{
+    Windows::Foundation::Collections::IVector<Windows::UI::Input::RadialControllerMenuItem> Items() const;
+    bool IsEnabled() const;
+    void IsEnabled(bool value) const;
+    Windows::UI::Input::RadialControllerMenuItem GetSelectedMenuItem() const;
+    void SelectMenuItem(const Windows::UI::Input::RadialControllerMenuItem & menuItem) const;
+    bool TrySelectPreviouslySelectedMenuItem() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerMenuItem
+{
+    hstring DisplayText() const;
+    Windows::Foundation::IInspectable Tag() const;
+    void Tag(const Windows::Foundation::IInspectable & value) const;
+    event_token Invoked(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialControllerMenuItem, Windows::Foundation::IInspectable> & handler) const;
+    using Invoked_revoker = event_revoker<IRadialControllerMenuItem>;
+    Invoked_revoker Invoked(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::RadialControllerMenuItem, Windows::Foundation::IInspectable> & handler) const;
+    void Invoked(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerMenuItemStatics
+{
+    Windows::UI::Input::RadialControllerMenuItem CreateFromIcon(hstring_view displayText, const Windows::Storage::Streams::RandomAccessStreamReference & icon) const;
+    Windows::UI::Input::RadialControllerMenuItem CreateFromKnownIcon(hstring_view displayText, Windows::UI::Input::RadialControllerMenuKnownIcon value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerRotationChangedEventArgs
+{
+    double RotationDeltaInDegrees() const;
+    Windows::UI::Input::RadialControllerScreenContact Contact() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerScreenContact
+{
+    Windows::Foundation::Rect Bounds() const;
+    Windows::Foundation::Point Position() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerScreenContactContinuedEventArgs
+{
+    Windows::UI::Input::RadialControllerScreenContact Contact() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerScreenContactStartedEventArgs
+{
+    Windows::UI::Input::RadialControllerScreenContact Contact() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRadialControllerStatics
+{
+    bool IsSupported() const;
+    Windows::UI::Input::RadialController CreateForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRightTappedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITappedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::Foundation::Point Position() const;
+    uint32_t TapCount() const;
+};
 
 }
 

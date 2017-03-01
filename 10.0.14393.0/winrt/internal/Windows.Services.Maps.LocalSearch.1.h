@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,7 +16,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Services::Maps::LocalSearch {
 
-struct __declspec(uuid("f49399f5-8261-4321-9974-ef92d49a8dca")) __declspec(novtable) ILocalCategoriesStatics : Windows::IInspectable
+struct __declspec(uuid("f49399f5-8261-4321-9974-ef92d49a8dca")) __declspec(novtable) ILocalCategoriesStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BankAndCreditUnions(hstring * value) = 0;
     virtual HRESULT __stdcall get_EatDrink(hstring * value) = 0;
@@ -28,7 +28,7 @@ struct __declspec(uuid("f49399f5-8261-4321-9974-ef92d49a8dca")) __declspec(novta
     virtual HRESULT __stdcall get_Shop(hstring * value) = 0;
 };
 
-struct __declspec(uuid("bb0fe9ab-4502-4f2c-94a9-0d60de0e2163")) __declspec(novtable) ILocalLocation : Windows::IInspectable
+struct __declspec(uuid("bb0fe9ab-4502-4f2c-94a9-0d60de0e2163")) __declspec(novtable) ILocalLocation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Address(Windows::Services::Maps::IMapAddress ** value) = 0;
     virtual HRESULT __stdcall get_Identifier(hstring * value) = 0;
@@ -39,32 +39,32 @@ struct __declspec(uuid("bb0fe9ab-4502-4f2c-94a9-0d60de0e2163")) __declspec(novta
     virtual HRESULT __stdcall get_DataAttribution(hstring * value) = 0;
 };
 
-struct __declspec(uuid("6e9e307c-ecb5-4ffc-bb8c-ba50ba8c2dc6")) __declspec(novtable) ILocalLocation2 : Windows::IInspectable
+struct __declspec(uuid("6e9e307c-ecb5-4ffc-bb8c-ba50ba8c2dc6")) __declspec(novtable) ILocalLocation2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Category(hstring * value) = 0;
     virtual HRESULT __stdcall get_RatingInfo(Windows::Services::Maps::LocalSearch::ILocalLocationRatingInfo ** value) = 0;
     virtual HRESULT __stdcall get_HoursOfOperation(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> ** value) = 0;
 };
 
-struct __declspec(uuid("d09b6cc6-f338-4191-9fd8-5440b9a68f52")) __declspec(novtable) ILocalLocationFinderResult : Windows::IInspectable
+struct __declspec(uuid("d09b6cc6-f338-4191-9fd8-5440b9a68f52")) __declspec(novtable) ILocalLocationFinderResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalLocations(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> ** value) = 0;
     virtual HRESULT __stdcall get_Status(winrt::Windows::Services::Maps::LocalSearch::LocalLocationFinderStatus * value) = 0;
 };
 
-struct __declspec(uuid("d2ef7344-a0de-48ca-81a8-07c7dcfd37ab")) __declspec(novtable) ILocalLocationFinderStatics : Windows::IInspectable
+struct __declspec(uuid("d2ef7344-a0de-48ca-81a8-07c7dcfd37ab")) __declspec(novtable) ILocalLocationFinderStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindLocalLocationsAsync(hstring searchTerm, Windows::Devices::Geolocation::IGeocircle * searchArea, hstring localCategory, uint32_t maxResults, Windows::Foundation::IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> ** result) = 0;
 };
 
-struct __declspec(uuid("23548c72-a1c7-43f1-a4f0-1091c39ec640")) __declspec(novtable) ILocalLocationHoursOfOperationItem : Windows::IInspectable
+struct __declspec(uuid("23548c72-a1c7-43f1-a4f0-1091c39ec640")) __declspec(novtable) ILocalLocationHoursOfOperationItem : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Day(winrt::Windows::Globalization::DayOfWeek * value) = 0;
     virtual HRESULT __stdcall get_Start(Windows::Foundation::TimeSpan * value) = 0;
     virtual HRESULT __stdcall get_Span(Windows::Foundation::TimeSpan * value) = 0;
 };
 
-struct __declspec(uuid("cb1dab56-3354-4311-8bc0-a2d4d5eb806e")) __declspec(novtable) ILocalLocationRatingInfo : Windows::IInspectable
+struct __declspec(uuid("cb1dab56-3354-4311-8bc0-a2d4d5eb806e")) __declspec(novtable) ILocalLocationRatingInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AggregateRating(Windows::Foundation::IReference<double> ** value) = 0;
     virtual HRESULT __stdcall get_RatingCount(Windows::Foundation::IReference<int32_t> ** value) = 0;
@@ -84,13 +84,67 @@ template <> struct traits<Windows::Services::Maps::LocalSearch::LocalLocationRat
 
 namespace Windows::Services::Maps::LocalSearch {
 
-template <typename T> struct impl_ILocalCategoriesStatics;
-template <typename T> struct impl_ILocalLocation;
-template <typename T> struct impl_ILocalLocation2;
-template <typename T> struct impl_ILocalLocationFinderResult;
-template <typename T> struct impl_ILocalLocationFinderStatics;
-template <typename T> struct impl_ILocalLocationHoursOfOperationItem;
-template <typename T> struct impl_ILocalLocationRatingInfo;
+template <typename D>
+struct WINRT_EBO impl_ILocalCategoriesStatics
+{
+    hstring BankAndCreditUnions() const;
+    hstring EatDrink() const;
+    hstring Hospitals() const;
+    hstring HotelsAndMotels() const;
+    hstring All() const;
+    hstring Parking() const;
+    hstring SeeDo() const;
+    hstring Shop() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocation
+{
+    Windows::Services::Maps::MapAddress Address() const;
+    hstring Identifier() const;
+    hstring Description() const;
+    hstring DisplayName() const;
+    Windows::Devices::Geolocation::Geopoint Point() const;
+    hstring PhoneNumber() const;
+    hstring DataAttribution() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocation2
+{
+    hstring Category() const;
+    Windows::Services::Maps::LocalSearch::LocalLocationRatingInfo RatingInfo() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> HoursOfOperation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocationFinderResult
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
+    Windows::Services::Maps::LocalSearch::LocalLocationFinderStatus Status() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocationFinderStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> FindLocalLocationsAsync(hstring_view searchTerm, const Windows::Devices::Geolocation::Geocircle & searchArea, hstring_view localCategory, uint32_t maxResults) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocationHoursOfOperationItem
+{
+    Windows::Globalization::DayOfWeek Day() const;
+    Windows::Foundation::TimeSpan Start() const;
+    Windows::Foundation::TimeSpan Span() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalLocationRatingInfo
+{
+    Windows::Foundation::IReference<double> AggregateRating() const;
+    Windows::Foundation::IReference<int32_t> RatingCount() const;
+    hstring ProviderIdentifier() const;
+};
 
 }
 

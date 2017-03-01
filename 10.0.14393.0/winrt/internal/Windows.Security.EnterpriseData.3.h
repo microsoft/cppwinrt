@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,9 +24,9 @@ struct WINRT_EBO DataProtectionInfo :
 struct DataProtectionManager
 {
     DataProtectionManager() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> ProtectAsync(const Windows::Storage::Streams::IBuffer & data, hstring_ref identity);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> ProtectAsync(const Windows::Storage::Streams::IBuffer & data, hstring_view identity);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> UnprotectAsync(const Windows::Storage::Streams::IBuffer & data);
-    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> ProtectStreamAsync(const Windows::Storage::Streams::IInputStream & unprotectedStream, hstring_ref identity, const Windows::Storage::Streams::IOutputStream & protectedStream);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> ProtectStreamAsync(const Windows::Storage::Streams::IInputStream & unprotectedStream, hstring_view identity, const Windows::Storage::Streams::IOutputStream & protectedStream);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> UnprotectStreamAsync(const Windows::Storage::Streams::IInputStream & protectedStream, const Windows::Storage::Streams::IOutputStream & unprotectedStream);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> GetProtectionInfoAsync(const Windows::Storage::Streams::IBuffer & protectedData);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> GetStreamProtectionInfoAsync(const Windows::Storage::Streams::IInputStream & protectedStream);
@@ -41,25 +41,25 @@ struct WINRT_EBO FileProtectionInfo :
 struct FileProtectionManager
 {
     FileProtectionManager() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> ProtectAsync(const Windows::Storage::IStorageItem & target, hstring_ref identity);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> ProtectAsync(const Windows::Storage::IStorageItem & target, hstring_view identity);
     static Windows::Foundation::IAsyncOperation<bool> CopyProtectionAsync(const Windows::Storage::IStorageItem & source, const Windows::Storage::IStorageItem & target);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> GetProtectionInfoAsync(const Windows::Storage::IStorageItem & source);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> SaveFileAsContainerAsync(const Windows::Storage::IStorageFile & protectedFile);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile, const Windows::Storage::IStorageItem & target);
-    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedFileCreateResult> CreateProtectedAndOpenAsync(const Windows::Storage::IStorageFolder & parentFolder, hstring_ref desiredName, hstring_ref identity, Windows::Storage::CreationCollisionOption collisionOption);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedFileCreateResult> CreateProtectedAndOpenAsync(const Windows::Storage::IStorageFolder & parentFolder, hstring_view desiredName, hstring_view identity, Windows::Storage::CreationCollisionOption collisionOption);
     static Windows::Foundation::IAsyncOperation<bool> IsContainerAsync(const Windows::Storage::IStorageFile & file);
     static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile, const Windows::Storage::IStorageItem & target, Windows::Storage::NameCollisionOption collisionOption);
-    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> SaveFileAsContainerAsync(const Windows::Storage::IStorageFile & protectedFile, const Windows::Foundation::Collections::IIterable<hstring> & sharedWithIdentities);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> SaveFileAsContainerAsync(const Windows::Storage::IStorageFile & protectedFile, iterable<hstring> sharedWithIdentities);
 };
 
-struct FileRevocationManager
+struct [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] FileRevocationManager
 {
     FileRevocationManager() = delete;
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> ProtectAsync(const Windows::Storage::IStorageItem & storageItem, hstring_ref enterpriseIdentity);
-    static Windows::Foundation::IAsyncOperation<bool> CopyProtectionAsync(const Windows::Storage::IStorageItem & sourceStorageItem, const Windows::Storage::IStorageItem & targetStorageItem);
-    static void Revoke(hstring_ref enterpriseIdentity);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> GetStatusAsync(const Windows::Storage::IStorageItem & storageItem);
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> ProtectAsync(const Windows::Storage::IStorageItem & storageItem, hstring_view enterpriseIdentity);
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] static Windows::Foundation::IAsyncOperation<bool> CopyProtectionAsync(const Windows::Storage::IStorageItem & sourceStorageItem, const Windows::Storage::IStorageItem & targetStorageItem);
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] static void Revoke(hstring_view enterpriseIdentity);
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> GetStatusAsync(const Windows::Storage::IStorageItem & storageItem);
 };
 
 struct WINRT_EBO ProtectedAccessResumedEventArgs :
@@ -102,8 +102,8 @@ struct WINRT_EBO ProtectionPolicyAuditInfo :
     Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo
 {
     ProtectionPolicyAuditInfo(std::nullptr_t) noexcept {}
-    ProtectionPolicyAuditInfo(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_ref dataDescription, hstring_ref sourceDescription, hstring_ref targetDescription);
-    ProtectionPolicyAuditInfo(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_ref dataDescription);
+    ProtectionPolicyAuditInfo(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_view dataDescription, hstring_view sourceDescription, hstring_view targetDescription);
+    ProtectionPolicyAuditInfo(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_view dataDescription);
 };
 
 struct WINRT_EBO ProtectionPolicyManager :
@@ -111,12 +111,12 @@ struct WINRT_EBO ProtectionPolicyManager :
     impl::require<ProtectionPolicyManager, Windows::Security::EnterpriseData::IProtectionPolicyManager2>
 {
     ProtectionPolicyManager(std::nullptr_t) noexcept {}
-    static bool IsIdentityManaged(hstring_ref identity);
-    static bool TryApplyProcessUIPolicy(hstring_ref identity);
+    static bool IsIdentityManaged(hstring_view identity);
+    static bool TryApplyProcessUIPolicy(hstring_view identity);
     static void ClearProcessUIPolicy();
-    static Windows::Security::EnterpriseData::ThreadNetworkContext CreateCurrentThreadNetworkContext(hstring_ref identity);
+    static Windows::Security::EnterpriseData::ThreadNetworkContext CreateCurrentThreadNetworkContext(hstring_view identity);
     static Windows::Foundation::IAsyncOperation<hstring> GetPrimaryManagedIdentityForNetworkEndpointAsync(const Windows::Networking::HostName & endpointHost);
-    static void RevokeContent(hstring_ref identity);
+    static void RevokeContent(hstring_view identity);
     static Windows::Security::EnterpriseData::ProtectionPolicyManager GetForCurrentView();
     static event_token ProtectedAccessSuspending(const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedAccessSuspendingEventArgs> & handler);
     using ProtectedAccessSuspending_revoker = factory_event_revoker<IProtectionPolicyManagerStatics>;
@@ -130,24 +130,24 @@ struct WINRT_EBO ProtectionPolicyManager :
     using ProtectedContentRevoked_revoker = factory_event_revoker<IProtectionPolicyManagerStatics>;
     static ProtectedContentRevoked_revoker ProtectedContentRevoked(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedContentRevokedEventArgs> & handler);
     static void ProtectedContentRevoked(event_token token);
-    static Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccess(hstring_ref sourceIdentity, hstring_ref targetIdentity);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_ref sourceIdentity, hstring_ref targetIdentity);
-    static bool HasContentBeenRevokedSince(hstring_ref identity, const Windows::Foundation::DateTime & since);
-    static Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccessForApp(hstring_ref sourceIdentity, hstring_ref appPackageFamilyName);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_ref sourceIdentity, hstring_ref appPackageFamilyName);
-    static Windows::Security::EnterpriseData::EnforcementLevel GetEnforcementLevel(hstring_ref identity);
-    static bool IsUserDecryptionAllowed(hstring_ref identity);
-    static bool IsProtectionUnderLockRequired(hstring_ref identity);
-    static event_token PolicyChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccess(hstring_view sourceIdentity, hstring_view targetIdentity);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity);
+    static bool HasContentBeenRevokedSince(hstring_view identity, const Windows::Foundation::DateTime & since);
+    static Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccessForApp(hstring_view sourceIdentity, hstring_view appPackageFamilyName);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName);
+    static Windows::Security::EnterpriseData::EnforcementLevel GetEnforcementLevel(hstring_view identity);
+    static bool IsUserDecryptionAllowed(hstring_view identity);
+    static bool IsProtectionUnderLockRequired(hstring_view identity);
+    static event_token PolicyChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using PolicyChanged_revoker = factory_event_revoker<IProtectionPolicyManagerStatics2>;
-    static PolicyChanged_revoker PolicyChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static PolicyChanged_revoker PolicyChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     static void PolicyChanged(event_token token);
     static bool IsProtectionEnabled();
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_ref sourceIdentity, hstring_ref targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_ref sourceIdentity, hstring_ref targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_ref messageFromApp);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_ref sourceIdentity, hstring_ref appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_ref sourceIdentity, hstring_ref appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_ref messageFromApp);
-    static void LogAuditEvent(hstring_ref sourceIdentity, hstring_ref targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_view messageFromApp);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_view messageFromApp);
+    static void LogAuditEvent(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo);
 };
 
 struct WINRT_EBO ThreadNetworkContext :

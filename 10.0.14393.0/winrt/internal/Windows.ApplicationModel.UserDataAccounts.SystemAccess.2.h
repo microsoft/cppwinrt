@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,6 +18,11 @@ template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -59,6 +64,16 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_90aea8c5_68d3_5c6f_8f14_00477eed0ca8
+#define WINRT_GENERIC_90aea8c5_68d3_5c6f_8f14_00477eed0ca8
+template <> struct __declspec(uuid("90aea8c5-68d3-5c6f-8f14-00477eed0ca8")) __declspec(novtable) IVector<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> : impl_IVector<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> {};
+#endif
+
+#ifndef WINRT_GENERIC_583fa489_106e_5351_910e_567f271031a7
+#define WINRT_GENERIC_583fa489_106e_5351_910e_567f271031a7
+template <> struct __declspec(uuid("583fa489-106e-5351-910e-567f271031a7")) __declspec(novtable) IVectorView<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> : impl_IVectorView<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> {};
+#endif
+
 #ifndef WINRT_GENERIC_51705a87_8dcb_5971_8d6b_ca8ae6a955ad
 #define WINRT_GENERIC_51705a87_8dcb_5971_8d6b_ca8ae6a955ad
 template <> struct __declspec(uuid("51705a87-8dcb-5971-8d6b-ca8ae6a955ad")) __declspec(novtable) IIterator<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> : impl_IIterator<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> {};
@@ -89,149 +104,32 @@ template <> struct __declspec(uuid("7c7899be-5f2e-5bf3-ade5-ad98b772c7cd")) __de
 
 namespace Windows::ApplicationModel::UserDataAccounts::SystemAccess {
 
-template <typename D>
-struct WINRT_EBO impl_IDeviceAccountConfiguration
-{
-    hstring AccountName() const;
-    void AccountName(hstring_ref value) const;
-    hstring DeviceAccountTypeId() const;
-    void DeviceAccountTypeId(hstring_ref value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountServerType ServerType() const;
-    void ServerType(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountServerType value) const;
-    hstring EmailAddress() const;
-    void EmailAddress(hstring_ref value) const;
-    hstring Domain() const;
-    void Domain(hstring_ref value) const;
-    bool EmailSyncEnabled() const;
-    void EmailSyncEnabled(bool value) const;
-    bool ContactsSyncEnabled() const;
-    void ContactsSyncEnabled(bool value) const;
-    bool CalendarSyncEnabled() const;
-    void CalendarSyncEnabled(bool value) const;
-    hstring IncomingServerAddress() const;
-    void IncomingServerAddress(hstring_ref value) const;
-    int32_t IncomingServerPort() const;
-    void IncomingServerPort(int32_t value) const;
-    bool IncomingServerRequiresSsl() const;
-    void IncomingServerRequiresSsl(bool value) const;
-    hstring IncomingServerUsername() const;
-    void IncomingServerUsername(hstring_ref value) const;
-    hstring OutgoingServerAddress() const;
-    void OutgoingServerAddress(hstring_ref value) const;
-    int32_t OutgoingServerPort() const;
-    void OutgoingServerPort(int32_t value) const;
-    bool OutgoingServerRequiresSsl() const;
-    void OutgoingServerRequiresSsl(bool value) const;
-    hstring OutgoingServerUsername() const;
-    void OutgoingServerUsername(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDeviceAccountConfiguration2
-{
-    Windows::Security::Credentials::PasswordCredential IncomingServerCredential() const;
-    void IncomingServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    Windows::Security::Credentials::PasswordCredential OutgoingServerCredential() const;
-    void OutgoingServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    hstring OAuthRefreshToken() const;
-    void OAuthRefreshToken(hstring_ref value) const;
-    bool IsExternallyManaged() const;
-    void IsExternallyManaged(bool value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountIconId AccountIconId() const;
-    void AccountIconId(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountIconId value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountAuthenticationType AuthenticationType() const;
-    void AuthenticationType(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountAuthenticationType value) const;
-    bool IsSsoAuthenticationSupported() const;
-    hstring SsoAccountId() const;
-    void SsoAccountId(hstring_ref value) const;
-    bool AlwaysDownloadFullMessage() const;
-    void AlwaysDownloadFullMessage(bool value) const;
-    bool DoesPolicyAllowMailSync() const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind SyncScheduleKind() const;
-    void SyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountMailAgeFilter MailAgeFilter() const;
-    void MailAgeFilter(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountMailAgeFilter value) const;
-    bool IsClientAuthenticationCertificateRequired() const;
-    void IsClientAuthenticationCertificateRequired(bool value) const;
-    bool AutoSelectAuthenticationCertificate() const;
-    void AutoSelectAuthenticationCertificate(bool value) const;
-    hstring AuthenticationCertificateId() const;
-    void AuthenticationCertificateId(hstring_ref value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind CardDavSyncScheduleKind() const;
-    void CardDavSyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
-    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind CalDavSyncScheduleKind() const;
-    void CalDavSyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
-    Windows::Foundation::Uri CardDavServerUrl() const;
-    void CardDavServerUrl(const Windows::Foundation::Uri & value) const;
-    bool CardDavRequiresSsl() const;
-    void CardDavRequiresSsl(bool value) const;
-    Windows::Foundation::Uri CalDavServerUrl() const;
-    void CalDavServerUrl(const Windows::Foundation::Uri & value) const;
-    bool CalDavRequiresSsl() const;
-    void CalDavRequiresSsl(bool value) const;
-    bool WasModifiedByUser() const;
-    void WasModifiedByUser(bool value) const;
-    bool WasIncomingServerCertificateHashConfirmed() const;
-    void WasIncomingServerCertificateHashConfirmed(bool value) const;
-    hstring IncomingServerCertificateHash() const;
-    void IncomingServerCertificateHash(hstring_ref value) const;
-    bool IsOutgoingServerAuthenticationRequired() const;
-    void IsOutgoingServerAuthenticationRequired(bool value) const;
-    bool IsOutgoingServerAuthenticationEnabled() const;
-    void IsOutgoingServerAuthenticationEnabled(bool value) const;
-    bool WasOutgoingServerCertificateHashConfirmed() const;
-    void WasOutgoingServerCertificateHashConfirmed(bool value) const;
-    hstring OutgoingServerCertificateHash() const;
-    void OutgoingServerCertificateHash(hstring_ref value) const;
-    bool IsSyncScheduleManagedBySystem() const;
-    void IsSyncScheduleManagedBySystem(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserDataAccountSystemAccessManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> AddAndShowDeviceAccountsAsync(const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> & accounts) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserDataAccountSystemAccessManagerStatics2
-{
-    Windows::Foundation::IAsyncAction SuppressLocalAccountWithAccountAsync(hstring_ref userDataAccountId) const;
-    Windows::Foundation::IAsyncOperation<hstring> CreateDeviceAccountAsync(const Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration & account) const;
-    Windows::Foundation::IAsyncAction DeleteDeviceAccountAsync(hstring_ref accountId) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> GetDeviceAccountConfigurationAsync(hstring_ref accountId) const;
-};
-
 struct IDeviceAccountConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDeviceAccountConfiguration>
 {
     IDeviceAccountConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDeviceAccountConfiguration>(m_ptr); }
 };
 
 struct IDeviceAccountConfiguration2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDeviceAccountConfiguration2>
 {
     IDeviceAccountConfiguration2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDeviceAccountConfiguration2>(m_ptr); }
 };
 
 struct IUserDataAccountSystemAccessManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserDataAccountSystemAccessManagerStatics>
 {
     IUserDataAccountSystemAccessManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserDataAccountSystemAccessManagerStatics>(m_ptr); }
 };
 
 struct IUserDataAccountSystemAccessManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserDataAccountSystemAccessManagerStatics2>
 {
     IUserDataAccountSystemAccessManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserDataAccountSystemAccessManagerStatics2>(m_ptr); }
 };
 
 }

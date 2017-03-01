@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,20 +16,20 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Services::Maps::Guidance {
 
-struct __declspec(uuid("ca2aa24a-c7c2-4d4c-9d7c-499576bceddb")) __declspec(novtable) IGuidanceAudioNotificationRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ca2aa24a-c7c2-4d4c-9d7c-499576bceddb")) __declspec(novtable) IGuidanceAudioNotificationRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AudioNotification(winrt::Windows::Services::Maps::Guidance::GuidanceAudioNotificationKind * value) = 0;
     virtual HRESULT __stdcall get_AudioFilePaths(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
     virtual HRESULT __stdcall get_AudioText(hstring * value) = 0;
 };
 
-struct __declspec(uuid("8404d114-6581-43b7-ac15-c9079bf90df1")) __declspec(novtable) IGuidanceLaneInfo : Windows::IInspectable
+struct __declspec(uuid("8404d114-6581-43b7-ac15-c9079bf90df1")) __declspec(novtable) IGuidanceLaneInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LaneMarkers(winrt::Windows::Services::Maps::Guidance::GuidanceLaneMarkers * value) = 0;
     virtual HRESULT __stdcall get_IsOnRoute(bool * value) = 0;
 };
 
-struct __declspec(uuid("fc09326c-ecc9-4928-a2a1-7232b99b94a1")) __declspec(novtable) IGuidanceManeuver : Windows::IInspectable
+struct __declspec(uuid("fc09326c-ecc9-4928-a2a1-7232b99b94a1")) __declspec(novtable) IGuidanceManeuver : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_StartLocation(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall get_DistanceFromRouteStart(int32_t * value) = 0;
@@ -45,7 +45,7 @@ struct __declspec(uuid("fc09326c-ecc9-4928-a2a1-7232b99b94a1")) __declspec(novta
     virtual HRESULT __stdcall get_InstructionText(hstring * value) = 0;
 };
 
-struct __declspec(uuid("b7acb168-2912-4a99-aff1-798609b981fe")) __declspec(novtable) IGuidanceMapMatchedCoordinate : Windows::IInspectable
+struct __declspec(uuid("b7acb168-2912-4a99-aff1-798609b981fe")) __declspec(novtable) IGuidanceMapMatchedCoordinate : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall get_CurrentHeading(double * value) = 0;
@@ -54,7 +54,7 @@ struct __declspec(uuid("b7acb168-2912-4a99-aff1-798609b981fe")) __declspec(novta
     virtual HRESULT __stdcall get_Road(Windows::Services::Maps::Guidance::IGuidanceRoadSegment ** value) = 0;
 };
 
-struct __declspec(uuid("08f17ef7-8e3f-4d9a-be8a-108f9a012c67")) __declspec(novtable) IGuidanceNavigator : Windows::IInspectable
+struct __declspec(uuid("08f17ef7-8e3f-4d9a-be8a-108f9a012c67")) __declspec(novtable) IGuidanceNavigator : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_StartNavigating(Windows::Services::Maps::Guidance::IGuidanceRoute * route) = 0;
     virtual HRESULT __stdcall abi_StartSimulating(Windows::Services::Maps::Guidance::IGuidanceRoute * route, int32_t speedInMetersPerSecond) = 0;
@@ -69,24 +69,24 @@ struct __declspec(uuid("08f17ef7-8e3f-4d9a-be8a-108f9a012c67")) __declspec(novta
     virtual HRESULT __stdcall put_AudioNotifications(winrt::Windows::Services::Maps::Guidance::GuidanceAudioNotifications value) = 0;
     virtual HRESULT __stdcall add_GuidanceUpdated(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceUpdatedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_GuidanceUpdated(event_token token) = 0;
-    virtual HRESULT __stdcall add_DestinationReached(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_DestinationReached(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_DestinationReached(event_token token) = 0;
-    virtual HRESULT __stdcall add_Rerouting(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_Rerouting(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Rerouting(event_token token) = 0;
     virtual HRESULT __stdcall add_Rerouted(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceReroutedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Rerouted(event_token token) = 0;
-    virtual HRESULT __stdcall add_RerouteFailed(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_RerouteFailed(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RerouteFailed(event_token token) = 0;
-    virtual HRESULT __stdcall add_UserLocationLost(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_UserLocationLost(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_UserLocationLost(event_token token) = 0;
-    virtual HRESULT __stdcall add_UserLocationRestored(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_UserLocationRestored(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_UserLocationRestored(event_token token) = 0;
     virtual HRESULT __stdcall abi_SetGuidanceVoice(int32_t voiceId, hstring voiceFolder) = 0;
     virtual HRESULT __stdcall abi_UpdateUserLocation(Windows::Devices::Geolocation::IGeocoordinate * userLocation) = 0;
     virtual HRESULT __stdcall abi_UpdateUserLocationWithPositionOverride(Windows::Devices::Geolocation::IGeocoordinate * userLocation, Windows::Devices::Geolocation::BasicGeoposition positionOverride) = 0;
 };
 
-struct __declspec(uuid("6cdc50d1-041c-4bf3-b633-a101fc2f6b57")) __declspec(novtable) IGuidanceNavigator2 : Windows::IInspectable
+struct __declspec(uuid("6cdc50d1-041c-4bf3-b633-a101fc2f6b57")) __declspec(novtable) IGuidanceNavigator2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_AudioNotificationRequested(Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceAudioNotificationRequestedEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_AudioNotificationRequested(event_token token) = 0;
@@ -94,22 +94,22 @@ struct __declspec(uuid("6cdc50d1-041c-4bf3-b633-a101fc2f6b57")) __declspec(novta
     virtual HRESULT __stdcall put_IsGuidanceAudioMuted(bool value) = 0;
 };
 
-struct __declspec(uuid("00fd9513-4456-4e66-a143-3add6be08426")) __declspec(novtable) IGuidanceNavigatorStatics : Windows::IInspectable
+struct __declspec(uuid("00fd9513-4456-4e66-a143-3add6be08426")) __declspec(novtable) IGuidanceNavigatorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetCurrent(Windows::Services::Maps::Guidance::IGuidanceNavigator ** result) = 0;
 };
 
-struct __declspec(uuid("54c5c3e2-7784-4c85-8c95-d0c6efb43965")) __declspec(novtable) IGuidanceNavigatorStatics2 : Windows::IInspectable
+struct __declspec(uuid("54c5c3e2-7784-4c85-8c95-d0c6efb43965")) __declspec(novtable) IGuidanceNavigatorStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UseAppProvidedVoice(bool * value) = 0;
 };
 
-struct __declspec(uuid("115d4008-d528-454e-bb94-a50341d2c9f1")) __declspec(novtable) IGuidanceReroutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("115d4008-d528-454e-bb94-a50341d2c9f1")) __declspec(novtable) IGuidanceReroutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Route(Windows::Services::Maps::Guidance::IGuidanceRoute ** result) = 0;
 };
 
-struct __declspec(uuid("b32758a6-be78-4c63-afe7-6c2957479b3e")) __declspec(novtable) IGuidanceRoadSegment : Windows::IInspectable
+struct __declspec(uuid("b32758a6-be78-4c63-afe7-6c2957479b3e")) __declspec(novtable) IGuidanceRoadSegment : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RoadName(hstring * value) = 0;
     virtual HRESULT __stdcall get_ShortRoadName(hstring * value) = 0;
@@ -122,7 +122,7 @@ struct __declspec(uuid("b32758a6-be78-4c63-afe7-6c2957479b3e")) __declspec(novta
     virtual HRESULT __stdcall get_IsTollRoad(bool * value) = 0;
 };
 
-struct __declspec(uuid("f1a728b6-f77a-4742-8312-53300f9845f0")) __declspec(novtable) IGuidanceRoadSignpost : Windows::IInspectable
+struct __declspec(uuid("f1a728b6-f77a-4742-8312-53300f9845f0")) __declspec(novtable) IGuidanceRoadSignpost : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ExitNumber(hstring * value) = 0;
     virtual HRESULT __stdcall get_Exit(hstring * value) = 0;
@@ -131,7 +131,7 @@ struct __declspec(uuid("f1a728b6-f77a-4742-8312-53300f9845f0")) __declspec(novta
     virtual HRESULT __stdcall get_ExitDirections(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("3a14545d-801a-40bd-a286-afb2010cce6c")) __declspec(novtable) IGuidanceRoute : Windows::IInspectable
+struct __declspec(uuid("3a14545d-801a-40bd-a286-afb2010cce6c")) __declspec(novtable) IGuidanceRoute : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Duration(Windows::Foundation::TimeSpan * value) = 0;
     virtual HRESULT __stdcall get_Distance(int32_t * value) = 0;
@@ -142,13 +142,13 @@ struct __declspec(uuid("3a14545d-801a-40bd-a286-afb2010cce6c")) __declspec(novta
     virtual HRESULT __stdcall abi_ConvertToMapRoute(Windows::Services::Maps::IMapRoute ** result) = 0;
 };
 
-struct __declspec(uuid("f56d926a-55ed-49c1-b09c-4b8223b50db3")) __declspec(novtable) IGuidanceRouteStatics : Windows::IInspectable
+struct __declspec(uuid("f56d926a-55ed-49c1-b09c-4b8223b50db3")) __declspec(novtable) IGuidanceRouteStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CanCreateFromMapRoute(Windows::Services::Maps::IMapRoute * mapRoute, bool * result) = 0;
     virtual HRESULT __stdcall abi_TryCreateFromMapRoute(Windows::Services::Maps::IMapRoute * mapRoute, Windows::Services::Maps::Guidance::IGuidanceRoute ** result) = 0;
 };
 
-struct __declspec(uuid("db1f8da5-b878-4d92-98dd-347d23d38262")) __declspec(novtable) IGuidanceTelemetryCollector : Windows::IInspectable
+struct __declspec(uuid("db1f8da5-b878-4d92-98dd-347d23d38262")) __declspec(novtable) IGuidanceTelemetryCollector : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Enabled(bool * value) = 0;
     virtual HRESULT __stdcall put_Enabled(bool value) = 0;
@@ -159,12 +159,12 @@ struct __declspec(uuid("db1f8da5-b878-4d92-98dd-347d23d38262")) __declspec(novta
     virtual HRESULT __stdcall put_UploadFrequency(int32_t value) = 0;
 };
 
-struct __declspec(uuid("36532047-f160-44fb-b578-94577ca05990")) __declspec(novtable) IGuidanceTelemetryCollectorStatics : Windows::IInspectable
+struct __declspec(uuid("36532047-f160-44fb-b578-94577ca05990")) __declspec(novtable) IGuidanceTelemetryCollectorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetCurrent(Windows::Services::Maps::Guidance::IGuidanceTelemetryCollector ** result) = 0;
 };
 
-struct __declspec(uuid("fdac160b-9e8d-4de3-a9fa-b06321d18db9")) __declspec(novtable) IGuidanceUpdatedEventArgs : Windows::IInspectable
+struct __declspec(uuid("fdac160b-9e8d-4de3-a9fa-b06321d18db9")) __declspec(novtable) IGuidanceUpdatedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Mode(winrt::Windows::Services::Maps::Guidance::GuidanceMode * value) = 0;
     virtual HRESULT __stdcall get_NextManeuver(Windows::Services::Maps::Guidance::IGuidanceManeuver ** value) = 0;
@@ -202,22 +202,203 @@ template <> struct traits<Windows::Services::Maps::Guidance::GuidanceUpdatedEven
 
 namespace Windows::Services::Maps::Guidance {
 
-template <typename T> struct impl_IGuidanceAudioNotificationRequestedEventArgs;
-template <typename T> struct impl_IGuidanceLaneInfo;
-template <typename T> struct impl_IGuidanceManeuver;
-template <typename T> struct impl_IGuidanceMapMatchedCoordinate;
-template <typename T> struct impl_IGuidanceNavigator;
-template <typename T> struct impl_IGuidanceNavigator2;
-template <typename T> struct impl_IGuidanceNavigatorStatics;
-template <typename T> struct impl_IGuidanceNavigatorStatics2;
-template <typename T> struct impl_IGuidanceReroutedEventArgs;
-template <typename T> struct impl_IGuidanceRoadSegment;
-template <typename T> struct impl_IGuidanceRoadSignpost;
-template <typename T> struct impl_IGuidanceRoute;
-template <typename T> struct impl_IGuidanceRouteStatics;
-template <typename T> struct impl_IGuidanceTelemetryCollector;
-template <typename T> struct impl_IGuidanceTelemetryCollectorStatics;
-template <typename T> struct impl_IGuidanceUpdatedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_IGuidanceAudioNotificationRequestedEventArgs
+{
+    Windows::Services::Maps::Guidance::GuidanceAudioNotificationKind AudioNotification() const;
+    Windows::Foundation::Collections::IVectorView<hstring> AudioFilePaths() const;
+    hstring AudioText() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceLaneInfo
+{
+    Windows::Services::Maps::Guidance::GuidanceLaneMarkers LaneMarkers() const;
+    bool IsOnRoute() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceManeuver
+{
+    Windows::Devices::Geolocation::Geopoint StartLocation() const;
+    int32_t DistanceFromRouteStart() const;
+    int32_t DistanceFromPreviousManeuver() const;
+    hstring DepartureRoadName() const;
+    hstring NextRoadName() const;
+    hstring DepartureShortRoadName() const;
+    hstring NextShortRoadName() const;
+    Windows::Services::Maps::Guidance::GuidanceManeuverKind Kind() const;
+    int32_t StartAngle() const;
+    int32_t EndAngle() const;
+    Windows::Services::Maps::Guidance::GuidanceRoadSignpost RoadSignpost() const;
+    hstring InstructionText() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceMapMatchedCoordinate
+{
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    double CurrentHeading() const;
+    double CurrentSpeed() const;
+    bool IsOnStreet() const;
+    Windows::Services::Maps::Guidance::GuidanceRoadSegment Road() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceNavigator
+{
+    void StartNavigating(const Windows::Services::Maps::Guidance::GuidanceRoute & route) const;
+    void StartSimulating(const Windows::Services::Maps::Guidance::GuidanceRoute & route, int32_t speedInMetersPerSecond) const;
+    void StartTracking() const;
+    void Pause() const;
+    void Resume() const;
+    void Stop() const;
+    void RepeatLastAudioNotification() const;
+    Windows::Services::Maps::Guidance::GuidanceAudioMeasurementSystem AudioMeasurementSystem() const;
+    void AudioMeasurementSystem(Windows::Services::Maps::Guidance::GuidanceAudioMeasurementSystem value) const;
+    Windows::Services::Maps::Guidance::GuidanceAudioNotifications AudioNotifications() const;
+    void AudioNotifications(Windows::Services::Maps::Guidance::GuidanceAudioNotifications value) const;
+    event_token GuidanceUpdated(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceUpdatedEventArgs> & handler) const;
+    using GuidanceUpdated_revoker = event_revoker<IGuidanceNavigator>;
+    GuidanceUpdated_revoker GuidanceUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceUpdatedEventArgs> & handler) const;
+    void GuidanceUpdated(event_token token) const;
+    event_token DestinationReached(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    using DestinationReached_revoker = event_revoker<IGuidanceNavigator>;
+    DestinationReached_revoker DestinationReached(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    void DestinationReached(event_token token) const;
+    event_token Rerouting(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    using Rerouting_revoker = event_revoker<IGuidanceNavigator>;
+    Rerouting_revoker Rerouting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    void Rerouting(event_token token) const;
+    event_token Rerouted(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceReroutedEventArgs> & handler) const;
+    using Rerouted_revoker = event_revoker<IGuidanceNavigator>;
+    Rerouted_revoker Rerouted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceReroutedEventArgs> & handler) const;
+    void Rerouted(event_token token) const;
+    event_token RerouteFailed(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    using RerouteFailed_revoker = event_revoker<IGuidanceNavigator>;
+    RerouteFailed_revoker RerouteFailed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    void RerouteFailed(event_token token) const;
+    event_token UserLocationLost(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    using UserLocationLost_revoker = event_revoker<IGuidanceNavigator>;
+    UserLocationLost_revoker UserLocationLost(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    void UserLocationLost(event_token token) const;
+    event_token UserLocationRestored(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    using UserLocationRestored_revoker = event_revoker<IGuidanceNavigator>;
+    UserLocationRestored_revoker UserLocationRestored(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Foundation::IInspectable> & handler) const;
+    void UserLocationRestored(event_token token) const;
+    void SetGuidanceVoice(int32_t voiceId, hstring_view voiceFolder) const;
+    void UpdateUserLocation(const Windows::Devices::Geolocation::Geocoordinate & userLocation) const;
+    void UpdateUserLocation(const Windows::Devices::Geolocation::Geocoordinate & userLocation, const Windows::Devices::Geolocation::BasicGeoposition & positionOverride) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceNavigator2
+{
+    event_token AudioNotificationRequested(const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceAudioNotificationRequestedEventArgs> & value) const;
+    using AudioNotificationRequested_revoker = event_revoker<IGuidanceNavigator2>;
+    AudioNotificationRequested_revoker AudioNotificationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Services::Maps::Guidance::GuidanceNavigator, Windows::Services::Maps::Guidance::GuidanceAudioNotificationRequestedEventArgs> & value) const;
+    void AudioNotificationRequested(event_token token) const;
+    bool IsGuidanceAudioMuted() const;
+    void IsGuidanceAudioMuted(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceNavigatorStatics
+{
+    Windows::Services::Maps::Guidance::GuidanceNavigator GetCurrent() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceNavigatorStatics2
+{
+    bool UseAppProvidedVoice() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceReroutedEventArgs
+{
+    Windows::Services::Maps::Guidance::GuidanceRoute Route() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceRoadSegment
+{
+    hstring RoadName() const;
+    hstring ShortRoadName() const;
+    double SpeedLimit() const;
+    Windows::Foundation::TimeSpan TravelTime() const;
+    Windows::Devices::Geolocation::Geopath Path() const;
+    hstring Id() const;
+    bool IsHighway() const;
+    bool IsTunnel() const;
+    bool IsTollRoad() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceRoadSignpost
+{
+    hstring ExitNumber() const;
+    hstring Exit() const;
+    Windows::UI::Color BackgroundColor() const;
+    Windows::UI::Color ForegroundColor() const;
+    Windows::Foundation::Collections::IVectorView<hstring> ExitDirections() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceRoute
+{
+    Windows::Foundation::TimeSpan Duration() const;
+    int32_t Distance() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::Guidance::GuidanceManeuver> Maneuvers() const;
+    Windows::Devices::Geolocation::GeoboundingBox BoundingBox() const;
+    Windows::Devices::Geolocation::Geopath Path() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::Guidance::GuidanceRoadSegment> RoadSegments() const;
+    Windows::Services::Maps::MapRoute ConvertToMapRoute() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceRouteStatics
+{
+    bool CanCreateFromMapRoute(const Windows::Services::Maps::MapRoute & mapRoute) const;
+    Windows::Services::Maps::Guidance::GuidanceRoute TryCreateFromMapRoute(const Windows::Services::Maps::MapRoute & mapRoute) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceTelemetryCollector
+{
+    bool Enabled() const;
+    void Enabled(bool value) const;
+    void ClearLocalData() const;
+    double SpeedTrigger() const;
+    void SpeedTrigger(double value) const;
+    int32_t UploadFrequency() const;
+    void UploadFrequency(int32_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceTelemetryCollectorStatics
+{
+    Windows::Services::Maps::Guidance::GuidanceTelemetryCollector GetCurrent() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGuidanceUpdatedEventArgs
+{
+    Windows::Services::Maps::Guidance::GuidanceMode Mode() const;
+    Windows::Services::Maps::Guidance::GuidanceManeuver NextManeuver() const;
+    int32_t NextManeuverDistance() const;
+    Windows::Services::Maps::Guidance::GuidanceManeuver AfterNextManeuver() const;
+    int32_t AfterNextManeuverDistance() const;
+    int32_t DistanceToDestination() const;
+    int32_t ElapsedDistance() const;
+    Windows::Foundation::TimeSpan ElapsedTime() const;
+    Windows::Foundation::TimeSpan TimeToDestination() const;
+    hstring RoadName() const;
+    Windows::Services::Maps::Guidance::GuidanceRoute Route() const;
+    Windows::Services::Maps::Guidance::GuidanceMapMatchedCoordinate CurrentLocation() const;
+    bool IsNewManeuver() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::Guidance::GuidanceLaneInfo> LaneInfo() const;
+};
 
 }
 

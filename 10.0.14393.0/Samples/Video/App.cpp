@@ -22,7 +22,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     {
     }
 
-    void Load(hstring_ref)
+    void Load(hstring_view)
     {
     }
 

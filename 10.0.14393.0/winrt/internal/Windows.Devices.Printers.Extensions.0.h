@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -50,6 +50,21 @@ struct PrintTaskConfiguration;
 struct PrintTaskConfigurationSaveRequest;
 struct PrintTaskConfigurationSaveRequestedDeferral;
 struct PrintTaskConfigurationSaveRequestedEventArgs;
+
+}
+
+namespace Windows::Devices::Printers::Extensions {
+
+template <typename T> struct impl_IPrint3DWorkflow;
+template <typename T> struct impl_IPrint3DWorkflow2;
+template <typename T> struct impl_IPrint3DWorkflowPrintRequestedEventArgs;
+template <typename T> struct impl_IPrint3DWorkflowPrinterChangedEventArgs;
+template <typename T> struct impl_IPrintExtensionContextStatic;
+template <typename T> struct impl_IPrintNotificationEventDetails;
+template <typename T> struct impl_IPrintTaskConfiguration;
+template <typename T> struct impl_IPrintTaskConfigurationSaveRequest;
+template <typename T> struct impl_IPrintTaskConfigurationSaveRequestedDeferral;
+template <typename T> struct impl_IPrintTaskConfigurationSaveRequestedEventArgs;
 
 }
 

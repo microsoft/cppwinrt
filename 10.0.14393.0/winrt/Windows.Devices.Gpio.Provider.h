@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
@@ -19,7 +22,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioControllerProvider> : p
     {
         try
         {
-            *value = detach(this->shim().PinCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PinCount());
             return S_OK;
         }
         catch (...)
@@ -28,11 +32,12 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioControllerProvider> : p
         }
     }
 
-    HRESULT __stdcall abi_OpenPinProvider(int32_t pin, Windows::Devices::Gpio::Provider::ProviderGpioSharingMode sharingMode, abi_arg_out<Windows::Devices::Gpio::Provider::IGpioPinProvider> gpioPinProvider) noexcept override
+    HRESULT __stdcall abi_OpenPinProvider(int32_t pin, Windows::Devices::Gpio::Provider::ProviderGpioSharingMode sharingMode, impl::abi_arg_out<Windows::Devices::Gpio::Provider::IGpioPinProvider> gpioPinProvider) noexcept override
     {
         try
         {
-            *gpioPinProvider = detach(this->shim().OpenPinProvider(pin, sharingMode));
+            typename D::abi_guard guard(this->shim());
+            *gpioPinProvider = detach_abi(this->shim().OpenPinProvider(pin, sharingMode));
             return S_OK;
         }
         catch (...)
@@ -46,11 +51,12 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioControllerProvider> : p
 template <typename D>
 struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_base<D, Windows::Devices::Gpio::Provider::IGpioPinProvider>
 {
-    HRESULT __stdcall add_ValueChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::Provider::IGpioPinProvider, Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ValueChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::Provider::IGpioPinProvider, Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ValueChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::Provider::IGpioPinProvider, Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ValueChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::Provider::IGpioPinProvider, Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -63,6 +69,7 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ValueChanged(token);
             return S_OK;
         }
@@ -72,11 +79,12 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
         }
     }
 
-    HRESULT __stdcall get_DebounceTimeout(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_DebounceTimeout(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DebounceTimeout());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DebounceTimeout());
             return S_OK;
         }
         catch (...)
@@ -85,10 +93,11 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
         }
     }
 
-    HRESULT __stdcall put_DebounceTimeout(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_DebounceTimeout(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DebounceTimeout(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -102,7 +111,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
-            *value = detach(this->shim().PinNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PinNumber());
             return S_OK;
         }
         catch (...)
@@ -115,7 +125,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
-            *value = detach(this->shim().SharingMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SharingMode());
             return S_OK;
         }
         catch (...)
@@ -128,7 +139,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
-            *supported = detach(this->shim().IsDriveModeSupported(driveMode));
+            typename D::abi_guard guard(this->shim());
+            *supported = detach_abi(this->shim().IsDriveModeSupported(driveMode));
             return S_OK;
         }
         catch (...)
@@ -141,7 +153,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
-            *value = detach(this->shim().GetDriveMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDriveMode());
             return S_OK;
         }
         catch (...)
@@ -154,6 +167,7 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetDriveMode(value);
             return S_OK;
         }
@@ -167,6 +181,7 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Write(value);
             return S_OK;
         }
@@ -180,7 +195,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProvider> : produce_
     {
         try
         {
-            *value = detach(this->shim().Read());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Read());
             return S_OK;
         }
         catch (...)
@@ -197,7 +213,8 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProviderValueChanged
     {
         try
         {
-            *value = detach(this->shim().Edge());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Edge());
             return S_OK;
         }
         catch (...)
@@ -210,11 +227,12 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProviderValueChanged
 template <typename D>
 struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgsFactory> : produce_base<D, Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgsFactory>
 {
-    HRESULT __stdcall abi_Create(Windows::Devices::Gpio::Provider::ProviderGpioPinEdge edge, abi_arg_out<Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgs> value) noexcept override
+    HRESULT __stdcall abi_Create(Windows::Devices::Gpio::Provider::ProviderGpioPinEdge edge, impl::abi_arg_out<Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgs> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Create(edge));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Create(edge));
             return S_OK;
         }
         catch (...)
@@ -228,11 +246,12 @@ struct produce<D, Windows::Devices::Gpio::Provider::IGpioPinProviderValueChanged
 template <typename D>
 struct produce<D, Windows::Devices::Gpio::Provider::IGpioProvider> : produce_base<D, Windows::Devices::Gpio::Provider::IGpioProvider>
 {
-    HRESULT __stdcall abi_GetControllers(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Gpio::Provider::IGpioControllerProvider>> result) noexcept override
+    HRESULT __stdcall abi_GetControllers(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Gpio::Provider::IGpioControllerProvider>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetControllers());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetControllers());
             return S_OK;
         }
         catch (...)
@@ -250,21 +269,21 @@ namespace Windows::Devices::Gpio::Provider {
 template <typename D> Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs impl_IGpioPinProviderValueChangedEventArgsFactory<D>::Create(Windows::Devices::Gpio::Provider::ProviderGpioPinEdge edge) const
 {
     Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs value { nullptr };
-    check_hresult(static_cast<const IGpioPinProviderValueChangedEventArgsFactory &>(static_cast<const D &>(*this))->abi_Create(edge, put(value)));
+    check_hresult(WINRT_SHIM(IGpioPinProviderValueChangedEventArgsFactory)->abi_Create(edge, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Gpio::Provider::ProviderGpioPinEdge impl_IGpioPinProviderValueChangedEventArgs<D>::Edge() const
 {
     Windows::Devices::Gpio::Provider::ProviderGpioPinEdge value {};
-    check_hresult(static_cast<const IGpioPinProviderValueChangedEventArgs &>(static_cast<const D &>(*this))->get_Edge(&value));
+    check_hresult(WINRT_SHIM(IGpioPinProviderValueChangedEventArgs)->get_Edge(&value));
     return value;
 }
 
 template <typename D> event_token impl_IGpioPinProvider<D>::ValueChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::Provider::IGpioPinProvider, Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->add_ValueChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->add_ValueChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -275,84 +294,84 @@ template <typename D> event_revoker<IGpioPinProvider> impl_IGpioPinProvider<D>::
 
 template <typename D> void impl_IGpioPinProvider<D>::ValueChanged(event_token token) const
 {
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->remove_ValueChanged(token));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->remove_ValueChanged(token));
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IGpioPinProvider<D>::DebounceTimeout() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->get_DebounceTimeout(put(value)));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->get_DebounceTimeout(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IGpioPinProvider<D>::DebounceTimeout(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->put_DebounceTimeout(get(value)));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->put_DebounceTimeout(get_abi(value)));
 }
 
 template <typename D> int32_t impl_IGpioPinProvider<D>::PinNumber() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->get_PinNumber(&value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->get_PinNumber(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Gpio::Provider::ProviderGpioSharingMode impl_IGpioPinProvider<D>::SharingMode() const
 {
     Windows::Devices::Gpio::Provider::ProviderGpioSharingMode value {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->get_SharingMode(&value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->get_SharingMode(&value));
     return value;
 }
 
 template <typename D> bool impl_IGpioPinProvider<D>::IsDriveModeSupported(Windows::Devices::Gpio::Provider::ProviderGpioPinDriveMode driveMode) const
 {
     bool supported {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->abi_IsDriveModeSupported(driveMode, &supported));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->abi_IsDriveModeSupported(driveMode, &supported));
     return supported;
 }
 
 template <typename D> Windows::Devices::Gpio::Provider::ProviderGpioPinDriveMode impl_IGpioPinProvider<D>::GetDriveMode() const
 {
     Windows::Devices::Gpio::Provider::ProviderGpioPinDriveMode value {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->abi_GetDriveMode(&value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->abi_GetDriveMode(&value));
     return value;
 }
 
 template <typename D> void impl_IGpioPinProvider<D>::SetDriveMode(Windows::Devices::Gpio::Provider::ProviderGpioPinDriveMode value) const
 {
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->abi_SetDriveMode(value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->abi_SetDriveMode(value));
 }
 
 template <typename D> void impl_IGpioPinProvider<D>::Write(Windows::Devices::Gpio::Provider::ProviderGpioPinValue value) const
 {
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->abi_Write(value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->abi_Write(value));
 }
 
 template <typename D> Windows::Devices::Gpio::Provider::ProviderGpioPinValue impl_IGpioPinProvider<D>::Read() const
 {
     Windows::Devices::Gpio::Provider::ProviderGpioPinValue value {};
-    check_hresult(static_cast<const IGpioPinProvider &>(static_cast<const D &>(*this))->abi_Read(&value));
+    check_hresult(WINRT_SHIM(IGpioPinProvider)->abi_Read(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IGpioControllerProvider<D>::PinCount() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IGpioControllerProvider &>(static_cast<const D &>(*this))->get_PinCount(&value));
+    check_hresult(WINRT_SHIM(IGpioControllerProvider)->get_PinCount(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Gpio::Provider::IGpioPinProvider impl_IGpioControllerProvider<D>::OpenPinProvider(int32_t pin, Windows::Devices::Gpio::Provider::ProviderGpioSharingMode sharingMode) const
 {
     Windows::Devices::Gpio::Provider::IGpioPinProvider gpioPinProvider;
-    check_hresult(static_cast<const IGpioControllerProvider &>(static_cast<const D &>(*this))->abi_OpenPinProvider(pin, sharingMode, put(gpioPinProvider)));
+    check_hresult(WINRT_SHIM(IGpioControllerProvider)->abi_OpenPinProvider(pin, sharingMode, put_abi(gpioPinProvider)));
     return gpioPinProvider;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Gpio::Provider::IGpioControllerProvider> impl_IGpioProvider<D>::GetControllers() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Gpio::Provider::IGpioControllerProvider> result;
-    check_hresult(static_cast<const IGpioProvider &>(static_cast<const D &>(*this))->abi_GetControllers(put(result)));
+    check_hresult(WINRT_SHIM(IGpioProvider)->abi_GetControllers(put_abi(result)));
     return result;
 }
 
@@ -363,3 +382,59 @@ inline GpioPinProviderValueChangedEventArgs::GpioPinProviderValueChangedEventArg
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::IGpioControllerProvider>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::IGpioControllerProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::IGpioPinProvider>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::IGpioPinProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgsFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::IGpioPinProviderValueChangedEventArgsFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::IGpioProvider>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::IGpioProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Gpio::Provider::GpioPinProviderValueChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

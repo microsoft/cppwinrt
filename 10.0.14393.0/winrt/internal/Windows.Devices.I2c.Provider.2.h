@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.I2c.Provider.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -13,6 +13,11 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_511f8a39_98ca_550d_af25_1df2c1193c01
 #define WINRT_GENERIC_511f8a39_98ca_550d_af25_1df2c1193c01
 template <> struct __declspec(uuid("511f8a39-98ca-550d-af25-1df2c1193c01")) __declspec(novtable) IVectorView<Windows::Devices::I2c::Provider::II2cControllerProvider> : impl_IVectorView<Windows::Devices::I2c::Provider::II2cControllerProvider> {};
+#endif
+
+#ifndef WINRT_GENERIC_0a45aa70_8d1f_5e65_85d6_d7eb247ea425
+#define WINRT_GENERIC_0a45aa70_8d1f_5e65_85d6_d7eb247ea425
+template <> struct __declspec(uuid("0a45aa70-8d1f-5e65-85d6-d7eb247ea425")) __declspec(novtable) IVector<Windows::Devices::I2c::Provider::II2cControllerProvider> : impl_IVector<Windows::Devices::I2c::Provider::II2cControllerProvider> {};
 #endif
 
 #ifndef WINRT_GENERIC_f6232961_c660_50a1_82e8_12892fcd91f7
@@ -45,72 +50,33 @@ template <> struct __declspec(uuid("771e22ed-da9e-50be-b730-a3bada6bfb25")) __de
 
 namespace Windows::Devices::I2c::Provider {
 
-template <typename D>
-struct WINRT_EBO impl_II2cControllerProvider
-{
-    Windows::Devices::I2c::Provider::II2cDeviceProvider GetDeviceProvider(const Windows::Devices::I2c::Provider::ProviderI2cConnectionSettings & settings) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_II2cDeviceProvider
-{
-    hstring DeviceId() const;
-    void Write(array_ref<const uint8_t> buffer) const;
-    Windows::Devices::I2c::Provider::ProviderI2cTransferResult WritePartial(array_ref<const uint8_t> buffer) const;
-    void Read(array_ref<uint8_t> buffer) const;
-    Windows::Devices::I2c::Provider::ProviderI2cTransferResult ReadPartial(array_ref<uint8_t> buffer) const;
-    void WriteRead(array_ref<const uint8_t> writeBuffer, array_ref<uint8_t> readBuffer) const;
-    Windows::Devices::I2c::Provider::ProviderI2cTransferResult WriteReadPartial(array_ref<const uint8_t> writeBuffer, array_ref<uint8_t> readBuffer) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_II2cProvider
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::I2c::Provider::II2cControllerProvider>> GetControllersAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProviderI2cConnectionSettings
-{
-    int32_t SlaveAddress() const;
-    void SlaveAddress(int32_t value) const;
-    Windows::Devices::I2c::Provider::ProviderI2cBusSpeed BusSpeed() const;
-    void BusSpeed(Windows::Devices::I2c::Provider::ProviderI2cBusSpeed value) const;
-    Windows::Devices::I2c::Provider::ProviderI2cSharingMode SharingMode() const;
-    void SharingMode(Windows::Devices::I2c::Provider::ProviderI2cSharingMode value) const;
-};
-
 struct II2cControllerProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<II2cControllerProvider>
 {
     II2cControllerProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<II2cControllerProvider>(m_ptr); }
 };
 
 struct II2cDeviceProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<II2cDeviceProvider>,
     impl::require<II2cDeviceProvider, Windows::Foundation::IClosable>
 {
     II2cDeviceProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<II2cDeviceProvider>(m_ptr); }
 };
 
 struct II2cProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<II2cProvider>
 {
     II2cProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<II2cProvider>(m_ptr); }
 };
 
 struct IProviderI2cConnectionSettings :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProviderI2cConnectionSettings>
 {
     IProviderI2cConnectionSettings(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProviderI2cConnectionSettings>(m_ptr); }
 };
 
 }

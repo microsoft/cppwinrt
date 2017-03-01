@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,6 +12,11 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_8aef9bca_fe7d_5966_9789_fede24cb41c4
 #define WINRT_GENERIC_8aef9bca_fe7d_5966_9789_fede24cb41c4
 template <> struct __declspec(uuid("8aef9bca-fe7d-5966-9789-fede24cb41c4")) __declspec(novtable) IVectorView<Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementReceivedEventArgs> : impl_IVectorView<Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementReceivedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_18b55e9e_757a_5f05_8f5d_850abf782d5d
+#define WINRT_GENERIC_18b55e9e_757a_5f05_8f5d_850abf782d5d
+template <> struct __declspec(uuid("18b55e9e-757a-5f05-8f5d-850abf782d5d")) __declspec(novtable) IVector<Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementReceivedEventArgs> : impl_IVector<Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementReceivedEventArgs> {};
 #endif
 
 #ifndef WINRT_GENERIC_096edbb8_ecef_5724_be62_240dcff6aca9
@@ -29,100 +34,46 @@ template <> struct __declspec(uuid("34f6412f-8314-5205-967c-db357c9a42a7")) __de
 
 namespace Windows::Devices::Bluetooth::Background {
 
-template <typename D>
-struct WINRT_EBO impl_IBluetoothLEAdvertisementPublisherTriggerDetails
-{
-    Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementPublisherStatus Status() const;
-    Windows::Devices::Bluetooth::BluetoothError Error() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBluetoothLEAdvertisementWatcherTriggerDetails
-{
-    Windows::Devices::Bluetooth::BluetoothError Error() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::Advertisement::BluetoothLEAdvertisementReceivedEventArgs> Advertisements() const;
-    Windows::Devices::Bluetooth::BluetoothSignalStrengthFilter SignalStrengthFilter() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IGattCharacteristicNotificationTriggerDetails
-{
-    Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic Characteristic() const;
-    Windows::Storage::Streams::IBuffer Value() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRfcommConnectionTriggerDetails
-{
-    Windows::Networking::Sockets::StreamSocket Socket() const;
-    bool Incoming() const;
-    Windows::Devices::Bluetooth::BluetoothDevice RemoteDevice() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRfcommInboundConnectionInformation
-{
-    Windows::Storage::Streams::IBuffer SdpRecord() const;
-    void SdpRecord(const Windows::Storage::Streams::IBuffer & value) const;
-    Windows::Devices::Bluetooth::Rfcomm::RfcommServiceId LocalServiceId() const;
-    void LocalServiceId(const Windows::Devices::Bluetooth::Rfcomm::RfcommServiceId & value) const;
-    Windows::Devices::Bluetooth::BluetoothServiceCapabilities ServiceCapabilities() const;
-    void ServiceCapabilities(Windows::Devices::Bluetooth::BluetoothServiceCapabilities value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRfcommOutboundConnectionInformation
-{
-    Windows::Devices::Bluetooth::Rfcomm::RfcommServiceId RemoteServiceId() const;
-    void RemoteServiceId(const Windows::Devices::Bluetooth::Rfcomm::RfcommServiceId & value) const;
-};
-
 struct IBluetoothLEAdvertisementPublisherTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBluetoothLEAdvertisementPublisherTriggerDetails>
 {
     IBluetoothLEAdvertisementPublisherTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBluetoothLEAdvertisementPublisherTriggerDetails>(m_ptr); }
 };
 
 struct IBluetoothLEAdvertisementWatcherTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBluetoothLEAdvertisementWatcherTriggerDetails>
 {
     IBluetoothLEAdvertisementWatcherTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBluetoothLEAdvertisementWatcherTriggerDetails>(m_ptr); }
 };
 
 struct IGattCharacteristicNotificationTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGattCharacteristicNotificationTriggerDetails>
 {
     IGattCharacteristicNotificationTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGattCharacteristicNotificationTriggerDetails>(m_ptr); }
 };
 
 struct IRfcommConnectionTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRfcommConnectionTriggerDetails>
 {
     IRfcommConnectionTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRfcommConnectionTriggerDetails>(m_ptr); }
 };
 
 struct IRfcommInboundConnectionInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRfcommInboundConnectionInformation>
 {
     IRfcommInboundConnectionInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRfcommInboundConnectionInformation>(m_ptr); }
 };
 
 struct IRfcommOutboundConnectionInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRfcommOutboundConnectionInformation>
 {
     IRfcommOutboundConnectionInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRfcommOutboundConnectionInformation>(m_ptr); }
 };
 
 }

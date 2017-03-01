@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -186,6 +186,62 @@ struct WebSocketServerCustomValidationRequestedEventArgs;
 
 namespace Windows::Networking::Sockets {
 
+template <typename T> struct impl_IControlChannelTrigger;
+template <typename T> struct impl_IControlChannelTrigger2;
+template <typename T> struct impl_IControlChannelTriggerEventDetails;
+template <typename T> struct impl_IControlChannelTriggerFactory;
+template <typename T> struct impl_IControlChannelTriggerResetEventDetails;
+template <typename T> struct impl_IDatagramSocket;
+template <typename T> struct impl_IDatagramSocket2;
+template <typename T> struct impl_IDatagramSocket3;
+template <typename T> struct impl_IDatagramSocketControl;
+template <typename T> struct impl_IDatagramSocketControl2;
+template <typename T> struct impl_IDatagramSocketControl3;
+template <typename T> struct impl_IDatagramSocketInformation;
+template <typename T> struct impl_IDatagramSocketMessageReceivedEventArgs;
+template <typename T> struct impl_IDatagramSocketStatics;
+template <typename T> struct impl_IMessageWebSocket;
+template <typename T> struct impl_IMessageWebSocket2;
+template <typename T> struct impl_IMessageWebSocketControl;
+template <typename T> struct impl_IMessageWebSocketMessageReceivedEventArgs;
+template <typename T> struct impl_ISocketActivityContext;
+template <typename T> struct impl_ISocketActivityContextFactory;
+template <typename T> struct impl_ISocketActivityInformation;
+template <typename T> struct impl_ISocketActivityInformationStatics;
+template <typename T> struct impl_ISocketActivityTriggerDetails;
+template <typename T> struct impl_ISocketErrorStatics;
+template <typename T> struct impl_IStreamSocket;
+template <typename T> struct impl_IStreamSocket2;
+template <typename T> struct impl_IStreamSocket3;
+template <typename T> struct impl_IStreamSocketControl;
+template <typename T> struct impl_IStreamSocketControl2;
+template <typename T> struct impl_IStreamSocketControl3;
+template <typename T> struct impl_IStreamSocketInformation;
+template <typename T> struct impl_IStreamSocketInformation2;
+template <typename T> struct impl_IStreamSocketListener;
+template <typename T> struct impl_IStreamSocketListener2;
+template <typename T> struct impl_IStreamSocketListener3;
+template <typename T> struct impl_IStreamSocketListenerConnectionReceivedEventArgs;
+template <typename T> struct impl_IStreamSocketListenerControl;
+template <typename T> struct impl_IStreamSocketListenerControl2;
+template <typename T> struct impl_IStreamSocketListenerInformation;
+template <typename T> struct impl_IStreamSocketStatics;
+template <typename T> struct impl_IStreamWebSocket;
+template <typename T> struct impl_IStreamWebSocket2;
+template <typename T> struct impl_IStreamWebSocketControl;
+template <typename T> struct impl_IWebSocket;
+template <typename T> struct impl_IWebSocketClosedEventArgs;
+template <typename T> struct impl_IWebSocketControl;
+template <typename T> struct impl_IWebSocketControl2;
+template <typename T> struct impl_IWebSocketErrorStatics;
+template <typename T> struct impl_IWebSocketInformation;
+template <typename T> struct impl_IWebSocketInformation2;
+template <typename T> struct impl_IWebSocketServerCustomValidationRequestedEventArgs;
+
+}
+
+namespace Windows::Networking::Sockets {
+
 enum class ControlChannelTriggerResetReason
 {
     FastUserSwitched = 0,
@@ -278,11 +334,11 @@ enum class SocketMessageType
 enum class SocketProtectionLevel
 {
     PlainSocket = 0,
-    Ssl = 1,
+    Ssl [[deprecated("Ssl may result in insecure connections and may be altered or unavailable for releases after Windows 8.1. Instead, use one of the TLS SocketProtectionLevel values.")]] = 1,
     SslAllowNullEncryption = 2,
     BluetoothEncryptionAllowNullAuthentication = 3,
     BluetoothEncryptionWithAuthentication = 4,
-    Ssl3AllowWeakEncryption = 5,
+    Ssl3AllowWeakEncryption [[deprecated("Ssl3AllowWeakEncryption may result in insecure connections and may be altered or unavailable for releases after Windows 8.1. Instead, use one of the TLS SocketProtectionLevel values.")]] = 5,
     Tls10 = 6,
     Tls11 = 7,
     Tls12 = 8,

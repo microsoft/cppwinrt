@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Storage.3.h"
@@ -21,7 +24,8 @@ struct produce<D, Windows::Storage::Streams::IBuffer> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().Capacity());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Capacity());
             return S_OK;
         }
         catch (...)
@@ -34,7 +38,8 @@ struct produce<D, Windows::Storage::Streams::IBuffer> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().Length());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Length());
             return S_OK;
         }
         catch (...)
@@ -47,6 +52,7 @@ struct produce<D, Windows::Storage::Streams::IBuffer> : produce_base<D, Windows:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Length(value);
             return S_OK;
         }
@@ -60,11 +66,12 @@ struct produce<D, Windows::Storage::Streams::IBuffer> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IBufferFactory> : produce_base<D, Windows::Storage::Streams::IBufferFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t capacity, abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall abi_Create(uint32_t capacity, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Create(capacity));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Create(capacity));
             return S_OK;
         }
         catch (...)
@@ -78,11 +85,12 @@ struct produce<D, Windows::Storage::Streams::IBufferFactory> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IBufferStatics> : produce_base<D, Windows::Storage::Streams::IBufferStatics>
 {
-    HRESULT __stdcall abi_CreateCopyFromMemoryBuffer(abi_arg_in<Windows::Foundation::IMemoryBuffer> input, abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall abi_CreateCopyFromMemoryBuffer(impl::abi_arg_in<Windows::Foundation::IMemoryBuffer> input, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateCopyFromMemoryBuffer(*reinterpret_cast<const Windows::Foundation::IMemoryBuffer *>(&input)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateCopyFromMemoryBuffer(*reinterpret_cast<const Windows::Foundation::IMemoryBuffer *>(&input)));
             return S_OK;
         }
         catch (...)
@@ -92,11 +100,12 @@ struct produce<D, Windows::Storage::Streams::IBufferStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_CreateMemoryBufferOverIBuffer(abi_arg_in<Windows::Storage::Streams::IBuffer> input, abi_arg_out<Windows::Foundation::IMemoryBuffer> value) noexcept override
+    HRESULT __stdcall abi_CreateMemoryBufferOverIBuffer(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> input, impl::abi_arg_out<Windows::Foundation::IMemoryBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateMemoryBufferOverIBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&input)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateMemoryBufferOverIBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&input)));
             return S_OK;
         }
         catch (...)
@@ -110,11 +119,12 @@ struct produce<D, Windows::Storage::Streams::IBufferStatics> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IContentTypeProvider> : produce_base<D, Windows::Storage::Streams::IContentTypeProvider>
 {
-    HRESULT __stdcall get_ContentType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContentType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContentType());
             return S_OK;
         }
         catch (...)
@@ -132,7 +142,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().UnconsumedBufferLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnconsumedBufferLength());
             return S_OK;
         }
         catch (...)
@@ -145,7 +156,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().UnicodeEncoding());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnicodeEncoding());
             return S_OK;
         }
         catch (...)
@@ -158,6 +170,7 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().UnicodeEncoding(value);
             return S_OK;
         }
@@ -171,7 +184,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ByteOrder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ByteOrder());
             return S_OK;
         }
         catch (...)
@@ -184,6 +198,7 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ByteOrder(value);
             return S_OK;
         }
@@ -197,7 +212,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().InputStreamOptions());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InputStreamOptions());
             return S_OK;
         }
         catch (...)
@@ -210,6 +226,7 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().InputStreamOptions(value);
             return S_OK;
         }
@@ -223,7 +240,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadByte());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadByte());
             return S_OK;
         }
         catch (...)
@@ -232,10 +250,11 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ReadBytes(uint32_t __valueSize, abi_arg_out<uint8_t> value) noexcept override
+    HRESULT __stdcall abi_ReadBytes(uint32_t __valueSize, impl::abi_arg_out<uint8_t> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadBytes(*value);
             return S_OK;
         }
@@ -245,11 +264,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ReadBuffer(uint32_t length, abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall abi_ReadBuffer(uint32_t length, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
     {
         try
         {
-            *buffer = detach(this->shim().ReadBuffer(length));
+            typename D::abi_guard guard(this->shim());
+            *buffer = detach_abi(this->shim().ReadBuffer(length));
             return S_OK;
         }
         catch (...)
@@ -263,7 +283,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadBoolean());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadBoolean());
             return S_OK;
         }
         catch (...)
@@ -276,7 +297,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadGuid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadGuid());
             return S_OK;
         }
         catch (...)
@@ -289,7 +311,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadInt16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadInt16());
             return S_OK;
         }
         catch (...)
@@ -302,7 +325,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadInt32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadInt32());
             return S_OK;
         }
         catch (...)
@@ -315,7 +339,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadInt64());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadInt64());
             return S_OK;
         }
         catch (...)
@@ -328,7 +353,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadUInt16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadUInt16());
             return S_OK;
         }
         catch (...)
@@ -341,7 +367,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadUInt32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadUInt32());
             return S_OK;
         }
         catch (...)
@@ -354,7 +381,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadUInt64());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadUInt64());
             return S_OK;
         }
         catch (...)
@@ -367,7 +395,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadSingle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadSingle());
             return S_OK;
         }
         catch (...)
@@ -380,7 +409,8 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadDouble());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadDouble());
             return S_OK;
         }
         catch (...)
@@ -389,11 +419,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ReadString(uint32_t codeUnitCount, abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_ReadString(uint32_t codeUnitCount, impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadString(codeUnitCount));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadString(codeUnitCount));
             return S_OK;
         }
         catch (...)
@@ -403,11 +434,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ReadDateTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall abi_ReadDateTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadDateTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadDateTime());
             return S_OK;
         }
         catch (...)
@@ -416,11 +448,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ReadTimeSpan(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall abi_ReadTimeSpan(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadTimeSpan());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadTimeSpan());
             return S_OK;
         }
         catch (...)
@@ -429,11 +462,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_LoadAsync(uint32_t count, abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_LoadAsync(uint32_t count, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().LoadAsync(count));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().LoadAsync(count));
             return S_OK;
         }
         catch (...)
@@ -443,11 +477,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_DetachBuffer(abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall abi_DetachBuffer(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
     {
         try
         {
-            *buffer = detach(this->shim().DetachBuffer());
+            typename D::abi_guard guard(this->shim());
+            *buffer = detach_abi(this->shim().DetachBuffer());
             return S_OK;
         }
         catch (...)
@@ -457,11 +492,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_DetachStream(abi_arg_out<Windows::Storage::Streams::IInputStream> stream) noexcept override
+    HRESULT __stdcall abi_DetachStream(impl::abi_arg_out<Windows::Storage::Streams::IInputStream> stream) noexcept override
     {
         try
         {
-            *stream = detach(this->shim().DetachStream());
+            typename D::abi_guard guard(this->shim());
+            *stream = detach_abi(this->shim().DetachStream());
             return S_OK;
         }
         catch (...)
@@ -475,11 +511,12 @@ struct produce<D, Windows::Storage::Streams::IDataReader> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IDataReaderFactory> : produce_base<D, Windows::Storage::Streams::IDataReaderFactory>
 {
-    HRESULT __stdcall abi_CreateDataReader(abi_arg_in<Windows::Storage::Streams::IInputStream> inputStream, abi_arg_out<Windows::Storage::Streams::IDataReader> dataReader) noexcept override
+    HRESULT __stdcall abi_CreateDataReader(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> inputStream, impl::abi_arg_out<Windows::Storage::Streams::IDataReader> dataReader) noexcept override
     {
         try
         {
-            *dataReader = detach(this->shim().CreateDataReader(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&inputStream)));
+            typename D::abi_guard guard(this->shim());
+            *dataReader = detach_abi(this->shim().CreateDataReader(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&inputStream)));
             return S_OK;
         }
         catch (...)
@@ -493,11 +530,12 @@ struct produce<D, Windows::Storage::Streams::IDataReaderFactory> : produce_base<
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IDataReaderStatics> : produce_base<D, Windows::Storage::Streams::IDataReaderStatics>
 {
-    HRESULT __stdcall abi_FromBuffer(abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, abi_arg_out<Windows::Storage::Streams::IDataReader> dataReader) noexcept override
+    HRESULT __stdcall abi_FromBuffer(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, impl::abi_arg_out<Windows::Storage::Streams::IDataReader> dataReader) noexcept override
     {
         try
         {
-            *dataReader = detach(this->shim().FromBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
+            typename D::abi_guard guard(this->shim());
+            *dataReader = detach_abi(this->shim().FromBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
             return S_OK;
         }
         catch (...)
@@ -515,7 +553,8 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().UnstoredBufferLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnstoredBufferLength());
             return S_OK;
         }
         catch (...)
@@ -528,7 +567,8 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().UnicodeEncoding());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnicodeEncoding());
             return S_OK;
         }
         catch (...)
@@ -541,6 +581,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().UnicodeEncoding(value);
             return S_OK;
         }
@@ -554,7 +595,8 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ByteOrder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ByteOrder());
             return S_OK;
         }
         catch (...)
@@ -567,6 +609,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ByteOrder(value);
             return S_OK;
         }
@@ -580,6 +623,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteByte(value);
             return S_OK;
         }
@@ -589,11 +633,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteBytes(uint32_t __valueSize, abi_arg_in<uint8_t> * value) noexcept override
+    HRESULT __stdcall abi_WriteBytes(uint32_t __valueSize, impl::abi_arg_in<uint8_t> * value) noexcept override
     {
         try
         {
-            this->shim().WriteBytes(array_ref<const uint8_t>(value, value + __valueSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().WriteBytes(array_view<const uint8_t>(value, value + __valueSize));
             return S_OK;
         }
         catch (...)
@@ -602,10 +647,11 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteBuffer(abi_arg_in<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall abi_WriteBuffer(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer));
             return S_OK;
         }
@@ -615,10 +661,11 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteBufferRange(abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, uint32_t start, uint32_t count) noexcept override
+    HRESULT __stdcall abi_WriteBufferRange(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, uint32_t start, uint32_t count) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteBuffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer), start, count);
             return S_OK;
         }
@@ -632,6 +679,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteBoolean(value);
             return S_OK;
         }
@@ -645,6 +693,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteGuid(value);
             return S_OK;
         }
@@ -658,6 +707,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteInt16(value);
             return S_OK;
         }
@@ -671,6 +721,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteInt32(value);
             return S_OK;
         }
@@ -684,6 +735,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteInt64(value);
             return S_OK;
         }
@@ -697,6 +749,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteUInt16(value);
             return S_OK;
         }
@@ -710,6 +763,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteUInt32(value);
             return S_OK;
         }
@@ -723,6 +777,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteUInt64(value);
             return S_OK;
         }
@@ -736,6 +791,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteSingle(value);
             return S_OK;
         }
@@ -749,6 +805,7 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteDouble(value);
             return S_OK;
         }
@@ -758,10 +815,11 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteDateTime(abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall abi_WriteDateTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteDateTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
             return S_OK;
         }
@@ -771,10 +829,11 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteTimeSpan(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall abi_WriteTimeSpan(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteTimeSpan(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -784,11 +843,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_WriteString(abi_arg_in<hstring> value, uint32_t * codeUnitCount) noexcept override
+    HRESULT __stdcall abi_WriteString(impl::abi_arg_in<hstring> value, uint32_t * codeUnitCount) noexcept override
     {
         try
         {
-            *codeUnitCount = detach(this->shim().WriteString(*reinterpret_cast<const hstring *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *codeUnitCount = detach_abi(this->shim().WriteString(*reinterpret_cast<const hstring *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -797,11 +857,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_MeasureString(abi_arg_in<hstring> value, uint32_t * codeUnitCount) noexcept override
+    HRESULT __stdcall abi_MeasureString(impl::abi_arg_in<hstring> value, uint32_t * codeUnitCount) noexcept override
     {
         try
         {
-            *codeUnitCount = detach(this->shim().MeasureString(*reinterpret_cast<const hstring *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *codeUnitCount = detach_abi(this->shim().MeasureString(*reinterpret_cast<const hstring *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -810,25 +871,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_StoreAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_StoreAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StoreAsync());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *operation = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_FlushAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
-    {
-        try
-        {
-            *operation = detach(this->shim().FlushAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StoreAsync());
             return S_OK;
         }
         catch (...)
@@ -838,11 +886,27 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_DetachBuffer(abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall abi_FlushAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *buffer = detach(this->shim().DetachBuffer());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FlushAsync());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *operation = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_DetachBuffer(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *buffer = detach_abi(this->shim().DetachBuffer());
             return S_OK;
         }
         catch (...)
@@ -852,11 +916,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_DetachStream(abi_arg_out<Windows::Storage::Streams::IOutputStream> outputStream) noexcept override
+    HRESULT __stdcall abi_DetachStream(impl::abi_arg_out<Windows::Storage::Streams::IOutputStream> outputStream) noexcept override
     {
         try
         {
-            *outputStream = detach(this->shim().DetachStream());
+            typename D::abi_guard guard(this->shim());
+            *outputStream = detach_abi(this->shim().DetachStream());
             return S_OK;
         }
         catch (...)
@@ -870,11 +935,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriter> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IDataWriterFactory> : produce_base<D, Windows::Storage::Streams::IDataWriterFactory>
 {
-    HRESULT __stdcall abi_CreateDataWriter(abi_arg_in<Windows::Storage::Streams::IOutputStream> outputStream, abi_arg_out<Windows::Storage::Streams::IDataWriter> dataWriter) noexcept override
+    HRESULT __stdcall abi_CreateDataWriter(impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> outputStream, impl::abi_arg_out<Windows::Storage::Streams::IDataWriter> dataWriter) noexcept override
     {
         try
         {
-            *dataWriter = detach(this->shim().CreateDataWriter(*reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&outputStream)));
+            typename D::abi_guard guard(this->shim());
+            *dataWriter = detach_abi(this->shim().CreateDataWriter(*reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&outputStream)));
             return S_OK;
         }
         catch (...)
@@ -888,11 +954,12 @@ struct produce<D, Windows::Storage::Streams::IDataWriterFactory> : produce_base<
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IInputStream> : produce_base<D, Windows::Storage::Streams::IInputStream>
 {
-    HRESULT __stdcall abi_ReadAsync(abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, uint32_t count, Windows::Storage::Streams::InputStreamOptions options, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_ReadAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, uint32_t count, Windows::Storage::Streams::InputStreamOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReadAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer), count, options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReadAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer), count, options));
             return S_OK;
         }
         catch (...)
@@ -906,11 +973,12 @@ struct produce<D, Windows::Storage::Streams::IInputStream> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IInputStreamReference> : produce_base<D, Windows::Storage::Streams::IInputStreamReference>
 {
-    HRESULT __stdcall abi_OpenSequentialReadAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream>> operation) noexcept override
+    HRESULT __stdcall abi_OpenSequentialReadAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenSequentialReadAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenSequentialReadAsync());
             return S_OK;
         }
         catch (...)
@@ -924,11 +992,12 @@ struct produce<D, Windows::Storage::Streams::IInputStreamReference> : produce_ba
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IOutputStream> : produce_base<D, Windows::Storage::Streams::IOutputStream>
 {
-    HRESULT __stdcall abi_WriteAsync(abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_WriteAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
             return S_OK;
         }
         catch (...)
@@ -938,11 +1007,12 @@ struct produce<D, Windows::Storage::Streams::IOutputStream> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_FlushAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_FlushAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FlushAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FlushAsync());
             return S_OK;
         }
         catch (...)
@@ -960,7 +1030,8 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
-            *value = detach(this->shim().Size());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Size());
             return S_OK;
         }
         catch (...)
@@ -973,6 +1044,7 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Size(value);
             return S_OK;
         }
@@ -982,11 +1054,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetInputStreamAt(uint64_t position, abi_arg_out<Windows::Storage::Streams::IInputStream> stream) noexcept override
+    HRESULT __stdcall abi_GetInputStreamAt(uint64_t position, impl::abi_arg_out<Windows::Storage::Streams::IInputStream> stream) noexcept override
     {
         try
         {
-            *stream = detach(this->shim().GetInputStreamAt(position));
+            typename D::abi_guard guard(this->shim());
+            *stream = detach_abi(this->shim().GetInputStreamAt(position));
             return S_OK;
         }
         catch (...)
@@ -996,11 +1069,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetOutputStreamAt(uint64_t position, abi_arg_out<Windows::Storage::Streams::IOutputStream> stream) noexcept override
+    HRESULT __stdcall abi_GetOutputStreamAt(uint64_t position, impl::abi_arg_out<Windows::Storage::Streams::IOutputStream> stream) noexcept override
     {
         try
         {
-            *stream = detach(this->shim().GetOutputStreamAt(position));
+            typename D::abi_guard guard(this->shim());
+            *stream = detach_abi(this->shim().GetOutputStreamAt(position));
             return S_OK;
         }
         catch (...)
@@ -1014,7 +1088,8 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
-            *value = detach(this->shim().Position());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Position());
             return S_OK;
         }
         catch (...)
@@ -1027,6 +1102,7 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Seek(position);
             return S_OK;
         }
@@ -1036,11 +1112,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CloneStream(abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> stream) noexcept override
+    HRESULT __stdcall abi_CloneStream(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> stream) noexcept override
     {
         try
         {
-            *stream = detach(this->shim().CloneStream());
+            typename D::abi_guard guard(this->shim());
+            *stream = detach_abi(this->shim().CloneStream());
             return S_OK;
         }
         catch (...)
@@ -1054,7 +1131,8 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
-            *value = detach(this->shim().CanRead());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CanRead());
             return S_OK;
         }
         catch (...)
@@ -1067,7 +1145,8 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
     {
         try
         {
-            *value = detach(this->shim().CanWrite());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CanWrite());
             return S_OK;
         }
         catch (...)
@@ -1080,11 +1159,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStream> : produce_base
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReference> : produce_base<D, Windows::Storage::Streams::IRandomAccessStreamReference>
 {
-    HRESULT __stdcall abi_OpenReadAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType>> operation) noexcept override
+    HRESULT __stdcall abi_OpenReadAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenReadAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenReadAsync());
             return S_OK;
         }
         catch (...)
@@ -1098,11 +1178,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReference> : pro
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReferenceStatics> : produce_base<D, Windows::Storage::Streams::IRandomAccessStreamReferenceStatics>
 {
-    HRESULT __stdcall abi_CreateFromFile(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
+    HRESULT __stdcall abi_CreateFromFile(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
     {
         try
         {
-            *streamReference = detach(this->shim().CreateFromFile(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *streamReference = detach_abi(this->shim().CreateFromFile(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -1112,11 +1193,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReferenceStatics
         }
     }
 
-    HRESULT __stdcall abi_CreateFromUri(abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
+    HRESULT __stdcall abi_CreateFromUri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
     {
         try
         {
-            *streamReference = detach(this->shim().CreateFromUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            typename D::abi_guard guard(this->shim());
+            *streamReference = detach_abi(this->shim().CreateFromUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -1126,11 +1208,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReferenceStatics
         }
     }
 
-    HRESULT __stdcall abi_CreateFromStream(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> stream, abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
+    HRESULT __stdcall abi_CreateFromStream(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> stream, impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> streamReference) noexcept override
     {
         try
         {
-            *streamReference = detach(this->shim().CreateFromStream(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&stream)));
+            typename D::abi_guard guard(this->shim());
+            *streamReference = detach_abi(this->shim().CreateFromStream(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&stream)));
             return S_OK;
         }
         catch (...)
@@ -1144,11 +1227,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamReferenceStatics
 template <typename D>
 struct produce<D, Windows::Storage::Streams::IRandomAccessStreamStatics> : produce_base<D, Windows::Storage::Streams::IRandomAccessStreamStatics>
 {
-    HRESULT __stdcall abi_CopyAsync(abi_arg_in<Windows::Storage::Streams::IInputStream> source, abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
+    HRESULT __stdcall abi_CopyAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> source, impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination)));
             return S_OK;
         }
         catch (...)
@@ -1158,11 +1242,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_CopySizeAsync(abi_arg_in<Windows::Storage::Streams::IInputStream> source, abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, uint64_t bytesToCopy, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
+    HRESULT __stdcall abi_CopySizeAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> source, impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, uint64_t bytesToCopy, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination), bytesToCopy));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination), bytesToCopy));
             return S_OK;
         }
         catch (...)
@@ -1172,11 +1257,12 @@ struct produce<D, Windows::Storage::Streams::IRandomAccessStreamStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_CopyAndCloseAsync(abi_arg_in<Windows::Storage::Streams::IInputStream> source, abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
+    HRESULT __stdcall abi_CopyAndCloseAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> source, impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> destination, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAndCloseAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAndCloseAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&destination)));
             return S_OK;
         }
         catch (...)
@@ -1198,531 +1284,531 @@ namespace Windows::Storage::Streams {
 template <typename D> uint32_t impl_IDataReader<D>::UnconsumedBufferLength() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->get_UnconsumedBufferLength(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->get_UnconsumedBufferLength(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::UnicodeEncoding impl_IDataReader<D>::UnicodeEncoding() const
 {
     Windows::Storage::Streams::UnicodeEncoding value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->get_UnicodeEncoding(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->get_UnicodeEncoding(&value));
     return value;
 }
 
 template <typename D> void impl_IDataReader<D>::UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const
 {
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->put_UnicodeEncoding(value));
+    check_hresult(WINRT_SHIM(IDataReader)->put_UnicodeEncoding(value));
 }
 
 template <typename D> Windows::Storage::Streams::ByteOrder impl_IDataReader<D>::ByteOrder() const
 {
     Windows::Storage::Streams::ByteOrder value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->get_ByteOrder(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->get_ByteOrder(&value));
     return value;
 }
 
 template <typename D> void impl_IDataReader<D>::ByteOrder(Windows::Storage::Streams::ByteOrder value) const
 {
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->put_ByteOrder(value));
+    check_hresult(WINRT_SHIM(IDataReader)->put_ByteOrder(value));
 }
 
 template <typename D> Windows::Storage::Streams::InputStreamOptions impl_IDataReader<D>::InputStreamOptions() const
 {
     Windows::Storage::Streams::InputStreamOptions value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->get_InputStreamOptions(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->get_InputStreamOptions(&value));
     return value;
 }
 
 template <typename D> void impl_IDataReader<D>::InputStreamOptions(Windows::Storage::Streams::InputStreamOptions value) const
 {
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->put_InputStreamOptions(value));
+    check_hresult(WINRT_SHIM(IDataReader)->put_InputStreamOptions(value));
 }
 
 template <typename D> uint8_t impl_IDataReader<D>::ReadByte() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadByte(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadByte(&value));
     return value;
 }
 
-template <typename D> void impl_IDataReader<D>::ReadBytes(array_ref<uint8_t> value) const
+template <typename D> void impl_IDataReader<D>::ReadBytes(array_view<uint8_t> value) const
 {
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadBytes(value.size(), get(value)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadBytes(value.size(), get_abi(value)));
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IDataReader<D>::ReadBuffer(uint32_t length) const
 {
     Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadBuffer(length, put(buffer)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadBuffer(length, put_abi(buffer)));
     return buffer;
 }
 
 template <typename D> bool impl_IDataReader<D>::ReadBoolean() const
 {
     bool value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadBoolean(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadBoolean(&value));
     return value;
 }
 
 template <typename D> GUID impl_IDataReader<D>::ReadGuid() const
 {
     GUID value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadGuid(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadGuid(&value));
     return value;
 }
 
 template <typename D> int16_t impl_IDataReader<D>::ReadInt16() const
 {
     int16_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadInt16(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadInt16(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IDataReader<D>::ReadInt32() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadInt32(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadInt32(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IDataReader<D>::ReadInt64() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadInt64(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadInt64(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IDataReader<D>::ReadUInt16() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadUInt16(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadUInt16(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IDataReader<D>::ReadUInt32() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadUInt32(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadUInt32(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IDataReader<D>::ReadUInt64() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadUInt64(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadUInt64(&value));
     return value;
 }
 
 template <typename D> float impl_IDataReader<D>::ReadSingle() const
 {
     float value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadSingle(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadSingle(&value));
     return value;
 }
 
 template <typename D> double impl_IDataReader<D>::ReadDouble() const
 {
     double value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadDouble(&value));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadDouble(&value));
     return value;
 }
 
 template <typename D> hstring impl_IDataReader<D>::ReadString(uint32_t codeUnitCount) const
 {
     hstring value;
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadString(codeUnitCount, put(value)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadString(codeUnitCount, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IDataReader<D>::ReadDateTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadDateTime(put(value)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadDateTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IDataReader<D>::ReadTimeSpan() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_ReadTimeSpan(put(value)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_ReadTimeSpan(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::DataReaderLoadOperation impl_IDataReader<D>::LoadAsync(uint32_t count) const
 {
     Windows::Storage::Streams::DataReaderLoadOperation operation { nullptr };
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_LoadAsync(count, put(operation)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_LoadAsync(count, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IDataReader<D>::DetachBuffer() const
 {
     Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_DetachBuffer(put(buffer)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_DetachBuffer(put_abi(buffer)));
     return buffer;
 }
 
 template <typename D> Windows::Storage::Streams::IInputStream impl_IDataReader<D>::DetachStream() const
 {
     Windows::Storage::Streams::IInputStream stream;
-    check_hresult(static_cast<const IDataReader &>(static_cast<const D &>(*this))->abi_DetachStream(put(stream)));
+    check_hresult(WINRT_SHIM(IDataReader)->abi_DetachStream(put_abi(stream)));
     return stream;
 }
 
 template <typename D> Windows::Storage::Streams::DataReader impl_IDataReaderFactory<D>::CreateDataReader(const Windows::Storage::Streams::IInputStream & inputStream) const
 {
     Windows::Storage::Streams::DataReader dataReader { nullptr };
-    check_hresult(static_cast<const IDataReaderFactory &>(static_cast<const D &>(*this))->abi_CreateDataReader(get(inputStream), put(dataReader)));
+    check_hresult(WINRT_SHIM(IDataReaderFactory)->abi_CreateDataReader(get_abi(inputStream), put_abi(dataReader)));
     return dataReader;
 }
 
 template <typename D> Windows::Storage::Streams::DataReader impl_IDataReaderStatics<D>::FromBuffer(const Windows::Storage::Streams::IBuffer & buffer) const
 {
     Windows::Storage::Streams::DataReader dataReader { nullptr };
-    check_hresult(static_cast<const IDataReaderStatics &>(static_cast<const D &>(*this))->abi_FromBuffer(get(buffer), put(dataReader)));
+    check_hresult(WINRT_SHIM(IDataReaderStatics)->abi_FromBuffer(get_abi(buffer), put_abi(dataReader)));
     return dataReader;
 }
 
 template <typename D> uint32_t impl_IDataWriter<D>::UnstoredBufferLength() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->get_UnstoredBufferLength(&value));
+    check_hresult(WINRT_SHIM(IDataWriter)->get_UnstoredBufferLength(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::UnicodeEncoding impl_IDataWriter<D>::UnicodeEncoding() const
 {
     Windows::Storage::Streams::UnicodeEncoding value {};
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->get_UnicodeEncoding(&value));
+    check_hresult(WINRT_SHIM(IDataWriter)->get_UnicodeEncoding(&value));
     return value;
 }
 
 template <typename D> void impl_IDataWriter<D>::UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->put_UnicodeEncoding(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->put_UnicodeEncoding(value));
 }
 
 template <typename D> Windows::Storage::Streams::ByteOrder impl_IDataWriter<D>::ByteOrder() const
 {
     Windows::Storage::Streams::ByteOrder value {};
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->get_ByteOrder(&value));
+    check_hresult(WINRT_SHIM(IDataWriter)->get_ByteOrder(&value));
     return value;
 }
 
 template <typename D> void impl_IDataWriter<D>::ByteOrder(Windows::Storage::Streams::ByteOrder value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->put_ByteOrder(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->put_ByteOrder(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteByte(uint8_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteByte(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteByte(value));
 }
 
-template <typename D> void impl_IDataWriter<D>::WriteBytes(array_ref<const uint8_t> value) const
+template <typename D> void impl_IDataWriter<D>::WriteBytes(array_view<const uint8_t> value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteBytes(value.size(), get(value)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteBytes(value.size(), get_abi(value)));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteBuffer(get(buffer)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteBuffer(get_abi(buffer)));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer, uint32_t start, uint32_t count) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteBufferRange(get(buffer), start, count));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteBufferRange(get_abi(buffer), start, count));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteBoolean(bool value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteBoolean(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteBoolean(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteGuid(GUID value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteGuid(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteGuid(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteInt16(int16_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteInt16(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteInt16(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteInt32(int32_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteInt32(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteInt32(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteInt64(int64_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteInt64(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteInt64(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteUInt16(uint16_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteUInt16(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteUInt16(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteUInt32(uint32_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteUInt32(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteUInt32(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteUInt64(uint64_t value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteUInt64(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteUInt64(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteSingle(float value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteSingle(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteSingle(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteDouble(double value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteDouble(value));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteDouble(value));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteDateTime(const Windows::Foundation::DateTime & value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteDateTime(get(value)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteDateTime(get_abi(value)));
 }
 
 template <typename D> void impl_IDataWriter<D>::WriteTimeSpan(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteTimeSpan(get(value)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteTimeSpan(get_abi(value)));
 }
 
-template <typename D> uint32_t impl_IDataWriter<D>::WriteString(hstring_ref value) const
+template <typename D> uint32_t impl_IDataWriter<D>::WriteString(hstring_view value) const
 {
     uint32_t codeUnitCount {};
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_WriteString(get(value), &codeUnitCount));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_WriteString(get_abi(value), &codeUnitCount));
     return codeUnitCount;
 }
 
-template <typename D> uint32_t impl_IDataWriter<D>::MeasureString(hstring_ref value) const
+template <typename D> uint32_t impl_IDataWriter<D>::MeasureString(hstring_view value) const
 {
     uint32_t codeUnitCount {};
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_MeasureString(get(value), &codeUnitCount));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_MeasureString(get_abi(value), &codeUnitCount));
     return codeUnitCount;
 }
 
 template <typename D> Windows::Storage::Streams::DataWriterStoreOperation impl_IDataWriter<D>::StoreAsync() const
 {
     Windows::Storage::Streams::DataWriterStoreOperation operation { nullptr };
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_StoreAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_StoreAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IDataWriter<D>::FlushAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_FlushAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_FlushAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IDataWriter<D>::DetachBuffer() const
 {
     Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_DetachBuffer(put(buffer)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_DetachBuffer(put_abi(buffer)));
     return buffer;
 }
 
 template <typename D> Windows::Storage::Streams::IOutputStream impl_IDataWriter<D>::DetachStream() const
 {
     Windows::Storage::Streams::IOutputStream outputStream;
-    check_hresult(static_cast<const IDataWriter &>(static_cast<const D &>(*this))->abi_DetachStream(put(outputStream)));
+    check_hresult(WINRT_SHIM(IDataWriter)->abi_DetachStream(put_abi(outputStream)));
     return outputStream;
 }
 
 template <typename D> Windows::Storage::Streams::DataWriter impl_IDataWriterFactory<D>::CreateDataWriter(const Windows::Storage::Streams::IOutputStream & outputStream) const
 {
     Windows::Storage::Streams::DataWriter dataWriter { nullptr };
-    check_hresult(static_cast<const IDataWriterFactory &>(static_cast<const D &>(*this))->abi_CreateDataWriter(get(outputStream), put(dataWriter)));
+    check_hresult(WINRT_SHIM(IDataWriterFactory)->abi_CreateDataWriter(get_abi(outputStream), put_abi(dataWriter)));
     return dataWriter;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> impl_IRandomAccessStreamReference<D>::OpenReadAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> operation;
-    check_hresult(static_cast<const IRandomAccessStreamReference &>(static_cast<const D &>(*this))->abi_OpenReadAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamReference)->abi_OpenReadAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> impl_IRandomAccessStreamStatics<D>::CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> operation;
-    check_hresult(static_cast<const IRandomAccessStreamStatics &>(static_cast<const D &>(*this))->abi_CopyAsync(get(source), get(destination), put(operation)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamStatics)->abi_CopyAsync(get_abi(source), get_abi(destination), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> impl_IRandomAccessStreamStatics<D>::CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination, uint64_t bytesToCopy) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> operation;
-    check_hresult(static_cast<const IRandomAccessStreamStatics &>(static_cast<const D &>(*this))->abi_CopySizeAsync(get(source), get(destination), bytesToCopy, put(operation)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamStatics)->abi_CopySizeAsync(get_abi(source), get_abi(destination), bytesToCopy, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> impl_IRandomAccessStreamStatics<D>::CopyAndCloseAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> operation;
-    check_hresult(static_cast<const IRandomAccessStreamStatics &>(static_cast<const D &>(*this))->abi_CopyAndCloseAsync(get(source), get(destination), put(operation)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamStatics)->abi_CopyAndCloseAsync(get_abi(source), get_abi(destination), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Streams::Buffer impl_IBufferFactory<D>::Create(uint32_t capacity) const
 {
     Windows::Storage::Streams::Buffer value { nullptr };
-    check_hresult(static_cast<const IBufferFactory &>(static_cast<const D &>(*this))->abi_Create(capacity, put(value)));
+    check_hresult(WINRT_SHIM(IBufferFactory)->abi_Create(capacity, put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IBuffer<D>::Capacity() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IBuffer &>(static_cast<const D &>(*this))->get_Capacity(&value));
+    check_hresult(WINRT_SHIM(IBuffer)->get_Capacity(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IBuffer<D>::Length() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IBuffer &>(static_cast<const D &>(*this))->get_Length(&value));
+    check_hresult(WINRT_SHIM(IBuffer)->get_Length(&value));
     return value;
 }
 
 template <typename D> void impl_IBuffer<D>::Length(uint32_t value) const
 {
-    check_hresult(static_cast<const IBuffer &>(static_cast<const D &>(*this))->put_Length(value));
+    check_hresult(WINRT_SHIM(IBuffer)->put_Length(value));
 }
 
 template <typename D> Windows::Storage::Streams::Buffer impl_IBufferStatics<D>::CreateCopyFromMemoryBuffer(const Windows::Foundation::IMemoryBuffer & input) const
 {
     Windows::Storage::Streams::Buffer value { nullptr };
-    check_hresult(static_cast<const IBufferStatics &>(static_cast<const D &>(*this))->abi_CreateCopyFromMemoryBuffer(get(input), put(value)));
+    check_hresult(WINRT_SHIM(IBufferStatics)->abi_CreateCopyFromMemoryBuffer(get_abi(input), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::MemoryBuffer impl_IBufferStatics<D>::CreateMemoryBufferOverIBuffer(const Windows::Storage::Streams::IBuffer & input) const
 {
     Windows::Foundation::MemoryBuffer value { nullptr };
-    check_hresult(static_cast<const IBufferStatics &>(static_cast<const D &>(*this))->abi_CreateMemoryBufferOverIBuffer(get(input), put(value)));
+    check_hresult(WINRT_SHIM(IBufferStatics)->abi_CreateMemoryBufferOverIBuffer(get_abi(input), put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IContentTypeProvider<D>::ContentType() const
 {
     hstring value;
-    check_hresult(static_cast<const IContentTypeProvider &>(static_cast<const D &>(*this))->get_ContentType(put(value)));
+    check_hresult(WINRT_SHIM(IContentTypeProvider)->get_ContentType(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> impl_IInputStreamReference<D>::OpenSequentialReadAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> operation;
-    check_hresult(static_cast<const IInputStreamReference &>(static_cast<const D &>(*this))->abi_OpenSequentialReadAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IInputStreamReference)->abi_OpenSequentialReadAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Streams::RandomAccessStreamReference impl_IRandomAccessStreamReferenceStatics<D>::CreateFromFile(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Storage::Streams::RandomAccessStreamReference streamReference { nullptr };
-    check_hresult(static_cast<const IRandomAccessStreamReferenceStatics &>(static_cast<const D &>(*this))->abi_CreateFromFile(get(file), put(streamReference)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamReferenceStatics)->abi_CreateFromFile(get_abi(file), put_abi(streamReference)));
     return streamReference;
 }
 
 template <typename D> Windows::Storage::Streams::RandomAccessStreamReference impl_IRandomAccessStreamReferenceStatics<D>::CreateFromUri(const Windows::Foundation::Uri & uri) const
 {
     Windows::Storage::Streams::RandomAccessStreamReference streamReference { nullptr };
-    check_hresult(static_cast<const IRandomAccessStreamReferenceStatics &>(static_cast<const D &>(*this))->abi_CreateFromUri(get(uri), put(streamReference)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamReferenceStatics)->abi_CreateFromUri(get_abi(uri), put_abi(streamReference)));
     return streamReference;
 }
 
 template <typename D> Windows::Storage::Streams::RandomAccessStreamReference impl_IRandomAccessStreamReferenceStatics<D>::CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream) const
 {
     Windows::Storage::Streams::RandomAccessStreamReference streamReference { nullptr };
-    check_hresult(static_cast<const IRandomAccessStreamReferenceStatics &>(static_cast<const D &>(*this))->abi_CreateFromStream(get(stream), put(streamReference)));
+    check_hresult(WINRT_SHIM(IRandomAccessStreamReferenceStatics)->abi_CreateFromStream(get_abi(stream), put_abi(streamReference)));
     return streamReference;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t> impl_IInputStream<D>::ReadAsync(const Windows::Storage::Streams::IBuffer & buffer, uint32_t count, Windows::Storage::Streams::InputStreamOptions options) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t> operation;
-    check_hresult(static_cast<const IInputStream &>(static_cast<const D &>(*this))->abi_ReadAsync(get(buffer), count, options, put(operation)));
+    check_hresult(WINRT_SHIM(IInputStream)->abi_ReadAsync(get_abi(buffer), count, options, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t> impl_IOutputStream<D>::WriteAsync(const Windows::Storage::Streams::IBuffer & buffer) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t> operation;
-    check_hresult(static_cast<const IOutputStream &>(static_cast<const D &>(*this))->abi_WriteAsync(get(buffer), put(operation)));
+    check_hresult(WINRT_SHIM(IOutputStream)->abi_WriteAsync(get_abi(buffer), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IOutputStream<D>::FlushAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IOutputStream &>(static_cast<const D &>(*this))->abi_FlushAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IOutputStream)->abi_FlushAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> uint64_t impl_IRandomAccessStream<D>::Size() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->get_Size(&value));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->get_Size(&value));
     return value;
 }
 
 template <typename D> void impl_IRandomAccessStream<D>::Size(uint64_t value) const
 {
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->put_Size(value));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->put_Size(value));
 }
 
 template <typename D> Windows::Storage::Streams::IInputStream impl_IRandomAccessStream<D>::GetInputStreamAt(uint64_t position) const
 {
     Windows::Storage::Streams::IInputStream stream;
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->abi_GetInputStreamAt(position, put(stream)));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->abi_GetInputStreamAt(position, put_abi(stream)));
     return stream;
 }
 
 template <typename D> Windows::Storage::Streams::IOutputStream impl_IRandomAccessStream<D>::GetOutputStreamAt(uint64_t position) const
 {
     Windows::Storage::Streams::IOutputStream stream;
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->abi_GetOutputStreamAt(position, put(stream)));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->abi_GetOutputStreamAt(position, put_abi(stream)));
     return stream;
 }
 
 template <typename D> uint64_t impl_IRandomAccessStream<D>::Position() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->get_Position(&value));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->get_Position(&value));
     return value;
 }
 
 template <typename D> void impl_IRandomAccessStream<D>::Seek(uint64_t position) const
 {
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->abi_Seek(position));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->abi_Seek(position));
 }
 
 template <typename D> Windows::Storage::Streams::IRandomAccessStream impl_IRandomAccessStream<D>::CloneStream() const
 {
     Windows::Storage::Streams::IRandomAccessStream stream;
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->abi_CloneStream(put(stream)));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->abi_CloneStream(put_abi(stream)));
     return stream;
 }
 
 template <typename D> bool impl_IRandomAccessStream<D>::CanRead() const
 {
     bool value {};
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->get_CanRead(&value));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->get_CanRead(&value));
     return value;
 }
 
 template <typename D> bool impl_IRandomAccessStream<D>::CanWrite() const
 {
     bool value {};
-    check_hresult(static_cast<const IRandomAccessStream &>(static_cast<const D &>(*this))->get_CanWrite(&value));
+    check_hresult(WINRT_SHIM(IRandomAccessStream)->get_CanWrite(&value));
     return value;
 }
 
@@ -1794,3 +1880,275 @@ inline Windows::Storage::Streams::RandomAccessStreamReference RandomAccessStream
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IBuffer>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IBuffer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IBufferFactory>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IBufferFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IBufferStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IBufferStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IContentTypeProvider>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IContentTypeProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IDataReader>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IDataReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IDataReaderFactory>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IDataReaderFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IDataReaderStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IDataReaderStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IDataWriter>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IDataWriter & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IDataWriterFactory>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IDataWriterFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IInputStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IInputStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IInputStreamReference>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IInputStreamReference & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IOutputStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IOutputStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IRandomAccessStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IRandomAccessStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IRandomAccessStreamReference>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IRandomAccessStreamReference & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IRandomAccessStreamReferenceStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IRandomAccessStreamReferenceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IRandomAccessStreamStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IRandomAccessStreamStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::Buffer>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::Buffer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::DataReader>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::DataReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::DataReaderLoadOperation>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::DataReaderLoadOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::DataWriter>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::DataWriter & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::DataWriterStoreOperation>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::DataWriterStoreOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::FileInputStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::FileInputStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::FileOutputStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::FileOutputStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::FileRandomAccessStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::FileRandomAccessStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::InputStreamOverStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::InputStreamOverStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::OutputStreamOverStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::OutputStreamOverStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::RandomAccessStreamOverStream>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::RandomAccessStreamOverStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Streams::RandomAccessStreamReference>
+{
+    size_t operator()(const winrt::Windows::Storage::Streams::RandomAccessStreamReference & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

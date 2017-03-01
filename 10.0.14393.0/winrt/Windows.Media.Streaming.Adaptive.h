@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Web.Http.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -22,7 +25,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().IsLive());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsLive());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall get_DesiredLiveOffset(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_DesiredLiveOffset(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DesiredLiveOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredLiveOffset());
             return S_OK;
         }
         catch (...)
@@ -44,10 +49,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall put_DesiredLiveOffset(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_DesiredLiveOffset(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DesiredLiveOffset(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -61,7 +67,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().InitialBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InitialBitrate());
             return S_OK;
         }
         catch (...)
@@ -74,6 +81,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().InitialBitrate(value);
             return S_OK;
         }
@@ -87,7 +95,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().CurrentDownloadBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentDownloadBitrate());
             return S_OK;
         }
         catch (...)
@@ -100,7 +109,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().CurrentPlaybackBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentPlaybackBitrate());
             return S_OK;
         }
         catch (...)
@@ -109,25 +119,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall get_AvailableBitrates(abi_arg_out<Windows::Foundation::Collections::IVectorView<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_AvailableBitrates(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<uint32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AvailableBitrates());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_DesiredMinBitrate(abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().DesiredMinBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AvailableBitrates());
             return S_OK;
         }
         catch (...)
@@ -137,10 +134,26 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall put_DesiredMinBitrate(abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_DesiredMinBitrate(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredMinBitrate());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall put_DesiredMinBitrate(impl::abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
             this->shim().DesiredMinBitrate(*reinterpret_cast<const Windows::Foundation::IReference<uint32_t> *>(&value));
             return S_OK;
         }
@@ -150,11 +163,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall get_DesiredMaxBitrate(abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_DesiredMaxBitrate(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DesiredMaxBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredMaxBitrate());
             return S_OK;
         }
         catch (...)
@@ -164,10 +178,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall put_DesiredMaxBitrate(abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall put_DesiredMaxBitrate(impl::abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DesiredMaxBitrate(*reinterpret_cast<const Windows::Foundation::IReference<uint32_t> *>(&value));
             return S_OK;
         }
@@ -181,7 +196,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().AudioOnlyPlayback());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AudioOnlyPlayback());
             return S_OK;
         }
         catch (...)
@@ -194,7 +210,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
-            *value = detach(this->shim().InboundBitsPerSecond());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InboundBitsPerSecond());
             return S_OK;
         }
         catch (...)
@@ -203,11 +220,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall get_InboundBitsPerSecondWindow(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_InboundBitsPerSecondWindow(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InboundBitsPerSecondWindow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InboundBitsPerSecondWindow());
             return S_OK;
         }
         catch (...)
@@ -216,10 +234,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall put_InboundBitsPerSecondWindow(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_InboundBitsPerSecondWindow(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().InboundBitsPerSecondWindow(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -229,11 +248,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall add_DownloadBitrateChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DownloadBitrateChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DownloadBitrateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DownloadBitrateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -246,6 +266,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DownloadBitrateChanged(token);
             return S_OK;
         }
@@ -255,11 +276,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall add_PlaybackBitrateChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PlaybackBitrateChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PlaybackBitrateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PlaybackBitrateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -272,6 +294,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PlaybackBitrateChanged(token);
             return S_OK;
         }
@@ -281,11 +304,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall add_DownloadRequested(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DownloadRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DownloadRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DownloadRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -298,6 +322,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DownloadRequested(token);
             return S_OK;
         }
@@ -307,11 +332,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall add_DownloadCompleted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DownloadCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DownloadCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DownloadCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -324,6 +350,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DownloadCompleted(token);
             return S_OK;
         }
@@ -333,11 +360,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
         }
     }
 
-    HRESULT __stdcall add_DownloadFailed(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DownloadFailed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DownloadFailed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DownloadFailed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -350,6 +378,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DownloadFailed(token);
             return S_OK;
         }
@@ -363,11 +392,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> : p
 template <typename D>
 struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource2> : produce_base<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource2>
 {
-    HRESULT __stdcall get_AdvancedSettings(abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvancedSettings> value) noexcept override
+    HRESULT __stdcall get_AdvancedSettings(impl::abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvancedSettings> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AdvancedSettings());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AdvancedSettings());
             return S_OK;
         }
         catch (...)
@@ -385,7 +415,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
     {
         try
         {
-            *value = detach(this->shim().AllSegmentsIndependent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AllSegmentsIndependent());
             return S_OK;
         }
         catch (...)
@@ -398,6 +429,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AllSegmentsIndependent(value);
             return S_OK;
         }
@@ -407,11 +439,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
         }
     }
 
-    HRESULT __stdcall get_DesiredBitrateHeadroomRatio(abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_DesiredBitrateHeadroomRatio(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DesiredBitrateHeadroomRatio());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredBitrateHeadroomRatio());
             return S_OK;
         }
         catch (...)
@@ -421,10 +454,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
         }
     }
 
-    HRESULT __stdcall put_DesiredBitrateHeadroomRatio(abi_arg_in<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall put_DesiredBitrateHeadroomRatio(impl::abi_arg_in<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DesiredBitrateHeadroomRatio(*reinterpret_cast<const Windows::Foundation::IReference<double> *>(&value));
             return S_OK;
         }
@@ -434,11 +468,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
         }
     }
 
-    HRESULT __stdcall get_BitrateDowngradeTriggerRatio(abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_BitrateDowngradeTriggerRatio(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BitrateDowngradeTriggerRatio());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BitrateDowngradeTriggerRatio());
             return S_OK;
         }
         catch (...)
@@ -448,10 +483,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvan
         }
     }
 
-    HRESULT __stdcall put_BitrateDowngradeTriggerRatio(abi_arg_in<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall put_BitrateDowngradeTriggerRatio(impl::abi_arg_in<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BitrateDowngradeTriggerRatio(*reinterpret_cast<const Windows::Foundation::IReference<double> *>(&value));
             return S_OK;
         }
@@ -469,7 +505,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceCreat
     {
         try
         {
-            *value = detach(this->shim().Status());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Status());
             return S_OK;
         }
         catch (...)
@@ -478,11 +515,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceCreat
         }
     }
 
-    HRESULT __stdcall get_MediaSource(abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> value) noexcept override
+    HRESULT __stdcall get_MediaSource(impl::abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediaSource());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaSource());
             return S_OK;
         }
         catch (...)
@@ -492,11 +530,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceCreat
         }
     }
 
-    HRESULT __stdcall get_HttpResponseMessage(abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
+    HRESULT __stdcall get_HttpResponseMessage(impl::abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HttpResponseMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HttpResponseMessage());
             return S_OK;
         }
         catch (...)
@@ -514,7 +553,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().OldValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OldValue());
             return S_OK;
         }
         catch (...)
@@ -527,7 +567,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().NewValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NewValue());
             return S_OK;
         }
         catch (...)
@@ -544,7 +585,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().ResourceType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceType());
             return S_OK;
         }
         catch (...)
@@ -553,25 +595,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceUri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_ResourceUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceUri());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_ResourceByteRangeOffset(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ResourceByteRangeOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceUri());
             return S_OK;
         }
         catch (...)
@@ -581,11 +610,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceByteRangeLength(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeOffset(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceByteRangeLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeOffset());
             return S_OK;
         }
         catch (...)
@@ -595,11 +625,27 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_HttpResponseMessage(abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeLength(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HttpResponseMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeLength());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_HttpResponseMessage(impl::abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HttpResponseMessage());
             return S_OK;
         }
         catch (...)
@@ -617,7 +663,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().ResourceType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceType());
             return S_OK;
         }
         catch (...)
@@ -626,25 +673,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceUri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_ResourceUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceUri());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_ResourceByteRangeOffset(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ResourceByteRangeOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceUri());
             return S_OK;
         }
         catch (...)
@@ -654,11 +688,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceByteRangeLength(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeOffset(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceByteRangeLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeOffset());
             return S_OK;
         }
         catch (...)
@@ -668,11 +703,27 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_HttpResponseMessage(abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeLength(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HttpResponseMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeLength());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_HttpResponseMessage(impl::abi_arg_out<Windows::Web::Http::IHttpResponseMessage> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HttpResponseMessage());
             return S_OK;
         }
         catch (...)
@@ -690,6 +741,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -707,7 +759,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().ResourceType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceType());
             return S_OK;
         }
         catch (...)
@@ -716,25 +769,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceUri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_ResourceUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceUri());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_ResourceByteRangeOffset(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ResourceByteRangeOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceUri());
             return S_OK;
         }
         catch (...)
@@ -744,11 +784,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceByteRangeLength(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeOffset(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceByteRangeLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeOffset());
             return S_OK;
         }
         catch (...)
@@ -758,11 +799,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_Result(abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeLength(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Result());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeLength());
             return S_OK;
         }
         catch (...)
@@ -772,11 +814,27 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedDeferral> deferral) noexcept override
+    HRESULT __stdcall get_Result(impl::abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult> value) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Result());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedDeferral> deferral) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -790,11 +848,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
 template <typename D>
 struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult> : produce_base<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult>
 {
-    HRESULT __stdcall get_ResourceUri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_ResourceUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceUri());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceUri());
             return S_OK;
         }
         catch (...)
@@ -804,10 +863,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_ResourceUri(abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_ResourceUri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ResourceUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
             return S_OK;
         }
@@ -817,11 +877,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_InputStream(abi_arg_out<Windows::Storage::Streams::IInputStream> value) noexcept override
+    HRESULT __stdcall get_InputStream(impl::abi_arg_out<Windows::Storage::Streams::IInputStream> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InputStream());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InputStream());
             return S_OK;
         }
         catch (...)
@@ -831,10 +892,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_InputStream(abi_arg_in<Windows::Storage::Streams::IInputStream> value) noexcept override
+    HRESULT __stdcall put_InputStream(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().InputStream(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&value));
             return S_OK;
         }
@@ -844,11 +906,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_Buffer(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Buffer(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Buffer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Buffer());
             return S_OK;
         }
         catch (...)
@@ -858,10 +921,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_Buffer(abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_Buffer(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Buffer(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
             return S_OK;
         }
@@ -871,11 +935,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ContentType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContentType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContentType());
             return S_OK;
         }
         catch (...)
@@ -885,10 +950,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_ContentType(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContentType(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ContentType(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -902,7 +968,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
-            *value = detach(this->shim().ExtendedStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExtendedStatus());
             return S_OK;
         }
         catch (...)
@@ -915,6 +982,7 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ExtendedStatus(value);
             return S_OK;
         }
@@ -928,11 +996,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
 template <typename D>
 struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult2> : produce_base<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult2>
 {
-    HRESULT __stdcall get_ResourceByteRangeOffset(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeOffset(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceByteRangeOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeOffset());
             return S_OK;
         }
         catch (...)
@@ -942,10 +1011,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_ResourceByteRangeOffset(abi_arg_in<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall put_ResourceByteRangeOffset(impl::abi_arg_in<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ResourceByteRangeOffset(*reinterpret_cast<const Windows::Foundation::IReference<uint64_t> *>(&value));
             return S_OK;
         }
@@ -955,11 +1025,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall get_ResourceByteRangeLength(abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall get_ResourceByteRangeLength(impl::abi_arg_out<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResourceByteRangeLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResourceByteRangeLength());
             return S_OK;
         }
         catch (...)
@@ -969,10 +1040,11 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownl
         }
     }
 
-    HRESULT __stdcall put_ResourceByteRangeLength(abi_arg_in<Windows::Foundation::IReference<uint64_t>> value) noexcept override
+    HRESULT __stdcall put_ResourceByteRangeLength(impl::abi_arg_in<Windows::Foundation::IReference<uint64_t>> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ResourceByteRangeLength(*reinterpret_cast<const Windows::Foundation::IReference<uint64_t> *>(&value));
             return S_OK;
         }
@@ -990,7 +1062,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlayb
     {
         try
         {
-            *value = detach(this->shim().OldValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OldValue());
             return S_OK;
         }
         catch (...)
@@ -1003,7 +1076,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlayb
     {
         try
         {
-            *value = detach(this->shim().NewValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NewValue());
             return S_OK;
         }
         catch (...)
@@ -1016,7 +1090,8 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlayb
     {
         try
         {
-            *value = detach(this->shim().AudioOnly());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AudioOnly());
             return S_OK;
         }
         catch (...)
@@ -1029,11 +1104,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlayb
 template <typename D>
 struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStatics> : produce_base<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStatics>
 {
-    HRESULT __stdcall abi_IsContentTypeSupported(abi_arg_in<hstring> contentType, bool * result) noexcept override
+    HRESULT __stdcall abi_IsContentTypeSupported(impl::abi_arg_in<hstring> contentType, bool * result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().IsContentTypeSupported(*reinterpret_cast<const hstring *>(&contentType)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().IsContentTypeSupported(*reinterpret_cast<const hstring *>(&contentType)));
             return S_OK;
         }
         catch (...)
@@ -1042,25 +1118,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStati
         }
     }
 
-    HRESULT __stdcall abi_CreateFromUriAsync(abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
+    HRESULT __stdcall abi_CreateFromUriAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().CreateFromUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *result = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_CreateFromUriWithDownloaderAsync(abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_in<Windows::Web::Http::IHttpClient> httpClient, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
-    {
-        try
-        {
-            *result = detach(this->shim().CreateFromUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Web::Http::HttpClient *>(&httpClient)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CreateFromUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -1070,11 +1133,12 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStati
         }
     }
 
-    HRESULT __stdcall abi_CreateFromStreamAsync(abi_arg_in<Windows::Storage::Streams::IInputStream> stream, abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_in<hstring> contentType, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
+    HRESULT __stdcall abi_CreateFromUriWithDownloaderAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::Web::Http::IHttpClient> httpClient, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().CreateFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&stream), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&contentType)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CreateFromUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Web::Http::HttpClient *>(&httpClient)));
             return S_OK;
         }
         catch (...)
@@ -1084,11 +1148,27 @@ struct produce<D, Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStati
         }
     }
 
-    HRESULT __stdcall abi_CreateFromStreamWithDownloaderAsync(abi_arg_in<Windows::Storage::Streams::IInputStream> stream, abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_in<hstring> contentType, abi_arg_in<Windows::Web::Http::IHttpClient> httpClient, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
+    HRESULT __stdcall abi_CreateFromStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> stream, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> contentType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().CreateFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&stream), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&contentType), *reinterpret_cast<const Windows::Web::Http::HttpClient *>(&httpClient)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CreateFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&stream), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&contentType)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *result = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_CreateFromStreamWithDownloaderAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> stream, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> contentType, impl::abi_arg_in<Windows::Web::Http::IHttpClient> httpClient, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>> result) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CreateFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&stream), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&contentType), *reinterpret_cast<const Windows::Web::Http::HttpClient *>(&httpClient)));
             return S_OK;
         }
         catch (...)
@@ -1106,165 +1186,165 @@ namespace Windows::Media::Streaming::Adaptive {
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationStatus impl_IAdaptiveMediaSourceCreationResult<D>::Status() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationStatus value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceCreationResult &>(static_cast<const D &>(*this))->get_Status(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceCreationResult)->get_Status(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSource impl_IAdaptiveMediaSourceCreationResult<D>::MediaSource() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSource value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceCreationResult &>(static_cast<const D &>(*this))->get_MediaSource(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceCreationResult)->get_MediaSource(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Web::Http::HttpResponseMessage impl_IAdaptiveMediaSourceCreationResult<D>::HttpResponseMessage() const
 {
     Windows::Web::Http::HttpResponseMessage value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceCreationResult &>(static_cast<const D &>(*this))->get_HttpResponseMessage(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceCreationResult)->get_HttpResponseMessage(put_abi(value)));
     return value;
 }
 
-template <typename D> bool impl_IAdaptiveMediaSourceStatics<D>::IsContentTypeSupported(hstring_ref contentType) const
+template <typename D> bool impl_IAdaptiveMediaSourceStatics<D>::IsContentTypeSupported(hstring_view contentType) const
 {
     bool result {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceStatics &>(static_cast<const D &>(*this))->abi_IsContentTypeSupported(get(contentType), &result));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceStatics)->abi_IsContentTypeSupported(get_abi(contentType), &result));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromUriAsync(const Windows::Foundation::Uri & uri) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> result;
-    check_hresult(static_cast<const IAdaptiveMediaSourceStatics &>(static_cast<const D &>(*this))->abi_CreateFromUriAsync(get(uri), put(result)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceStatics)->abi_CreateFromUriAsync(get_abi(uri), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromUriAsync(const Windows::Foundation::Uri & uri, const Windows::Web::Http::HttpClient & httpClient) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> result;
-    check_hresult(static_cast<const IAdaptiveMediaSourceStatics &>(static_cast<const D &>(*this))->abi_CreateFromUriWithDownloaderAsync(get(uri), get(httpClient), put(result)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceStatics)->abi_CreateFromUriWithDownloaderAsync(get_abi(uri), get_abi(httpClient), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_ref contentType) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_view contentType) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> result;
-    check_hresult(static_cast<const IAdaptiveMediaSourceStatics &>(static_cast<const D &>(*this))->abi_CreateFromStreamAsync(get(stream), get(uri), get(contentType), put(result)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceStatics)->abi_CreateFromStreamAsync(get_abi(stream), get_abi(uri), get_abi(contentType), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_ref contentType, const Windows::Web::Http::HttpClient & httpClient) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> impl_IAdaptiveMediaSourceStatics<D>::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_view contentType, const Windows::Web::Http::HttpClient & httpClient) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> result;
-    check_hresult(static_cast<const IAdaptiveMediaSourceStatics &>(static_cast<const D &>(*this))->abi_CreateFromStreamWithDownloaderAsync(get(stream), get(uri), get(contentType), get(httpClient), put(result)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceStatics)->abi_CreateFromStreamWithDownloaderAsync(get_abi(stream), get_abi(uri), get_abi(contentType), get_abi(httpClient), put_abi(result)));
     return result;
 }
 
 template <typename D> bool impl_IAdaptiveMediaSource<D>::IsLive() const
 {
     bool value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_IsLive(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_IsLive(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IAdaptiveMediaSource<D>::DesiredLiveOffset() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_DesiredLiveOffset(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_DesiredLiveOffset(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::DesiredLiveOffset(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->put_DesiredLiveOffset(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->put_DesiredLiveOffset(get_abi(value)));
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSource<D>::InitialBitrate() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_InitialBitrate(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_InitialBitrate(&value));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::InitialBitrate(uint32_t value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->put_InitialBitrate(value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->put_InitialBitrate(value));
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSource<D>::CurrentDownloadBitrate() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_CurrentDownloadBitrate(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_CurrentDownloadBitrate(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSource<D>::CurrentPlaybackBitrate() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_CurrentPlaybackBitrate(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_CurrentPlaybackBitrate(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<uint32_t> impl_IAdaptiveMediaSource<D>::AvailableBitrates() const
 {
     Windows::Foundation::Collections::IVectorView<uint32_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_AvailableBitrates(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_AvailableBitrates(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint32_t> impl_IAdaptiveMediaSource<D>::DesiredMinBitrate() const
 {
     Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_DesiredMinBitrate(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_DesiredMinBitrate(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSource<D>::DesiredMinBitrate(const Windows::Foundation::IReference<uint32_t> & value) const
+template <typename D> void impl_IAdaptiveMediaSource<D>::DesiredMinBitrate(const optional<uint32_t> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->put_DesiredMinBitrate(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->put_DesiredMinBitrate(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IReference<uint32_t> impl_IAdaptiveMediaSource<D>::DesiredMaxBitrate() const
 {
     Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_DesiredMaxBitrate(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_DesiredMaxBitrate(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSource<D>::DesiredMaxBitrate(const Windows::Foundation::IReference<uint32_t> & value) const
+template <typename D> void impl_IAdaptiveMediaSource<D>::DesiredMaxBitrate(const optional<uint32_t> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->put_DesiredMaxBitrate(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->put_DesiredMaxBitrate(get_abi(value)));
 }
 
 template <typename D> bool impl_IAdaptiveMediaSource<D>::AudioOnlyPlayback() const
 {
     bool value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_AudioOnlyPlayback(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_AudioOnlyPlayback(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IAdaptiveMediaSource<D>::InboundBitsPerSecond() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_InboundBitsPerSecond(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_InboundBitsPerSecond(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IAdaptiveMediaSource<D>::InboundBitsPerSecondWindow() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->get_InboundBitsPerSecondWindow(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->get_InboundBitsPerSecondWindow(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::InboundBitsPerSecondWindow(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->put_InboundBitsPerSecondWindow(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->put_InboundBitsPerSecondWindow(get_abi(value)));
 }
 
 template <typename D> event_token impl_IAdaptiveMediaSource<D>::DownloadBitrateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->add_DownloadBitrateChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->add_DownloadBitrateChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -1275,13 +1355,13 @@ template <typename D> event_revoker<IAdaptiveMediaSource> impl_IAdaptiveMediaSou
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::DownloadBitrateChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->remove_DownloadBitrateChanged(token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->remove_DownloadBitrateChanged(token));
 }
 
 template <typename D> event_token impl_IAdaptiveMediaSource<D>::PlaybackBitrateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->add_PlaybackBitrateChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->add_PlaybackBitrateChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -1292,13 +1372,13 @@ template <typename D> event_revoker<IAdaptiveMediaSource> impl_IAdaptiveMediaSou
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::PlaybackBitrateChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->remove_PlaybackBitrateChanged(token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->remove_PlaybackBitrateChanged(token));
 }
 
 template <typename D> event_token impl_IAdaptiveMediaSource<D>::DownloadRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->add_DownloadRequested(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->add_DownloadRequested(get_abi(handler), &token));
     return token;
 }
 
@@ -1309,13 +1389,13 @@ template <typename D> event_revoker<IAdaptiveMediaSource> impl_IAdaptiveMediaSou
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::DownloadRequested(event_token token) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->remove_DownloadRequested(token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->remove_DownloadRequested(token));
 }
 
 template <typename D> event_token impl_IAdaptiveMediaSource<D>::DownloadCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->add_DownloadCompleted(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->add_DownloadCompleted(get_abi(handler), &token));
     return token;
 }
 
@@ -1326,13 +1406,13 @@ template <typename D> event_revoker<IAdaptiveMediaSource> impl_IAdaptiveMediaSou
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::DownloadCompleted(event_token token) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->remove_DownloadCompleted(token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->remove_DownloadCompleted(token));
 }
 
 template <typename D> event_token impl_IAdaptiveMediaSource<D>::DownloadFailed(const Windows::Foundation::TypedEventHandler<Windows::Media::Streaming::Adaptive::AdaptiveMediaSource, Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->add_DownloadFailed(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->add_DownloadFailed(get_abi(handler), &token));
     return token;
 }
 
@@ -1343,289 +1423,289 @@ template <typename D> event_revoker<IAdaptiveMediaSource> impl_IAdaptiveMediaSou
 
 template <typename D> void impl_IAdaptiveMediaSource<D>::DownloadFailed(event_token token) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSource &>(static_cast<const D &>(*this))->remove_DownloadFailed(token));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource)->remove_DownloadFailed(token));
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceAdvancedSettings impl_IAdaptiveMediaSource2<D>::AdvancedSettings() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceAdvancedSettings value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSource2 &>(static_cast<const D &>(*this))->get_AdvancedSettings(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSource2)->get_AdvancedSettings(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IAdaptiveMediaSourceAdvancedSettings<D>::AllSegmentsIndependent() const
 {
     bool value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->get_AllSegmentsIndependent(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->get_AllSegmentsIndependent(&value));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceAdvancedSettings<D>::AllSegmentsIndependent(bool value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->put_AllSegmentsIndependent(value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->put_AllSegmentsIndependent(value));
 }
 
 template <typename D> Windows::Foundation::IReference<double> impl_IAdaptiveMediaSourceAdvancedSettings<D>::DesiredBitrateHeadroomRatio() const
 {
     Windows::Foundation::IReference<double> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->get_DesiredBitrateHeadroomRatio(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->get_DesiredBitrateHeadroomRatio(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSourceAdvancedSettings<D>::DesiredBitrateHeadroomRatio(const Windows::Foundation::IReference<double> & value) const
+template <typename D> void impl_IAdaptiveMediaSourceAdvancedSettings<D>::DesiredBitrateHeadroomRatio(const optional<double> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->put_DesiredBitrateHeadroomRatio(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->put_DesiredBitrateHeadroomRatio(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IReference<double> impl_IAdaptiveMediaSourceAdvancedSettings<D>::BitrateDowngradeTriggerRatio() const
 {
     Windows::Foundation::IReference<double> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->get_BitrateDowngradeTriggerRatio(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->get_BitrateDowngradeTriggerRatio(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSourceAdvancedSettings<D>::BitrateDowngradeTriggerRatio(const Windows::Foundation::IReference<double> & value) const
+template <typename D> void impl_IAdaptiveMediaSourceAdvancedSettings<D>::BitrateDowngradeTriggerRatio(const optional<double> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceAdvancedSettings &>(static_cast<const D &>(*this))->put_BitrateDowngradeTriggerRatio(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceAdvancedSettings)->put_BitrateDowngradeTriggerRatio(get_abi(value)));
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs<D>::OldValue() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadBitrateChangedEventArgs &>(static_cast<const D &>(*this))->get_OldValue(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadBitrateChangedEventArgs)->get_OldValue(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs<D>::NewValue() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadBitrateChangedEventArgs &>(static_cast<const D &>(*this))->get_NewValue(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadBitrateChangedEventArgs)->get_NewValue(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs<D>::OldValue() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs &>(static_cast<const D &>(*this))->get_OldValue(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs)->get_OldValue(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs<D>::NewValue() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs &>(static_cast<const D &>(*this))->get_NewValue(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs)->get_NewValue(&value));
     return value;
 }
 
 template <typename D> bool impl_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs<D>::AudioOnly() const
 {
     bool value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs &>(static_cast<const D &>(*this))->get_AudioOnly(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs)->get_AudioOnly(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::ResourceType() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->get_ResourceType(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->get_ResourceType(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::ResourceUri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->get_ResourceUri(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->get_ResourceUri(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::ResourceByteRangeOffset() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeOffset(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->get_ResourceByteRangeOffset(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::ResourceByteRangeLength() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeLength(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->get_ResourceByteRangeLength(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadResult impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::Result() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadResult value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->get_Result(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->get_Result(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedDeferral impl_IAdaptiveMediaSourceDownloadRequestedEventArgs<D>::GetDeferral() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedDeferral deferral { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedEventArgs &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedEventArgs)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IAdaptiveMediaSourceDownloadResult<D>::ResourceUri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->get_ResourceUri(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->get_ResourceUri(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::ResourceUri(const Windows::Foundation::Uri & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->put_ResourceUri(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->put_ResourceUri(get_abi(value)));
 }
 
 template <typename D> Windows::Storage::Streams::IInputStream impl_IAdaptiveMediaSourceDownloadResult<D>::InputStream() const
 {
     Windows::Storage::Streams::IInputStream value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->get_InputStream(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->get_InputStream(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::InputStream(const Windows::Storage::Streams::IInputStream & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->put_InputStream(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->put_InputStream(get_abi(value)));
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IAdaptiveMediaSourceDownloadResult<D>::Buffer() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->get_Buffer(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->get_Buffer(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::Buffer(const Windows::Storage::Streams::IBuffer & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->put_Buffer(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->put_Buffer(get_abi(value)));
 }
 
 template <typename D> hstring impl_IAdaptiveMediaSourceDownloadResult<D>::ContentType() const
 {
     hstring value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->get_ContentType(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->get_ContentType(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::ContentType(hstring_ref value) const
+template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::ContentType(hstring_view value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->put_ContentType(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->put_ContentType(get_abi(value)));
 }
 
 template <typename D> uint32_t impl_IAdaptiveMediaSourceDownloadResult<D>::ExtendedStatus() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->get_ExtendedStatus(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->get_ExtendedStatus(&value));
     return value;
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceDownloadResult<D>::ExtendedStatus(uint32_t value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult &>(static_cast<const D &>(*this))->put_ExtendedStatus(value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult)->put_ExtendedStatus(value));
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeOffset() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult2 &>(static_cast<const D &>(*this))->get_ResourceByteRangeOffset(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult2)->get_ResourceByteRangeOffset(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeOffset(const Windows::Foundation::IReference<uint64_t> & value) const
+template <typename D> void impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeOffset(const optional<uint64_t> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult2 &>(static_cast<const D &>(*this))->put_ResourceByteRangeOffset(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult2)->put_ResourceByteRangeOffset(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeLength() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult2 &>(static_cast<const D &>(*this))->get_ResourceByteRangeLength(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult2)->get_ResourceByteRangeLength(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeLength(const Windows::Foundation::IReference<uint64_t> & value) const
+template <typename D> void impl_IAdaptiveMediaSourceDownloadResult2<D>::ResourceByteRangeLength(const optional<uint64_t> & value) const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadResult2 &>(static_cast<const D &>(*this))->put_ResourceByteRangeLength(get(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadResult2)->put_ResourceByteRangeLength(get_abi(value)));
 }
 
 template <typename D> void impl_IAdaptiveMediaSourceDownloadRequestedDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadRequestedDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadRequestedDeferral)->abi_Complete());
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType impl_IAdaptiveMediaSourceDownloadCompletedEventArgs<D>::ResourceType() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResourceType(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadCompletedEventArgs)->get_ResourceType(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IAdaptiveMediaSourceDownloadCompletedEventArgs<D>::ResourceUri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResourceUri(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadCompletedEventArgs)->get_ResourceUri(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadCompletedEventArgs<D>::ResourceByteRangeOffset() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeOffset(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadCompletedEventArgs)->get_ResourceByteRangeOffset(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadCompletedEventArgs<D>::ResourceByteRangeLength() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeLength(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadCompletedEventArgs)->get_ResourceByteRangeLength(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Web::Http::HttpResponseMessage impl_IAdaptiveMediaSourceDownloadCompletedEventArgs<D>::HttpResponseMessage() const
 {
     Windows::Web::Http::HttpResponseMessage value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadCompletedEventArgs &>(static_cast<const D &>(*this))->get_HttpResponseMessage(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadCompletedEventArgs)->get_HttpResponseMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType impl_IAdaptiveMediaSourceDownloadFailedEventArgs<D>::ResourceType() const
 {
     Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceResourceType value {};
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadFailedEventArgs &>(static_cast<const D &>(*this))->get_ResourceType(&value));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadFailedEventArgs)->get_ResourceType(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IAdaptiveMediaSourceDownloadFailedEventArgs<D>::ResourceUri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadFailedEventArgs &>(static_cast<const D &>(*this))->get_ResourceUri(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadFailedEventArgs)->get_ResourceUri(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadFailedEventArgs<D>::ResourceByteRangeOffset() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadFailedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeOffset(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadFailedEventArgs)->get_ResourceByteRangeOffset(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint64_t> impl_IAdaptiveMediaSourceDownloadFailedEventArgs<D>::ResourceByteRangeLength() const
 {
     Windows::Foundation::IReference<uint64_t> value;
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadFailedEventArgs &>(static_cast<const D &>(*this))->get_ResourceByteRangeLength(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadFailedEventArgs)->get_ResourceByteRangeLength(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Web::Http::HttpResponseMessage impl_IAdaptiveMediaSourceDownloadFailedEventArgs<D>::HttpResponseMessage() const
 {
     Windows::Web::Http::HttpResponseMessage value { nullptr };
-    check_hresult(static_cast<const IAdaptiveMediaSourceDownloadFailedEventArgs &>(static_cast<const D &>(*this))->get_HttpResponseMessage(put(value)));
+    check_hresult(WINRT_SHIM(IAdaptiveMediaSourceDownloadFailedEventArgs)->get_HttpResponseMessage(put_abi(value)));
     return value;
 }
 
-inline bool AdaptiveMediaSource::IsContentTypeSupported(hstring_ref contentType)
+inline bool AdaptiveMediaSource::IsContentTypeSupported(hstring_view contentType)
 {
     return get_activation_factory<AdaptiveMediaSource, IAdaptiveMediaSourceStatics>().IsContentTypeSupported(contentType);
 }
@@ -1640,12 +1720,12 @@ inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive:
     return get_activation_factory<AdaptiveMediaSource, IAdaptiveMediaSourceStatics>().CreateFromUriAsync(uri, httpClient);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> AdaptiveMediaSource::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_ref contentType)
+inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> AdaptiveMediaSource::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_view contentType)
 {
     return get_activation_factory<AdaptiveMediaSource, IAdaptiveMediaSourceStatics>().CreateFromStreamAsync(stream, uri, contentType);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> AdaptiveMediaSource::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_ref contentType, const Windows::Web::Http::HttpClient & httpClient)
+inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult> AdaptiveMediaSource::CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, const Windows::Foundation::Uri & uri, hstring_view contentType, const Windows::Web::Http::HttpClient & httpClient)
 {
     return get_activation_factory<AdaptiveMediaSource, IAdaptiveMediaSourceStatics>().CreateFromStreamAsync(stream, uri, contentType, httpClient);
 }
@@ -1653,3 +1733,212 @@ inline Windows::Foundation::IAsyncOperation<Windows::Media::Streaming::Adaptive:
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource2>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSource2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvancedSettings>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceAdvancedSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceCreationResult>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceCreationResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadBitrateChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadBitrateChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadCompletedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadCompletedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadFailedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadFailedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedDeferral>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult2>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceDownloadResult2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStatics>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::IAdaptiveMediaSourceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSource>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceAdvancedSettings>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceAdvancedSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceCreationResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadBitrateChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadCompletedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadFailedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedDeferral>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadResult>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourceDownloadResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Streaming::Adaptive::AdaptiveMediaSourcePlaybackBitrateChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

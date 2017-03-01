@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -41,6 +41,20 @@ struct CoreDragInfo;
 struct CoreDragOperation;
 struct CoreDragUIOverride;
 struct CoreDropOperationTargetRequestedEventArgs;
+
+}
+
+namespace Windows::ApplicationModel::DataTransfer::DragDrop::Core {
+
+template <typename T> struct impl_ICoreDragDropManager;
+template <typename T> struct impl_ICoreDragDropManagerStatics;
+template <typename T> struct impl_ICoreDragInfo;
+template <typename T> struct impl_ICoreDragInfo2;
+template <typename T> struct impl_ICoreDragOperation;
+template <typename T> struct impl_ICoreDragOperation2;
+template <typename T> struct impl_ICoreDragUIOverride;
+template <typename T> struct impl_ICoreDropOperationTarget;
+template <typename T> struct impl_ICoreDropOperationTargetRequestedEventArgs;
 
 }
 

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Graphics.Display.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, Windows::Devices::Sensors::IAccelerometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -35,7 +39,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -48,6 +53,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -61,7 +67,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -70,11 +77,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -87,6 +95,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -96,11 +105,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_Shaken(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Shaken(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Shaken(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Shaken(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -113,6 +123,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Shaken(token);
             return S_OK;
         }
@@ -130,6 +141,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer2> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -143,7 +155,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer2> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -160,6 +173,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportLatency(value);
             return S_OK;
         }
@@ -173,7 +187,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().ReportLatency());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportLatency());
             return S_OK;
         }
         catch (...)
@@ -186,7 +201,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().MaxBatchSize());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxBatchSize());
             return S_OK;
         }
         catch (...)
@@ -203,7 +219,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer4> : produce_base<D, 
     {
         try
         {
-            *type = detach(this->shim().ReadingType());
+            typename D::abi_guard guard(this->shim());
+            *type = detach_abi(this->shim().ReadingType());
             return S_OK;
         }
         catch (...)
@@ -216,11 +233,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer4> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IAccelerometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -234,11 +252,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerDeviceId> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_base<D, Windows::Devices::Sensors::IAccelerometerReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -251,7 +270,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().AccelerationX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccelerationX());
             return S_OK;
         }
         catch (...)
@@ -264,7 +284,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().AccelerationY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccelerationY());
             return S_OK;
         }
         catch (...)
@@ -277,7 +298,8 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().AccelerationZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccelerationZ());
             return S_OK;
         }
         catch (...)
@@ -290,11 +312,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -308,11 +331,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventAr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs> : produce_base<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -325,11 +349,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics> : produce_base<D, Windows::Devices::Sensors::IAccelerometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -343,11 +368,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics2> : produce_base<D, Windows::Devices::Sensors::IAccelerometerStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultWithAccelerometerReadingType(Windows::Devices::Sensors::AccelerometerReadingType readingType, abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultWithAccelerometerReadingType(Windows::Devices::Sensors::AccelerometerReadingType readingType, impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault(readingType));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault(readingType));
             return S_OK;
         }
         catch (...)
@@ -361,11 +387,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics2> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, Windows::Devices::Sensors::IActivitySensor>
 {
-    HRESULT __stdcall abi_GetCurrentReadingAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading>> result) noexcept override
+    HRESULT __stdcall abi_GetCurrentReadingAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetCurrentReadingAsync());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetCurrentReadingAsync());
             return S_OK;
         }
         catch (...)
@@ -375,11 +402,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SubscribedActivities(abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
+    HRESULT __stdcall get_SubscribedActivities(impl::abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SubscribedActivities());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SubscribedActivities());
             return S_OK;
         }
         catch (...)
@@ -393,7 +421,8 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().PowerInMilliwatts());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PowerInMilliwatts());
             return S_OK;
         }
         catch (...)
@@ -402,11 +431,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -416,11 +446,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SupportedActivities(abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
+    HRESULT __stdcall get_SupportedActivities(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SupportedActivities());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedActivities());
             return S_OK;
         }
         catch (...)
@@ -434,7 +465,8 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -443,11 +475,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -460,6 +493,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -473,11 +507,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -490,7 +525,8 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
     {
         try
         {
-            *value = detach(this->shim().Activity());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Activity());
             return S_OK;
         }
         catch (...)
@@ -503,7 +539,8 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
     {
         try
         {
-            *value = detach(this->shim().Confidence());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Confidence());
             return S_OK;
         }
         catch (...)
@@ -516,11 +553,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -534,11 +572,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -552,11 +591,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventA
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_base<D, Windows::Devices::Sensors::IActivitySensorStatics>
 {
-    HRESULT __stdcall abi_GetDefaultAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefaultAsync());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefaultAsync());
             return S_OK;
         }
         catch (...)
@@ -566,11 +606,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -580,11 +621,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -594,11 +636,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryAsync(abi_arg_in<Windows::Foundation::DateTime> fromTime, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
+    HRESULT __stdcall abi_GetSystemHistoryAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
             return S_OK;
         }
         catch (...)
@@ -608,11 +651,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(abi_arg_in<Windows::Foundation::DateTime> fromTime, abi_arg_in<Windows::Foundation::TimeSpan> duration, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
+    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
             return S_OK;
         }
         catch (...)
@@ -626,11 +670,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails> : produce_base<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails>
 {
-    HRESULT __stdcall abi_ReadReports(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport>> value) noexcept override
+    HRESULT __stdcall abi_ReadReports(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadReports());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadReports());
             return S_OK;
         }
         catch (...)
@@ -644,11 +689,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windows::Devices::Sensors::IAltimeter>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -658,11 +704,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -676,7 +723,8 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -689,6 +737,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -702,7 +751,8 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -711,11 +761,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -728,6 +779,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -741,11 +793,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D, Windows::Devices::Sensors::IAltimeterReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -758,7 +811,8 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().AltitudeChangeInMeters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AltitudeChangeInMeters());
             return S_OK;
         }
         catch (...)
@@ -771,11 +825,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -789,11 +844,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterStatics> : produce_base<D, Windows::Devices::Sensors::IAltimeterStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IAltimeter> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeter> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -807,11 +863,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windows::Devices::Sensors::IBarometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -821,11 +878,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -839,7 +897,8 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -852,6 +911,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -865,7 +925,8 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -874,11 +935,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -891,6 +953,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -904,11 +967,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D, Windows::Devices::Sensors::IBarometerReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -921,7 +985,8 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().StationPressureInHectopascals());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StationPressureInHectopascals());
             return S_OK;
         }
         catch (...)
@@ -934,11 +999,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -952,11 +1018,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerStatics> : produce_base<D, Windows::Devices::Sensors::IBarometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IBarometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IBarometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -970,11 +1037,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows::Devices::Sensors::ICompass>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -988,7 +1056,8 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1001,6 +1070,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -1014,7 +1084,8 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1023,11 +1094,12 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1040,6 +1112,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -1057,6 +1130,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Window
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -1070,7 +1144,8 @@ struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Window
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -1083,11 +1158,12 @@ struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Window
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassDeviceId> : produce_base<D, Windows::Devices::Sensors::ICompassDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1101,11 +1177,12 @@ struct produce<D, Windows::Devices::Sensors::ICompassDeviceId> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, Windows::Devices::Sensors::ICompassReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1118,7 +1195,8 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
     {
         try
         {
-            *value = detach(this->shim().HeadingMagneticNorth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeadingMagneticNorth());
             return S_OK;
         }
         catch (...)
@@ -1127,11 +1205,12 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_HeadingTrueNorth(abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_HeadingTrueNorth(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HeadingTrueNorth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeadingTrueNorth());
             return S_OK;
         }
         catch (...)
@@ -1145,11 +1224,12 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ICompassReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -1167,7 +1247,8 @@ struct produce<D, Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> : p
     {
         try
         {
-            *value = detach(this->shim().HeadingAccuracy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeadingAccuracy());
             return S_OK;
         }
         catch (...)
@@ -1180,11 +1261,12 @@ struct produce<D, Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> : p
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassStatics> : produce_base<D, Windows::Devices::Sensors::ICompassStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::ICompass> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ICompass> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -1198,11 +1280,12 @@ struct produce<D, Windows::Devices::Sensors::ICompassStatics> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windows::Devices::Sensors::IGyrometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -1216,7 +1299,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1229,6 +1313,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -1242,7 +1327,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1251,11 +1337,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1268,6 +1355,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -1285,6 +1373,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -1298,7 +1387,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -1311,11 +1401,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IGyrometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1329,11 +1420,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerDeviceId> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D, Windows::Devices::Sensors::IGyrometerReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1346,7 +1438,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().AngularVelocityX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngularVelocityX());
             return S_OK;
         }
         catch (...)
@@ -1359,7 +1452,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().AngularVelocityY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngularVelocityY());
             return S_OK;
         }
         catch (...)
@@ -1372,7 +1466,8 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().AngularVelocityZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AngularVelocityZ());
             return S_OK;
         }
         catch (...)
@@ -1385,11 +1480,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -1403,11 +1499,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerStatics> : produce_base<D, Windows::Devices::Sensors::IGyrometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IGyrometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -1421,11 +1518,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Windows::Devices::Sensors::IInclinometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -1439,7 +1537,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1452,6 +1551,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -1465,7 +1565,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1474,11 +1575,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1491,6 +1593,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -1508,6 +1611,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -1521,7 +1625,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -1534,7 +1639,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
     {
         try
         {
-            *type = detach(this->shim().ReadingType());
+            typename D::abi_guard guard(this->shim());
+            *type = detach_abi(this->shim().ReadingType());
             return S_OK;
         }
         catch (...)
@@ -1547,11 +1653,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IInclinometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1565,11 +1672,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerDeviceId> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_base<D, Windows::Devices::Sensors::IInclinometerReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1582,7 +1690,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().PitchDegrees());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PitchDegrees());
             return S_OK;
         }
         catch (...)
@@ -1595,7 +1704,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().RollDegrees());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RollDegrees());
             return S_OK;
         }
         catch (...)
@@ -1608,7 +1718,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().YawDegrees());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().YawDegrees());
             return S_OK;
         }
         catch (...)
@@ -1621,11 +1732,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -1643,7 +1755,8 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> : 
     {
         try
         {
-            *value = detach(this->shim().YawAccuracy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().YawAccuracy());
             return S_OK;
         }
         catch (...)
@@ -1656,11 +1769,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> : 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -1674,11 +1788,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics2> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultForRelativeReadings(abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultForRelativeReadings(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefaultForRelativeReadings());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefaultForRelativeReadings());
             return S_OK;
         }
         catch (...)
@@ -1692,11 +1807,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics2> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics3> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics3>
 {
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault(sensorReadingtype));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault(sensorReadingtype));
             return S_OK;
         }
         catch (...)
@@ -1710,11 +1826,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics3> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Windows::Devices::Sensors::ILightSensor>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -1728,7 +1845,8 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1741,6 +1859,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -1754,7 +1873,8 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1763,11 +1883,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1780,6 +1901,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -1793,11 +1915,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::ILightSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1811,11 +1934,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorDeviceId> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base<D, Windows::Devices::Sensors::ILightSensorReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1828,7 +1952,8 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base
     {
         try
         {
-            *value = detach(this->shim().IlluminanceInLux());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IlluminanceInLux());
             return S_OK;
         }
         catch (...)
@@ -1841,11 +1966,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -1859,11 +1985,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorStatics> : produce_base<D, Windows::Devices::Sensors::ILightSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::ILightSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -1877,11 +2004,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Windows::Devices::Sensors::IMagnetometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -1895,7 +2023,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1908,6 +2037,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -1921,7 +2051,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -1930,11 +2061,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1947,6 +2079,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -1964,6 +2097,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -1977,7 +2111,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -1990,11 +2125,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IMagnetometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -2008,11 +2144,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerDeviceId> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_base<D, Windows::Devices::Sensors::IMagnetometerReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2025,7 +2162,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().MagneticFieldX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MagneticFieldX());
             return S_OK;
         }
         catch (...)
@@ -2038,7 +2176,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().MagneticFieldY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MagneticFieldY());
             return S_OK;
         }
         catch (...)
@@ -2051,7 +2190,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().MagneticFieldZ());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MagneticFieldZ());
             return S_OK;
         }
         catch (...)
@@ -2064,7 +2204,8 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().DirectionalAccuracy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DirectionalAccuracy());
             return S_OK;
         }
         catch (...)
@@ -2077,11 +2218,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -2095,11 +2237,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArg
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerStatics> : produce_base<D, Windows::Devices::Sensors::IMagnetometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IMagnetometer> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometer> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -2113,11 +2256,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<D, Windows::Devices::Sensors::IOrientationSensor>
 {
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -2131,7 +2275,8 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -2144,6 +2289,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -2157,7 +2303,8 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -2166,11 +2313,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2183,6 +2331,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -2200,6 +2349,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -2213,7 +2363,8 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -2226,7 +2377,8 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
     {
         try
         {
-            *type = detach(this->shim().ReadingType());
+            typename D::abi_guard guard(this->shim());
+            *type = detach_abi(this->shim().ReadingType());
             return S_OK;
         }
         catch (...)
@@ -2239,11 +2391,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -2257,11 +2410,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorDeviceId> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2270,11 +2424,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
         }
     }
 
-    HRESULT __stdcall get_RotationMatrix(abi_arg_out<Windows::Devices::Sensors::ISensorRotationMatrix> value) noexcept override
+    HRESULT __stdcall get_RotationMatrix(impl::abi_arg_out<Windows::Devices::Sensors::ISensorRotationMatrix> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RotationMatrix());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RotationMatrix());
             return S_OK;
         }
         catch (...)
@@ -2284,11 +2439,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
         }
     }
 
-    HRESULT __stdcall get_Quaternion(abi_arg_out<Windows::Devices::Sensors::ISensorQuaternion> value) noexcept override
+    HRESULT __stdcall get_Quaternion(impl::abi_arg_out<Windows::Devices::Sensors::ISensorQuaternion> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Quaternion());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Quaternion());
             return S_OK;
         }
         catch (...)
@@ -2302,11 +2458,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -2324,7 +2481,8 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingYawAccurac
     {
         try
         {
-            *value = detach(this->shim().YawAccuracy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().YawAccuracy());
             return S_OK;
         }
         catch (...)
@@ -2337,11 +2495,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingYawAccurac
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -2355,11 +2514,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics2> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultForRelativeReadings(abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultForRelativeReadings(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefaultForRelativeReadings());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefaultForRelativeReadings());
             return S_OK;
         }
         catch (...)
@@ -2373,11 +2533,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics2> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics3>
 {
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault(sensorReadingtype));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault(sensorReadingtype));
             return S_OK;
         }
         catch (...)
@@ -2387,11 +2548,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal, abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal, impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault(sensorReadingType, optimizationGoal));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault(sensorReadingType, optimizationGoal));
             return S_OK;
         }
         catch (...)
@@ -2405,11 +2567,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windows::Devices::Sensors::IPedometer>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -2423,7 +2586,8 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().PowerInMilliwatts());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PowerInMilliwatts());
             return S_OK;
         }
         catch (...)
@@ -2436,7 +2600,8 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().MinimumReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinimumReportInterval());
             return S_OK;
         }
         catch (...)
@@ -2449,6 +2614,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportInterval(value);
             return S_OK;
         }
@@ -2462,7 +2628,8 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().ReportInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportInterval());
             return S_OK;
         }
         catch (...)
@@ -2471,11 +2638,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2488,6 +2656,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -2501,11 +2670,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometer2> : produce_base<D, Windows::Devices::Sensors::IPedometer2>
 {
-    HRESULT __stdcall abi_GetCurrentReadings(abi_arg_out<Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading>> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReadings(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReadings());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReadings());
             return S_OK;
         }
         catch (...)
@@ -2519,11 +2689,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer2> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerDataThresholdFactory> : produce_base<D, Windows::Devices::Sensors::IPedometerDataThresholdFactory>
 {
-    HRESULT __stdcall abi_Create(abi_arg_in<Windows::Devices::Sensors::IPedometer> sensor, int32_t stepGoal, abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
+    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Devices::Sensors::IPedometer> sensor, int32_t stepGoal, impl::abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
     {
         try
         {
-            *threshold = detach(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::Pedometer *>(&sensor), stepGoal));
+            typename D::abi_guard guard(this->shim());
+            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::Pedometer *>(&sensor), stepGoal));
             return S_OK;
         }
         catch (...)
@@ -2541,7 +2712,8 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().StepKind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StepKind());
             return S_OK;
         }
         catch (...)
@@ -2554,7 +2726,8 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().CumulativeSteps());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CumulativeSteps());
             return S_OK;
         }
         catch (...)
@@ -2563,11 +2736,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2576,11 +2750,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_CumulativeStepsDuration(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_CumulativeStepsDuration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CumulativeStepsDuration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CumulativeStepsDuration());
             return S_OK;
         }
         catch (...)
@@ -2593,11 +2768,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IPedometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IPedometerReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -2611,11 +2787,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D, Windows::Devices::Sensors::IPedometerStatics>
 {
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -2625,11 +2802,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
+    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetDefaultAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetDefaultAsync());
             return S_OK;
         }
         catch (...)
@@ -2639,11 +2817,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -2653,11 +2832,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryAsync(abi_arg_in<Windows::Foundation::DateTime> fromTime, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
+    HRESULT __stdcall abi_GetSystemHistoryAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
             return S_OK;
         }
         catch (...)
@@ -2667,11 +2847,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(abi_arg_in<Windows::Foundation::DateTime> fromTime, abi_arg_in<Windows::Foundation::TimeSpan> duration, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
+    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
             return S_OK;
         }
         catch (...)
@@ -2685,11 +2866,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerStatics2> : produce_base<D, Windows::Devices::Sensors::IPedometerStatics2>
 {
-    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> result) noexcept override
+    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(impl::abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
             return S_OK;
         }
         catch (...)
@@ -2703,11 +2885,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics2> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D, Windows::Devices::Sensors::IProximitySensor>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -2717,11 +2900,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_MaxDistanceInMillimeters(abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxDistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MaxDistanceInMillimeters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxDistanceInMillimeters());
             return S_OK;
         }
         catch (...)
@@ -2731,11 +2915,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_MinDistanceInMillimeters(abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MinDistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MinDistanceInMillimeters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MinDistanceInMillimeters());
             return S_OK;
         }
         catch (...)
@@ -2745,11 +2930,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_GetCurrentReading(abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentReading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentReading());
             return S_OK;
         }
         catch (...)
@@ -2759,11 +2945,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2776,6 +2963,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingChanged(token);
             return S_OK;
         }
@@ -2785,11 +2973,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_CreateDisplayOnOffController(abi_arg_out<Windows::Foundation::IClosable> controller) noexcept override
+    HRESULT __stdcall abi_CreateDisplayOnOffController(impl::abi_arg_out<Windows::Foundation::IClosable> controller) noexcept override
     {
         try
         {
-            *controller = detach(this->shim().CreateDisplayOnOffController());
+            typename D::abi_guard guard(this->shim());
+            *controller = detach_abi(this->shim().CreateDisplayOnOffController());
             return S_OK;
         }
         catch (...)
@@ -2803,11 +2992,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactory> : produce_base<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactory>
 {
-    HRESULT __stdcall abi_Create(abi_arg_in<Windows::Devices::Sensors::IProximitySensor> sensor, abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
+    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Devices::Sensors::IProximitySensor> sensor, impl::abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
     {
         try
         {
-            *threshold = detach(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::ProximitySensor *>(&sensor)));
+            typename D::abi_guard guard(this->shim());
+            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::ProximitySensor *>(&sensor)));
             return S_OK;
         }
         catch (...)
@@ -2821,11 +3011,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactor
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_base<D, Windows::Devices::Sensors::IProximitySensorReading>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2838,7 +3029,8 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
     {
         try
         {
-            *value = detach(this->shim().IsDetected());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsDetected());
             return S_OK;
         }
         catch (...)
@@ -2847,11 +3039,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
         }
     }
 
-    HRESULT __stdcall get_DistanceInMillimeters(abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_DistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DistanceInMillimeters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DistanceInMillimeters());
             return S_OK;
         }
         catch (...)
@@ -2865,11 +3058,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Reading());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Reading());
             return S_OK;
         }
         catch (...)
@@ -2883,11 +3077,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEvent
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_base<D, Windows::Devices::Sensors::IProximitySensorStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -2897,11 +3092,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FromId(abi_arg_in<hstring> sensorId, abi_arg_out<Windows::Devices::Sensors::IProximitySensor> result) noexcept override
+    HRESULT __stdcall abi_FromId(impl::abi_arg_in<hstring> sensorId, impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().FromId(*reinterpret_cast<const hstring *>(&sensorId)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().FromId(*reinterpret_cast<const hstring *>(&sensorId)));
             return S_OK;
         }
         catch (...)
@@ -2915,11 +3111,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics2> : produce_base<D, Windows::Devices::Sensors::IProximitySensorStatics2>
 {
-    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading>> result) noexcept override
+    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(impl::abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
             return S_OK;
         }
         catch (...)
@@ -2937,11 +3134,12 @@ struct produce<D, Windows::Devices::Sensors::ISensorDataThreshold> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> : produce_base<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -2955,7 +3153,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
     {
         try
         {
-            *value = detach(this->shim().SensorType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SensorType());
             return S_OK;
         }
         catch (...)
@@ -2972,7 +3171,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().W());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().W());
             return S_OK;
         }
         catch (...)
@@ -2985,7 +3185,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().X());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().X());
             return S_OK;
         }
         catch (...)
@@ -2998,7 +3199,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().Y());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Y());
             return S_OK;
         }
         catch (...)
@@ -3011,7 +3213,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().Z());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Z());
             return S_OK;
         }
         catch (...)
@@ -3028,7 +3231,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M11());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M11());
             return S_OK;
         }
         catch (...)
@@ -3041,7 +3245,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M12());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M12());
             return S_OK;
         }
         catch (...)
@@ -3054,7 +3259,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M13());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M13());
             return S_OK;
         }
         catch (...)
@@ -3067,7 +3273,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M21());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M21());
             return S_OK;
         }
         catch (...)
@@ -3080,7 +3287,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M22());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M22());
             return S_OK;
         }
         catch (...)
@@ -3093,7 +3301,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M23());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M23());
             return S_OK;
         }
         catch (...)
@@ -3106,7 +3315,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M31());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M31());
             return S_OK;
         }
         catch (...)
@@ -3119,7 +3329,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M32());
             return S_OK;
         }
         catch (...)
@@ -3132,7 +3343,8 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().M33());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().M33());
             return S_OK;
         }
         catch (...)
@@ -3149,7 +3361,8 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
     {
         try
         {
-            *value = detach(this->shim().GetCurrentOrientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentOrientation());
             return S_OK;
         }
         catch (...)
@@ -3158,11 +3371,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
         }
     }
 
-    HRESULT __stdcall add_OrientationChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_OrientationChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -3175,6 +3389,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OrientationChanged(token);
             return S_OK;
         }
@@ -3192,6 +3407,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produc
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReadingTransform(value);
             return S_OK;
         }
@@ -3205,7 +3421,8 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produc
     {
         try
         {
-            *value = detach(this->shim().ReadingTransform());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadingTransform());
             return S_OK;
         }
         catch (...)
@@ -3218,11 +3435,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -3236,11 +3454,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> :
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -3253,7 +3472,8 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientation
     {
         try
         {
-            *value = detach(this->shim().Orientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Orientation());
             return S_OK;
         }
         catch (...)
@@ -3266,11 +3486,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientation
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorStatics> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sensors::ISimpleOrientationSensor> result) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ISimpleOrientationSensor> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -3288,68 +3509,68 @@ namespace Windows::Devices::Sensors {
 template <typename D> hstring impl_ISensorDataThresholdTriggerDetails<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISensorDataThresholdTriggerDetails &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISensorDataThresholdTriggerDetails)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SensorType impl_ISensorDataThresholdTriggerDetails<D>::SensorType() const
 {
     Windows::Devices::Sensors::SensorType value {};
-    check_hresult(static_cast<const ISensorDataThresholdTriggerDetails &>(static_cast<const D &>(*this))->get_SensorType(&value));
+    check_hresult(WINRT_SHIM(ISensorDataThresholdTriggerDetails)->get_SensorType(&value));
     return value;
 }
 
 template <typename D> hstring impl_IAccelerometerDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IAccelerometerDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IAccelerometerDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Accelerometer impl_IAccelerometerStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Accelerometer result { nullptr };
-    check_hresult(static_cast<const IAccelerometerStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IAccelerometerStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::Accelerometer impl_IAccelerometerStatics2<D>::GetDefault(Windows::Devices::Sensors::AccelerometerReadingType readingType) const
 {
     Windows::Devices::Sensors::Accelerometer result { nullptr };
-    check_hresult(static_cast<const IAccelerometerStatics2 &>(static_cast<const D &>(*this))->abi_GetDefaultWithAccelerometerReadingType(readingType, put(result)));
+    check_hresult(WINRT_SHIM(IAccelerometerStatics2)->abi_GetDefaultWithAccelerometerReadingType(readingType, put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::AccelerometerReading impl_IAccelerometer<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::AccelerometerReading value { nullptr };
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IAccelerometer)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IAccelerometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IAccelerometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IAccelerometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IAccelerometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IAccelerometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IAccelerometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IAccelerometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAccelerometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -3360,13 +3581,13 @@ template <typename D> event_revoker<IAccelerometer> impl_IAccelerometer<D>::Read
 
 template <typename D> void impl_IAccelerometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IAccelerometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> event_token impl_IAccelerometer<D>::Shaken(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->add_Shaken(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAccelerometer)->add_Shaken(get_abi(handler), &token));
     return token;
 }
 
@@ -3377,147 +3598,147 @@ template <typename D> event_revoker<IAccelerometer> impl_IAccelerometer<D>::Shak
 
 template <typename D> void impl_IAccelerometer<D>::Shaken(event_token token) const
 {
-    check_hresult(static_cast<const IAccelerometer &>(static_cast<const D &>(*this))->remove_Shaken(token));
+    check_hresult(WINRT_SHIM(IAccelerometer)->remove_Shaken(token));
 }
 
 template <typename D> void impl_IAccelerometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IAccelerometer2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(IAccelerometer2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IAccelerometer2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IAccelerometer2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(IAccelerometer2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> void impl_IAccelerometer3<D>::ReportLatency(uint32_t value) const
 {
-    check_hresult(static_cast<const IAccelerometer3 &>(static_cast<const D &>(*this))->put_ReportLatency(value));
+    check_hresult(WINRT_SHIM(IAccelerometer3)->put_ReportLatency(value));
 }
 
 template <typename D> uint32_t impl_IAccelerometer3<D>::ReportLatency() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAccelerometer3 &>(static_cast<const D &>(*this))->get_ReportLatency(&value));
+    check_hresult(WINRT_SHIM(IAccelerometer3)->get_ReportLatency(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IAccelerometer3<D>::MaxBatchSize() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAccelerometer3 &>(static_cast<const D &>(*this))->get_MaxBatchSize(&value));
+    check_hresult(WINRT_SHIM(IAccelerometer3)->get_MaxBatchSize(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::AccelerometerReadingType impl_IAccelerometer4<D>::ReadingType() const
 {
     Windows::Devices::Sensors::AccelerometerReadingType type {};
-    check_hresult(static_cast<const IAccelerometer4 &>(static_cast<const D &>(*this))->get_ReadingType(&type));
+    check_hresult(WINRT_SHIM(IAccelerometer4)->get_ReadingType(&type));
     return type;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IAccelerometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IAccelerometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IAccelerometerReading<D>::AccelerationX() const
 {
     double value {};
-    check_hresult(static_cast<const IAccelerometerReading &>(static_cast<const D &>(*this))->get_AccelerationX(&value));
+    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationX(&value));
     return value;
 }
 
 template <typename D> double impl_IAccelerometerReading<D>::AccelerationY() const
 {
     double value {};
-    check_hresult(static_cast<const IAccelerometerReading &>(static_cast<const D &>(*this))->get_AccelerationY(&value));
+    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationY(&value));
     return value;
 }
 
 template <typename D> double impl_IAccelerometerReading<D>::AccelerationZ() const
 {
     double value {};
-    check_hresult(static_cast<const IAccelerometerReading &>(static_cast<const D &>(*this))->get_AccelerationZ(&value));
+    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationZ(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::AccelerometerReading impl_IAccelerometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::AccelerometerReading value { nullptr };
-    check_hresult(static_cast<const IAccelerometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IAccelerometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IAccelerometerShakenEventArgs<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IAccelerometerShakenEventArgs &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IAccelerometerShakenEventArgs)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IInclinometerDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IInclinometerDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IInclinometerDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(static_cast<const IInclinometerStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IInclinometerStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics2<D>::GetDefaultForRelativeReadings() const
 {
     Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(static_cast<const IInclinometerStatics2 &>(static_cast<const D &>(*this))->abi_GetDefaultForRelativeReadings(put(result)));
+    check_hresult(WINRT_SHIM(IInclinometerStatics2)->abi_GetDefaultForRelativeReadings(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype) const
 {
     Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(static_cast<const IInclinometerStatics3 &>(static_cast<const D &>(*this))->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put(result)));
+    check_hresult(WINRT_SHIM(IInclinometerStatics3)->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::InclinometerReading impl_IInclinometer<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::InclinometerReading value { nullptr };
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IInclinometer)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IInclinometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IInclinometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IInclinometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IInclinometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IInclinometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IInclinometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IInclinometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IInclinometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -3528,114 +3749,114 @@ template <typename D> event_revoker<IInclinometer> impl_IInclinometer<D>::Readin
 
 template <typename D> void impl_IInclinometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IInclinometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IInclinometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> void impl_IInclinometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IInclinometer2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(IInclinometer2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IInclinometer2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IInclinometer2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(IInclinometer2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SensorReadingType impl_IInclinometer2<D>::ReadingType() const
 {
     Windows::Devices::Sensors::SensorReadingType type {};
-    check_hresult(static_cast<const IInclinometer2 &>(static_cast<const D &>(*this))->get_ReadingType(&type));
+    check_hresult(WINRT_SHIM(IInclinometer2)->get_ReadingType(&type));
     return type;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IInclinometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IInclinometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IInclinometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> float impl_IInclinometerReading<D>::PitchDegrees() const
 {
     float value {};
-    check_hresult(static_cast<const IInclinometerReading &>(static_cast<const D &>(*this))->get_PitchDegrees(&value));
+    check_hresult(WINRT_SHIM(IInclinometerReading)->get_PitchDegrees(&value));
     return value;
 }
 
 template <typename D> float impl_IInclinometerReading<D>::RollDegrees() const
 {
     float value {};
-    check_hresult(static_cast<const IInclinometerReading &>(static_cast<const D &>(*this))->get_RollDegrees(&value));
+    check_hresult(WINRT_SHIM(IInclinometerReading)->get_RollDegrees(&value));
     return value;
 }
 
 template <typename D> float impl_IInclinometerReading<D>::YawDegrees() const
 {
     float value {};
-    check_hresult(static_cast<const IInclinometerReading &>(static_cast<const D &>(*this))->get_YawDegrees(&value));
+    check_hresult(WINRT_SHIM(IInclinometerReading)->get_YawDegrees(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IInclinometerReadingYawAccuracy<D>::YawAccuracy() const
 {
     Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(static_cast<const IInclinometerReadingYawAccuracy &>(static_cast<const D &>(*this))->get_YawAccuracy(&value));
+    check_hresult(WINRT_SHIM(IInclinometerReadingYawAccuracy)->get_YawAccuracy(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::InclinometerReading impl_IInclinometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::InclinometerReading value { nullptr };
-    check_hresult(static_cast<const IInclinometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IInclinometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IGyrometerDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IGyrometerDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IGyrometerDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Gyrometer impl_IGyrometerStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Gyrometer result { nullptr };
-    check_hresult(static_cast<const IGyrometerStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IGyrometerStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::GyrometerReading impl_IGyrometer<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::GyrometerReading value { nullptr };
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IGyrometer)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IGyrometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IGyrometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IGyrometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IGyrometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IGyrometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IGyrometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IGyrometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IGyrometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -3646,100 +3867,100 @@ template <typename D> event_revoker<IGyrometer> impl_IGyrometer<D>::ReadingChang
 
 template <typename D> void impl_IGyrometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IGyrometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IGyrometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> void impl_IGyrometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IGyrometer2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(IGyrometer2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IGyrometer2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IGyrometer2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(IGyrometer2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IGyrometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IGyrometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IGyrometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IGyrometerReading<D>::AngularVelocityX() const
 {
     double value {};
-    check_hresult(static_cast<const IGyrometerReading &>(static_cast<const D &>(*this))->get_AngularVelocityX(&value));
+    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityX(&value));
     return value;
 }
 
 template <typename D> double impl_IGyrometerReading<D>::AngularVelocityY() const
 {
     double value {};
-    check_hresult(static_cast<const IGyrometerReading &>(static_cast<const D &>(*this))->get_AngularVelocityY(&value));
+    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityY(&value));
     return value;
 }
 
 template <typename D> double impl_IGyrometerReading<D>::AngularVelocityZ() const
 {
     double value {};
-    check_hresult(static_cast<const IGyrometerReading &>(static_cast<const D &>(*this))->get_AngularVelocityZ(&value));
+    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityZ(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::GyrometerReading impl_IGyrometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::GyrometerReading value { nullptr };
-    check_hresult(static_cast<const IGyrometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IGyrometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICompassDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ICompassDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ICompassDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Compass impl_ICompassStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Compass result { nullptr };
-    check_hresult(static_cast<const ICompassStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(ICompassStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::CompassReading impl_ICompass<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::CompassReading value { nullptr };
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(ICompass)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ICompass<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(ICompass)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_ICompass<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(ICompass)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_ICompass<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(ICompass)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_ICompass<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ICompass)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -3750,100 +3971,100 @@ template <typename D> event_revoker<ICompass> impl_ICompass<D>::ReadingChanged(a
 
 template <typename D> void impl_ICompass<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const ICompass &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(ICompass)->remove_ReadingChanged(token));
 }
 
 template <typename D> void impl_ICompass2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const ICompass2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(ICompass2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_ICompass2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const ICompass2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(ICompass2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ICompassReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ICompassReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ICompassReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_ICompassReading<D>::HeadingMagneticNorth() const
 {
     double value {};
-    check_hresult(static_cast<const ICompassReading &>(static_cast<const D &>(*this))->get_HeadingMagneticNorth(&value));
+    check_hresult(WINRT_SHIM(ICompassReading)->get_HeadingMagneticNorth(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<double> impl_ICompassReading<D>::HeadingTrueNorth() const
 {
     Windows::Foundation::IReference<double> value;
-    check_hresult(static_cast<const ICompassReading &>(static_cast<const D &>(*this))->get_HeadingTrueNorth(put(value)));
+    check_hresult(WINRT_SHIM(ICompassReading)->get_HeadingTrueNorth(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_ICompassReadingHeadingAccuracy<D>::HeadingAccuracy() const
 {
     Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(static_cast<const ICompassReadingHeadingAccuracy &>(static_cast<const D &>(*this))->get_HeadingAccuracy(&value));
+    check_hresult(WINRT_SHIM(ICompassReadingHeadingAccuracy)->get_HeadingAccuracy(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::CompassReading impl_ICompassReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::CompassReading value { nullptr };
-    check_hresult(static_cast<const ICompassReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(ICompassReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ILightSensorDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ILightSensorDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ILightSensorDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::LightSensor impl_ILightSensorStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::LightSensor result { nullptr };
-    check_hresult(static_cast<const ILightSensorStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(ILightSensorStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::LightSensorReading impl_ILightSensor<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::LightSensorReading value { nullptr };
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(ILightSensor)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ILightSensor<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(ILightSensor)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_ILightSensor<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(ILightSensor)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_ILightSensor<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(ILightSensor)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_ILightSensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ILightSensor)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -3854,186 +4075,186 @@ template <typename D> event_revoker<ILightSensor> impl_ILightSensor<D>::ReadingC
 
 template <typename D> void impl_ILightSensor<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const ILightSensor &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(ILightSensor)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ILightSensorReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ILightSensorReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ILightSensorReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> float impl_ILightSensorReading<D>::IlluminanceInLux() const
 {
     float value {};
-    check_hresult(static_cast<const ILightSensorReading &>(static_cast<const D &>(*this))->get_IlluminanceInLux(&value));
+    check_hresult(WINRT_SHIM(ILightSensorReading)->get_IlluminanceInLux(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::LightSensorReading impl_ILightSensorReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::LightSensorReading value { nullptr };
-    check_hresult(static_cast<const ILightSensorReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(ILightSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M11() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M11(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M11(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M12() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M12(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M12(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M13() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M13(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M13(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M21() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M21(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M21(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M22() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M22(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M22(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M23() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M23(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M23(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M31() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M31(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M31(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M32() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M32(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M32(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorRotationMatrix<D>::M33() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorRotationMatrix &>(static_cast<const D &>(*this))->get_M33(&value));
+    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M33(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorQuaternion<D>::W() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorQuaternion &>(static_cast<const D &>(*this))->get_W(&value));
+    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_W(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorQuaternion<D>::X() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorQuaternion &>(static_cast<const D &>(*this))->get_X(&value));
+    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_X(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorQuaternion<D>::Y() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorQuaternion &>(static_cast<const D &>(*this))->get_Y(&value));
+    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_Y(&value));
     return value;
 }
 
 template <typename D> float impl_ISensorQuaternion<D>::Z() const
 {
     float value {};
-    check_hresult(static_cast<const ISensorQuaternion &>(static_cast<const D &>(*this))->get_Z(&value));
+    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_Z(&value));
     return value;
 }
 
 template <typename D> hstring impl_IOrientationSensorDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IOrientationSensorDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(static_cast<const IOrientationSensorStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IOrientationSensorStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics2<D>::GetDefaultForRelativeReadings() const
 {
     Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(static_cast<const IOrientationSensorStatics2 &>(static_cast<const D &>(*this))->abi_GetDefaultForRelativeReadings(put(result)));
+    check_hresult(WINRT_SHIM(IOrientationSensorStatics2)->abi_GetDefaultForRelativeReadings(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype) const
 {
     Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(static_cast<const IOrientationSensorStatics3 &>(static_cast<const D &>(*this))->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put(result)));
+    check_hresult(WINRT_SHIM(IOrientationSensorStatics3)->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal) const
 {
     Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(static_cast<const IOrientationSensorStatics3 &>(static_cast<const D &>(*this))->abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(sensorReadingType, optimizationGoal, put(result)));
+    check_hresult(WINRT_SHIM(IOrientationSensorStatics3)->abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(sensorReadingType, optimizationGoal, put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensorReading impl_IOrientationSensor<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::OrientationSensorReading value { nullptr };
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IOrientationSensor<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IOrientationSensor<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IOrientationSensor<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IOrientationSensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4044,88 +4265,88 @@ template <typename D> event_revoker<IOrientationSensor> impl_IOrientationSensor<
 
 template <typename D> void impl_IOrientationSensor<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IOrientationSensor &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IOrientationSensor)->remove_ReadingChanged(token));
 }
 
 template <typename D> void impl_IOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IOrientationSensor2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(IOrientationSensor2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IOrientationSensor2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IOrientationSensor2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(IOrientationSensor2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SensorReadingType impl_IOrientationSensor2<D>::ReadingType() const
 {
     Windows::Devices::Sensors::SensorReadingType type {};
-    check_hresult(static_cast<const IOrientationSensor2 &>(static_cast<const D &>(*this))->get_ReadingType(&type));
+    check_hresult(WINRT_SHIM(IOrientationSensor2)->get_ReadingType(&type));
     return type;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IOrientationSensorReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IOrientationSensorReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SensorRotationMatrix impl_IOrientationSensorReading<D>::RotationMatrix() const
 {
     Windows::Devices::Sensors::SensorRotationMatrix value { nullptr };
-    check_hresult(static_cast<const IOrientationSensorReading &>(static_cast<const D &>(*this))->get_RotationMatrix(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_RotationMatrix(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SensorQuaternion impl_IOrientationSensorReading<D>::Quaternion() const
 {
     Windows::Devices::Sensors::SensorQuaternion value { nullptr };
-    check_hresult(static_cast<const IOrientationSensorReading &>(static_cast<const D &>(*this))->get_Quaternion(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_Quaternion(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IOrientationSensorReadingYawAccuracy<D>::YawAccuracy() const
 {
     Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(static_cast<const IOrientationSensorReadingYawAccuracy &>(static_cast<const D &>(*this))->get_YawAccuracy(&value));
+    check_hresult(WINRT_SHIM(IOrientationSensorReadingYawAccuracy)->get_YawAccuracy(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::OrientationSensorReading impl_IOrientationSensorReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::OrientationSensorReading value { nullptr };
-    check_hresult(static_cast<const IOrientationSensorReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IOrientationSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISimpleOrientationSensorDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISimpleOrientationSensorDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SimpleOrientationSensor impl_ISimpleOrientationSensorStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::SimpleOrientationSensor result { nullptr };
-    check_hresult(static_cast<const ISimpleOrientationSensorStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensorStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::SimpleOrientation impl_ISimpleOrientationSensor<D>::GetCurrentOrientation() const
 {
     Windows::Devices::Sensors::SimpleOrientation value {};
-    check_hresult(static_cast<const ISimpleOrientationSensor &>(static_cast<const D &>(*this))->abi_GetCurrentOrientation(&value));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->abi_GetCurrentOrientation(&value));
     return value;
 }
 
 template <typename D> event_token impl_ISimpleOrientationSensor<D>::OrientationChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISimpleOrientationSensor &>(static_cast<const D &>(*this))->add_OrientationChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->add_OrientationChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4136,79 +4357,79 @@ template <typename D> event_revoker<ISimpleOrientationSensor> impl_ISimpleOrient
 
 template <typename D> void impl_ISimpleOrientationSensor<D>::OrientationChanged(event_token token) const
 {
-    check_hresult(static_cast<const ISimpleOrientationSensor &>(static_cast<const D &>(*this))->remove_OrientationChanged(token));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->remove_OrientationChanged(token));
 }
 
 template <typename D> void impl_ISimpleOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const ISimpleOrientationSensor2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensor2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_ISimpleOrientationSensor2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const ISimpleOrientationSensor2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensor2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISimpleOrientationSensorOrientationChangedEventArgs &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensorOrientationChangedEventArgs)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::SimpleOrientation impl_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Orientation() const
 {
     Windows::Devices::Sensors::SimpleOrientation value {};
-    check_hresult(static_cast<const ISimpleOrientationSensorOrientationChangedEventArgs &>(static_cast<const D &>(*this))->get_Orientation(&value));
+    check_hresult(WINRT_SHIM(ISimpleOrientationSensorOrientationChangedEventArgs)->get_Orientation(&value));
     return value;
 }
 
 template <typename D> hstring impl_IMagnetometerDeviceId<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IMagnetometerDeviceId &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IMagnetometerDeviceId)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Magnetometer impl_IMagnetometerStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Magnetometer result { nullptr };
-    check_hresult(static_cast<const IMagnetometerStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IMagnetometerStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerReading impl_IMagnetometer<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::MagnetometerReading value { nullptr };
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IMagnetometer)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IMagnetometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IMagnetometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IMagnetometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IMagnetometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IMagnetometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IMagnetometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IMagnetometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IMagnetometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4219,144 +4440,144 @@ template <typename D> event_revoker<IMagnetometer> impl_IMagnetometer<D>::Readin
 
 template <typename D> void impl_IMagnetometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IMagnetometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IMagnetometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> void impl_IMagnetometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IMagnetometer2 &>(static_cast<const D &>(*this))->put_ReadingTransform(value));
+    check_hresult(WINRT_SHIM(IMagnetometer2)->put_ReadingTransform(value));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IMagnetometer2<D>::ReadingTransform() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IMagnetometer2 &>(static_cast<const D &>(*this))->get_ReadingTransform(&value));
+    check_hresult(WINRT_SHIM(IMagnetometer2)->get_ReadingTransform(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IMagnetometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IMagnetometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldX() const
 {
     float value {};
-    check_hresult(static_cast<const IMagnetometerReading &>(static_cast<const D &>(*this))->get_MagneticFieldX(&value));
+    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldX(&value));
     return value;
 }
 
 template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldY() const
 {
     float value {};
-    check_hresult(static_cast<const IMagnetometerReading &>(static_cast<const D &>(*this))->get_MagneticFieldY(&value));
+    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldY(&value));
     return value;
 }
 
 template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldZ() const
 {
     float value {};
-    check_hresult(static_cast<const IMagnetometerReading &>(static_cast<const D &>(*this))->get_MagneticFieldZ(&value));
+    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldZ(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IMagnetometerReading<D>::DirectionalAccuracy() const
 {
     Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(static_cast<const IMagnetometerReading &>(static_cast<const D &>(*this))->get_DirectionalAccuracy(&value));
+    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_DirectionalAccuracy(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::MagnetometerReading impl_IMagnetometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::MagnetometerReading value { nullptr };
-    check_hresult(static_cast<const IMagnetometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IMagnetometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> impl_IActivitySensorStatics<D>::GetDefaultAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result;
-    check_hresult(static_cast<const IActivitySensorStatics &>(static_cast<const D &>(*this))->abi_GetDefaultAsync(put(result)));
+    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetDefaultAsync(put_abi(result)));
     return result;
 }
 
 template <typename D> hstring impl_IActivitySensorStatics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const IActivitySensorStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> impl_IActivitySensorStatics<D>::FromIdAsync(hstring_ref deviceId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> impl_IActivitySensorStatics<D>::FromIdAsync(hstring_view deviceId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result;
-    check_hresult(static_cast<const IActivitySensorStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), put(result)));
+    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> impl_IActivitySensorStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result;
-    check_hresult(static_cast<const IActivitySensorStatics &>(static_cast<const D &>(*this))->abi_GetSystemHistoryAsync(get(fromTime), put(result)));
+    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetSystemHistoryAsync(get_abi(fromTime), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> impl_IActivitySensorStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result;
-    check_hresult(static_cast<const IActivitySensorStatics &>(static_cast<const D &>(*this))->abi_GetSystemHistoryWithDurationAsync(get(fromTime), get(duration), put(result)));
+    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> impl_IActivitySensor<D>::GetCurrentReadingAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> result;
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->abi_GetCurrentReadingAsync(put(result)));
+    check_hresult(WINRT_SHIM(IActivitySensor)->abi_GetCurrentReadingAsync(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType> impl_IActivitySensor<D>::SubscribedActivities() const
 {
     Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType> value;
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->get_SubscribedActivities(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensor)->get_SubscribedActivities(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IActivitySensor<D>::PowerInMilliwatts() const
 {
     double value {};
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->get_PowerInMilliwatts(&value));
+    check_hresult(WINRT_SHIM(IActivitySensor)->get_PowerInMilliwatts(&value));
     return value;
 }
 
 template <typename D> hstring impl_IActivitySensor<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensor)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType> impl_IActivitySensor<D>::SupportedActivities() const
 {
     Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType> value;
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->get_SupportedActivities(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensor)->get_SupportedActivities(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IActivitySensor<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IActivitySensor)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IActivitySensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IActivitySensor)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4367,95 +4588,95 @@ template <typename D> event_revoker<IActivitySensor> impl_IActivitySensor<D>::Re
 
 template <typename D> void impl_IActivitySensor<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IActivitySensor &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IActivitySensor)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IActivitySensorReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IActivitySensorReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ActivityType impl_IActivitySensorReading<D>::Activity() const
 {
     Windows::Devices::Sensors::ActivityType value {};
-    check_hresult(static_cast<const IActivitySensorReading &>(static_cast<const D &>(*this))->get_Activity(&value));
+    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Activity(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ActivitySensorReadingConfidence impl_IActivitySensorReading<D>::Confidence() const
 {
     Windows::Devices::Sensors::ActivitySensorReadingConfidence value {};
-    check_hresult(static_cast<const IActivitySensorReading &>(static_cast<const D &>(*this))->get_Confidence(&value));
+    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Confidence(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ActivitySensorReading impl_IActivitySensorReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::ActivitySensorReading value { nullptr };
-    check_hresult(static_cast<const IActivitySensorReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ActivitySensorReading impl_IActivitySensorReadingChangeReport<D>::Reading() const
 {
     Windows::Devices::Sensors::ActivitySensorReading value { nullptr };
-    check_hresult(static_cast<const IActivitySensorReadingChangeReport &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensorReadingChangeReport)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> impl_IActivitySensorTriggerDetails<D>::ReadReports() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> value;
-    check_hresult(static_cast<const IActivitySensorTriggerDetails &>(static_cast<const D &>(*this))->abi_ReadReports(put(value)));
+    check_hresult(WINRT_SHIM(IActivitySensorTriggerDetails)->abi_ReadReports(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::Barometer impl_IBarometerStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Barometer result { nullptr };
-    check_hresult(static_cast<const IBarometerStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IBarometerStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::BarometerReading impl_IBarometer<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::BarometerReading value { nullptr };
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IBarometer)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IBarometer<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IBarometer)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IBarometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IBarometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IBarometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IBarometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IBarometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IBarometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IBarometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IBarometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4466,151 +4687,151 @@ template <typename D> event_revoker<IBarometer> impl_IBarometer<D>::ReadingChang
 
 template <typename D> void impl_IBarometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IBarometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IBarometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IBarometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IBarometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IBarometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IBarometerReading<D>::StationPressureInHectopascals() const
 {
     double value {};
-    check_hresult(static_cast<const IBarometerReading &>(static_cast<const D &>(*this))->get_StationPressureInHectopascals(&value));
+    check_hresult(WINRT_SHIM(IBarometerReading)->get_StationPressureInHectopascals(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::BarometerReading impl_IBarometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::BarometerReading value { nullptr };
-    check_hresult(static_cast<const IBarometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IBarometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::PedometerStepKind impl_IPedometerReading<D>::StepKind() const
 {
     Windows::Devices::Sensors::PedometerStepKind value {};
-    check_hresult(static_cast<const IPedometerReading &>(static_cast<const D &>(*this))->get_StepKind(&value));
+    check_hresult(WINRT_SHIM(IPedometerReading)->get_StepKind(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IPedometerReading<D>::CumulativeSteps() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IPedometerReading &>(static_cast<const D &>(*this))->get_CumulativeSteps(&value));
+    check_hresult(WINRT_SHIM(IPedometerReading)->get_CumulativeSteps(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IPedometerReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IPedometerReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IPedometerReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IPedometerReading<D>::CumulativeStepsDuration() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IPedometerReading &>(static_cast<const D &>(*this))->get_CumulativeStepsDuration(put(value)));
+    check_hresult(WINRT_SHIM(IPedometerReading)->get_CumulativeStepsDuration(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::PedometerReading impl_IPedometerReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::PedometerReading value { nullptr };
-    check_hresult(static_cast<const IPedometerReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IPedometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> impl_IPedometerStatics<D>::FromIdAsync(hstring_ref deviceId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> impl_IPedometerStatics<D>::FromIdAsync(hstring_view deviceId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation;
-    check_hresult(static_cast<const IPedometerStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), put(operation)));
+    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> impl_IPedometerStatics<D>::GetDefaultAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation;
-    check_hresult(static_cast<const IPedometerStatics &>(static_cast<const D &>(*this))->abi_GetDefaultAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetDefaultAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_IPedometerStatics<D>::GetDeviceSelector() const
 {
     hstring result;
-    check_hresult(static_cast<const IPedometerStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(result)));
+    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetDeviceSelector(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> impl_IPedometerStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation;
-    check_hresult(static_cast<const IPedometerStatics &>(static_cast<const D &>(*this))->abi_GetSystemHistoryAsync(get(fromTime), put(operation)));
+    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetSystemHistoryAsync(get_abi(fromTime), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> impl_IPedometerStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation;
-    check_hresult(static_cast<const IPedometerStatics &>(static_cast<const D &>(*this))->abi_GetSystemHistoryWithDurationAsync(get(fromTime), get(duration), put(operation)));
+    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> impl_IPedometerStatics2<D>::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> result;
-    check_hresult(static_cast<const IPedometerStatics2 &>(static_cast<const D &>(*this))->abi_GetReadingsFromTriggerDetails(get(triggerDetails), put(result)));
+    check_hresult(WINRT_SHIM(IPedometerStatics2)->abi_GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> impl_IPedometer2<D>::GetCurrentReadings() const
 {
     Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> value;
-    check_hresult(static_cast<const IPedometer2 &>(static_cast<const D &>(*this))->abi_GetCurrentReadings(put(value)));
+    check_hresult(WINRT_SHIM(IPedometer2)->abi_GetCurrentReadings(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IPedometer<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IPedometer)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IPedometer<D>::PowerInMilliwatts() const
 {
     double value {};
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->get_PowerInMilliwatts(&value));
+    check_hresult(WINRT_SHIM(IPedometer)->get_PowerInMilliwatts(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPedometer<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IPedometer)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IPedometer<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IPedometer)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IPedometer<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IPedometer)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IPedometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IPedometer)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4621,62 +4842,62 @@ template <typename D> event_revoker<IPedometer> impl_IPedometer<D>::ReadingChang
 
 template <typename D> void impl_IPedometer<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IPedometer &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IPedometer)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Devices::Sensors::PedometerDataThreshold impl_IPedometerDataThresholdFactory<D>::Create(const Windows::Devices::Sensors::Pedometer & sensor, int32_t stepGoal) const
 {
     Windows::Devices::Sensors::PedometerDataThreshold threshold { nullptr };
-    check_hresult(static_cast<const IPedometerDataThresholdFactory &>(static_cast<const D &>(*this))->abi_Create(get(sensor), stepGoal, put(threshold)));
+    check_hresult(WINRT_SHIM(IPedometerDataThresholdFactory)->abi_Create(get_abi(sensor), stepGoal, put_abi(threshold)));
     return threshold;
 }
 
 template <typename D> hstring impl_IProximitySensorStatics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const IProximitySensorStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensorStatics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Devices::Sensors::ProximitySensor impl_IProximitySensorStatics<D>::FromId(hstring_ref sensorId) const
+template <typename D> Windows::Devices::Sensors::ProximitySensor impl_IProximitySensorStatics<D>::FromId(hstring_view sensorId) const
 {
     Windows::Devices::Sensors::ProximitySensor result { nullptr };
-    check_hresult(static_cast<const IProximitySensorStatics &>(static_cast<const D &>(*this))->abi_FromId(get(sensorId), put(result)));
+    check_hresult(WINRT_SHIM(IProximitySensorStatics)->abi_FromId(get_abi(sensorId), put_abi(result)));
     return result;
 }
 
 template <typename D> hstring impl_IProximitySensor<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensor)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensor<D>::MaxDistanceInMillimeters() const
 {
     Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->get_MaxDistanceInMillimeters(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensor)->get_MaxDistanceInMillimeters(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensor<D>::MinDistanceInMillimeters() const
 {
     Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->get_MinDistanceInMillimeters(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensor)->get_MinDistanceInMillimeters(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ProximitySensorReading impl_IProximitySensor<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::ProximitySensorReading value { nullptr };
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensor)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_IProximitySensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IProximitySensor)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4687,102 +4908,102 @@ template <typename D> event_revoker<IProximitySensor> impl_IProximitySensor<D>::
 
 template <typename D> void impl_IProximitySensor<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IProximitySensor)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Devices::Sensors::ProximitySensorDisplayOnOffController impl_IProximitySensor<D>::CreateDisplayOnOffController() const
 {
     Windows::Devices::Sensors::ProximitySensorDisplayOnOffController controller { nullptr };
-    check_hresult(static_cast<const IProximitySensor &>(static_cast<const D &>(*this))->abi_CreateDisplayOnOffController(put(controller)));
+    check_hresult(WINRT_SHIM(IProximitySensor)->abi_CreateDisplayOnOffController(put_abi(controller)));
     return controller;
 }
 
 template <typename D> Windows::Devices::Sensors::ProximitySensorReading impl_IProximitySensorReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::ProximitySensorReading value { nullptr };
-    check_hresult(static_cast<const IProximitySensorReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IProximitySensorReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IProximitySensorReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IProximitySensorReading<D>::IsDetected() const
 {
     bool value {};
-    check_hresult(static_cast<const IProximitySensorReading &>(static_cast<const D &>(*this))->get_IsDetected(&value));
+    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_IsDetected(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensorReading<D>::DistanceInMillimeters() const
 {
     Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(static_cast<const IProximitySensorReading &>(static_cast<const D &>(*this))->get_DistanceInMillimeters(put(value)));
+    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_DistanceInMillimeters(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::ProximitySensorDataThreshold impl_IProximitySensorDataThresholdFactory<D>::Create(const Windows::Devices::Sensors::ProximitySensor & sensor) const
 {
     Windows::Devices::Sensors::ProximitySensorDataThreshold threshold { nullptr };
-    check_hresult(static_cast<const IProximitySensorDataThresholdFactory &>(static_cast<const D &>(*this))->abi_Create(get(sensor), put(threshold)));
+    check_hresult(WINRT_SHIM(IProximitySensorDataThresholdFactory)->abi_Create(get_abi(sensor), put_abi(threshold)));
     return threshold;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> impl_IProximitySensorStatics2<D>::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> result;
-    check_hresult(static_cast<const IProximitySensorStatics2 &>(static_cast<const D &>(*this))->abi_GetReadingsFromTriggerDetails(get(triggerDetails), put(result)));
+    check_hresult(WINRT_SHIM(IProximitySensorStatics2)->abi_GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::Altimeter impl_IAltimeterStatics<D>::GetDefault() const
 {
     Windows::Devices::Sensors::Altimeter result { nullptr };
-    check_hresult(static_cast<const IAltimeterStatics &>(static_cast<const D &>(*this))->abi_GetDefault(put(result)));
+    check_hresult(WINRT_SHIM(IAltimeterStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Devices::Sensors::AltimeterReading impl_IAltimeter<D>::GetCurrentReading() const
 {
     Windows::Devices::Sensors::AltimeterReading value { nullptr };
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->abi_GetCurrentReading(put(value)));
+    check_hresult(WINRT_SHIM(IAltimeter)->abi_GetCurrentReading(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAltimeter<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IAltimeter)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IAltimeter<D>::MinimumReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->get_MinimumReportInterval(&value));
+    check_hresult(WINRT_SHIM(IAltimeter)->get_MinimumReportInterval(&value));
     return value;
 }
 
 template <typename D> void impl_IAltimeter<D>::ReportInterval(uint32_t value) const
 {
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->put_ReportInterval(value));
+    check_hresult(WINRT_SHIM(IAltimeter)->put_ReportInterval(value));
 }
 
 template <typename D> uint32_t impl_IAltimeter<D>::ReportInterval() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->get_ReportInterval(&value));
+    check_hresult(WINRT_SHIM(IAltimeter)->get_ReportInterval(&value));
     return value;
 }
 
 template <typename D> event_token impl_IAltimeter<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->add_ReadingChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAltimeter)->add_ReadingChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -4793,27 +5014,27 @@ template <typename D> event_revoker<IAltimeter> impl_IAltimeter<D>::ReadingChang
 
 template <typename D> void impl_IAltimeter<D>::ReadingChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAltimeter &>(static_cast<const D &>(*this))->remove_ReadingChanged(token));
+    check_hresult(WINRT_SHIM(IAltimeter)->remove_ReadingChanged(token));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IAltimeterReading<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IAltimeterReading &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IAltimeterReading)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IAltimeterReading<D>::AltitudeChangeInMeters() const
 {
     double value {};
-    check_hresult(static_cast<const IAltimeterReading &>(static_cast<const D &>(*this))->get_AltitudeChangeInMeters(&value));
+    check_hresult(WINRT_SHIM(IAltimeterReading)->get_AltitudeChangeInMeters(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sensors::AltimeterReading impl_IAltimeterReadingChangedEventArgs<D>::Reading() const
 {
     Windows::Devices::Sensors::AltimeterReading value { nullptr };
-    check_hresult(static_cast<const IAltimeterReadingChangedEventArgs &>(static_cast<const D &>(*this))->get_Reading(put(value)));
+    check_hresult(WINRT_SHIM(IAltimeterReadingChangedEventArgs)->get_Reading(put_abi(value)));
     return value;
 }
 
@@ -4837,7 +5058,7 @@ inline hstring ActivitySensor::GetDeviceSelector()
     return get_activation_factory<ActivitySensor, IActivitySensorStatics>().GetDeviceSelector();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> ActivitySensor::FromIdAsync(hstring_ref deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> ActivitySensor::FromIdAsync(hstring_view deviceId)
 {
     return get_activation_factory<ActivitySensor, IActivitySensorStatics>().FromIdAsync(deviceId);
 }
@@ -4917,7 +5138,7 @@ inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefaul
     return get_activation_factory<OrientationSensor, IOrientationSensorStatics3>().GetDefault(sensorReadingType, optimizationGoal);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> Pedometer::FromIdAsync(hstring_ref deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> Pedometer::FromIdAsync(hstring_view deviceId)
 {
     return get_activation_factory<Pedometer, IPedometerStatics>().FromIdAsync(deviceId);
 }
@@ -4956,7 +5177,7 @@ inline hstring ProximitySensor::GetDeviceSelector()
     return get_activation_factory<ProximitySensor, IProximitySensorStatics>().GetDeviceSelector();
 }
 
-inline Windows::Devices::Sensors::ProximitySensor ProximitySensor::FromId(hstring_ref sensorId)
+inline Windows::Devices::Sensors::ProximitySensor ProximitySensor::FromId(hstring_view sensorId)
 {
     return get_activation_factory<ProximitySensor, IProximitySensorStatics>().FromId(sensorId);
 }
@@ -4978,3 +5199,1220 @@ inline Windows::Devices::Sensors::SimpleOrientationSensor SimpleOrientationSenso
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer3>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer4>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer4 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAltimeter>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeter & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IBarometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IBarometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IBarometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompass>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompass & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompass2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompass2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompassDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompassReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ICompassStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometer2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometer2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometer2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometer2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics3>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ILightSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometer2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometer2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensor2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensor2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics3>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometer2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometer2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IPedometerStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISensorDataThreshold>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorDataThreshold & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISensorQuaternion>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorQuaternion & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISensorRotationMatrix>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorRotationMatrix & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Accelerometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Accelerometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Altimeter>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Altimeter & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::AltimeterReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::AltimeterReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Barometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Barometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::BarometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::BarometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Compass>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Compass & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::CompassReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::CompassReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Gyrometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Gyrometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::GyrometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::GyrometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Inclinometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Inclinometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::InclinometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::InclinometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::LightSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::LightSensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Magnetometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Magnetometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::MagnetometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::MagnetometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::Pedometer>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::Pedometer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::PedometerDataThreshold>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerDataThreshold & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::PedometerReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorReading>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorReading & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::SensorQuaternion>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::SensorQuaternion & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::SensorRotationMatrix>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::SensorRotationMatrix & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensor>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::SimpleOrientationSensor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

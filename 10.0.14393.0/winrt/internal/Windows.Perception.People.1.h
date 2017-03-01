@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Perception::People {
 
-struct __declspec(uuid("7f5ac5a5-49db-379f-9429-32a2faf34fa6")) __declspec(novtable) IHeadPose : Windows::IInspectable
+struct __declspec(uuid("7f5ac5a5-49db-379f-9429-32a2faf34fa6")) __declspec(novtable) IHeadPose : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Numerics::float3 * value) = 0;
     virtual HRESULT __stdcall get_ForwardDirection(Windows::Foundation::Numerics::float3 * value) = 0;
@@ -27,7 +27,13 @@ template <> struct traits<Windows::Perception::People::HeadPose> { using default
 
 namespace Windows::Perception::People {
 
-template <typename T> struct impl_IHeadPose;
+template <typename D>
+struct WINRT_EBO impl_IHeadPose
+{
+    Windows::Foundation::Numerics::float3 Position() const;
+    Windows::Foundation::Numerics::float3 ForwardDirection() const;
+    Windows::Foundation::Numerics::float3 UpDirection() const;
+};
 
 }
 

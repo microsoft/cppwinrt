@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::Management::Deployment {
 
-struct __declspec(uuid("96592f8d-856c-4426-a947-b06307718078")) __declspec(novtable) IEnterprise : Windows::IInspectable
+struct __declspec(uuid("96592f8d-856c-4426-a947-b06307718078")) __declspec(novtable) IEnterprise : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(GUID * value) = 0;
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
@@ -25,7 +25,7 @@ struct __declspec(uuid("96592f8d-856c-4426-a947-b06307718078")) __declspec(novta
     virtual HRESULT __stdcall get_Status(winrt::Windows::Phone::Management::Deployment::EnterpriseStatus * value) = 0;
 };
 
-struct __declspec(uuid("20f9f390-2c69-41d8-88e6-e4b3884026cb")) __declspec(novtable) IEnterpriseEnrollmentManager : Windows::IInspectable
+struct __declspec(uuid("20f9f390-2c69-41d8-88e6-e4b3884026cb")) __declspec(novtable) IEnterpriseEnrollmentManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EnrolledEnterprises(Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> ** result) = 0;
     virtual HRESULT __stdcall get_CurrentEnterprise(Windows::Phone::Management::Deployment::IEnterprise ** result) = 0;
@@ -34,13 +34,13 @@ struct __declspec(uuid("20f9f390-2c69-41d8-88e6-e4b3884026cb")) __declspec(novta
     virtual HRESULT __stdcall abi_RequestUnenrollmentAsync(Windows::Phone::Management::Deployment::IEnterprise * enterprise, Windows::Foundation::IAsyncOperation<bool> ** result) = 0;
 };
 
-struct __declspec(uuid("9ff71ce6-90db-4342-b326-1729aa91301c")) __declspec(novtable) IEnterpriseEnrollmentResult : Windows::IInspectable
+struct __declspec(uuid("9ff71ce6-90db-4342-b326-1729aa91301c")) __declspec(novtable) IEnterpriseEnrollmentResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EnrolledEnterprise(Windows::Phone::Management::Deployment::IEnterprise ** result) = 0;
     virtual HRESULT __stdcall get_Status(winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus * value) = 0;
 };
 
-struct __declspec(uuid("929aa738-8d49-42ac-80c9-b4ad793c43f2")) __declspec(novtable) IInstallationManagerStatics : Windows::IInspectable
+struct __declspec(uuid("929aa738-8d49-42ac-80c9-b4ad793c43f2")) __declspec(novtable) IInstallationManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddPackageAsync(hstring title, Windows::Foundation::IUriRuntimeClass * sourceLocation, Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_AddPackagePreloadedAsync(hstring title, Windows::Foundation::IUriRuntimeClass * sourceLocation, hstring instanceId, hstring offerId, Windows::Foundation::IUriRuntimeClass * license, Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> ** asyncInfo) = 0;
@@ -49,20 +49,20 @@ struct __declspec(uuid("929aa738-8d49-42ac-80c9-b4ad793c43f2")) __declspec(novta
     virtual HRESULT __stdcall abi_FindPackages(Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> ** items) = 0;
 };
 
-struct __declspec(uuid("7c6c2cbd-fa4a-4c8e-ab97-d959452f19e5")) __declspec(novtable) IInstallationManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("7c6c2cbd-fa4a-4c8e-ab97-d959452f19e5")) __declspec(novtable) IInstallationManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RemovePackageAsync(hstring packageFullName, winrt::Windows::Management::Deployment::RemovalOptions removalOptions, Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_RegisterPackageAsync(Windows::Foundation::IUriRuntimeClass * manifestUri, Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> * dependencyPackageUris, winrt::Windows::Management::Deployment::DeploymentOptions deploymentOptions, Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_FindPackagesByNamePublisher(hstring packageName, hstring packagePublisher, Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> ** items) = 0;
 };
 
-struct __declspec(uuid("33e8eed5-0f7e-4473-967c-7d6e1c0e7de1")) __declspec(novtable) IPackageInstallResult : Windows::IInspectable
+struct __declspec(uuid("33e8eed5-0f7e-4473-967c-7d6e1c0e7de1")) __declspec(novtable) IPackageInstallResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ProductId(hstring * value) = 0;
     virtual HRESULT __stdcall get_InstallState(winrt::Windows::Management::Deployment::PackageInstallState * value) = 0;
 };
 
-struct __declspec(uuid("7149d909-3ff9-41ed-a717-2bc65ffc61d2")) __declspec(novtable) IPackageInstallResult2 : Windows::IInspectable
+struct __declspec(uuid("7149d909-3ff9-41ed-a717-2bc65ffc61d2")) __declspec(novtable) IPackageInstallResult2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ErrorText(hstring * value) = 0;
 };
@@ -79,13 +79,64 @@ template <> struct traits<Windows::Phone::Management::Deployment::PackageInstall
 
 namespace Windows::Phone::Management::Deployment {
 
-template <typename T> struct impl_IEnterprise;
-template <typename T> struct impl_IEnterpriseEnrollmentManager;
-template <typename T> struct impl_IEnterpriseEnrollmentResult;
-template <typename T> struct impl_IInstallationManagerStatics;
-template <typename T> struct impl_IInstallationManagerStatics2;
-template <typename T> struct impl_IPackageInstallResult;
-template <typename T> struct impl_IPackageInstallResult2;
+template <typename D>
+struct WINRT_EBO impl_IEnterprise
+{
+    GUID Id() const;
+    hstring Name() const;
+    int32_t WorkplaceId() const;
+    Windows::Foundation::DateTime EnrollmentValidFrom() const;
+    Windows::Foundation::DateTime EnrollmentValidTo() const;
+    Windows::Phone::Management::Deployment::EnterpriseStatus Status() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEnterpriseEnrollmentManager
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> EnrolledEnterprises() const;
+    Windows::Phone::Management::Deployment::Enterprise CurrentEnterprise() const;
+    Windows::Foundation::IAsyncAction ValidateEnterprisesAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> RequestEnrollmentAsync(hstring_view enrollmentToken) const;
+    Windows::Foundation::IAsyncOperation<bool> RequestUnenrollmentAsync(const Windows::Phone::Management::Deployment::Enterprise & enterprise) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEnterpriseEnrollmentResult
+{
+    Windows::Phone::Management::Deployment::Enterprise EnrolledEnterprise() const;
+    Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus Status() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInstallationManagerStatics
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation, hstring_view instanceId, hstring_view offerId, const Windows::Foundation::Uri & license) const;
+    Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> GetPendingPackageInstalls() const;
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> FindPackagesForCurrentPublisher() const;
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> FindPackages() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInstallationManagerStatics2
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> RemovePackageAsync(hstring_view packageFullName, Windows::Management::Deployment::RemovalOptions removalOptions) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> RegisterPackageAsync(const Windows::Foundation::Uri & manifestUri, iterable<Windows::Foundation::Uri> dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions deploymentOptions) const;
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> FindPackages(hstring_view packageName, hstring_view packagePublisher) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPackageInstallResult
+{
+    hstring ProductId() const;
+    Windows::Management::Deployment::PackageInstallState InstallState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPackageInstallResult2
+{
+    hstring ErrorText() const;
+};
 
 }
 

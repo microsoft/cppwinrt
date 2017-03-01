@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Media::SpeechSynthesis::IInstalledVoicesStatic> : produce_base<D, Windows::Media::SpeechSynthesis::IInstalledVoicesStatic>
 {
-    HRESULT __stdcall get_AllVoices(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechSynthesis::VoiceInformation>> value) noexcept override
+    HRESULT __stdcall get_AllVoices(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechSynthesis::VoiceInformation>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AllVoices());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AllVoices());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::IInstalledVoicesStatic> : pro
         }
     }
 
-    HRESULT __stdcall get_DefaultVoice(abi_arg_out<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
+    HRESULT __stdcall get_DefaultVoice(impl::abi_arg_out<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DefaultVoice());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DefaultVoice());
             return S_OK;
         }
         catch (...)
@@ -49,11 +54,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::IInstalledVoicesStatic> : pro
 template <typename D>
 struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesisStream> : produce_base<D, Windows::Media::SpeechSynthesis::ISpeechSynthesisStream>
 {
-    HRESULT __stdcall get_Markers(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::IMediaMarker>> value) noexcept override
+    HRESULT __stdcall get_Markers(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::IMediaMarker>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Markers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Markers());
             return S_OK;
         }
         catch (...)
@@ -67,11 +73,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesisStream> : pro
 template <typename D>
 struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer> : produce_base<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer>
 {
-    HRESULT __stdcall abi_SynthesizeTextToStreamAsync(abi_arg_in<hstring> text, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream>> operation) noexcept override
+    HRESULT __stdcall abi_SynthesizeTextToStreamAsync(impl::abi_arg_in<hstring> text, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SynthesizeTextToStreamAsync(*reinterpret_cast<const hstring *>(&text)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SynthesizeTextToStreamAsync(*reinterpret_cast<const hstring *>(&text)));
             return S_OK;
         }
         catch (...)
@@ -81,11 +88,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer> : produce
         }
     }
 
-    HRESULT __stdcall abi_SynthesizeSsmlToStreamAsync(abi_arg_in<hstring> Ssml, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream>> operation) noexcept override
+    HRESULT __stdcall abi_SynthesizeSsmlToStreamAsync(impl::abi_arg_in<hstring> Ssml, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SynthesizeSsmlToStreamAsync(*reinterpret_cast<const hstring *>(&Ssml)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SynthesizeSsmlToStreamAsync(*reinterpret_cast<const hstring *>(&Ssml)));
             return S_OK;
         }
         catch (...)
@@ -95,10 +103,11 @@ struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer> : produce
         }
     }
 
-    HRESULT __stdcall put_Voice(abi_arg_in<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
+    HRESULT __stdcall put_Voice(impl::abi_arg_in<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Voice(*reinterpret_cast<const Windows::Media::SpeechSynthesis::VoiceInformation *>(&value));
             return S_OK;
         }
@@ -108,11 +117,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer> : produce
         }
     }
 
-    HRESULT __stdcall get_Voice(abi_arg_out<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
+    HRESULT __stdcall get_Voice(impl::abi_arg_out<Windows::Media::SpeechSynthesis::IVoiceInformation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Voice());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Voice());
             return S_OK;
         }
         catch (...)
@@ -126,11 +136,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::ISpeechSynthesizer> : produce
 template <typename D>
 struct produce<D, Windows::Media::SpeechSynthesis::IVoiceInformation> : produce_base<D, Windows::Media::SpeechSynthesis::IVoiceInformation>
 {
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -140,11 +151,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::IVoiceInformation> : produce_
         }
     }
 
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -154,11 +166,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::IVoiceInformation> : produce_
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -168,11 +181,12 @@ struct produce<D, Windows::Media::SpeechSynthesis::IVoiceInformation> : produce_
         }
     }
 
-    HRESULT __stdcall get_Description(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Description());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Description());
             return S_OK;
         }
         catch (...)
@@ -186,7 +200,8 @@ struct produce<D, Windows::Media::SpeechSynthesis::IVoiceInformation> : produce_
     {
         try
         {
-            *value = detach(this->shim().Gender());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Gender());
             return S_OK;
         }
         catch (...)
@@ -203,82 +218,82 @@ namespace Windows::Media::SpeechSynthesis {
 template <typename D> hstring impl_IVoiceInformation<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IVoiceInformation &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IVoiceInformation)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IVoiceInformation<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IVoiceInformation &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IVoiceInformation)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IVoiceInformation<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const IVoiceInformation &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(IVoiceInformation)->get_Language(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IVoiceInformation<D>::Description() const
 {
     hstring value;
-    check_hresult(static_cast<const IVoiceInformation &>(static_cast<const D &>(*this))->get_Description(put(value)));
+    check_hresult(WINRT_SHIM(IVoiceInformation)->get_Description(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::SpeechSynthesis::VoiceGender impl_IVoiceInformation<D>::Gender() const
 {
     Windows::Media::SpeechSynthesis::VoiceGender value {};
-    check_hresult(static_cast<const IVoiceInformation &>(static_cast<const D &>(*this))->get_Gender(&value));
+    check_hresult(WINRT_SHIM(IVoiceInformation)->get_Gender(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechSynthesis::VoiceInformation> impl_IInstalledVoicesStatic<D>::AllVoices() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechSynthesis::VoiceInformation> value;
-    check_hresult(static_cast<const IInstalledVoicesStatic &>(static_cast<const D &>(*this))->get_AllVoices(put(value)));
+    check_hresult(WINRT_SHIM(IInstalledVoicesStatic)->get_AllVoices(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::SpeechSynthesis::VoiceInformation impl_IInstalledVoicesStatic<D>::DefaultVoice() const
 {
     Windows::Media::SpeechSynthesis::VoiceInformation value { nullptr };
-    check_hresult(static_cast<const IInstalledVoicesStatic &>(static_cast<const D &>(*this))->get_DefaultVoice(put(value)));
+    check_hresult(WINRT_SHIM(IInstalledVoicesStatic)->get_DefaultVoice(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Media::IMediaMarker> impl_ISpeechSynthesisStream<D>::Markers() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Media::IMediaMarker> value;
-    check_hresult(static_cast<const ISpeechSynthesisStream &>(static_cast<const D &>(*this))->get_Markers(put(value)));
+    check_hresult(WINRT_SHIM(ISpeechSynthesisStream)->get_Markers(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> impl_ISpeechSynthesizer<D>::SynthesizeTextToStreamAsync(hstring_ref text) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> impl_ISpeechSynthesizer<D>::SynthesizeTextToStreamAsync(hstring_view text) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> operation;
-    check_hresult(static_cast<const ISpeechSynthesizer &>(static_cast<const D &>(*this))->abi_SynthesizeTextToStreamAsync(get(text), put(operation)));
+    check_hresult(WINRT_SHIM(ISpeechSynthesizer)->abi_SynthesizeTextToStreamAsync(get_abi(text), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> impl_ISpeechSynthesizer<D>::SynthesizeSsmlToStreamAsync(hstring_ref Ssml) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> impl_ISpeechSynthesizer<D>::SynthesizeSsmlToStreamAsync(hstring_view Ssml) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> operation;
-    check_hresult(static_cast<const ISpeechSynthesizer &>(static_cast<const D &>(*this))->abi_SynthesizeSsmlToStreamAsync(get(Ssml), put(operation)));
+    check_hresult(WINRT_SHIM(ISpeechSynthesizer)->abi_SynthesizeSsmlToStreamAsync(get_abi(Ssml), put_abi(operation)));
     return operation;
 }
 
 template <typename D> void impl_ISpeechSynthesizer<D>::Voice(const Windows::Media::SpeechSynthesis::VoiceInformation & value) const
 {
-    check_hresult(static_cast<const ISpeechSynthesizer &>(static_cast<const D &>(*this))->put_Voice(get(value)));
+    check_hresult(WINRT_SHIM(ISpeechSynthesizer)->put_Voice(get_abi(value)));
 }
 
 template <typename D> Windows::Media::SpeechSynthesis::VoiceInformation impl_ISpeechSynthesizer<D>::Voice() const
 {
     Windows::Media::SpeechSynthesis::VoiceInformation value { nullptr };
-    check_hresult(static_cast<const ISpeechSynthesizer &>(static_cast<const D &>(*this))->get_Voice(put(value)));
+    check_hresult(WINRT_SHIM(ISpeechSynthesizer)->get_Voice(put_abi(value)));
     return value;
 }
 
@@ -299,3 +314,68 @@ inline Windows::Media::SpeechSynthesis::VoiceInformation SpeechSynthesizer::Defa
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::IInstalledVoicesStatic>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::IInstalledVoicesStatic & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::ISpeechSynthesisStream>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::ISpeechSynthesisStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::ISpeechSynthesizer>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::ISpeechSynthesizer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::IVoiceInformation>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::IVoiceInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::SpeechSynthesisStream>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::SpeechSynthesisStream & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::SpeechSynthesizer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::SpeechSynthesis::VoiceInformation>
+{
+    size_t operator()(const winrt::Windows::Media::SpeechSynthesis::VoiceInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

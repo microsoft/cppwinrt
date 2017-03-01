@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -44,88 +44,32 @@ template <> struct __declspec(uuid("0cffc6c9-4c2b-5cd4-b38c-7b8df3ff5afb")) __de
 
 namespace Windows::Security::Credentials::UI {
 
-template <typename D>
-struct WINRT_EBO impl_ICredentialPickerOptions
-{
-    void Caption(hstring_ref value) const;
-    hstring Caption() const;
-    void Message(hstring_ref value) const;
-    hstring Message() const;
-    void ErrorCode(uint32_t value) const;
-    uint32_t ErrorCode() const;
-    void TargetName(hstring_ref value) const;
-    hstring TargetName() const;
-    void AuthenticationProtocol(Windows::Security::Credentials::UI::AuthenticationProtocol value) const;
-    Windows::Security::Credentials::UI::AuthenticationProtocol AuthenticationProtocol() const;
-    void CustomAuthenticationProtocol(hstring_ref value) const;
-    hstring CustomAuthenticationProtocol() const;
-    void PreviousCredential(const Windows::Storage::Streams::IBuffer & value) const;
-    Windows::Storage::Streams::IBuffer PreviousCredential() const;
-    void AlwaysDisplayDialog(bool value) const;
-    bool AlwaysDisplayDialog() const;
-    void CallerSavesCredential(bool value) const;
-    bool CallerSavesCredential() const;
-    void CredentialSaveOption(Windows::Security::Credentials::UI::CredentialSaveOption value) const;
-    Windows::Security::Credentials::UI::CredentialSaveOption CredentialSaveOption() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICredentialPickerResults
-{
-    uint32_t ErrorCode() const;
-    Windows::Security::Credentials::UI::CredentialSaveOption CredentialSaveOption() const;
-    bool CredentialSaved() const;
-    Windows::Storage::Streams::IBuffer Credential() const;
-    hstring CredentialDomainName() const;
-    hstring CredentialUserName() const;
-    hstring CredentialPassword() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICredentialPickerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::UI::CredentialPickerResults> PickAsync(const Windows::Security::Credentials::UI::CredentialPickerOptions & options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::UI::CredentialPickerResults> PickAsync(hstring_ref targetName, hstring_ref message) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::UI::CredentialPickerResults> PickAsync(hstring_ref targetName, hstring_ref message, hstring_ref caption) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserConsentVerifierStatics
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Credentials::UI::UserConsentVerifierAvailability> CheckAvailabilityAsync() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Credentials::UI::UserConsentVerificationResult> RequestVerificationAsync(hstring_ref message) const;
-};
-
 struct ICredentialPickerOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialPickerOptions>
 {
     ICredentialPickerOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialPickerOptions>(m_ptr); }
 };
 
 struct ICredentialPickerResults :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialPickerResults>
 {
     ICredentialPickerResults(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialPickerResults>(m_ptr); }
 };
 
 struct ICredentialPickerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialPickerStatics>
 {
     ICredentialPickerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialPickerStatics>(m_ptr); }
 };
 
 struct IUserConsentVerifierStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserConsentVerifierStatics>
 {
     IUserConsentVerifierStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserConsentVerifierStatics>(m_ptr); }
 };
 
 }

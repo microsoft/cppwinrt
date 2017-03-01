@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -38,6 +38,20 @@ struct JsonArray;
 struct JsonError;
 struct JsonObject;
 struct JsonValue;
+
+}
+
+namespace Windows::Data::Json {
+
+template <typename T> struct impl_IJsonArray;
+template <typename T> struct impl_IJsonArrayStatics;
+template <typename T> struct impl_IJsonErrorStatics2;
+template <typename T> struct impl_IJsonObject;
+template <typename T> struct impl_IJsonObjectStatics;
+template <typename T> struct impl_IJsonObjectWithDefaultValues;
+template <typename T> struct impl_IJsonValue;
+template <typename T> struct impl_IJsonValueStatics;
+template <typename T> struct impl_IJsonValueStatics2;
 
 }
 

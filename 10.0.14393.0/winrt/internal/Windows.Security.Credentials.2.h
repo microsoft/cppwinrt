@@ -1,9 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Security.Credentials.1.h"
+#include "Windows.Foundation.Collections.1.h"
 #include "Windows.Foundation.Collections.2.h"
 
 WINRT_EXPORT namespace winrt {
@@ -22,17 +23,22 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_236aac9d_fb12_5c4d_a41c_9e445fb4d7ec
 #define WINRT_GENERIC_236aac9d_fb12_5c4d_a41c_9e445fb4d7ec
-template <> struct __declspec(uuid("236aac9d-fb12-5c4d-a41c-9e445fb4d7ec")) __declspec(novtable) IObservableMap<hstring, Windows::IInspectable> : impl_IObservableMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("236aac9d-fb12-5c4d-a41c-9e445fb4d7ec")) __declspec(novtable) IObservableMap<hstring, Windows::Foundation::IInspectable> : impl_IObservableMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
 #define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::IInspectable> : impl_IMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
@@ -42,7 +48,7 @@ template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __de
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -117,7 +123,7 @@ template <> struct __declspec(uuid("60141efb-f2f9-5377-96fd-f8c60d9558b5")) __de
 
 #ifndef WINRT_GENERIC_24f981e5_ddca_538d_aada_a59906084cf1
 #define WINRT_GENERIC_24f981e5_ddca_538d_aada_a59906084cf1
-template <> struct __declspec(uuid("24f981e5-ddca-538d-aada-a59906084cf1")) __declspec(novtable) MapChangedEventHandler<hstring, Windows::IInspectable> : impl_MapChangedEventHandler<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("24f981e5-ddca-538d-aada-a59906084cf1")) __declspec(novtable) MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> : impl_MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -150,6 +156,11 @@ template <> struct __declspec(uuid("2c16e103-f783-5dd9-a5f3-3362bcbdaabd")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1d0e801c_b8b4_5c03_a32c_45dcf65cc978
+#define WINRT_GENERIC_1d0e801c_b8b4_5c03_a32c_45dcf65cc978
+template <> struct __declspec(uuid("1d0e801c-b8b4-5c03-a32c-45dcf65cc978")) __declspec(novtable) IVector<Windows::Security::Credentials::PasswordCredential> : impl_IVector<Windows::Security::Credentials::PasswordCredential> {};
+#endif
+
 #ifndef WINRT_GENERIC_b01093d8_4f52_50f0_9aa4_e22639111162
 #define WINRT_GENERIC_b01093d8_4f52_50f0_9aa4_e22639111162
 template <> struct __declspec(uuid("b01093d8-4f52-50f0-9aa4-e22639111162")) __declspec(novtable) IIterator<Windows::Security::Credentials::PasswordCredential> : impl_IIterator<Windows::Security::Credentials::PasswordCredential> {};
@@ -162,7 +173,7 @@ template <> struct __declspec(uuid("0d224a66-bad5-5ad5-9ade-1e9f5a60fe73")) __de
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
@@ -172,7 +183,7 @@ template <> struct __declspec(uuid("e9bdaaf0-cbf6-5c72-be90-29cbf3a1319b")) __de
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_05eb86f1_7140_5517_b88d_cbaebe57e6b1
@@ -185,250 +196,112 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Security::Credentials {
 
-template <typename D>
-struct WINRT_EBO impl_ICredentialFactory
-{
-    Windows::Security::Credentials::PasswordCredential CreatePasswordCredential(hstring_ref resource, hstring_ref userName, hstring_ref password) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyCredential
-{
-    hstring Name() const;
-    Windows::Storage::Streams::IBuffer RetrievePublicKey() const;
-    Windows::Storage::Streams::IBuffer RetrievePublicKey(Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType blobType) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialOperationResult> RequestSignAsync(const Windows::Storage::Streams::IBuffer & data) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialAttestationResult> GetAttestationAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyCredentialAttestationResult
-{
-    Windows::Storage::Streams::IBuffer CertificateChainBuffer() const;
-    Windows::Storage::Streams::IBuffer AttestationBuffer() const;
-    Windows::Security::Credentials::KeyCredentialAttestationStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyCredentialManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<bool> IsSupportedAsync() const;
-    Windows::Foundation::IAsyncAction RenewAttestationAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> RequestCreateAsync(hstring_ref name, Windows::Security::Credentials::KeyCredentialCreationOption option) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> OpenAsync(hstring_ref name) const;
-    Windows::Foundation::IAsyncAction DeleteAsync(hstring_ref name) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyCredentialOperationResult
-{
-    Windows::Storage::Streams::IBuffer Result() const;
-    Windows::Security::Credentials::KeyCredentialStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyCredentialRetrievalResult
-{
-    Windows::Security::Credentials::KeyCredential Credential() const;
-    Windows::Security::Credentials::KeyCredentialStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPasswordCredential
-{
-    hstring Resource() const;
-    void Resource(hstring_ref resource) const;
-    hstring UserName() const;
-    void UserName(hstring_ref userName) const;
-    hstring Password() const;
-    void Password(hstring_ref password) const;
-    void RetrievePassword() const;
-    Windows::Foundation::Collections::IPropertySet Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPasswordVault
-{
-    void Add(const Windows::Security::Credentials::PasswordCredential & credential) const;
-    void Remove(const Windows::Security::Credentials::PasswordCredential & credential) const;
-    Windows::Security::Credentials::PasswordCredential Retrieve(hstring_ref resource, hstring_ref userName) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::PasswordCredential> FindAllByResource(hstring_ref resource) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::PasswordCredential> FindAllByUserName(hstring_ref userName) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::PasswordCredential> RetrieveAll() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccount
-{
-    Windows::Security::Credentials::WebAccountProvider WebAccountProvider() const;
-    hstring UserName() const;
-    Windows::Security::Credentials::WebAccountState State() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccount2
-{
-    hstring Id() const;
-    Windows::Foundation::Collections::IMapView<hstring, hstring> Properties() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> GetPictureAsync(Windows::Security::Credentials::WebAccountPictureSize desizedSize) const;
-    Windows::Foundation::IAsyncAction SignOutAsync() const;
-    Windows::Foundation::IAsyncAction SignOutAsync(hstring_ref clientId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountFactory
-{
-    Windows::Security::Credentials::WebAccount CreateWebAccount(const Windows::Security::Credentials::WebAccountProvider & webAccountProvider, hstring_ref userName, Windows::Security::Credentials::WebAccountState state) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProvider
-{
-    hstring Id() const;
-    hstring DisplayName() const;
-    Windows::Foundation::Uri IconUri() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProvider2
-{
-    hstring DisplayPurpose() const;
-    hstring Authority() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProvider3
-{
-    Windows::System::User User() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountProviderFactory
-{
-    Windows::Security::Credentials::WebAccountProvider CreateWebAccountProvider(hstring_ref id, hstring_ref displayName, const Windows::Foundation::Uri & iconUri) const;
-};
-
 struct ICredentialFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICredentialFactory>
 {
     ICredentialFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICredentialFactory>(m_ptr); }
 };
 
 struct IKeyCredential :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyCredential>
 {
     IKeyCredential(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyCredential>(m_ptr); }
 };
 
 struct IKeyCredentialAttestationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyCredentialAttestationResult>
 {
     IKeyCredentialAttestationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyCredentialAttestationResult>(m_ptr); }
 };
 
 struct IKeyCredentialManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyCredentialManagerStatics>
 {
     IKeyCredentialManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyCredentialManagerStatics>(m_ptr); }
 };
 
 struct IKeyCredentialOperationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyCredentialOperationResult>
 {
     IKeyCredentialOperationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyCredentialOperationResult>(m_ptr); }
 };
 
 struct IKeyCredentialRetrievalResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyCredentialRetrievalResult>
 {
     IKeyCredentialRetrievalResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyCredentialRetrievalResult>(m_ptr); }
 };
 
 struct IPasswordCredential :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPasswordCredential>
 {
     IPasswordCredential(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPasswordCredential>(m_ptr); }
 };
 
 struct IPasswordVault :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPasswordVault>
 {
     IPasswordVault(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPasswordVault>(m_ptr); }
 };
 
 struct IWebAccount :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccount>
 {
     IWebAccount(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccount>(m_ptr); }
 };
 
 struct IWebAccount2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccount2>,
     impl::require<IWebAccount2, Windows::Security::Credentials::IWebAccount>
 {
     IWebAccount2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccount2>(m_ptr); }
 };
 
 struct IWebAccountFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountFactory>
 {
     IWebAccountFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountFactory>(m_ptr); }
 };
 
 struct IWebAccountProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProvider>
 {
     IWebAccountProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProvider>(m_ptr); }
 };
 
 struct IWebAccountProvider2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProvider2>,
     impl::require<IWebAccountProvider2, Windows::Security::Credentials::IWebAccountProvider>
 {
     IWebAccountProvider2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProvider2>(m_ptr); }
 };
 
 struct IWebAccountProvider3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProvider3>,
     impl::require<IWebAccountProvider3, Windows::Security::Credentials::IWebAccountProvider, Windows::Security::Credentials::IWebAccountProvider2>
 {
     IWebAccountProvider3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProvider3>(m_ptr); }
 };
 
 struct IWebAccountProviderFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountProviderFactory>
 {
     IWebAccountProviderFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountProviderFactory>(m_ptr); }
 };
 
 }

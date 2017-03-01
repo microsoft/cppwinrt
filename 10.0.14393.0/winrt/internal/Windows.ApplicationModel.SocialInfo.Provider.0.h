@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,6 +24,14 @@ struct ISocialInfoProviderManagerStatics;
 struct SocialDashboardItemUpdater;
 struct SocialFeedUpdater;
 struct SocialInfoProviderManager;
+
+}
+
+namespace Windows::ApplicationModel::SocialInfo::Provider {
+
+template <typename T> struct impl_ISocialDashboardItemUpdater;
+template <typename T> struct impl_ISocialFeedUpdater;
+template <typename T> struct impl_ISocialInfoProviderManagerStatics;
 
 }
 

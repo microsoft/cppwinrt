@@ -1,15 +1,21 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Graphics.Imaging.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
+#include "Windows.Storage.Streams.1.h"
 #include "Windows.Storage.Streams.2.h"
 
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -131,6 +137,11 @@ template <> struct __declspec(uuid("b699b653-33ed-5e2d-a75f-02bf90e32619")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1817453d_ded6_5d5d_9623_1020a1a8d3b3
+#define WINRT_GENERIC_1817453d_ded6_5d5d_9623_1020a1a8d3b3
+template <> struct __declspec(uuid("1817453d-ded6-5d5d-9623-1020a1a8d3b3")) __declspec(novtable) IVector<Windows::Graphics::Imaging::BitmapCodecInformation> : impl_IVector<Windows::Graphics::Imaging::BitmapCodecInformation> {};
+#endif
+
 #ifndef WINRT_GENERIC_4ff2b2db_9326_537f_b8dc_4c93d77fbb84
 #define WINRT_GENERIC_4ff2b2db_9326_537f_b8dc_4c93d77fbb84
 template <> struct __declspec(uuid("4ff2b2db-9326-537f-b8dc-4c93d77fbb84")) __declspec(novtable) IIterator<Windows::Graphics::Imaging::BitmapCodecInformation> : impl_IIterator<Windows::Graphics::Imaging::BitmapCodecInformation> {};
@@ -181,345 +192,134 @@ template <> struct __declspec(uuid("2ad3fb0c-0656-5302-b504-3153be845161")) __de
 
 namespace Windows::Graphics::Imaging {
 
-template <typename D>
-struct WINRT_EBO impl_IBitmapBuffer
-{
-    int32_t GetPlaneCount() const;
-    Windows::Graphics::Imaging::BitmapPlaneDescription GetPlaneDescription(int32_t index) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapCodecInformation
-{
-    GUID CodecId() const;
-    Windows::Foundation::Collections::IVectorView<hstring> FileExtensions() const;
-    hstring FriendlyName() const;
-    Windows::Foundation::Collections::IVectorView<hstring> MimeTypes() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapDecoder
-{
-    Windows::Graphics::Imaging::BitmapPropertiesView BitmapContainerProperties() const;
-    Windows::Graphics::Imaging::BitmapCodecInformation DecoderInformation() const;
-    uint32_t FrameCount() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::ImageStream> GetPreviewAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapFrame> GetFrameAsync(uint32_t frameIndex) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapDecoderStatics
-{
-    GUID BmpDecoderId() const;
-    GUID JpegDecoderId() const;
-    GUID PngDecoderId() const;
-    GUID TiffDecoderId() const;
-    GUID GifDecoderId() const;
-    GUID JpegXRDecoderId() const;
-    GUID IcoDecoderId() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Graphics::Imaging::BitmapCodecInformation> GetDecoderInformationEnumerator() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapDecoder> CreateAsync(const Windows::Storage::Streams::IRandomAccessStream & stream) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapDecoder> CreateAsync(GUID decoderId, const Windows::Storage::Streams::IRandomAccessStream & stream) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapEncoder
-{
-    Windows::Graphics::Imaging::BitmapCodecInformation EncoderInformation() const;
-    Windows::Graphics::Imaging::BitmapProperties BitmapProperties() const;
-    Windows::Graphics::Imaging::BitmapProperties BitmapContainerProperties() const;
-    bool IsThumbnailGenerated() const;
-    void IsThumbnailGenerated(bool value) const;
-    uint32_t GeneratedThumbnailWidth() const;
-    void GeneratedThumbnailWidth(uint32_t value) const;
-    uint32_t GeneratedThumbnailHeight() const;
-    void GeneratedThumbnailHeight(uint32_t value) const;
-    Windows::Graphics::Imaging::BitmapTransform BitmapTransform() const;
-    void SetPixelData(Windows::Graphics::Imaging::BitmapPixelFormat pixelFormat, Windows::Graphics::Imaging::BitmapAlphaMode alphaMode, uint32_t width, uint32_t height, double dpiX, double dpiY, array_ref<const uint8_t> pixels) const;
-    Windows::Foundation::IAsyncAction GoToNextFrameAsync() const;
-    Windows::Foundation::IAsyncAction GoToNextFrameAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Graphics::Imaging::BitmapTypedValue>> & encodingOptions) const;
-    Windows::Foundation::IAsyncAction FlushAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapEncoderStatics
-{
-    GUID BmpEncoderId() const;
-    GUID JpegEncoderId() const;
-    GUID PngEncoderId() const;
-    GUID TiffEncoderId() const;
-    GUID GifEncoderId() const;
-    GUID JpegXREncoderId() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Graphics::Imaging::BitmapCodecInformation> GetEncoderInformationEnumerator() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapEncoder> CreateAsync(GUID encoderId, const Windows::Storage::Streams::IRandomAccessStream & stream) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapEncoder> CreateAsync(GUID encoderId, const Windows::Storage::Streams::IRandomAccessStream & stream, const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Graphics::Imaging::BitmapTypedValue>> & encodingOptions) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapEncoder> CreateForTranscodingAsync(const Windows::Storage::Streams::IRandomAccessStream & stream, const Windows::Graphics::Imaging::BitmapDecoder & bitmapDecoder) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapEncoder> CreateForInPlacePropertyEncodingAsync(const Windows::Graphics::Imaging::BitmapDecoder & bitmapDecoder) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapEncoderWithSoftwareBitmap
-{
-    void SetSoftwareBitmap(const Windows::Graphics::Imaging::SoftwareBitmap & bitmap) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapFrame
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::ImageStream> GetThumbnailAsync() const;
-    Windows::Graphics::Imaging::BitmapPropertiesView BitmapProperties() const;
-    Windows::Graphics::Imaging::BitmapPixelFormat BitmapPixelFormat() const;
-    Windows::Graphics::Imaging::BitmapAlphaMode BitmapAlphaMode() const;
-    double DpiX() const;
-    double DpiY() const;
-    uint32_t PixelWidth() const;
-    uint32_t PixelHeight() const;
-    uint32_t OrientedPixelWidth() const;
-    uint32_t OrientedPixelHeight() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::PixelDataProvider> GetPixelDataAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::PixelDataProvider> GetPixelDataAsync(Windows::Graphics::Imaging::BitmapPixelFormat pixelFormat, Windows::Graphics::Imaging::BitmapAlphaMode alphaMode, const Windows::Graphics::Imaging::BitmapTransform & transform, Windows::Graphics::Imaging::ExifOrientationMode exifOrientationMode, Windows::Graphics::Imaging::ColorManagementMode colorManagementMode) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapFrameWithSoftwareBitmap
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::SoftwareBitmap> GetSoftwareBitmapAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::SoftwareBitmap> GetSoftwareBitmapAsync(Windows::Graphics::Imaging::BitmapPixelFormat pixelFormat, Windows::Graphics::Imaging::BitmapAlphaMode alphaMode) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::SoftwareBitmap> GetSoftwareBitmapAsync(Windows::Graphics::Imaging::BitmapPixelFormat pixelFormat, Windows::Graphics::Imaging::BitmapAlphaMode alphaMode, const Windows::Graphics::Imaging::BitmapTransform & transform, Windows::Graphics::Imaging::ExifOrientationMode exifOrientationMode, Windows::Graphics::Imaging::ColorManagementMode colorManagementMode) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapProperties
-{
-    Windows::Foundation::IAsyncAction SetPropertiesAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Graphics::Imaging::BitmapTypedValue>> & propertiesToSet) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapPropertiesView
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::BitmapPropertySet> GetPropertiesAsync(const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapTransform
-{
-    uint32_t ScaledWidth() const;
-    void ScaledWidth(uint32_t value) const;
-    uint32_t ScaledHeight() const;
-    void ScaledHeight(uint32_t value) const;
-    Windows::Graphics::Imaging::BitmapInterpolationMode InterpolationMode() const;
-    void InterpolationMode(Windows::Graphics::Imaging::BitmapInterpolationMode value) const;
-    Windows::Graphics::Imaging::BitmapFlip Flip() const;
-    void Flip(Windows::Graphics::Imaging::BitmapFlip value) const;
-    Windows::Graphics::Imaging::BitmapRotation Rotation() const;
-    void Rotation(Windows::Graphics::Imaging::BitmapRotation value) const;
-    Windows::Graphics::Imaging::BitmapBounds Bounds() const;
-    void Bounds(const Windows::Graphics::Imaging::BitmapBounds & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapTypedValue
-{
-    Windows::IInspectable Value() const;
-    Windows::Foundation::PropertyType Type() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBitmapTypedValueFactory
-{
-    Windows::Graphics::Imaging::BitmapTypedValue Create(const Windows::IInspectable & value, Windows::Foundation::PropertyType type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPixelDataProvider
-{
-    com_array<uint8_t> DetachPixelData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISoftwareBitmap
-{
-    Windows::Graphics::Imaging::BitmapPixelFormat BitmapPixelFormat() const;
-    Windows::Graphics::Imaging::BitmapAlphaMode BitmapAlphaMode() const;
-    int32_t PixelWidth() const;
-    int32_t PixelHeight() const;
-    bool IsReadOnly() const;
-    void DpiX(double value) const;
-    double DpiX() const;
-    void DpiY(double value) const;
-    double DpiY() const;
-    Windows::Graphics::Imaging::BitmapBuffer LockBuffer(Windows::Graphics::Imaging::BitmapBufferAccessMode mode) const;
-    void CopyTo(const Windows::Graphics::Imaging::SoftwareBitmap & bitmap) const;
-    void CopyFromBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-    void CopyToBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-    Windows::Graphics::Imaging::SoftwareBitmap GetReadOnlyView() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISoftwareBitmapFactory
-{
-    Windows::Graphics::Imaging::SoftwareBitmap Create(Windows::Graphics::Imaging::BitmapPixelFormat format, int32_t width, int32_t height) const;
-    Windows::Graphics::Imaging::SoftwareBitmap CreateWithAlpha(Windows::Graphics::Imaging::BitmapPixelFormat format, int32_t width, int32_t height, Windows::Graphics::Imaging::BitmapAlphaMode alpha) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISoftwareBitmapStatics
-{
-    Windows::Graphics::Imaging::SoftwareBitmap Copy(const Windows::Graphics::Imaging::SoftwareBitmap & source) const;
-    Windows::Graphics::Imaging::SoftwareBitmap Convert(const Windows::Graphics::Imaging::SoftwareBitmap & source, Windows::Graphics::Imaging::BitmapPixelFormat format) const;
-    Windows::Graphics::Imaging::SoftwareBitmap Convert(const Windows::Graphics::Imaging::SoftwareBitmap & source, Windows::Graphics::Imaging::BitmapPixelFormat format, Windows::Graphics::Imaging::BitmapAlphaMode alpha) const;
-    Windows::Graphics::Imaging::SoftwareBitmap CreateCopyFromBuffer(const Windows::Storage::Streams::IBuffer & source, Windows::Graphics::Imaging::BitmapPixelFormat format, int32_t width, int32_t height) const;
-    Windows::Graphics::Imaging::SoftwareBitmap CreateCopyFromBuffer(const Windows::Storage::Streams::IBuffer & source, Windows::Graphics::Imaging::BitmapPixelFormat format, int32_t width, int32_t height, Windows::Graphics::Imaging::BitmapAlphaMode alpha) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::SoftwareBitmap> CreateCopyFromSurfaceAsync(const Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface & surface) const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Imaging::SoftwareBitmap> CreateCopyFromSurfaceAsync(const Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface & surface, Windows::Graphics::Imaging::BitmapAlphaMode alpha) const;
-};
-
 struct IBitmapBuffer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapBuffer>,
     impl::require<IBitmapBuffer, Windows::Foundation::IClosable, Windows::Foundation::IMemoryBuffer>
 {
     IBitmapBuffer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapBuffer>(m_ptr); }
 };
 
 struct IBitmapCodecInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapCodecInformation>
 {
     IBitmapCodecInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapCodecInformation>(m_ptr); }
 };
 
 struct IBitmapDecoder :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapDecoder>
 {
     IBitmapDecoder(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapDecoder>(m_ptr); }
 };
 
 struct IBitmapDecoderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapDecoderStatics>
 {
     IBitmapDecoderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapDecoderStatics>(m_ptr); }
 };
 
 struct IBitmapEncoder :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapEncoder>
 {
     IBitmapEncoder(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapEncoder>(m_ptr); }
 };
 
 struct IBitmapEncoderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapEncoderStatics>
 {
     IBitmapEncoderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapEncoderStatics>(m_ptr); }
 };
 
 struct IBitmapEncoderWithSoftwareBitmap :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapEncoderWithSoftwareBitmap>
 {
     IBitmapEncoderWithSoftwareBitmap(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapEncoderWithSoftwareBitmap>(m_ptr); }
 };
 
 struct IBitmapFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapFrame>
 {
     IBitmapFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapFrame>(m_ptr); }
 };
 
 struct IBitmapFrameWithSoftwareBitmap :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapFrameWithSoftwareBitmap>,
     impl::require<IBitmapFrameWithSoftwareBitmap, Windows::Graphics::Imaging::IBitmapFrame>
 {
     IBitmapFrameWithSoftwareBitmap(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapFrameWithSoftwareBitmap>(m_ptr); }
 };
 
 struct IBitmapProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapProperties>,
     impl::require<IBitmapProperties, Windows::Graphics::Imaging::IBitmapPropertiesView>
 {
     IBitmapProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapProperties>(m_ptr); }
 };
 
 struct IBitmapPropertiesView :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapPropertiesView>
 {
     IBitmapPropertiesView(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapPropertiesView>(m_ptr); }
 };
 
 struct IBitmapTransform :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapTransform>
 {
     IBitmapTransform(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapTransform>(m_ptr); }
 };
 
 struct IBitmapTypedValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapTypedValue>
 {
     IBitmapTypedValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapTypedValue>(m_ptr); }
 };
 
 struct IBitmapTypedValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBitmapTypedValueFactory>
 {
     IBitmapTypedValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBitmapTypedValueFactory>(m_ptr); }
 };
 
 struct IPixelDataProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPixelDataProvider>
 {
     IPixelDataProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPixelDataProvider>(m_ptr); }
 };
 
 struct ISoftwareBitmap :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISoftwareBitmap>,
     impl::require<ISoftwareBitmap, Windows::Foundation::IClosable>
 {
     ISoftwareBitmap(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISoftwareBitmap>(m_ptr); }
 };
 
 struct ISoftwareBitmapFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISoftwareBitmapFactory>
 {
     ISoftwareBitmapFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISoftwareBitmapFactory>(m_ptr); }
 };
 
 struct ISoftwareBitmapStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISoftwareBitmapStatics>
 {
     ISoftwareBitmapStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISoftwareBitmapStatics>(m_ptr); }
 };
 
 }

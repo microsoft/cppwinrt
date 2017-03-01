@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.Gpio.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -34,6 +34,11 @@ template <> struct __declspec(uuid("44ba689b-7d42-5374-add9-ab41e877a34b")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_ada84338_13b1_5367_9692_57b066badd6c
+#define WINRT_GENERIC_ada84338_13b1_5367_9692_57b066badd6c
+template <> struct __declspec(uuid("ada84338-13b1-5367-9692-57b066badd6c")) __declspec(novtable) IVector<Windows::Devices::Gpio::GpioController> : impl_IVector<Windows::Devices::Gpio::GpioController> {};
+#endif
 
 #ifndef WINRT_GENERIC_67944db0_6c56_5a2f_9e7b_63ca1aa8c411
 #define WINRT_GENERIC_67944db0_6c56_5a2f_9e7b_63ca1aa8c411
@@ -70,91 +75,40 @@ template <> struct __declspec(uuid("ee427f2e-7d37-558f-9718-9cbcbff40c94")) __de
 
 namespace Windows::Devices::Gpio {
 
-template <typename D>
-struct WINRT_EBO impl_IGpioController
-{
-    int32_t PinCount() const;
-    Windows::Devices::Gpio::GpioPin OpenPin(int32_t pinNumber) const;
-    Windows::Devices::Gpio::GpioPin OpenPin(int32_t pinNumber, Windows::Devices::Gpio::GpioSharingMode sharingMode) const;
-    bool TryOpenPin(int32_t pinNumber, Windows::Devices::Gpio::GpioSharingMode sharingMode, Windows::Devices::Gpio::GpioPin & pin, Windows::Devices::Gpio::GpioOpenStatus & openStatus) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IGpioControllerStatics
-{
-    Windows::Devices::Gpio::GpioController GetDefault() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IGpioControllerStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Gpio::GpioController>> GetControllersAsync(const Windows::Devices::Gpio::Provider::IGpioProvider & provider) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Gpio::GpioController> GetDefaultAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IGpioPin
-{
-    event_token ValueChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::GpioPin, Windows::Devices::Gpio::GpioPinValueChangedEventArgs> & handler) const;
-    using ValueChanged_revoker = event_revoker<IGpioPin>;
-    ValueChanged_revoker ValueChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Gpio::GpioPin, Windows::Devices::Gpio::GpioPinValueChangedEventArgs> & handler) const;
-    void ValueChanged(event_token token) const;
-    Windows::Foundation::TimeSpan DebounceTimeout() const;
-    void DebounceTimeout(const Windows::Foundation::TimeSpan & value) const;
-    int32_t PinNumber() const;
-    Windows::Devices::Gpio::GpioSharingMode SharingMode() const;
-    bool IsDriveModeSupported(Windows::Devices::Gpio::GpioPinDriveMode driveMode) const;
-    Windows::Devices::Gpio::GpioPinDriveMode GetDriveMode() const;
-    void SetDriveMode(Windows::Devices::Gpio::GpioPinDriveMode value) const;
-    void Write(Windows::Devices::Gpio::GpioPinValue value) const;
-    Windows::Devices::Gpio::GpioPinValue Read() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IGpioPinValueChangedEventArgs
-{
-    Windows::Devices::Gpio::GpioPinEdge Edge() const;
-};
-
 struct IGpioController :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGpioController>
 {
     IGpioController(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGpioController>(m_ptr); }
 };
 
 struct IGpioControllerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGpioControllerStatics>
 {
     IGpioControllerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGpioControllerStatics>(m_ptr); }
 };
 
 struct IGpioControllerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGpioControllerStatics2>
 {
     IGpioControllerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGpioControllerStatics2>(m_ptr); }
 };
 
 struct IGpioPin :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGpioPin>,
     impl::require<IGpioPin, Windows::Foundation::IClosable>
 {
     IGpioPin(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGpioPin>(m_ptr); }
 };
 
 struct IGpioPinValueChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IGpioPinValueChangedEventArgs>
 {
     IGpioPinValueChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IGpioPinValueChangedEventArgs>(m_ptr); }
 };
 
 }

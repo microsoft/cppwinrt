@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -283,6 +283,99 @@ struct SensorQuaternion;
 struct SensorRotationMatrix;
 struct SimpleOrientationSensor;
 struct SimpleOrientationSensorOrientationChangedEventArgs;
+
+}
+
+namespace Windows::Devices::Sensors {
+
+template <typename T> struct impl_IAccelerometer;
+template <typename T> struct impl_IAccelerometer2;
+template <typename T> struct impl_IAccelerometer3;
+template <typename T> struct impl_IAccelerometer4;
+template <typename T> struct impl_IAccelerometerDeviceId;
+template <typename T> struct impl_IAccelerometerReading;
+template <typename T> struct impl_IAccelerometerReadingChangedEventArgs;
+template <typename T> struct impl_IAccelerometerShakenEventArgs;
+template <typename T> struct impl_IAccelerometerStatics;
+template <typename T> struct impl_IAccelerometerStatics2;
+template <typename T> struct impl_IActivitySensor;
+template <typename T> struct impl_IActivitySensorReading;
+template <typename T> struct impl_IActivitySensorReadingChangeReport;
+template <typename T> struct impl_IActivitySensorReadingChangedEventArgs;
+template <typename T> struct impl_IActivitySensorStatics;
+template <typename T> struct impl_IActivitySensorTriggerDetails;
+template <typename T> struct impl_IAltimeter;
+template <typename T> struct impl_IAltimeterReading;
+template <typename T> struct impl_IAltimeterReadingChangedEventArgs;
+template <typename T> struct impl_IAltimeterStatics;
+template <typename T> struct impl_IBarometer;
+template <typename T> struct impl_IBarometerReading;
+template <typename T> struct impl_IBarometerReadingChangedEventArgs;
+template <typename T> struct impl_IBarometerStatics;
+template <typename T> struct impl_ICompass;
+template <typename T> struct impl_ICompass2;
+template <typename T> struct impl_ICompassDeviceId;
+template <typename T> struct impl_ICompassReading;
+template <typename T> struct impl_ICompassReadingChangedEventArgs;
+template <typename T> struct impl_ICompassReadingHeadingAccuracy;
+template <typename T> struct impl_ICompassStatics;
+template <typename T> struct impl_IGyrometer;
+template <typename T> struct impl_IGyrometer2;
+template <typename T> struct impl_IGyrometerDeviceId;
+template <typename T> struct impl_IGyrometerReading;
+template <typename T> struct impl_IGyrometerReadingChangedEventArgs;
+template <typename T> struct impl_IGyrometerStatics;
+template <typename T> struct impl_IInclinometer;
+template <typename T> struct impl_IInclinometer2;
+template <typename T> struct impl_IInclinometerDeviceId;
+template <typename T> struct impl_IInclinometerReading;
+template <typename T> struct impl_IInclinometerReadingChangedEventArgs;
+template <typename T> struct impl_IInclinometerReadingYawAccuracy;
+template <typename T> struct impl_IInclinometerStatics;
+template <typename T> struct impl_IInclinometerStatics2;
+template <typename T> struct impl_IInclinometerStatics3;
+template <typename T> struct impl_ILightSensor;
+template <typename T> struct impl_ILightSensorDeviceId;
+template <typename T> struct impl_ILightSensorReading;
+template <typename T> struct impl_ILightSensorReadingChangedEventArgs;
+template <typename T> struct impl_ILightSensorStatics;
+template <typename T> struct impl_IMagnetometer;
+template <typename T> struct impl_IMagnetometer2;
+template <typename T> struct impl_IMagnetometerDeviceId;
+template <typename T> struct impl_IMagnetometerReading;
+template <typename T> struct impl_IMagnetometerReadingChangedEventArgs;
+template <typename T> struct impl_IMagnetometerStatics;
+template <typename T> struct impl_IOrientationSensor;
+template <typename T> struct impl_IOrientationSensor2;
+template <typename T> struct impl_IOrientationSensorDeviceId;
+template <typename T> struct impl_IOrientationSensorReading;
+template <typename T> struct impl_IOrientationSensorReadingChangedEventArgs;
+template <typename T> struct impl_IOrientationSensorReadingYawAccuracy;
+template <typename T> struct impl_IOrientationSensorStatics;
+template <typename T> struct impl_IOrientationSensorStatics2;
+template <typename T> struct impl_IOrientationSensorStatics3;
+template <typename T> struct impl_IPedometer;
+template <typename T> struct impl_IPedometer2;
+template <typename T> struct impl_IPedometerDataThresholdFactory;
+template <typename T> struct impl_IPedometerReading;
+template <typename T> struct impl_IPedometerReadingChangedEventArgs;
+template <typename T> struct impl_IPedometerStatics;
+template <typename T> struct impl_IPedometerStatics2;
+template <typename T> struct impl_IProximitySensor;
+template <typename T> struct impl_IProximitySensorDataThresholdFactory;
+template <typename T> struct impl_IProximitySensorReading;
+template <typename T> struct impl_IProximitySensorReadingChangedEventArgs;
+template <typename T> struct impl_IProximitySensorStatics;
+template <typename T> struct impl_IProximitySensorStatics2;
+template <typename T> struct impl_ISensorDataThreshold;
+template <typename T> struct impl_ISensorDataThresholdTriggerDetails;
+template <typename T> struct impl_ISensorQuaternion;
+template <typename T> struct impl_ISensorRotationMatrix;
+template <typename T> struct impl_ISimpleOrientationSensor;
+template <typename T> struct impl_ISimpleOrientationSensor2;
+template <typename T> struct impl_ISimpleOrientationSensorDeviceId;
+template <typename T> struct impl_ISimpleOrientationSensorOrientationChangedEventArgs;
+template <typename T> struct impl_ISimpleOrientationSensorStatics;
 
 }
 

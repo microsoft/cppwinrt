@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,6 +19,13 @@ struct IBackgroundEnergyDiagnosticsStatics;
 struct IForegroundEnergyDiagnosticsStatics;
 struct BackgroundEnergyDiagnostics;
 struct ForegroundEnergyDiagnostics;
+
+}
+
+namespace Windows::System::Power::Diagnostics {
+
+template <typename T> struct impl_IBackgroundEnergyDiagnosticsStatics;
+template <typename T> struct impl_IForegroundEnergyDiagnosticsStatics;
 
 }
 

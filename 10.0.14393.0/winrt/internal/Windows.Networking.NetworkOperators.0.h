@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -242,6 +242,74 @@ struct ProvisioningAgent;
 struct UssdMessage;
 struct UssdReply;
 struct UssdSession;
+
+}
+
+namespace Windows::Networking::NetworkOperators {
+
+template <typename T> struct impl_IFdnAccessManagerStatics;
+template <typename T> struct impl_IHotspotAuthenticationContext;
+template <typename T> struct impl_IHotspotAuthenticationContext2;
+template <typename T> struct impl_IHotspotAuthenticationContextStatics;
+template <typename T> struct impl_IHotspotAuthenticationEventDetails;
+template <typename T> struct impl_IHotspotCredentialsAuthenticationResult;
+template <typename T> struct impl_IKnownCSimFilePathsStatics;
+template <typename T> struct impl_IKnownRuimFilePathsStatics;
+template <typename T> struct impl_IKnownSimFilePathsStatics;
+template <typename T> struct impl_IKnownUSimFilePathsStatics;
+template <typename T> struct impl_IMobileBroadbandAccount;
+template <typename T> struct impl_IMobileBroadbandAccount2;
+template <typename T> struct impl_IMobileBroadbandAccountEventArgs;
+template <typename T> struct impl_IMobileBroadbandAccountStatics;
+template <typename T> struct impl_IMobileBroadbandAccountUpdatedEventArgs;
+template <typename T> struct impl_IMobileBroadbandAccountWatcher;
+template <typename T> struct impl_IMobileBroadbandDeviceInformation;
+template <typename T> struct impl_IMobileBroadbandDeviceInformation2;
+template <typename T> struct impl_IMobileBroadbandDeviceService;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceCommandResult;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceCommandSession;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceDataReceivedEventArgs;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceDataSession;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceInformation;
+template <typename T> struct impl_IMobileBroadbandDeviceServiceTriggerDetails;
+template <typename T> struct impl_IMobileBroadbandModem;
+template <typename T> struct impl_IMobileBroadbandModemConfiguration;
+template <typename T> struct impl_IMobileBroadbandModemStatics;
+template <typename T> struct impl_IMobileBroadbandNetwork;
+template <typename T> struct impl_IMobileBroadbandNetwork2;
+template <typename T> struct impl_IMobileBroadbandNetworkRegistrationStateChange;
+template <typename T> struct impl_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails;
+template <typename T> struct impl_IMobileBroadbandPin;
+template <typename T> struct impl_IMobileBroadbandPinLockStateChange;
+template <typename T> struct impl_IMobileBroadbandPinLockStateChangeTriggerDetails;
+template <typename T> struct impl_IMobileBroadbandPinManager;
+template <typename T> struct impl_IMobileBroadbandPinOperationResult;
+template <typename T> struct impl_IMobileBroadbandRadioStateChange;
+template <typename T> struct impl_IMobileBroadbandRadioStateChangeTriggerDetails;
+template <typename T> struct impl_IMobileBroadbandUicc;
+template <typename T> struct impl_IMobileBroadbandUiccApp;
+template <typename T> struct impl_IMobileBroadbandUiccAppReadRecordResult;
+template <typename T> struct impl_IMobileBroadbandUiccAppRecordDetailsResult;
+template <typename T> struct impl_IMobileBroadbandUiccAppsResult;
+template <typename T> struct impl_INetworkOperatorNotificationEventDetails;
+template <typename T> struct impl_INetworkOperatorTetheringAccessPointConfiguration;
+template <typename T> struct impl_INetworkOperatorTetheringClient;
+template <typename T> struct impl_INetworkOperatorTetheringClientManager;
+template <typename T> struct impl_INetworkOperatorTetheringEntitlementCheck;
+template <typename T> struct impl_INetworkOperatorTetheringManager;
+template <typename T> struct impl_INetworkOperatorTetheringManagerStatics;
+template <typename T> struct impl_INetworkOperatorTetheringManagerStatics2;
+template <typename T> struct impl_INetworkOperatorTetheringManagerStatics3;
+template <typename T> struct impl_INetworkOperatorTetheringOperationResult;
+template <typename T> struct impl_IProvisionFromXmlDocumentResults;
+template <typename T> struct impl_IProvisionedProfile;
+template <typename T> struct impl_IProvisioningAgent;
+template <typename T> struct impl_IProvisioningAgentStaticMethods;
+template <typename T> struct impl_IUssdMessage;
+template <typename T> struct impl_IUssdMessageFactory;
+template <typename T> struct impl_IUssdReply;
+template <typename T> struct impl_IUssdSession;
+template <typename T> struct impl_IUssdSessionStatics;
 
 }
 

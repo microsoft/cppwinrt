@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,12 +15,12 @@ struct WINRT_EBO ResourceLoader :
 {
     ResourceLoader(std::nullptr_t) noexcept {}
     ResourceLoader();
-    ResourceLoader(hstring_ref name);
-    static hstring GetStringForReference(const Windows::Foundation::Uri & uri);
+    ResourceLoader(hstring_view name);
+    [[deprecated("GetStringForReference may be altered or unavailable for releases after Windows Phone 'OSVersion' (TBD). Instead, use GetStringForUri.")]] static hstring GetStringForReference(const Windows::Foundation::Uri & uri);
     static Windows::ApplicationModel::Resources::ResourceLoader GetForCurrentView();
-    static Windows::ApplicationModel::Resources::ResourceLoader GetForCurrentView(hstring_ref name);
+    static Windows::ApplicationModel::Resources::ResourceLoader GetForCurrentView(hstring_view name);
     static Windows::ApplicationModel::Resources::ResourceLoader GetForViewIndependentUse();
-    static Windows::ApplicationModel::Resources::ResourceLoader GetForViewIndependentUse(hstring_ref name);
+    static Windows::ApplicationModel::Resources::ResourceLoader GetForViewIndependentUse(hstring_view name);
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -39,6 +39,19 @@ struct StorePreview;
 struct StorePreviewProductInfo;
 struct StorePreviewPurchaseResults;
 struct StorePreviewSkuInfo;
+
+}
+
+namespace Windows::ApplicationModel::Store::Preview {
+
+template <typename T> struct impl_IStoreConfigurationStatics;
+template <typename T> struct impl_IStoreConfigurationStatics2;
+template <typename T> struct impl_IStoreConfigurationStatics3;
+template <typename T> struct impl_IStoreHardwareManufacturerInfo;
+template <typename T> struct impl_IStorePreview;
+template <typename T> struct impl_IStorePreviewProductInfo;
+template <typename T> struct impl_IStorePreviewPurchaseResults;
+template <typename T> struct impl_IStorePreviewSkuInfo;
 
 }
 

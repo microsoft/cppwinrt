@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -139,6 +139,52 @@ struct SmartCardPinResetRequest;
 struct SmartCardProvisioning;
 struct SmartCardReader;
 struct SmartCardTriggerDetails;
+
+}
+
+namespace Windows::Devices::SmartCards {
+
+template <typename T> struct impl_ICardAddedEventArgs;
+template <typename T> struct impl_ICardRemovedEventArgs;
+template <typename T> struct impl_ISmartCard;
+template <typename T> struct impl_ISmartCardAppletIdGroup;
+template <typename T> struct impl_ISmartCardAppletIdGroupFactory;
+template <typename T> struct impl_ISmartCardAppletIdGroupRegistration;
+template <typename T> struct impl_ISmartCardAppletIdGroupStatics;
+template <typename T> struct impl_ISmartCardAutomaticResponseApdu;
+template <typename T> struct impl_ISmartCardAutomaticResponseApdu2;
+template <typename T> struct impl_ISmartCardAutomaticResponseApdu3;
+template <typename T> struct impl_ISmartCardAutomaticResponseApduFactory;
+template <typename T> struct impl_ISmartCardChallengeContext;
+template <typename T> struct impl_ISmartCardConnect;
+template <typename T> struct impl_ISmartCardConnection;
+template <typename T> struct impl_ISmartCardCryptogramGenerator;
+template <typename T> struct impl_ISmartCardCryptogramGeneratorStatics;
+template <typename T> struct impl_ISmartCardCryptogramMaterialPossessionProof;
+template <typename T> struct impl_ISmartCardCryptogramPlacementStep;
+template <typename T> struct impl_ISmartCardCryptogramStorageKeyInfo;
+template <typename T> struct impl_ISmartCardCryptogramStorageKeyInfo2;
+template <typename T> struct impl_ISmartCardEmulator;
+template <typename T> struct impl_ISmartCardEmulator2;
+template <typename T> struct impl_ISmartCardEmulatorApduReceivedEventArgs;
+template <typename T> struct impl_ISmartCardEmulatorApduReceivedEventArgs2;
+template <typename T> struct impl_ISmartCardEmulatorApduReceivedEventArgsWithCryptograms;
+template <typename T> struct impl_ISmartCardEmulatorConnectionDeactivatedEventArgs;
+template <typename T> struct impl_ISmartCardEmulatorConnectionProperties;
+template <typename T> struct impl_ISmartCardEmulatorStatics;
+template <typename T> struct impl_ISmartCardEmulatorStatics2;
+template <typename T> struct impl_ISmartCardPinPolicy;
+template <typename T> struct impl_ISmartCardPinResetDeferral;
+template <typename T> struct impl_ISmartCardPinResetRequest;
+template <typename T> struct impl_ISmartCardProvisioning;
+template <typename T> struct impl_ISmartCardProvisioning2;
+template <typename T> struct impl_ISmartCardProvisioningStatics;
+template <typename T> struct impl_ISmartCardProvisioningStatics2;
+template <typename T> struct impl_ISmartCardReader;
+template <typename T> struct impl_ISmartCardReaderStatics;
+template <typename T> struct impl_ISmartCardTriggerDetails;
+template <typename T> struct impl_ISmartCardTriggerDetails2;
+template <typename T> struct impl_SmartCardPinResetHandler;
 
 }
 

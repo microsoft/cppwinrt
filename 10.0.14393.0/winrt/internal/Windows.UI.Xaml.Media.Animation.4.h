@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -22,16 +22,17 @@ public:
         return shim().as<INavigationTransitionInfoOverrides>().GetNavigationStateCore();
     }
 
-    void SetNavigationStateCore(hstring_ref navigationState)
+    void SetNavigationStateCore(hstring_view navigationState)
     {
         shim().as<INavigationTransitionInfoOverrides>().SetNavigationStateCore(navigationState);
     }
 
-    HRESULT __stdcall abi_GetNavigationStateCore(abi_arg_out<hstring> returnValue) noexcept override
+    HRESULT __stdcall abi_GetNavigationStateCore(impl::abi_arg_out<hstring> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GetNavigationStateCore());
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GetNavigationStateCore());
             return S_OK;
         }
         catch (...)
@@ -41,10 +42,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_SetNavigationStateCore(abi_arg_in<hstring> navigationState) noexcept override
+    HRESULT __stdcall abi_SetNavigationStateCore(impl::abi_arg_in<hstring> navigationState) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetNavigationStateCore(*reinterpret_cast<const hstring *>(&navigationState));
             return S_OK;
         }

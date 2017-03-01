@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_CallControlEventHandler : implements<impl_Call
 {
     impl_CallControlEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Devices::ICallControl> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Devices::ICallControl> sender) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_DialRequestedEventHandler : implements<impl_Di
 {
     impl_DialRequestedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Devices::ICallControl> sender, abi_arg_in<Windows::Media::Devices::IDialRequestedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Devices::ICallControl> sender, impl::abi_arg_in<Windows::Media::Devices::IDialRequestedEventArgs> e) noexcept override
     {
         try
         {
@@ -49,7 +49,7 @@ template <typename H> struct impl_KeypadPressedEventHandler : implements<impl_Ke
 {
     impl_KeypadPressedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Devices::ICallControl> sender, abi_arg_in<Windows::Media::Devices::IKeypadPressedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Devices::ICallControl> sender, impl::abi_arg_in<Windows::Media::Devices::IKeypadPressedEventArgs> e) noexcept override
     {
         try
         {
@@ -67,7 +67,7 @@ template <typename H> struct impl_RedialRequestedEventHandler : implements<impl_
 {
     impl_RedialRequestedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Devices::ICallControl> sender, abi_arg_in<Windows::Media::Devices::IRedialRequestedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Devices::ICallControl> sender, impl::abi_arg_in<Windows::Media::Devices::IRedialRequestedEventArgs> e) noexcept override
     {
         try
         {
@@ -109,7 +109,7 @@ struct WINRT_EBO CallControl :
 {
     CallControl(std::nullptr_t) noexcept {}
     static Windows::Media::Devices::CallControl GetDefault();
-    static Windows::Media::Devices::CallControl FromId(hstring_ref deviceId);
+    static Windows::Media::Devices::CallControl FromId(hstring_view deviceId);
 };
 
 struct WINRT_EBO DefaultAudioCaptureDeviceChangedEventArgs :
@@ -208,13 +208,13 @@ struct MediaDevice
     static hstring GetVideoCaptureSelector();
     static hstring GetDefaultAudioCaptureId(Windows::Media::Devices::AudioDeviceRole role);
     static hstring GetDefaultAudioRenderId(Windows::Media::Devices::AudioDeviceRole role);
-    static event_token DefaultAudioCaptureDeviceChanged(const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Media::Devices::DefaultAudioCaptureDeviceChangedEventArgs> & handler);
+    static event_token DefaultAudioCaptureDeviceChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Media::Devices::DefaultAudioCaptureDeviceChangedEventArgs> & handler);
     using DefaultAudioCaptureDeviceChanged_revoker = factory_event_revoker<IMediaDeviceStatics>;
-    static DefaultAudioCaptureDeviceChanged_revoker DefaultAudioCaptureDeviceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Media::Devices::DefaultAudioCaptureDeviceChangedEventArgs> & handler);
+    static DefaultAudioCaptureDeviceChanged_revoker DefaultAudioCaptureDeviceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Media::Devices::DefaultAudioCaptureDeviceChangedEventArgs> & handler);
     static void DefaultAudioCaptureDeviceChanged(event_token cookie);
-    static event_token DefaultAudioRenderDeviceChanged(const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Media::Devices::DefaultAudioRenderDeviceChangedEventArgs> & handler);
+    static event_token DefaultAudioRenderDeviceChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Media::Devices::DefaultAudioRenderDeviceChangedEventArgs> & handler);
     using DefaultAudioRenderDeviceChanged_revoker = factory_event_revoker<IMediaDeviceStatics>;
-    static DefaultAudioRenderDeviceChanged_revoker DefaultAudioRenderDeviceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Media::Devices::DefaultAudioRenderDeviceChangedEventArgs> & handler);
+    static DefaultAudioRenderDeviceChanged_revoker DefaultAudioRenderDeviceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Media::Devices::DefaultAudioRenderDeviceChangedEventArgs> & handler);
     static void DefaultAudioRenderDeviceChanged(event_token cookie);
 };
 

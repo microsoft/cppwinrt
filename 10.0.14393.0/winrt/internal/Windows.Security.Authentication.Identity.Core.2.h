@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -59,6 +64,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_5fb049e0_d8ae_5ce7_9164_d6747d7888dc
+#define WINRT_GENERIC_5fb049e0_d8ae_5ce7_9164_d6747d7888dc
+template <> struct __declspec(uuid("5fb049e0-d8ae-5ce7-9164-d6747d7888dc")) __declspec(novtable) IVector<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> : impl_IVector<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_fd6d2ade_0fd3_5cd0_b86e_d24ad9a2092c
 #define WINRT_GENERIC_fd6d2ade_0fd3_5cd0_b86e_d24ad9a2092c
 template <> struct __declspec(uuid("fd6d2ade-0fd3-5cd0-b86e-d24ad9a2092c")) __declspec(novtable) IIterator<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> : impl_IIterator<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> {};
@@ -99,109 +109,46 @@ template <> struct __declspec(uuid("6cc53e8c-d0e4-5ded-94f4-7c73b132d2a4")) __de
 
 namespace Windows::Security::Authentication::Identity::Core {
 
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorAuthenticationManager
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorOneTimeCodedInfo> GetOneTimePassCodeAsync(hstring_ref userAccountId, uint32_t codeLength) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> AddDeviceAsync(hstring_ref userAccountId, hstring_ref authenticationToken, hstring_ref wnsChannelId) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> RemoveDeviceAsync(hstring_ref userAccountId) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> UpdateWnsChannelAsync(hstring_ref userAccountId, hstring_ref channelUri) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorGetSessionsResult> GetSessionsAsync(const Windows::Foundation::Collections::IIterable<hstring> & userAccountIdList) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo> GetSessionsAndUnregisteredAccountsAsync(const Windows::Foundation::Collections::IIterable<hstring> & userAccountIdList) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> ApproveSessionAsync(Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionAuthenticationStatus sessionAuthentictionStatus, const Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo & authenticationSessionInfo) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> ApproveSessionAsync(Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionAuthenticationStatus sessionAuthentictionStatus, hstring_ref userAccountId, hstring_ref sessionId, Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorAuthenticationType sessionAuthenticationType) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> DenySessionAsync(const Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo & authenticationSessionInfo) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse> DenySessionAsync(hstring_ref userAccountId, hstring_ref sessionId, Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorAuthenticationType sessionAuthenticationType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorAuthenticatorStatics
-{
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorAuthenticationManager Current() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorGetSessionsResult
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> Sessions() const;
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse ServiceResponse() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorOneTimeCodedInfo
-{
-    hstring Code() const;
-    Windows::Foundation::TimeSpan TimeInterval() const;
-    Windows::Foundation::TimeSpan TimeToLive() const;
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse ServiceResponse() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorSessionInfo
-{
-    hstring UserAccountId() const;
-    hstring SessionId() const;
-    hstring DisplaySessionId() const;
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionApprovalStatus ApprovalStatus() const;
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorAuthenticationType AuthenticationType() const;
-    Windows::Foundation::DateTime RequestTime() const;
-    Windows::Foundation::DateTime ExpirationTime() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorSessionInfo> Sessions() const;
-    Windows::Foundation::Collections::IVectorView<hstring> UnregisteredAccounts() const;
-    Windows::Security::Authentication::Identity::Core::MicrosoftAccountMultiFactorServiceResponse ServiceResponse() const;
-};
-
 struct IMicrosoftAccountMultiFactorAuthenticationManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorAuthenticationManager>
 {
     IMicrosoftAccountMultiFactorAuthenticationManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorAuthenticationManager>(m_ptr); }
 };
 
 struct IMicrosoftAccountMultiFactorAuthenticatorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorAuthenticatorStatics>
 {
     IMicrosoftAccountMultiFactorAuthenticatorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorAuthenticatorStatics>(m_ptr); }
 };
 
 struct IMicrosoftAccountMultiFactorGetSessionsResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorGetSessionsResult>
 {
     IMicrosoftAccountMultiFactorGetSessionsResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorGetSessionsResult>(m_ptr); }
 };
 
 struct IMicrosoftAccountMultiFactorOneTimeCodedInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorOneTimeCodedInfo>
 {
     IMicrosoftAccountMultiFactorOneTimeCodedInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorOneTimeCodedInfo>(m_ptr); }
 };
 
 struct IMicrosoftAccountMultiFactorSessionInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorSessionInfo>
 {
     IMicrosoftAccountMultiFactorSessionInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorSessionInfo>(m_ptr); }
 };
 
 struct IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>
 {
     IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>(m_ptr); }
 };
 
 }

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Graphics.Display.3.h"
@@ -22,9 +25,9 @@ template <typename O, typename M> DisplayPropertiesEventHandler::DisplayProperti
     DisplayPropertiesEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void DisplayPropertiesEventHandler::operator()(const Windows::IInspectable & sender) const
+inline void DisplayPropertiesEventHandler::operator()(const Windows::Foundation::IInspectable & sender) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender)));
+    check_hresult((*(abi<DisplayPropertiesEventHandler> **)this)->abi_Invoke(get_abi(sender)));
 }
 
 }
@@ -38,7 +41,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().CurrentOrientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentOrientation());
             return S_OK;
         }
         catch (...)
@@ -51,7 +55,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().NativeOrientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NativeOrientation());
             return S_OK;
         }
         catch (...)
@@ -60,11 +65,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_OrientationChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_OrientationChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -77,6 +83,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OrientationChanged(token);
             return S_OK;
         }
@@ -90,7 +97,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().ResolutionScale());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResolutionScale());
             return S_OK;
         }
         catch (...)
@@ -103,7 +111,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().LogicalDpi());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LogicalDpi());
             return S_OK;
         }
         catch (...)
@@ -116,7 +125,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().RawDpiX());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RawDpiX());
             return S_OK;
         }
         catch (...)
@@ -129,7 +139,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().RawDpiY());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RawDpiY());
             return S_OK;
         }
         catch (...)
@@ -138,11 +149,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_DpiChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DpiChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DpiChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DpiChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -155,6 +167,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DpiChanged(token);
             return S_OK;
         }
@@ -168,7 +181,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().StereoEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StereoEnabled());
             return S_OK;
         }
         catch (...)
@@ -177,11 +191,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_StereoEnabledChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_StereoEnabledChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().StereoEnabledChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().StereoEnabledChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -194,6 +209,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StereoEnabledChanged(token);
             return S_OK;
         }
@@ -203,11 +219,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetColorProfileAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_GetColorProfileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().GetColorProfileAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().GetColorProfileAsync());
             return S_OK;
         }
         catch (...)
@@ -217,11 +234,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_ColorProfileChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ColorProfileChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ColorProfileChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ColorProfileChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -234,6 +252,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation> : produce_bas
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ColorProfileChanged(token);
             return S_OK;
         }
@@ -251,7 +270,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation2> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().RawPixelsPerViewPixel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RawPixelsPerViewPixel());
             return S_OK;
         }
         catch (...)
@@ -264,11 +284,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation2> : produce_ba
 template <typename D>
 struct produce<D, Windows::Graphics::Display::IDisplayInformation3> : produce_base<D, Windows::Graphics::Display::IDisplayInformation3>
 {
-    HRESULT __stdcall get_DiagonalSizeInInches(abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_DiagonalSizeInInches(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DiagonalSizeInInches());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DiagonalSizeInInches());
             return S_OK;
         }
         catch (...)
@@ -286,7 +307,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation4> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().ScreenWidthInRawPixels());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScreenWidthInRawPixels());
             return S_OK;
         }
         catch (...)
@@ -299,7 +321,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation4> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().ScreenHeightInRawPixels());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScreenHeightInRawPixels());
             return S_OK;
         }
         catch (...)
@@ -312,11 +335,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformation4> : produce_ba
 template <typename D>
 struct produce<D, Windows::Graphics::Display::IDisplayInformationStatics> : produce_base<D, Windows::Graphics::Display::IDisplayInformationStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(abi_arg_out<Windows::Graphics::Display::IDisplayInformation> current) noexcept override
+    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::Graphics::Display::IDisplayInformation> current) noexcept override
     {
         try
         {
-            *current = detach(this->shim().GetForCurrentView());
+            typename D::abi_guard guard(this->shim());
+            *current = detach_abi(this->shim().GetForCurrentView());
             return S_OK;
         }
         catch (...)
@@ -330,7 +354,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformationStatics> : prod
     {
         try
         {
-            *value = detach(this->shim().AutoRotationPreferences());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AutoRotationPreferences());
             return S_OK;
         }
         catch (...)
@@ -343,6 +368,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformationStatics> : prod
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AutoRotationPreferences(value);
             return S_OK;
         }
@@ -352,11 +378,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformationStatics> : prod
         }
     }
 
-    HRESULT __stdcall add_DisplayContentsInvalidated(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DisplayContentsInvalidated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DisplayContentsInvalidated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DisplayContentsInvalidated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -369,6 +396,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayInformationStatics> : prod
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisplayContentsInvalidated(token);
             return S_OK;
         }
@@ -386,7 +414,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().CurrentOrientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentOrientation());
             return S_OK;
         }
         catch (...)
@@ -399,7 +428,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().NativeOrientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NativeOrientation());
             return S_OK;
         }
         catch (...)
@@ -412,7 +442,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().AutoRotationPreferences());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AutoRotationPreferences());
             return S_OK;
         }
         catch (...)
@@ -425,6 +456,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AutoRotationPreferences(value);
             return S_OK;
         }
@@ -434,11 +466,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall add_OrientationChanged(abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_OrientationChanged(impl::abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -451,6 +484,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OrientationChanged(token);
             return S_OK;
         }
@@ -464,7 +498,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().ResolutionScale());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResolutionScale());
             return S_OK;
         }
         catch (...)
@@ -477,7 +512,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().LogicalDpi());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LogicalDpi());
             return S_OK;
         }
         catch (...)
@@ -486,11 +522,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall add_LogicalDpiChanged(abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LogicalDpiChanged(impl::abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().LogicalDpiChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().LogicalDpiChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -503,6 +540,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LogicalDpiChanged(token);
             return S_OK;
         }
@@ -516,7 +554,8 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
-            *value = detach(this->shim().StereoEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StereoEnabled());
             return S_OK;
         }
         catch (...)
@@ -525,11 +564,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall add_StereoEnabledChanged(abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_StereoEnabledChanged(impl::abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().StereoEnabledChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().StereoEnabledChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -542,6 +582,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StereoEnabledChanged(token);
             return S_OK;
         }
@@ -551,11 +592,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetColorProfileAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_GetColorProfileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().GetColorProfileAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().GetColorProfileAsync());
             return S_OK;
         }
         catch (...)
@@ -565,11 +607,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall add_ColorProfileChanged(abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ColorProfileChanged(impl::abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ColorProfileChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ColorProfileChanged(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -582,6 +625,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ColorProfileChanged(token);
             return S_OK;
         }
@@ -591,11 +635,12 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
         }
     }
 
-    HRESULT __stdcall add_DisplayContentsInvalidated(abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DisplayContentsInvalidated(impl::abi_arg_in<Windows::Graphics::Display::DisplayPropertiesEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DisplayContentsInvalidated(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DisplayContentsInvalidated(*reinterpret_cast<const Windows::Graphics::Display::DisplayPropertiesEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -608,6 +653,7 @@ struct produce<D, Windows::Graphics::Display::IDisplayPropertiesStatics> : produ
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisplayContentsInvalidated(token);
             return S_OK;
         }
@@ -625,221 +671,221 @@ namespace Windows::Graphics::Display {
 template <typename D> Windows::Graphics::Display::DisplayInformation impl_IDisplayInformationStatics<D>::GetForCurrentView() const
 {
     Windows::Graphics::Display::DisplayInformation current { nullptr };
-    check_hresult(static_cast<const IDisplayInformationStatics &>(static_cast<const D &>(*this))->abi_GetForCurrentView(put(current)));
+    check_hresult(WINRT_SHIM(IDisplayInformationStatics)->abi_GetForCurrentView(put_abi(current)));
     return current;
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayInformationStatics<D>::AutoRotationPreferences() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayInformationStatics &>(static_cast<const D &>(*this))->get_AutoRotationPreferences(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformationStatics)->get_AutoRotationPreferences(&value));
     return value;
 }
 
 template <typename D> void impl_IDisplayInformationStatics<D>::AutoRotationPreferences(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IDisplayInformationStatics &>(static_cast<const D &>(*this))->put_AutoRotationPreferences(value));
+    check_hresult(WINRT_SHIM(IDisplayInformationStatics)->put_AutoRotationPreferences(value));
 }
 
-template <typename D> event_token impl_IDisplayInformationStatics<D>::DisplayContentsInvalidated(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IDisplayInformationStatics<D>::DisplayContentsInvalidated(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayInformationStatics &>(static_cast<const D &>(*this))->add_DisplayContentsInvalidated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayInformationStatics)->add_DisplayContentsInvalidated(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IDisplayInformationStatics> impl_IDisplayInformationStatics<D>::DisplayContentsInvalidated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IDisplayInformationStatics> impl_IDisplayInformationStatics<D>::DisplayContentsInvalidated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IDisplayInformationStatics>(this, &ABI::Windows::Graphics::Display::IDisplayInformationStatics::remove_DisplayContentsInvalidated, DisplayContentsInvalidated(handler));
 }
 
 template <typename D> void impl_IDisplayInformationStatics<D>::DisplayContentsInvalidated(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayInformationStatics &>(static_cast<const D &>(*this))->remove_DisplayContentsInvalidated(token));
+    check_hresult(WINRT_SHIM(IDisplayInformationStatics)->remove_DisplayContentsInvalidated(token));
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayInformation<D>::CurrentOrientation() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_CurrentOrientation(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_CurrentOrientation(&value));
     return value;
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayInformation<D>::NativeOrientation() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_NativeOrientation(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_NativeOrientation(&value));
     return value;
 }
 
-template <typename D> event_token impl_IDisplayInformation<D>::OrientationChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IDisplayInformation<D>::OrientationChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->add_OrientationChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->add_OrientationChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::OrientationChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::OrientationChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IDisplayInformation>(this, &ABI::Windows::Graphics::Display::IDisplayInformation::remove_OrientationChanged, OrientationChanged(handler));
 }
 
 template <typename D> void impl_IDisplayInformation<D>::OrientationChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->remove_OrientationChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->remove_OrientationChanged(token));
 }
 
 template <typename D> Windows::Graphics::Display::ResolutionScale impl_IDisplayInformation<D>::ResolutionScale() const
 {
     Windows::Graphics::Display::ResolutionScale value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_ResolutionScale(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_ResolutionScale(&value));
     return value;
 }
 
 template <typename D> float impl_IDisplayInformation<D>::LogicalDpi() const
 {
     float value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_LogicalDpi(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_LogicalDpi(&value));
     return value;
 }
 
 template <typename D> float impl_IDisplayInformation<D>::RawDpiX() const
 {
     float value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_RawDpiX(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_RawDpiX(&value));
     return value;
 }
 
 template <typename D> float impl_IDisplayInformation<D>::RawDpiY() const
 {
     float value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_RawDpiY(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_RawDpiY(&value));
     return value;
 }
 
-template <typename D> event_token impl_IDisplayInformation<D>::DpiChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IDisplayInformation<D>::DpiChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->add_DpiChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->add_DpiChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::DpiChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::DpiChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IDisplayInformation>(this, &ABI::Windows::Graphics::Display::IDisplayInformation::remove_DpiChanged, DpiChanged(handler));
 }
 
 template <typename D> void impl_IDisplayInformation<D>::DpiChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->remove_DpiChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->remove_DpiChanged(token));
 }
 
 template <typename D> bool impl_IDisplayInformation<D>::StereoEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->get_StereoEnabled(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->get_StereoEnabled(&value));
     return value;
 }
 
-template <typename D> event_token impl_IDisplayInformation<D>::StereoEnabledChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IDisplayInformation<D>::StereoEnabledChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->add_StereoEnabledChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->add_StereoEnabledChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::StereoEnabledChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::StereoEnabledChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IDisplayInformation>(this, &ABI::Windows::Graphics::Display::IDisplayInformation::remove_StereoEnabledChanged, StereoEnabledChanged(handler));
 }
 
 template <typename D> void impl_IDisplayInformation<D>::StereoEnabledChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->remove_StereoEnabledChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->remove_StereoEnabledChanged(token));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> impl_IDisplayInformation<D>::GetColorProfileAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> asyncInfo;
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->abi_GetColorProfileAsync(put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->abi_GetColorProfileAsync(put_abi(asyncInfo)));
     return asyncInfo;
 }
 
-template <typename D> event_token impl_IDisplayInformation<D>::ColorProfileChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IDisplayInformation<D>::ColorProfileChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->add_ColorProfileChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->add_ColorProfileChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::ColorProfileChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IDisplayInformation> impl_IDisplayInformation<D>::ColorProfileChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IDisplayInformation>(this, &ABI::Windows::Graphics::Display::IDisplayInformation::remove_ColorProfileChanged, ColorProfileChanged(handler));
 }
 
 template <typename D> void impl_IDisplayInformation<D>::ColorProfileChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayInformation &>(static_cast<const D &>(*this))->remove_ColorProfileChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayInformation)->remove_ColorProfileChanged(token));
 }
 
 template <typename D> double impl_IDisplayInformation2<D>::RawPixelsPerViewPixel() const
 {
     double value {};
-    check_hresult(static_cast<const IDisplayInformation2 &>(static_cast<const D &>(*this))->get_RawPixelsPerViewPixel(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation2)->get_RawPixelsPerViewPixel(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<double> impl_IDisplayInformation3<D>::DiagonalSizeInInches() const
 {
     Windows::Foundation::IReference<double> value;
-    check_hresult(static_cast<const IDisplayInformation3 &>(static_cast<const D &>(*this))->get_DiagonalSizeInInches(put(value)));
+    check_hresult(WINRT_SHIM(IDisplayInformation3)->get_DiagonalSizeInInches(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IDisplayInformation4<D>::ScreenWidthInRawPixels() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IDisplayInformation4 &>(static_cast<const D &>(*this))->get_ScreenWidthInRawPixels(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation4)->get_ScreenWidthInRawPixels(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IDisplayInformation4<D>::ScreenHeightInRawPixels() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IDisplayInformation4 &>(static_cast<const D &>(*this))->get_ScreenHeightInRawPixels(&value));
+    check_hresult(WINRT_SHIM(IDisplayInformation4)->get_ScreenHeightInRawPixels(&value));
     return value;
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayPropertiesStatics<D>::CurrentOrientation() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_CurrentOrientation(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_CurrentOrientation(&value));
     return value;
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayPropertiesStatics<D>::NativeOrientation() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_NativeOrientation(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_NativeOrientation(&value));
     return value;
 }
 
 template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IDisplayPropertiesStatics<D>::AutoRotationPreferences() const
 {
     Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_AutoRotationPreferences(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_AutoRotationPreferences(&value));
     return value;
 }
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::AutoRotationPreferences(Windows::Graphics::Display::DisplayOrientations value) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->put_AutoRotationPreferences(value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->put_AutoRotationPreferences(value));
 }
 
 template <typename D> event_token impl_IDisplayPropertiesStatics<D>::OrientationChanged(const Windows::Graphics::Display::DisplayPropertiesEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->add_OrientationChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->add_OrientationChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -850,27 +896,27 @@ template <typename D> event_revoker<IDisplayPropertiesStatics> impl_IDisplayProp
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::OrientationChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->remove_OrientationChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->remove_OrientationChanged(token));
 }
 
 template <typename D> Windows::Graphics::Display::ResolutionScale impl_IDisplayPropertiesStatics<D>::ResolutionScale() const
 {
     Windows::Graphics::Display::ResolutionScale value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_ResolutionScale(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_ResolutionScale(&value));
     return value;
 }
 
 template <typename D> float impl_IDisplayPropertiesStatics<D>::LogicalDpi() const
 {
     float value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_LogicalDpi(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_LogicalDpi(&value));
     return value;
 }
 
 template <typename D> event_token impl_IDisplayPropertiesStatics<D>::LogicalDpiChanged(const Windows::Graphics::Display::DisplayPropertiesEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->add_LogicalDpiChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->add_LogicalDpiChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -881,20 +927,20 @@ template <typename D> event_revoker<IDisplayPropertiesStatics> impl_IDisplayProp
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::LogicalDpiChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->remove_LogicalDpiChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->remove_LogicalDpiChanged(token));
 }
 
 template <typename D> bool impl_IDisplayPropertiesStatics<D>::StereoEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->get_StereoEnabled(&value));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->get_StereoEnabled(&value));
     return value;
 }
 
 template <typename D> event_token impl_IDisplayPropertiesStatics<D>::StereoEnabledChanged(const Windows::Graphics::Display::DisplayPropertiesEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->add_StereoEnabledChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->add_StereoEnabledChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -905,20 +951,20 @@ template <typename D> event_revoker<IDisplayPropertiesStatics> impl_IDisplayProp
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::StereoEnabledChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->remove_StereoEnabledChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->remove_StereoEnabledChanged(token));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> impl_IDisplayPropertiesStatics<D>::GetColorProfileAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> asyncInfo;
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->abi_GetColorProfileAsync(put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->abi_GetColorProfileAsync(put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> event_token impl_IDisplayPropertiesStatics<D>::ColorProfileChanged(const Windows::Graphics::Display::DisplayPropertiesEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->add_ColorProfileChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->add_ColorProfileChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -929,13 +975,13 @@ template <typename D> event_revoker<IDisplayPropertiesStatics> impl_IDisplayProp
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::ColorProfileChanged(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->remove_ColorProfileChanged(token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->remove_ColorProfileChanged(token));
 }
 
 template <typename D> event_token impl_IDisplayPropertiesStatics<D>::DisplayContentsInvalidated(const Windows::Graphics::Display::DisplayPropertiesEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->add_DisplayContentsInvalidated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->add_DisplayContentsInvalidated(get_abi(handler), &token));
     return token;
 }
 
@@ -946,7 +992,7 @@ template <typename D> event_revoker<IDisplayPropertiesStatics> impl_IDisplayProp
 
 template <typename D> void impl_IDisplayPropertiesStatics<D>::DisplayContentsInvalidated(event_token token) const
 {
-    check_hresult(static_cast<const IDisplayPropertiesStatics &>(static_cast<const D &>(*this))->remove_DisplayContentsInvalidated(token));
+    check_hresult(WINRT_SHIM(IDisplayPropertiesStatics)->remove_DisplayContentsInvalidated(token));
 }
 
 inline Windows::Graphics::Display::DisplayInformation DisplayInformation::GetForCurrentView()
@@ -964,12 +1010,12 @@ inline void DisplayInformation::AutoRotationPreferences(Windows::Graphics::Displ
     get_activation_factory<DisplayInformation, IDisplayInformationStatics>().AutoRotationPreferences(value);
 }
 
-inline event_token DisplayInformation::DisplayContentsInvalidated(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler)
+inline event_token DisplayInformation::DisplayContentsInvalidated(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler)
 {
     return get_activation_factory<DisplayInformation, IDisplayInformationStatics>().DisplayContentsInvalidated(handler);
 }
 
-inline factory_event_revoker<IDisplayInformationStatics> DisplayInformation::DisplayContentsInvalidated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::IInspectable> & handler)
+inline factory_event_revoker<IDisplayInformationStatics> DisplayInformation::DisplayContentsInvalidated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> & handler)
 {
     auto factory = get_activation_factory<DisplayInformation, IDisplayInformationStatics>();
     return { factory, &ABI::Windows::Graphics::Display::IDisplayInformationStatics::remove_DisplayContentsInvalidated, factory.DisplayContentsInvalidated(handler) };
@@ -1103,3 +1149,68 @@ inline void DisplayProperties::DisplayContentsInvalidated(event_token token)
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayInformation>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayInformation2>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayInformation2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayInformation3>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayInformation3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayInformation4>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayInformation4 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayInformationStatics>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayInformationStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::IDisplayPropertiesStatics>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::IDisplayPropertiesStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Graphics::Display::DisplayInformation>
+{
+    size_t operator()(const winrt::Windows::Graphics::Display::DisplayInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

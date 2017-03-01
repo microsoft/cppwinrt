@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,17 +16,17 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::AppService {
 
-struct __declspec(uuid("ef0d2507-d132-4c85-8395-3c31d5a1e941")) __declspec(novtable) IAppServiceCatalogStatics : Windows::IInspectable
+struct __declspec(uuid("ef0d2507-d132-4c85-8395-3c31d5a1e941")) __declspec(novtable) IAppServiceCatalogStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindAppServiceProvidersAsync(hstring appServiceName, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> ** operation) = 0;
 };
 
-struct __declspec(uuid("de6016f6-cb03-4d35-ac8d-cc6303239731")) __declspec(novtable) IAppServiceClosedEventArgs : Windows::IInspectable
+struct __declspec(uuid("de6016f6-cb03-4d35-ac8d-cc6303239731")) __declspec(novtable) IAppServiceClosedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Status(winrt::Windows::ApplicationModel::AppService::AppServiceClosedStatus * value) = 0;
 };
 
-struct __declspec(uuid("9dd474a2-871f-4d52-89a9-9e090531bd27")) __declspec(novtable) IAppServiceConnection : Windows::IInspectable
+struct __declspec(uuid("9dd474a2-871f-4d52-89a9-9e090531bd27")) __declspec(novtable) IAppServiceConnection : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AppServiceName(hstring * value) = 0;
     virtual HRESULT __stdcall put_AppServiceName(hstring value) = 0;
@@ -40,44 +40,44 @@ struct __declspec(uuid("9dd474a2-871f-4d52-89a9-9e090531bd27")) __declspec(novta
     virtual HRESULT __stdcall remove_ServiceClosed(event_token token) = 0;
 };
 
-struct __declspec(uuid("8bdfcd5f-2302-4fbd-8061-52511c2f8bf9")) __declspec(novtable) IAppServiceConnection2 : Windows::IInspectable
+struct __declspec(uuid("8bdfcd5f-2302-4fbd-8061-52511c2f8bf9")) __declspec(novtable) IAppServiceConnection2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_OpenRemoteAsync(Windows::System::RemoteSystems::IRemoteSystemConnectionRequest * remoteSystemConnectionRequest, Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceConnectionStatus> ** operation) = 0;
     virtual HRESULT __stdcall get_User(Windows::System::IUser ** value) = 0;
     virtual HRESULT __stdcall put_User(Windows::System::IUser * value) = 0;
 };
 
-struct __declspec(uuid("7e1b5322-eab0-4248-ae04-fdf93838e472")) __declspec(novtable) IAppServiceDeferral : Windows::IInspectable
+struct __declspec(uuid("7e1b5322-eab0-4248-ae04-fdf93838e472")) __declspec(novtable) IAppServiceDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("20e58d9d-18de-4b01-80ba-90a76204e3c8")) __declspec(novtable) IAppServiceRequest : Windows::IInspectable
+struct __declspec(uuid("20e58d9d-18de-4b01-80ba-90a76204e3c8")) __declspec(novtable) IAppServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Message(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall abi_SendResponseAsync(Windows::Foundation::Collections::IPropertySet * message, Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceResponseStatus> ** operation) = 0;
 };
 
-struct __declspec(uuid("6e122360-ff65-44ae-9e45-857fe4180681")) __declspec(novtable) IAppServiceRequestReceivedEventArgs : Windows::IInspectable
+struct __declspec(uuid("6e122360-ff65-44ae-9e45-857fe4180681")) __declspec(novtable) IAppServiceRequestReceivedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Request(Windows::ApplicationModel::AppService::IAppServiceRequest ** value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::ApplicationModel::AppService::IAppServiceDeferral ** value) = 0;
 };
 
-struct __declspec(uuid("8d503cec-9aa3-4e68-9559-9de63e372ce4")) __declspec(novtable) IAppServiceResponse : Windows::IInspectable
+struct __declspec(uuid("8d503cec-9aa3-4e68-9559-9de63e372ce4")) __declspec(novtable) IAppServiceResponse : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Message(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall get_Status(winrt::Windows::ApplicationModel::AppService::AppServiceResponseStatus * value) = 0;
 };
 
-struct __declspec(uuid("88a2dcac-ad28-41b8-80bb-bdf1b2169e19")) __declspec(novtable) IAppServiceTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("88a2dcac-ad28-41b8-80bb-bdf1b2169e19")) __declspec(novtable) IAppServiceTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_CallerPackageFamilyName(hstring * value) = 0;
     virtual HRESULT __stdcall get_AppServiceConnection(Windows::ApplicationModel::AppService::IAppServiceConnection ** value) = 0;
 };
 
-struct __declspec(uuid("e83d54b2-28cc-43f2-b465-c0482e59e2dc")) __declspec(novtable) IAppServiceTriggerDetails2 : Windows::IInspectable
+struct __declspec(uuid("e83d54b2-28cc-43f2-b465-c0482e59e2dc")) __declspec(novtable) IAppServiceTriggerDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsRemoteSystemConnection(bool * value) = 0;
 };
@@ -98,16 +98,85 @@ template <> struct traits<Windows::ApplicationModel::AppService::AppServiceTrigg
 
 namespace Windows::ApplicationModel::AppService {
 
-template <typename T> struct impl_IAppServiceCatalogStatics;
-template <typename T> struct impl_IAppServiceClosedEventArgs;
-template <typename T> struct impl_IAppServiceConnection;
-template <typename T> struct impl_IAppServiceConnection2;
-template <typename T> struct impl_IAppServiceDeferral;
-template <typename T> struct impl_IAppServiceRequest;
-template <typename T> struct impl_IAppServiceRequestReceivedEventArgs;
-template <typename T> struct impl_IAppServiceResponse;
-template <typename T> struct impl_IAppServiceTriggerDetails;
-template <typename T> struct impl_IAppServiceTriggerDetails2;
+template <typename D>
+struct WINRT_EBO impl_IAppServiceCatalogStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindAppServiceProvidersAsync(hstring_view appServiceName) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceClosedEventArgs
+{
+    Windows::ApplicationModel::AppService::AppServiceClosedStatus Status() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceConnection
+{
+    hstring AppServiceName() const;
+    void AppServiceName(hstring_view value) const;
+    hstring PackageFamilyName() const;
+    void PackageFamilyName(hstring_view value) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceConnectionStatus> OpenAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::AppService::AppServiceResponse> SendMessageAsync(const Windows::Foundation::Collections::ValueSet & message) const;
+    event_token RequestReceived(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceRequestReceivedEventArgs> & handler) const;
+    using RequestReceived_revoker = event_revoker<IAppServiceConnection>;
+    RequestReceived_revoker RequestReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceRequestReceivedEventArgs> & handler) const;
+    void RequestReceived(event_token token) const;
+    event_token ServiceClosed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceClosedEventArgs> & handler) const;
+    using ServiceClosed_revoker = event_revoker<IAppServiceConnection>;
+    ServiceClosed_revoker ServiceClosed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceClosedEventArgs> & handler) const;
+    void ServiceClosed(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceConnection2
+{
+    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceConnectionStatus> OpenRemoteAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest) const;
+    Windows::System::User User() const;
+    void User(const Windows::System::User & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceRequest
+{
+    Windows::Foundation::Collections::ValueSet Message() const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceResponseStatus> SendResponseAsync(const Windows::Foundation::Collections::ValueSet & message) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceRequestReceivedEventArgs
+{
+    Windows::ApplicationModel::AppService::AppServiceRequest Request() const;
+    Windows::ApplicationModel::AppService::AppServiceDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceResponse
+{
+    Windows::Foundation::Collections::ValueSet Message() const;
+    Windows::ApplicationModel::AppService::AppServiceResponseStatus Status() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceTriggerDetails
+{
+    hstring Name() const;
+    hstring CallerPackageFamilyName() const;
+    Windows::ApplicationModel::AppService::AppServiceConnection AppServiceConnection() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppServiceTriggerDetails2
+{
+    bool IsRemoteSystemConnection() const;
+};
 
 }
 

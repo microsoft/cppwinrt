@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -113,6 +113,43 @@ struct DownloadOperation;
 struct ResponseInformation;
 struct UnconstrainedTransferRequestResult;
 struct UploadOperation;
+
+}
+
+namespace Windows::Networking::BackgroundTransfer {
+
+template <typename T> struct impl_IBackgroundDownloader;
+template <typename T> struct impl_IBackgroundDownloader2;
+template <typename T> struct impl_IBackgroundDownloader3;
+template <typename T> struct impl_IBackgroundDownloaderFactory;
+template <typename T> struct impl_IBackgroundDownloaderStaticMethods;
+template <typename T> struct impl_IBackgroundDownloaderStaticMethods2;
+template <typename T> struct impl_IBackgroundDownloaderUserConsent;
+template <typename T> struct impl_IBackgroundTransferBase;
+template <typename T> struct impl_IBackgroundTransferCompletionGroup;
+template <typename T> struct impl_IBackgroundTransferCompletionGroupTriggerDetails;
+template <typename T> struct impl_IBackgroundTransferContentPart;
+template <typename T> struct impl_IBackgroundTransferContentPartFactory;
+template <typename T> struct impl_IBackgroundTransferErrorStaticMethods;
+template <typename T> struct impl_IBackgroundTransferGroup;
+template <typename T> struct impl_IBackgroundTransferGroupStatics;
+template <typename T> struct impl_IBackgroundTransferOperation;
+template <typename T> struct impl_IBackgroundTransferOperationPriority;
+template <typename T> struct impl_IBackgroundUploader;
+template <typename T> struct impl_IBackgroundUploader2;
+template <typename T> struct impl_IBackgroundUploader3;
+template <typename T> struct impl_IBackgroundUploaderFactory;
+template <typename T> struct impl_IBackgroundUploaderStaticMethods;
+template <typename T> struct impl_IBackgroundUploaderStaticMethods2;
+template <typename T> struct impl_IBackgroundUploaderUserConsent;
+template <typename T> struct impl_IContentPrefetcher;
+template <typename T> struct impl_IContentPrefetcherTime;
+template <typename T> struct impl_IDownloadOperation;
+template <typename T> struct impl_IDownloadOperation2;
+template <typename T> struct impl_IResponseInformation;
+template <typename T> struct impl_IUnconstrainedTransferRequestResult;
+template <typename T> struct impl_IUploadOperation;
+template <typename T> struct impl_IUploadOperation2;
 
 }
 

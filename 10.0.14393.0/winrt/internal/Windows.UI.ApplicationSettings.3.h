@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_CredentialCommandCredentialDeletedHandler : im
 {
     impl_CredentialCommandCredentialDeletedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::ApplicationSettings::ICredentialCommand> command) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::ApplicationSettings::ICredentialCommand> command) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_WebAccountCommandInvokedHandler : implements<i
 {
     impl_WebAccountCommandInvokedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountCommand> command, abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountInvokedArgs> args) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountCommand> command, impl::abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountInvokedArgs> args) noexcept override
     {
         try
         {
@@ -49,7 +49,7 @@ template <typename H> struct impl_WebAccountProviderCommandInvokedHandler : impl
 {
     impl_WebAccountProviderCommandInvokedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountProviderCommand> command) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::ApplicationSettings::IWebAccountProviderCommand> command) noexcept override
     {
         try
         {
@@ -101,26 +101,26 @@ struct WINRT_EBO SettingsCommand :
     Windows::UI::Popups::IUICommand
 {
     SettingsCommand(std::nullptr_t) noexcept {}
-    SettingsCommand(const Windows::IInspectable & settingsCommandId, hstring_ref label, const Windows::UI::Popups::UICommandInvokedHandler & handler);
+    SettingsCommand(const Windows::Foundation::IInspectable & settingsCommandId, hstring_view label, const Windows::UI::Popups::UICommandInvokedHandler & handler);
     static Windows::UI::ApplicationSettings::SettingsCommand AccountsCommand();
 };
 
-struct WINRT_EBO SettingsPane :
+struct [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPane :
     Windows::UI::ApplicationSettings::ISettingsPane
 {
     SettingsPane(std::nullptr_t) noexcept {}
-    static Windows::UI::ApplicationSettings::SettingsPane GetForCurrentView();
-    static void Show();
-    static Windows::UI::ApplicationSettings::SettingsEdgeLocation Edge();
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] static Windows::UI::ApplicationSettings::SettingsPane GetForCurrentView();
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] static void Show();
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] static Windows::UI::ApplicationSettings::SettingsEdgeLocation Edge();
 };
 
-struct WINRT_EBO SettingsPaneCommandsRequest :
+struct [[deprecated("SettingsPaneCommandsRequest is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPaneCommandsRequest :
     Windows::UI::ApplicationSettings::ISettingsPaneCommandsRequest
 {
     SettingsPaneCommandsRequest(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO SettingsPaneCommandsRequestedEventArgs :
+struct [[deprecated("SettingsPaneCommandsRequestedEventArgs is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPaneCommandsRequestedEventArgs :
     Windows::UI::ApplicationSettings::ISettingsPaneCommandsRequestedEventArgs
 {
     SettingsPaneCommandsRequestedEventArgs(std::nullptr_t) noexcept {}

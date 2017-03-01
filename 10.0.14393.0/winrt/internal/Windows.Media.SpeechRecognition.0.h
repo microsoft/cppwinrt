@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -104,6 +104,38 @@ struct SpeechRecognizerTimeouts;
 struct SpeechRecognizerUIOptions;
 struct VoiceCommandManager;
 struct VoiceCommandSet;
+
+}
+
+namespace Windows::Media::SpeechRecognition {
+
+template <typename T> struct impl_ISpeechContinuousRecognitionCompletedEventArgs;
+template <typename T> struct impl_ISpeechContinuousRecognitionResultGeneratedEventArgs;
+template <typename T> struct impl_ISpeechContinuousRecognitionSession;
+template <typename T> struct impl_ISpeechRecognitionCompilationResult;
+template <typename T> struct impl_ISpeechRecognitionConstraint;
+template <typename T> struct impl_ISpeechRecognitionGrammarFileConstraint;
+template <typename T> struct impl_ISpeechRecognitionGrammarFileConstraintFactory;
+template <typename T> struct impl_ISpeechRecognitionHypothesis;
+template <typename T> struct impl_ISpeechRecognitionHypothesisGeneratedEventArgs;
+template <typename T> struct impl_ISpeechRecognitionListConstraint;
+template <typename T> struct impl_ISpeechRecognitionListConstraintFactory;
+template <typename T> struct impl_ISpeechRecognitionQualityDegradingEventArgs;
+template <typename T> struct impl_ISpeechRecognitionResult;
+template <typename T> struct impl_ISpeechRecognitionResult2;
+template <typename T> struct impl_ISpeechRecognitionSemanticInterpretation;
+template <typename T> struct impl_ISpeechRecognitionTopicConstraint;
+template <typename T> struct impl_ISpeechRecognitionTopicConstraintFactory;
+template <typename T> struct impl_ISpeechRecognitionVoiceCommandDefinitionConstraint;
+template <typename T> struct impl_ISpeechRecognizer;
+template <typename T> struct impl_ISpeechRecognizer2;
+template <typename T> struct impl_ISpeechRecognizerFactory;
+template <typename T> struct impl_ISpeechRecognizerStateChangedEventArgs;
+template <typename T> struct impl_ISpeechRecognizerStatics;
+template <typename T> struct impl_ISpeechRecognizerTimeouts;
+template <typename T> struct impl_ISpeechRecognizerUIOptions;
+template <typename T> struct impl_IVoiceCommandManager;
+template <typename T> struct impl_IVoiceCommandSet;
 
 }
 

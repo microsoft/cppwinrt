@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -71,7 +71,7 @@ template <> struct __declspec(uuid("b425d126-1069-563f-a863-44a30a8f071d")) __de
 
 #ifndef WINRT_GENERIC_dbb08ab5_6b40_55fb_83d3_50d5373a3b20
 #define WINRT_GENERIC_dbb08ab5_6b40_55fb_83d3_50d5373a3b20
-template <> struct __declspec(uuid("dbb08ab5-6b40-55fb-83d3-50d5373a3b20")) __declspec(novtable) TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::IInspectable> : impl_TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::IInspectable> {};
+template <> struct __declspec(uuid("dbb08ab5-6b40-55fb-83d3-50d5373a3b20")) __declspec(novtable) TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_34bf236c_e5d6_501f_8693_bc1d8d431d7e
@@ -83,6 +83,21 @@ template <> struct __declspec(uuid("34bf236c-e5d6-501f-8693-bc1d8d431d7e")) __de
 #define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __declspec(novtable) AsyncOperationCompletedHandler<bool> : impl_AsyncOperationCompletedHandler<bool> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_25298593_9baf_5a73_a1b6_cd5e40a5e834
+#define WINRT_GENERIC_25298593_9baf_5a73_a1b6_cd5e40a5e834
+template <> struct __declspec(uuid("25298593-9baf-5a73-a1b6-cd5e40a5e834")) __declspec(novtable) IMap<hstring, Windows::Perception::Spatial::SpatialAnchor> : impl_IMap<hstring, Windows::Perception::Spatial::SpatialAnchor> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_84c21a3a_037a_503f_8006_ab577b7f6f66
 #define WINRT_GENERIC_84c21a3a_037a_503f_8006_ab577b7f6f66
@@ -129,271 +144,116 @@ template <> struct __declspec(uuid("3a950aa3-9c65-586e-af75-1acf07190e90")) __de
 
 namespace Windows::Perception::Spatial {
 
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchor
-{
-    Windows::Perception::Spatial::SpatialCoordinateSystem CoordinateSystem() const;
-    Windows::Perception::Spatial::SpatialCoordinateSystem RawCoordinateSystem() const;
-    event_token RawCoordinateSystemAdjusted(const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialAnchor, Windows::Perception::Spatial::SpatialAnchorRawCoordinateSystemAdjustedEventArgs> & handler) const;
-    using RawCoordinateSystemAdjusted_revoker = event_revoker<ISpatialAnchor>;
-    RawCoordinateSystemAdjusted_revoker RawCoordinateSystemAdjusted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialAnchor, Windows::Perception::Spatial::SpatialAnchorRawCoordinateSystemAdjustedEventArgs> & handler) const;
-    void RawCoordinateSystemAdjusted(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchor2
-{
-    bool RemovedByUser() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchorManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::SpatialAnchorStore> RequestStoreAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchorRawCoordinateSystemAdjustedEventArgs
-{
-    Windows::Foundation::Numerics::float4x4 OldRawCoordinateSystemToNewRawCoordinateSystemTransform() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchorStatics
-{
-    Windows::Perception::Spatial::SpatialAnchor TryCreateRelativeTo(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    Windows::Perception::Spatial::SpatialAnchor TryCreateRelativeTo(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Foundation::Numerics::float3 & position) const;
-    Windows::Perception::Spatial::SpatialAnchor TryCreateRelativeTo(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Foundation::Numerics::float3 & position, const Windows::Foundation::Numerics::quaternion & orientation) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchorStore
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Perception::Spatial::SpatialAnchor> GetAllSavedAnchors() const;
-    bool TrySave(hstring_ref id, const Windows::Perception::Spatial::SpatialAnchor & anchor) const;
-    void Remove(hstring_ref id) const;
-    void Clear() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialAnchorTransferManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::Perception::Spatial::SpatialAnchor>> TryImportAnchorsAsync(const Windows::Storage::Streams::IInputStream & stream) const;
-    Windows::Foundation::IAsyncOperation<bool> TryExportAnchorsAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Perception::Spatial::SpatialAnchor>> & anchors, const Windows::Storage::Streams::IOutputStream & stream) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial::SpatialPerceptionAccessStatus> RequestAccessAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialBoundingVolume
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialBoundingVolumeStatics
-{
-    Windows::Perception::Spatial::SpatialBoundingVolume FromBox(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Perception::Spatial::SpatialBoundingBox & box) const;
-    Windows::Perception::Spatial::SpatialBoundingVolume FromOrientedBox(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Perception::Spatial::SpatialBoundingOrientedBox & box) const;
-    Windows::Perception::Spatial::SpatialBoundingVolume FromSphere(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Perception::Spatial::SpatialBoundingSphere & sphere) const;
-    Windows::Perception::Spatial::SpatialBoundingVolume FromFrustum(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem, const Windows::Perception::Spatial::SpatialBoundingFrustum & frustum) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialCoordinateSystem
-{
-    Windows::Foundation::IReference<Windows::Foundation::Numerics::float4x4> TryGetTransformTo(const Windows::Perception::Spatial::SpatialCoordinateSystem & target) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialLocation
-{
-    Windows::Foundation::Numerics::float3 Position() const;
-    Windows::Foundation::Numerics::quaternion Orientation() const;
-    Windows::Foundation::Numerics::float3 AbsoluteLinearVelocity() const;
-    Windows::Foundation::Numerics::float3 AbsoluteLinearAcceleration() const;
-    Windows::Foundation::Numerics::quaternion AbsoluteAngularVelocity() const;
-    Windows::Foundation::Numerics::quaternion AbsoluteAngularAcceleration() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialLocator
-{
-    Windows::Perception::Spatial::SpatialLocatability Locatability() const;
-    event_token LocatabilityChanged(const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::IInspectable> & handler) const;
-    using LocatabilityChanged_revoker = event_revoker<ISpatialLocator>;
-    LocatabilityChanged_revoker LocatabilityChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::IInspectable> & handler) const;
-    void LocatabilityChanged(event_token cookie) const;
-    event_token PositionalTrackingDeactivating(const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::Perception::Spatial::SpatialLocatorPositionalTrackingDeactivatingEventArgs> & handler) const;
-    using PositionalTrackingDeactivating_revoker = event_revoker<ISpatialLocator>;
-    PositionalTrackingDeactivating_revoker PositionalTrackingDeactivating(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::SpatialLocator, Windows::Perception::Spatial::SpatialLocatorPositionalTrackingDeactivatingEventArgs> & handler) const;
-    void PositionalTrackingDeactivating(event_token cookie) const;
-    Windows::Perception::Spatial::SpatialLocation TryLocateAtTimestamp(const Windows::Perception::PerceptionTimestamp & timestamp, const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-    Windows::Perception::Spatial::SpatialLocatorAttachedFrameOfReference CreateAttachedFrameOfReferenceAtCurrentHeading() const;
-    Windows::Perception::Spatial::SpatialLocatorAttachedFrameOfReference CreateAttachedFrameOfReferenceAtCurrentHeading(const Windows::Foundation::Numerics::float3 & relativePosition) const;
-    Windows::Perception::Spatial::SpatialLocatorAttachedFrameOfReference CreateAttachedFrameOfReferenceAtCurrentHeading(const Windows::Foundation::Numerics::float3 & relativePosition, const Windows::Foundation::Numerics::quaternion & relativeOrientation) const;
-    Windows::Perception::Spatial::SpatialLocatorAttachedFrameOfReference CreateAttachedFrameOfReferenceAtCurrentHeading(const Windows::Foundation::Numerics::float3 & relativePosition, const Windows::Foundation::Numerics::quaternion & relativeOrientation, double relativeHeadingInRadians) const;
-    Windows::Perception::Spatial::SpatialStationaryFrameOfReference CreateStationaryFrameOfReferenceAtCurrentLocation() const;
-    Windows::Perception::Spatial::SpatialStationaryFrameOfReference CreateStationaryFrameOfReferenceAtCurrentLocation(const Windows::Foundation::Numerics::float3 & relativePosition) const;
-    Windows::Perception::Spatial::SpatialStationaryFrameOfReference CreateStationaryFrameOfReferenceAtCurrentLocation(const Windows::Foundation::Numerics::float3 & relativePosition, const Windows::Foundation::Numerics::quaternion & relativeOrientation) const;
-    Windows::Perception::Spatial::SpatialStationaryFrameOfReference CreateStationaryFrameOfReferenceAtCurrentLocation(const Windows::Foundation::Numerics::float3 & relativePosition, const Windows::Foundation::Numerics::quaternion & relativeOrientation, double relativeHeadingInRadians) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialLocatorAttachedFrameOfReference
-{
-    Windows::Foundation::Numerics::float3 RelativePosition() const;
-    void RelativePosition(const Windows::Foundation::Numerics::float3 & value) const;
-    Windows::Foundation::Numerics::quaternion RelativeOrientation() const;
-    void RelativeOrientation(const Windows::Foundation::Numerics::quaternion & value) const;
-    void AdjustHeading(double headingOffsetInRadians) const;
-    Windows::Perception::Spatial::SpatialCoordinateSystem GetStationaryCoordinateSystemAtTimestamp(const Windows::Perception::PerceptionTimestamp & timestamp) const;
-    Windows::Foundation::IReference<double> TryGetRelativeHeadingAtTimestamp(const Windows::Perception::PerceptionTimestamp & timestamp) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialLocatorPositionalTrackingDeactivatingEventArgs
-{
-    bool Canceled() const;
-    void Canceled(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialLocatorStatics
-{
-    Windows::Perception::Spatial::SpatialLocator GetDefault() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpatialStationaryFrameOfReference
-{
-    Windows::Perception::Spatial::SpatialCoordinateSystem CoordinateSystem() const;
-};
-
 struct ISpatialAnchor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchor>
 {
     ISpatialAnchor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchor>(m_ptr); }
 };
 
 struct ISpatialAnchor2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchor2>
 {
     ISpatialAnchor2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchor2>(m_ptr); }
 };
 
 struct ISpatialAnchorManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchorManagerStatics>
 {
     ISpatialAnchorManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchorManagerStatics>(m_ptr); }
 };
 
 struct ISpatialAnchorRawCoordinateSystemAdjustedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchorRawCoordinateSystemAdjustedEventArgs>
 {
     ISpatialAnchorRawCoordinateSystemAdjustedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchorRawCoordinateSystemAdjustedEventArgs>(m_ptr); }
 };
 
 struct ISpatialAnchorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchorStatics>
 {
     ISpatialAnchorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchorStatics>(m_ptr); }
 };
 
 struct ISpatialAnchorStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchorStore>
 {
     ISpatialAnchorStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchorStore>(m_ptr); }
 };
 
 struct ISpatialAnchorTransferManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialAnchorTransferManagerStatics>
 {
     ISpatialAnchorTransferManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialAnchorTransferManagerStatics>(m_ptr); }
 };
 
 struct ISpatialBoundingVolume :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialBoundingVolume>
 {
     ISpatialBoundingVolume(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialBoundingVolume>(m_ptr); }
 };
 
 struct ISpatialBoundingVolumeStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialBoundingVolumeStatics>
 {
     ISpatialBoundingVolumeStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialBoundingVolumeStatics>(m_ptr); }
 };
 
 struct ISpatialCoordinateSystem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialCoordinateSystem>
 {
     ISpatialCoordinateSystem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialCoordinateSystem>(m_ptr); }
 };
 
 struct ISpatialLocation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialLocation>
 {
     ISpatialLocation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialLocation>(m_ptr); }
 };
 
 struct ISpatialLocator :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialLocator>
 {
     ISpatialLocator(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialLocator>(m_ptr); }
 };
 
 struct ISpatialLocatorAttachedFrameOfReference :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialLocatorAttachedFrameOfReference>
 {
     ISpatialLocatorAttachedFrameOfReference(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialLocatorAttachedFrameOfReference>(m_ptr); }
 };
 
 struct ISpatialLocatorPositionalTrackingDeactivatingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialLocatorPositionalTrackingDeactivatingEventArgs>
 {
     ISpatialLocatorPositionalTrackingDeactivatingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialLocatorPositionalTrackingDeactivatingEventArgs>(m_ptr); }
 };
 
 struct ISpatialLocatorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialLocatorStatics>
 {
     ISpatialLocatorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialLocatorStatics>(m_ptr); }
 };
 
 struct ISpatialStationaryFrameOfReference :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpatialStationaryFrameOfReference>
 {
     ISpatialStationaryFrameOfReference(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpatialStationaryFrameOfReference>(m_ptr); }
 };
 
 }

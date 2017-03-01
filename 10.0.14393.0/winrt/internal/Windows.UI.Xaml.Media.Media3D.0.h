@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -49,6 +49,19 @@ struct CompositeTransform3D;
 struct Matrix3DHelper;
 struct PerspectiveTransform3D;
 struct Transform3D;
+
+}
+
+namespace Windows::UI::Xaml::Media::Media3D {
+
+template <typename T> struct impl_ICompositeTransform3D;
+template <typename T> struct impl_ICompositeTransform3DStatics;
+template <typename T> struct impl_IMatrix3DHelper;
+template <typename T> struct impl_IMatrix3DHelperStatics;
+template <typename T> struct impl_IPerspectiveTransform3D;
+template <typename T> struct impl_IPerspectiveTransform3DStatics;
+template <typename T> struct impl_ITransform3D;
+template <typename T> struct impl_ITransform3DFactory;
 
 }
 

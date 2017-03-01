@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -74,35 +74,18 @@ template <> struct __declspec(uuid("427deafd-b226-5ef0-9320-c9f325e37474")) __de
 
 namespace Windows::Media::Playlists {
 
-template <typename D>
-struct WINRT_EBO impl_IPlaylist
-{
-    Windows::Foundation::Collections::IVector<Windows::Storage::StorageFile> Files() const;
-    Windows::Foundation::IAsyncAction SaveAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> SaveAsAsync(const Windows::Storage::IStorageFolder & saveLocation, hstring_ref desiredName, Windows::Storage::NameCollisionOption option) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> SaveAsAsync(const Windows::Storage::IStorageFolder & saveLocation, hstring_ref desiredName, Windows::Storage::NameCollisionOption option, Windows::Media::Playlists::PlaylistFormat playlistFormat) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlaylistStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Media::Playlists::Playlist> LoadAsync(const Windows::Storage::IStorageFile & file) const;
-};
-
 struct IPlaylist :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlaylist>
 {
     IPlaylist(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlaylist>(m_ptr); }
 };
 
 struct IPlaylistStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlaylistStatics>
 {
     IPlaylistStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlaylistStatics>(m_ptr); }
 };
 
 }

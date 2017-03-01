@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -49,6 +49,20 @@ struct PickerClosingOperation;
 struct TargetFileRequest;
 struct TargetFileRequestDeferral;
 struct TargetFileRequestedEventArgs;
+
+}
+
+namespace Windows::Storage::Pickers::Provider {
+
+template <typename T> struct impl_IFileOpenPickerUI;
+template <typename T> struct impl_IFileRemovedEventArgs;
+template <typename T> struct impl_IFileSavePickerUI;
+template <typename T> struct impl_IPickerClosingDeferral;
+template <typename T> struct impl_IPickerClosingEventArgs;
+template <typename T> struct impl_IPickerClosingOperation;
+template <typename T> struct impl_ITargetFileRequest;
+template <typename T> struct impl_ITargetFileRequestDeferral;
+template <typename T> struct impl_ITargetFileRequestedEventArgs;
 
 }
 

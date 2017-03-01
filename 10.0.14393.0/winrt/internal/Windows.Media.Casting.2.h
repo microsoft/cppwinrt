@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.Casting.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -22,7 +22,7 @@ template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __de
 
 #ifndef WINRT_GENERIC_f1576170_9b08_5a9b_87d2_c1ac47bc6681
 #define WINRT_GENERIC_f1576170_9b08_5a9b_87d2_c1ac47bc6681
-template <> struct __declspec(uuid("f1576170-9b08-5a9b-87d2-c1ac47bc6681")) __declspec(novtable) TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::IInspectable> {};
+template <> struct __declspec(uuid("f1576170-9b08-5a9b-87d2-c1ac47bc6681")) __declspec(novtable) TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_78afbbd0_9811_5f0e_9566_47c3e8cdd929
@@ -67,7 +67,7 @@ template <> struct __declspec(uuid("b3655b33-c4ad-5f4c-a187-b2e4c770a16b")) __de
 
 #ifndef WINRT_GENERIC_a64b972b_aa63_5c61_9cde_cd6ffea8a247
 #define WINRT_GENERIC_a64b972b_aa63_5c61_9cde_cd6ffea8a247
-template <> struct __declspec(uuid("a64b972b-aa63-5c61-9cde-cd6ffea8a247")) __declspec(novtable) TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::IInspectable> {};
+template <> struct __declspec(uuid("a64b972b-aa63-5c61-9cde-cd6ffea8a247")) __declspec(novtable) TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -120,157 +120,61 @@ template <> struct __declspec(uuid("7828da61-dea4-5485-b27a-8f78e0472402")) __de
 
 namespace Windows::Media::Casting {
 
-template <typename D>
-struct WINRT_EBO impl_ICastingConnection
-{
-    Windows::Media::Casting::CastingConnectionState State() const;
-    Windows::Media::Casting::CastingDevice Device() const;
-    Windows::Media::Casting::CastingSource Source() const;
-    void Source(const Windows::Media::Casting::CastingSource & value) const;
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::IInspectable> & handler) const;
-    using StateChanged_revoker = event_revoker<ICastingConnection>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::IInspectable> & handler) const;
-    void StateChanged(event_token token) const;
-    event_token ErrorOccurred(const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::Media::Casting::CastingConnectionErrorOccurredEventArgs> & handler) const;
-    using ErrorOccurred_revoker = event_revoker<ICastingConnection>;
-    ErrorOccurred_revoker ErrorOccurred(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingConnection, Windows::Media::Casting::CastingConnectionErrorOccurredEventArgs> & handler) const;
-    void ErrorOccurred(event_token token) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Casting::CastingConnectionErrorStatus> RequestStartCastingAsync(const Windows::Media::Casting::CastingSource & value) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Casting::CastingConnectionErrorStatus> DisconnectAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingConnectionErrorOccurredEventArgs
-{
-    Windows::Media::Casting::CastingConnectionErrorStatus ErrorStatus() const;
-    hstring Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingDevice
-{
-    hstring Id() const;
-    hstring FriendlyName() const;
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType Icon() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Casting::CastingPlaybackTypes> GetSupportedCastingPlaybackTypesAsync() const;
-    Windows::Media::Casting::CastingConnection CreateCastingConnection() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingDevicePicker
-{
-    Windows::Media::Casting::CastingDevicePickerFilter Filter() const;
-    Windows::Devices::Enumeration::DevicePickerAppearance Appearance() const;
-    event_token CastingDeviceSelected(const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::Media::Casting::CastingDeviceSelectedEventArgs> & handler) const;
-    using CastingDeviceSelected_revoker = event_revoker<ICastingDevicePicker>;
-    CastingDeviceSelected_revoker CastingDeviceSelected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::Media::Casting::CastingDeviceSelectedEventArgs> & handler) const;
-    void CastingDeviceSelected(event_token token) const;
-    event_token CastingDevicePickerDismissed(const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::IInspectable> & handler) const;
-    using CastingDevicePickerDismissed_revoker = event_revoker<ICastingDevicePicker>;
-    CastingDevicePickerDismissed_revoker CastingDevicePickerDismissed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Casting::CastingDevicePicker, Windows::IInspectable> & handler) const;
-    void CastingDevicePickerDismissed(event_token token) const;
-    void Show(const Windows::Foundation::Rect & selection) const;
-    void Show(const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const;
-    void Hide() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingDevicePickerFilter
-{
-    bool SupportsAudio() const;
-    void SupportsAudio(bool value) const;
-    bool SupportsVideo() const;
-    void SupportsVideo(bool value) const;
-    bool SupportsPictures() const;
-    void SupportsPictures(bool value) const;
-    Windows::Foundation::Collections::IVector<Windows::Media::Casting::CastingSource> SupportedCastingSources() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingDeviceSelectedEventArgs
-{
-    Windows::Media::Casting::CastingDevice SelectedCastingDevice() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingDeviceStatics
-{
-    hstring GetDeviceSelector(Windows::Media::Casting::CastingPlaybackTypes type) const;
-    Windows::Foundation::IAsyncOperation<hstring> GetDeviceSelectorFromCastingSourceAsync(const Windows::Media::Casting::CastingSource & castingSource) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::Casting::CastingDevice> FromIdAsync(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<bool> DeviceInfoSupportsCastingAsync(const Windows::Devices::Enumeration::DeviceInformation & device) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICastingSource
-{
-    Windows::Foundation::Uri PreferredSourceUri() const;
-    void PreferredSourceUri(const Windows::Foundation::Uri & value) const;
-};
-
 struct ICastingConnection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingConnection>,
     impl::require<ICastingConnection, Windows::Foundation::IClosable>
 {
     ICastingConnection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingConnection>(m_ptr); }
 };
 
 struct ICastingConnectionErrorOccurredEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingConnectionErrorOccurredEventArgs>
 {
     ICastingConnectionErrorOccurredEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingConnectionErrorOccurredEventArgs>(m_ptr); }
 };
 
 struct ICastingDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingDevice>
 {
     ICastingDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingDevice>(m_ptr); }
 };
 
 struct ICastingDevicePicker :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingDevicePicker>
 {
     ICastingDevicePicker(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingDevicePicker>(m_ptr); }
 };
 
 struct ICastingDevicePickerFilter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingDevicePickerFilter>
 {
     ICastingDevicePickerFilter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingDevicePickerFilter>(m_ptr); }
 };
 
 struct ICastingDeviceSelectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingDeviceSelectedEventArgs>
 {
     ICastingDeviceSelectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingDeviceSelectedEventArgs>(m_ptr); }
 };
 
 struct ICastingDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingDeviceStatics>
 {
     ICastingDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingDeviceStatics>(m_ptr); }
 };
 
 struct ICastingSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICastingSource>
 {
     ICastingSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICastingSource>(m_ptr); }
 };
 
 }

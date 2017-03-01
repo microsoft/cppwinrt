@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,7 +19,7 @@ struct ServiceDevice
 struct StorageDevice
 {
     StorageDevice() = delete;
-    static Windows::Storage::StorageFolder FromId(hstring_ref deviceId);
+    static Windows::Storage::StorageFolder FromId(hstring_view deviceId);
     static hstring GetDeviceSelector();
 };
 

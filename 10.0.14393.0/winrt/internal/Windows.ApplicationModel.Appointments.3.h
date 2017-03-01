@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -65,15 +65,15 @@ struct AppointmentManager
     AppointmentManager() = delete;
     static Windows::Foundation::IAsyncOperation<hstring> ShowAddAppointmentAsync(const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection);
     static Windows::Foundation::IAsyncOperation<hstring> ShowAddAppointmentAsync(const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement);
-    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_ref appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection);
-    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_ref appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement);
-    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_ref appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::Foundation::DateTime & instanceStartDate);
-    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_ref appointmentId, const Windows::Foundation::Rect & selection);
-    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_ref appointmentId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement);
-    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_ref appointmentId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::Foundation::DateTime & instanceStartDate);
+    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_view appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection);
+    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_view appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement);
+    static Windows::Foundation::IAsyncOperation<hstring> ShowReplaceAppointmentAsync(hstring_view appointmentId, const Windows::ApplicationModel::Appointments::Appointment & appointment, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::Foundation::DateTime & instanceStartDate);
+    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_view appointmentId, const Windows::Foundation::Rect & selection);
+    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_view appointmentId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement);
+    static Windows::Foundation::IAsyncOperation<bool> ShowRemoveAppointmentAsync(hstring_view appointmentId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::Foundation::DateTime & instanceStartDate);
     static Windows::Foundation::IAsyncAction ShowTimeFrameAsync(const Windows::Foundation::DateTime & timeToShow, const Windows::Foundation::TimeSpan & duration);
-    static Windows::Foundation::IAsyncAction ShowAppointmentDetailsAsync(hstring_ref appointmentId);
-    static Windows::Foundation::IAsyncAction ShowAppointmentDetailsAsync(hstring_ref appointmentId, const Windows::Foundation::DateTime & instanceStartDate);
+    static Windows::Foundation::IAsyncAction ShowAppointmentDetailsAsync(hstring_view appointmentId);
+    static Windows::Foundation::IAsyncAction ShowAppointmentDetailsAsync(hstring_view appointmentId, const Windows::Foundation::DateTime & instanceStartDate);
     static Windows::Foundation::IAsyncOperation<hstring> ShowEditNewAppointmentAsync(const Windows::ApplicationModel::Appointments::Appointment & appointment);
     static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Appointments::AppointmentStore> RequestStoreAsync(Windows::ApplicationModel::Appointments::AppointmentStoreAccessType options);
     static Windows::ApplicationModel::Appointments::AppointmentManagerForUser GetForUser(const Windows::System::User & user);

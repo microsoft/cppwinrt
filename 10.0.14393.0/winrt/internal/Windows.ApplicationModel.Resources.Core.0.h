@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -77,6 +77,23 @@ struct ResourceQualifier;
 struct ResourceQualifierMapView;
 struct ResourceQualifierObservableMap;
 struct ResourceQualifierVectorView;
+
+}
+
+namespace Windows::ApplicationModel::Resources::Core {
+
+template <typename T> struct impl_INamedResource;
+template <typename T> struct impl_IResourceCandidate;
+template <typename T> struct impl_IResourceCandidate2;
+template <typename T> struct impl_IResourceContext;
+template <typename T> struct impl_IResourceContextStatics;
+template <typename T> struct impl_IResourceContextStatics2;
+template <typename T> struct impl_IResourceContextStatics3;
+template <typename T> struct impl_IResourceManager;
+template <typename T> struct impl_IResourceManager2;
+template <typename T> struct impl_IResourceManagerStatics;
+template <typename T> struct impl_IResourceMap;
+template <typename T> struct impl_IResourceQualifier;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,12 +13,12 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Web {
 
-struct __declspec(uuid("b0aba86a-9aeb-4d3a-9590-003e3ca7e290")) __declspec(novtable) IUriToStreamResolver : Windows::IInspectable
+struct __declspec(uuid("b0aba86a-9aeb-4d3a-9590-003e3ca7e290")) __declspec(novtable) IUriToStreamResolver : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_UriToStreamAsync(Windows::Foundation::IUriRuntimeClass * uri, Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> ** operation) = 0;
 };
 
-struct __declspec(uuid("fe616766-bf27-4064-87b7-6563bb11ce2e")) __declspec(novtable) IWebErrorStatics : Windows::IInspectable
+struct __declspec(uuid("fe616766-bf27-4064-87b7-6563bb11ce2e")) __declspec(novtable) IWebErrorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetStatus(int32_t hresult, winrt::Windows::Web::WebErrorStatus * status) = 0;
 };
@@ -32,8 +32,17 @@ namespace ABI {
 
 namespace Windows::Web {
 
-template <typename T> struct impl_IUriToStreamResolver;
-template <typename T> struct impl_IWebErrorStatics;
+template <typename D>
+struct WINRT_EBO impl_IUriToStreamResolver
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> UriToStreamAsync(const Windows::Foundation::Uri & uri) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebErrorStatics
+{
+    Windows::Web::WebErrorStatus GetStatus(int32_t hresult) const;
+};
 
 }
 

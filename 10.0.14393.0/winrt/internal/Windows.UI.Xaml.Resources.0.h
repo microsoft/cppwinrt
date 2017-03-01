@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -23,6 +23,15 @@ struct ICustomXamlResourceLoaderFactory;
 struct ICustomXamlResourceLoaderOverrides;
 struct ICustomXamlResourceLoaderStatics;
 struct CustomXamlResourceLoader;
+
+}
+
+namespace Windows::UI::Xaml::Resources {
+
+template <typename T> struct impl_ICustomXamlResourceLoader;
+template <typename T> struct impl_ICustomXamlResourceLoaderFactory;
+template <typename T> struct impl_ICustomXamlResourceLoaderOverrides;
+template <typename T> struct impl_ICustomXamlResourceLoaderStatics;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -41,7 +41,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 #define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
-template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::IInspectable> : impl_EventHandler<Windows::IInspectable> {};
+template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -104,91 +104,39 @@ template <> struct __declspec(uuid("cf61be5d-40c3-5484-846a-3f82b8ba5738")) __de
 
 namespace Windows::Media::ContentRestrictions {
 
-template <typename D>
-struct WINRT_EBO impl_IContentRestrictionsBrowsePolicy
-{
-    hstring GeographicRegion() const;
-    Windows::Foundation::IReference<uint32_t> MaxBrowsableAgeRating() const;
-    Windows::Foundation::IReference<uint32_t> PreferredAgeRating() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRatedContentDescription
-{
-    hstring Id() const;
-    void Id(hstring_ref value) const;
-    hstring Title() const;
-    void Title(hstring_ref value) const;
-    Windows::Storage::Streams::IRandomAccessStreamReference Image() const;
-    void Image(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
-    Windows::Media::ContentRestrictions::RatedContentCategory Category() const;
-    void Category(Windows::Media::ContentRestrictions::RatedContentCategory value) const;
-    Windows::Foundation::Collections::IVector<hstring> Ratings() const;
-    void Ratings(const Windows::Foundation::Collections::IVector<hstring> & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRatedContentDescriptionFactory
-{
-    Windows::Media::ContentRestrictions::RatedContentDescription Create(hstring_ref id, hstring_ref title, Windows::Media::ContentRestrictions::RatedContentCategory category) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRatedContentRestrictions
-{
-    Windows::Foundation::IAsyncOperation<Windows::Media::ContentRestrictions::ContentRestrictionsBrowsePolicy> GetBrowsePolicyAsync() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::ContentRestrictions::ContentAccessRestrictionLevel> GetRestrictionLevelAsync(const Windows::Media::ContentRestrictions::RatedContentDescription & RatedContentDescription) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestContentAccessAsync(const Windows::Media::ContentRestrictions::RatedContentDescription & RatedContentDescription) const;
-    event_token RestrictionsChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    using RestrictionsChanged_revoker = event_revoker<IRatedContentRestrictions>;
-    RestrictionsChanged_revoker RestrictionsChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    void RestrictionsChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRatedContentRestrictionsFactory
-{
-    Windows::Media::ContentRestrictions::RatedContentRestrictions CreateWithMaxAgeRating(uint32_t maxAgeRating) const;
-};
-
 struct IContentRestrictionsBrowsePolicy :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContentRestrictionsBrowsePolicy>
 {
     IContentRestrictionsBrowsePolicy(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContentRestrictionsBrowsePolicy>(m_ptr); }
 };
 
 struct IRatedContentDescription :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRatedContentDescription>
 {
     IRatedContentDescription(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRatedContentDescription>(m_ptr); }
 };
 
 struct IRatedContentDescriptionFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRatedContentDescriptionFactory>
 {
     IRatedContentDescriptionFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRatedContentDescriptionFactory>(m_ptr); }
 };
 
 struct IRatedContentRestrictions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRatedContentRestrictions>
 {
     IRatedContentRestrictions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRatedContentRestrictions>(m_ptr); }
 };
 
 struct IRatedContentRestrictionsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRatedContentRestrictionsFactory>
 {
     IRatedContentRestrictionsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRatedContentRestrictionsFactory>(m_ptr); }
 };
 
 }

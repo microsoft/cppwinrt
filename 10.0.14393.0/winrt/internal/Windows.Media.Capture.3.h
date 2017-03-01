@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_MediaCaptureFailedEventHandler : implements<im
 {
     impl_MediaCaptureFailedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Capture::IMediaCapture> sender, abi_arg_in<Windows::Media::Capture::IMediaCaptureFailedEventArgs> errorEventArgs) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Capture::IMediaCapture> sender, impl::abi_arg_in<Windows::Media::Capture::IMediaCaptureFailedEventArgs> errorEventArgs) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_RecordLimitationExceededEventHandler : impleme
 {
     impl_RecordLimitationExceededEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Capture::IMediaCapture> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Capture::IMediaCapture> sender) noexcept override
     {
         try
         {
@@ -160,10 +160,10 @@ struct WINRT_EBO MediaCapture :
 {
     MediaCapture(std::nullptr_t) noexcept {}
     MediaCapture();
-    static bool IsVideoProfileSupported(hstring_ref videoDeviceId);
-    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindAllVideoProfiles(hstring_ref videoDeviceId);
-    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindConcurrentProfiles(hstring_ref videoDeviceId);
-    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindKnownVideoProfiles(hstring_ref videoDeviceId, Windows::Media::Capture::KnownVideoProfile name);
+    static bool IsVideoProfileSupported(hstring_view videoDeviceId);
+    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindAllVideoProfiles(hstring_view videoDeviceId);
+    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindConcurrentProfiles(hstring_view videoDeviceId);
+    static Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::MediaCaptureVideoProfile> FindKnownVideoProfiles(hstring_view videoDeviceId, Windows::Media::Capture::KnownVideoProfile name);
 };
 
 struct WINRT_EBO MediaCaptureFailedEventArgs :

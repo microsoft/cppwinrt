@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -27,8 +27,8 @@ struct BadgeUpdateManager
 {
     BadgeUpdateManager() = delete;
     static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication();
-    static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_ref applicationId);
-    static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_ref tileId);
+    static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_view applicationId);
+    static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_view tileId);
     static Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type);
     static Windows::UI::Notifications::BadgeUpdateManagerForUser GetForUser(const Windows::System::User & user);
 };
@@ -138,8 +138,8 @@ struct TileFlyoutUpdateManager
 {
     TileFlyoutUpdateManager() = delete;
     static Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication();
-    static Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication(hstring_ref applicationId);
-    static Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForSecondaryTile(hstring_ref tileId);
+    static Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication(hstring_view applicationId);
+    static Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForSecondaryTile(hstring_view tileId);
     static Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type);
 };
 
@@ -160,8 +160,8 @@ struct TileUpdateManager
 {
     TileUpdateManager() = delete;
     static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication();
-    static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_ref applicationId);
-    static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_ref tileId);
+    static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_view applicationId);
+    static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_view tileId);
     static Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileTemplateType type);
     static Windows::UI::Notifications::TileUpdateManagerForUser GetForUser(const Windows::System::User & user);
 };
@@ -228,7 +228,7 @@ struct ToastNotificationManager
 {
     ToastNotificationManager() = delete;
     static Windows::UI::Notifications::ToastNotifier CreateToastNotifier();
-    static Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_ref applicationId);
+    static Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_view applicationId);
     static Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type);
     static Windows::UI::Notifications::ToastNotificationHistory History();
     static Windows::UI::Notifications::ToastNotificationManagerForUser GetForUser(const Windows::System::User & user);

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -215,6 +215,67 @@ struct ReceiptPrinterCapabilities;
 struct SlipPrintJob;
 struct SlipPrinterCapabilities;
 struct UnifiedPosErrorData;
+
+}
+
+namespace Windows::Devices::PointOfService {
+
+template <typename T> struct impl_IBarcodeScanner;
+template <typename T> struct impl_IBarcodeScanner2;
+template <typename T> struct impl_IBarcodeScannerCapabilities;
+template <typename T> struct impl_IBarcodeScannerCapabilities1;
+template <typename T> struct impl_IBarcodeScannerDataReceivedEventArgs;
+template <typename T> struct impl_IBarcodeScannerErrorOccurredEventArgs;
+template <typename T> struct impl_IBarcodeScannerImagePreviewReceivedEventArgs;
+template <typename T> struct impl_IBarcodeScannerReport;
+template <typename T> struct impl_IBarcodeScannerStatics;
+template <typename T> struct impl_IBarcodeScannerStatusUpdatedEventArgs;
+template <typename T> struct impl_IBarcodeSymbologiesStatics;
+template <typename T> struct impl_ICashDrawer;
+template <typename T> struct impl_ICashDrawerCapabilities;
+template <typename T> struct impl_ICashDrawerCloseAlarm;
+template <typename T> struct impl_ICashDrawerEventSource;
+template <typename T> struct impl_ICashDrawerEventSourceEventArgs;
+template <typename T> struct impl_ICashDrawerStatics;
+template <typename T> struct impl_ICashDrawerStatus;
+template <typename T> struct impl_ICashDrawerStatusUpdatedEventArgs;
+template <typename T> struct impl_IClaimedBarcodeScanner;
+template <typename T> struct impl_IClaimedBarcodeScanner1;
+template <typename T> struct impl_IClaimedCashDrawer;
+template <typename T> struct impl_IClaimedJournalPrinter;
+template <typename T> struct impl_IClaimedMagneticStripeReader;
+template <typename T> struct impl_IClaimedPosPrinter;
+template <typename T> struct impl_IClaimedReceiptPrinter;
+template <typename T> struct impl_IClaimedSlipPrinter;
+template <typename T> struct impl_ICommonClaimedPosPrinterStation;
+template <typename T> struct impl_ICommonPosPrintStationCapabilities;
+template <typename T> struct impl_ICommonReceiptSlipCapabilities;
+template <typename T> struct impl_IJournalPrinterCapabilities;
+template <typename T> struct impl_IMagneticStripeReader;
+template <typename T> struct impl_IMagneticStripeReaderAamvaCardDataReceivedEventArgs;
+template <typename T> struct impl_IMagneticStripeReaderBankCardDataReceivedEventArgs;
+template <typename T> struct impl_IMagneticStripeReaderCapabilities;
+template <typename T> struct impl_IMagneticStripeReaderCardTypesStatics;
+template <typename T> struct impl_IMagneticStripeReaderEncryptionAlgorithmsStatics;
+template <typename T> struct impl_IMagneticStripeReaderErrorOccurredEventArgs;
+template <typename T> struct impl_IMagneticStripeReaderReport;
+template <typename T> struct impl_IMagneticStripeReaderStatics;
+template <typename T> struct impl_IMagneticStripeReaderStatusUpdatedEventArgs;
+template <typename T> struct impl_IMagneticStripeReaderTrackData;
+template <typename T> struct impl_IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs;
+template <typename T> struct impl_IPosPrinter;
+template <typename T> struct impl_IPosPrinterCapabilities;
+template <typename T> struct impl_IPosPrinterCharacterSetIdsStatics;
+template <typename T> struct impl_IPosPrinterJob;
+template <typename T> struct impl_IPosPrinterReleaseDeviceRequestedEventArgs;
+template <typename T> struct impl_IPosPrinterStatics;
+template <typename T> struct impl_IPosPrinterStatus;
+template <typename T> struct impl_IPosPrinterStatusUpdatedEventArgs;
+template <typename T> struct impl_IReceiptOrSlipJob;
+template <typename T> struct impl_IReceiptPrintJob;
+template <typename T> struct impl_IReceiptPrinterCapabilities;
+template <typename T> struct impl_ISlipPrinterCapabilities;
+template <typename T> struct impl_IUnifiedPosErrorData;
 
 }
 

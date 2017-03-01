@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -22,13 +22,13 @@ struct WINRT_EBO BluetoothDevice :
     impl::require<BluetoothDevice, Windows::Foundation::IClosable, Windows::Devices::Bluetooth::IBluetoothDevice2, Windows::Devices::Bluetooth::IBluetoothDevice3>
 {
     BluetoothDevice(std::nullptr_t) noexcept {}
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothDevice> FromIdAsync(hstring_ref deviceId);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothDevice> FromIdAsync(hstring_view deviceId);
     static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothDevice> FromHostNameAsync(const Windows::Networking::HostName & hostName);
     static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothDevice> FromBluetoothAddressAsync(uint64_t address);
     static hstring GetDeviceSelector();
     static hstring GetDeviceSelectorFromPairingState(bool pairingState);
     static hstring GetDeviceSelectorFromConnectionStatus(Windows::Devices::Bluetooth::BluetoothConnectionStatus connectionStatus);
-    static hstring GetDeviceSelectorFromDeviceName(hstring_ref deviceName);
+    static hstring GetDeviceSelectorFromDeviceName(hstring_view deviceName);
     static hstring GetDeviceSelectorFromBluetoothAddress(uint64_t bluetoothAddress);
     static hstring GetDeviceSelectorFromClassOfDevice(const Windows::Devices::Bluetooth::BluetoothClassOfDevice & classOfDevice);
 };
@@ -106,12 +106,12 @@ struct WINRT_EBO BluetoothLEDevice :
     impl::require<BluetoothLEDevice, Windows::Foundation::IClosable, Windows::Devices::Bluetooth::IBluetoothLEDevice2>
 {
     BluetoothLEDevice(std::nullptr_t) noexcept {}
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothLEDevice> FromIdAsync(hstring_ref deviceId);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothLEDevice> FromIdAsync(hstring_view deviceId);
     static Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::BluetoothLEDevice> FromBluetoothAddressAsync(uint64_t bluetoothAddress);
     static hstring GetDeviceSelector();
     static hstring GetDeviceSelectorFromPairingState(bool pairingState);
     static hstring GetDeviceSelectorFromConnectionStatus(Windows::Devices::Bluetooth::BluetoothConnectionStatus connectionStatus);
-    static hstring GetDeviceSelectorFromDeviceName(hstring_ref deviceName);
+    static hstring GetDeviceSelectorFromDeviceName(hstring_view deviceName);
     static hstring GetDeviceSelectorFromBluetoothAddress(uint64_t bluetoothAddress);
     static hstring GetDeviceSelectorFromBluetoothAddress(uint64_t bluetoothAddress, Windows::Devices::Bluetooth::BluetoothAddressType bluetoothAddressType);
     static hstring GetDeviceSelectorFromAppearance(const Windows::Devices::Bluetooth::BluetoothLEAppearance & appearance);

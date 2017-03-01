@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.SpeechRecognition.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -85,6 +85,11 @@ template <> struct __declspec(uuid("26192073-a2c9-527d-9bd3-911c05e0011e")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_dcf2525a_42c0_501d_9fcb_471fae060396
+#define WINRT_GENERIC_dcf2525a_42c0_501d_9fcb_471fae060396
+template <> struct __declspec(uuid("dcf2525a-42c0-501d-9fcb-471fae060396")) __declspec(novtable) IVector<Windows::Globalization::Language> : impl_IVector<Windows::Globalization::Language> {};
+#endif
+
 #ifndef WINRT_GENERIC_48409a10_61b6_5db1_a69d_8abc46ac608a
 #define WINRT_GENERIC_48409a10_61b6_5db1_a69d_8abc46ac608a
 template <> struct __declspec(uuid("48409a10-61b6-5db1-a69d-8abc46ac608a")) __declspec(novtable) IIterable<Windows::Globalization::Language> : impl_IIterable<Windows::Globalization::Language> {};
@@ -103,6 +108,11 @@ template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __de
 #ifndef WINRT_GENERIC_30e99ae6_f414_5243_8db2_aab38ea3f1f1
 #define WINRT_GENERIC_30e99ae6_f414_5243_8db2_aab38ea3f1f1
 template <> struct __declspec(uuid("30e99ae6-f414-5243-8db2-aab38ea3f1f1")) __declspec(novtable) IIterator<Windows::Globalization::Language> : impl_IIterator<Windows::Globalization::Language> {};
+#endif
+
+#ifndef WINRT_GENERIC_07035819_cc06_5409_96d9_7a4b7a383b93
+#define WINRT_GENERIC_07035819_cc06_5409_96d9_7a4b7a383b93
+template <> struct __declspec(uuid("07035819-cc06-5409-96d9-7a4b7a383b93")) __declspec(novtable) IVector<Windows::Media::SpeechRecognition::SpeechRecognitionResult> : impl_IVector<Windows::Media::SpeechRecognition::SpeechRecognitionResult> {};
 #endif
 
 #ifndef WINRT_GENERIC_20756dd2_6d3f_5409_846a_0f0f01d7bf9a
@@ -155,6 +165,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("2bda6840-c39e-5534-8099-22004ab33fc2")) __declspec(novtable) IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
 #endif
 
+#ifndef WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
+#define WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
+template <> struct __declspec(uuid("49aec24b-4678-5ce4-879d-b22ba71d3140")) __declspec(novtable) IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
+#endif
+
 #ifndef WINRT_GENERIC_2843d34f_d3e5_5fca_9fdc_b568dd5c1e64
 #define WINRT_GENERIC_2843d34f_d3e5_5fca_9fdc_b568dd5c1e64
 template <> struct __declspec(uuid("2843d34f-d3e5-5fca-9fdc-b568dd5c1e64")) __declspec(novtable) IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
@@ -163,6 +178,11 @@ template <> struct __declspec(uuid("2843d34f-d3e5-5fca-9fdc-b568dd5c1e64")) __de
 #ifndef WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
 #define WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
 template <> struct __declspec(uuid("bcde03ad-ea71-5077-a961-1c0ecff57202")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
+#endif
+
+#ifndef WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+#define WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+template <> struct __declspec(uuid("b63397c9-5d89-530b-becf-2b843a15c4e4")) __declspec(novtable) IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
 #endif
 
 #ifndef WINRT_GENERIC_d19b13f3_9058_53bd_8d53_3ee1ea84389b
@@ -190,456 +210,198 @@ template <> struct __declspec(uuid("a4cd6151-2cc1-56f1-9014-df6ba3410beb")) __de
 
 namespace Windows::Media::SpeechRecognition {
 
-template <typename D>
-struct WINRT_EBO impl_ISpeechContinuousRecognitionCompletedEventArgs
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionResultStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechContinuousRecognitionResultGeneratedEventArgs
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionResult Result() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechContinuousRecognitionSession
-{
-    Windows::Foundation::TimeSpan AutoStopSilenceTimeout() const;
-    void AutoStopSilenceTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::IAsyncAction StartAsync() const;
-    Windows::Foundation::IAsyncAction StartAsync(Windows::Media::SpeechRecognition::SpeechContinuousRecognitionMode mode) const;
-    Windows::Foundation::IAsyncAction StopAsync() const;
-    Windows::Foundation::IAsyncAction CancelAsync() const;
-    Windows::Foundation::IAsyncAction PauseAsync() const;
-    void Resume() const;
-    event_token Completed(const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechContinuousRecognitionSession, Windows::Media::SpeechRecognition::SpeechContinuousRecognitionCompletedEventArgs> & value) const;
-    using Completed_revoker = event_revoker<ISpeechContinuousRecognitionSession>;
-    Completed_revoker Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechContinuousRecognitionSession, Windows::Media::SpeechRecognition::SpeechContinuousRecognitionCompletedEventArgs> & value) const;
-    void Completed(event_token value) const;
-    event_token ResultGenerated(const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechContinuousRecognitionSession, Windows::Media::SpeechRecognition::SpeechContinuousRecognitionResultGeneratedEventArgs> & value) const;
-    using ResultGenerated_revoker = event_revoker<ISpeechContinuousRecognitionSession>;
-    ResultGenerated_revoker ResultGenerated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechContinuousRecognitionSession, Windows::Media::SpeechRecognition::SpeechContinuousRecognitionResultGeneratedEventArgs> & value) const;
-    void ResultGenerated(event_token value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionCompilationResult
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionResultStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionConstraint
-{
-    bool IsEnabled() const;
-    void IsEnabled(bool value) const;
-    hstring Tag() const;
-    void Tag(hstring_ref value) const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionConstraintType Type() const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionConstraintProbability Probability() const;
-    void Probability(Windows::Media::SpeechRecognition::SpeechRecognitionConstraintProbability value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionGrammarFileConstraint
-{
-    Windows::Storage::StorageFile GrammarFile() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionGrammarFileConstraintFactory
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionGrammarFileConstraint Create(const Windows::Storage::StorageFile & file) const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionGrammarFileConstraint CreateWithTag(const Windows::Storage::StorageFile & file, hstring_ref tag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionHypothesis
-{
-    hstring Text() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionHypothesisGeneratedEventArgs
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionHypothesis Hypothesis() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionListConstraint
-{
-    Windows::Foundation::Collections::IVector<hstring> Commands() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionListConstraintFactory
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionListConstraint Create(const Windows::Foundation::Collections::IIterable<hstring> & commands) const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionListConstraint CreateWithTag(const Windows::Foundation::Collections::IIterable<hstring> & commands, hstring_ref tag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionQualityDegradingEventArgs
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionAudioProblem Problem() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionResult
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionResultStatus Status() const;
-    hstring Text() const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionConfidence Confidence() const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionSemanticInterpretation SemanticInterpretation() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechRecognition::SpeechRecognitionResult> GetAlternates(uint32_t maxAlternates) const;
-    Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint Constraint() const;
-    Windows::Foundation::Collections::IVectorView<hstring> RulePath() const;
-    double RawConfidence() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionResult2
-{
-    Windows::Foundation::DateTime PhraseStartTime() const;
-    Windows::Foundation::TimeSpan PhraseDuration() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionSemanticInterpretation
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionTopicConstraint
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionScenario Scenario() const;
-    hstring TopicHint() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionTopicConstraintFactory
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionTopicConstraint Create(Windows::Media::SpeechRecognition::SpeechRecognitionScenario scenario, hstring_ref topicHint) const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionTopicConstraint CreateWithTag(Windows::Media::SpeechRecognition::SpeechRecognitionScenario scenario, hstring_ref topicHint, hstring_ref tag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognitionVoiceCommandDefinitionConstraint
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizer
-{
-    Windows::Globalization::Language CurrentLanguage() const;
-    Windows::Foundation::Collections::IVector<Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint> Constraints() const;
-    Windows::Media::SpeechRecognition::SpeechRecognizerTimeouts Timeouts() const;
-    Windows::Media::SpeechRecognition::SpeechRecognizerUIOptions UIOptions() const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::SpeechRecognition::SpeechRecognitionCompilationResult> CompileConstraintsAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::SpeechRecognition::SpeechRecognitionResult> RecognizeAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::SpeechRecognition::SpeechRecognitionResult> RecognizeWithUIAsync() const;
-    event_token RecognitionQualityDegrading(const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognitionQualityDegradingEventArgs> & speechRecognitionQualityDegradingHandler) const;
-    using RecognitionQualityDegrading_revoker = event_revoker<ISpeechRecognizer>;
-    RecognitionQualityDegrading_revoker RecognitionQualityDegrading(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognitionQualityDegradingEventArgs> & speechRecognitionQualityDegradingHandler) const;
-    void RecognitionQualityDegrading(event_token cookie) const;
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognizerStateChangedEventArgs> & stateChangedHandler) const;
-    using StateChanged_revoker = event_revoker<ISpeechRecognizer>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognizerStateChangedEventArgs> & stateChangedHandler) const;
-    void StateChanged(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizer2
-{
-    Windows::Media::SpeechRecognition::SpeechContinuousRecognitionSession ContinuousRecognitionSession() const;
-    Windows::Media::SpeechRecognition::SpeechRecognizerState State() const;
-    Windows::Foundation::IAsyncAction StopRecognitionAsync() const;
-    event_token HypothesisGenerated(const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognitionHypothesisGeneratedEventArgs> & value) const;
-    using HypothesisGenerated_revoker = event_revoker<ISpeechRecognizer2>;
-    HypothesisGenerated_revoker HypothesisGenerated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::SpeechRecognition::SpeechRecognizer, Windows::Media::SpeechRecognition::SpeechRecognitionHypothesisGeneratedEventArgs> & value) const;
-    void HypothesisGenerated(event_token value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizerFactory
-{
-    Windows::Media::SpeechRecognition::SpeechRecognizer Create(const Windows::Globalization::Language & language) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizerStateChangedEventArgs
-{
-    Windows::Media::SpeechRecognition::SpeechRecognizerState State() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizerStatics
-{
-    Windows::Globalization::Language SystemSpeechLanguage() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::Language> SupportedTopicLanguages() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::Language> SupportedGrammarLanguages() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizerTimeouts
-{
-    Windows::Foundation::TimeSpan InitialSilenceTimeout() const;
-    void InitialSilenceTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan EndSilenceTimeout() const;
-    void EndSilenceTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan BabbleTimeout() const;
-    void BabbleTimeout(const Windows::Foundation::TimeSpan & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechRecognizerUIOptions
-{
-    hstring ExampleText() const;
-    void ExampleText(hstring_ref value) const;
-    hstring AudiblePrompt() const;
-    void AudiblePrompt(hstring_ref value) const;
-    bool IsReadBackEnabled() const;
-    void IsReadBackEnabled(bool value) const;
-    bool ShowConfirmation() const;
-    void ShowConfirmation(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandManager
-{
-    Windows::Foundation::IAsyncAction InstallCommandSetsFromStorageFileAsync(const Windows::Storage::StorageFile & file) const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> InstalledCommandSets() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandSet
-{
-    hstring Language() const;
-    hstring Name() const;
-    Windows::Foundation::IAsyncAction SetPhraseListAsync(hstring_ref phraseListName, const Windows::Foundation::Collections::IIterable<hstring> & phraseList) const;
-};
-
 struct ISpeechContinuousRecognitionCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechContinuousRecognitionCompletedEventArgs>
 {
     ISpeechContinuousRecognitionCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechContinuousRecognitionCompletedEventArgs>(m_ptr); }
 };
 
 struct ISpeechContinuousRecognitionResultGeneratedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechContinuousRecognitionResultGeneratedEventArgs>
 {
     ISpeechContinuousRecognitionResultGeneratedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechContinuousRecognitionResultGeneratedEventArgs>(m_ptr); }
 };
 
 struct ISpeechContinuousRecognitionSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechContinuousRecognitionSession>
 {
     ISpeechContinuousRecognitionSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechContinuousRecognitionSession>(m_ptr); }
 };
 
 struct ISpeechRecognitionCompilationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionCompilationResult>
 {
     ISpeechRecognitionCompilationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionCompilationResult>(m_ptr); }
 };
 
 struct ISpeechRecognitionConstraint :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionConstraint>
 {
     ISpeechRecognitionConstraint(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionConstraint>(m_ptr); }
 };
 
 struct ISpeechRecognitionGrammarFileConstraint :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionGrammarFileConstraint>,
     impl::require<ISpeechRecognitionGrammarFileConstraint, Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint>
 {
     ISpeechRecognitionGrammarFileConstraint(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionGrammarFileConstraint>(m_ptr); }
 };
 
 struct ISpeechRecognitionGrammarFileConstraintFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionGrammarFileConstraintFactory>
 {
     ISpeechRecognitionGrammarFileConstraintFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionGrammarFileConstraintFactory>(m_ptr); }
 };
 
 struct ISpeechRecognitionHypothesis :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionHypothesis>
 {
     ISpeechRecognitionHypothesis(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionHypothesis>(m_ptr); }
 };
 
 struct ISpeechRecognitionHypothesisGeneratedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionHypothesisGeneratedEventArgs>
 {
     ISpeechRecognitionHypothesisGeneratedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionHypothesisGeneratedEventArgs>(m_ptr); }
 };
 
 struct ISpeechRecognitionListConstraint :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionListConstraint>,
     impl::require<ISpeechRecognitionListConstraint, Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint>
 {
     ISpeechRecognitionListConstraint(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionListConstraint>(m_ptr); }
 };
 
 struct ISpeechRecognitionListConstraintFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionListConstraintFactory>
 {
     ISpeechRecognitionListConstraintFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionListConstraintFactory>(m_ptr); }
 };
 
 struct ISpeechRecognitionQualityDegradingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionQualityDegradingEventArgs>
 {
     ISpeechRecognitionQualityDegradingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionQualityDegradingEventArgs>(m_ptr); }
 };
 
 struct ISpeechRecognitionResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionResult>
 {
     ISpeechRecognitionResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionResult>(m_ptr); }
 };
 
 struct ISpeechRecognitionResult2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionResult2>
 {
     ISpeechRecognitionResult2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionResult2>(m_ptr); }
 };
 
 struct ISpeechRecognitionSemanticInterpretation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionSemanticInterpretation>
 {
     ISpeechRecognitionSemanticInterpretation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionSemanticInterpretation>(m_ptr); }
 };
 
 struct ISpeechRecognitionTopicConstraint :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionTopicConstraint>,
     impl::require<ISpeechRecognitionTopicConstraint, Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint>
 {
     ISpeechRecognitionTopicConstraint(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionTopicConstraint>(m_ptr); }
 };
 
 struct ISpeechRecognitionTopicConstraintFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionTopicConstraintFactory>
 {
     ISpeechRecognitionTopicConstraintFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionTopicConstraintFactory>(m_ptr); }
 };
 
 struct ISpeechRecognitionVoiceCommandDefinitionConstraint :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognitionVoiceCommandDefinitionConstraint>,
     impl::require<ISpeechRecognitionVoiceCommandDefinitionConstraint, Windows::Media::SpeechRecognition::ISpeechRecognitionConstraint>
 {
     ISpeechRecognitionVoiceCommandDefinitionConstraint(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognitionVoiceCommandDefinitionConstraint>(m_ptr); }
 };
 
 struct ISpeechRecognizer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizer>,
     impl::require<ISpeechRecognizer, Windows::Foundation::IClosable>
 {
     ISpeechRecognizer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizer>(m_ptr); }
 };
 
 struct ISpeechRecognizer2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizer2>
 {
     ISpeechRecognizer2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizer2>(m_ptr); }
 };
 
 struct ISpeechRecognizerFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizerFactory>
 {
     ISpeechRecognizerFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizerFactory>(m_ptr); }
 };
 
 struct ISpeechRecognizerStateChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizerStateChangedEventArgs>
 {
     ISpeechRecognizerStateChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizerStateChangedEventArgs>(m_ptr); }
 };
 
 struct ISpeechRecognizerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizerStatics>
 {
     ISpeechRecognizerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizerStatics>(m_ptr); }
 };
 
 struct ISpeechRecognizerTimeouts :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizerTimeouts>
 {
     ISpeechRecognizerTimeouts(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizerTimeouts>(m_ptr); }
 };
 
 struct ISpeechRecognizerUIOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechRecognizerUIOptions>
 {
     ISpeechRecognizerUIOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechRecognizerUIOptions>(m_ptr); }
 };
 
 struct IVoiceCommandManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandManager>
 {
     IVoiceCommandManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandManager>(m_ptr); }
 };
 
 struct IVoiceCommandSet :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandSet>
 {
     IVoiceCommandSet(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandSet>(m_ptr); }
 };
 
 }

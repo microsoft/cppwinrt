@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -65,6 +65,22 @@ struct Gamepad;
 struct Headset;
 struct RacingWheel;
 struct UINavigationController;
+
+}
+
+namespace Windows::Gaming::Input {
+
+template <typename T> struct impl_IArcadeStick;
+template <typename T> struct impl_IArcadeStickStatics;
+template <typename T> struct impl_IGameController;
+template <typename T> struct impl_IGamepad;
+template <typename T> struct impl_IGamepad2;
+template <typename T> struct impl_IGamepadStatics;
+template <typename T> struct impl_IHeadset;
+template <typename T> struct impl_IRacingWheel;
+template <typename T> struct impl_IRacingWheelStatics;
+template <typename T> struct impl_IUINavigationController;
+template <typename T> struct impl_IUINavigationControllerStatics;
 
 }
 

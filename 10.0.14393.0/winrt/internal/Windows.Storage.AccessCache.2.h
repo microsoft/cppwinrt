@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -69,6 +69,11 @@ template <> struct __declspec(uuid("92c3102f-a327-5318-a6c1-76f6b2a0abfb")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_156b7b9d_7c0f_53b1_8844_e2ea9a083882
+#define WINRT_GENERIC_156b7b9d_7c0f_53b1_8844_e2ea9a083882
+template <> struct __declspec(uuid("156b7b9d-7c0f-53b1-8844-e2ea9a083882")) __declspec(novtable) IVector<Windows::Storage::AccessCache::AccessListEntry> : impl_IVector<Windows::Storage::AccessCache::AccessListEntry> {};
+#endif
+
 #ifndef WINRT_GENERIC_d1a0a6c4_889d_519b_8508_26241b329b7e
 #define WINRT_GENERIC_d1a0a6c4_889d_519b_8508_26241b329b7e
 template <> struct __declspec(uuid("d1a0a6c4-889d-519b-8508-26241b329b7e")) __declspec(novtable) IIterator<Windows::Storage::AccessCache::AccessListEntry> : impl_IIterator<Windows::Storage::AccessCache::AccessListEntry> {};
@@ -79,96 +84,41 @@ template <> struct __declspec(uuid("d1a0a6c4-889d-519b-8508-26241b329b7e")) __de
 
 namespace Windows::Storage::AccessCache {
 
-template <typename D>
-struct WINRT_EBO impl_IItemRemovedEventArgs
-{
-    Windows::Storage::AccessCache::AccessListEntry RemovedEntry() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageApplicationPermissionsStatics
-{
-    Windows::Storage::AccessCache::StorageItemAccessList FutureAccessList() const;
-    Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList MostRecentlyUsedList() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemAccessList
-{
-    hstring Add(const Windows::Storage::IStorageItem & file) const;
-    hstring Add(const Windows::Storage::IStorageItem & file, hstring_ref metadata) const;
-    void AddOrReplace(hstring_ref token, const Windows::Storage::IStorageItem & file) const;
-    void AddOrReplace(hstring_ref token, const Windows::Storage::IStorageItem & file, hstring_ref metadata) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetItemAsync(hstring_ref token) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileAsync(hstring_ref token) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderAsync(hstring_ref token) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetItemAsync(hstring_ref token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileAsync(hstring_ref token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderAsync(hstring_ref token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
-    void Remove(hstring_ref token) const;
-    bool ContainsItem(hstring_ref token) const;
-    void Clear() const;
-    bool CheckAccess(const Windows::Storage::IStorageItem & file) const;
-    Windows::Storage::AccessCache::AccessListEntryView Entries() const;
-    uint32_t MaximumItemsAllowed() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemMostRecentlyUsedList
-{
-    event_token ItemRemoved(const Windows::Foundation::TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> & handler) const;
-    using ItemRemoved_revoker = event_revoker<IStorageItemMostRecentlyUsedList>;
-    ItemRemoved_revoker ItemRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> & handler) const;
-    void ItemRemoved(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemMostRecentlyUsedList2
-{
-    hstring Add(const Windows::Storage::IStorageItem & file, hstring_ref metadata, Windows::Storage::AccessCache::RecentStorageItemVisibility visibility) const;
-    void AddOrReplace(hstring_ref token, const Windows::Storage::IStorageItem & file, hstring_ref metadata, Windows::Storage::AccessCache::RecentStorageItemVisibility visibility) const;
-};
-
 struct IItemRemovedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IItemRemovedEventArgs>
 {
     IItemRemovedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IItemRemovedEventArgs>(m_ptr); }
 };
 
 struct IStorageApplicationPermissionsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageApplicationPermissionsStatics>
 {
     IStorageApplicationPermissionsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageApplicationPermissionsStatics>(m_ptr); }
 };
 
 struct IStorageItemAccessList :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemAccessList>
 {
     IStorageItemAccessList(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemAccessList>(m_ptr); }
 };
 
 struct IStorageItemMostRecentlyUsedList :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemMostRecentlyUsedList>,
     impl::require<IStorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::IStorageItemAccessList>
 {
     IStorageItemMostRecentlyUsedList(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemMostRecentlyUsedList>(m_ptr); }
 };
 
 struct IStorageItemMostRecentlyUsedList2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemMostRecentlyUsedList2>,
     impl::require<IStorageItemMostRecentlyUsedList2, Windows::Storage::AccessCache::IStorageItemAccessList, Windows::Storage::AccessCache::IStorageItemMostRecentlyUsedList>
 {
     IStorageItemMostRecentlyUsedList2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemMostRecentlyUsedList2>(m_ptr); }
     using impl_IStorageItemAccessList::Add;
     using impl_IStorageItemAccessList::AddOrReplace;
     using impl_IStorageItemMostRecentlyUsedList2::Add;

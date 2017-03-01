@@ -7,13 +7,13 @@ struct file
 {
     file(wchar_t const * const filename) :
         m_handle(create(filename)),
-        m_io(get(m_handle))
+        m_io(get_abi(m_handle))
     {
     }
 
     auto read(uint64_t const offset, void * const buffer, size_t const size)
     {
-        return m_io.start([=, handle = get(m_handle)](OVERLAPPED & overlapped)
+        return m_io.start([=, handle = get_abi(m_handle)](OVERLAPPED & overlapped)
         {
             overlapped.Offset = static_cast<DWORD>(offset);
             overlapped.OffsetHigh = offset >> 32;
@@ -47,7 +47,7 @@ private:
         }
     };
 
-    using file_handle = handle<file_traits>;
+    using file_handle = impl::handle<file_traits>;
 
     static file_handle create(wchar_t const * const filename)
     {
@@ -89,7 +89,7 @@ IAsyncAction sample()
 
 int main()
 {
-    initialize();
+    init_apartment();
 
     sample().get();
 }

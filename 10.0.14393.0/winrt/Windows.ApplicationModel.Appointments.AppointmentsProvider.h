@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.ApplicationModel.Appointments.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -15,11 +18,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentInformation(abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
+    HRESULT __stdcall get_AppointmentInformation(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppointmentInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppointmentInformation());
             return S_OK;
         }
         catch (...)
@@ -29,11 +33,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourcePackageFamilyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourcePackageFamilyName());
             return S_OK;
         }
         catch (...)
@@ -43,10 +48,11 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted(abi_arg_in<hstring> itemId) noexcept override
+    HRESULT __stdcall abi_ReportCompleted(impl::abi_arg_in<hstring> itemId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCompleted(*reinterpret_cast<const hstring *>(&itemId));
             return S_OK;
         }
@@ -60,6 +66,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCanceled();
             return S_OK;
         }
@@ -69,10 +76,11 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -86,6 +94,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissUI();
             return S_OK;
         }
@@ -99,11 +108,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>
 {
-    HRESULT __stdcall get_AddAppointment(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AddAppointment(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AddAppointment());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AddAppointment());
             return S_OK;
         }
         catch (...)
@@ -113,11 +123,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_ReplaceAppointment(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ReplaceAppointment(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReplaceAppointment());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReplaceAppointment());
             return S_OK;
         }
         catch (...)
@@ -127,11 +138,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_RemoveAppointment(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoveAppointment(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RemoveAppointment());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RemoveAppointment());
             return S_OK;
         }
         catch (...)
@@ -141,11 +153,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_ShowTimeFrame(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ShowTimeFrame(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ShowTimeFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ShowTimeFrame());
             return S_OK;
         }
         catch (...)
@@ -159,11 +172,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2>
 {
-    HRESULT __stdcall get_ShowAppointmentDetails(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ShowAppointmentDetails(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ShowAppointmentDetails());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ShowAppointmentDetails());
             return S_OK;
         }
         catch (...)
@@ -177,11 +191,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppointmentId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppointmentId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppointmentId());
             return S_OK;
         }
         catch (...)
@@ -191,11 +206,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_InstanceStartDate(abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_InstanceStartDate(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InstanceStartDate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstanceStartDate());
             return S_OK;
         }
         catch (...)
@@ -205,11 +221,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourcePackageFamilyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourcePackageFamilyName());
             return S_OK;
         }
         catch (...)
@@ -223,6 +240,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCompleted();
             return S_OK;
         }
@@ -236,6 +254,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCanceled();
             return S_OK;
         }
@@ -245,10 +264,11 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -262,6 +282,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissUI();
             return S_OK;
         }
@@ -275,11 +296,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppointmentId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppointmentId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppointmentId());
             return S_OK;
         }
         catch (...)
@@ -289,11 +311,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_AppointmentInformation(abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
+    HRESULT __stdcall get_AppointmentInformation(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppointmentInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppointmentInformation());
             return S_OK;
         }
         catch (...)
@@ -303,11 +326,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_InstanceStartDate(abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_InstanceStartDate(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InstanceStartDate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstanceStartDate());
             return S_OK;
         }
         catch (...)
@@ -317,11 +341,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourcePackageFamilyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourcePackageFamilyName());
             return S_OK;
         }
         catch (...)
@@ -331,10 +356,11 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted(abi_arg_in<hstring> itemId) noexcept override
+    HRESULT __stdcall abi_ReportCompleted(impl::abi_arg_in<hstring> itemId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCompleted(*reinterpret_cast<const hstring *>(&itemId));
             return S_OK;
         }
@@ -348,6 +374,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportCanceled();
             return S_OK;
         }
@@ -357,10 +384,11 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -374,6 +402,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissUI();
             return S_OK;
         }
@@ -391,159 +420,159 @@ namespace Windows::ApplicationModel::Appointments::AppointmentsProvider {
 template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::AddAppointment() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppointmentsProviderLaunchActionVerbsStatics &>(static_cast<const D &>(*this))->get_AddAppointment(put(value)));
+    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_AddAppointment(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::ReplaceAppointment() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppointmentsProviderLaunchActionVerbsStatics &>(static_cast<const D &>(*this))->get_ReplaceAppointment(put(value)));
+    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_ReplaceAppointment(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::RemoveAppointment() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppointmentsProviderLaunchActionVerbsStatics &>(static_cast<const D &>(*this))->get_RemoveAppointment(put(value)));
+    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_RemoveAppointment(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::ShowTimeFrame() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppointmentsProviderLaunchActionVerbsStatics &>(static_cast<const D &>(*this))->get_ShowTimeFrame(put(value)));
+    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_ShowTimeFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics2<D>::ShowAppointmentDetails() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppointmentsProviderLaunchActionVerbsStatics2 &>(static_cast<const D &>(*this))->get_ShowAppointmentDetails(put(value)));
+    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics2)->get_ShowAppointmentDetails(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Appointments::Appointment impl_IAddAppointmentOperation<D>::AppointmentInformation() const
 {
     Windows::ApplicationModel::Appointments::Appointment value { nullptr };
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->get_AppointmentInformation(put(value)));
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAddAppointmentOperation<D>::SourcePackageFamilyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->get_SourcePackageFamilyName(put(value)));
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAddAppointmentOperation<D>::ReportCompleted(hstring_ref itemId) const
+template <typename D> void impl_IAddAppointmentOperation<D>::ReportCompleted(hstring_view itemId) const
 {
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCompleted(get(itemId)));
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportCompleted(get_abi(itemId)));
 }
 
 template <typename D> void impl_IAddAppointmentOperation<D>::ReportCanceled() const
 {
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCanceled());
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportCanceled());
 }
 
-template <typename D> void impl_IAddAppointmentOperation<D>::ReportError(hstring_ref value) const
+template <typename D> void impl_IAddAppointmentOperation<D>::ReportError(hstring_view value) const
 {
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportError(get(value)));
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportError(get_abi(value)));
 }
 
 template <typename D> void impl_IAddAppointmentOperation<D>::DismissUI() const
 {
-    check_hresult(static_cast<const IAddAppointmentOperation &>(static_cast<const D &>(*this))->abi_DismissUI());
+    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_DismissUI());
 }
 
 template <typename D> hstring impl_IReplaceAppointmentOperation<D>::AppointmentId() const
 {
     hstring value;
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->get_AppointmentId(put(value)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_AppointmentId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Appointments::Appointment impl_IReplaceAppointmentOperation<D>::AppointmentInformation() const
 {
     Windows::ApplicationModel::Appointments::Appointment value { nullptr };
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->get_AppointmentInformation(put(value)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IReplaceAppointmentOperation<D>::InstanceStartDate() const
 {
     Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->get_InstanceStartDate(put(value)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IReplaceAppointmentOperation<D>::SourcePackageFamilyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->get_SourcePackageFamilyName(put(value)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportCompleted(hstring_ref itemId) const
+template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportCompleted(hstring_view itemId) const
 {
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCompleted(get(itemId)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportCompleted(get_abi(itemId)));
 }
 
 template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportCanceled() const
 {
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCanceled());
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportCanceled());
 }
 
-template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportError(hstring_ref value) const
+template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportError(hstring_view value) const
 {
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportError(get(value)));
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportError(get_abi(value)));
 }
 
 template <typename D> void impl_IReplaceAppointmentOperation<D>::DismissUI() const
 {
-    check_hresult(static_cast<const IReplaceAppointmentOperation &>(static_cast<const D &>(*this))->abi_DismissUI());
+    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_DismissUI());
 }
 
 template <typename D> hstring impl_IRemoveAppointmentOperation<D>::AppointmentId() const
 {
     hstring value;
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->get_AppointmentId(put(value)));
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_AppointmentId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IRemoveAppointmentOperation<D>::InstanceStartDate() const
 {
     Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->get_InstanceStartDate(put(value)));
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IRemoveAppointmentOperation<D>::SourcePackageFamilyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->get_SourcePackageFamilyName(put(value)));
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportCompleted() const
 {
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCompleted());
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportCompleted());
 }
 
 template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportCanceled() const
 {
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportCanceled());
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportCanceled());
 }
 
-template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportError(hstring_ref value) const
+template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportError(hstring_view value) const
 {
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->abi_ReportError(get(value)));
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportError(get_abi(value)));
 }
 
 template <typename D> void impl_IRemoveAppointmentOperation<D>::DismissUI() const
 {
-    check_hresult(static_cast<const IRemoveAppointmentOperation &>(static_cast<const D &>(*this))->abi_DismissUI());
+    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_DismissUI());
 }
 
 inline hstring AppointmentsProviderLaunchActionVerbs::AddAppointment()
@@ -574,3 +603,77 @@ inline hstring AppointmentsProviderLaunchActionVerbs::ShowAppointmentDetails()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

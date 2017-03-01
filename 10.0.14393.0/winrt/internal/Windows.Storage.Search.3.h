@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,7 +14,7 @@ struct WINRT_EBO ContentIndexer :
     impl::require<ContentIndexer, Windows::Storage::Search::IContentIndexerQueryOperations>
 {
     ContentIndexer(std::nullptr_t) noexcept {}
-    static Windows::Storage::Search::ContentIndexer GetIndexer(hstring_ref indexName);
+    static Windows::Storage::Search::ContentIndexer GetIndexer(hstring_view indexName);
     static Windows::Storage::Search::ContentIndexer GetIndexer();
 };
 
@@ -37,7 +37,7 @@ struct WINRT_EBO QueryOptions :
 {
     QueryOptions(std::nullptr_t) noexcept {}
     QueryOptions();
-    QueryOptions(Windows::Storage::Search::CommonFileQuery query, const Windows::Foundation::Collections::IIterable<hstring> & fileTypeFilter);
+    QueryOptions(Windows::Storage::Search::CommonFileQuery query, iterable<hstring> fileTypeFilter);
     QueryOptions(Windows::Storage::Search::CommonFolderQuery query);
 };
 

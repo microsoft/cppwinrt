@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,7 +34,7 @@ struct WINRT_EBO HidDevice :
     HidDevice(std::nullptr_t) noexcept {}
     static hstring GetDeviceSelector(uint16_t usagePage, uint16_t usageId);
     static hstring GetDeviceSelector(uint16_t usagePage, uint16_t usageId, uint16_t vendorId, uint16_t productId);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> FromIdAsync(hstring_ref deviceId, Windows::Storage::FileAccessMode accessMode);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> FromIdAsync(hstring_view deviceId, Windows::Storage::FileAccessMode accessMode);
 };
 
 struct WINRT_EBO HidFeatureReport :

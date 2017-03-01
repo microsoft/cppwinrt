@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -181,6 +181,61 @@ struct RcsServiceKindSupportedChangedEventArgs;
 struct RcsTransport;
 struct RcsTransportConfiguration;
 struct RemoteParticipantComposingChangedEventArgs;
+
+}
+
+namespace Windows::ApplicationModel::Chat {
+
+template <typename T> struct impl_IChatCapabilities;
+template <typename T> struct impl_IChatCapabilitiesManagerStatics;
+template <typename T> struct impl_IChatConversation;
+template <typename T> struct impl_IChatConversation2;
+template <typename T> struct impl_IChatConversationReader;
+template <typename T> struct impl_IChatConversationThreadingInfo;
+template <typename T> struct impl_IChatItem;
+template <typename T> struct impl_IChatMessage;
+template <typename T> struct impl_IChatMessage2;
+template <typename T> struct impl_IChatMessage3;
+template <typename T> struct impl_IChatMessage4;
+template <typename T> struct impl_IChatMessageAttachment;
+template <typename T> struct impl_IChatMessageAttachment2;
+template <typename T> struct impl_IChatMessageAttachmentFactory;
+template <typename T> struct impl_IChatMessageBlockingStatic;
+template <typename T> struct impl_IChatMessageChange;
+template <typename T> struct impl_IChatMessageChangeReader;
+template <typename T> struct impl_IChatMessageChangeTracker;
+template <typename T> struct impl_IChatMessageChangedDeferral;
+template <typename T> struct impl_IChatMessageChangedEventArgs;
+template <typename T> struct impl_IChatMessageManager2Statics;
+template <typename T> struct impl_IChatMessageManagerStatic;
+template <typename T> struct impl_IChatMessageManagerStatics3;
+template <typename T> struct impl_IChatMessageNotificationTriggerDetails;
+template <typename T> struct impl_IChatMessageNotificationTriggerDetails2;
+template <typename T> struct impl_IChatMessageReader;
+template <typename T> struct impl_IChatMessageReader2;
+template <typename T> struct impl_IChatMessageStore;
+template <typename T> struct impl_IChatMessageStore2;
+template <typename T> struct impl_IChatMessageStore3;
+template <typename T> struct impl_IChatMessageStoreChangedEventArgs;
+template <typename T> struct impl_IChatMessageTransport;
+template <typename T> struct impl_IChatMessageTransport2;
+template <typename T> struct impl_IChatMessageTransportConfiguration;
+template <typename T> struct impl_IChatMessageValidationResult;
+template <typename T> struct impl_IChatQueryOptions;
+template <typename T> struct impl_IChatRecipientDeliveryInfo;
+template <typename T> struct impl_IChatSearchReader;
+template <typename T> struct impl_IChatSyncConfiguration;
+template <typename T> struct impl_IChatSyncManager;
+template <typename T> struct impl_IRcsEndUserMessage;
+template <typename T> struct impl_IRcsEndUserMessageAction;
+template <typename T> struct impl_IRcsEndUserMessageAvailableEventArgs;
+template <typename T> struct impl_IRcsEndUserMessageAvailableTriggerDetails;
+template <typename T> struct impl_IRcsEndUserMessageManager;
+template <typename T> struct impl_IRcsManagerStatics;
+template <typename T> struct impl_IRcsServiceKindSupportedChangedEventArgs;
+template <typename T> struct impl_IRcsTransport;
+template <typename T> struct impl_IRcsTransportConfiguration;
+template <typename T> struct impl_IRemoteParticipantComposingChangedEventArgs;
 
 }
 

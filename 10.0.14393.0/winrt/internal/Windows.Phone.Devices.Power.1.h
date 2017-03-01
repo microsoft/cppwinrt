@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,15 +12,15 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::Devices::Power {
 
-struct __declspec(uuid("972adbdd-6720-4702-a476-b9d38a0070e3")) __declspec(novtable) IBattery : Windows::IInspectable
+struct __declspec(uuid("972adbdd-6720-4702-a476-b9d38a0070e3")) __declspec(novtable) IBattery : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemainingChargePercent(int32_t * value) = 0;
     virtual HRESULT __stdcall get_RemainingDischargeTime(Windows::Foundation::TimeSpan * value) = 0;
-    virtual HRESULT __stdcall add_RemainingChargePercentChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * changeHandler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_RemainingChargePercentChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * changeHandler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RemainingChargePercentChanged(event_token token) = 0;
 };
 
-struct __declspec(uuid("faf5bc70-6369-11e1-b86c-0800200c9a66")) __declspec(novtable) IBatteryStatics : Windows::IInspectable
+struct __declspec(uuid("faf5bc70-6369-11e1-b86c-0800200c9a66")) __declspec(novtable) IBatteryStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetDefault(Windows::Phone::Devices::Power::IBattery ** result) = 0;
 };
@@ -35,8 +35,22 @@ template <> struct traits<Windows::Phone::Devices::Power::Battery> { using defau
 
 namespace Windows::Phone::Devices::Power {
 
-template <typename T> struct impl_IBattery;
-template <typename T> struct impl_IBatteryStatics;
+template <typename D>
+struct WINRT_EBO impl_IBattery
+{
+    int32_t RemainingChargePercent() const;
+    Windows::Foundation::TimeSpan RemainingDischargeTime() const;
+    event_token RemainingChargePercentChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler) const;
+    using RemainingChargePercentChanged_revoker = event_revoker<IBattery>;
+    RemainingChargePercentChanged_revoker RemainingChargePercentChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler) const;
+    void RemainingChargePercentChanged(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBatteryStatics
+{
+    Windows::Phone::Devices::Power::Battery GetDefault() const;
+};
 
 }
 

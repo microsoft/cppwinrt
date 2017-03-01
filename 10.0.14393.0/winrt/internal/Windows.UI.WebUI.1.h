@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -17,30 +17,30 @@ namespace ABI::Windows::UI::WebUI {
 
 struct __declspec(uuid("50f1e730-c5d1-4b6b-9adb-8a11756be29c")) __declspec(novtable) ActivatedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::ApplicationModel::Activation::IActivatedEventArgs * eventArgs) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::ApplicationModel::Activation::IActivatedEventArgs * eventArgs) = 0;
 };
 
 struct __declspec(uuid("2b09a173-b68e-4def-88c1-8de84e5aab2f")) __declspec(novtable) EnteredBackgroundEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::ApplicationModel::IEnteredBackgroundEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::ApplicationModel::IEnteredBackgroundEventArgs * e) = 0;
 };
 
-struct __declspec(uuid("c3bd1978-a431-49d8-a76a-395a4e03dcf3")) __declspec(novtable) IActivatedDeferral : Windows::IInspectable
+struct __declspec(uuid("c3bd1978-a431-49d8-a76a-395a4e03dcf3")) __declspec(novtable) IActivatedDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("ca6d5f74-63c2-44a6-b97b-d9a03c20bc9b")) __declspec(novtable) IActivatedEventArgsDeferral : Windows::IInspectable
+struct __declspec(uuid("ca6d5f74-63c2-44a6-b97b-d9a03c20bc9b")) __declspec(novtable) IActivatedEventArgsDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ActivatedOperation(Windows::UI::WebUI::IActivatedOperation ** value) = 0;
 };
 
-struct __declspec(uuid("b6a0b4bc-c6ca-42fd-9818-71904e45fed7")) __declspec(novtable) IActivatedOperation : Windows::IInspectable
+struct __declspec(uuid("b6a0b4bc-c6ca-42fd-9818-71904e45fed7")) __declspec(novtable) IActivatedOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetDeferral(Windows::UI::WebUI::IActivatedDeferral ** deferral) = 0;
 };
 
-struct __declspec(uuid("cea6469a-0e05-467a-abc9-36ec1d4cdcb6")) __declspec(novtable) IHtmlPrintDocumentSource : Windows::IInspectable
+struct __declspec(uuid("cea6469a-0e05-467a-abc9-36ec1d4cdcb6")) __declspec(novtable) IHtmlPrintDocumentSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(winrt::Windows::UI::WebUI::PrintContent * value) = 0;
     virtual HRESULT __stdcall put_Content(winrt::Windows::UI::WebUI::PrintContent value) = 0;
@@ -62,7 +62,7 @@ struct __declspec(uuid("cea6469a-0e05-467a-abc9-36ec1d4cdcb6")) __declspec(novta
     virtual HRESULT __stdcall abi_TrySetPageRange(hstring strPageRange, bool * pfSuccess) = 0;
 };
 
-struct __declspec(uuid("351b86bd-43b3-482b-85db-35d87b517ad9")) __declspec(novtable) IWebUIActivationStatics : Windows::IInspectable
+struct __declspec(uuid("351b86bd-43b3-482b-85db-35d87b517ad9")) __declspec(novtable) IWebUIActivationStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_Activated(Windows::UI::WebUI::ActivatedEventHandler * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Activated(event_token token) = 0;
@@ -74,7 +74,7 @@ struct __declspec(uuid("351b86bd-43b3-482b-85db-35d87b517ad9")) __declspec(novta
     virtual HRESULT __stdcall remove_Navigated(event_token token) = 0;
 };
 
-struct __declspec(uuid("c8e88696-4d78-4aa4-8f06-2a9eadc6c40a")) __declspec(novtable) IWebUIActivationStatics2 : Windows::IInspectable
+struct __declspec(uuid("c8e88696-4d78-4aa4-8f06-2a9eadc6c40a")) __declspec(novtable) IWebUIActivationStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_LeavingBackground(Windows::UI::WebUI::LeavingBackgroundEventHandler * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_LeavingBackground(event_token token) = 0;
@@ -83,50 +83,50 @@ struct __declspec(uuid("c8e88696-4d78-4aa4-8f06-2a9eadc6c40a")) __declspec(novta
     virtual HRESULT __stdcall abi_EnablePrelaunch(bool value) = 0;
 };
 
-struct __declspec(uuid("23f12c25-e2f7-4741-bc9c-394595de24dc")) __declspec(novtable) IWebUIBackgroundTaskInstance : Windows::IInspectable
+struct __declspec(uuid("23f12c25-e2f7-4741-bc9c-394595de24dc")) __declspec(novtable) IWebUIBackgroundTaskInstance : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Succeeded(bool * succeeded) = 0;
     virtual HRESULT __stdcall put_Succeeded(bool succeeded) = 0;
 };
 
-struct __declspec(uuid("9c7a5291-19ae-4ca3-b94b-fe4ec744a740")) __declspec(novtable) IWebUIBackgroundTaskInstanceStatics : Windows::IInspectable
+struct __declspec(uuid("9c7a5291-19ae-4ca3-b94b-fe4ec744a740")) __declspec(novtable) IWebUIBackgroundTaskInstanceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Current(Windows::UI::WebUI::IWebUIBackgroundTaskInstance ** backgroundTaskInstance) = 0;
 };
 
-struct __declspec(uuid("d804204d-831f-46e2-b432-3afce211f962")) __declspec(novtable) IWebUINavigatedDeferral : Windows::IInspectable
+struct __declspec(uuid("d804204d-831f-46e2-b432-3afce211f962")) __declspec(novtable) IWebUINavigatedDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("a75841b8-2499-4030-a69d-15d2d9cfe524")) __declspec(novtable) IWebUINavigatedEventArgs : Windows::IInspectable
+struct __declspec(uuid("a75841b8-2499-4030-a69d-15d2d9cfe524")) __declspec(novtable) IWebUINavigatedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NavigatedOperation(Windows::UI::WebUI::IWebUINavigatedOperation ** value) = 0;
 };
 
-struct __declspec(uuid("7a965f08-8182-4a89-ab67-8492e8750d4b")) __declspec(novtable) IWebUINavigatedOperation : Windows::IInspectable
+struct __declspec(uuid("7a965f08-8182-4a89-ab67-8492e8750d4b")) __declspec(novtable) IWebUINavigatedOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetDeferral(Windows::UI::WebUI::IWebUINavigatedDeferral ** deferral) = 0;
 };
 
 struct __declspec(uuid("00b4ccd9-7a9c-4b6b-9ac4-13474f268bc4")) __declspec(novtable) LeavingBackgroundEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::ApplicationModel::ILeavingBackgroundEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::ApplicationModel::ILeavingBackgroundEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("7af46fe6-40ca-4e49-a7d6-dbdb330cd1a3")) __declspec(novtable) NavigatedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::WebUI::IWebUINavigatedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::WebUI::IWebUINavigatedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("26599ba9-a22d-4806-a728-acadc1d075fa")) __declspec(novtable) ResumingEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender) = 0;
 };
 
 struct __declspec(uuid("509c429c-78e2-4883-abc8-8960dcde1b5c")) __declspec(novtable) SuspendingEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::ApplicationModel::ISuspendingEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::ApplicationModel::ISuspendingEventArgs * e) = 0;
 };
 
 }
@@ -188,23 +188,112 @@ template <> struct traits<Windows::UI::WebUI::WebUIWebAuthenticationBrokerContin
 
 namespace Windows::UI::WebUI {
 
-template <typename T> struct impl_IActivatedDeferral;
-template <typename T> struct impl_IActivatedEventArgsDeferral;
-template <typename T> struct impl_IActivatedOperation;
-template <typename T> struct impl_IHtmlPrintDocumentSource;
-template <typename T> struct impl_IWebUIActivationStatics;
-template <typename T> struct impl_IWebUIActivationStatics2;
-template <typename T> struct impl_IWebUIBackgroundTaskInstance;
-template <typename T> struct impl_IWebUIBackgroundTaskInstanceStatics;
-template <typename T> struct impl_IWebUINavigatedDeferral;
-template <typename T> struct impl_IWebUINavigatedEventArgs;
-template <typename T> struct impl_IWebUINavigatedOperation;
-template <typename T> struct impl_ActivatedEventHandler;
-template <typename T> struct impl_EnteredBackgroundEventHandler;
-template <typename T> struct impl_LeavingBackgroundEventHandler;
-template <typename T> struct impl_NavigatedEventHandler;
-template <typename T> struct impl_ResumingEventHandler;
-template <typename T> struct impl_SuspendingEventHandler;
+template <typename D>
+struct WINRT_EBO impl_IActivatedDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IActivatedEventArgsDeferral
+{
+    Windows::UI::WebUI::ActivatedOperation ActivatedOperation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IActivatedOperation
+{
+    Windows::UI::WebUI::ActivatedDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHtmlPrintDocumentSource
+{
+    Windows::UI::WebUI::PrintContent Content() const;
+    void Content(Windows::UI::WebUI::PrintContent value) const;
+    float LeftMargin() const;
+    void LeftMargin(float value) const;
+    float TopMargin() const;
+    void TopMargin(float value) const;
+    float RightMargin() const;
+    void RightMargin(float value) const;
+    float BottomMargin() const;
+    void BottomMargin(float value) const;
+    bool EnableHeaderFooter() const;
+    void EnableHeaderFooter(bool value) const;
+    bool ShrinkToFit() const;
+    void ShrinkToFit(bool value) const;
+    float PercentScale() const;
+    void PercentScale(float scalePercent) const;
+    hstring PageRange() const;
+    bool TrySetPageRange(hstring_view strPageRange) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUIActivationStatics
+{
+    event_token Activated(const Windows::UI::WebUI::ActivatedEventHandler & handler) const;
+    using Activated_revoker = event_revoker<IWebUIActivationStatics>;
+    Activated_revoker Activated(auto_revoke_t, const Windows::UI::WebUI::ActivatedEventHandler & handler) const;
+    void Activated(event_token token) const;
+    event_token Suspending(const Windows::UI::WebUI::SuspendingEventHandler & handler) const;
+    using Suspending_revoker = event_revoker<IWebUIActivationStatics>;
+    Suspending_revoker Suspending(auto_revoke_t, const Windows::UI::WebUI::SuspendingEventHandler & handler) const;
+    void Suspending(event_token token) const;
+    event_token Resuming(const Windows::UI::WebUI::ResumingEventHandler & handler) const;
+    using Resuming_revoker = event_revoker<IWebUIActivationStatics>;
+    Resuming_revoker Resuming(auto_revoke_t, const Windows::UI::WebUI::ResumingEventHandler & handler) const;
+    void Resuming(event_token token) const;
+    event_token Navigated(const Windows::UI::WebUI::NavigatedEventHandler & handler) const;
+    using Navigated_revoker = event_revoker<IWebUIActivationStatics>;
+    Navigated_revoker Navigated(auto_revoke_t, const Windows::UI::WebUI::NavigatedEventHandler & handler) const;
+    void Navigated(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUIActivationStatics2
+{
+    event_token LeavingBackground(const Windows::UI::WebUI::LeavingBackgroundEventHandler & handler) const;
+    using LeavingBackground_revoker = event_revoker<IWebUIActivationStatics2>;
+    LeavingBackground_revoker LeavingBackground(auto_revoke_t, const Windows::UI::WebUI::LeavingBackgroundEventHandler & handler) const;
+    void LeavingBackground(event_token token) const;
+    event_token EnteredBackground(const Windows::UI::WebUI::EnteredBackgroundEventHandler & handler) const;
+    using EnteredBackground_revoker = event_revoker<IWebUIActivationStatics2>;
+    EnteredBackground_revoker EnteredBackground(auto_revoke_t, const Windows::UI::WebUI::EnteredBackgroundEventHandler & handler) const;
+    void EnteredBackground(event_token token) const;
+    void EnablePrelaunch(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUIBackgroundTaskInstance
+{
+    bool Succeeded() const;
+    void Succeeded(bool succeeded) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUIBackgroundTaskInstanceStatics
+{
+    Windows::UI::WebUI::IWebUIBackgroundTaskInstance Current() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUINavigatedDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUINavigatedEventArgs
+{
+    Windows::UI::WebUI::WebUINavigatedOperation NavigatedOperation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebUINavigatedOperation
+{
+    Windows::UI::WebUI::WebUINavigatedDeferral GetDeferral() const;
+};
 
 }
 

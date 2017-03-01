@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,31 +12,31 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Globalization::NumberFormatting {
 
-struct __declspec(uuid("11730ca5-4b00-41b2-b332-73b12a497d54")) __declspec(novtable) ICurrencyFormatter : Windows::IInspectable
+struct __declspec(uuid("11730ca5-4b00-41b2-b332-73b12a497d54")) __declspec(novtable) ICurrencyFormatter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Currency(hstring * value) = 0;
     virtual HRESULT __stdcall put_Currency(hstring value) = 0;
 };
 
-struct __declspec(uuid("072c2f1d-e7ba-4197-920e-247c92f7dea6")) __declspec(novtable) ICurrencyFormatter2 : Windows::IInspectable
+struct __declspec(uuid("072c2f1d-e7ba-4197-920e-247c92f7dea6")) __declspec(novtable) ICurrencyFormatter2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Mode(winrt::Windows::Globalization::NumberFormatting::CurrencyFormatterMode * value) = 0;
     virtual HRESULT __stdcall put_Mode(winrt::Windows::Globalization::NumberFormatting::CurrencyFormatterMode value) = 0;
     virtual HRESULT __stdcall abi_ApplyRoundingForCurrency(winrt::Windows::Globalization::NumberFormatting::RoundingAlgorithm roundingAlgorithm) = 0;
 };
 
-struct __declspec(uuid("86c7537e-b938-4aa2-84b0-2c33dc5b1450")) __declspec(novtable) ICurrencyFormatterFactory : Windows::IInspectable
+struct __declspec(uuid("86c7537e-b938-4aa2-84b0-2c33dc5b1450")) __declspec(novtable) ICurrencyFormatterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateCurrencyFormatterCode(hstring currencyCode, Windows::Globalization::NumberFormatting::ICurrencyFormatter ** result) = 0;
     virtual HRESULT __stdcall abi_CreateCurrencyFormatterCodeContext(hstring currencyCode, Windows::Foundation::Collections::IIterable<hstring> * languages, hstring geographicRegion, Windows::Globalization::NumberFormatting::ICurrencyFormatter ** result) = 0;
 };
 
-struct __declspec(uuid("0d018c9a-e393-46b8-b830-7a69c8f89fbb")) __declspec(novtable) IDecimalFormatterFactory : Windows::IInspectable
+struct __declspec(uuid("0d018c9a-e393-46b8-b830-7a69c8f89fbb")) __declspec(novtable) IDecimalFormatterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateDecimalFormatter(Windows::Foundation::Collections::IIterable<hstring> * languages, hstring geographicRegion, Windows::Globalization::NumberFormatting::INumberFormatter ** result) = 0;
 };
 
-struct __declspec(uuid("70a64ff8-66ab-4155-9da1-739e46764543")) __declspec(novtable) IIncrementNumberRounder : Windows::IInspectable
+struct __declspec(uuid("70a64ff8-66ab-4155-9da1-739e46764543")) __declspec(novtable) IIncrementNumberRounder : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RoundingAlgorithm(winrt::Windows::Globalization::NumberFormatting::RoundingAlgorithm * value) = 0;
     virtual HRESULT __stdcall put_RoundingAlgorithm(winrt::Windows::Globalization::NumberFormatting::RoundingAlgorithm value) = 0;
@@ -44,21 +44,21 @@ struct __declspec(uuid("70a64ff8-66ab-4155-9da1-739e46764543")) __declspec(novta
     virtual HRESULT __stdcall put_Increment(double value) = 0;
 };
 
-struct __declspec(uuid("a5007c49-7676-4db7-8631-1b6ff265caa9")) __declspec(novtable) INumberFormatter : Windows::IInspectable
+struct __declspec(uuid("a5007c49-7676-4db7-8631-1b6ff265caa9")) __declspec(novtable) INumberFormatter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FormatInt(int64_t value, hstring * result) = 0;
     virtual HRESULT __stdcall abi_FormatUInt(uint64_t value, hstring * result) = 0;
     virtual HRESULT __stdcall abi_FormatDouble(double value, hstring * result) = 0;
 };
 
-struct __declspec(uuid("d4a8c1f0-80d0-4b0d-a89e-882c1e8f8310")) __declspec(novtable) INumberFormatter2 : Windows::IInspectable
+struct __declspec(uuid("d4a8c1f0-80d0-4b0d-a89e-882c1e8f8310")) __declspec(novtable) INumberFormatter2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FormatInt(int64_t value, hstring * result) = 0;
     virtual HRESULT __stdcall abi_FormatUInt(uint64_t value, hstring * result) = 0;
     virtual HRESULT __stdcall abi_FormatDouble(double value, hstring * result) = 0;
 };
 
-struct __declspec(uuid("80332d21-aee1-4a39-baa2-07ed8c96daf6")) __declspec(novtable) INumberFormatterOptions : Windows::IInspectable
+struct __declspec(uuid("80332d21-aee1-4a39-baa2-07ed8c96daf6")) __declspec(novtable) INumberFormatterOptions : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Languages(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
     virtual HRESULT __stdcall get_GeographicRegion(hstring * value) = 0;
@@ -76,14 +76,14 @@ struct __declspec(uuid("80332d21-aee1-4a39-baa2-07ed8c96daf6")) __declspec(novta
     virtual HRESULT __stdcall get_ResolvedGeographicRegion(hstring * value) = 0;
 };
 
-struct __declspec(uuid("e6659412-4a13-4a53-83a1-392fbe4cff9f")) __declspec(novtable) INumberParser : Windows::IInspectable
+struct __declspec(uuid("e6659412-4a13-4a53-83a1-392fbe4cff9f")) __declspec(novtable) INumberParser : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ParseInt(hstring text, Windows::Foundation::IReference<int64_t> ** result) = 0;
     virtual HRESULT __stdcall abi_ParseUInt(hstring text, Windows::Foundation::IReference<uint64_t> ** result) = 0;
     virtual HRESULT __stdcall abi_ParseDouble(hstring text, Windows::Foundation::IReference<double> ** result) = 0;
 };
 
-struct __declspec(uuid("5473c375-38ed-4631-b80c-ef34fc48b7f5")) __declspec(novtable) INumberRounder : Windows::IInspectable
+struct __declspec(uuid("5473c375-38ed-4631-b80c-ef34fc48b7f5")) __declspec(novtable) INumberRounder : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RoundInt32(int32_t value, int32_t * result) = 0;
     virtual HRESULT __stdcall abi_RoundUInt32(uint32_t value, uint32_t * result) = 0;
@@ -93,13 +93,13 @@ struct __declspec(uuid("5473c375-38ed-4631-b80c-ef34fc48b7f5")) __declspec(novta
     virtual HRESULT __stdcall abi_RoundDouble(double value, double * result) = 0;
 };
 
-struct __declspec(uuid("3b088433-646f-4efe-8d48-66eb2e49e736")) __declspec(novtable) INumberRounderOption : Windows::IInspectable
+struct __declspec(uuid("3b088433-646f-4efe-8d48-66eb2e49e736")) __declspec(novtable) INumberRounderOption : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NumberRounder(Windows::Globalization::NumberFormatting::INumberRounder ** value) = 0;
     virtual HRESULT __stdcall put_NumberRounder(Windows::Globalization::NumberFormatting::INumberRounder * value) = 0;
 };
 
-struct __declspec(uuid("28f5bc2c-8c23-4234-ad2e-fa5a3a426e9b")) __declspec(novtable) INumeralSystemTranslator : Windows::IInspectable
+struct __declspec(uuid("28f5bc2c-8c23-4234-ad2e-fa5a3a426e9b")) __declspec(novtable) INumeralSystemTranslator : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Languages(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
     virtual HRESULT __stdcall get_ResolvedLanguage(hstring * value) = 0;
@@ -108,28 +108,28 @@ struct __declspec(uuid("28f5bc2c-8c23-4234-ad2e-fa5a3a426e9b")) __declspec(novta
     virtual HRESULT __stdcall abi_TranslateNumerals(hstring value, hstring * result) = 0;
 };
 
-struct __declspec(uuid("9630c8da-36ef-4d88-a85c-6f0d98d620a6")) __declspec(novtable) INumeralSystemTranslatorFactory : Windows::IInspectable
+struct __declspec(uuid("9630c8da-36ef-4d88-a85c-6f0d98d620a6")) __declspec(novtable) INumeralSystemTranslatorFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::Foundation::Collections::IIterable<hstring> * languages, Windows::Globalization::NumberFormatting::INumeralSystemTranslator ** result) = 0;
 };
 
-struct __declspec(uuid("b7828aef-fed4-4018-a6e2-e09961e03765")) __declspec(novtable) IPercentFormatterFactory : Windows::IInspectable
+struct __declspec(uuid("b7828aef-fed4-4018-a6e2-e09961e03765")) __declspec(novtable) IPercentFormatterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreatePercentFormatter(Windows::Foundation::Collections::IIterable<hstring> * languages, hstring geographicRegion, Windows::Globalization::NumberFormatting::INumberFormatter ** result) = 0;
 };
 
-struct __declspec(uuid("2b37b4ac-e638-4ed5-a998-62f6b06a49ae")) __declspec(novtable) IPermilleFormatterFactory : Windows::IInspectable
+struct __declspec(uuid("2b37b4ac-e638-4ed5-a998-62f6b06a49ae")) __declspec(novtable) IPermilleFormatterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreatePermilleFormatter(Windows::Foundation::Collections::IIterable<hstring> * languages, hstring geographicRegion, Windows::Globalization::NumberFormatting::INumberFormatter ** result) = 0;
 };
 
-struct __declspec(uuid("fd1cdd31-0a3c-49c4-a642-96a1564f4f30")) __declspec(novtable) ISignedZeroOption : Windows::IInspectable
+struct __declspec(uuid("fd1cdd31-0a3c-49c4-a642-96a1564f4f30")) __declspec(novtable) ISignedZeroOption : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsZeroSigned(bool * value) = 0;
     virtual HRESULT __stdcall put_IsZeroSigned(bool value) = 0;
 };
 
-struct __declspec(uuid("f5941bca-6646-4913-8c76-1b191ff94dfd")) __declspec(novtable) ISignificantDigitsNumberRounder : Windows::IInspectable
+struct __declspec(uuid("f5941bca-6646-4913-8c76-1b191ff94dfd")) __declspec(novtable) ISignificantDigitsNumberRounder : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RoundingAlgorithm(winrt::Windows::Globalization::NumberFormatting::RoundingAlgorithm * value) = 0;
     virtual HRESULT __stdcall put_RoundingAlgorithm(winrt::Windows::Globalization::NumberFormatting::RoundingAlgorithm value) = 0;
@@ -137,7 +137,7 @@ struct __declspec(uuid("f5941bca-6646-4913-8c76-1b191ff94dfd")) __declspec(novta
     virtual HRESULT __stdcall put_SignificantDigits(uint32_t value) = 0;
 };
 
-struct __declspec(uuid("1d4dfcdd-2d43-4ee8-bbf1-c1b26a711a58")) __declspec(novtable) ISignificantDigitsOption : Windows::IInspectable
+struct __declspec(uuid("1d4dfcdd-2d43-4ee8-bbf1-c1b26a711a58")) __declspec(novtable) ISignificantDigitsOption : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SignificantDigits(int32_t * value) = 0;
     virtual HRESULT __stdcall put_SignificantDigits(int32_t value) = 0;
@@ -159,24 +159,154 @@ template <> struct traits<Windows::Globalization::NumberFormatting::SignificantD
 
 namespace Windows::Globalization::NumberFormatting {
 
-template <typename T> struct impl_ICurrencyFormatter;
-template <typename T> struct impl_ICurrencyFormatter2;
-template <typename T> struct impl_ICurrencyFormatterFactory;
-template <typename T> struct impl_IDecimalFormatterFactory;
-template <typename T> struct impl_IIncrementNumberRounder;
-template <typename T> struct impl_INumberFormatter;
-template <typename T> struct impl_INumberFormatter2;
-template <typename T> struct impl_INumberFormatterOptions;
-template <typename T> struct impl_INumberParser;
-template <typename T> struct impl_INumberRounder;
-template <typename T> struct impl_INumberRounderOption;
-template <typename T> struct impl_INumeralSystemTranslator;
-template <typename T> struct impl_INumeralSystemTranslatorFactory;
-template <typename T> struct impl_IPercentFormatterFactory;
-template <typename T> struct impl_IPermilleFormatterFactory;
-template <typename T> struct impl_ISignedZeroOption;
-template <typename T> struct impl_ISignificantDigitsNumberRounder;
-template <typename T> struct impl_ISignificantDigitsOption;
+template <typename D>
+struct WINRT_EBO impl_ICurrencyFormatter
+{
+    hstring Currency() const;
+    [[deprecated("Currency may be read-only for releases after Windows 8.1. Instead, use a new CurrencyFormatter.")]] void Currency(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICurrencyFormatter2
+{
+    Windows::Globalization::NumberFormatting::CurrencyFormatterMode Mode() const;
+    void Mode(Windows::Globalization::NumberFormatting::CurrencyFormatterMode value) const;
+    void ApplyRoundingForCurrency(Windows::Globalization::NumberFormatting::RoundingAlgorithm roundingAlgorithm) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICurrencyFormatterFactory
+{
+    Windows::Globalization::NumberFormatting::CurrencyFormatter CreateCurrencyFormatterCode(hstring_view currencyCode) const;
+    Windows::Globalization::NumberFormatting::CurrencyFormatter CreateCurrencyFormatterCodeContext(hstring_view currencyCode, iterable<hstring> languages, hstring_view geographicRegion) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDecimalFormatterFactory
+{
+    Windows::Globalization::NumberFormatting::DecimalFormatter CreateDecimalFormatter(iterable<hstring> languages, hstring_view geographicRegion) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IIncrementNumberRounder
+{
+    Windows::Globalization::NumberFormatting::RoundingAlgorithm RoundingAlgorithm() const;
+    void RoundingAlgorithm(Windows::Globalization::NumberFormatting::RoundingAlgorithm value) const;
+    double Increment() const;
+    void Increment(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberFormatter
+{
+    hstring Format(int64_t value) const;
+    hstring Format(uint64_t value) const;
+    hstring Format(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberFormatter2
+{
+    hstring FormatInt(int64_t value) const;
+    hstring FormatUInt(uint64_t value) const;
+    hstring FormatDouble(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberFormatterOptions
+{
+    Windows::Foundation::Collections::IVectorView<hstring> Languages() const;
+    hstring GeographicRegion() const;
+    int32_t IntegerDigits() const;
+    void IntegerDigits(int32_t value) const;
+    int32_t FractionDigits() const;
+    void FractionDigits(int32_t value) const;
+    bool IsGrouped() const;
+    void IsGrouped(bool value) const;
+    bool IsDecimalPointAlwaysDisplayed() const;
+    void IsDecimalPointAlwaysDisplayed(bool value) const;
+    hstring NumeralSystem() const;
+    void NumeralSystem(hstring_view value) const;
+    hstring ResolvedLanguage() const;
+    hstring ResolvedGeographicRegion() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberParser
+{
+    Windows::Foundation::IReference<int64_t> ParseInt(hstring_view text) const;
+    Windows::Foundation::IReference<uint64_t> ParseUInt(hstring_view text) const;
+    Windows::Foundation::IReference<double> ParseDouble(hstring_view text) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberRounder
+{
+    int32_t RoundInt32(int32_t value) const;
+    uint32_t RoundUInt32(uint32_t value) const;
+    int64_t RoundInt64(int64_t value) const;
+    uint64_t RoundUInt64(uint64_t value) const;
+    float RoundSingle(float value) const;
+    double RoundDouble(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumberRounderOption
+{
+    Windows::Globalization::NumberFormatting::INumberRounder NumberRounder() const;
+    void NumberRounder(const Windows::Globalization::NumberFormatting::INumberRounder & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumeralSystemTranslator
+{
+    Windows::Foundation::Collections::IVectorView<hstring> Languages() const;
+    hstring ResolvedLanguage() const;
+    hstring NumeralSystem() const;
+    void NumeralSystem(hstring_view value) const;
+    hstring TranslateNumerals(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INumeralSystemTranslatorFactory
+{
+    Windows::Globalization::NumberFormatting::NumeralSystemTranslator Create(iterable<hstring> languages) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPercentFormatterFactory
+{
+    Windows::Globalization::NumberFormatting::PercentFormatter CreatePercentFormatter(iterable<hstring> languages, hstring_view geographicRegion) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPermilleFormatterFactory
+{
+    Windows::Globalization::NumberFormatting::PermilleFormatter CreatePermilleFormatter(iterable<hstring> languages, hstring_view geographicRegion) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISignedZeroOption
+{
+    bool IsZeroSigned() const;
+    void IsZeroSigned(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISignificantDigitsNumberRounder
+{
+    Windows::Globalization::NumberFormatting::RoundingAlgorithm RoundingAlgorithm() const;
+    void RoundingAlgorithm(Windows::Globalization::NumberFormatting::RoundingAlgorithm value) const;
+    uint32_t SignificantDigits() const;
+    void SignificantDigits(uint32_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISignificantDigitsOption
+{
+    int32_t SignificantDigits() const;
+    void SignificantDigits(int32_t value) const;
+};
 
 }
 

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.ApplicationModel.Email.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> : produce_base<D, Windows::Phone::Notification::Management::IAccessoryManager>
 {
-    HRESULT __stdcall abi_RegisterAccessoryApp(abi_arg_out<hstring> triggerId) noexcept override
+    HRESULT __stdcall abi_RegisterAccessoryApp(impl::abi_arg_out<hstring> triggerId) noexcept override
     {
         try
         {
-            *triggerId = detach(this->shim().RegisterAccessoryApp());
+            typename D::abi_guard guard(this->shim());
+            *triggerId = detach_abi(this->shim().RegisterAccessoryApp());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_GetNextTriggerDetails(abi_arg_out<Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails> pDetails) noexcept override
+    HRESULT __stdcall abi_GetNextTriggerDetails(impl::abi_arg_out<Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails> pDetails) noexcept override
     {
         try
         {
-            *pDetails = detach(this->shim().GetNextTriggerDetails());
+            typename D::abi_guard guard(this->shim());
+            *pDetails = detach_abi(this->shim().GetNextTriggerDetails());
             return S_OK;
         }
         catch (...)
@@ -45,10 +50,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_ProcessTriggerDetails(abi_arg_in<Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails> pDetails) noexcept override
+    HRESULT __stdcall abi_ProcessTriggerDetails(impl::abi_arg_in<Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails> pDetails) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProcessTriggerDetails(*reinterpret_cast<const Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails *>(&pDetails));
             return S_OK;
         }
@@ -58,11 +64,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall get_PhoneLineDetails(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::PhoneLineDetails>> ppvalue) noexcept override
+    HRESULT __stdcall get_PhoneLineDetails(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::PhoneLineDetails>> ppvalue) noexcept override
     {
         try
         {
-            *ppvalue = detach(this->shim().PhoneLineDetails());
+            typename D::abi_guard guard(this->shim());
+            *ppvalue = detach_abi(this->shim().PhoneLineDetails());
             return S_OK;
         }
         catch (...)
@@ -72,11 +79,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_GetPhoneLineDetails(GUID phoneLine, abi_arg_out<Windows::Phone::Notification::Management::IPhoneLineDetails> ppdetails) noexcept override
+    HRESULT __stdcall abi_GetPhoneLineDetails(GUID phoneLine, impl::abi_arg_out<Windows::Phone::Notification::Management::IPhoneLineDetails> ppdetails) noexcept override
     {
         try
         {
-            *ppdetails = detach(this->shim().GetPhoneLineDetails(phoneLine));
+            typename D::abi_guard guard(this->shim());
+            *ppdetails = detach_abi(this->shim().GetPhoneLineDetails(phoneLine));
             return S_OK;
         }
         catch (...)
@@ -90,6 +98,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AcceptPhoneCall(phoneCallId);
             return S_OK;
         }
@@ -103,6 +112,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AcceptPhoneCall(phoneCallId, endPoint);
             return S_OK;
         }
@@ -116,6 +126,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AcceptPhoneCallWithVideo(phoneCallId);
             return S_OK;
         }
@@ -129,6 +140,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AcceptPhoneCallWithVideo(phoneCallId, endPoint);
             return S_OK;
         }
@@ -142,6 +154,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RejectPhoneCall(phoneCallId);
             return S_OK;
         }
@@ -155,6 +168,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RejectPhoneCall(phoneCallId, textResponseID);
             return S_OK;
         }
@@ -164,10 +178,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_MakePhoneCall(GUID phoneLine, abi_arg_in<hstring> phoneNumber) noexcept override
+    HRESULT __stdcall abi_MakePhoneCall(GUID phoneLine, impl::abi_arg_in<hstring> phoneNumber) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MakePhoneCall(phoneLine, *reinterpret_cast<const hstring *>(&phoneNumber));
             return S_OK;
         }
@@ -177,10 +192,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_MakePhoneCallOnAudioEndpoint(GUID phoneLine, abi_arg_in<hstring> phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) noexcept override
+    HRESULT __stdcall abi_MakePhoneCallOnAudioEndpoint(GUID phoneLine, impl::abi_arg_in<hstring> phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MakePhoneCall(phoneLine, *reinterpret_cast<const hstring *>(&phoneNumber), endPoint);
             return S_OK;
         }
@@ -190,10 +206,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_MakePhoneCallWithVideo(GUID phoneLine, abi_arg_in<hstring> phoneNumber) noexcept override
+    HRESULT __stdcall abi_MakePhoneCallWithVideo(GUID phoneLine, impl::abi_arg_in<hstring> phoneNumber) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MakePhoneCallWithVideo(phoneLine, *reinterpret_cast<const hstring *>(&phoneNumber));
             return S_OK;
         }
@@ -203,10 +220,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_MakePhoneCallWithVideoOnAudioEndpoint(GUID phoneLine, abi_arg_in<hstring> phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) noexcept override
+    HRESULT __stdcall abi_MakePhoneCallWithVideoOnAudioEndpoint(GUID phoneLine, impl::abi_arg_in<hstring> phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MakePhoneCallWithVideo(phoneLine, *reinterpret_cast<const hstring *>(&phoneNumber), endPoint);
             return S_OK;
         }
@@ -220,6 +238,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SwapPhoneCalls(phoneCallIdToHold, phoneCallIdOnHold);
             return S_OK;
         }
@@ -233,6 +252,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().HoldPhoneCall(phoneCallId, holdCall);
             return S_OK;
         }
@@ -246,6 +266,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EndPhoneCall(phoneCallId);
             return S_OK;
         }
@@ -259,6 +280,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PhoneMute(value);
             return S_OK;
         }
@@ -272,7 +294,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().PhoneMute());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneMute());
             return S_OK;
         }
         catch (...)
@@ -285,6 +308,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PhoneCallAudioEndpoint(value);
             return S_OK;
         }
@@ -298,7 +322,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().PhoneCallAudioEndpoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneCallAudioEndpoint());
             return S_OK;
         }
         catch (...)
@@ -311,6 +336,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeAlarm(alarmId);
             return S_OK;
         }
@@ -320,10 +346,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_SnoozeAlarmForSpecifiedTime(GUID alarmId, abi_arg_in<Windows::Foundation::TimeSpan> timeSpan) noexcept override
+    HRESULT __stdcall abi_SnoozeAlarmForSpecifiedTime(GUID alarmId, impl::abi_arg_in<Windows::Foundation::TimeSpan> timeSpan) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeAlarm(alarmId, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&timeSpan));
             return S_OK;
         }
@@ -337,6 +364,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissAlarm(alarmId);
             return S_OK;
         }
@@ -350,6 +378,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeReminder(reminderId);
             return S_OK;
         }
@@ -359,10 +388,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_SnoozeReminderForSpecifiedTime(GUID reminderId, abi_arg_in<Windows::Foundation::TimeSpan> timeSpan) noexcept override
+    HRESULT __stdcall abi_SnoozeReminderForSpecifiedTime(GUID reminderId, impl::abi_arg_in<Windows::Foundation::TimeSpan> timeSpan) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeReminder(reminderId, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&timeSpan));
             return S_OK;
         }
@@ -376,6 +406,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissReminder(reminderId);
             return S_OK;
         }
@@ -385,11 +416,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_GetMediaMetadata(abi_arg_out<Windows::Phone::Notification::Management::IMediaMetadata> ppMetadata) noexcept override
+    HRESULT __stdcall abi_GetMediaMetadata(impl::abi_arg_out<Windows::Phone::Notification::Management::IMediaMetadata> ppMetadata) noexcept override
     {
         try
         {
-            *ppMetadata = detach(this->shim().GetMediaMetadata());
+            typename D::abi_guard guard(this->shim());
+            *ppMetadata = detach_abi(this->shim().GetMediaMetadata());
             return S_OK;
         }
         catch (...)
@@ -403,7 +435,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().MediaPlaybackCapabilities());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaPlaybackCapabilities());
             return S_OK;
         }
         catch (...)
@@ -416,7 +449,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().MediaPlaybackStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaPlaybackStatus());
             return S_OK;
         }
         catch (...)
@@ -429,6 +463,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PerformMediaPlaybackCommand(command);
             return S_OK;
         }
@@ -442,7 +477,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().DoNotDisturbEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DoNotDisturbEnabled());
             return S_OK;
         }
         catch (...)
@@ -455,7 +491,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().DrivingModeEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DrivingModeEnabled());
             return S_OK;
         }
         catch (...)
@@ -468,7 +505,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *value = detach(this->shim().BatterySaverState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BatterySaverState());
             return S_OK;
         }
         catch (...)
@@ -477,11 +515,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_GetApps(abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo>> returnValue) noexcept override
+    HRESULT __stdcall abi_GetApps(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo>> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GetApps());
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GetApps());
             return S_OK;
         }
         catch (...)
@@ -491,10 +530,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_EnableNotificationsForApplication(abi_arg_in<hstring> appId) noexcept override
+    HRESULT __stdcall abi_EnableNotificationsForApplication(impl::abi_arg_in<hstring> appId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnableNotificationsForApplication(*reinterpret_cast<const hstring *>(&appId));
             return S_OK;
         }
@@ -504,10 +544,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_DisableNotificationsForApplication(abi_arg_in<hstring> appId) noexcept override
+    HRESULT __stdcall abi_DisableNotificationsForApplication(impl::abi_arg_in<hstring> appId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisableNotificationsForApplication(*reinterpret_cast<const hstring *>(&appId));
             return S_OK;
         }
@@ -517,11 +558,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_IsNotificationEnabledForApplication(abi_arg_in<hstring> appId, bool * enabled) noexcept override
+    HRESULT __stdcall abi_IsNotificationEnabledForApplication(impl::abi_arg_in<hstring> appId, bool * enabled) noexcept override
     {
         try
         {
-            *enabled = detach(this->shim().IsNotificationEnabledForApplication(*reinterpret_cast<const hstring *>(&appId)));
+            typename D::abi_guard guard(this->shim());
+            *enabled = detach_abi(this->shim().IsNotificationEnabledForApplication(*reinterpret_cast<const hstring *>(&appId)));
             return S_OK;
         }
         catch (...)
@@ -534,7 +576,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *enabledAccessoryNotificationTypes = detach(this->shim().GetEnabledAccessoryNotificationTypes());
+            typename D::abi_guard guard(this->shim());
+            *enabledAccessoryNotificationTypes = detach_abi(this->shim().GetEnabledAccessoryNotificationTypes());
             return S_OK;
         }
         catch (...)
@@ -547,6 +590,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnableAccessoryNotificationTypes(accessoryNotificationTypes);
             return S_OK;
         }
@@ -560,6 +604,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisableAllAccessoryNotificationTypes();
             return S_OK;
         }
@@ -573,7 +618,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
     {
         try
         {
-            *enabled = detach(this->shim().GetUserConsent());
+            typename D::abi_guard guard(this->shim());
+            *enabled = detach_abi(this->shim().GetUserConsent());
             return S_OK;
         }
         catch (...)
@@ -582,11 +628,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager> :
         }
     }
 
-    HRESULT __stdcall abi_GetAppIcon(abi_arg_in<hstring> appId, abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> returnValue) noexcept override
+    HRESULT __stdcall abi_GetAppIcon(impl::abi_arg_in<hstring> appId, impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GetAppIcon(*reinterpret_cast<const hstring *>(&appId)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GetAppIcon(*reinterpret_cast<const hstring *>(&appId)));
             return S_OK;
         }
         catch (...)
@@ -604,6 +651,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RingDevice();
             return S_OK;
         }
@@ -613,11 +661,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall get_SpeedDialList(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry>> ppvalue) noexcept override
+    HRESULT __stdcall get_SpeedDialList(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry>> ppvalue) noexcept override
     {
         try
         {
-            *ppvalue = detach(this->shim().SpeedDialList());
+            typename D::abi_guard guard(this->shim());
+            *ppvalue = detach_abi(this->shim().SpeedDialList());
             return S_OK;
         }
         catch (...)
@@ -627,10 +676,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_ClearToast(abi_arg_in<hstring> instanceId) noexcept override
+    HRESULT __stdcall abi_ClearToast(impl::abi_arg_in<hstring> instanceId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ClearToast(*reinterpret_cast<const hstring *>(&instanceId));
             return S_OK;
         }
@@ -644,7 +694,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
-            *pinLocked = detach(this->shim().IsPhonePinLocked());
+            typename D::abi_guard guard(this->shim());
+            *pinLocked = detach_abi(this->shim().IsPhonePinLocked());
             return S_OK;
         }
         catch (...)
@@ -657,6 +708,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IncreaseVolume(step);
             return S_OK;
         }
@@ -670,6 +722,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DecreaseVolume(step);
             return S_OK;
         }
@@ -683,6 +736,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetMute(mute);
             return S_OK;
         }
@@ -696,6 +750,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetRingerVibrate(ringer, vibrate);
             return S_OK;
         }
@@ -705,11 +760,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall get_VolumeInfo(abi_arg_out<Windows::Phone::Notification::Management::IVolumeInfo> ppVolume) noexcept override
+    HRESULT __stdcall get_VolumeInfo(impl::abi_arg_out<Windows::Phone::Notification::Management::IVolumeInfo> ppVolume) noexcept override
     {
         try
         {
-            *ppVolume = detach(this->shim().VolumeInfo());
+            typename D::abi_guard guard(this->shim());
+            *ppVolume = detach_abi(this->shim().VolumeInfo());
             return S_OK;
         }
         catch (...)
@@ -719,11 +775,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_GetAllEmailAccounts(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo>> emailAccounts) noexcept override
+    HRESULT __stdcall abi_GetAllEmailAccounts(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo>> emailAccounts) noexcept override
     {
         try
         {
-            *emailAccounts = detach(this->shim().GetAllEmailAccounts());
+            typename D::abi_guard guard(this->shim());
+            *emailAccounts = detach_abi(this->shim().GetAllEmailAccounts());
             return S_OK;
         }
         catch (...)
@@ -733,11 +790,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_GetFolders(abi_arg_in<hstring> emailAccount, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo>> folders) noexcept override
+    HRESULT __stdcall abi_GetFolders(impl::abi_arg_in<hstring> emailAccount, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo>> folders) noexcept override
     {
         try
         {
-            *folders = detach(this->shim().GetFolders(*reinterpret_cast<const hstring *>(&emailAccount)));
+            typename D::abi_guard guard(this->shim());
+            *folders = detach_abi(this->shim().GetFolders(*reinterpret_cast<const hstring *>(&emailAccount)));
             return S_OK;
         }
         catch (...)
@@ -747,10 +805,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_EnableEmailNotificationEmailAccount(abi_arg_in<hstring> emailAccount) noexcept override
+    HRESULT __stdcall abi_EnableEmailNotificationEmailAccount(impl::abi_arg_in<hstring> emailAccount) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnableEmailNotificationEmailAccount(*reinterpret_cast<const hstring *>(&emailAccount));
             return S_OK;
         }
@@ -760,10 +819,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_DisableEmailNotificationEmailAccount(abi_arg_in<hstring> emailAccount) noexcept override
+    HRESULT __stdcall abi_DisableEmailNotificationEmailAccount(impl::abi_arg_in<hstring> emailAccount) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisableEmailNotificationEmailAccount(*reinterpret_cast<const hstring *>(&emailAccount));
             return S_OK;
         }
@@ -773,10 +833,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_EnableEmailNotificationFolderFilter(abi_arg_in<hstring> emailAccount, abi_arg_in<Windows::Foundation::Collections::IVectorView<hstring>> folders) noexcept override
+    HRESULT __stdcall abi_EnableEmailNotificationFolderFilter(impl::abi_arg_in<hstring> emailAccount, impl::abi_arg_in<Windows::Foundation::Collections::IVectorView<hstring>> folders) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnableEmailNotificationFolderFilter(*reinterpret_cast<const hstring *>(&emailAccount), *reinterpret_cast<const Windows::Foundation::Collections::IVectorView<hstring> *>(&folders));
             return S_OK;
         }
@@ -786,10 +847,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
         }
     }
 
-    HRESULT __stdcall abi_UpdateEmailReadStatus(abi_arg_in<Windows::Phone::Notification::Management::IBinaryId> messageEntryId, bool isRead) noexcept override
+    HRESULT __stdcall abi_UpdateEmailReadStatus(impl::abi_arg_in<Windows::Phone::Notification::Management::IBinaryId> messageEntryId, bool isRead) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().UpdateEmailReadStatus(*reinterpret_cast<const Windows::Phone::Notification::Management::BinaryId *>(&messageEntryId), isRead);
             return S_OK;
         }
@@ -803,10 +865,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager2> 
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager3> : produce_base<D, Windows::Phone::Notification::Management::IAccessoryManager3>
 {
-    HRESULT __stdcall abi_SnoozeAlarmByInstanceId(abi_arg_in<hstring> instanceId) noexcept override
+    HRESULT __stdcall abi_SnoozeAlarmByInstanceId(impl::abi_arg_in<hstring> instanceId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeAlarmByInstanceId(*reinterpret_cast<const hstring *>(&instanceId));
             return S_OK;
         }
@@ -816,10 +879,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager3> 
         }
     }
 
-    HRESULT __stdcall abi_DismissAlarmByInstanceId(abi_arg_in<hstring> instanceId) noexcept override
+    HRESULT __stdcall abi_DismissAlarmByInstanceId(impl::abi_arg_in<hstring> instanceId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissAlarmByInstanceId(*reinterpret_cast<const hstring *>(&instanceId));
             return S_OK;
         }
@@ -829,10 +893,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager3> 
         }
     }
 
-    HRESULT __stdcall abi_SnoozeReminderByInstanceId(abi_arg_in<hstring> instanceId) noexcept override
+    HRESULT __stdcall abi_SnoozeReminderByInstanceId(impl::abi_arg_in<hstring> instanceId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SnoozeReminderByInstanceId(*reinterpret_cast<const hstring *>(&instanceId));
             return S_OK;
         }
@@ -842,10 +907,11 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager3> 
         }
     }
 
-    HRESULT __stdcall abi_DismissReminderByInstanceId(abi_arg_in<hstring> instanceId) noexcept override
+    HRESULT __stdcall abi_DismissReminderByInstanceId(impl::abi_arg_in<hstring> instanceId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DismissReminderByInstanceId(*reinterpret_cast<const hstring *>(&instanceId));
             return S_OK;
         }
@@ -859,11 +925,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryManager3> 
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails> : produce_base<D, Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails>
 {
-    HRESULT __stdcall get_TimeCreated(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_TimeCreated(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TimeCreated());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeCreated());
             return S_OK;
         }
         catch (...)
@@ -872,11 +939,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificati
         }
     }
 
-    HRESULT __stdcall get_AppDisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppDisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppDisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppDisplayName());
             return S_OK;
         }
         catch (...)
@@ -886,11 +954,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificati
         }
     }
 
-    HRESULT __stdcall get_AppId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppId());
             return S_OK;
         }
         catch (...)
@@ -904,7 +973,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificati
     {
         try
         {
-            *value = detach(this->shim().AccessoryNotificationType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccessoryNotificationType());
             return S_OK;
         }
         catch (...)
@@ -917,7 +987,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificati
     {
         try
         {
-            *value = detach(this->shim().StartedProcessing());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartedProcessing());
             return S_OK;
         }
         catch (...)
@@ -930,6 +1001,7 @@ struct produce<D, Windows::Phone::Notification::Management::IAccessoryNotificati
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StartedProcessing(value);
             return S_OK;
         }
@@ -947,7 +1019,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
     {
         try
         {
-            *value = detach(this->shim().AlarmId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlarmId());
             return S_OK;
         }
         catch (...)
@@ -956,11 +1029,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Title(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Title());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Title());
             return S_OK;
         }
         catch (...)
@@ -970,11 +1044,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -987,7 +1062,8 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
     {
         try
         {
-            *value = detach(this->shim().ReminderState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReminderState());
             return S_OK;
         }
         catch (...)
@@ -1000,11 +1076,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails2> : produce_base<D, Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails2>
 {
-    HRESULT __stdcall get_InstanceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InstanceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InstanceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstanceId());
             return S_OK;
         }
         catch (...)
@@ -1018,11 +1095,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAlarmNotificationTr
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IAppNotificationInfo> : produce_base<D, Windows::Phone::Notification::Management::IAppNotificationInfo>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -1032,11 +1110,12 @@ struct produce<D, Windows::Phone::Notification::Management::IAppNotificationInfo
         }
     }
 
-    HRESULT __stdcall get_Name(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Name());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Name());
             return S_OK;
         }
         catch (...)
@@ -1054,7 +1133,8 @@ struct produce<D, Windows::Phone::Notification::Management::IBinaryId> : produce
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -1067,7 +1147,8 @@ struct produce<D, Windows::Phone::Notification::Management::IBinaryId> : produce
     {
         try
         {
-            *value = detach(this->shim().Length());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Length());
             return S_OK;
         }
         catch (...)
@@ -1084,7 +1165,8 @@ struct produce<D, Windows::Phone::Notification::Management::ICalendarChangedNoti
     {
         try
         {
-            *value = detach(this->shim().EventType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EventType());
             return S_OK;
         }
         catch (...)
@@ -1093,11 +1175,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICalendarChangedNoti
         }
     }
 
-    HRESULT __stdcall get_ItemId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ItemId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ItemId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ItemId());
             return S_OK;
         }
         catch (...)
@@ -1111,11 +1194,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICalendarChangedNoti
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotificationTriggerDetails> : produce_base<D, Windows::Phone::Notification::Management::ICortanaTileNotificationTriggerDetails>
 {
-    HRESULT __stdcall get_TileId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TileId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TileId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TileId());
             return S_OK;
         }
         catch (...)
@@ -1125,11 +1209,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_Content(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Content(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Content());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Content());
             return S_OK;
         }
         catch (...)
@@ -1139,11 +1224,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_LargeContent1(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LargeContent1(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LargeContent1());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LargeContent1());
             return S_OK;
         }
         catch (...)
@@ -1153,11 +1239,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_LargeContent2(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LargeContent2(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LargeContent2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LargeContent2());
             return S_OK;
         }
         catch (...)
@@ -1167,11 +1254,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_EmphasizedText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EmphasizedText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EmphasizedText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EmphasizedText());
             return S_OK;
         }
         catch (...)
@@ -1181,11 +1269,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_NonWrappedSmallContent1(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NonWrappedSmallContent1(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NonWrappedSmallContent1());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NonWrappedSmallContent1());
             return S_OK;
         }
         catch (...)
@@ -1195,11 +1284,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_NonWrappedSmallContent2(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NonWrappedSmallContent2(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NonWrappedSmallContent2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NonWrappedSmallContent2());
             return S_OK;
         }
         catch (...)
@@ -1209,11 +1299,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_NonWrappedSmallContent3(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NonWrappedSmallContent3(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NonWrappedSmallContent3());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NonWrappedSmallContent3());
             return S_OK;
         }
         catch (...)
@@ -1223,11 +1314,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_NonWrappedSmallContent4(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NonWrappedSmallContent4(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NonWrappedSmallContent4());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NonWrappedSmallContent4());
             return S_OK;
         }
         catch (...)
@@ -1237,11 +1329,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
         }
     }
 
-    HRESULT __stdcall get_Source(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Source(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Source());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Source());
             return S_OK;
         }
         catch (...)
@@ -1255,11 +1348,12 @@ struct produce<D, Windows::Phone::Notification::Management::ICortanaTileNotifica
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IEmailAccountInfo> : produce_base<D, Windows::Phone::Notification::Management::IEmailAccountInfo>
 {
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -1273,7 +1367,8 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailAccountInfo> :
     {
         try
         {
-            *value = detach(this->shim().IsNotificationEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsNotificationEnabled());
             return S_OK;
         }
         catch (...)
@@ -1286,11 +1381,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailAccountInfo> :
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IEmailFolderInfo> : produce_base<D, Windows::Phone::Notification::Management::IEmailFolderInfo>
 {
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -1304,7 +1400,8 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailFolderInfo> : 
     {
         try
         {
-            *value = detach(this->shim().IsNotificationEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsNotificationEnabled());
             return S_OK;
         }
         catch (...)
@@ -1317,11 +1414,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailFolderInfo> : 
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails> : produce_base<D, Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails>
 {
-    HRESULT __stdcall get_AccountName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AccountName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AccountName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccountName());
             return S_OK;
         }
         catch (...)
@@ -1331,11 +1429,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
         }
     }
 
-    HRESULT __stdcall get_ParentFolderName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ParentFolderName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentFolderName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentFolderName());
             return S_OK;
         }
         catch (...)
@@ -1345,11 +1444,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
         }
     }
 
-    HRESULT __stdcall get_SenderName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SenderName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SenderName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SenderName());
             return S_OK;
         }
         catch (...)
@@ -1359,11 +1459,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
         }
     }
 
-    HRESULT __stdcall get_SenderAddress(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SenderAddress(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SenderAddress());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SenderAddress());
             return S_OK;
         }
         catch (...)
@@ -1373,11 +1474,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
         }
     }
 
-    HRESULT __stdcall get_EmailMessage(abi_arg_out<Windows::ApplicationModel::Email::IEmailMessage> value) noexcept override
+    HRESULT __stdcall get_EmailMessage(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EmailMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EmailMessage());
             return S_OK;
         }
         catch (...)
@@ -1387,11 +1489,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1404,11 +1507,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails2> : produce_base<D, Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails2>
 {
-    HRESULT __stdcall get_MessageEntryId(abi_arg_out<Windows::Phone::Notification::Management::IBinaryId> value) noexcept override
+    HRESULT __stdcall get_MessageEntryId(impl::abi_arg_out<Windows::Phone::Notification::Management::IBinaryId> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageEntryId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageEntryId());
             return S_OK;
         }
         catch (...)
@@ -1422,11 +1526,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailNotificationTr
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IEmailReadNotificationTriggerDetails> : produce_base<D, Windows::Phone::Notification::Management::IEmailReadNotificationTriggerDetails>
 {
-    HRESULT __stdcall get_AccountName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AccountName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AccountName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccountName());
             return S_OK;
         }
         catch (...)
@@ -1436,11 +1541,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailReadNotificati
         }
     }
 
-    HRESULT __stdcall get_ParentFolderName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ParentFolderName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentFolderName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentFolderName());
             return S_OK;
         }
         catch (...)
@@ -1450,11 +1556,12 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailReadNotificati
         }
     }
 
-    HRESULT __stdcall get_MessageEntryId(abi_arg_out<Windows::Phone::Notification::Management::IBinaryId> value) noexcept override
+    HRESULT __stdcall get_MessageEntryId(impl::abi_arg_out<Windows::Phone::Notification::Management::IBinaryId> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageEntryId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageEntryId());
             return S_OK;
         }
         catch (...)
@@ -1468,7 +1575,8 @@ struct produce<D, Windows::Phone::Notification::Management::IEmailReadNotificati
     {
         try
         {
-            *value = detach(this->shim().IsRead());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsRead());
             return S_OK;
         }
         catch (...)
@@ -1485,7 +1593,8 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaControlsTrigge
     {
         try
         {
-            *value = detach(this->shim().PlaybackStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PlaybackStatus());
             return S_OK;
         }
         catch (...)
@@ -1494,11 +1603,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaControlsTrigge
         }
     }
 
-    HRESULT __stdcall get_MediaMetadata(abi_arg_out<Windows::Phone::Notification::Management::IMediaMetadata> value) noexcept override
+    HRESULT __stdcall get_MediaMetadata(impl::abi_arg_out<Windows::Phone::Notification::Management::IMediaMetadata> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediaMetadata());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaMetadata());
             return S_OK;
         }
         catch (...)
@@ -1512,11 +1622,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaControlsTrigge
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : produce_base<D, Windows::Phone::Notification::Management::IMediaMetadata>
 {
-    HRESULT __stdcall get_Title(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Title());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Title());
             return S_OK;
         }
         catch (...)
@@ -1526,11 +1637,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
         }
     }
 
-    HRESULT __stdcall get_Subtitle(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subtitle(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Subtitle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Subtitle());
             return S_OK;
         }
         catch (...)
@@ -1540,11 +1652,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
         }
     }
 
-    HRESULT __stdcall get_Artist(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Artist(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Artist());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Artist());
             return S_OK;
         }
         catch (...)
@@ -1554,11 +1667,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
         }
     }
 
-    HRESULT __stdcall get_Album(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Album(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Album());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Album());
             return S_OK;
         }
         catch (...)
@@ -1572,7 +1686,8 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
     {
         try
         {
-            *value = detach(this->shim().Track());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Track());
             return S_OK;
         }
         catch (...)
@@ -1581,11 +1696,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
         }
     }
 
-    HRESULT __stdcall get_Duration(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Duration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Duration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Duration());
             return S_OK;
         }
         catch (...)
@@ -1594,11 +1710,12 @@ struct produce<D, Windows::Phone::Notification::Management::IMediaMetadata> : pr
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Thumbnail());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Thumbnail());
             return S_OK;
         }
         catch (...)
@@ -1616,7 +1733,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().PhoneLine());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneLine());
             return S_OK;
         }
         catch (...)
@@ -1629,7 +1747,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().CallId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallId());
             return S_OK;
         }
         catch (...)
@@ -1642,7 +1761,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().CallTransport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallTransport());
             return S_OK;
         }
         catch (...)
@@ -1655,7 +1775,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().CallMediaType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallMediaType());
             return S_OK;
         }
         catch (...)
@@ -1668,7 +1789,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().CallDirection());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallDirection());
             return S_OK;
         }
         catch (...)
@@ -1681,7 +1803,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().State());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().State());
             return S_OK;
         }
         catch (...)
@@ -1694,7 +1817,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
     {
         try
         {
-            *value = detach(this->shim().ConferenceCallId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ConferenceCallId());
             return S_OK;
         }
         catch (...)
@@ -1703,11 +1827,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
         }
     }
 
-    HRESULT __stdcall get_StartTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_StartTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartTime());
             return S_OK;
         }
         catch (...)
@@ -1716,11 +1841,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
         }
     }
 
-    HRESULT __stdcall get_EndTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_EndTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EndTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EndTime());
             return S_OK;
         }
         catch (...)
@@ -1729,25 +1855,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
         }
     }
 
-    HRESULT __stdcall get_PhoneNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PhoneNumber());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_ContactName(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ContactName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneNumber());
             return S_OK;
         }
         catch (...)
@@ -1757,11 +1870,27 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneCallDetails> :
         }
     }
 
-    HRESULT __stdcall get_PresetTextResponses(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse>> value) noexcept override
+    HRESULT __stdcall get_ContactName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PresetTextResponses());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContactName());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_PresetTextResponses(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PresetTextResponses());
             return S_OK;
         }
         catch (...)
@@ -1779,7 +1908,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
     {
         try
         {
-            *value = detach(this->shim().LineId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LineId());
             return S_OK;
         }
         catch (...)
@@ -1788,11 +1918,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -1802,11 +1933,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
         }
     }
 
-    HRESULT __stdcall get_LineNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LineNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LineNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LineNumber());
             return S_OK;
         }
         catch (...)
@@ -1820,7 +1952,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
     {
         try
         {
-            *value = detach(this->shim().DefaultOutgoingLine());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DefaultOutgoingLine());
             return S_OK;
         }
         catch (...)
@@ -1833,7 +1966,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
     {
         try
         {
-            *value = detach(this->shim().VoicemailCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VoicemailCount());
             return S_OK;
         }
         catch (...)
@@ -1846,7 +1980,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails> :
     {
         try
         {
-            *value = detach(this->shim().RegistrationState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RegistrationState());
             return S_OK;
         }
         catch (...)
@@ -1863,7 +1998,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneLineDetails2> 
     {
         try
         {
-            *value = detach(this->shim().MissedCallCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MissedCallCount());
             return S_OK;
         }
         catch (...)
@@ -1880,7 +2016,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneNotificationTr
     {
         try
         {
-            *value = detach(this->shim().PhoneNotificationType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneNotificationType());
             return S_OK;
         }
         catch (...)
@@ -1889,11 +2026,12 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneNotificationTr
         }
     }
 
-    HRESULT __stdcall get_CallDetails(abi_arg_out<Windows::Phone::Notification::Management::IPhoneCallDetails> value) noexcept override
+    HRESULT __stdcall get_CallDetails(impl::abi_arg_out<Windows::Phone::Notification::Management::IPhoneCallDetails> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CallDetails());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallDetails());
             return S_OK;
         }
         catch (...)
@@ -1907,7 +2045,8 @@ struct produce<D, Windows::Phone::Notification::Management::IPhoneNotificationTr
     {
         try
         {
-            *value = detach(this->shim().PhoneLineChangedId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneLineChangedId());
             return S_OK;
         }
         catch (...)
@@ -1924,7 +2063,8 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
     {
         try
         {
-            *value = detach(this->shim().ReminderId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReminderId());
             return S_OK;
         }
         catch (...)
@@ -1933,25 +2073,12 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
         }
     }
 
-    HRESULT __stdcall get_Title(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Title());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Description(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Description());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Title());
             return S_OK;
         }
         catch (...)
@@ -1961,11 +2088,12 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
         }
     }
 
-    HRESULT __stdcall get_Details(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Details());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Description());
             return S_OK;
         }
         catch (...)
@@ -1975,11 +2103,27 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
         }
     }
 
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Details(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Details());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1988,11 +2132,12 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
         }
     }
 
-    HRESULT __stdcall get_Appointment(abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
+    HRESULT __stdcall get_Appointment(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Appointment());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Appointment());
             return S_OK;
         }
         catch (...)
@@ -2006,7 +2151,8 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
     {
         try
         {
-            *value = detach(this->shim().ReminderState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReminderState());
             return S_OK;
         }
         catch (...)
@@ -2019,11 +2165,12 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails2> : produce_base<D, Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails2>
 {
-    HRESULT __stdcall get_InstanceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InstanceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InstanceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstanceId());
             return S_OK;
         }
         catch (...)
@@ -2037,11 +2184,12 @@ struct produce<D, Windows::Phone::Notification::Management::IReminderNotificatio
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::ISpeedDialEntry> : produce_base<D, Windows::Phone::Notification::Management::ISpeedDialEntry>
 {
-    HRESULT __stdcall get_PhoneNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PhoneNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneNumber());
             return S_OK;
         }
         catch (...)
@@ -2051,11 +2199,12 @@ struct produce<D, Windows::Phone::Notification::Management::ISpeedDialEntry> : p
         }
     }
 
-    HRESULT __stdcall get_NumberType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NumberType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NumberType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NumberType());
             return S_OK;
         }
         catch (...)
@@ -2065,11 +2214,12 @@ struct produce<D, Windows::Phone::Notification::Management::ISpeedDialEntry> : p
         }
     }
 
-    HRESULT __stdcall get_ContactName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContactName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContactName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContactName());
             return S_OK;
         }
         catch (...)
@@ -2087,7 +2237,8 @@ struct produce<D, Windows::Phone::Notification::Management::ITextResponse> : pro
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -2096,11 +2247,12 @@ struct produce<D, Windows::Phone::Notification::Management::ITextResponse> : pro
         }
     }
 
-    HRESULT __stdcall get_Content(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Content(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Content());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Content());
             return S_OK;
         }
         catch (...)
@@ -2114,11 +2266,12 @@ struct produce<D, Windows::Phone::Notification::Management::ITextResponse> : pro
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTriggerDetails> : produce_base<D, Windows::Phone::Notification::Management::IToastNotificationTriggerDetails>
 {
-    HRESULT __stdcall get_Text1(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text1(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text1());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text1());
             return S_OK;
         }
         catch (...)
@@ -2128,11 +2281,12 @@ struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Text2(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text2(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text2());
             return S_OK;
         }
         catch (...)
@@ -2142,11 +2296,12 @@ struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Text3(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text3(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text3());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text3());
             return S_OK;
         }
         catch (...)
@@ -2156,11 +2311,12 @@ struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTr
         }
     }
 
-    HRESULT __stdcall get_Text4(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text4(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text4());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text4());
             return S_OK;
         }
         catch (...)
@@ -2174,7 +2330,8 @@ struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTr
     {
         try
         {
-            *value = detach(this->shim().SuppressPopup());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SuppressPopup());
             return S_OK;
         }
         catch (...)
@@ -2187,11 +2344,12 @@ struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTr
 template <typename D>
 struct produce<D, Windows::Phone::Notification::Management::IToastNotificationTriggerDetails2> : produce_base<D, Windows::Phone::Notification::Management::IToastNotificationTriggerDetails2>
 {
-    HRESULT __stdcall get_InstanceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InstanceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InstanceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstanceId());
             return S_OK;
         }
         catch (...)
@@ -2209,7 +2367,8 @@ struct produce<D, Windows::Phone::Notification::Management::IVolumeInfo> : produ
     {
         try
         {
-            *value = detach(this->shim().SystemVolume());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemVolume());
             return S_OK;
         }
         catch (...)
@@ -2222,7 +2381,8 @@ struct produce<D, Windows::Phone::Notification::Management::IVolumeInfo> : produ
     {
         try
         {
-            *value = detach(this->shim().CallVolume());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallVolume());
             return S_OK;
         }
         catch (...)
@@ -2235,7 +2395,8 @@ struct produce<D, Windows::Phone::Notification::Management::IVolumeInfo> : produ
     {
         try
         {
-            *value = detach(this->shim().MediaVolume());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaVolume());
             return S_OK;
         }
         catch (...)
@@ -2248,7 +2409,8 @@ struct produce<D, Windows::Phone::Notification::Management::IVolumeInfo> : produ
     {
         try
         {
-            *value = detach(this->shim().IsMuted());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsMuted());
             return S_OK;
         }
         catch (...)
@@ -2261,7 +2423,8 @@ struct produce<D, Windows::Phone::Notification::Management::IVolumeInfo> : produ
     {
         try
         {
-            *value = detach(this->shim().IsVibrateEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsVibrateEnabled());
             return S_OK;
         }
         catch (...)
@@ -2278,1037 +2441,1037 @@ namespace Windows::Phone::Notification::Management {
 template <typename D> uint32_t impl_ITextResponse<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ITextResponse &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(ITextResponse)->get_Id(&value));
     return value;
 }
 
 template <typename D> hstring impl_ITextResponse<D>::Content() const
 {
     hstring value;
-    check_hresult(static_cast<const ITextResponse &>(static_cast<const D &>(*this))->get_Content(put(value)));
+    check_hresult(WINRT_SHIM(ITextResponse)->get_Content(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppNotificationInfo<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppNotificationInfo &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IAppNotificationInfo)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppNotificationInfo<D>::Name() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppNotificationInfo &>(static_cast<const D &>(*this))->get_Name(put(value)));
+    check_hresult(WINRT_SHIM(IAppNotificationInfo)->get_Name(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailAccountInfo<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailAccountInfo &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailAccountInfo)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IEmailAccountInfo<D>::IsNotificationEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IEmailAccountInfo &>(static_cast<const D &>(*this))->get_IsNotificationEnabled(&value));
+    check_hresult(WINRT_SHIM(IEmailAccountInfo)->get_IsNotificationEnabled(&value));
     return value;
 }
 
 template <typename D> hstring impl_IEmailFolderInfo<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailFolderInfo &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailFolderInfo)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IEmailFolderInfo<D>::IsNotificationEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IEmailFolderInfo &>(static_cast<const D &>(*this))->get_IsNotificationEnabled(&value));
+    check_hresult(WINRT_SHIM(IEmailFolderInfo)->get_IsNotificationEnabled(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IBinaryId<D>::Id() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IBinaryId &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IBinaryId)->get_Id(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IBinaryId<D>::Length() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IBinaryId &>(static_cast<const D &>(*this))->get_Length(&value));
+    check_hresult(WINRT_SHIM(IBinaryId)->get_Length(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IAccessoryNotificationTriggerDetails<D>::TimeCreated() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_TimeCreated(put(value)));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->get_TimeCreated(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAccessoryNotificationTriggerDetails<D>::AppDisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AppDisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->get_AppDisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAccessoryNotificationTriggerDetails<D>::AppId() const
 {
     hstring value;
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AppId(put(value)));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->get_AppId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::AccessoryNotificationType impl_IAccessoryNotificationTriggerDetails<D>::AccessoryNotificationType() const
 {
     Windows::Phone::Notification::Management::AccessoryNotificationType value {};
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AccessoryNotificationType(&value));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->get_AccessoryNotificationType(&value));
     return value;
 }
 
 template <typename D> bool impl_IAccessoryNotificationTriggerDetails<D>::StartedProcessing() const
 {
     bool value {};
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_StartedProcessing(&value));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->get_StartedProcessing(&value));
     return value;
 }
 
 template <typename D> void impl_IAccessoryNotificationTriggerDetails<D>::StartedProcessing(bool value) const
 {
-    check_hresult(static_cast<const IAccessoryNotificationTriggerDetails &>(static_cast<const D &>(*this))->put_StartedProcessing(value));
+    check_hresult(WINRT_SHIM(IAccessoryNotificationTriggerDetails)->put_StartedProcessing(value));
 }
 
 template <typename D> GUID impl_IAlarmNotificationTriggerDetails<D>::AlarmId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IAlarmNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AlarmId(&value));
+    check_hresult(WINRT_SHIM(IAlarmNotificationTriggerDetails)->get_AlarmId(&value));
     return value;
 }
 
 template <typename D> hstring impl_IAlarmNotificationTriggerDetails<D>::Title() const
 {
     hstring value;
-    check_hresult(static_cast<const IAlarmNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Title(put(value)));
+    check_hresult(WINRT_SHIM(IAlarmNotificationTriggerDetails)->get_Title(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IAlarmNotificationTriggerDetails<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IAlarmNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IAlarmNotificationTriggerDetails)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::ReminderState impl_IAlarmNotificationTriggerDetails<D>::ReminderState() const
 {
     Windows::Phone::Notification::Management::ReminderState value {};
-    check_hresult(static_cast<const IAlarmNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ReminderState(&value));
+    check_hresult(WINRT_SHIM(IAlarmNotificationTriggerDetails)->get_ReminderState(&value));
     return value;
 }
 
 template <typename D> hstring impl_IAlarmNotificationTriggerDetails2<D>::InstanceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IAlarmNotificationTriggerDetails2 &>(static_cast<const D &>(*this))->get_InstanceId(put(value)));
+    check_hresult(WINRT_SHIM(IAlarmNotificationTriggerDetails2)->get_InstanceId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailNotificationTriggerDetails<D>::AccountName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AccountName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_AccountName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailNotificationTriggerDetails<D>::ParentFolderName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ParentFolderName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_ParentFolderName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailNotificationTriggerDetails<D>::SenderName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_SenderName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_SenderName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailNotificationTriggerDetails<D>::SenderAddress() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_SenderAddress(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_SenderAddress(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Email::EmailMessage impl_IEmailNotificationTriggerDetails<D>::EmailMessage() const
 {
     Windows::ApplicationModel::Email::EmailMessage value { nullptr };
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_EmailMessage(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_EmailMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IEmailNotificationTriggerDetails<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::BinaryId impl_IEmailNotificationTriggerDetails2<D>::MessageEntryId() const
 {
     Windows::Phone::Notification::Management::BinaryId value { nullptr };
-    check_hresult(static_cast<const IEmailNotificationTriggerDetails2 &>(static_cast<const D &>(*this))->get_MessageEntryId(put(value)));
+    check_hresult(WINRT_SHIM(IEmailNotificationTriggerDetails2)->get_MessageEntryId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailReadNotificationTriggerDetails<D>::AccountName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailReadNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_AccountName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailReadNotificationTriggerDetails)->get_AccountName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IEmailReadNotificationTriggerDetails<D>::ParentFolderName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEmailReadNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ParentFolderName(put(value)));
+    check_hresult(WINRT_SHIM(IEmailReadNotificationTriggerDetails)->get_ParentFolderName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::BinaryId impl_IEmailReadNotificationTriggerDetails<D>::MessageEntryId() const
 {
     Windows::Phone::Notification::Management::BinaryId value { nullptr };
-    check_hresult(static_cast<const IEmailReadNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_MessageEntryId(put(value)));
+    check_hresult(WINRT_SHIM(IEmailReadNotificationTriggerDetails)->get_MessageEntryId(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IEmailReadNotificationTriggerDetails<D>::IsRead() const
 {
     bool value {};
-    check_hresult(static_cast<const IEmailReadNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_IsRead(&value));
+    check_hresult(WINRT_SHIM(IEmailReadNotificationTriggerDetails)->get_IsRead(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPhoneLineDetails<D>::LineId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_LineId(&value));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_LineId(&value));
     return value;
 }
 
 template <typename D> hstring impl_IPhoneLineDetails<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IPhoneLineDetails<D>::LineNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_LineNumber(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_LineNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IPhoneLineDetails<D>::DefaultOutgoingLine() const
 {
     bool value {};
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_DefaultOutgoingLine(&value));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_DefaultOutgoingLine(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPhoneLineDetails<D>::VoicemailCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_VoicemailCount(&value));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_VoicemailCount(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneLineRegistrationState impl_IPhoneLineDetails<D>::RegistrationState() const
 {
     Windows::Phone::Notification::Management::PhoneLineRegistrationState value {};
-    check_hresult(static_cast<const IPhoneLineDetails &>(static_cast<const D &>(*this))->get_RegistrationState(&value));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails)->get_RegistrationState(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPhoneLineDetails2<D>::MissedCallCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPhoneLineDetails2 &>(static_cast<const D &>(*this))->get_MissedCallCount(&value));
+    check_hresult(WINRT_SHIM(IPhoneLineDetails2)->get_MissedCallCount(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPhoneCallDetails<D>::PhoneLine() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_PhoneLine(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_PhoneLine(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPhoneCallDetails<D>::CallId() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_CallId(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_CallId(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneCallTransport impl_IPhoneCallDetails<D>::CallTransport() const
 {
     Windows::Phone::Notification::Management::PhoneCallTransport value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_CallTransport(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_CallTransport(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneMediaType impl_IPhoneCallDetails<D>::CallMediaType() const
 {
     Windows::Phone::Notification::Management::PhoneMediaType value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_CallMediaType(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_CallMediaType(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneCallDirection impl_IPhoneCallDetails<D>::CallDirection() const
 {
     Windows::Phone::Notification::Management::PhoneCallDirection value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_CallDirection(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_CallDirection(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneCallState impl_IPhoneCallDetails<D>::State() const
 {
     Windows::Phone::Notification::Management::PhoneCallState value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_State(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_State(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPhoneCallDetails<D>::ConferenceCallId() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_ConferenceCallId(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_ConferenceCallId(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IPhoneCallDetails<D>::StartTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_StartTime(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_StartTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IPhoneCallDetails<D>::EndTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_EndTime(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_EndTime(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IPhoneCallDetails<D>::PhoneNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_PhoneNumber(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_PhoneNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IPhoneCallDetails<D>::ContactName() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_ContactName(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_ContactName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse> impl_IPhoneCallDetails<D>::PresetTextResponses() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse> value;
-    check_hresult(static_cast<const IPhoneCallDetails &>(static_cast<const D &>(*this))->get_PresetTextResponses(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallDetails)->get_PresetTextResponses(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneNotificationType impl_IPhoneNotificationTriggerDetails<D>::PhoneNotificationType() const
 {
     Windows::Phone::Notification::Management::PhoneNotificationType value {};
-    check_hresult(static_cast<const IPhoneNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_PhoneNotificationType(&value));
+    check_hresult(WINRT_SHIM(IPhoneNotificationTriggerDetails)->get_PhoneNotificationType(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneCallDetails impl_IPhoneNotificationTriggerDetails<D>::CallDetails() const
 {
     Windows::Phone::Notification::Management::PhoneCallDetails value { nullptr };
-    check_hresult(static_cast<const IPhoneNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_CallDetails(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneNotificationTriggerDetails)->get_CallDetails(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IPhoneNotificationTriggerDetails<D>::PhoneLineChangedId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPhoneNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_PhoneLineChangedId(&value));
+    check_hresult(WINRT_SHIM(IPhoneNotificationTriggerDetails)->get_PhoneLineChangedId(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISpeedDialEntry<D>::PhoneNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISpeedDialEntry &>(static_cast<const D &>(*this))->get_PhoneNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISpeedDialEntry)->get_PhoneNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISpeedDialEntry<D>::NumberType() const
 {
     hstring value;
-    check_hresult(static_cast<const ISpeedDialEntry &>(static_cast<const D &>(*this))->get_NumberType(put(value)));
+    check_hresult(WINRT_SHIM(ISpeedDialEntry)->get_NumberType(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISpeedDialEntry<D>::ContactName() const
 {
     hstring value;
-    check_hresult(static_cast<const ISpeedDialEntry &>(static_cast<const D &>(*this))->get_ContactName(put(value)));
+    check_hresult(WINRT_SHIM(ISpeedDialEntry)->get_ContactName(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IReminderNotificationTriggerDetails<D>::ReminderId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ReminderId(&value));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_ReminderId(&value));
     return value;
 }
 
 template <typename D> hstring impl_IReminderNotificationTriggerDetails<D>::Title() const
 {
     hstring value;
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Title(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_Title(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IReminderNotificationTriggerDetails<D>::Description() const
 {
     hstring value;
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Description(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_Description(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IReminderNotificationTriggerDetails<D>::Details() const
 {
     hstring value;
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Details(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_Details(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IReminderNotificationTriggerDetails<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Appointments::Appointment impl_IReminderNotificationTriggerDetails<D>::Appointment() const
 {
     Windows::ApplicationModel::Appointments::Appointment value { nullptr };
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Appointment(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_Appointment(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::ReminderState impl_IReminderNotificationTriggerDetails<D>::ReminderState() const
 {
     Windows::Phone::Notification::Management::ReminderState value {};
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ReminderState(&value));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails)->get_ReminderState(&value));
     return value;
 }
 
 template <typename D> hstring impl_IReminderNotificationTriggerDetails2<D>::InstanceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IReminderNotificationTriggerDetails2 &>(static_cast<const D &>(*this))->get_InstanceId(put(value)));
+    check_hresult(WINRT_SHIM(IReminderNotificationTriggerDetails2)->get_InstanceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::CalendarChangedEvent impl_ICalendarChangedNotificationTriggerDetails<D>::EventType() const
 {
     Windows::Phone::Notification::Management::CalendarChangedEvent value {};
-    check_hresult(static_cast<const ICalendarChangedNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_EventType(&value));
+    check_hresult(WINRT_SHIM(ICalendarChangedNotificationTriggerDetails)->get_EventType(&value));
     return value;
 }
 
 template <typename D> hstring impl_ICalendarChangedNotificationTriggerDetails<D>::ItemId() const
 {
     hstring value;
-    check_hresult(static_cast<const ICalendarChangedNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_ItemId(put(value)));
+    check_hresult(WINRT_SHIM(ICalendarChangedNotificationTriggerDetails)->get_ItemId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IToastNotificationTriggerDetails<D>::Text1() const
 {
     hstring value;
-    check_hresult(static_cast<const IToastNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Text1(put(value)));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails)->get_Text1(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IToastNotificationTriggerDetails<D>::Text2() const
 {
     hstring value;
-    check_hresult(static_cast<const IToastNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Text2(put(value)));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails)->get_Text2(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IToastNotificationTriggerDetails<D>::Text3() const
 {
     hstring value;
-    check_hresult(static_cast<const IToastNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Text3(put(value)));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails)->get_Text3(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IToastNotificationTriggerDetails<D>::Text4() const
 {
     hstring value;
-    check_hresult(static_cast<const IToastNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Text4(put(value)));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails)->get_Text4(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IToastNotificationTriggerDetails<D>::SuppressPopup() const
 {
     bool value {};
-    check_hresult(static_cast<const IToastNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_SuppressPopup(&value));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails)->get_SuppressPopup(&value));
     return value;
 }
 
 template <typename D> hstring impl_IToastNotificationTriggerDetails2<D>::InstanceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IToastNotificationTriggerDetails2 &>(static_cast<const D &>(*this))->get_InstanceId(put(value)));
+    check_hresult(WINRT_SHIM(IToastNotificationTriggerDetails2)->get_InstanceId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::TileId() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_TileId(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_TileId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::Content() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Content(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_Content(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::LargeContent1() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_LargeContent1(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_LargeContent1(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::LargeContent2() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_LargeContent2(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_LargeContent2(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::EmphasizedText() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_EmphasizedText(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_EmphasizedText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::NonWrappedSmallContent1() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_NonWrappedSmallContent1(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_NonWrappedSmallContent1(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::NonWrappedSmallContent2() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_NonWrappedSmallContent2(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_NonWrappedSmallContent2(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::NonWrappedSmallContent3() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_NonWrappedSmallContent3(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_NonWrappedSmallContent3(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::NonWrappedSmallContent4() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_NonWrappedSmallContent4(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_NonWrappedSmallContent4(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ICortanaTileNotificationTriggerDetails<D>::Source() const
 {
     hstring value;
-    check_hresult(static_cast<const ICortanaTileNotificationTriggerDetails &>(static_cast<const D &>(*this))->get_Source(put(value)));
+    check_hresult(WINRT_SHIM(ICortanaTileNotificationTriggerDetails)->get_Source(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaMetadata<D>::Title() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Title(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Title(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaMetadata<D>::Subtitle() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Subtitle(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Subtitle(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaMetadata<D>::Artist() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Artist(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Artist(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaMetadata<D>::Album() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Album(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Album(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IMediaMetadata<D>::Track() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Track(&value));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Track(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IMediaMetadata<D>::Duration() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Duration(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Duration(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IMediaMetadata<D>::Thumbnail() const
 {
     Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(static_cast<const IMediaMetadata &>(static_cast<const D &>(*this))->get_Thumbnail(put(value)));
+    check_hresult(WINRT_SHIM(IMediaMetadata)->get_Thumbnail(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PlaybackStatus impl_IMediaControlsTriggerDetails<D>::PlaybackStatus() const
 {
     Windows::Phone::Notification::Management::PlaybackStatus value {};
-    check_hresult(static_cast<const IMediaControlsTriggerDetails &>(static_cast<const D &>(*this))->get_PlaybackStatus(&value));
+    check_hresult(WINRT_SHIM(IMediaControlsTriggerDetails)->get_PlaybackStatus(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::MediaMetadata impl_IMediaControlsTriggerDetails<D>::MediaMetadata() const
 {
     Windows::Phone::Notification::Management::MediaMetadata value { nullptr };
-    check_hresult(static_cast<const IMediaControlsTriggerDetails &>(static_cast<const D &>(*this))->get_MediaMetadata(put(value)));
+    check_hresult(WINRT_SHIM(IMediaControlsTriggerDetails)->get_MediaMetadata(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IVolumeInfo<D>::SystemVolume() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IVolumeInfo &>(static_cast<const D &>(*this))->get_SystemVolume(&value));
+    check_hresult(WINRT_SHIM(IVolumeInfo)->get_SystemVolume(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IVolumeInfo<D>::CallVolume() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IVolumeInfo &>(static_cast<const D &>(*this))->get_CallVolume(&value));
+    check_hresult(WINRT_SHIM(IVolumeInfo)->get_CallVolume(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IVolumeInfo<D>::MediaVolume() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IVolumeInfo &>(static_cast<const D &>(*this))->get_MediaVolume(&value));
+    check_hresult(WINRT_SHIM(IVolumeInfo)->get_MediaVolume(&value));
     return value;
 }
 
 template <typename D> bool impl_IVolumeInfo<D>::IsMuted() const
 {
     bool value {};
-    check_hresult(static_cast<const IVolumeInfo &>(static_cast<const D &>(*this))->get_IsMuted(&value));
+    check_hresult(WINRT_SHIM(IVolumeInfo)->get_IsMuted(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::VibrateState impl_IVolumeInfo<D>::IsVibrateEnabled() const
 {
     Windows::Phone::Notification::Management::VibrateState value {};
-    check_hresult(static_cast<const IVolumeInfo &>(static_cast<const D &>(*this))->get_IsVibrateEnabled(&value));
+    check_hresult(WINRT_SHIM(IVolumeInfo)->get_IsVibrateEnabled(&value));
     return value;
 }
 
 template <typename D> hstring impl_IAccessoryManager<D>::RegisterAccessoryApp() const
 {
     hstring triggerId;
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_RegisterAccessoryApp(put(triggerId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_RegisterAccessoryApp(put_abi(triggerId)));
     return triggerId;
 }
 
 template <typename D> Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails impl_IAccessoryManager<D>::GetNextTriggerDetails() const
 {
     Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails pDetails;
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetNextTriggerDetails(put(pDetails)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetNextTriggerDetails(put_abi(pDetails)));
     return pDetails;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::ProcessTriggerDetails(const Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails & pDetails) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_ProcessTriggerDetails(get(pDetails)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_ProcessTriggerDetails(get_abi(pDetails)));
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::PhoneLineDetails> impl_IAccessoryManager<D>::PhoneLineDetails() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::PhoneLineDetails> ppvalue;
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_PhoneLineDetails(put(ppvalue)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_PhoneLineDetails(put_abi(ppvalue)));
     return ppvalue;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneLineDetails impl_IAccessoryManager<D>::GetPhoneLineDetails(GUID phoneLine) const
 {
     Windows::Phone::Notification::Management::PhoneLineDetails ppdetails { nullptr };
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetPhoneLineDetails(phoneLine, put(ppdetails)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetPhoneLineDetails(phoneLine, put_abi(ppdetails)));
     return ppdetails;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::AcceptPhoneCall(uint32_t phoneCallId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_AcceptPhoneCall(phoneCallId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_AcceptPhoneCall(phoneCallId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::AcceptPhoneCall(uint32_t phoneCallId, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_AcceptPhoneCallOnEndpoint(phoneCallId, endPoint));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_AcceptPhoneCallOnEndpoint(phoneCallId, endPoint));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::AcceptPhoneCallWithVideo(uint32_t phoneCallId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_AcceptPhoneCallWithVideo(phoneCallId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_AcceptPhoneCallWithVideo(phoneCallId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::AcceptPhoneCallWithVideo(uint32_t phoneCallId, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_AcceptPhoneCallWithVideoOnAudioEndpoint(phoneCallId, endPoint));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_AcceptPhoneCallWithVideoOnAudioEndpoint(phoneCallId, endPoint));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::RejectPhoneCall(uint32_t phoneCallId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_RejectPhoneCall(phoneCallId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_RejectPhoneCall(phoneCallId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::RejectPhoneCall(uint32_t phoneCallId, uint32_t textResponseID) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_RejectPhoneCallWithText(phoneCallId, textResponseID));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_RejectPhoneCallWithText(phoneCallId, textResponseID));
 }
 
-template <typename D> void impl_IAccessoryManager<D>::MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber) const
+template <typename D> void impl_IAccessoryManager<D>::MakePhoneCall(GUID phoneLine, hstring_view phoneNumber) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_MakePhoneCall(phoneLine, get(phoneNumber)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_MakePhoneCall(phoneLine, get_abi(phoneNumber)));
 }
 
-template <typename D> void impl_IAccessoryManager<D>::MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
+template <typename D> void impl_IAccessoryManager<D>::MakePhoneCall(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_MakePhoneCallOnAudioEndpoint(phoneLine, get(phoneNumber), endPoint));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_MakePhoneCallOnAudioEndpoint(phoneLine, get_abi(phoneNumber), endPoint));
 }
 
-template <typename D> void impl_IAccessoryManager<D>::MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber) const
+template <typename D> void impl_IAccessoryManager<D>::MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_MakePhoneCallWithVideo(phoneLine, get(phoneNumber)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_MakePhoneCallWithVideo(phoneLine, get_abi(phoneNumber)));
 }
 
-template <typename D> void impl_IAccessoryManager<D>::MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
+template <typename D> void impl_IAccessoryManager<D>::MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_MakePhoneCallWithVideoOnAudioEndpoint(phoneLine, get(phoneNumber), endPoint));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_MakePhoneCallWithVideoOnAudioEndpoint(phoneLine, get_abi(phoneNumber), endPoint));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::SwapPhoneCalls(uint32_t phoneCallIdToHold, uint32_t phoneCallIdOnHold) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_SwapPhoneCalls(phoneCallIdToHold, phoneCallIdOnHold));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_SwapPhoneCalls(phoneCallIdToHold, phoneCallIdOnHold));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::HoldPhoneCall(uint32_t phoneCallId, bool holdCall) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_HoldPhoneCall(phoneCallId, holdCall));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_HoldPhoneCall(phoneCallId, holdCall));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::EndPhoneCall(uint32_t phoneCallId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_EndPhoneCall(phoneCallId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_EndPhoneCall(phoneCallId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::PhoneMute(bool value) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->put_PhoneMute(value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->put_PhoneMute(value));
 }
 
 template <typename D> bool impl_IAccessoryManager<D>::PhoneMute() const
 {
     bool value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_PhoneMute(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_PhoneMute(&value));
     return value;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::PhoneCallAudioEndpoint(Windows::Phone::Notification::Management::PhoneCallAudioEndpoint value) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->put_PhoneCallAudioEndpoint(value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->put_PhoneCallAudioEndpoint(value));
 }
 
 template <typename D> Windows::Phone::Notification::Management::PhoneCallAudioEndpoint impl_IAccessoryManager<D>::PhoneCallAudioEndpoint() const
 {
     Windows::Phone::Notification::Management::PhoneCallAudioEndpoint value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_PhoneCallAudioEndpoint(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_PhoneCallAudioEndpoint(&value));
     return value;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::SnoozeAlarm(GUID alarmId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_SnoozeAlarm(alarmId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_SnoozeAlarm(alarmId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::SnoozeAlarm(GUID alarmId, const Windows::Foundation::TimeSpan & timeSpan) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_SnoozeAlarmForSpecifiedTime(alarmId, get(timeSpan)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_SnoozeAlarmForSpecifiedTime(alarmId, get_abi(timeSpan)));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::DismissAlarm(GUID alarmId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_DismissAlarm(alarmId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_DismissAlarm(alarmId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::SnoozeReminder(GUID reminderId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_SnoozeReminder(reminderId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_SnoozeReminder(reminderId));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::SnoozeReminder(GUID reminderId, const Windows::Foundation::TimeSpan & timeSpan) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_SnoozeReminderForSpecifiedTime(reminderId, get(timeSpan)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_SnoozeReminderForSpecifiedTime(reminderId, get_abi(timeSpan)));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::DismissReminder(GUID reminderId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_DismissReminder(reminderId));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_DismissReminder(reminderId));
 }
 
 template <typename D> Windows::Phone::Notification::Management::MediaMetadata impl_IAccessoryManager<D>::GetMediaMetadata() const
 {
     Windows::Phone::Notification::Management::MediaMetadata ppMetadata { nullptr };
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetMediaMetadata(put(ppMetadata)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetMediaMetadata(put_abi(ppMetadata)));
     return ppMetadata;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PlaybackCapability impl_IAccessoryManager<D>::MediaPlaybackCapabilities() const
 {
     Windows::Phone::Notification::Management::PlaybackCapability value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_MediaPlaybackCapabilities(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_MediaPlaybackCapabilities(&value));
     return value;
 }
 
 template <typename D> Windows::Phone::Notification::Management::PlaybackStatus impl_IAccessoryManager<D>::MediaPlaybackStatus() const
 {
     Windows::Phone::Notification::Management::PlaybackStatus value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_MediaPlaybackStatus(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_MediaPlaybackStatus(&value));
     return value;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::PerformMediaPlaybackCommand(Windows::Phone::Notification::Management::PlaybackCommand command) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_PerformMediaPlaybackCommand(command));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_PerformMediaPlaybackCommand(command));
 }
 
 template <typename D> bool impl_IAccessoryManager<D>::DoNotDisturbEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_DoNotDisturbEnabled(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_DoNotDisturbEnabled(&value));
     return value;
 }
 
 template <typename D> bool impl_IAccessoryManager<D>::DrivingModeEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_DrivingModeEnabled(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_DrivingModeEnabled(&value));
     return value;
 }
 
 template <typename D> bool impl_IAccessoryManager<D>::BatterySaverState() const
 {
     bool value {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->get_BatterySaverState(&value));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->get_BatterySaverState(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo> impl_IAccessoryManager<D>::GetApps() const
 {
     Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo> returnValue;
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetApps(put(returnValue)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetApps(put_abi(returnValue)));
     return returnValue;
 }
 
-template <typename D> void impl_IAccessoryManager<D>::EnableNotificationsForApplication(hstring_ref appId) const
+template <typename D> void impl_IAccessoryManager<D>::EnableNotificationsForApplication(hstring_view appId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_EnableNotificationsForApplication(get(appId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_EnableNotificationsForApplication(get_abi(appId)));
 }
 
-template <typename D> void impl_IAccessoryManager<D>::DisableNotificationsForApplication(hstring_ref appId) const
+template <typename D> void impl_IAccessoryManager<D>::DisableNotificationsForApplication(hstring_view appId) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_DisableNotificationsForApplication(get(appId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_DisableNotificationsForApplication(get_abi(appId)));
 }
 
-template <typename D> bool impl_IAccessoryManager<D>::IsNotificationEnabledForApplication(hstring_ref appId) const
+template <typename D> bool impl_IAccessoryManager<D>::IsNotificationEnabledForApplication(hstring_view appId) const
 {
     bool enabled {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_IsNotificationEnabledForApplication(get(appId), &enabled));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_IsNotificationEnabledForApplication(get_abi(appId), &enabled));
     return enabled;
 }
 
 template <typename D> int32_t impl_IAccessoryManager<D>::GetEnabledAccessoryNotificationTypes() const
 {
     int32_t enabledAccessoryNotificationTypes {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetEnabledAccessoryNotificationTypes(&enabledAccessoryNotificationTypes));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetEnabledAccessoryNotificationTypes(&enabledAccessoryNotificationTypes));
     return enabledAccessoryNotificationTypes;
 }
 
 template <typename D> void impl_IAccessoryManager<D>::EnableAccessoryNotificationTypes(int32_t accessoryNotificationTypes) const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_EnableAccessoryNotificationTypes(accessoryNotificationTypes));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_EnableAccessoryNotificationTypes(accessoryNotificationTypes));
 }
 
 template <typename D> void impl_IAccessoryManager<D>::DisableAllAccessoryNotificationTypes() const
 {
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_DisableAllAccessoryNotificationTypes());
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_DisableAllAccessoryNotificationTypes());
 }
 
 template <typename D> bool impl_IAccessoryManager<D>::GetUserConsent() const
 {
     bool enabled {};
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetUserConsent(&enabled));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetUserConsent(&enabled));
     return enabled;
 }
 
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IAccessoryManager<D>::GetAppIcon(hstring_ref appId) const
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IAccessoryManager<D>::GetAppIcon(hstring_view appId) const
 {
     Windows::Storage::Streams::IRandomAccessStreamReference returnValue;
-    check_hresult(static_cast<const IAccessoryManager &>(static_cast<const D &>(*this))->abi_GetAppIcon(get(appId), put(returnValue)));
+    check_hresult(WINRT_SHIM(IAccessoryManager)->abi_GetAppIcon(get_abi(appId), put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::RingDevice() const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_RingDevice());
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_RingDevice());
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry> impl_IAccessoryManager2<D>::SpeedDialList() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry> ppvalue;
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->get_SpeedDialList(put(ppvalue)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->get_SpeedDialList(put_abi(ppvalue)));
     return ppvalue;
 }
 
-template <typename D> void impl_IAccessoryManager2<D>::ClearToast(hstring_ref instanceId) const
+template <typename D> void impl_IAccessoryManager2<D>::ClearToast(hstring_view instanceId) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_ClearToast(get(instanceId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_ClearToast(get_abi(instanceId)));
 }
 
 template <typename D> bool impl_IAccessoryManager2<D>::IsPhonePinLocked() const
 {
     bool pinLocked {};
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->get_IsPhonePinLocked(&pinLocked));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->get_IsPhonePinLocked(&pinLocked));
     return pinLocked;
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::IncreaseVolume(int32_t step) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_IncreaseVolume(step));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_IncreaseVolume(step));
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::DecreaseVolume(int32_t step) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_DecreaseVolume(step));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_DecreaseVolume(step));
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::SetMute(bool mute) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_SetMute(mute));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_SetMute(mute));
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::SetRingerVibrate(bool ringer, bool vibrate) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_SetRingerVibrate(ringer, vibrate));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_SetRingerVibrate(ringer, vibrate));
 }
 
 template <typename D> Windows::Phone::Notification::Management::VolumeInfo impl_IAccessoryManager2<D>::VolumeInfo() const
 {
     Windows::Phone::Notification::Management::VolumeInfo ppVolume { nullptr };
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->get_VolumeInfo(put(ppVolume)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->get_VolumeInfo(put_abi(ppVolume)));
     return ppVolume;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo> impl_IAccessoryManager2<D>::GetAllEmailAccounts() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo> emailAccounts;
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_GetAllEmailAccounts(put(emailAccounts)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_GetAllEmailAccounts(put_abi(emailAccounts)));
     return emailAccounts;
 }
 
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> impl_IAccessoryManager2<D>::GetFolders(hstring_ref emailAccount) const
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> impl_IAccessoryManager2<D>::GetFolders(hstring_view emailAccount) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> folders;
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_GetFolders(get(emailAccount), put(folders)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_GetFolders(get_abi(emailAccount), put_abi(folders)));
     return folders;
 }
 
-template <typename D> void impl_IAccessoryManager2<D>::EnableEmailNotificationEmailAccount(hstring_ref emailAccount) const
+template <typename D> void impl_IAccessoryManager2<D>::EnableEmailNotificationEmailAccount(hstring_view emailAccount) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_EnableEmailNotificationEmailAccount(get(emailAccount)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_EnableEmailNotificationEmailAccount(get_abi(emailAccount)));
 }
 
-template <typename D> void impl_IAccessoryManager2<D>::DisableEmailNotificationEmailAccount(hstring_ref emailAccount) const
+template <typename D> void impl_IAccessoryManager2<D>::DisableEmailNotificationEmailAccount(hstring_view emailAccount) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_DisableEmailNotificationEmailAccount(get(emailAccount)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_DisableEmailNotificationEmailAccount(get_abi(emailAccount)));
 }
 
-template <typename D> void impl_IAccessoryManager2<D>::EnableEmailNotificationFolderFilter(hstring_ref emailAccount, const Windows::Foundation::Collections::IVectorView<hstring> & folders) const
+template <typename D> void impl_IAccessoryManager2<D>::EnableEmailNotificationFolderFilter(hstring_view emailAccount, vector_view<hstring> folders) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_EnableEmailNotificationFolderFilter(get(emailAccount), get(folders)));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_EnableEmailNotificationFolderFilter(get_abi(emailAccount), get_abi(folders)));
 }
 
 template <typename D> void impl_IAccessoryManager2<D>::UpdateEmailReadStatus(const Windows::Phone::Notification::Management::BinaryId & messageEntryId, bool isRead) const
 {
-    check_hresult(static_cast<const IAccessoryManager2 &>(static_cast<const D &>(*this))->abi_UpdateEmailReadStatus(get(messageEntryId), isRead));
+    check_hresult(WINRT_SHIM(IAccessoryManager2)->abi_UpdateEmailReadStatus(get_abi(messageEntryId), isRead));
 }
 
-template <typename D> void impl_IAccessoryManager3<D>::SnoozeAlarmByInstanceId(hstring_ref instanceId) const
+template <typename D> void impl_IAccessoryManager3<D>::SnoozeAlarmByInstanceId(hstring_view instanceId) const
 {
-    check_hresult(static_cast<const IAccessoryManager3 &>(static_cast<const D &>(*this))->abi_SnoozeAlarmByInstanceId(get(instanceId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager3)->abi_SnoozeAlarmByInstanceId(get_abi(instanceId)));
 }
 
-template <typename D> void impl_IAccessoryManager3<D>::DismissAlarmByInstanceId(hstring_ref instanceId) const
+template <typename D> void impl_IAccessoryManager3<D>::DismissAlarmByInstanceId(hstring_view instanceId) const
 {
-    check_hresult(static_cast<const IAccessoryManager3 &>(static_cast<const D &>(*this))->abi_DismissAlarmByInstanceId(get(instanceId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager3)->abi_DismissAlarmByInstanceId(get_abi(instanceId)));
 }
 
-template <typename D> void impl_IAccessoryManager3<D>::SnoozeReminderByInstanceId(hstring_ref instanceId) const
+template <typename D> void impl_IAccessoryManager3<D>::SnoozeReminderByInstanceId(hstring_view instanceId) const
 {
-    check_hresult(static_cast<const IAccessoryManager3 &>(static_cast<const D &>(*this))->abi_SnoozeReminderByInstanceId(get(instanceId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager3)->abi_SnoozeReminderByInstanceId(get_abi(instanceId)));
 }
 
-template <typename D> void impl_IAccessoryManager3<D>::DismissReminderByInstanceId(hstring_ref instanceId) const
+template <typename D> void impl_IAccessoryManager3<D>::DismissReminderByInstanceId(hstring_view instanceId) const
 {
-    check_hresult(static_cast<const IAccessoryManager3 &>(static_cast<const D &>(*this))->abi_DismissReminderByInstanceId(get(instanceId)));
+    check_hresult(WINRT_SHIM(IAccessoryManager3)->abi_DismissReminderByInstanceId(get_abi(instanceId)));
 }
 
 inline hstring AccessoryManager::RegisterAccessoryApp()
@@ -3366,22 +3529,22 @@ inline void AccessoryManager::RejectPhoneCall(uint32_t phoneCallId, uint32_t tex
     get_activation_factory<AccessoryManager, IAccessoryManager>().RejectPhoneCall(phoneCallId, textResponseID);
 }
 
-inline void AccessoryManager::MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber)
+inline void AccessoryManager::MakePhoneCall(GUID phoneLine, hstring_view phoneNumber)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().MakePhoneCall(phoneLine, phoneNumber);
 }
 
-inline void AccessoryManager::MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint)
+inline void AccessoryManager::MakePhoneCall(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().MakePhoneCall(phoneLine, phoneNumber, endPoint);
 }
 
-inline void AccessoryManager::MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber)
+inline void AccessoryManager::MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().MakePhoneCallWithVideo(phoneLine, phoneNumber);
 }
 
-inline void AccessoryManager::MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint)
+inline void AccessoryManager::MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().MakePhoneCallWithVideo(phoneLine, phoneNumber, endPoint);
 }
@@ -3491,17 +3654,17 @@ inline Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notif
     return get_activation_factory<AccessoryManager, IAccessoryManager>().GetApps();
 }
 
-inline void AccessoryManager::EnableNotificationsForApplication(hstring_ref appId)
+inline void AccessoryManager::EnableNotificationsForApplication(hstring_view appId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().EnableNotificationsForApplication(appId);
 }
 
-inline void AccessoryManager::DisableNotificationsForApplication(hstring_ref appId)
+inline void AccessoryManager::DisableNotificationsForApplication(hstring_view appId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager>().DisableNotificationsForApplication(appId);
 }
 
-inline bool AccessoryManager::IsNotificationEnabledForApplication(hstring_ref appId)
+inline bool AccessoryManager::IsNotificationEnabledForApplication(hstring_view appId)
 {
     return get_activation_factory<AccessoryManager, IAccessoryManager>().IsNotificationEnabledForApplication(appId);
 }
@@ -3526,7 +3689,7 @@ inline bool AccessoryManager::GetUserConsent()
     return get_activation_factory<AccessoryManager, IAccessoryManager>().GetUserConsent();
 }
 
-inline Windows::Storage::Streams::IRandomAccessStreamReference AccessoryManager::GetAppIcon(hstring_ref appId)
+inline Windows::Storage::Streams::IRandomAccessStreamReference AccessoryManager::GetAppIcon(hstring_view appId)
 {
     return get_activation_factory<AccessoryManager, IAccessoryManager>().GetAppIcon(appId);
 }
@@ -3541,7 +3704,7 @@ inline Windows::Foundation::Collections::IVectorView<Windows::Phone::Notificatio
     return get_activation_factory<AccessoryManager, IAccessoryManager2>().SpeedDialList();
 }
 
-inline void AccessoryManager::ClearToast(hstring_ref instanceId)
+inline void AccessoryManager::ClearToast(hstring_view instanceId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager2>().ClearToast(instanceId);
 }
@@ -3581,22 +3744,22 @@ inline Windows::Foundation::Collections::IVectorView<Windows::Phone::Notificatio
     return get_activation_factory<AccessoryManager, IAccessoryManager2>().GetAllEmailAccounts();
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> AccessoryManager::GetFolders(hstring_ref emailAccount)
+inline Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> AccessoryManager::GetFolders(hstring_view emailAccount)
 {
     return get_activation_factory<AccessoryManager, IAccessoryManager2>().GetFolders(emailAccount);
 }
 
-inline void AccessoryManager::EnableEmailNotificationEmailAccount(hstring_ref emailAccount)
+inline void AccessoryManager::EnableEmailNotificationEmailAccount(hstring_view emailAccount)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager2>().EnableEmailNotificationEmailAccount(emailAccount);
 }
 
-inline void AccessoryManager::DisableEmailNotificationEmailAccount(hstring_ref emailAccount)
+inline void AccessoryManager::DisableEmailNotificationEmailAccount(hstring_view emailAccount)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager2>().DisableEmailNotificationEmailAccount(emailAccount);
 }
 
-inline void AccessoryManager::EnableEmailNotificationFolderFilter(hstring_ref emailAccount, const Windows::Foundation::Collections::IVectorView<hstring> & folders)
+inline void AccessoryManager::EnableEmailNotificationFolderFilter(hstring_view emailAccount, vector_view<hstring> folders)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager2>().EnableEmailNotificationFolderFilter(emailAccount, folders);
 }
@@ -3606,22 +3769,22 @@ inline void AccessoryManager::UpdateEmailReadStatus(const Windows::Phone::Notifi
     get_activation_factory<AccessoryManager, IAccessoryManager2>().UpdateEmailReadStatus(messageEntryId, isRead);
 }
 
-inline void AccessoryManager::SnoozeAlarmByInstanceId(hstring_ref instanceId)
+inline void AccessoryManager::SnoozeAlarmByInstanceId(hstring_view instanceId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager3>().SnoozeAlarmByInstanceId(instanceId);
 }
 
-inline void AccessoryManager::DismissAlarmByInstanceId(hstring_ref instanceId)
+inline void AccessoryManager::DismissAlarmByInstanceId(hstring_view instanceId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager3>().DismissAlarmByInstanceId(instanceId);
 }
 
-inline void AccessoryManager::SnoozeReminderByInstanceId(hstring_ref instanceId)
+inline void AccessoryManager::SnoozeReminderByInstanceId(hstring_view instanceId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager3>().SnoozeReminderByInstanceId(instanceId);
 }
 
-inline void AccessoryManager::DismissReminderByInstanceId(hstring_ref instanceId)
+inline void AccessoryManager::DismissReminderByInstanceId(hstring_view instanceId)
 {
     get_activation_factory<AccessoryManager, IAccessoryManager3>().DismissReminderByInstanceId(instanceId);
 }
@@ -3629,3 +3792,428 @@ inline void AccessoryManager::DismissReminderByInstanceId(hstring_ref instanceId
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAccessoryManager>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAccessoryManager & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAccessoryManager2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAccessoryManager2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAccessoryManager3>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAccessoryManager3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAlarmNotificationTriggerDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IAppNotificationInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IAppNotificationInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IBinaryId>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IBinaryId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ICalendarChangedNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ICalendarChangedNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ICortanaTileNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ICortanaTileNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IEmailAccountInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IEmailAccountInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IEmailFolderInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IEmailFolderInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IEmailNotificationTriggerDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IEmailReadNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IEmailReadNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IMediaControlsTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IMediaControlsTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IMediaMetadata>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IMediaMetadata & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IPhoneCallDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IPhoneCallDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IPhoneLineDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IPhoneLineDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IPhoneLineDetails2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IPhoneLineDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IPhoneNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IPhoneNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IReminderNotificationTriggerDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ISpeedDialEntry>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ISpeedDialEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ITextResponse>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ITextResponse & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IToastNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IToastNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IToastNotificationTriggerDetails2>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IToastNotificationTriggerDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::IVolumeInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::IVolumeInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::AlarmNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::AlarmNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::AppNotificationInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::AppNotificationInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::BinaryId>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::BinaryId & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::CalendarChangedNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::CalendarChangedNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::CortanaTileNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::CortanaTileNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::EmailAccountInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::EmailAccountInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::EmailFolderInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::EmailFolderInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::EmailNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::EmailNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::EmailReadNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::EmailReadNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::MediaControlsTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::MediaControlsTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::MediaMetadata>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::MediaMetadata & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::PhoneCallDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::PhoneCallDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::PhoneLineDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::PhoneLineDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::PhoneNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::PhoneNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ReminderNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ReminderNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::SpeedDialEntry>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::SpeedDialEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::TextResponse>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::TextResponse & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::ToastNotificationTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::ToastNotificationTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::Notification::Management::VolumeInfo>
+{
+    size_t operator()(const winrt::Windows::Phone::Notification::Management::VolumeInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

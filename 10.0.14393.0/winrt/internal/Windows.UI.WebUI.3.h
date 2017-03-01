@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_ActivatedEventHandler : implements<impl_Activa
 {
     impl_ActivatedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::ApplicationModel::Activation::IActivatedEventArgs> eventArgs) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::ApplicationModel::Activation::IActivatedEventArgs> eventArgs) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::Activation::IActivatedEventArgs *>(&eventArgs));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::Activation::IActivatedEventArgs *>(&eventArgs));
             return S_OK;
         }
         catch (...)
@@ -31,11 +31,11 @@ template <typename H> struct impl_EnteredBackgroundEventHandler : implements<imp
 {
     impl_EnteredBackgroundEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::ApplicationModel::IEnteredBackgroundEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::ApplicationModel::IEnteredBackgroundEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::IEnteredBackgroundEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::IEnteredBackgroundEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -49,11 +49,11 @@ template <typename H> struct impl_LeavingBackgroundEventHandler : implements<imp
 {
     impl_LeavingBackgroundEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::ApplicationModel::ILeavingBackgroundEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::ApplicationModel::ILeavingBackgroundEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::ILeavingBackgroundEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::ILeavingBackgroundEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -67,11 +67,11 @@ template <typename H> struct impl_NavigatedEventHandler : implements<impl_Naviga
 {
     impl_NavigatedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::WebUI::IWebUINavigatedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::WebUI::IWebUINavigatedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::WebUI::IWebUINavigatedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::WebUI::IWebUINavigatedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -85,11 +85,11 @@ template <typename H> struct impl_ResumingEventHandler : implements<impl_Resumin
 {
     impl_ResumingEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender));
             return S_OK;
         }
         catch (...)
@@ -103,11 +103,11 @@ template <typename H> struct impl_SuspendingEventHandler : implements<impl_Suspe
 {
     impl_SuspendingEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::ApplicationModel::ISuspendingEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::ApplicationModel::ISuspendingEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::ISuspendingEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::ApplicationModel::ISuspendingEventArgs *>(&e));
             return S_OK;
         }
         catch (...)

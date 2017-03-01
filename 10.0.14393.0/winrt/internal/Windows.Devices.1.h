@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Devices {
 
-struct __declspec(uuid("a73e561c-aac1-4ec7-a852-479f7060d01f")) __declspec(novtable) ILowLevelDevicesAggregateProvider : Windows::IInspectable
+struct __declspec(uuid("a73e561c-aac1-4ec7-a852-479f7060d01f")) __declspec(novtable) ILowLevelDevicesAggregateProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AdcControllerProvider(Windows::Devices::Adc::Provider::IAdcControllerProvider ** value) = 0;
     virtual HRESULT __stdcall get_PwmControllerProvider(Windows::Devices::Pwm::Provider::IPwmControllerProvider ** value) = 0;
@@ -24,16 +24,16 @@ struct __declspec(uuid("a73e561c-aac1-4ec7-a852-479f7060d01f")) __declspec(novta
     virtual HRESULT __stdcall get_SpiControllerProvider(Windows::Devices::Spi::Provider::ISpiControllerProvider ** value) = 0;
 };
 
-struct __declspec(uuid("9ac4aaf6-3473-465e-96d5-36281a2c57af")) __declspec(novtable) ILowLevelDevicesAggregateProviderFactory : Windows::IInspectable
+struct __declspec(uuid("9ac4aaf6-3473-465e-96d5-36281a2c57af")) __declspec(novtable) ILowLevelDevicesAggregateProviderFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::Devices::Adc::Provider::IAdcControllerProvider * adc, Windows::Devices::Pwm::Provider::IPwmControllerProvider * pwm, Windows::Devices::Gpio::Provider::IGpioControllerProvider * gpio, Windows::Devices::I2c::Provider::II2cControllerProvider * i2c, Windows::Devices::Spi::Provider::ISpiControllerProvider * spi, Windows::Devices::ILowLevelDevicesAggregateProvider ** value) = 0;
 };
 
-struct __declspec(uuid("2ec23dd4-179b-45de-9b39-3ae02527de52")) __declspec(novtable) ILowLevelDevicesController : Windows::IInspectable
+struct __declspec(uuid("2ec23dd4-179b-45de-9b39-3ae02527de52")) __declspec(novtable) ILowLevelDevicesController : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("093e926a-fccb-4394-a697-19de637c2db3")) __declspec(novtable) ILowLevelDevicesControllerStatics : Windows::IInspectable
+struct __declspec(uuid("093e926a-fccb-4394-a697-19de637c2db3")) __declspec(novtable) ILowLevelDevicesControllerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DefaultProvider(Windows::Devices::ILowLevelDevicesAggregateProvider ** value) = 0;
     virtual HRESULT __stdcall put_DefaultProvider(Windows::Devices::ILowLevelDevicesAggregateProvider * value) = 0;
@@ -50,10 +50,33 @@ template <> struct traits<Windows::Devices::LowLevelDevicesController> { using d
 
 namespace Windows::Devices {
 
-template <typename T> struct impl_ILowLevelDevicesAggregateProvider;
-template <typename T> struct impl_ILowLevelDevicesAggregateProviderFactory;
-template <typename T> struct impl_ILowLevelDevicesController;
-template <typename T> struct impl_ILowLevelDevicesControllerStatics;
+template <typename D>
+struct WINRT_EBO impl_ILowLevelDevicesAggregateProvider
+{
+    Windows::Devices::Adc::Provider::IAdcControllerProvider AdcControllerProvider() const;
+    Windows::Devices::Pwm::Provider::IPwmControllerProvider PwmControllerProvider() const;
+    Windows::Devices::Gpio::Provider::IGpioControllerProvider GpioControllerProvider() const;
+    Windows::Devices::I2c::Provider::II2cControllerProvider I2cControllerProvider() const;
+    Windows::Devices::Spi::Provider::ISpiControllerProvider SpiControllerProvider() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILowLevelDevicesAggregateProviderFactory
+{
+    Windows::Devices::LowLevelDevicesAggregateProvider Create(const Windows::Devices::Adc::Provider::IAdcControllerProvider & adc, const Windows::Devices::Pwm::Provider::IPwmControllerProvider & pwm, const Windows::Devices::Gpio::Provider::IGpioControllerProvider & gpio, const Windows::Devices::I2c::Provider::II2cControllerProvider & i2c, const Windows::Devices::Spi::Provider::ISpiControllerProvider & spi) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILowLevelDevicesController
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILowLevelDevicesControllerStatics
+{
+    Windows::Devices::ILowLevelDevicesAggregateProvider DefaultProvider() const;
+    void DefaultProvider(const Windows::Devices::ILowLevelDevicesAggregateProvider & value) const;
+};
 
 }
 

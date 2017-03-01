@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -125,9 +125,9 @@ struct WINRT_EBO ContactField :
     Windows::ApplicationModel::Contacts::IContactField
 {
     ContactField(std::nullptr_t) noexcept {}
-    ContactField(hstring_ref value, Windows::ApplicationModel::Contacts::ContactFieldType type);
-    ContactField(hstring_ref value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
-    ContactField(hstring_ref name, hstring_ref value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
+    ContactField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type);
+    ContactField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
+    ContactField(hstring_view name, hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
 };
 
 struct WINRT_EBO ContactFieldFactory :
@@ -148,9 +148,9 @@ struct WINRT_EBO ContactInstantMessageField :
     Windows::ApplicationModel::Contacts::IContactInstantMessageField
 {
     ContactInstantMessageField(std::nullptr_t) noexcept {}
-    ContactInstantMessageField(hstring_ref userName);
-    ContactInstantMessageField(hstring_ref userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
-    ContactInstantMessageField(hstring_ref userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_ref service, hstring_ref displayText, const Windows::Foundation::Uri & verb);
+    ContactInstantMessageField(hstring_view userName);
+    ContactInstantMessageField(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
+    ContactInstantMessageField(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view service, hstring_view displayText, const Windows::Foundation::Uri & verb);
 };
 
 struct WINRT_EBO ContactJobInfo :
@@ -202,9 +202,9 @@ struct WINRT_EBO ContactLocationField :
     Windows::ApplicationModel::Contacts::IContactLocationField
 {
     ContactLocationField(std::nullptr_t) noexcept {}
-    ContactLocationField(hstring_ref unstructuredAddress);
-    ContactLocationField(hstring_ref unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
-    ContactLocationField(hstring_ref unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_ref street, hstring_ref city, hstring_ref region, hstring_ref country, hstring_ref postalCode);
+    ContactLocationField(hstring_view unstructuredAddress);
+    ContactLocationField(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category);
+    ContactLocationField(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view street, hstring_view city, hstring_view region, hstring_view country, hstring_view postalCode);
 };
 
 struct ContactManager
@@ -263,8 +263,8 @@ struct WINRT_EBO ContactQueryOptions :
 {
     ContactQueryOptions(std::nullptr_t) noexcept {}
     ContactQueryOptions();
-    ContactQueryOptions(hstring_ref text);
-    ContactQueryOptions(hstring_ref text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields fields);
+    ContactQueryOptions(hstring_view text);
+    ContactQueryOptions(hstring_view text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields fields);
 };
 
 struct WINRT_EBO ContactQueryTextSearch :
@@ -315,15 +315,15 @@ struct WINRT_EBO FullContactCardOptions :
     FullContactCardOptions();
 };
 
-struct KnownContactField
+struct [[deprecated("KnownContactField  may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] KnownContactField
 {
     KnownContactField() = delete;
-    static hstring Email();
-    static hstring PhoneNumber();
-    static hstring Location();
-    static hstring InstantMessage();
-    static Windows::ApplicationModel::Contacts::ContactFieldType ConvertNameToType(hstring_ref name);
-    static hstring ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType type);
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static hstring Email();
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static hstring PhoneNumber();
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static hstring Location();
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static hstring InstantMessage();
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static Windows::ApplicationModel::Contacts::ContactFieldType ConvertNameToType(hstring_view name);
+    [[deprecated("IKnownContactFieldStatics may be altered or unavailable for releases after Windows 8.1. Instead, use ContactAddress, ContactPhone, ContactConnectedServiceAccount or ContactEmail.")]] static hstring ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType type);
 };
 
 }

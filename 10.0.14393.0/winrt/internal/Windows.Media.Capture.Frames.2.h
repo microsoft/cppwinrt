@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.Capture.Frames.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -20,9 +20,14 @@ template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_5ee3189c_7dbf_5998_ad07_5414fb82567c
+#define WINRT_GENERIC_5ee3189c_7dbf_5998_ad07_5414fb82567c
+template <> struct __declspec(uuid("5ee3189c-7dbf-5998-ad07-5414fb82567c")) __declspec(novtable) IMap<GUID, Windows::Foundation::IInspectable> : impl_IMap<GUID, Windows::Foundation::IInspectable> {};
+#endif
+
 #ifndef WINRT_GENERIC_3bda1540_d089_5a1a_8f0d_94eba8068e58
 #define WINRT_GENERIC_3bda1540_d089_5a1a_8f0d_94eba8068e58
-template <> struct __declspec(uuid("3bda1540-d089-5a1a-8f0d-94eba8068e58")) __declspec(novtable) IKeyValuePair<GUID, Windows::IInspectable> : impl_IKeyValuePair<GUID, Windows::IInspectable> {};
+template <> struct __declspec(uuid("3bda1540-d089-5a1a-8f0d-94eba8068e58")) __declspec(novtable) IKeyValuePair<GUID, Windows::Foundation::IInspectable> : impl_IKeyValuePair<GUID, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_dbdb7946_9b30_51d0_9c8c_c7105af690e0
@@ -52,7 +57,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_e4d2c732_bbc1_5ef4_869f_5007ceb55f6e
 #define WINRT_GENERIC_e4d2c732_bbc1_5ef4_869f_5007ceb55f6e
-template <> struct __declspec(uuid("e4d2c732-bbc1-5ef4-869f-5007ceb55f6e")) __declspec(novtable) IMapView<GUID, Windows::IInspectable> : impl_IMapView<GUID, Windows::IInspectable> {};
+template <> struct __declspec(uuid("e4d2c732-bbc1-5ef4-869f-5007ceb55f6e")) __declspec(novtable) IMapView<GUID, Windows::Foundation::IInspectable> : impl_IMapView<GUID, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_bae2547d_3fae_55cd_b209_45c3b5b2f816
@@ -67,7 +72,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c7e61aa7_4716_5514_a913_ef1796b98dbd
 #define WINRT_GENERIC_c7e61aa7_4716_5514_a913_ef1796b98dbd
-template <> struct __declspec(uuid("c7e61aa7-4716-5514-a913-ef1796b98dbd")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> {};
+template <> struct __declspec(uuid("c7e61aa7-4716-5514-a913-ef1796b98dbd")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_d3dd49cb_8d25_591a_80f7_8363d5c03ec9
@@ -95,6 +100,11 @@ template <> struct __declspec(uuid("a1507c16-5f84-586e-8ca9-224f37e0e0de")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_21afcbdd_acc0_559b_a807_44fbb225d36a
+#define WINRT_GENERIC_21afcbdd_acc0_559b_a807_44fbb225d36a
+template <> struct __declspec(uuid("21afcbdd-acc0-559b-a807-44fbb225d36a")) __declspec(novtable) IVector<Windows::Media::Capture::Frames::MediaFrameSourceInfo> : impl_IVector<Windows::Media::Capture::Frames::MediaFrameSourceInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_443c60d8_208e_5399_bc44_edc6fef02293
 #define WINRT_GENERIC_443c60d8_208e_5399_bc44_edc6fef02293
 template <> struct __declspec(uuid("443c60d8-208e-5399-bc44-edc6fef02293")) __declspec(novtable) IIterator<Windows::Media::Capture::Frames::MediaFrameSourceInfo> : impl_IIterator<Windows::Media::Capture::Frames::MediaFrameSourceInfo> {};
@@ -103,6 +113,11 @@ template <> struct __declspec(uuid("443c60d8-208e-5399-bc44-edc6fef02293")) __de
 #ifndef WINRT_GENERIC_2e29c5b0_6aa9_50f2_91a4_5b67a5598f2e
 #define WINRT_GENERIC_2e29c5b0_6aa9_50f2_91a4_5b67a5598f2e
 template <> struct __declspec(uuid("2e29c5b0-6aa9-50f2-91a4-5b67a5598f2e")) __declspec(novtable) IIterable<Windows::Media::Capture::Frames::MediaFrameSourceInfo> : impl_IIterable<Windows::Media::Capture::Frames::MediaFrameSourceInfo> {};
+#endif
+
+#ifndef WINRT_GENERIC_d82a2f69_97bb_59f2_8fc8_f218c5489bd1
+#define WINRT_GENERIC_d82a2f69_97bb_59f2_8fc8_f218c5489bd1
+template <> struct __declspec(uuid("d82a2f69-97bb-59f2-8fc8-f218c5489bd1")) __declspec(novtable) IVector<Windows::Media::Capture::Frames::MediaFrameSourceGroup> : impl_IVector<Windows::Media::Capture::Frames::MediaFrameSourceGroup> {};
 #endif
 
 #ifndef WINRT_GENERIC_dc0c1f9a_b748_5cfa_9b42_a3a8fe37281a
@@ -129,6 +144,11 @@ template <> struct __declspec(uuid("adf10eeb-9fc5-553b-9164-294246992a2a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_a2425fd6_15df_517b_81b9_988dd4d32f17
+#define WINRT_GENERIC_a2425fd6_15df_517b_81b9_988dd4d32f17
+template <> struct __declspec(uuid("a2425fd6-15df-517b-81b9-988dd4d32f17")) __declspec(novtable) IVector<Windows::Media::Capture::Frames::MediaFrameFormat> : impl_IVector<Windows::Media::Capture::Frames::MediaFrameFormat> {};
+#endif
 
 #ifndef WINRT_GENERIC_83a0cfaa_6546_5a63_8cd7_f62152a75d27
 #define WINRT_GENERIC_83a0cfaa_6546_5a63_8cd7_f62152a75d27
@@ -167,7 +187,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_f3b20528_e3b3_5331_b2d0_0c2623aee785
 #define WINRT_GENERIC_f3b20528_e3b3_5331_b2d0_0c2623aee785
-template <> struct __declspec(uuid("f3b20528-e3b3-5331-b2d0-0c2623aee785")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("f3b20528-e3b3-5331-b2d0-0c2623aee785")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -187,7 +207,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_4f25059a_0b9a_5f25_9b9e_4b9f1d22ff65
 #define WINRT_GENERIC_4f25059a_0b9a_5f25_9b9e_4b9f1d22ff65
-template <> struct __declspec(uuid("4f25059a-0b9a-5f25-9b9e-4b9f1d22ff65")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("4f25059a-0b9a-5f25-9b9e-4b9f1d22ff65")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -205,285 +225,118 @@ template <> struct __declspec(uuid("cff78a64-bd44-5638-af2f-540c23b322e7")) __de
 
 namespace Windows::Media::Capture::Frames {
 
-template <typename D>
-struct WINRT_EBO impl_IBufferMediaFrame
-{
-    Windows::Media::Capture::Frames::MediaFrameReference FrameReference() const;
-    Windows::Storage::Streams::IBuffer Buffer() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDepthMediaFrame
-{
-    Windows::Media::Capture::Frames::MediaFrameReference FrameReference() const;
-    Windows::Media::Capture::Frames::VideoMediaFrame VideoMediaFrame() const;
-    Windows::Media::Capture::Frames::DepthMediaFrameFormat DepthFormat() const;
-    Windows::Media::Devices::Core::DepthCorrelatedCoordinateMapper TryCreateCoordinateMapper(const Windows::Media::Devices::Core::CameraIntrinsics & cameraIntrinsics, const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDepthMediaFrameFormat
-{
-    Windows::Media::Capture::Frames::VideoMediaFrameFormat VideoFormat() const;
-    double DepthScaleInMeters() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInfraredMediaFrame
-{
-    Windows::Media::Capture::Frames::MediaFrameReference FrameReference() const;
-    Windows::Media::Capture::Frames::VideoMediaFrame VideoMediaFrame() const;
-    bool IsIlluminated() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameArrivedEventArgs
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameFormat
-{
-    hstring MajorType() const;
-    hstring Subtype() const;
-    Windows::Media::MediaProperties::MediaRatio FrameRate() const;
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> Properties() const;
-    Windows::Media::Capture::Frames::VideoMediaFrameFormat VideoFormat() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameReader
-{
-    event_token FrameArrived(const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs> & handler) const;
-    using FrameArrived_revoker = event_revoker<IMediaFrameReader>;
-    FrameArrived_revoker FrameArrived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs> & handler) const;
-    void FrameArrived(event_token token) const;
-    Windows::Media::Capture::Frames::MediaFrameReference TryAcquireLatestFrame() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameReaderStartStatus> StartAsync() const;
-    Windows::Foundation::IAsyncAction StopAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameReference
-{
-    Windows::Media::Capture::Frames::MediaFrameSourceKind SourceKind() const;
-    Windows::Media::Capture::Frames::MediaFrameFormat Format() const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> SystemRelativeTime() const;
-    Windows::Foundation::TimeSpan Duration() const;
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> Properties() const;
-    Windows::Media::Capture::Frames::BufferMediaFrame BufferMediaFrame() const;
-    Windows::Media::Capture::Frames::VideoMediaFrame VideoMediaFrame() const;
-    Windows::Perception::Spatial::SpatialCoordinateSystem CoordinateSystem() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSource
-{
-    Windows::Media::Capture::Frames::MediaFrameSourceInfo Info() const;
-    Windows::Media::Capture::Frames::MediaFrameSourceController Controller() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameFormat> SupportedFormats() const;
-    Windows::Media::Capture::Frames::MediaFrameFormat CurrentFormat() const;
-    Windows::Foundation::IAsyncAction SetFormatAsync(const Windows::Media::Capture::Frames::MediaFrameFormat & format) const;
-    event_token FormatChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> & handler) const;
-    using FormatChanged_revoker = event_revoker<IMediaFrameSource>;
-    FormatChanged_revoker FormatChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> & handler) const;
-    void FormatChanged(event_token token) const;
-    Windows::Media::Devices::Core::CameraIntrinsics TryGetCameraIntrinsics(const Windows::Media::Capture::Frames::MediaFrameFormat & format) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSourceController
-{
-    Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult> GetPropertyAsync(hstring_ref propertyId) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus> SetPropertyAsync(hstring_ref propertyId, const Windows::IInspectable & propertyValue) const;
-    Windows::Media::Devices::VideoDeviceController VideoDeviceController() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSourceGetPropertyResult
-{
-    Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyStatus Status() const;
-    Windows::IInspectable Value() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSourceGroup
-{
-    hstring Id() const;
-    hstring DisplayName() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceInfo> SourceInfos() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSourceGroupStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceGroup>> FindAllAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> FromIdAsync(hstring_ref id) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaFrameSourceInfo
-{
-    hstring Id() const;
-    Windows::Media::Capture::MediaStreamType MediaStreamType() const;
-    Windows::Media::Capture::Frames::MediaFrameSourceKind SourceKind() const;
-    Windows::Media::Capture::Frames::MediaFrameSourceGroup SourceGroup() const;
-    Windows::Devices::Enumeration::DeviceInformation DeviceInformation() const;
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> Properties() const;
-    Windows::Perception::Spatial::SpatialCoordinateSystem CoordinateSystem() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoMediaFrame
-{
-    Windows::Media::Capture::Frames::MediaFrameReference FrameReference() const;
-    Windows::Media::Capture::Frames::VideoMediaFrameFormat VideoFormat() const;
-    Windows::Graphics::Imaging::SoftwareBitmap SoftwareBitmap() const;
-    Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface Direct3DSurface() const;
-    Windows::Media::Devices::Core::CameraIntrinsics CameraIntrinsics() const;
-    Windows::Media::Capture::Frames::InfraredMediaFrame InfraredMediaFrame() const;
-    Windows::Media::Capture::Frames::DepthMediaFrame DepthMediaFrame() const;
-    Windows::Media::VideoFrame GetVideoFrame() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoMediaFrameFormat
-{
-    Windows::Media::Capture::Frames::MediaFrameFormat MediaFrameFormat() const;
-    Windows::Media::Capture::Frames::DepthMediaFrameFormat DepthFormat() const;
-    uint32_t Width() const;
-    uint32_t Height() const;
-};
-
 struct IBufferMediaFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBufferMediaFrame>
 {
     IBufferMediaFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBufferMediaFrame>(m_ptr); }
 };
 
 struct IDepthMediaFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDepthMediaFrame>
 {
     IDepthMediaFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDepthMediaFrame>(m_ptr); }
 };
 
 struct IDepthMediaFrameFormat :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDepthMediaFrameFormat>
 {
     IDepthMediaFrameFormat(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDepthMediaFrameFormat>(m_ptr); }
 };
 
 struct IInfraredMediaFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInfraredMediaFrame>
 {
     IInfraredMediaFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInfraredMediaFrame>(m_ptr); }
 };
 
 struct IMediaFrameArrivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameArrivedEventArgs>
 {
     IMediaFrameArrivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameArrivedEventArgs>(m_ptr); }
 };
 
 struct IMediaFrameFormat :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameFormat>
 {
     IMediaFrameFormat(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameFormat>(m_ptr); }
 };
 
 struct IMediaFrameReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameReader>,
     impl::require<IMediaFrameReader, Windows::Foundation::IClosable>
 {
     IMediaFrameReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameReader>(m_ptr); }
 };
 
 struct IMediaFrameReference :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameReference>,
     impl::require<IMediaFrameReference, Windows::Foundation::IClosable>
 {
     IMediaFrameReference(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameReference>(m_ptr); }
 };
 
 struct IMediaFrameSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSource>
 {
     IMediaFrameSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSource>(m_ptr); }
 };
 
 struct IMediaFrameSourceController :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSourceController>
 {
     IMediaFrameSourceController(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSourceController>(m_ptr); }
 };
 
 struct IMediaFrameSourceGetPropertyResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSourceGetPropertyResult>
 {
     IMediaFrameSourceGetPropertyResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSourceGetPropertyResult>(m_ptr); }
 };
 
 struct IMediaFrameSourceGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSourceGroup>
 {
     IMediaFrameSourceGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSourceGroup>(m_ptr); }
 };
 
 struct IMediaFrameSourceGroupStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSourceGroupStatics>
 {
     IMediaFrameSourceGroupStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSourceGroupStatics>(m_ptr); }
 };
 
 struct IMediaFrameSourceInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaFrameSourceInfo>
 {
     IMediaFrameSourceInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaFrameSourceInfo>(m_ptr); }
 };
 
 struct IVideoMediaFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoMediaFrame>
 {
     IVideoMediaFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoMediaFrame>(m_ptr); }
 };
 
 struct IVideoMediaFrameFormat :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoMediaFrameFormat>
 {
     IVideoMediaFrameFormat(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoMediaFrameFormat>(m_ptr); }
 };
 
 }

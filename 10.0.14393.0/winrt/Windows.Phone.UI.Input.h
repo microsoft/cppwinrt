@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Phone.UI.Input.3.h"
@@ -17,7 +20,8 @@ struct produce<D, Windows::Phone::UI::Input::IBackPressedEventArgs> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().Handled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Handled());
             return S_OK;
         }
         catch (...)
@@ -30,6 +34,7 @@ struct produce<D, Windows::Phone::UI::Input::IBackPressedEventArgs> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Handled(value);
             return S_OK;
         }
@@ -47,11 +52,12 @@ struct produce<D, Windows::Phone::UI::Input::ICameraEventArgs> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics> : produce_base<D, Windows::Phone::UI::Input::IHardwareButtonsStatics>
 {
-    HRESULT __stdcall add_BackPressed(abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_BackPressed(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().BackPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().BackPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -64,6 +70,7 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BackPressed(token);
             return S_OK;
         }
@@ -77,11 +84,12 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics> : produce_
 template <typename D>
 struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce_base<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2>
 {
-    HRESULT __stdcall add_CameraHalfPressed(abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_CameraHalfPressed(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().CameraHalfPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().CameraHalfPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -94,6 +102,7 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CameraHalfPressed(token);
             return S_OK;
         }
@@ -103,11 +112,12 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce
         }
     }
 
-    HRESULT __stdcall add_CameraPressed(abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_CameraPressed(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().CameraPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().CameraPressed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -120,6 +130,7 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CameraPressed(token);
             return S_OK;
         }
@@ -129,11 +140,12 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce
         }
     }
 
-    HRESULT __stdcall add_CameraReleased(abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_CameraReleased(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().CameraReleased(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().CameraReleased(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -146,6 +158,7 @@ struct produce<D, Windows::Phone::UI::Input::IHardwareButtonsStatics2> : produce
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CameraReleased(token);
             return S_OK;
         }
@@ -163,7 +176,7 @@ namespace Windows::Phone::UI::Input {
 template <typename D> event_token impl_IHardwareButtonsStatics<D>::BackPressed(const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IHardwareButtonsStatics &>(static_cast<const D &>(*this))->add_BackPressed(get(handler), &token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics)->add_BackPressed(get_abi(handler), &token));
     return token;
 }
 
@@ -174,13 +187,13 @@ template <typename D> event_revoker<IHardwareButtonsStatics> impl_IHardwareButto
 
 template <typename D> void impl_IHardwareButtonsStatics<D>::BackPressed(event_token token) const
 {
-    check_hresult(static_cast<const IHardwareButtonsStatics &>(static_cast<const D &>(*this))->remove_BackPressed(token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics)->remove_BackPressed(token));
 }
 
 template <typename D> event_token impl_IHardwareButtonsStatics2<D>::CameraHalfPressed(const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->add_CameraHalfPressed(get(handler), &token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->add_CameraHalfPressed(get_abi(handler), &token));
     return token;
 }
 
@@ -191,13 +204,13 @@ template <typename D> event_revoker<IHardwareButtonsStatics2> impl_IHardwareButt
 
 template <typename D> void impl_IHardwareButtonsStatics2<D>::CameraHalfPressed(event_token token) const
 {
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->remove_CameraHalfPressed(token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->remove_CameraHalfPressed(token));
 }
 
 template <typename D> event_token impl_IHardwareButtonsStatics2<D>::CameraPressed(const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->add_CameraPressed(get(handler), &token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->add_CameraPressed(get_abi(handler), &token));
     return token;
 }
 
@@ -208,13 +221,13 @@ template <typename D> event_revoker<IHardwareButtonsStatics2> impl_IHardwareButt
 
 template <typename D> void impl_IHardwareButtonsStatics2<D>::CameraPressed(event_token token) const
 {
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->remove_CameraPressed(token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->remove_CameraPressed(token));
 }
 
 template <typename D> event_token impl_IHardwareButtonsStatics2<D>::CameraReleased(const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::CameraEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->add_CameraReleased(get(handler), &token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->add_CameraReleased(get_abi(handler), &token));
     return token;
 }
 
@@ -225,19 +238,19 @@ template <typename D> event_revoker<IHardwareButtonsStatics2> impl_IHardwareButt
 
 template <typename D> void impl_IHardwareButtonsStatics2<D>::CameraReleased(event_token token) const
 {
-    check_hresult(static_cast<const IHardwareButtonsStatics2 &>(static_cast<const D &>(*this))->remove_CameraReleased(token));
+    check_hresult(WINRT_SHIM(IHardwareButtonsStatics2)->remove_CameraReleased(token));
 }
 
 template <typename D> bool impl_IBackPressedEventArgs<D>::Handled() const
 {
     bool value {};
-    check_hresult(static_cast<const IBackPressedEventArgs &>(static_cast<const D &>(*this))->get_Handled(&value));
+    check_hresult(WINRT_SHIM(IBackPressedEventArgs)->get_Handled(&value));
     return value;
 }
 
 template <typename D> void impl_IBackPressedEventArgs<D>::Handled(bool value) const
 {
-    check_hresult(static_cast<const IBackPressedEventArgs &>(static_cast<const D &>(*this))->put_Handled(value));
+    check_hresult(WINRT_SHIM(IBackPressedEventArgs)->put_Handled(value));
 }
 
 inline event_token HardwareButtons::BackPressed(const Windows::Foundation::EventHandler<Windows::Phone::UI::Input::BackPressedEventArgs> & handler)
@@ -307,3 +320,59 @@ inline void HardwareButtons::CameraReleased(event_token token)
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::IBackPressedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::IBackPressedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::ICameraEventArgs>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::ICameraEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::IHardwareButtonsStatics>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::IHardwareButtonsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::IHardwareButtonsStatics2>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::IHardwareButtonsStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::BackPressedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::BackPressedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::UI::Input::CameraEventArgs>
+{
+    size_t operator()(const winrt::Windows::Phone::UI::Input::CameraEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

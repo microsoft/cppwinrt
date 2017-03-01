@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,7 +16,7 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 #ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 #define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
-template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::IInspectable> : impl_EventHandler<Windows::IInspectable> {};
+template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_338579bf_1a35_5cc4_a622_a6f384fd892c
@@ -71,7 +71,7 @@ template <> struct __declspec(uuid("d9a3f433-9bcc-54d6-b3cf-7b01f026d4cd")) __de
 
 #ifndef WINRT_GENERIC_28342e21_dad3_5e32_bae1_afe7b26c66fb
 #define WINRT_GENERIC_28342e21_dad3_5e32_bae1_afe7b26c66fb
-template <> struct __declspec(uuid("28342e21-dad3-5e32-bae1-afe7b26c66fb")) __declspec(novtable) TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> : impl_TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> {};
+template <> struct __declspec(uuid("28342e21-dad3-5e32-bae1-afe7b26c66fb")) __declspec(novtable) TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -83,6 +83,11 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_8af29ecf_6cc4_5a34_99c6_cd9069809253
+#define WINRT_GENERIC_8af29ecf_6cc4_5a34_99c6_cd9069809253
+template <> struct __declspec(uuid("8af29ecf-6cc4-5a34-99c6-cd9069809253")) __declspec(novtable) IVector<Windows::ApplicationModel::Core::CoreApplicationView> : impl_IVector<Windows::ApplicationModel::Core::CoreApplicationView> {};
+#endif
 
 #ifndef WINRT_GENERIC_4f5f6944_264b_5868_809e_c7ac1ac5edad
 #define WINRT_GENERIC_4f5f6944_264b_5868_809e_c7ac1ac5edad
@@ -99,320 +104,130 @@ template <> struct __declspec(uuid("32bc12d1-2653-5a41-a55e-88a12af2026a")) __de
 
 namespace Windows::ApplicationModel::Core {
 
-template <typename D>
-struct WINRT_EBO impl_IAppListEntry
-{
-    Windows::ApplicationModel::AppDisplayInfo DisplayInfo() const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplication
-{
-    hstring Id() const;
-    event_token Suspending(const Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs> & handler) const;
-    using Suspending_revoker = event_revoker<ICoreApplication>;
-    Suspending_revoker Suspending(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::ApplicationModel::SuspendingEventArgs> & handler) const;
-    void Suspending(event_token token) const;
-    event_token Resuming(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    using Resuming_revoker = event_revoker<ICoreApplication>;
-    Resuming_revoker Resuming(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    void Resuming(event_token token) const;
-    Windows::Foundation::Collections::IPropertySet Properties() const;
-    Windows::ApplicationModel::Core::CoreApplicationView GetCurrentView() const;
-    void Run(const Windows::ApplicationModel::Core::IFrameworkViewSource & viewSource) const;
-    void RunWithActivationFactories(const Windows::Foundation::IGetActivationFactory & activationFactoryCallback) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplication2
-{
-    event_token BackgroundActivated(const Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs> & handler) const;
-    using BackgroundActivated_revoker = event_revoker<ICoreApplication2>;
-    BackgroundActivated_revoker BackgroundActivated(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs> & handler) const;
-    void BackgroundActivated(event_token token) const;
-    event_token LeavingBackground(const Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs> & handler) const;
-    using LeavingBackground_revoker = event_revoker<ICoreApplication2>;
-    LeavingBackground_revoker LeavingBackground(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::ApplicationModel::LeavingBackgroundEventArgs> & handler) const;
-    void LeavingBackground(event_token token) const;
-    event_token EnteredBackground(const Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs> & handler) const;
-    using EnteredBackground_revoker = event_revoker<ICoreApplication2>;
-    EnteredBackground_revoker EnteredBackground(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::ApplicationModel::EnteredBackgroundEventArgs> & handler) const;
-    void EnteredBackground(event_token token) const;
-    void EnablePrelaunch(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationExit
-{
-    void Exit() const;
-    event_token Exiting(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    using Exiting_revoker = event_revoker<ICoreApplicationExit>;
-    Exiting_revoker Exiting(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    void Exiting(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationUnhandledError
-{
-    event_token UnhandledErrorDetected(const Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs> & handler) const;
-    using UnhandledErrorDetected_revoker = event_revoker<ICoreApplicationUnhandledError>;
-    UnhandledErrorDetected_revoker UnhandledErrorDetected(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::ApplicationModel::Core::UnhandledErrorDetectedEventArgs> & handler) const;
-    void UnhandledErrorDetected(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationUseCount
-{
-    void IncrementApplicationUseCount() const;
-    void DecrementApplicationUseCount() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationView
-{
-    Windows::UI::Core::CoreWindow CoreWindow() const;
-    event_token Activated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs> & handler) const;
-    using Activated_revoker = event_revoker<ICoreApplicationView>;
-    Activated_revoker Activated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs> & handler) const;
-    void Activated(event_token token) const;
-    bool IsMain() const;
-    bool IsHosted() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationView2
-{
-    Windows::UI::Core::CoreDispatcher Dispatcher() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationView3
-{
-    bool IsComponent() const;
-    Windows::ApplicationModel::Core::CoreApplicationViewTitleBar TitleBar() const;
-    event_token HostedViewClosing(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs> & handler) const;
-    using HostedViewClosing_revoker = event_revoker<ICoreApplicationView3>;
-    HostedViewClosing_revoker HostedViewClosing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationView, Windows::ApplicationModel::Core::HostedViewClosingEventArgs> & handler) const;
-    void HostedViewClosing(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreApplicationViewTitleBar
-{
-    void ExtendViewIntoTitleBar(bool value) const;
-    bool ExtendViewIntoTitleBar() const;
-    double SystemOverlayLeftInset() const;
-    double SystemOverlayRightInset() const;
-    double Height() const;
-    event_token LayoutMetricsChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const;
-    using LayoutMetricsChanged_revoker = event_revoker<ICoreApplicationViewTitleBar>;
-    LayoutMetricsChanged_revoker LayoutMetricsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const;
-    void LayoutMetricsChanged(event_token token) const;
-    bool IsVisible() const;
-    event_token IsVisibleChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const;
-    using IsVisibleChanged_revoker = event_revoker<ICoreApplicationViewTitleBar>;
-    IsVisibleChanged_revoker IsVisibleChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar, Windows::IInspectable> & handler) const;
-    void IsVisibleChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreImmersiveApplication
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::CoreApplicationView> Views() const;
-    Windows::ApplicationModel::Core::CoreApplicationView CreateNewView(hstring_ref runtimeType, hstring_ref entryPoint) const;
-    Windows::ApplicationModel::Core::CoreApplicationView MainView() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreImmersiveApplication2
-{
-    Windows::ApplicationModel::Core::CoreApplicationView CreateNewView() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreImmersiveApplication3
-{
-    Windows::ApplicationModel::Core::CoreApplicationView CreateNewView(const Windows::ApplicationModel::Core::IFrameworkViewSource & viewSource) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFrameworkView
-{
-    void Initialize(const Windows::ApplicationModel::Core::CoreApplicationView & applicationView) const;
-    void SetWindow(const Windows::UI::Core::CoreWindow & window) const;
-    void Load(hstring_ref entryPoint) const;
-    void Run() const;
-    void Uninitialize() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFrameworkViewSource
-{
-    Windows::ApplicationModel::Core::IFrameworkView CreateView() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHostedViewClosingEventArgs
-{
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUnhandledError
-{
-    bool Handled() const;
-    void Propagate() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUnhandledErrorDetectedEventArgs
-{
-    Windows::ApplicationModel::Core::UnhandledError UnhandledError() const;
-};
-
 struct IAppListEntry :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppListEntry>
 {
     IAppListEntry(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppListEntry>(m_ptr); }
 };
 
 struct ICoreApplication :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplication>
 {
     ICoreApplication(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplication>(m_ptr); }
 };
 
 struct ICoreApplication2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplication2>
 {
     ICoreApplication2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplication2>(m_ptr); }
 };
 
 struct ICoreApplicationExit :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationExit>
 {
     ICoreApplicationExit(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationExit>(m_ptr); }
 };
 
 struct ICoreApplicationUnhandledError :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationUnhandledError>
 {
     ICoreApplicationUnhandledError(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationUnhandledError>(m_ptr); }
 };
 
 struct ICoreApplicationUseCount :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationUseCount>
 {
     ICoreApplicationUseCount(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationUseCount>(m_ptr); }
 };
 
 struct ICoreApplicationView :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationView>
 {
     ICoreApplicationView(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationView>(m_ptr); }
 };
 
 struct ICoreApplicationView2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationView2>
 {
     ICoreApplicationView2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationView2>(m_ptr); }
 };
 
 struct ICoreApplicationView3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationView3>
 {
     ICoreApplicationView3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationView3>(m_ptr); }
 };
 
 struct ICoreApplicationViewTitleBar :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreApplicationViewTitleBar>
 {
     ICoreApplicationViewTitleBar(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreApplicationViewTitleBar>(m_ptr); }
 };
 
 struct ICoreImmersiveApplication :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreImmersiveApplication>
 {
     ICoreImmersiveApplication(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreImmersiveApplication>(m_ptr); }
 };
 
 struct ICoreImmersiveApplication2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreImmersiveApplication2>
 {
     ICoreImmersiveApplication2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreImmersiveApplication2>(m_ptr); }
 };
 
 struct ICoreImmersiveApplication3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreImmersiveApplication3>
 {
     ICoreImmersiveApplication3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreImmersiveApplication3>(m_ptr); }
 };
 
 struct IFrameworkView :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFrameworkView>
 {
     IFrameworkView(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFrameworkView>(m_ptr); }
 };
 
 struct IFrameworkViewSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFrameworkViewSource>
 {
     IFrameworkViewSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFrameworkViewSource>(m_ptr); }
 };
 
 struct IHostedViewClosingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHostedViewClosingEventArgs>
 {
     IHostedViewClosingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHostedViewClosingEventArgs>(m_ptr); }
 };
 
 struct IUnhandledError :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUnhandledError>
 {
     IUnhandledError(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUnhandledError>(m_ptr); }
 };
 
 struct IUnhandledErrorDetectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUnhandledErrorDetectedEventArgs>
 {
     IUnhandledErrorDetectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUnhandledErrorDetectedEventArgs>(m_ptr); }
 };
 
 }

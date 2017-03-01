@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,12 +11,12 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
 #define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::IInspectable> : impl_IMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
@@ -31,7 +31,7 @@ template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __de
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -134,6 +134,11 @@ template <> struct __declspec(uuid("c99c97d5-9bf5-545a-bb17-4f1f0c7a2359")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_7757c072_927f_5930_b3bd_06eb15527785
+#define WINRT_GENERIC_7757c072_927f_5930_b3bd_06eb15527785
+template <> struct __declspec(uuid("7757c072-927f-5930-b3bd-06eb15527785")) __declspec(novtable) IVector<Windows::Phone::PersonalInformation::StoredContact> : impl_IVector<Windows::Phone::PersonalInformation::StoredContact> {};
+#endif
+
 #ifndef WINRT_GENERIC_8d97c17a_5781_5198_a459_437f84a1d101
 #define WINRT_GENERIC_8d97c17a_5781_5198_a459_437f84a1d101
 template <> struct __declspec(uuid("8d97c17a-5781-5198-a459-437f84a1d101")) __declspec(novtable) IIterator<Windows::Phone::PersonalInformation::StoredContact> : impl_IIterator<Windows::Phone::PersonalInformation::StoredContact> {};
@@ -158,6 +163,11 @@ template <> struct __declspec(uuid("c4b696d5-2d7b-50bc-8dc9-d267e87a1908")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_99cc45f3_68b8_5b6a_9b4b_f9ab5168e6fb
+#define WINRT_GENERIC_99cc45f3_68b8_5b6a_9b4b_f9ab5168e6fb
+template <> struct __declspec(uuid("99cc45f3-68b8-5b6a-9b4b-f9ab5168e6fb")) __declspec(novtable) IVector<Windows::Phone::PersonalInformation::ContactChangeRecord> : impl_IVector<Windows::Phone::PersonalInformation::ContactChangeRecord> {};
+#endif
 
 #ifndef WINRT_GENERIC_72cc5afc_1154_56c5_a9c3_10d7aefc5380
 #define WINRT_GENERIC_72cc5afc_1154_56c5_a9c3_10d7aefc5380
@@ -186,7 +196,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -196,7 +206,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_127e39c7_07c1_58e5_b48e_3a4729839fec
 #define WINRT_GENERIC_127e39c7_07c1_58e5_b48e_3a4729839fec
-template <> struct __declspec(uuid("127e39c7-07c1-58e5-b48e-3a4729839fec")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> : impl_IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("127e39c7-07c1-58e5-b48e-3a4729839fec")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>> : impl_IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_b6724abf_1a00_5d1a_aef8_9e85a4e5cea8
@@ -216,7 +226,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -226,7 +236,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_7344f356_8399_5756_a2f8_abd50c4146ff
 #define WINRT_GENERIC_7344f356_8399_5756_a2f8_abd50c4146ff
-template <> struct __declspec(uuid("7344f356-8399-5756-a2f8-abd50c4146ff")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("7344f356-8399-5756-a2f8-abd50c4146ff")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_7abe3867_891d_5ee1_aeb0_c673e2c856de
@@ -244,271 +254,96 @@ template <> struct __declspec(uuid("4cc06c54-47a0-5949-8640-e257ce0eef1e")) __de
 
 namespace Windows::Phone::PersonalInformation {
 
-template <typename D>
-struct WINRT_EBO impl_IContactAddress
-{
-    hstring Country() const;
-    void Country(hstring_ref value) const;
-    hstring Locality() const;
-    void Locality(hstring_ref value) const;
-    hstring Region() const;
-    void Region(hstring_ref value) const;
-    hstring PostalCode() const;
-    void PostalCode(hstring_ref value) const;
-    hstring StreetAddress() const;
-    void StreetAddress(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactChangeRecord
-{
-    Windows::Phone::PersonalInformation::ContactChangeType ChangeType() const;
-    uint64_t RevisionNumber() const;
-    hstring Id() const;
-    hstring RemoteId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactInformation
-{
-    hstring DisplayName() const;
-    void DisplayName(hstring_ref value) const;
-    hstring FamilyName() const;
-    void FamilyName(hstring_ref value) const;
-    hstring GivenName() const;
-    void GivenName(hstring_ref value) const;
-    hstring HonorificPrefix() const;
-    void HonorificPrefix(hstring_ref value) const;
-    hstring HonorificSuffix() const;
-    void HonorificSuffix(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> GetDisplayPictureAsync() const;
-    Windows::Foundation::IAsyncAction SetDisplayPictureAsync(const Windows::Storage::Streams::IInputStream & stream) const;
-    Windows::Storage::Streams::IRandomAccessStreamReference DisplayPicture() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> GetPropertiesAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> ToVcardAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> ToVcardAsync(Windows::Phone::PersonalInformation::VCardFormat format) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactInformation2
-{
-    Windows::Foundation::DateTime DisplayPictureDate() const;
-    void DisplayPictureDate(const Windows::Foundation::DateTime & returnValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactInformationStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::ContactInformation> ParseVcardAsync(const Windows::Storage::Streams::IInputStream & vcard) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactQueryOptions
-{
-    Windows::Foundation::Collections::IVector<hstring> DesiredFields() const;
-    Windows::Phone::PersonalInformation::ContactQueryResultOrdering OrderBy() const;
-    void OrderBy(Windows::Phone::PersonalInformation::ContactQueryResultOrdering value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactQueryResult
-{
-    Windows::Foundation::IAsyncOperation<uint32_t> GetContactCountAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Phone::PersonalInformation::StoredContact>> GetContactsAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Phone::PersonalInformation::StoredContact>> GetContactsAsync(uint32_t startIndex, uint32_t maxNumberOfItems) const;
-    Windows::Phone::PersonalInformation::ContactQueryOptions GetCurrentQueryOptions() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactStore
-{
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::StoredContact> FindContactByRemoteIdAsync(hstring_ref id) const;
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::StoredContact> FindContactByIdAsync(hstring_ref id) const;
-    Windows::Foundation::IAsyncAction DeleteContactAsync(hstring_ref id) const;
-    Windows::Phone::PersonalInformation::ContactQueryResult CreateContactQuery() const;
-    Windows::Phone::PersonalInformation::ContactQueryResult CreateContactQuery(const Windows::Phone::PersonalInformation::ContactQueryOptions & options) const;
-    Windows::Foundation::IAsyncAction DeleteAsync() const;
-    uint64_t RevisionNumber() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Phone::PersonalInformation::ContactChangeRecord>> GetChangesAsync(uint64_t baseRevisionNumber) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> LoadExtendedPropertiesAsync() const;
-    Windows::Foundation::IAsyncAction SaveExtendedPropertiesAsync(const Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> & data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactStore2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::StoredContact> CreateMeContactAsync(hstring_ref id) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContactStoreStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::ContactStore> CreateOrOpenAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Phone::PersonalInformation::ContactStore> CreateOrOpenAsync(Windows::Phone::PersonalInformation::ContactStoreSystemAccessMode access, Windows::Phone::PersonalInformation::ContactStoreApplicationAccessMode sharing) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownContactPropertiesStatics
-{
-    hstring DisplayName() const;
-    hstring FamilyName() const;
-    hstring GivenName() const;
-    hstring HonorificPrefix() const;
-    hstring HonorificSuffix() const;
-    hstring AdditionalName() const;
-    hstring Address() const;
-    hstring OtherAddress() const;
-    hstring Email() const;
-    hstring WorkAddress() const;
-    hstring WorkTelephone() const;
-    hstring JobTitle() const;
-    hstring Birthdate() const;
-    hstring Anniversary() const;
-    hstring Telephone() const;
-    hstring MobileTelephone() const;
-    hstring Url() const;
-    hstring Notes() const;
-    hstring WorkFax() const;
-    hstring Children() const;
-    hstring SignificantOther() const;
-    hstring CompanyName() const;
-    hstring CompanyTelephone() const;
-    hstring HomeFax() const;
-    hstring AlternateTelephone() const;
-    hstring Manager() const;
-    hstring Nickname() const;
-    hstring OfficeLocation() const;
-    hstring WorkEmail() const;
-    hstring YomiGivenName() const;
-    hstring YomiFamilyName() const;
-    hstring YomiCompanyName() const;
-    hstring OtherEmail() const;
-    hstring AlternateMobileTelephone() const;
-    hstring AlternateWorkTelephone() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStoredContact
-{
-    Windows::Phone::PersonalInformation::ContactStore Store() const;
-    hstring Id() const;
-    hstring RemoteId() const;
-    void RemoteId(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> GetExtendedPropertiesAsync() const;
-    Windows::Foundation::IAsyncAction SaveAsync() const;
-    Windows::Foundation::IAsyncAction ReplaceExistingContactAsync(hstring_ref id) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStoredContactFactory
-{
-    Windows::Phone::PersonalInformation::StoredContact CreateStoredContact(const Windows::Phone::PersonalInformation::ContactStore & store) const;
-    Windows::Phone::PersonalInformation::StoredContact CreateStoredContactFromInformation(const Windows::Phone::PersonalInformation::ContactStore & store, const Windows::Phone::PersonalInformation::ContactInformation & contact) const;
-};
-
 struct IContactAddress :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactAddress>
 {
     IContactAddress(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactAddress>(m_ptr); }
 };
 
 struct IContactChangeRecord :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactChangeRecord>
 {
     IContactChangeRecord(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactChangeRecord>(m_ptr); }
 };
 
 struct IContactInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactInformation>
 {
     IContactInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactInformation>(m_ptr); }
 };
 
 struct IContactInformation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactInformation2>
 {
     IContactInformation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactInformation2>(m_ptr); }
 };
 
 struct IContactInformationStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactInformationStatics>
 {
     IContactInformationStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactInformationStatics>(m_ptr); }
 };
 
 struct IContactQueryOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactQueryOptions>
 {
     IContactQueryOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactQueryOptions>(m_ptr); }
 };
 
 struct IContactQueryResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactQueryResult>
 {
     IContactQueryResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactQueryResult>(m_ptr); }
 };
 
 struct IContactStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactStore>
 {
     IContactStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactStore>(m_ptr); }
 };
 
 struct IContactStore2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactStore2>
 {
     IContactStore2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactStore2>(m_ptr); }
 };
 
 struct IContactStoreStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContactStoreStatics>
 {
     IContactStoreStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContactStoreStatics>(m_ptr); }
 };
 
 struct IKnownContactPropertiesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownContactPropertiesStatics>
 {
     IKnownContactPropertiesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownContactPropertiesStatics>(m_ptr); }
 };
 
 struct IStoredContact :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStoredContact>,
     impl::require<IStoredContact, Windows::Phone::PersonalInformation::IContactInformation>
 {
     IStoredContact(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStoredContact>(m_ptr); }
 };
 
 struct IStoredContactFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStoredContactFactory>
 {
     IStoredContactFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStoredContactFactory>(m_ptr); }
 };
 
 }

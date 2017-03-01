@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -56,6 +56,23 @@ struct VoiceCommandDisambiguationResult;
 struct VoiceCommandResponse;
 struct VoiceCommandServiceConnection;
 struct VoiceCommandUserMessage;
+
+}
+
+namespace Windows::ApplicationModel::VoiceCommands {
+
+template <typename T> struct impl_IVoiceCommand;
+template <typename T> struct impl_IVoiceCommandCompletedEventArgs;
+template <typename T> struct impl_IVoiceCommandConfirmationResult;
+template <typename T> struct impl_IVoiceCommandContentTile;
+template <typename T> struct impl_IVoiceCommandDefinition;
+template <typename T> struct impl_IVoiceCommandDefinitionManagerStatics;
+template <typename T> struct impl_IVoiceCommandDisambiguationResult;
+template <typename T> struct impl_IVoiceCommandResponse;
+template <typename T> struct impl_IVoiceCommandResponseStatics;
+template <typename T> struct impl_IVoiceCommandServiceConnection;
+template <typename T> struct impl_IVoiceCommandServiceConnectionStatics;
+template <typename T> struct impl_IVoiceCommandUserMessage;
 
 }
 

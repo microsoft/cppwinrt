@@ -1,12 +1,14 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Storage.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
+#include "Windows.Foundation.Collections.1.h"
+#include "Windows.Storage.Search.1.h"
+#include "Windows.Storage.Streams.1.h"
 #include "Windows.Foundation.Collections.2.h"
-#include "Windows.Storage.Search.2.h"
 #include "Windows.Storage.Streams.2.h"
 
 WINRT_EXPORT namespace winrt {
@@ -25,17 +27,17 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_236aac9d_fb12_5c4d_a41c_9e445fb4d7ec
 #define WINRT_GENERIC_236aac9d_fb12_5c4d_a41c_9e445fb4d7ec
-template <> struct __declspec(uuid("236aac9d-fb12-5c4d-a41c-9e445fb4d7ec")) __declspec(novtable) IObservableMap<hstring, Windows::IInspectable> : impl_IObservableMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("236aac9d-fb12-5c4d-a41c-9e445fb4d7ec")) __declspec(novtable) IObservableMap<hstring, Windows::Foundation::IInspectable> : impl_IObservableMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
 #define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::IInspectable> : impl_IMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -65,7 +67,7 @@ template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __de
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -135,7 +137,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_edc09538_bbae_5b2b_9e81_b449ea7e48fe
 #define WINRT_GENERIC_edc09538_bbae_5b2b_9e81_b449ea7e48fe
-template <> struct __declspec(uuid("edc09538-bbae-5b2b-9e81-b449ea7e48fe")) __declspec(novtable) TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> : impl_TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> {};
+template <> struct __declspec(uuid("edc09538-bbae-5b2b-9e81-b449ea7e48fe")) __declspec(novtable) TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
@@ -220,7 +222,7 @@ template <> struct __declspec(uuid("31456b58-a5cb-5c5b-bd6e-ccce3a7bf4b4")) __de
 
 #ifndef WINRT_GENERIC_b5348b3b_5081_5ae9_8fa3_4d22d68fb0ea
 #define WINRT_GENERIC_b5348b3b_5081_5ae9_8fa3_4d22d68fb0ea
-template <> struct __declspec(uuid("b5348b3b-5081-5ae9-8fa3-4d22d68fb0ea")) __declspec(novtable) TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> : impl_TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> {};
+template <> struct __declspec(uuid("b5348b3b-5081-5ae9-8fa3-4d22d68fb0ea")) __declspec(novtable) TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -231,6 +233,16 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_13624f8d_85cc_5780_a78d_64dba58f2c3c
 #define WINRT_GENERIC_13624f8d_85cc_5780_a78d_64dba58f2c3c
 template <> struct __declspec(uuid("13624f8d-85cc-5780-a78d-64dba58f2c3c")) __declspec(novtable) IMapView<hstring, Windows::Storage::ApplicationDataContainer> : impl_IMapView<hstring, Windows::Storage::ApplicationDataContainer> {};
+#endif
+
+#ifndef WINRT_GENERIC_802508e2_9c2c_5b91_89a8_39bcf7223344
+#define WINRT_GENERIC_802508e2_9c2c_5b91_89a8_39bcf7223344
+template <> struct __declspec(uuid("802508e2-9c2c-5b91-89a8-39bcf7223344")) __declspec(novtable) IVector<Windows::Storage::IStorageItem> : impl_IVector<Windows::Storage::IStorageItem> {};
+#endif
+
+#ifndef WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
+#define WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
+template <> struct __declspec(uuid("fcbc8b8b-6103-5b4e-ba00-4bc2cedb6a35")) __declspec(novtable) IVector<Windows::Storage::StorageFile> : impl_IVector<Windows::Storage::StorageFile> {};
 #endif
 
 
@@ -255,7 +267,7 @@ template <> struct __declspec(uuid("60141efb-f2f9-5377-96fd-f8c60d9558b5")) __de
 
 #ifndef WINRT_GENERIC_24f981e5_ddca_538d_aada_a59906084cf1
 #define WINRT_GENERIC_24f981e5_ddca_538d_aada_a59906084cf1
-template <> struct __declspec(uuid("24f981e5-ddca-538d-aada-a59906084cf1")) __declspec(novtable) MapChangedEventHandler<hstring, Windows::IInspectable> : impl_MapChangedEventHandler<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("24f981e5-ddca-538d-aada-a59906084cf1")) __declspec(novtable) MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> : impl_MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -358,6 +370,11 @@ template <> struct __declspec(uuid("c8659aae-4926-52ad-8f60-d89fe5a8df5f")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_0e874d56_47fb_5e37_b05a_eea1bc5e4c80
+#define WINRT_GENERIC_0e874d56_47fb_5e37_b05a_eea1bc5e4c80
+template <> struct __declspec(uuid("0e874d56-47fb-5e37-b05a-eea1bc5e4c80")) __declspec(novtable) IVector<Windows::Storage::StorageLibraryChange> : impl_IVector<Windows::Storage::StorageLibraryChange> {};
+#endif
+
 #ifndef WINRT_GENERIC_c48a1103_56e6_5398_84fe_92edad7fc111
 #define WINRT_GENERIC_c48a1103_56e6_5398_84fe_92edad7fc111
 template <> struct __declspec(uuid("c48a1103-56e6-5398-84fe-92edad7fc111")) __declspec(novtable) IIterator<Windows::Storage::StorageLibraryChange> : impl_IIterator<Windows::Storage::StorageLibraryChange> {};
@@ -413,9 +430,14 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("5adbc543-2170-5ad9-b35e-968cdb78fb30")) __declspec(novtable) IKeyValuePair<hstring, Windows::Storage::ApplicationDataContainer> : impl_IKeyValuePair<hstring, Windows::Storage::ApplicationDataContainer> {};
 #endif
 
+#ifndef WINRT_GENERIC_b56241e6_507b_5cd7_b9c3_297bcbd5bcef
+#define WINRT_GENERIC_b56241e6_507b_5cd7_b9c3_297bcbd5bcef
+template <> struct __declspec(uuid("b56241e6-507b-5cd7-b9c3-297bcbd5bcef")) __declspec(novtable) IMap<hstring, Windows::Storage::ApplicationDataContainer> : impl_IMap<hstring, Windows::Storage::ApplicationDataContainer> {};
+#endif
+
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -455,7 +477,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -508,474 +530,18 @@ template <> struct __declspec(uuid("a785be1d-159e-53ad-9553-598b03dca048")) __de
 
 namespace Windows::Storage {
 
-template <typename D>
-struct WINRT_EBO impl_IApplicationData
-{
-    uint32_t Version() const;
-    Windows::Foundation::IAsyncAction SetVersionAsync(uint32_t desiredVersion, const Windows::Storage::ApplicationDataSetVersionHandler & handler) const;
-    Windows::Foundation::IAsyncAction ClearAsync() const;
-    Windows::Foundation::IAsyncAction ClearAsync(Windows::Storage::ApplicationDataLocality locality) const;
-    Windows::Storage::ApplicationDataContainer LocalSettings() const;
-    Windows::Storage::ApplicationDataContainer RoamingSettings() const;
-    Windows::Storage::StorageFolder LocalFolder() const;
-    Windows::Storage::StorageFolder RoamingFolder() const;
-    Windows::Storage::StorageFolder TemporaryFolder() const;
-    event_token DataChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> & handler) const;
-    using DataChanged_revoker = event_revoker<IApplicationData>;
-    DataChanged_revoker DataChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> & handler) const;
-    void DataChanged(event_token token) const;
-    void SignalDataChanged() const;
-    uint64_t RoamingStorageQuota() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IApplicationData2
-{
-    Windows::Storage::StorageFolder LocalCacheFolder() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IApplicationData3
-{
-    Windows::Storage::StorageFolder GetPublisherCacheFolder(hstring_ref folderName) const;
-    Windows::Foundation::IAsyncAction ClearPublisherCacheFolderAsync(hstring_ref folderName) const;
-    Windows::Storage::StorageFolder SharedLocalFolder() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IApplicationDataContainer
-{
-    hstring Name() const;
-    Windows::Storage::ApplicationDataLocality Locality() const;
-    Windows::Foundation::Collections::IPropertySet Values() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::ApplicationDataContainer> Containers() const;
-    Windows::Storage::ApplicationDataContainer CreateContainer(hstring_ref name, Windows::Storage::ApplicationDataCreateDisposition disposition) const;
-    void DeleteContainer(hstring_ref name) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IApplicationDataStatics
-{
-    Windows::Storage::ApplicationData Current() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IApplicationDataStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::ApplicationData> GetForUserAsync(const Windows::System::User & user) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICachedFileManagerStatics
-{
-    void DeferUpdates(const Windows::Storage::IStorageFile & file) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::FileUpdateStatus> CompleteUpdatesAsync(const Windows::Storage::IStorageFile & file) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDownloadsFolderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDownloadsFolderStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFileIOStatics
-{
-    Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(const Windows::Storage::IStorageFile & file) const;
-    Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents) const;
-    Windows::Foundation::IAsyncAction WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents) const;
-    Windows::Foundation::IAsyncAction AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(const Windows::Storage::IStorageFile & file) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines) const;
-    Windows::Foundation::IAsyncAction WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines) const;
-    Windows::Foundation::IAsyncAction AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ReadBufferAsync(const Windows::Storage::IStorageFile & file) const;
-    Windows::Foundation::IAsyncAction WriteBufferAsync(const Windows::Storage::IStorageFile & file, const Windows::Storage::Streams::IBuffer & buffer) const;
-    Windows::Foundation::IAsyncAction WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_ref<const uint8_t> buffer) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersCameraRollStatics
-{
-    Windows::Storage::StorageFolder CameraRoll() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersPlaylistsStatics
-{
-    Windows::Storage::StorageFolder Playlists() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersSavedPicturesStatics
-{
-    Windows::Storage::StorageFolder SavedPictures() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersStatics
-{
-    Windows::Storage::StorageFolder MusicLibrary() const;
-    Windows::Storage::StorageFolder PicturesLibrary() const;
-    Windows::Storage::StorageFolder VideosLibrary() const;
-    Windows::Storage::StorageFolder DocumentsLibrary() const;
-    Windows::Storage::StorageFolder HomeGroup() const;
-    Windows::Storage::StorageFolder RemovableDevices() const;
-    Windows::Storage::StorageFolder MediaServerDevices() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersStatics2
-{
-    Windows::Storage::StorageFolder Objects3D() const;
-    Windows::Storage::StorageFolder AppCaptures() const;
-    Windows::Storage::StorageFolder RecordedCalls() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownFoldersStatics3
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderForUserAsync(const Windows::System::User & user, Windows::Storage::KnownFolderId folderId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPathIOStatics
-{
-    Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_ref absolutePath) const;
-    Windows::Foundation::IAsyncOperation<hstring> ReadTextAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction WriteTextAsync(hstring_ref absolutePath, hstring_ref contents) const;
-    Windows::Foundation::IAsyncAction WriteTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction AppendTextAsync(hstring_ref absolutePath, hstring_ref contents) const;
-    Windows::Foundation::IAsyncAction AppendTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_ref absolutePath) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> ReadLinesAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines) const;
-    Windows::Foundation::IAsyncAction WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines) const;
-    Windows::Foundation::IAsyncAction AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ReadBufferAsync(hstring_ref absolutePath) const;
-    Windows::Foundation::IAsyncAction WriteBufferAsync(hstring_ref absolutePath, const Windows::Storage::Streams::IBuffer & buffer) const;
-    Windows::Foundation::IAsyncAction WriteBytesAsync(hstring_ref absolutePath, array_ref<const uint8_t> buffer) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISetVersionDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISetVersionRequest
-{
-    uint32_t CurrentVersion() const;
-    uint32_t DesiredVersion() const;
-    Windows::Storage::SetVersionDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFile
-{
-    hstring FileType() const;
-    hstring ContentType() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> OpenAsync(Windows::Storage::FileAccessMode accessMode) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> OpenTransactedWriteAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName, Windows::Storage::NameCollisionOption option) const;
-    Windows::Foundation::IAsyncAction CopyAndReplaceAsync(const Windows::Storage::IStorageFile & fileToReplace) const;
-    Windows::Foundation::IAsyncAction MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder) const;
-    Windows::Foundation::IAsyncAction MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName) const;
-    Windows::Foundation::IAsyncAction MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName, Windows::Storage::NameCollisionOption option) const;
-    Windows::Foundation::IAsyncAction MoveAndReplaceAsync(const Windows::Storage::IStorageFile & fileToReplace) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFile2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> OpenAsync(Windows::Storage::FileAccessMode accessMode, Windows::Storage::StorageOpenOptions options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> OpenTransactedWriteAsync(Windows::Storage::StorageOpenOptions options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFilePropertiesWithAvailability
-{
-    bool IsAvailable() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFileStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileFromPathAsync(hstring_ref path) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileFromApplicationUriAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileAsync(hstring_ref displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ReplaceWithStreamedFileAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateStreamedFileFromUriAsync(hstring_ref displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ReplaceWithStreamedFileFromUriAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFolder
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption options) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileAsync(hstring_ref name) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderAsync(hstring_ref name) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetItemAsync(hstring_ref name) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> GetFilesAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> GetFoldersAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> GetItemsAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFolder2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> TryGetItemAsync(hstring_ref name) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageFolderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderFromPathAsync(hstring_ref path) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItem
-{
-    Windows::Foundation::IAsyncAction RenameAsync(hstring_ref desiredName) const;
-    Windows::Foundation::IAsyncAction RenameAsync(hstring_ref desiredName, Windows::Storage::NameCollisionOption option) const;
-    Windows::Foundation::IAsyncAction DeleteAsync() const;
-    Windows::Foundation::IAsyncAction DeleteAsync(Windows::Storage::StorageDeleteOption option) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::BasicProperties> GetBasicPropertiesAsync() const;
-    hstring Name() const;
-    hstring Path() const;
-    Windows::Storage::FileAttributes Attributes() const;
-    Windows::Foundation::DateTime DateCreated() const;
-    bool IsOfType(Windows::Storage::StorageItemTypes type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItem2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetParentAsync() const;
-    bool IsEqual(const Windows::Storage::IStorageItem & item) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemProperties
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options) const;
-    hstring DisplayName() const;
-    hstring DisplayType() const;
-    hstring FolderRelativeId() const;
-    Windows::Storage::FileProperties::StorageItemContentProperties Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemProperties2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageItemPropertiesWithProvider
-{
-    Windows::Storage::StorageProvider Provider() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibrary
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> RequestAddFolderAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RequestRemoveFolderAsync(const Windows::Storage::StorageFolder & folder) const;
-    Windows::Foundation::Collections::IObservableVector<Windows::Storage::StorageFolder> Folders() const;
-    Windows::Storage::StorageFolder SaveFolder() const;
-    event_token DefinitionChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> & handler) const;
-    using DefinitionChanged_revoker = event_revoker<IStorageLibrary>;
-    DefinitionChanged_revoker DefinitionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> & handler) const;
-    void DefinitionChanged(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibrary2
-{
-    Windows::Storage::StorageLibraryChangeTracker ChangeTracker() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibraryChange
-{
-    Windows::Storage::StorageLibraryChangeType ChangeType() const;
-    hstring Path() const;
-    hstring PreviousPath() const;
-    bool IsOfType(Windows::Storage::StorageItemTypes type) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetStorageItemAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibraryChangeReader
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageLibraryChange>> ReadBatchAsync() const;
-    Windows::Foundation::IAsyncAction AcceptChangesAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibraryChangeTracker
-{
-    Windows::Storage::StorageLibraryChangeReader GetChangeReader() const;
-    void Enable() const;
-    void Reset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibraryStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> GetLibraryAsync(Windows::Storage::KnownLibraryId libraryId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageLibraryStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> GetLibraryForUserAsync(const Windows::System::User & user, Windows::Storage::KnownLibraryId libraryId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageProvider
-{
-    hstring Id() const;
-    hstring DisplayName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStorageStreamTransaction
-{
-    Windows::Storage::Streams::IRandomAccessStream Stream() const;
-    Windows::Foundation::IAsyncAction CommitAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamedFileDataRequest
-{
-    void FailAndClose(Windows::Storage::StreamedFileFailureMode failureMode) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemAudioProperties
-{
-    hstring EncodingBitrate() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemGPSProperties
-{
-    hstring LatitudeDecimal() const;
-    hstring LongitudeDecimal() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemImageProperties
-{
-    hstring HorizontalSize() const;
-    hstring VerticalSize() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemMediaProperties
-{
-    hstring Duration() const;
-    hstring Producer() const;
-    hstring Publisher() const;
-    hstring SubTitle() const;
-    hstring Writer() const;
-    hstring Year() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemMusicProperties
-{
-    hstring AlbumArtist() const;
-    hstring AlbumTitle() const;
-    hstring Artist() const;
-    hstring Composer() const;
-    hstring Conductor() const;
-    hstring DisplayArtist() const;
-    hstring Genre() const;
-    hstring TrackNumber() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemPhotoProperties
-{
-    hstring CameraManufacturer() const;
-    hstring CameraModel() const;
-    hstring DateTaken() const;
-    hstring Orientation() const;
-    hstring PeopleNames() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemProperties
-{
-    hstring Author() const;
-    hstring Comment() const;
-    hstring ItemNameDisplay() const;
-    hstring Keywords() const;
-    hstring Rating() const;
-    hstring Title() const;
-    Windows::Storage::SystemAudioProperties Audio() const;
-    Windows::Storage::SystemGPSProperties GPS() const;
-    Windows::Storage::SystemMediaProperties Media() const;
-    Windows::Storage::SystemMusicProperties Music() const;
-    Windows::Storage::SystemPhotoProperties Photo() const;
-    Windows::Storage::SystemVideoProperties Video() const;
-    Windows::Storage::SystemImageProperties Image() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISystemVideoProperties
-{
-    hstring Director() const;
-    hstring FrameHeight() const;
-    hstring FrameWidth() const;
-    hstring Orientation() const;
-    hstring TotalBitrate() const;
-};
-
-struct ApplicationDataSetVersionHandler : Windows::IUnknown
+struct ApplicationDataSetVersionHandler : Windows::Foundation::IUnknown
 {
     ApplicationDataSetVersionHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ApplicationDataSetVersionHandler>(m_ptr); }
     template <typename L> ApplicationDataSetVersionHandler(L lambda);
     template <typename F> ApplicationDataSetVersionHandler (F * function);
     template <typename O, typename M> ApplicationDataSetVersionHandler(O * object, M method);
     void operator()(const Windows::Storage::SetVersionRequest & setVersionRequest) const;
 };
 
-struct StreamedFileDataRequestedHandler : Windows::IUnknown
+struct StreamedFileDataRequestedHandler : Windows::Foundation::IUnknown
 {
     StreamedFileDataRequestedHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<StreamedFileDataRequestedHandler>(m_ptr); }
     template <typename L> StreamedFileDataRequestedHandler(L lambda);
     template <typename F> StreamedFileDataRequestedHandler (F * function);
     template <typename O, typename M> StreamedFileDataRequestedHandler(O * object, M method);
@@ -983,401 +549,352 @@ struct StreamedFileDataRequestedHandler : Windows::IUnknown
 };
 
 struct IApplicationData :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationData>
 {
     IApplicationData(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationData>(m_ptr); }
 };
 
 struct IApplicationData2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationData2>
 {
     IApplicationData2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationData2>(m_ptr); }
 };
 
 struct IApplicationData3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationData3>
 {
     IApplicationData3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationData3>(m_ptr); }
 };
 
 struct IApplicationDataContainer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationDataContainer>
 {
     IApplicationDataContainer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationDataContainer>(m_ptr); }
 };
 
 struct IApplicationDataStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationDataStatics>
 {
     IApplicationDataStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationDataStatics>(m_ptr); }
 };
 
 struct IApplicationDataStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IApplicationDataStatics2>
 {
     IApplicationDataStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IApplicationDataStatics2>(m_ptr); }
 };
 
 struct ICachedFileManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICachedFileManagerStatics>
 {
     ICachedFileManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICachedFileManagerStatics>(m_ptr); }
 };
 
 struct IDownloadsFolderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDownloadsFolderStatics>
 {
     IDownloadsFolderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDownloadsFolderStatics>(m_ptr); }
 };
 
 struct IDownloadsFolderStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDownloadsFolderStatics2>
 {
     IDownloadsFolderStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDownloadsFolderStatics2>(m_ptr); }
 };
 
 struct IFileIOStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFileIOStatics>
 {
     IFileIOStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFileIOStatics>(m_ptr); }
 };
 
 struct IKnownFoldersCameraRollStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersCameraRollStatics>
 {
     IKnownFoldersCameraRollStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersCameraRollStatics>(m_ptr); }
 };
 
 struct IKnownFoldersPlaylistsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersPlaylistsStatics>
 {
     IKnownFoldersPlaylistsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersPlaylistsStatics>(m_ptr); }
 };
 
 struct IKnownFoldersSavedPicturesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersSavedPicturesStatics>
 {
     IKnownFoldersSavedPicturesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersSavedPicturesStatics>(m_ptr); }
 };
 
 struct IKnownFoldersStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersStatics>
 {
     IKnownFoldersStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersStatics>(m_ptr); }
 };
 
 struct IKnownFoldersStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersStatics2>
 {
     IKnownFoldersStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersStatics2>(m_ptr); }
 };
 
 struct IKnownFoldersStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownFoldersStatics3>
 {
     IKnownFoldersStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownFoldersStatics3>(m_ptr); }
 };
 
 struct IPathIOStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPathIOStatics>
 {
     IPathIOStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPathIOStatics>(m_ptr); }
 };
 
 struct ISetVersionDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISetVersionDeferral>
 {
     ISetVersionDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISetVersionDeferral>(m_ptr); }
 };
 
 struct ISetVersionRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISetVersionRequest>
 {
     ISetVersionRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISetVersionRequest>(m_ptr); }
 };
 
 struct IStorageFile :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFile>,
     impl::require<IStorageFile, Windows::Storage::IStorageItem, Windows::Storage::Streams::IInputStreamReference, Windows::Storage::Streams::IRandomAccessStreamReference>
 {
     IStorageFile(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFile>(m_ptr); }
 };
 
 struct IStorageFile2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFile2>
 {
     IStorageFile2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFile2>(m_ptr); }
 };
 
 struct IStorageFilePropertiesWithAvailability :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFilePropertiesWithAvailability>
 {
     IStorageFilePropertiesWithAvailability(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFilePropertiesWithAvailability>(m_ptr); }
 };
 
 struct IStorageFileStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFileStatics>
 {
     IStorageFileStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFileStatics>(m_ptr); }
 };
 
 struct IStorageFolder :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFolder>,
     impl::require<IStorageFolder, Windows::Storage::IStorageItem>
 {
     IStorageFolder(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFolder>(m_ptr); }
 };
 
 struct IStorageFolder2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFolder2>
 {
     IStorageFolder2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFolder2>(m_ptr); }
 };
 
 struct IStorageFolderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageFolderStatics>
 {
     IStorageFolderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageFolderStatics>(m_ptr); }
 };
 
 struct IStorageItem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItem>
 {
     IStorageItem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItem>(m_ptr); }
 };
 
 struct IStorageItem2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItem2>,
     impl::require<IStorageItem2, Windows::Storage::IStorageItem>
 {
     IStorageItem2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItem2>(m_ptr); }
 };
 
 struct IStorageItemProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemProperties>
 {
     IStorageItemProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemProperties>(m_ptr); }
 };
 
 struct IStorageItemProperties2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemProperties2>,
     impl::require<IStorageItemProperties2, Windows::Storage::IStorageItemProperties>
 {
     IStorageItemProperties2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemProperties2>(m_ptr); }
 };
 
 struct IStorageItemPropertiesWithProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageItemPropertiesWithProvider>,
     impl::require<IStorageItemPropertiesWithProvider, Windows::Storage::IStorageItemProperties>
 {
     IStorageItemPropertiesWithProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageItemPropertiesWithProvider>(m_ptr); }
 };
 
 struct IStorageLibrary :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibrary>
 {
     IStorageLibrary(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibrary>(m_ptr); }
 };
 
 struct IStorageLibrary2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibrary2>
 {
     IStorageLibrary2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibrary2>(m_ptr); }
 };
 
 struct IStorageLibraryChange :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibraryChange>
 {
     IStorageLibraryChange(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibraryChange>(m_ptr); }
 };
 
 struct IStorageLibraryChangeReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibraryChangeReader>
 {
     IStorageLibraryChangeReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibraryChangeReader>(m_ptr); }
 };
 
 struct IStorageLibraryChangeTracker :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibraryChangeTracker>
 {
     IStorageLibraryChangeTracker(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibraryChangeTracker>(m_ptr); }
 };
 
 struct IStorageLibraryStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibraryStatics>
 {
     IStorageLibraryStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibraryStatics>(m_ptr); }
 };
 
 struct IStorageLibraryStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageLibraryStatics2>
 {
     IStorageLibraryStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageLibraryStatics2>(m_ptr); }
 };
 
 struct IStorageProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageProvider>
 {
     IStorageProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageProvider>(m_ptr); }
 };
 
 struct IStorageStreamTransaction :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStorageStreamTransaction>,
     impl::require<IStorageStreamTransaction, Windows::Foundation::IClosable>
 {
     IStorageStreamTransaction(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStorageStreamTransaction>(m_ptr); }
 };
 
 struct IStreamedFileDataRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamedFileDataRequest>
 {
     IStreamedFileDataRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamedFileDataRequest>(m_ptr); }
 };
 
 struct ISystemAudioProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemAudioProperties>
 {
     ISystemAudioProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemAudioProperties>(m_ptr); }
 };
 
 struct ISystemGPSProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemGPSProperties>
 {
     ISystemGPSProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemGPSProperties>(m_ptr); }
 };
 
 struct ISystemImageProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemImageProperties>
 {
     ISystemImageProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemImageProperties>(m_ptr); }
 };
 
 struct ISystemMediaProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemMediaProperties>
 {
     ISystemMediaProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemMediaProperties>(m_ptr); }
 };
 
 struct ISystemMusicProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemMusicProperties>
 {
     ISystemMusicProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemMusicProperties>(m_ptr); }
 };
 
 struct ISystemPhotoProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemPhotoProperties>
 {
     ISystemPhotoProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemPhotoProperties>(m_ptr); }
 };
 
 struct ISystemProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemProperties>
 {
     ISystemProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemProperties>(m_ptr); }
 };
 
 struct ISystemVideoProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISystemVideoProperties>
 {
     ISystemVideoProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISystemVideoProperties>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -60,16 +60,16 @@ struct Launcher
     static Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData);
     static Windows::Foundation::IAsyncOperation<bool> LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, hstring_ref packageFamilyName);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, hstring_view packageFamilyName);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryFileSupportAsync(const Windows::Storage::StorageFile & file);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryFileSupportAsync(const Windows::Storage::StorageFile & file, hstring_ref packageFamilyName);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_ref scheme);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_ref scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType);
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindFileHandlersAsync(hstring_ref extension);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryFileSupportAsync(const Windows::Storage::StorageFile & file, hstring_view packageFamilyName);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_view scheme);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_view scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindFileHandlersAsync(hstring_view extension);
     static Windows::Foundation::IAsyncOperation<bool> LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder);
     static Windows::Foundation::IAsyncOperation<bool> LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder, const Windows::System::FolderLauncherOptions & options);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri);
-    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri, hstring_ref packageFamilyName);
+    static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri, hstring_view packageFamilyName);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindAppUriHandlersAsync(const Windows::Foundation::Uri & uri);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options);
@@ -98,13 +98,13 @@ struct MemoryManager
     static uint64_t AppMemoryUsage();
     static uint64_t AppMemoryUsageLimit();
     static Windows::System::AppMemoryUsageLevel AppMemoryUsageLevel();
-    static event_token AppMemoryUsageIncreased(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static event_token AppMemoryUsageIncreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using AppMemoryUsageIncreased_revoker = factory_event_revoker<IMemoryManagerStatics>;
-    static AppMemoryUsageIncreased_revoker AppMemoryUsageIncreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static AppMemoryUsageIncreased_revoker AppMemoryUsageIncreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     static void AppMemoryUsageIncreased(event_token token);
-    static event_token AppMemoryUsageDecreased(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static event_token AppMemoryUsageDecreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using AppMemoryUsageDecreased_revoker = factory_event_revoker<IMemoryManagerStatics>;
-    static AppMemoryUsageDecreased_revoker AppMemoryUsageDecreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static AppMemoryUsageDecreased_revoker AppMemoryUsageDecreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     static void AppMemoryUsageDecreased(event_token token);
     static event_token AppMemoryUsageLimitChanging(const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler);
     using AppMemoryUsageLimitChanging_revoker = factory_event_revoker<IMemoryManagerStatics>;
@@ -118,8 +118,8 @@ struct MemoryManager
 struct ProcessLauncher
 {
     ProcessLauncher() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_ref fileName, hstring_ref args);
-    static Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_ref fileName, hstring_ref args, const Windows::System::ProcessLauncherOptions & options);
+    static Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_view fileName, hstring_view args);
+    static Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_view fileName, hstring_view args, const Windows::System::ProcessLauncherOptions & options);
 };
 
 struct WINRT_EBO ProcessLauncherOptions :
@@ -175,7 +175,7 @@ struct TimeZoneSettings
     static hstring CurrentTimeZoneDisplayName();
     static Windows::Foundation::Collections::IVectorView<hstring> SupportedTimeZoneDisplayNames();
     static bool CanChangeTimeZone();
-    static void ChangeTimeZoneByDisplayName(hstring_ref timeZoneDisplayName);
+    static void ChangeTimeZoneByDisplayName(hstring_view timeZoneDisplayName);
 };
 
 struct WINRT_EBO User :
@@ -186,7 +186,7 @@ struct WINRT_EBO User :
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync();
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync(Windows::System::UserType type);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync(Windows::System::UserType type, Windows::System::UserAuthenticationStatus status);
-    static Windows::System::User GetFromId(hstring_ref nonRoamableId);
+    static Windows::System::User GetFromId(hstring_view nonRoamableId);
 };
 
 struct WINRT_EBO UserAuthenticationStatusChangeDeferral :
@@ -210,7 +210,7 @@ struct WINRT_EBO UserChangedEventArgs :
 struct UserDeviceAssociation
 {
     UserDeviceAssociation() = delete;
-    static Windows::System::User FindUserFromDeviceId(hstring_ref deviceId);
+    static Windows::System::User FindUserFromDeviceId(hstring_view deviceId);
     static event_token UserDeviceAssociationChanged(const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler);
     using UserDeviceAssociationChanged_revoker = factory_event_revoker<IUserDeviceAssociationStatics>;
     static UserDeviceAssociationChanged_revoker UserDeviceAssociationChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler);

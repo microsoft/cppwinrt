@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -251,6 +251,81 @@ struct Vector4KeyFrameAnimation;
 struct Visual;
 struct VisualCollection;
 struct VisualUnorderedCollection;
+
+}
+
+namespace Windows::UI::Composition {
+
+template <typename T> struct impl_IAmbientLight;
+template <typename T> struct impl_IColorKeyFrameAnimation;
+template <typename T> struct impl_ICompositionAnimation;
+template <typename T> struct impl_ICompositionAnimation2;
+template <typename T> struct impl_ICompositionAnimationBase;
+template <typename T> struct impl_ICompositionAnimationFactory;
+template <typename T> struct impl_ICompositionAnimationGroup;
+template <typename T> struct impl_ICompositionBackdropBrush;
+template <typename T> struct impl_ICompositionBatchCompletedEventArgs;
+template <typename T> struct impl_ICompositionBrush;
+template <typename T> struct impl_ICompositionBrushFactory;
+template <typename T> struct impl_ICompositionClip;
+template <typename T> struct impl_ICompositionClip2;
+template <typename T> struct impl_ICompositionClipFactory;
+template <typename T> struct impl_ICompositionColorBrush;
+template <typename T> struct impl_ICompositionCommitBatch;
+template <typename T> struct impl_ICompositionDrawingSurface;
+template <typename T> struct impl_ICompositionEasingFunction;
+template <typename T> struct impl_ICompositionEasingFunctionFactory;
+template <typename T> struct impl_ICompositionEffectBrush;
+template <typename T> struct impl_ICompositionEffectFactory;
+template <typename T> struct impl_ICompositionEffectSourceParameter;
+template <typename T> struct impl_ICompositionEffectSourceParameterFactory;
+template <typename T> struct impl_ICompositionGraphicsDevice;
+template <typename T> struct impl_ICompositionLight;
+template <typename T> struct impl_ICompositionLightFactory;
+template <typename T> struct impl_ICompositionMaskBrush;
+template <typename T> struct impl_ICompositionNineGridBrush;
+template <typename T> struct impl_ICompositionObject;
+template <typename T> struct impl_ICompositionObject2;
+template <typename T> struct impl_ICompositionObjectFactory;
+template <typename T> struct impl_ICompositionPropertySet;
+template <typename T> struct impl_ICompositionPropertySet2;
+template <typename T> struct impl_ICompositionScopedBatch;
+template <typename T> struct impl_ICompositionShadow;
+template <typename T> struct impl_ICompositionShadowFactory;
+template <typename T> struct impl_ICompositionSurface;
+template <typename T> struct impl_ICompositionSurfaceBrush;
+template <typename T> struct impl_ICompositionSurfaceBrush2;
+template <typename T> struct impl_ICompositionTarget;
+template <typename T> struct impl_ICompositor;
+template <typename T> struct impl_ICompositor2;
+template <typename T> struct impl_IContainerVisual;
+template <typename T> struct impl_IContainerVisualFactory;
+template <typename T> struct impl_ICubicBezierEasingFunction;
+template <typename T> struct impl_IDistantLight;
+template <typename T> struct impl_IDropShadow;
+template <typename T> struct impl_IExpressionAnimation;
+template <typename T> struct impl_IImplicitAnimationCollection;
+template <typename T> struct impl_IInsetClip;
+template <typename T> struct impl_IKeyFrameAnimation;
+template <typename T> struct impl_IKeyFrameAnimation2;
+template <typename T> struct impl_IKeyFrameAnimationFactory;
+template <typename T> struct impl_ILayerVisual;
+template <typename T> struct impl_ILinearEasingFunction;
+template <typename T> struct impl_IPointLight;
+template <typename T> struct impl_IQuaternionKeyFrameAnimation;
+template <typename T> struct impl_IRenderingDeviceReplacedEventArgs;
+template <typename T> struct impl_IScalarKeyFrameAnimation;
+template <typename T> struct impl_ISpotLight;
+template <typename T> struct impl_ISpriteVisual;
+template <typename T> struct impl_ISpriteVisual2;
+template <typename T> struct impl_IStepEasingFunction;
+template <typename T> struct impl_IVector2KeyFrameAnimation;
+template <typename T> struct impl_IVector3KeyFrameAnimation;
+template <typename T> struct impl_IVector4KeyFrameAnimation;
+template <typename T> struct impl_IVisual;
+template <typename T> struct impl_IVisualCollection;
+template <typename T> struct impl_IVisualFactory;
+template <typename T> struct impl_IVisualUnorderedCollection;
 
 }
 

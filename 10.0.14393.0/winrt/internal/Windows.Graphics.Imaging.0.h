@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -91,6 +91,29 @@ struct BitmapTypedValue;
 struct ImageStream;
 struct PixelDataProvider;
 struct SoftwareBitmap;
+
+}
+
+namespace Windows::Graphics::Imaging {
+
+template <typename T> struct impl_IBitmapBuffer;
+template <typename T> struct impl_IBitmapCodecInformation;
+template <typename T> struct impl_IBitmapDecoder;
+template <typename T> struct impl_IBitmapDecoderStatics;
+template <typename T> struct impl_IBitmapEncoder;
+template <typename T> struct impl_IBitmapEncoderStatics;
+template <typename T> struct impl_IBitmapEncoderWithSoftwareBitmap;
+template <typename T> struct impl_IBitmapFrame;
+template <typename T> struct impl_IBitmapFrameWithSoftwareBitmap;
+template <typename T> struct impl_IBitmapProperties;
+template <typename T> struct impl_IBitmapPropertiesView;
+template <typename T> struct impl_IBitmapTransform;
+template <typename T> struct impl_IBitmapTypedValue;
+template <typename T> struct impl_IBitmapTypedValueFactory;
+template <typename T> struct impl_IPixelDataProvider;
+template <typename T> struct impl_ISoftwareBitmap;
+template <typename T> struct impl_ISoftwareBitmapFactory;
+template <typename T> struct impl_ISoftwareBitmapStatics;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -118,7 +118,7 @@ struct MediaEncodingSubtypes
 };
 
 struct WINRT_EBO MediaPropertySet :
-    Windows::Foundation::Collections::IMap<GUID, Windows::IInspectable>
+    Windows::Foundation::Collections::IMap<GUID, Windows::Foundation::IInspectable>
 {
     MediaPropertySet(std::nullptr_t) noexcept {}
     MediaPropertySet();
@@ -148,7 +148,7 @@ struct WINRT_EBO VideoEncodingProperties :
     VideoEncodingProperties();
     static Windows::Media::MediaProperties::VideoEncodingProperties CreateH264();
     static Windows::Media::MediaProperties::VideoEncodingProperties CreateMpeg2();
-    static Windows::Media::MediaProperties::VideoEncodingProperties CreateUncompressed(hstring_ref subtype, uint32_t width, uint32_t height);
+    static Windows::Media::MediaProperties::VideoEncodingProperties CreateUncompressed(hstring_view subtype, uint32_t width, uint32_t height);
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -31,6 +31,16 @@ struct WiFiAdapter;
 struct WiFiAvailableNetwork;
 struct WiFiConnectionResult;
 struct WiFiNetworkReport;
+
+}
+
+namespace Windows::Devices::WiFi {
+
+template <typename T> struct impl_IWiFiAdapter;
+template <typename T> struct impl_IWiFiAdapterStatics;
+template <typename T> struct impl_IWiFiAvailableNetwork;
+template <typename T> struct impl_IWiFiConnectionResult;
+template <typename T> struct impl_IWiFiNetworkReport;
 
 }
 

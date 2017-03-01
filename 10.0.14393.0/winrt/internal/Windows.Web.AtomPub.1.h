@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,7 +18,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Web::AtomPub {
 
-struct __declspec(uuid("35392c38-cded-4d4c-9637-05f15c1c9406")) __declspec(novtable) IAtomPubClient : Windows::IInspectable
+struct __declspec(uuid("35392c38-cded-4d4c-9637-05f15c1c9406")) __declspec(novtable) IAtomPubClient : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RetrieveServiceDocumentAsync(Windows::Foundation::IUriRuntimeClass * uri, Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> ** operation) = 0;
     virtual HRESULT __stdcall abi_RetrieveMediaResourceAsync(Windows::Foundation::IUriRuntimeClass * uri, Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> ** operation) = 0;
@@ -33,12 +33,12 @@ struct __declspec(uuid("35392c38-cded-4d4c-9637-05f15c1c9406")) __declspec(novta
     virtual HRESULT __stdcall abi_CancelAsyncOperations() = 0;
 };
 
-struct __declspec(uuid("49d55012-57cb-4bde-ab9f-2610b172777b")) __declspec(novtable) IAtomPubClientFactory : Windows::IInspectable
+struct __declspec(uuid("49d55012-57cb-4bde-ab9f-2610b172777b")) __declspec(novtable) IAtomPubClientFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateAtomPubClientWithCredentials(Windows::Security::Credentials::IPasswordCredential * serverCredential, Windows::Web::AtomPub::IAtomPubClient ** atomPubClient) = 0;
 };
 
-struct __declspec(uuid("7f5fd609-bc88-41d4-88fa-3de6704d428e")) __declspec(novtable) IResourceCollection : Windows::IInspectable
+struct __declspec(uuid("7f5fd609-bc88-41d4-88fa-3de6704d428e")) __declspec(novtable) IResourceCollection : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(Windows::Web::Syndication::ISyndicationText ** value) = 0;
     virtual HRESULT __stdcall get_Uri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
@@ -46,12 +46,12 @@ struct __declspec(uuid("7f5fd609-bc88-41d4-88fa-3de6704d428e")) __declspec(novta
     virtual HRESULT __stdcall get_Accepts(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("8b7ec771-2ab3-4dbe-8bcc-778f92b75e51")) __declspec(novtable) IServiceDocument : Windows::IInspectable
+struct __declspec(uuid("8b7ec771-2ab3-4dbe-8bcc-778f92b75e51")) __declspec(novtable) IServiceDocument : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Workspaces(Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> ** value) = 0;
 };
 
-struct __declspec(uuid("b41da63b-a4b8-4036-89c5-83c31266ba49")) __declspec(novtable) IWorkspace : Windows::IInspectable
+struct __declspec(uuid("b41da63b-a4b8-4036-89c5-83c31266ba49")) __declspec(novtable) IWorkspace : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(Windows::Web::Syndication::ISyndicationText ** value) = 0;
     virtual HRESULT __stdcall get_Collections(Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> ** value) = 0;
@@ -70,11 +70,49 @@ template <> struct traits<Windows::Web::AtomPub::Workspace> { using default_inte
 
 namespace Windows::Web::AtomPub {
 
-template <typename T> struct impl_IAtomPubClient;
-template <typename T> struct impl_IAtomPubClientFactory;
-template <typename T> struct impl_IResourceCollection;
-template <typename T> struct impl_IServiceDocument;
-template <typename T> struct impl_IWorkspace;
+template <typename D>
+struct WINRT_EBO impl_IAtomPubClient
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> RetrieveServiceDocumentAsync(const Windows::Foundation::Uri & uri) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> RetrieveMediaResourceAsync(const Windows::Foundation::Uri & uri) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress> RetrieveResourceAsync(const Windows::Foundation::Uri & uri) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> CreateResourceAsync(const Windows::Foundation::Uri & uri, hstring_view description, const Windows::Web::Syndication::SyndicationItem & item) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> CreateMediaResourceAsync(const Windows::Foundation::Uri & uri, hstring_view mediaType, hstring_view description, const Windows::Storage::Streams::IInputStream & mediaStream) const;
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> UpdateMediaResourceAsync(const Windows::Foundation::Uri & uri, hstring_view mediaType, const Windows::Storage::Streams::IInputStream & mediaStream) const;
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> UpdateResourceAsync(const Windows::Foundation::Uri & uri, const Windows::Web::Syndication::SyndicationItem & item) const;
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> UpdateResourceItemAsync(const Windows::Web::Syndication::SyndicationItem & item) const;
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> DeleteResourceAsync(const Windows::Foundation::Uri & uri) const;
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> DeleteResourceItemAsync(const Windows::Web::Syndication::SyndicationItem & item) const;
+    void CancelAsyncOperations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAtomPubClientFactory
+{
+    Windows::Web::AtomPub::AtomPubClient CreateAtomPubClientWithCredentials(const Windows::Security::Credentials::PasswordCredential & serverCredential) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IResourceCollection
+{
+    Windows::Web::Syndication::ISyndicationText Title() const;
+    Windows::Foundation::Uri Uri() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory> Categories() const;
+    Windows::Foundation::Collections::IVectorView<hstring> Accepts() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IServiceDocument
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> Workspaces() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWorkspace
+{
+    Windows::Web::Syndication::ISyndicationText Title() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> Collections() const;
+};
 
 }
 

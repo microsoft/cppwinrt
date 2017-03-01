@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -53,63 +53,63 @@ template <> struct traits<Windows::UI::Xaml::Markup::XmlnsDefinition>
 
 namespace ABI::Windows::UI::Xaml::Markup {
 
-struct __declspec(uuid("f6790987-e6e5-47f2-92c6-eccce4ba159a")) __declspec(novtable) IComponentConnector : Windows::IInspectable
+struct __declspec(uuid("f6790987-e6e5-47f2-92c6-eccce4ba159a")) __declspec(novtable) IComponentConnector : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_Connect(int32_t connectionId, Windows::IInspectable * target) = 0;
+    virtual HRESULT __stdcall abi_Connect(int32_t connectionId, Windows::Foundation::IInspectable * target) = 0;
 };
 
-struct __declspec(uuid("dc8f368b-eccc-498e-b139-91142254d7ae")) __declspec(novtable) IComponentConnector2 : Windows::IInspectable
+struct __declspec(uuid("dc8f368b-eccc-498e-b139-91142254d7ae")) __declspec(novtable) IComponentConnector2 : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_GetBindingConnector(int32_t connectionId, Windows::IInspectable * target, Windows::UI::Xaml::Markup::IComponentConnector ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_GetBindingConnector(int32_t connectionId, Windows::Foundation::IInspectable * target, Windows::UI::Xaml::Markup::IComponentConnector ** returnValue) = 0;
 };
 
-struct __declspec(uuid("08429dc8-8ab0-4747-aa9a-feadfc8da8e1")) __declspec(novtable) IDataTemplateComponent : Windows::IInspectable
+struct __declspec(uuid("08429dc8-8ab0-4747-aa9a-feadfc8da8e1")) __declspec(novtable) IDataTemplateComponent : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Recycle() = 0;
-    virtual HRESULT __stdcall abi_ProcessBindings(Windows::IInspectable * item, int32_t itemIndex, int32_t phase, int32_t * nextPhase) = 0;
+    virtual HRESULT __stdcall abi_ProcessBindings(Windows::Foundation::IInspectable * item, int32_t itemIndex, int32_t phase, int32_t * nextPhase) = 0;
 };
 
-struct __declspec(uuid("829d2ad3-620a-46f6-845d-436a05927100")) __declspec(novtable) IXamlBinaryWriter : Windows::IInspectable
+struct __declspec(uuid("829d2ad3-620a-46f6-845d-436a05927100")) __declspec(novtable) IXamlBinaryWriter : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("0d8ed07a-9b82-4aa8-b68b-026f2de1cc86")) __declspec(novtable) IXamlBinaryWriterStatics : Windows::IInspectable
+struct __declspec(uuid("0d8ed07a-9b82-4aa8-b68b-026f2de1cc86")) __declspec(novtable) IXamlBinaryWriterStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Write(Windows::Foundation::Collections::IVector<Windows::Storage::Streams::IRandomAccessStream> * inputStreams, Windows::Foundation::Collections::IVector<Windows::Storage::Streams::IRandomAccessStream> * outputStreams, Windows::UI::Xaml::Markup::IXamlMetadataProvider * xamlMetadataProvider, Windows::UI::Xaml::Markup::XamlBinaryWriterErrorInformation * returnValue) = 0;
 };
 
-struct __declspec(uuid("faa6fb06-8ab9-4ef7-8ae7-fbd30bbfd06d")) __declspec(novtable) IXamlBindingHelper : Windows::IInspectable
+struct __declspec(uuid("faa6fb06-8ab9-4ef7-8ae7-fbd30bbfd06d")) __declspec(novtable) IXamlBindingHelper : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("f65cfb71-c80c-4ffa-86ee-558754ee336d")) __declspec(novtable) IXamlBindingHelperStatics : Windows::IInspectable
+struct __declspec(uuid("f65cfb71-c80c-4ffa-86ee-558754ee336d")) __declspec(novtable) IXamlBindingHelperStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DataTemplateComponentProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall abi_GetDataTemplateComponent(Windows::UI::Xaml::IDependencyObject * element, Windows::UI::Xaml::Markup::IDataTemplateComponent ** value) = 0;
     virtual HRESULT __stdcall abi_SetDataTemplateComponent(Windows::UI::Xaml::IDependencyObject * element, Windows::UI::Xaml::Markup::IDataTemplateComponent * value) = 0;
     virtual HRESULT __stdcall abi_SuspendRendering(Windows::UI::Xaml::IUIElement * target) = 0;
     virtual HRESULT __stdcall abi_ResumeRendering(Windows::UI::Xaml::IUIElement * target) = 0;
-    virtual HRESULT __stdcall abi_ConvertValue(Windows::UI::Xaml::Interop::TypeName type, Windows::IInspectable * value, Windows::IInspectable ** returnValue) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromString(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, hstring value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromBoolean(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, bool value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromChar16(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, wchar_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromDateTime(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::DateTime value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromDouble(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, double value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromInt32(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, int32_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromUInt32(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint32_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromInt64(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, int64_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromUInt64(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint64_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromSingle(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, float value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromPoint(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Point value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromRect(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Rect value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromSize(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Size value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromTimeSpan(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::TimeSpan value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromByte(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint8_t value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromUri(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::IUriRuntimeClass * value) = 0;
-    virtual HRESULT __stdcall abi_SetPropertyFromObject(Windows::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_ConvertValue(Windows::UI::Xaml::Interop::TypeName type, Windows::Foundation::IInspectable * value, Windows::Foundation::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromString(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, hstring value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromBoolean(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, bool value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromChar16(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, wchar_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromDateTime(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::DateTime value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromDouble(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, double value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromInt32(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, int32_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromUInt32(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint32_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromInt64(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, int64_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromUInt64(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint64_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromSingle(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, float value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromPoint(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Point value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromRect(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Rect value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromSize(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::Size value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromTimeSpan(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::TimeSpan value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromByte(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, uint8_t value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromUri(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::IUriRuntimeClass * value) = 0;
+    virtual HRESULT __stdcall abi_SetPropertyFromObject(Windows::Foundation::IInspectable * dependencyObject, Windows::UI::Xaml::IDependencyProperty * propertyToSet, Windows::Foundation::IInspectable * value) = 0;
 };
 
-struct __declspec(uuid("c541f58c-43a9-4216-b718-e0b11b14e93e")) __declspec(novtable) IXamlMember : Windows::IInspectable
+struct __declspec(uuid("c541f58c-43a9-4216-b718-e0b11b14e93e")) __declspec(novtable) IXamlMember : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsAttachable(bool * value) = 0;
     virtual HRESULT __stdcall get_IsDependencyProperty(bool * value) = 0;
@@ -117,28 +117,28 @@ struct __declspec(uuid("c541f58c-43a9-4216-b718-e0b11b14e93e")) __declspec(novta
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_TargetType(Windows::UI::Xaml::Markup::IXamlType ** value) = 0;
     virtual HRESULT __stdcall get_Type(Windows::UI::Xaml::Markup::IXamlType ** value) = 0;
-    virtual HRESULT __stdcall abi_GetValue(Windows::IInspectable * instance, Windows::IInspectable ** value) = 0;
-    virtual HRESULT __stdcall abi_SetValue(Windows::IInspectable * instance, Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_GetValue(Windows::Foundation::IInspectable * instance, Windows::Foundation::IInspectable ** value) = 0;
+    virtual HRESULT __stdcall abi_SetValue(Windows::Foundation::IInspectable * instance, Windows::Foundation::IInspectable * value) = 0;
 };
 
-struct __declspec(uuid("b3765d69-68a5-4b32-8861-fdb90c1f5836")) __declspec(novtable) IXamlMetadataProvider : Windows::IInspectable
+struct __declspec(uuid("b3765d69-68a5-4b32-8861-fdb90c1f5836")) __declspec(novtable) IXamlMetadataProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetXamlType(Windows::UI::Xaml::Interop::TypeName type, Windows::UI::Xaml::Markup::IXamlType ** xamlType) = 0;
     virtual HRESULT __stdcall abi_GetXamlTypeByFullName(hstring fullName, Windows::UI::Xaml::Markup::IXamlType ** xamlType) = 0;
     virtual HRESULT __stdcall abi_GetXmlnsDefinitions(uint32_t * __definitionsSize, Windows::UI::Xaml::Markup::XmlnsDefinition ** definitions) = 0;
 };
 
-struct __declspec(uuid("24374cf1-cceb-48bf-a514-41b0186f84c2")) __declspec(novtable) IXamlReader : Windows::IInspectable
+struct __declspec(uuid("24374cf1-cceb-48bf-a514-41b0186f84c2")) __declspec(novtable) IXamlReader : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("9891c6bd-534f-4955-b85a-8a8dc0dca602")) __declspec(novtable) IXamlReaderStatics : Windows::IInspectable
+struct __declspec(uuid("9891c6bd-534f-4955-b85a-8a8dc0dca602")) __declspec(novtable) IXamlReaderStatics : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_Load(hstring xaml, Windows::IInspectable ** returnValue) = 0;
-    virtual HRESULT __stdcall abi_LoadWithInitialTemplateValidation(hstring xaml, Windows::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_Load(hstring xaml, Windows::Foundation::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_LoadWithInitialTemplateValidation(hstring xaml, Windows::Foundation::IInspectable ** returnValue) = 0;
 };
 
-struct __declspec(uuid("7920eab1-a2e5-479a-bd50-6cef3c0b4970")) __declspec(novtable) IXamlType : Windows::IInspectable
+struct __declspec(uuid("7920eab1-a2e5-479a-bd50-6cef3c0b4970")) __declspec(novtable) IXamlType : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BaseType(Windows::UI::Xaml::Markup::IXamlType ** value) = 0;
     virtual HRESULT __stdcall get_ContentProperty(Windows::UI::Xaml::Markup::IXamlMember ** value) = 0;
@@ -152,11 +152,11 @@ struct __declspec(uuid("7920eab1-a2e5-479a-bd50-6cef3c0b4970")) __declspec(novta
     virtual HRESULT __stdcall get_ItemType(Windows::UI::Xaml::Markup::IXamlType ** value) = 0;
     virtual HRESULT __stdcall get_KeyType(Windows::UI::Xaml::Markup::IXamlType ** value) = 0;
     virtual HRESULT __stdcall get_UnderlyingType(Windows::UI::Xaml::Interop::TypeName * value) = 0;
-    virtual HRESULT __stdcall abi_ActivateInstance(Windows::IInspectable ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateFromString(hstring value, Windows::IInspectable ** instance) = 0;
+    virtual HRESULT __stdcall abi_ActivateInstance(Windows::Foundation::IInspectable ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateFromString(hstring value, Windows::Foundation::IInspectable ** instance) = 0;
     virtual HRESULT __stdcall abi_GetMember(hstring name, Windows::UI::Xaml::Markup::IXamlMember ** xamlMember) = 0;
-    virtual HRESULT __stdcall abi_AddToVector(Windows::IInspectable * instance, Windows::IInspectable * value) = 0;
-    virtual HRESULT __stdcall abi_AddToMap(Windows::IInspectable * instance, Windows::IInspectable * key, Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_AddToVector(Windows::Foundation::IInspectable * instance, Windows::Foundation::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_AddToMap(Windows::Foundation::IInspectable * instance, Windows::Foundation::IInspectable * key, Windows::Foundation::IInspectable * value) = 0;
     virtual HRESULT __stdcall abi_RunInitializer() = 0;
 };
 
@@ -172,18 +172,124 @@ template <> struct traits<Windows::UI::Xaml::Markup::XamlReader> { using default
 
 namespace Windows::UI::Xaml::Markup {
 
-template <typename T> struct impl_IComponentConnector;
-template <typename T> struct impl_IComponentConnector2;
-template <typename T> struct impl_IDataTemplateComponent;
-template <typename T> struct impl_IXamlBinaryWriter;
-template <typename T> struct impl_IXamlBinaryWriterStatics;
-template <typename T> struct impl_IXamlBindingHelper;
-template <typename T> struct impl_IXamlBindingHelperStatics;
-template <typename T> struct impl_IXamlMember;
-template <typename T> struct impl_IXamlMetadataProvider;
-template <typename T> struct impl_IXamlReader;
-template <typename T> struct impl_IXamlReaderStatics;
-template <typename T> struct impl_IXamlType;
+template <typename D>
+struct WINRT_EBO impl_IComponentConnector
+{
+    void Connect(int32_t connectionId, const Windows::Foundation::IInspectable & target) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IComponentConnector2
+{
+    Windows::UI::Xaml::Markup::IComponentConnector GetBindingConnector(int32_t connectionId, const Windows::Foundation::IInspectable & target) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataTemplateComponent
+{
+    void Recycle() const;
+    void ProcessBindings(const Windows::Foundation::IInspectable & item, int32_t itemIndex, int32_t phase, int32_t & nextPhase) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlBinaryWriter
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlBinaryWriterStatics
+{
+    Windows::UI::Xaml::Markup::XamlBinaryWriterErrorInformation Write(const Windows::Foundation::Collections::IVector<Windows::Storage::Streams::IRandomAccessStream> & inputStreams, const Windows::Foundation::Collections::IVector<Windows::Storage::Streams::IRandomAccessStream> & outputStreams, const Windows::UI::Xaml::Markup::IXamlMetadataProvider & xamlMetadataProvider) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlBindingHelper
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlBindingHelperStatics
+{
+    Windows::UI::Xaml::DependencyProperty DataTemplateComponentProperty() const;
+    Windows::UI::Xaml::Markup::IDataTemplateComponent GetDataTemplateComponent(const Windows::UI::Xaml::DependencyObject & element) const;
+    void SetDataTemplateComponent(const Windows::UI::Xaml::DependencyObject & element, const Windows::UI::Xaml::Markup::IDataTemplateComponent & value) const;
+    void SuspendRendering(const Windows::UI::Xaml::UIElement & target) const;
+    void ResumeRendering(const Windows::UI::Xaml::UIElement & target) const;
+    Windows::Foundation::IInspectable ConvertValue(const Windows::UI::Xaml::Interop::TypeName & type, const Windows::Foundation::IInspectable & value) const;
+    void SetPropertyFromString(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, hstring_view value) const;
+    void SetPropertyFromBoolean(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, bool value) const;
+    void SetPropertyFromChar16(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, wchar_t value) const;
+    void SetPropertyFromDateTime(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::DateTime & value) const;
+    void SetPropertyFromDouble(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, double value) const;
+    void SetPropertyFromInt32(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, int32_t value) const;
+    void SetPropertyFromUInt32(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, uint32_t value) const;
+    void SetPropertyFromInt64(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, int64_t value) const;
+    void SetPropertyFromUInt64(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, uint64_t value) const;
+    void SetPropertyFromSingle(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, float value) const;
+    void SetPropertyFromPoint(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::Point & value) const;
+    void SetPropertyFromRect(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::Rect & value) const;
+    void SetPropertyFromSize(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::Size & value) const;
+    void SetPropertyFromTimeSpan(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::TimeSpan & value) const;
+    void SetPropertyFromByte(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, uint8_t value) const;
+    void SetPropertyFromUri(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::Uri & value) const;
+    void SetPropertyFromObject(const Windows::Foundation::IInspectable & dependencyObject, const Windows::UI::Xaml::DependencyProperty & propertyToSet, const Windows::Foundation::IInspectable & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlMember
+{
+    bool IsAttachable() const;
+    bool IsDependencyProperty() const;
+    bool IsReadOnly() const;
+    hstring Name() const;
+    Windows::UI::Xaml::Markup::IXamlType TargetType() const;
+    Windows::UI::Xaml::Markup::IXamlType Type() const;
+    Windows::Foundation::IInspectable GetValue(const Windows::Foundation::IInspectable & instance) const;
+    void SetValue(const Windows::Foundation::IInspectable & instance, const Windows::Foundation::IInspectable & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlMetadataProvider
+{
+    Windows::UI::Xaml::Markup::IXamlType GetXamlType(const Windows::UI::Xaml::Interop::TypeName & type) const;
+    Windows::UI::Xaml::Markup::IXamlType GetXamlType(hstring_view fullName) const;
+    com_array<Windows::UI::Xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlReader
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlReaderStatics
+{
+    Windows::Foundation::IInspectable Load(hstring_view xaml) const;
+    Windows::Foundation::IInspectable LoadWithInitialTemplateValidation(hstring_view xaml) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IXamlType
+{
+    Windows::UI::Xaml::Markup::IXamlType BaseType() const;
+    Windows::UI::Xaml::Markup::IXamlMember ContentProperty() const;
+    hstring FullName() const;
+    bool IsArray() const;
+    bool IsCollection() const;
+    bool IsConstructible() const;
+    bool IsDictionary() const;
+    bool IsMarkupExtension() const;
+    bool IsBindable() const;
+    Windows::UI::Xaml::Markup::IXamlType ItemType() const;
+    Windows::UI::Xaml::Markup::IXamlType KeyType() const;
+    Windows::UI::Xaml::Interop::TypeName UnderlyingType() const;
+    Windows::Foundation::IInspectable ActivateInstance() const;
+    Windows::Foundation::IInspectable CreateFromString(hstring_view value) const;
+    Windows::UI::Xaml::Markup::IXamlMember GetMember(hstring_view name) const;
+    void AddToVector(const Windows::Foundation::IInspectable & instance, const Windows::Foundation::IInspectable & value) const;
+    void AddToMap(const Windows::Foundation::IInspectable & instance, const Windows::Foundation::IInspectable & key, const Windows::Foundation::IInspectable & value) const;
+    void RunInitializer() const;
+};
 
 }
 

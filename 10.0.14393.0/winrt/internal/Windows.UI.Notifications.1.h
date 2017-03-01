@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -17,13 +17,13 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::UI::Notifications {
 
-struct __declspec(uuid("eb0dbe66-7448-448d-9db8-d78acd2abba9")) __declspec(novtable) IAdaptiveNotificationContent : Windows::IInspectable
+struct __declspec(uuid("eb0dbe66-7448-448d-9db8-d78acd2abba9")) __declspec(novtable) IAdaptiveNotificationContent : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Kind(winrt::Windows::UI::Notifications::AdaptiveNotificationContentKind * value) = 0;
     virtual HRESULT __stdcall get_Hints(Windows::Foundation::Collections::IMap<hstring, hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("46d4a3be-609a-4326-a40b-bfde872034a3")) __declspec(novtable) IAdaptiveNotificationText : Windows::IInspectable
+struct __declspec(uuid("46d4a3be-609a-4326-a40b-bfde872034a3")) __declspec(novtable) IAdaptiveNotificationText : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
     virtual HRESULT __stdcall put_Text(hstring value) = 0;
@@ -31,19 +31,19 @@ struct __declspec(uuid("46d4a3be-609a-4326-a40b-bfde872034a3")) __declspec(novta
     virtual HRESULT __stdcall put_Language(hstring value) = 0;
 };
 
-struct __declspec(uuid("075cb4ca-d08a-4e2f-9233-7e289c1f7722")) __declspec(novtable) IBadgeNotification : Windows::IInspectable
+struct __declspec(uuid("075cb4ca-d08a-4e2f-9233-7e289c1f7722")) __declspec(novtable) IBadgeNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall put_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> * value) = 0;
     virtual HRESULT __stdcall get_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> ** value) = 0;
 };
 
-struct __declspec(uuid("edf255ce-0618-4d59-948a-5a61040c52f9")) __declspec(novtable) IBadgeNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("edf255ce-0618-4d59-948a-5a61040c52f9")) __declspec(novtable) IBadgeNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateBadgeNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::UI::Notifications::IBadgeNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("996b21bc-0386-44e5-ba8d-0c1077a62e92")) __declspec(novtable) IBadgeUpdateManagerForUser : Windows::IInspectable
+struct __declspec(uuid("996b21bc-0386-44e5-ba8d-0c1077a62e92")) __declspec(novtable) IBadgeUpdateManagerForUser : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateBadgeUpdaterForApplication(Windows::UI::Notifications::IBadgeUpdater ** result) = 0;
     virtual HRESULT __stdcall abi_CreateBadgeUpdaterForApplicationWithId(hstring applicationId, Windows::UI::Notifications::IBadgeUpdater ** result) = 0;
@@ -51,7 +51,7 @@ struct __declspec(uuid("996b21bc-0386-44e5-ba8d-0c1077a62e92")) __declspec(novta
     virtual HRESULT __stdcall get_User(Windows::System::IUser ** value) = 0;
 };
 
-struct __declspec(uuid("33400faa-6dd5-4105-aebc-9b50fca492da")) __declspec(novtable) IBadgeUpdateManagerStatics : Windows::IInspectable
+struct __declspec(uuid("33400faa-6dd5-4105-aebc-9b50fca492da")) __declspec(novtable) IBadgeUpdateManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateBadgeUpdaterForApplication(Windows::UI::Notifications::IBadgeUpdater ** updater) = 0;
     virtual HRESULT __stdcall abi_CreateBadgeUpdaterForApplicationWithId(hstring applicationId, Windows::UI::Notifications::IBadgeUpdater ** updater) = 0;
@@ -59,12 +59,12 @@ struct __declspec(uuid("33400faa-6dd5-4105-aebc-9b50fca492da")) __declspec(novta
     virtual HRESULT __stdcall abi_GetTemplateContent(winrt::Windows::UI::Notifications::BadgeTemplateType type, Windows::Data::Xml::Dom::IXmlDocument ** content) = 0;
 };
 
-struct __declspec(uuid("979a35ce-f940-48bf-94e8-ca244d400b41")) __declspec(novtable) IBadgeUpdateManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("979a35ce-f940-48bf-94e8-ca244d400b41")) __declspec(novtable) IBadgeUpdateManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForUser(Windows::System::IUser * user, Windows::UI::Notifications::IBadgeUpdateManagerForUser ** result) = 0;
 };
 
-struct __declspec(uuid("b5fa1fd4-7562-4f6c-bfa3-1b6ed2e57f2f")) __declspec(novtable) IBadgeUpdater : Windows::IInspectable
+struct __declspec(uuid("b5fa1fd4-7562-4f6c-bfa3-1b6ed2e57f2f")) __declspec(novtable) IBadgeUpdater : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Update(Windows::UI::Notifications::IBadgeNotification * notification) = 0;
     virtual HRESULT __stdcall abi_Clear() = 0;
@@ -73,7 +73,7 @@ struct __declspec(uuid("b5fa1fd4-7562-4f6c-bfa3-1b6ed2e57f2f")) __declspec(novta
     virtual HRESULT __stdcall abi_StopPeriodicUpdate() = 0;
 };
 
-struct __declspec(uuid("06206598-d496-497d-8692-4f7d7c2770df")) __declspec(novtable) IKnownAdaptiveNotificationHintsStatics : Windows::IInspectable
+struct __declspec(uuid("06206598-d496-497d-8692-4f7d7c2770df")) __declspec(novtable) IKnownAdaptiveNotificationHintsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Style(hstring * value) = 0;
     virtual HRESULT __stdcall get_Wrap(hstring * value) = 0;
@@ -83,7 +83,7 @@ struct __declspec(uuid("06206598-d496-497d-8692-4f7d7c2770df")) __declspec(novta
     virtual HRESULT __stdcall get_Align(hstring * value) = 0;
 };
 
-struct __declspec(uuid("202192d7-8996-45aa-8ba1-d461d72c2a1b")) __declspec(novtable) IKnownAdaptiveNotificationTextStylesStatics : Windows::IInspectable
+struct __declspec(uuid("202192d7-8996-45aa-8ba1-d461d72c2a1b")) __declspec(novtable) IKnownAdaptiveNotificationTextStylesStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Caption(hstring * value) = 0;
     virtual HRESULT __stdcall get_Body(hstring * value) = 0;
@@ -106,12 +106,12 @@ struct __declspec(uuid("202192d7-8996-45aa-8ba1-d461d72c2a1b")) __declspec(novta
     virtual HRESULT __stdcall get_HeaderNumeralSubtle(hstring * value) = 0;
 };
 
-struct __declspec(uuid("79427bae-a8b7-4d58-89ea-76a7b7bccded")) __declspec(novtable) IKnownNotificationBindingsStatics : Windows::IInspectable
+struct __declspec(uuid("79427bae-a8b7-4d58-89ea-76a7b7bccded")) __declspec(novtable) IKnownNotificationBindingsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ToastGeneric(hstring * value) = 0;
 };
 
-struct __declspec(uuid("108037fe-eb76-4f82-97bc-da07530a2e20")) __declspec(novtable) INotification : Windows::IInspectable
+struct __declspec(uuid("108037fe-eb76-4f82-97bc-da07530a2e20")) __declspec(novtable) INotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> ** value) = 0;
     virtual HRESULT __stdcall put_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> * value) = 0;
@@ -119,7 +119,7 @@ struct __declspec(uuid("108037fe-eb76-4f82-97bc-da07530a2e20")) __declspec(novta
     virtual HRESULT __stdcall put_Visual(Windows::UI::Notifications::INotificationVisual * value) = 0;
 };
 
-struct __declspec(uuid("f29e4b85-0370-4ad3-b4ea-da9e35e7eabf")) __declspec(novtable) INotificationBinding : Windows::IInspectable
+struct __declspec(uuid("f29e4b85-0370-4ad3-b4ea-da9e35e7eabf")) __declspec(novtable) INotificationBinding : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Template(hstring * value) = 0;
     virtual HRESULT __stdcall put_Template(hstring value) = 0;
@@ -129,7 +129,7 @@ struct __declspec(uuid("f29e4b85-0370-4ad3-b4ea-da9e35e7eabf")) __declspec(novta
     virtual HRESULT __stdcall abi_GetTextElements(Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> ** result) = 0;
 };
 
-struct __declspec(uuid("68835b8e-aa56-4e11-86d3-5f9a6957bc5b")) __declspec(novtable) INotificationVisual : Windows::IInspectable
+struct __declspec(uuid("68835b8e-aa56-4e11-86d3-5f9a6957bc5b")) __declspec(novtable) INotificationVisual : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Language(hstring * value) = 0;
     virtual HRESULT __stdcall put_Language(hstring value) = 0;
@@ -137,7 +137,7 @@ struct __declspec(uuid("68835b8e-aa56-4e11-86d3-5f9a6957bc5b")) __declspec(novta
     virtual HRESULT __stdcall abi_GetBinding(hstring templateName, Windows::UI::Notifications::INotificationBinding ** result) = 0;
 };
 
-struct __declspec(uuid("0abca6d5-99dc-4c78-a11c-c9e7f86d7ef7")) __declspec(novtable) IScheduledTileNotification : Windows::IInspectable
+struct __declspec(uuid("0abca6d5-99dc-4c78-a11c-c9e7f86d7ef7")) __declspec(novtable) IScheduledTileNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall get_DeliveryTime(Windows::Foundation::DateTime * value) = 0;
@@ -149,12 +149,12 @@ struct __declspec(uuid("0abca6d5-99dc-4c78-a11c-c9e7f86d7ef7")) __declspec(novta
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
 };
 
-struct __declspec(uuid("3383138a-98c0-4c3b-bbd6-4a633c7cfc29")) __declspec(novtable) IScheduledTileNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("3383138a-98c0-4c3b-bbd6-4a633c7cfc29")) __declspec(novtable) IScheduledTileNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateScheduledTileNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::Foundation::DateTime deliveryTime, Windows::UI::Notifications::IScheduledTileNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("79f577f8-0de7-48cd-9740-9b370490c838")) __declspec(novtable) IScheduledToastNotification : Windows::IInspectable
+struct __declspec(uuid("79f577f8-0de7-48cd-9740-9b370490c838")) __declspec(novtable) IScheduledToastNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall get_DeliveryTime(Windows::Foundation::DateTime * value) = 0;
@@ -164,7 +164,7 @@ struct __declspec(uuid("79f577f8-0de7-48cd-9740-9b370490c838")) __declspec(novta
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
 };
 
-struct __declspec(uuid("a66ea09c-31b4-43b0-b5dd-7a40e85363b1")) __declspec(novtable) IScheduledToastNotification2 : Windows::IInspectable
+struct __declspec(uuid("a66ea09c-31b4-43b0-b5dd-7a40e85363b1")) __declspec(novtable) IScheduledToastNotification2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_Tag(hstring value) = 0;
     virtual HRESULT __stdcall get_Tag(hstring * value) = 0;
@@ -174,7 +174,7 @@ struct __declspec(uuid("a66ea09c-31b4-43b0-b5dd-7a40e85363b1")) __declspec(novta
     virtual HRESULT __stdcall get_SuppressPopup(bool * value) = 0;
 };
 
-struct __declspec(uuid("98429e8b-bd32-4a3b-9d15-22aea49462a1")) __declspec(novtable) IScheduledToastNotification3 : Windows::IInspectable
+struct __declspec(uuid("98429e8b-bd32-4a3b-9d15-22aea49462a1")) __declspec(novtable) IScheduledToastNotification3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NotificationMirroring(winrt::Windows::UI::Notifications::NotificationMirroring * value) = 0;
     virtual HRESULT __stdcall put_NotificationMirroring(winrt::Windows::UI::Notifications::NotificationMirroring value) = 0;
@@ -182,30 +182,30 @@ struct __declspec(uuid("98429e8b-bd32-4a3b-9d15-22aea49462a1")) __declspec(novta
     virtual HRESULT __stdcall put_RemoteId(hstring value) = 0;
 };
 
-struct __declspec(uuid("e7bed191-0bb9-4189-8394-31761b476fd7")) __declspec(novtable) IScheduledToastNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("e7bed191-0bb9-4189-8394-31761b476fd7")) __declspec(novtable) IScheduledToastNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateScheduledToastNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::Foundation::DateTime deliveryTime, Windows::UI::Notifications::IScheduledToastNotification ** notification) = 0;
     virtual HRESULT __stdcall abi_CreateScheduledToastNotificationRecurring(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::Foundation::DateTime deliveryTime, Windows::Foundation::TimeSpan snoozeInterval, uint32_t maximumSnoozeCount, Windows::UI::Notifications::IScheduledToastNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("342d8988-5af2-481a-a6a3-f2fdc78de88e")) __declspec(novtable) IShownTileNotification : Windows::IInspectable
+struct __declspec(uuid("342d8988-5af2-481a-a6a3-f2fdc78de88e")) __declspec(novtable) IShownTileNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Arguments(hstring * value) = 0;
 };
 
-struct __declspec(uuid("9a53b261-c70c-42be-b2f3-f42aa97d34e5")) __declspec(novtable) ITileFlyoutNotification : Windows::IInspectable
+struct __declspec(uuid("9a53b261-c70c-42be-b2f3-f42aa97d34e5")) __declspec(novtable) ITileFlyoutNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall put_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> * value) = 0;
     virtual HRESULT __stdcall get_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> ** value) = 0;
 };
 
-struct __declspec(uuid("ef556ff5-5226-4f2b-b278-88a35dfe569f")) __declspec(novtable) ITileFlyoutNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("ef556ff5-5226-4f2b-b278-88a35dfe569f")) __declspec(novtable) ITileFlyoutNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateTileFlyoutNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::UI::Notifications::ITileFlyoutNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("04363b0b-1ac0-4b99-88e7-ada83e953d48")) __declspec(novtable) ITileFlyoutUpdateManagerStatics : Windows::IInspectable
+struct __declspec(uuid("04363b0b-1ac0-4b99-88e7-ada83e953d48")) __declspec(novtable) ITileFlyoutUpdateManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateTileFlyoutUpdaterForApplication(Windows::UI::Notifications::ITileFlyoutUpdater ** updater) = 0;
     virtual HRESULT __stdcall abi_CreateTileFlyoutUpdaterForApplicationWithId(hstring applicationId, Windows::UI::Notifications::ITileFlyoutUpdater ** updater) = 0;
@@ -213,7 +213,7 @@ struct __declspec(uuid("04363b0b-1ac0-4b99-88e7-ada83e953d48")) __declspec(novta
     virtual HRESULT __stdcall abi_GetTemplateContent(winrt::Windows::UI::Notifications::TileFlyoutTemplateType type, Windows::Data::Xml::Dom::IXmlDocument ** content) = 0;
 };
 
-struct __declspec(uuid("8d40c76a-c465-4052-a740-5c2654c1a089")) __declspec(novtable) ITileFlyoutUpdater : Windows::IInspectable
+struct __declspec(uuid("8d40c76a-c465-4052-a740-5c2654c1a089")) __declspec(novtable) ITileFlyoutUpdater : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Update(Windows::UI::Notifications::ITileFlyoutNotification * notification) = 0;
     virtual HRESULT __stdcall abi_Clear() = 0;
@@ -223,7 +223,7 @@ struct __declspec(uuid("8d40c76a-c465-4052-a740-5c2654c1a089")) __declspec(novta
     virtual HRESULT __stdcall get_Setting(winrt::Windows::UI::Notifications::NotificationSetting * value) = 0;
 };
 
-struct __declspec(uuid("ebaec8fa-50ec-4c18-b4d0-3af02e5540ab")) __declspec(novtable) ITileNotification : Windows::IInspectable
+struct __declspec(uuid("ebaec8fa-50ec-4c18-b4d0-3af02e5540ab")) __declspec(novtable) ITileNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall put_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> * value) = 0;
@@ -232,12 +232,12 @@ struct __declspec(uuid("ebaec8fa-50ec-4c18-b4d0-3af02e5540ab")) __declspec(novta
     virtual HRESULT __stdcall get_Tag(hstring * value) = 0;
 };
 
-struct __declspec(uuid("c6abdd6e-4928-46c8-bdbf-81a047dea0d4")) __declspec(novtable) ITileNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("c6abdd6e-4928-46c8-bdbf-81a047dea0d4")) __declspec(novtable) ITileNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateTileNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::UI::Notifications::ITileNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("55141348-2ee2-4e2d-9cc1-216a20decc9f")) __declspec(novtable) ITileUpdateManagerForUser : Windows::IInspectable
+struct __declspec(uuid("55141348-2ee2-4e2d-9cc1-216a20decc9f")) __declspec(novtable) ITileUpdateManagerForUser : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateTileUpdaterForApplication(Windows::UI::Notifications::ITileUpdater ** updater) = 0;
     virtual HRESULT __stdcall abi_CreateTileUpdaterForApplicationWithId(hstring applicationId, Windows::UI::Notifications::ITileUpdater ** updater) = 0;
@@ -245,7 +245,7 @@ struct __declspec(uuid("55141348-2ee2-4e2d-9cc1-216a20decc9f")) __declspec(novta
     virtual HRESULT __stdcall get_User(Windows::System::IUser ** value) = 0;
 };
 
-struct __declspec(uuid("da159e5d-3ea9-4986-8d84-b09d5e12276d")) __declspec(novtable) ITileUpdateManagerStatics : Windows::IInspectable
+struct __declspec(uuid("da159e5d-3ea9-4986-8d84-b09d5e12276d")) __declspec(novtable) ITileUpdateManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateTileUpdaterForApplication(Windows::UI::Notifications::ITileUpdater ** updater) = 0;
     virtual HRESULT __stdcall abi_CreateTileUpdaterForApplicationWithId(hstring applicationId, Windows::UI::Notifications::ITileUpdater ** updater) = 0;
@@ -253,12 +253,12 @@ struct __declspec(uuid("da159e5d-3ea9-4986-8d84-b09d5e12276d")) __declspec(novta
     virtual HRESULT __stdcall abi_GetTemplateContent(winrt::Windows::UI::Notifications::TileTemplateType type, Windows::Data::Xml::Dom::IXmlDocument ** content) = 0;
 };
 
-struct __declspec(uuid("731c1ddc-8e14-4b7c-a34b-9d22de76c84d")) __declspec(novtable) ITileUpdateManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("731c1ddc-8e14-4b7c-a34b-9d22de76c84d")) __declspec(novtable) ITileUpdateManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForUser(Windows::System::IUser * user, Windows::UI::Notifications::ITileUpdateManagerForUser ** result) = 0;
 };
 
-struct __declspec(uuid("0942a48b-1d91-44ec-9243-c1e821c29a20")) __declspec(novtable) ITileUpdater : Windows::IInspectable
+struct __declspec(uuid("0942a48b-1d91-44ec-9243-c1e821c29a20")) __declspec(novtable) ITileUpdater : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Update(Windows::UI::Notifications::ITileNotification * notification) = 0;
     virtual HRESULT __stdcall abi_Clear() = 0;
@@ -274,42 +274,42 @@ struct __declspec(uuid("0942a48b-1d91-44ec-9243-c1e821c29a20")) __declspec(novta
     virtual HRESULT __stdcall abi_StartPeriodicUpdateBatchAtTime(Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> * tileContents, Windows::Foundation::DateTime startTime, winrt::Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) = 0;
 };
 
-struct __declspec(uuid("a2266e12-15ee-43ed-83f5-65b352bb1a84")) __declspec(novtable) ITileUpdater2 : Windows::IInspectable
+struct __declspec(uuid("a2266e12-15ee-43ed-83f5-65b352bb1a84")) __declspec(novtable) ITileUpdater2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_EnableNotificationQueueForSquare150x150(bool enable) = 0;
     virtual HRESULT __stdcall abi_EnableNotificationQueueForWide310x150(bool enable) = 0;
     virtual HRESULT __stdcall abi_EnableNotificationQueueForSquare310x310(bool enable) = 0;
 };
 
-struct __declspec(uuid("e3bf92f3-c197-436f-8265-0625824f8dac")) __declspec(novtable) IToastActivatedEventArgs : Windows::IInspectable
+struct __declspec(uuid("e3bf92f3-c197-436f-8265-0625824f8dac")) __declspec(novtable) IToastActivatedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Arguments(hstring * value) = 0;
 };
 
-struct __declspec(uuid("3f89d935-d9cb-4538-a0f0-ffe7659938f8")) __declspec(novtable) IToastDismissedEventArgs : Windows::IInspectable
+struct __declspec(uuid("3f89d935-d9cb-4538-a0f0-ffe7659938f8")) __declspec(novtable) IToastDismissedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Reason(winrt::Windows::UI::Notifications::ToastDismissalReason * value) = 0;
 };
 
-struct __declspec(uuid("35176862-cfd4-44f8-ad64-f500fd896c3b")) __declspec(novtable) IToastFailedEventArgs : Windows::IInspectable
+struct __declspec(uuid("35176862-cfd4-44f8-ad64-f500fd896c3b")) __declspec(novtable) IToastFailedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ErrorCode(HRESULT * value) = 0;
 };
 
-struct __declspec(uuid("997e2675-059e-4e60-8b06-1760917c8b80")) __declspec(novtable) IToastNotification : Windows::IInspectable
+struct __declspec(uuid("997e2675-059e-4e60-8b06-1760917c8b80")) __declspec(novtable) IToastNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Content(Windows::Data::Xml::Dom::IXmlDocument ** value) = 0;
     virtual HRESULT __stdcall put_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> * value) = 0;
     virtual HRESULT __stdcall get_ExpirationTime(Windows::Foundation::IReference<Windows::Foundation::DateTime> ** value) = 0;
     virtual HRESULT __stdcall add_Dismissed(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_Dismissed(event_token cookie) = 0;
-    virtual HRESULT __stdcall add_Activated(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::IInspectable> * handler, event_token * cookie) = 0;
+    virtual HRESULT __stdcall add_Activated(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_Activated(event_token cookie) = 0;
     virtual HRESULT __stdcall add_Failed(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_Failed(event_token token) = 0;
 };
 
-struct __declspec(uuid("9dfb9fd1-143a-490e-90bf-b9fba7132de7")) __declspec(novtable) IToastNotification2 : Windows::IInspectable
+struct __declspec(uuid("9dfb9fd1-143a-490e-90bf-b9fba7132de7")) __declspec(novtable) IToastNotification2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_Tag(hstring value) = 0;
     virtual HRESULT __stdcall get_Tag(hstring * value) = 0;
@@ -319,7 +319,7 @@ struct __declspec(uuid("9dfb9fd1-143a-490e-90bf-b9fba7132de7")) __declspec(novta
     virtual HRESULT __stdcall get_SuppressPopup(bool * value) = 0;
 };
 
-struct __declspec(uuid("31e8aed8-8141-4f99-bc0a-c4ed21297d77")) __declspec(novtable) IToastNotification3 : Windows::IInspectable
+struct __declspec(uuid("31e8aed8-8141-4f99-bc0a-c4ed21297d77")) __declspec(novtable) IToastNotification3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NotificationMirroring(winrt::Windows::UI::Notifications::NotificationMirroring * value) = 0;
     virtual HRESULT __stdcall put_NotificationMirroring(winrt::Windows::UI::Notifications::NotificationMirroring value) = 0;
@@ -327,18 +327,18 @@ struct __declspec(uuid("31e8aed8-8141-4f99-bc0a-c4ed21297d77")) __declspec(novta
     virtual HRESULT __stdcall put_RemoteId(hstring value) = 0;
 };
 
-struct __declspec(uuid("9445135a-38f3-42f6-96aa-7955b0f03da2")) __declspec(novtable) IToastNotificationActionTriggerDetail : Windows::IInspectable
+struct __declspec(uuid("9445135a-38f3-42f6-96aa-7955b0f03da2")) __declspec(novtable) IToastNotificationActionTriggerDetail : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Argument(hstring * argument) = 0;
     virtual HRESULT __stdcall get_UserInput(Windows::Foundation::Collections::IPropertySet ** inputs) = 0;
 };
 
-struct __declspec(uuid("04124b20-82c6-4229-b109-fd9ed4662b53")) __declspec(novtable) IToastNotificationFactory : Windows::IInspectable
+struct __declspec(uuid("04124b20-82c6-4229-b109-fd9ed4662b53")) __declspec(novtable) IToastNotificationFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateToastNotification(Windows::Data::Xml::Dom::IXmlDocument * content, Windows::UI::Notifications::IToastNotification ** notification) = 0;
 };
 
-struct __declspec(uuid("5caddc63-01d3-4c97-986f-0533483fee14")) __declspec(novtable) IToastNotificationHistory : Windows::IInspectable
+struct __declspec(uuid("5caddc63-01d3-4c97-986f-0533483fee14")) __declspec(novtable) IToastNotificationHistory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RemoveGroup(hstring group) = 0;
     virtual HRESULT __stdcall abi_RemoveGroupWithId(hstring group, hstring applicationId) = 0;
@@ -349,18 +349,18 @@ struct __declspec(uuid("5caddc63-01d3-4c97-986f-0533483fee14")) __declspec(novta
     virtual HRESULT __stdcall abi_ClearWithId(hstring applicationId) = 0;
 };
 
-struct __declspec(uuid("3bc3d253-2f31-4092-9129-8ad5abf067da")) __declspec(novtable) IToastNotificationHistory2 : Windows::IInspectable
+struct __declspec(uuid("3bc3d253-2f31-4092-9129-8ad5abf067da")) __declspec(novtable) IToastNotificationHistory2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetHistory(Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> ** toasts) = 0;
     virtual HRESULT __stdcall abi_GetHistoryWithId(hstring applicationId, Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> ** toasts) = 0;
 };
 
-struct __declspec(uuid("db037ffa-0068-412c-9c83-267c37f65670")) __declspec(novtable) IToastNotificationHistoryChangedTriggerDetail : Windows::IInspectable
+struct __declspec(uuid("db037ffa-0068-412c-9c83-267c37f65670")) __declspec(novtable) IToastNotificationHistoryChangedTriggerDetail : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ChangeType(winrt::Windows::UI::Notifications::ToastHistoryChangedType * value) = 0;
 };
 
-struct __declspec(uuid("79ab57f6-43fe-487b-8a7f-99567200ae94")) __declspec(novtable) IToastNotificationManagerForUser : Windows::IInspectable
+struct __declspec(uuid("79ab57f6-43fe-487b-8a7f-99567200ae94")) __declspec(novtable) IToastNotificationManagerForUser : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateToastNotifier(Windows::UI::Notifications::IToastNotifier ** result) = 0;
     virtual HRESULT __stdcall abi_CreateToastNotifierWithId(hstring applicationId, Windows::UI::Notifications::IToastNotifier ** result) = 0;
@@ -368,25 +368,25 @@ struct __declspec(uuid("79ab57f6-43fe-487b-8a7f-99567200ae94")) __declspec(novta
     virtual HRESULT __stdcall get_User(Windows::System::IUser ** value) = 0;
 };
 
-struct __declspec(uuid("50ac103f-d235-4598-bbef-98fe4d1a3ad4")) __declspec(novtable) IToastNotificationManagerStatics : Windows::IInspectable
+struct __declspec(uuid("50ac103f-d235-4598-bbef-98fe4d1a3ad4")) __declspec(novtable) IToastNotificationManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateToastNotifier(Windows::UI::Notifications::IToastNotifier ** notifier) = 0;
     virtual HRESULT __stdcall abi_CreateToastNotifierWithId(hstring applicationId, Windows::UI::Notifications::IToastNotifier ** notifier) = 0;
     virtual HRESULT __stdcall abi_GetTemplateContent(winrt::Windows::UI::Notifications::ToastTemplateType type, Windows::Data::Xml::Dom::IXmlDocument ** content) = 0;
 };
 
-struct __declspec(uuid("7ab93c52-0e48-4750-ba9d-1a4113981847")) __declspec(novtable) IToastNotificationManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("7ab93c52-0e48-4750-ba9d-1a4113981847")) __declspec(novtable) IToastNotificationManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_History(Windows::UI::Notifications::IToastNotificationHistory ** value) = 0;
 };
 
-struct __declspec(uuid("8f993fd3-e516-45fb-8130-398e93fa52c3")) __declspec(novtable) IToastNotificationManagerStatics4 : Windows::IInspectable
+struct __declspec(uuid("8f993fd3-e516-45fb-8130-398e93fa52c3")) __declspec(novtable) IToastNotificationManagerStatics4 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForUser(Windows::System::IUser * user, Windows::UI::Notifications::IToastNotificationManagerForUser ** result) = 0;
     virtual HRESULT __stdcall abi_ConfigureNotificationMirroring(winrt::Windows::UI::Notifications::NotificationMirroring value) = 0;
 };
 
-struct __declspec(uuid("75927b93-03f3-41ec-91d3-6e5bac1b38e7")) __declspec(novtable) IToastNotifier : Windows::IInspectable
+struct __declspec(uuid("75927b93-03f3-41ec-91d3-6e5bac1b38e7")) __declspec(novtable) IToastNotifier : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Show(Windows::UI::Notifications::IToastNotification * notification) = 0;
     virtual HRESULT __stdcall abi_Hide(Windows::UI::Notifications::IToastNotification * notification) = 0;
@@ -396,7 +396,7 @@ struct __declspec(uuid("75927b93-03f3-41ec-91d3-6e5bac1b38e7")) __declspec(novta
     virtual HRESULT __stdcall abi_GetScheduledToastNotifications(Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> ** scheduledToasts) = 0;
 };
 
-struct __declspec(uuid("adf7e52f-4e53-42d5-9c33-eb5ea515b23e")) __declspec(novtable) IUserNotification : Windows::IInspectable
+struct __declspec(uuid("adf7e52f-4e53-42d5-9c33-eb5ea515b23e")) __declspec(novtable) IUserNotification : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Notification(Windows::UI::Notifications::INotification ** value) = 0;
     virtual HRESULT __stdcall get_AppInfo(Windows::ApplicationModel::IAppInfo ** value) = 0;
@@ -404,7 +404,7 @@ struct __declspec(uuid("adf7e52f-4e53-42d5-9c33-eb5ea515b23e")) __declspec(novta
     virtual HRESULT __stdcall get_CreationTime(Windows::Foundation::DateTime * value) = 0;
 };
 
-struct __declspec(uuid("b6bd6839-79cf-4b25-82c0-0ce1eef81f8c")) __declspec(novtable) IUserNotificationChangedEventArgs : Windows::IInspectable
+struct __declspec(uuid("b6bd6839-79cf-4b25-82c0-0ce1eef81f8c")) __declspec(novtable) IUserNotificationChangedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ChangeKind(winrt::Windows::UI::Notifications::UserNotificationChangedKind * value) = 0;
     virtual HRESULT __stdcall get_UserNotificationId(uint32_t * value) = 0;
@@ -445,56 +445,454 @@ template <> struct traits<Windows::UI::Notifications::UserNotificationChangedEve
 
 namespace Windows::UI::Notifications {
 
-template <typename T> struct impl_IAdaptiveNotificationContent;
-template <typename T> struct impl_IAdaptiveNotificationText;
-template <typename T> struct impl_IBadgeNotification;
-template <typename T> struct impl_IBadgeNotificationFactory;
-template <typename T> struct impl_IBadgeUpdateManagerForUser;
-template <typename T> struct impl_IBadgeUpdateManagerStatics;
-template <typename T> struct impl_IBadgeUpdateManagerStatics2;
-template <typename T> struct impl_IBadgeUpdater;
-template <typename T> struct impl_IKnownAdaptiveNotificationHintsStatics;
-template <typename T> struct impl_IKnownAdaptiveNotificationTextStylesStatics;
-template <typename T> struct impl_IKnownNotificationBindingsStatics;
-template <typename T> struct impl_INotification;
-template <typename T> struct impl_INotificationBinding;
-template <typename T> struct impl_INotificationVisual;
-template <typename T> struct impl_IScheduledTileNotification;
-template <typename T> struct impl_IScheduledTileNotificationFactory;
-template <typename T> struct impl_IScheduledToastNotification;
-template <typename T> struct impl_IScheduledToastNotification2;
-template <typename T> struct impl_IScheduledToastNotification3;
-template <typename T> struct impl_IScheduledToastNotificationFactory;
-template <typename T> struct impl_IShownTileNotification;
-template <typename T> struct impl_ITileFlyoutNotification;
-template <typename T> struct impl_ITileFlyoutNotificationFactory;
-template <typename T> struct impl_ITileFlyoutUpdateManagerStatics;
-template <typename T> struct impl_ITileFlyoutUpdater;
-template <typename T> struct impl_ITileNotification;
-template <typename T> struct impl_ITileNotificationFactory;
-template <typename T> struct impl_ITileUpdateManagerForUser;
-template <typename T> struct impl_ITileUpdateManagerStatics;
-template <typename T> struct impl_ITileUpdateManagerStatics2;
-template <typename T> struct impl_ITileUpdater;
-template <typename T> struct impl_ITileUpdater2;
-template <typename T> struct impl_IToastActivatedEventArgs;
-template <typename T> struct impl_IToastDismissedEventArgs;
-template <typename T> struct impl_IToastFailedEventArgs;
-template <typename T> struct impl_IToastNotification;
-template <typename T> struct impl_IToastNotification2;
-template <typename T> struct impl_IToastNotification3;
-template <typename T> struct impl_IToastNotificationActionTriggerDetail;
-template <typename T> struct impl_IToastNotificationFactory;
-template <typename T> struct impl_IToastNotificationHistory;
-template <typename T> struct impl_IToastNotificationHistory2;
-template <typename T> struct impl_IToastNotificationHistoryChangedTriggerDetail;
-template <typename T> struct impl_IToastNotificationManagerForUser;
-template <typename T> struct impl_IToastNotificationManagerStatics;
-template <typename T> struct impl_IToastNotificationManagerStatics2;
-template <typename T> struct impl_IToastNotificationManagerStatics4;
-template <typename T> struct impl_IToastNotifier;
-template <typename T> struct impl_IUserNotification;
-template <typename T> struct impl_IUserNotificationChangedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_IAdaptiveNotificationContent
+{
+    Windows::UI::Notifications::AdaptiveNotificationContentKind Kind() const;
+    Windows::Foundation::Collections::IMap<hstring, hstring> Hints() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAdaptiveNotificationText
+{
+    hstring Text() const;
+    void Text(hstring_view value) const;
+    hstring Language() const;
+    void Language(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeNotificationFactory
+{
+    Windows::UI::Notifications::BadgeNotification CreateBadgeNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeUpdateManagerForUser
+{
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication() const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_view applicationId) const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_view tileId) const;
+    Windows::System::User User() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeUpdateManagerStatics
+{
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication() const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_view applicationId) const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_view tileId) const;
+    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeUpdateManagerStatics2
+{
+    Windows::UI::Notifications::BadgeUpdateManagerForUser GetForUser(const Windows::System::User & user) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBadgeUpdater
+{
+    void Update(const Windows::UI::Notifications::BadgeNotification & notification) const;
+    void Clear() const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StopPeriodicUpdate() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKnownAdaptiveNotificationHintsStatics
+{
+    hstring Style() const;
+    hstring Wrap() const;
+    hstring MaxLines() const;
+    hstring MinLines() const;
+    hstring TextStacking() const;
+    hstring Align() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKnownAdaptiveNotificationTextStylesStatics
+{
+    hstring Caption() const;
+    hstring Body() const;
+    hstring Base() const;
+    hstring Subtitle() const;
+    hstring Title() const;
+    hstring Subheader() const;
+    hstring Header() const;
+    hstring TitleNumeral() const;
+    hstring SubheaderNumeral() const;
+    hstring HeaderNumeral() const;
+    hstring CaptionSubtle() const;
+    hstring BodySubtle() const;
+    hstring BaseSubtle() const;
+    hstring SubtitleSubtle() const;
+    hstring TitleSubtle() const;
+    hstring SubheaderSubtle() const;
+    hstring SubheaderNumeralSubtle() const;
+    hstring HeaderSubtle() const;
+    hstring HeaderNumeralSubtle() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKnownNotificationBindingsStatics
+{
+    hstring ToastGeneric() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INotification
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::UI::Notifications::NotificationVisual Visual() const;
+    void Visual(const Windows::UI::Notifications::NotificationVisual & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INotificationBinding
+{
+    hstring Template() const;
+    void Template(hstring_view value) const;
+    hstring Language() const;
+    void Language(hstring_view value) const;
+    Windows::Foundation::Collections::IMap<hstring, hstring> Hints() const;
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> GetTextElements() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INotificationVisual
+{
+    hstring Language() const;
+    void Language(hstring_view value) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> Bindings() const;
+    Windows::UI::Notifications::NotificationBinding GetBinding(hstring_view templateName) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledTileNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    Windows::Foundation::DateTime DeliveryTime() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+    void Tag(hstring_view value) const;
+    hstring Tag() const;
+    void Id(hstring_view value) const;
+    hstring Id() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledTileNotificationFactory
+{
+    Windows::UI::Notifications::ScheduledTileNotification CreateScheduledTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledToastNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    Windows::Foundation::DateTime DeliveryTime() const;
+    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> SnoozeInterval() const;
+    uint32_t MaximumSnoozeCount() const;
+    void Id(hstring_view value) const;
+    hstring Id() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledToastNotification2
+{
+    void Tag(hstring_view value) const;
+    hstring Tag() const;
+    void Group(hstring_view value) const;
+    hstring Group() const;
+    void SuppressPopup(bool value) const;
+    bool SuppressPopup() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledToastNotification3
+{
+    Windows::UI::Notifications::NotificationMirroring NotificationMirroring() const;
+    void NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
+    hstring RemoteId() const;
+    void RemoteId(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScheduledToastNotificationFactory
+{
+    Windows::UI::Notifications::ScheduledToastNotification CreateScheduledToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const;
+    Windows::UI::Notifications::ScheduledToastNotification CreateScheduledToastNotificationRecurring(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime, const Windows::Foundation::TimeSpan & snoozeInterval, uint32_t maximumSnoozeCount) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IShownTileNotification
+{
+    hstring Arguments() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileFlyoutNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileFlyoutNotificationFactory
+{
+    Windows::UI::Notifications::TileFlyoutNotification CreateTileFlyoutNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileFlyoutUpdateManagerStatics
+{
+    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication() const;
+    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication(hstring_view applicationId) const;
+    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForSecondaryTile(hstring_view tileId) const;
+    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileFlyoutUpdater
+{
+    void Update(const Windows::UI::Notifications::TileFlyoutNotification & notification) const;
+    void Clear() const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StopPeriodicUpdate() const;
+    Windows::UI::Notifications::NotificationSetting Setting() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+    void Tag(hstring_view value) const;
+    hstring Tag() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileNotificationFactory
+{
+    Windows::UI::Notifications::TileNotification CreateTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileUpdateManagerForUser
+{
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplicationForUser() const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_view applicationId) const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_view tileId) const;
+    Windows::System::User User() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileUpdateManagerStatics
+{
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication() const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_view applicationId) const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_view tileId) const;
+    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileTemplateType type) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileUpdateManagerStatics2
+{
+    Windows::UI::Notifications::TileUpdateManagerForUser GetForUser(const Windows::System::User & user) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileUpdater
+{
+    void Update(const Windows::UI::Notifications::TileNotification & notification) const;
+    void Clear() const;
+    void EnableNotificationQueue(bool enable) const;
+    Windows::UI::Notifications::NotificationSetting Setting() const;
+    void AddToSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const;
+    void RemoveFromSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const;
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> GetScheduledTileNotifications() const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StopPeriodicUpdate() const;
+    void StartPeriodicUpdateBatch(iterable<Windows::Foundation::Uri> tileContents, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+    void StartPeriodicUpdateBatch(iterable<Windows::Foundation::Uri> tileContents, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITileUpdater2
+{
+    void EnableNotificationQueueForSquare150x150(bool enable) const;
+    void EnableNotificationQueueForWide310x150(bool enable) const;
+    void EnableNotificationQueueForSquare310x310(bool enable) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastActivatedEventArgs
+{
+    hstring Arguments() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastDismissedEventArgs
+{
+    Windows::UI::Notifications::ToastDismissalReason Reason() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastFailedEventArgs
+{
+    HRESULT ErrorCode() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotification
+{
+    Windows::Data::Xml::Dom::XmlDocument Content() const;
+    void ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
+    event_token Dismissed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const;
+    using Dismissed_revoker = event_revoker<IToastNotification>;
+    Dismissed_revoker Dismissed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const;
+    void Dismissed(event_token cookie) const;
+    event_token Activated(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> & handler) const;
+    using Activated_revoker = event_revoker<IToastNotification>;
+    Activated_revoker Activated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> & handler) const;
+    void Activated(event_token cookie) const;
+    event_token Failed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const;
+    using Failed_revoker = event_revoker<IToastNotification>;
+    Failed_revoker Failed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const;
+    void Failed(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotification2
+{
+    void Tag(hstring_view value) const;
+    hstring Tag() const;
+    void Group(hstring_view value) const;
+    hstring Group() const;
+    void SuppressPopup(bool value) const;
+    bool SuppressPopup() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotification3
+{
+    Windows::UI::Notifications::NotificationMirroring NotificationMirroring() const;
+    void NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
+    hstring RemoteId() const;
+    void RemoteId(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationActionTriggerDetail
+{
+    hstring Argument() const;
+    Windows::Foundation::Collections::ValueSet UserInput() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationFactory
+{
+    Windows::UI::Notifications::ToastNotification CreateToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationHistory
+{
+    void RemoveGroup(hstring_view group) const;
+    void RemoveGroup(hstring_view group, hstring_view applicationId) const;
+    void Remove(hstring_view tag, hstring_view group, hstring_view applicationId) const;
+    void Remove(hstring_view tag, hstring_view group) const;
+    void Remove(hstring_view tag) const;
+    void Clear() const;
+    void Clear(hstring_view applicationId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationHistory2
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> GetHistory() const;
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> GetHistory(hstring_view applicationId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationHistoryChangedTriggerDetail
+{
+    Windows::UI::Notifications::ToastHistoryChangedType ChangeType() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationManagerForUser
+{
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifier() const;
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_view applicationId) const;
+    Windows::UI::Notifications::ToastNotificationHistory History() const;
+    Windows::System::User User() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationManagerStatics
+{
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifier() const;
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_view applicationId) const;
+    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationManagerStatics2
+{
+    Windows::UI::Notifications::ToastNotificationHistory History() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationManagerStatics4
+{
+    Windows::UI::Notifications::ToastNotificationManagerForUser GetForUser(const Windows::System::User & user) const;
+    void ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotifier
+{
+    void Show(const Windows::UI::Notifications::ToastNotification & notification) const;
+    void Hide(const Windows::UI::Notifications::ToastNotification & notification) const;
+    Windows::UI::Notifications::NotificationSetting Setting() const;
+    void AddToSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const;
+    void RemoveFromSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const;
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> GetScheduledToastNotifications() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserNotification
+{
+    Windows::UI::Notifications::Notification Notification() const;
+    Windows::ApplicationModel::AppInfo AppInfo() const;
+    uint32_t Id() const;
+    Windows::Foundation::DateTime CreationTime() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserNotificationChangedEventArgs
+{
+    Windows::UI::Notifications::UserNotificationChangedKind ChangeKind() const;
+    uint32_t UserNotificationId() const;
+};
 
 }
 

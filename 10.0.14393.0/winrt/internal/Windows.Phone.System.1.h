@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,12 +10,12 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::System {
 
-struct __declspec(uuid("49c36560-97e1-4d99-8bfb-befeaa6ace6d")) __declspec(novtable) ISystemProtectionStatics : Windows::IInspectable
+struct __declspec(uuid("49c36560-97e1-4d99-8bfb-befeaa6ace6d")) __declspec(novtable) ISystemProtectionStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ScreenLocked(bool * value) = 0;
 };
 
-struct __declspec(uuid("0692fa3f-8f11-4c4b-aa0d-87d7af7b1779")) __declspec(novtable) ISystemProtectionUnlockStatics : Windows::IInspectable
+struct __declspec(uuid("0692fa3f-8f11-4c4b-aa0d-87d7af7b1779")) __declspec(novtable) ISystemProtectionUnlockStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RequestScreenUnlock() = 0;
 };
@@ -29,8 +29,17 @@ namespace ABI {
 
 namespace Windows::Phone::System {
 
-template <typename T> struct impl_ISystemProtectionStatics;
-template <typename T> struct impl_ISystemProtectionUnlockStatics;
+template <typename D>
+struct WINRT_EBO impl_ISystemProtectionStatics
+{
+    bool ScreenLocked() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISystemProtectionUnlockStatics
+{
+    void RequestScreenUnlock() const;
+};
 
 }
 

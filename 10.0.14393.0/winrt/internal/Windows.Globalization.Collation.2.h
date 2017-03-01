@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,6 +19,11 @@ template <> struct __declspec(uuid("f7cf5a4a-2b7a-5bc9-a0c4-9dce07ff61c9")) __de
 template <> struct __declspec(uuid("82e3abf0-06e3-5609-ba39-c51eb2f5fae6")) __declspec(novtable) IIterable<Windows::Globalization::Collation::CharacterGrouping> : impl_IIterable<Windows::Globalization::Collation::CharacterGrouping> {};
 #endif
 
+#ifndef WINRT_GENERIC_9b1db9e5_f1e6_505c_88f2_82e82f7e9d2e
+#define WINRT_GENERIC_9b1db9e5_f1e6_505c_88f2_82e82f7e9d2e
+template <> struct __declspec(uuid("9b1db9e5-f1e6-505c-88f2-82e82f7e9d2e")) __declspec(novtable) IVector<Windows::Globalization::Collation::CharacterGrouping> : impl_IVector<Windows::Globalization::Collation::CharacterGrouping> {};
+#endif
+
 #ifndef WINRT_GENERIC_57e89bbc_9220_5df2_844b_ddfe6605db5f
 #define WINRT_GENERIC_57e89bbc_9220_5df2_844b_ddfe6605db5f
 template <> struct __declspec(uuid("57e89bbc-9220-5df2-844b-ddfe6605db5f")) __declspec(novtable) IIterator<Windows::Globalization::Collation::CharacterGrouping> : impl_IIterator<Windows::Globalization::Collation::CharacterGrouping> {};
@@ -29,34 +34,19 @@ template <> struct __declspec(uuid("57e89bbc-9220-5df2-844b-ddfe6605db5f")) __de
 
 namespace Windows::Globalization::Collation {
 
-template <typename D>
-struct WINRT_EBO impl_ICharacterGrouping
-{
-    hstring First() const;
-    hstring Label() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICharacterGroupings
-{
-    hstring Lookup(hstring_ref text) const;
-};
-
 struct ICharacterGrouping :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICharacterGrouping>
 {
     ICharacterGrouping(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICharacterGrouping>(m_ptr); }
 };
 
 struct ICharacterGroupings :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICharacterGroupings>,
     impl::require<ICharacterGroupings, Windows::Foundation::Collections::IIterable<Windows::Globalization::Collation::CharacterGrouping>, Windows::Foundation::Collections::IVectorView<Windows::Globalization::Collation::CharacterGrouping>>
 {
     ICharacterGroupings(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICharacterGroupings>(m_ptr); }
 };
 
 }

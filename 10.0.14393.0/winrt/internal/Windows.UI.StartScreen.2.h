@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -99,6 +99,11 @@ template <> struct __declspec(uuid("3c047c6a-c55b-5485-b673-8d4bd7c342e2")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_7746d0eb_48b1_54ea_b91a_e0c303ac208a
+#define WINRT_GENERIC_7746d0eb_48b1_54ea_b91a_e0c303ac208a
+template <> struct __declspec(uuid("7746d0eb-48b1-54ea-b91a-e0c303ac208a")) __declspec(novtable) IVector<Windows::UI::StartScreen::SecondaryTile> : impl_IVector<Windows::UI::StartScreen::SecondaryTile> {};
+#endif
+
 #ifndef WINRT_GENERIC_391f7579_a90e_5352_9d01_fda995d7912f
 #define WINRT_GENERIC_391f7579_a90e_5352_9d01_fda995d7912f
 template <> struct __declspec(uuid("391f7579-a90e-5352-9d01-fda995d7912f")) __declspec(novtable) IIterator<Windows::UI::StartScreen::SecondaryTile> : impl_IIterator<Windows::UI::StartScreen::SecondaryTile> {};
@@ -107,6 +112,11 @@ template <> struct __declspec(uuid("391f7579-a90e-5352-9d01-fda995d7912f")) __de
 #ifndef WINRT_GENERIC_75651af0_014a_5593_bc48_836ba3d1d5d4
 #define WINRT_GENERIC_75651af0_014a_5593_bc48_836ba3d1d5d4
 template <> struct __declspec(uuid("75651af0-014a-5593-bc48-836ba3d1d5d4")) __declspec(novtable) IIterable<Windows::UI::StartScreen::SecondaryTile> : impl_IIterable<Windows::UI::StartScreen::SecondaryTile> {};
+#endif
+
+#ifndef WINRT_GENERIC_ed460c68_6b09_55f2_829a_4bd7525eb780
+#define WINRT_GENERIC_ed460c68_6b09_55f2_829a_4bd7525eb780
+template <> struct __declspec(uuid("ed460c68-6b09-55f2-829a-4bd7525eb780")) __declspec(novtable) IVector<Windows::UI::StartScreen::SecondaryTileVisualElements> : impl_IVector<Windows::UI::StartScreen::SecondaryTileVisualElements> {};
 #endif
 
 #ifndef WINRT_GENERIC_bbc6e16c_cace_5230_8804_2298375168ac
@@ -139,300 +149,111 @@ template <> struct __declspec(uuid("b9d6d973-a089-550a-83b7-f659ea0dea04")) __de
 
 namespace Windows::UI::StartScreen {
 
-template <typename D>
-struct WINRT_EBO impl_IJumpList
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::StartScreen::JumpListItem> Items() const;
-    Windows::UI::StartScreen::JumpListSystemGroupKind SystemGroupKind() const;
-    void SystemGroupKind(Windows::UI::StartScreen::JumpListSystemGroupKind value) const;
-    Windows::Foundation::IAsyncAction SaveAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJumpListItem
-{
-    Windows::UI::StartScreen::JumpListItemKind Kind() const;
-    hstring Arguments() const;
-    bool RemovedByUser() const;
-    hstring Description() const;
-    void Description(hstring_ref value) const;
-    hstring DisplayName() const;
-    void DisplayName(hstring_ref value) const;
-    hstring GroupName() const;
-    void GroupName(hstring_ref value) const;
-    Windows::Foundation::Uri Logo() const;
-    void Logo(const Windows::Foundation::Uri & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJumpListItemStatics
-{
-    Windows::UI::StartScreen::JumpListItem CreateWithArguments(hstring_ref arguments, hstring_ref displayName) const;
-    Windows::UI::StartScreen::JumpListItem CreateSeparator() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJumpListStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::UI::StartScreen::JumpList> LoadCurrentAsync() const;
-    bool IsSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTile
-{
-    void TileId(hstring_ref value) const;
-    hstring TileId() const;
-    void Arguments(hstring_ref value) const;
-    hstring Arguments() const;
-    void ShortName(hstring_ref value) const;
-    hstring ShortName() const;
-    void DisplayName(hstring_ref value) const;
-    hstring DisplayName() const;
-    void Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Logo() const;
-    void SmallLogo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri SmallLogo() const;
-    void WideLogo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri WideLogo() const;
-    void LockScreenBadgeLogo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri LockScreenBadgeLogo() const;
-    void LockScreenDisplayBadgeAndTileText(bool value) const;
-    bool LockScreenDisplayBadgeAndTileText() const;
-    void TileOptions(Windows::UI::StartScreen::TileOptions value) const;
-    Windows::UI::StartScreen::TileOptions TileOptions() const;
-    void ForegroundText(Windows::UI::StartScreen::ForegroundText value) const;
-    Windows::UI::StartScreen::ForegroundText ForegroundText() const;
-    void BackgroundColor(const Windows::UI::Color & value) const;
-    Windows::UI::Color BackgroundColor() const;
-    Windows::Foundation::IAsyncOperation<bool> RequestCreateAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RequestCreateAsync(const Windows::Foundation::Point & invocationPoint) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestCreateForSelectionAsync(const Windows::Foundation::Rect & selection) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestCreateForSelectionAsync(const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestDeleteAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RequestDeleteAsync(const Windows::Foundation::Point & invocationPoint) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestDeleteForSelectionAsync(const Windows::Foundation::Rect & selection) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestDeleteForSelectionAsync(const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const;
-    Windows::Foundation::IAsyncOperation<bool> UpdateAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTile2
-{
-    void PhoneticName(hstring_ref value) const;
-    hstring PhoneticName() const;
-    Windows::UI::StartScreen::SecondaryTileVisualElements VisualElements() const;
-    void RoamingEnabled(bool value) const;
-    bool RoamingEnabled() const;
-    event_token VisualElementsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::StartScreen::SecondaryTile, Windows::UI::StartScreen::VisualElementsRequestedEventArgs> & handler) const;
-    using VisualElementsRequested_revoker = event_revoker<ISecondaryTile2>;
-    VisualElementsRequested_revoker VisualElementsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::StartScreen::SecondaryTile, Windows::UI::StartScreen::VisualElementsRequestedEventArgs> & handler) const;
-    void VisualElementsRequested(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileFactory
-{
-    Windows::UI::StartScreen::SecondaryTile CreateTile(hstring_ref tileId, hstring_ref shortName, hstring_ref displayName, hstring_ref arguments, Windows::UI::StartScreen::TileOptions tileOptions, const Windows::Foundation::Uri & logoReference) const;
-    Windows::UI::StartScreen::SecondaryTile CreateWideTile(hstring_ref tileId, hstring_ref shortName, hstring_ref displayName, hstring_ref arguments, Windows::UI::StartScreen::TileOptions tileOptions, const Windows::Foundation::Uri & logoReference, const Windows::Foundation::Uri & wideLogoReference) const;
-    Windows::UI::StartScreen::SecondaryTile CreateWithId(hstring_ref tileId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileFactory2
-{
-    Windows::UI::StartScreen::SecondaryTile CreateMinimalTile(hstring_ref tileId, hstring_ref displayName, hstring_ref arguments, const Windows::Foundation::Uri & square150x150Logo, Windows::UI::StartScreen::TileSize desiredSize) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileStatics
-{
-    bool Exists(hstring_ref tileId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::StartScreen::SecondaryTile>> FindAllAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::StartScreen::SecondaryTile>> FindAllAsync(hstring_ref applicationId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::StartScreen::SecondaryTile>> FindAllForPackageAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileVisualElements
-{
-    void Square30x30Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square30x30Logo() const;
-    void Square70x70Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square70x70Logo() const;
-    void Square150x150Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square150x150Logo() const;
-    void Wide310x150Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Wide310x150Logo() const;
-    void Square310x310Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square310x310Logo() const;
-    void ForegroundText(Windows::UI::StartScreen::ForegroundText value) const;
-    Windows::UI::StartScreen::ForegroundText ForegroundText() const;
-    void BackgroundColor(const Windows::UI::Color & value) const;
-    Windows::UI::Color BackgroundColor() const;
-    void ShowNameOnSquare150x150Logo(bool value) const;
-    bool ShowNameOnSquare150x150Logo() const;
-    void ShowNameOnWide310x150Logo(bool value) const;
-    bool ShowNameOnWide310x150Logo() const;
-    void ShowNameOnSquare310x310Logo(bool value) const;
-    bool ShowNameOnSquare310x310Logo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileVisualElements2
-{
-    void Square71x71Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square71x71Logo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISecondaryTileVisualElements3
-{
-    void Square44x44Logo(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Uri Square44x44Logo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVisualElementsRequest
-{
-    Windows::UI::StartScreen::SecondaryTileVisualElements VisualElements() const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::StartScreen::SecondaryTileVisualElements> AlternateVisualElements() const;
-    Windows::Foundation::DateTime Deadline() const;
-    Windows::UI::StartScreen::VisualElementsRequestDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVisualElementsRequestDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVisualElementsRequestedEventArgs
-{
-    Windows::UI::StartScreen::VisualElementsRequest Request() const;
-};
-
 struct IJumpList :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJumpList>
 {
     IJumpList(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJumpList>(m_ptr); }
 };
 
 struct IJumpListItem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJumpListItem>
 {
     IJumpListItem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJumpListItem>(m_ptr); }
 };
 
 struct IJumpListItemStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJumpListItemStatics>
 {
     IJumpListItemStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJumpListItemStatics>(m_ptr); }
 };
 
 struct IJumpListStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJumpListStatics>
 {
     IJumpListStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJumpListStatics>(m_ptr); }
 };
 
 struct ISecondaryTile :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTile>
 {
     ISecondaryTile(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTile>(m_ptr); }
 };
 
 struct ISecondaryTile2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTile2>,
     impl::require<ISecondaryTile2, Windows::UI::StartScreen::ISecondaryTile>
 {
     ISecondaryTile2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTile2>(m_ptr); }
 };
 
 struct ISecondaryTileFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileFactory>
 {
     ISecondaryTileFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileFactory>(m_ptr); }
 };
 
 struct ISecondaryTileFactory2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileFactory2>,
     impl::require<ISecondaryTileFactory2, Windows::UI::StartScreen::ISecondaryTileFactory>
 {
     ISecondaryTileFactory2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileFactory2>(m_ptr); }
 };
 
 struct ISecondaryTileStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileStatics>
 {
     ISecondaryTileStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileStatics>(m_ptr); }
 };
 
 struct ISecondaryTileVisualElements :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileVisualElements>
 {
     ISecondaryTileVisualElements(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileVisualElements>(m_ptr); }
 };
 
 struct ISecondaryTileVisualElements2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileVisualElements2>
 {
     ISecondaryTileVisualElements2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileVisualElements2>(m_ptr); }
 };
 
 struct ISecondaryTileVisualElements3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISecondaryTileVisualElements3>
 {
     ISecondaryTileVisualElements3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISecondaryTileVisualElements3>(m_ptr); }
 };
 
 struct IVisualElementsRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVisualElementsRequest>
 {
     IVisualElementsRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVisualElementsRequest>(m_ptr); }
 };
 
 struct IVisualElementsRequestDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVisualElementsRequestDeferral>
 {
     IVisualElementsRequestDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVisualElementsRequestDeferral>(m_ptr); }
 };
 
 struct IVisualElementsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVisualElementsRequestedEventArgs>
 {
     IVisualElementsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVisualElementsRequestedEventArgs>(m_ptr); }
 };
 
 }

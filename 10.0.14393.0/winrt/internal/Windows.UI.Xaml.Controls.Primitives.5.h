@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -39,7 +39,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DragCompletedEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
     using composable = DragCompletedEventArgs;
@@ -53,7 +53,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DragDeltaEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
     using composable = DragDeltaEventArgs;
@@ -67,7 +67,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DragStartedEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
     using composable = DragStartedEventArgs;

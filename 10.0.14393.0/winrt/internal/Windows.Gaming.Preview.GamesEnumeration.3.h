@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_GameListChangedEventHandler : implements<impl_
 {
     impl_GameListChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> game) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> game) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_GameListRemovedEventHandler : implements<impl_
 {
     impl_GameListRemovedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<hstring> identifier) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<hstring> identifier) noexcept override
     {
         try
         {
@@ -53,7 +53,7 @@ struct GameList
 {
     GameList() = delete;
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> FindAllAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> FindAllAsync(hstring_ref packageFamilyName);
+    static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> FindAllAsync(hstring_view packageFamilyName);
     static event_token GameAdded(const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler & handler);
     using GameAdded_revoker = factory_event_revoker<IGameListStatics>;
     static GameAdded_revoker GameAdded(auto_revoke_t, const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler & handler);

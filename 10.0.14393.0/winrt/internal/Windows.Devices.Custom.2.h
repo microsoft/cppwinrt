@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -44,82 +44,39 @@ template <> struct __declspec(uuid("1fdd39b0-e0e5-5c59-b27d-a549b1075ce9")) __de
 
 namespace Windows::Devices::Custom {
 
-template <typename D>
-struct WINRT_EBO impl_ICustomDevice
-{
-    Windows::Storage::Streams::IInputStream InputStream() const;
-    Windows::Storage::Streams::IOutputStream OutputStream() const;
-    Windows::Foundation::IAsyncOperation<uint32_t> SendIOControlAsync(const Windows::Devices::Custom::IIOControlCode & ioControlCode, const Windows::Storage::Streams::IBuffer & inputBuffer, const Windows::Storage::Streams::IBuffer & outputBuffer) const;
-    Windows::Foundation::IAsyncOperation<bool> TrySendIOControlAsync(const Windows::Devices::Custom::IIOControlCode & ioControlCode, const Windows::Storage::Streams::IBuffer & inputBuffer, const Windows::Storage::Streams::IBuffer & outputBuffer) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICustomDeviceStatics
-{
-    hstring GetDeviceSelector(GUID classGuid) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> FromIdAsync(hstring_ref deviceId, Windows::Devices::Custom::DeviceAccessMode desiredAccess, Windows::Devices::Custom::DeviceSharingMode sharingMode) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IIOControlCode
-{
-    Windows::Devices::Custom::IOControlAccessMode AccessMode() const;
-    Windows::Devices::Custom::IOControlBufferingMethod BufferingMethod() const;
-    uint16_t Function() const;
-    uint16_t DeviceType() const;
-    uint32_t ControlCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IIOControlCodeFactory
-{
-    Windows::Devices::Custom::IOControlCode CreateIOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode accessMode, Windows::Devices::Custom::IOControlBufferingMethod bufferingMethod) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownDeviceTypesStatics
-{
-    uint16_t Unknown() const;
-};
-
 struct ICustomDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICustomDevice>
 {
     ICustomDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICustomDevice>(m_ptr); }
 };
 
 struct ICustomDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICustomDeviceStatics>
 {
     ICustomDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICustomDeviceStatics>(m_ptr); }
 };
 
 struct IIOControlCode :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IIOControlCode>
 {
     IIOControlCode(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IIOControlCode>(m_ptr); }
 };
 
 struct IIOControlCodeFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IIOControlCodeFactory>
 {
     IIOControlCodeFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IIOControlCodeFactory>(m_ptr); }
 };
 
 struct IKnownDeviceTypesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownDeviceTypesStatics>
 {
     IKnownDeviceTypesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownDeviceTypesStatics>(m_ptr); }
 };
 
 }

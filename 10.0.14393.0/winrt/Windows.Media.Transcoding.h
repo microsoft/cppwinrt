@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Media.Core.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -19,10 +22,11 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<D, Windows::Media::Transcoding::IMediaTranscoder>
 {
-    HRESULT __stdcall put_TrimStartTime(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_TrimStartTime(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TrimStartTime(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -32,11 +36,12 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_TrimStartTime(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_TrimStartTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TrimStartTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TrimStartTime());
             return S_OK;
         }
         catch (...)
@@ -45,10 +50,11 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_TrimStopTime(abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_TrimStopTime(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TrimStopTime(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
             return S_OK;
         }
@@ -58,11 +64,12 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_TrimStopTime(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_TrimStopTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TrimStopTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TrimStopTime());
             return S_OK;
         }
         catch (...)
@@ -75,6 +82,7 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AlwaysReencode(value);
             return S_OK;
         }
@@ -88,7 +96,8 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().AlwaysReencode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlwaysReencode());
             return S_OK;
         }
         catch (...)
@@ -101,6 +110,7 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().HardwareAccelerationEnabled(value);
             return S_OK;
         }
@@ -114,7 +124,8 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().HardwareAccelerationEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HardwareAccelerationEnabled());
             return S_OK;
         }
         catch (...)
@@ -123,10 +134,11 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_AddAudioEffect(abi_arg_in<hstring> activatableClassId) noexcept override
+    HRESULT __stdcall abi_AddAudioEffect(impl::abi_arg_in<hstring> activatableClassId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddAudioEffect(*reinterpret_cast<const hstring *>(&activatableClassId));
             return S_OK;
         }
@@ -136,10 +148,11 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_AddAudioEffectWithSettings(abi_arg_in<hstring> activatableClassId, bool effectRequired, abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration) noexcept override
+    HRESULT __stdcall abi_AddAudioEffectWithSettings(impl::abi_arg_in<hstring> activatableClassId, bool effectRequired, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddAudioEffect(*reinterpret_cast<const hstring *>(&activatableClassId), effectRequired, *reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration));
             return S_OK;
         }
@@ -149,10 +162,11 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_AddVideoEffect(abi_arg_in<hstring> activatableClassId) noexcept override
+    HRESULT __stdcall abi_AddVideoEffect(impl::abi_arg_in<hstring> activatableClassId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddVideoEffect(*reinterpret_cast<const hstring *>(&activatableClassId));
             return S_OK;
         }
@@ -162,10 +176,11 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_AddVideoEffectWithSettings(abi_arg_in<hstring> activatableClassId, bool effectRequired, abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration) noexcept override
+    HRESULT __stdcall abi_AddVideoEffectWithSettings(impl::abi_arg_in<hstring> activatableClassId, bool effectRequired, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddVideoEffect(*reinterpret_cast<const hstring *>(&activatableClassId), effectRequired, *reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration));
             return S_OK;
         }
@@ -179,6 +194,7 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ClearEffects();
             return S_OK;
         }
@@ -188,11 +204,12 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_PrepareFileTranscodeAsync(abi_arg_in<Windows::Storage::IStorageFile> source, abi_arg_in<Windows::Storage::IStorageFile> destination, abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
+    HRESULT __stdcall abi_PrepareFileTranscodeAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> source, impl::abi_arg_in<Windows::Storage::IStorageFile> destination, impl::abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().PrepareFileTranscodeAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&source), *reinterpret_cast<const Windows::Storage::IStorageFile *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().PrepareFileTranscodeAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&source), *reinterpret_cast<const Windows::Storage::IStorageFile *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
             return S_OK;
         }
         catch (...)
@@ -202,11 +219,12 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_PrepareStreamTranscodeAsync(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> source, abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> destination, abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
+    HRESULT __stdcall abi_PrepareStreamTranscodeAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> source, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> destination, impl::abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().PrepareStreamTranscodeAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().PrepareStreamTranscodeAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
             return S_OK;
         }
         catch (...)
@@ -220,11 +238,12 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder> : produce_base<
 template <typename D>
 struct produce<D, Windows::Media::Transcoding::IMediaTranscoder2> : produce_base<D, Windows::Media::Transcoding::IMediaTranscoder2>
 {
-    HRESULT __stdcall abi_PrepareMediaStreamSourceTranscodeAsync(abi_arg_in<Windows::Media::Core::IMediaSource> source, abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> destination, abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
+    HRESULT __stdcall abi_PrepareMediaStreamSourceTranscodeAsync(impl::abi_arg_in<Windows::Media::Core::IMediaSource> source, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> destination, impl::abi_arg_in<Windows::Media::MediaProperties::IMediaEncodingProfile> profile, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().PrepareMediaStreamSourceTranscodeAsync(*reinterpret_cast<const Windows::Media::Core::IMediaSource *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().PrepareMediaStreamSourceTranscodeAsync(*reinterpret_cast<const Windows::Media::Core::IMediaSource *>(&source), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&destination), *reinterpret_cast<const Windows::Media::MediaProperties::MediaEncodingProfile *>(&profile)));
             return S_OK;
         }
         catch (...)
@@ -238,6 +257,7 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder2> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().VideoProcessingAlgorithm(value);
             return S_OK;
         }
@@ -251,7 +271,8 @@ struct produce<D, Windows::Media::Transcoding::IMediaTranscoder2> : produce_base
     {
         try
         {
-            *value = detach(this->shim().VideoProcessingAlgorithm());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoProcessingAlgorithm());
             return S_OK;
         }
         catch (...)
@@ -268,7 +289,8 @@ struct produce<D, Windows::Media::Transcoding::IPrepareTranscodeResult> : produc
     {
         try
         {
-            *value = detach(this->shim().CanTranscode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CanTranscode());
             return S_OK;
         }
         catch (...)
@@ -281,7 +303,8 @@ struct produce<D, Windows::Media::Transcoding::IPrepareTranscodeResult> : produc
     {
         try
         {
-            *value = detach(this->shim().FailureReason());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FailureReason());
             return S_OK;
         }
         catch (...)
@@ -290,11 +313,12 @@ struct produce<D, Windows::Media::Transcoding::IPrepareTranscodeResult> : produc
         }
     }
 
-    HRESULT __stdcall abi_TranscodeAsync(abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<double>> operation) noexcept override
+    HRESULT __stdcall abi_TranscodeAsync(impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<double>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().TranscodeAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().TranscodeAsync());
             return S_OK;
         }
         catch (...)
@@ -312,127 +336,127 @@ namespace Windows::Media::Transcoding {
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> impl_IMediaTranscoder2<D>::PrepareMediaStreamSourceTranscodeAsync(const Windows::Media::Core::IMediaSource & source, const Windows::Storage::Streams::IRandomAccessStream & destination, const Windows::Media::MediaProperties::MediaEncodingProfile & profile) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> operation;
-    check_hresult(static_cast<const IMediaTranscoder2 &>(static_cast<const D &>(*this))->abi_PrepareMediaStreamSourceTranscodeAsync(get(source), get(destination), get(profile), put(operation)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder2)->abi_PrepareMediaStreamSourceTranscodeAsync(get_abi(source), get_abi(destination), get_abi(profile), put_abi(operation)));
     return operation;
 }
 
 template <typename D> void impl_IMediaTranscoder2<D>::VideoProcessingAlgorithm(Windows::Media::Transcoding::MediaVideoProcessingAlgorithm value) const
 {
-    check_hresult(static_cast<const IMediaTranscoder2 &>(static_cast<const D &>(*this))->put_VideoProcessingAlgorithm(value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder2)->put_VideoProcessingAlgorithm(value));
 }
 
 template <typename D> Windows::Media::Transcoding::MediaVideoProcessingAlgorithm impl_IMediaTranscoder2<D>::VideoProcessingAlgorithm() const
 {
     Windows::Media::Transcoding::MediaVideoProcessingAlgorithm value {};
-    check_hresult(static_cast<const IMediaTranscoder2 &>(static_cast<const D &>(*this))->get_VideoProcessingAlgorithm(&value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder2)->get_VideoProcessingAlgorithm(&value));
     return value;
 }
 
 template <typename D> void impl_IMediaTranscoder<D>::TrimStartTime(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->put_TrimStartTime(get(value)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->put_TrimStartTime(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IMediaTranscoder<D>::TrimStartTime() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->get_TrimStartTime(put(value)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->get_TrimStartTime(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IMediaTranscoder<D>::TrimStopTime(const Windows::Foundation::TimeSpan & value) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->put_TrimStopTime(get(value)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->put_TrimStopTime(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IMediaTranscoder<D>::TrimStopTime() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->get_TrimStopTime(put(value)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->get_TrimStopTime(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IMediaTranscoder<D>::AlwaysReencode(bool value) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->put_AlwaysReencode(value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->put_AlwaysReencode(value));
 }
 
 template <typename D> bool impl_IMediaTranscoder<D>::AlwaysReencode() const
 {
     bool value {};
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->get_AlwaysReencode(&value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->get_AlwaysReencode(&value));
     return value;
 }
 
 template <typename D> void impl_IMediaTranscoder<D>::HardwareAccelerationEnabled(bool value) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->put_HardwareAccelerationEnabled(value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->put_HardwareAccelerationEnabled(value));
 }
 
 template <typename D> bool impl_IMediaTranscoder<D>::HardwareAccelerationEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->get_HardwareAccelerationEnabled(&value));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->get_HardwareAccelerationEnabled(&value));
     return value;
 }
 
-template <typename D> void impl_IMediaTranscoder<D>::AddAudioEffect(hstring_ref activatableClassId) const
+template <typename D> void impl_IMediaTranscoder<D>::AddAudioEffect(hstring_view activatableClassId) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_AddAudioEffect(get(activatableClassId)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_AddAudioEffect(get_abi(activatableClassId)));
 }
 
-template <typename D> void impl_IMediaTranscoder<D>::AddAudioEffect(hstring_ref activatableClassId, bool effectRequired, const Windows::Foundation::Collections::IPropertySet & configuration) const
+template <typename D> void impl_IMediaTranscoder<D>::AddAudioEffect(hstring_view activatableClassId, bool effectRequired, const Windows::Foundation::Collections::IPropertySet & configuration) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_AddAudioEffectWithSettings(get(activatableClassId), effectRequired, get(configuration)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_AddAudioEffectWithSettings(get_abi(activatableClassId), effectRequired, get_abi(configuration)));
 }
 
-template <typename D> void impl_IMediaTranscoder<D>::AddVideoEffect(hstring_ref activatableClassId) const
+template <typename D> void impl_IMediaTranscoder<D>::AddVideoEffect(hstring_view activatableClassId) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_AddVideoEffect(get(activatableClassId)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_AddVideoEffect(get_abi(activatableClassId)));
 }
 
-template <typename D> void impl_IMediaTranscoder<D>::AddVideoEffect(hstring_ref activatableClassId, bool effectRequired, const Windows::Foundation::Collections::IPropertySet & configuration) const
+template <typename D> void impl_IMediaTranscoder<D>::AddVideoEffect(hstring_view activatableClassId, bool effectRequired, const Windows::Foundation::Collections::IPropertySet & configuration) const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_AddVideoEffectWithSettings(get(activatableClassId), effectRequired, get(configuration)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_AddVideoEffectWithSettings(get_abi(activatableClassId), effectRequired, get_abi(configuration)));
 }
 
 template <typename D> void impl_IMediaTranscoder<D>::ClearEffects() const
 {
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_ClearEffects());
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_ClearEffects());
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> impl_IMediaTranscoder<D>::PrepareFileTranscodeAsync(const Windows::Storage::IStorageFile & source, const Windows::Storage::IStorageFile & destination, const Windows::Media::MediaProperties::MediaEncodingProfile & profile) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> operation;
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_PrepareFileTranscodeAsync(get(source), get(destination), get(profile), put(operation)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_PrepareFileTranscodeAsync(get_abi(source), get_abi(destination), get_abi(profile), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> impl_IMediaTranscoder<D>::PrepareStreamTranscodeAsync(const Windows::Storage::Streams::IRandomAccessStream & source, const Windows::Storage::Streams::IRandomAccessStream & destination, const Windows::Media::MediaProperties::MediaEncodingProfile & profile) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Transcoding::PrepareTranscodeResult> operation;
-    check_hresult(static_cast<const IMediaTranscoder &>(static_cast<const D &>(*this))->abi_PrepareStreamTranscodeAsync(get(source), get(destination), get(profile), put(operation)));
+    check_hresult(WINRT_SHIM(IMediaTranscoder)->abi_PrepareStreamTranscodeAsync(get_abi(source), get_abi(destination), get_abi(profile), put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_IPrepareTranscodeResult<D>::CanTranscode() const
 {
     bool value {};
-    check_hresult(static_cast<const IPrepareTranscodeResult &>(static_cast<const D &>(*this))->get_CanTranscode(&value));
+    check_hresult(WINRT_SHIM(IPrepareTranscodeResult)->get_CanTranscode(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Transcoding::TranscodeFailureReason impl_IPrepareTranscodeResult<D>::FailureReason() const
 {
     Windows::Media::Transcoding::TranscodeFailureReason value {};
-    check_hresult(static_cast<const IPrepareTranscodeResult &>(static_cast<const D &>(*this))->get_FailureReason(&value));
+    check_hresult(WINRT_SHIM(IPrepareTranscodeResult)->get_FailureReason(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncActionWithProgress<double> impl_IPrepareTranscodeResult<D>::TranscodeAsync() const
 {
     Windows::Foundation::IAsyncActionWithProgress<double> operation;
-    check_hresult(static_cast<const IPrepareTranscodeResult &>(static_cast<const D &>(*this))->abi_TranscodeAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IPrepareTranscodeResult)->abi_TranscodeAsync(put_abi(operation)));
     return operation;
 }
 
@@ -443,3 +467,50 @@ inline MediaTranscoder::MediaTranscoder() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Media::Transcoding::IMediaTranscoder>
+{
+    size_t operator()(const winrt::Windows::Media::Transcoding::IMediaTranscoder & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Transcoding::IMediaTranscoder2>
+{
+    size_t operator()(const winrt::Windows::Media::Transcoding::IMediaTranscoder2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Transcoding::IPrepareTranscodeResult>
+{
+    size_t operator()(const winrt::Windows::Media::Transcoding::IPrepareTranscodeResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Transcoding::MediaTranscoder>
+{
+    size_t operator()(const winrt::Windows::Media::Transcoding::MediaTranscoder & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Transcoding::PrepareTranscodeResult>
+{
+    size_t operator()(const winrt::Windows::Media::Transcoding::PrepareTranscodeResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

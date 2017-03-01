@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ struct WINRT_EBO DualSimTile :
     DualSimTile(std::nullptr_t) noexcept {}
     DualSimTile();
     static Windows::Phone::StartScreen::DualSimTile GetTileForSim2();
-    static Windows::Foundation::IAsyncOperation<bool> UpdateDisplayNameForSim1Async(hstring_ref name);
+    static Windows::Foundation::IAsyncOperation<bool> UpdateDisplayNameForSim1Async(hstring_view name);
     static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim1();
     static Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim2();
     static Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSim1();

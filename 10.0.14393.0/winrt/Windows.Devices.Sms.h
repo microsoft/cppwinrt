@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -28,7 +31,7 @@ template <typename O, typename M> SmsDeviceStatusChangedEventHandler::SmsDeviceS
 
 inline void SmsDeviceStatusChangedEventHandler::operator()(const Windows::Devices::Sms::SmsDevice & sender) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender)));
+    check_hresult((*(abi<SmsDeviceStatusChangedEventHandler> **)this)->abi_Invoke(get_abi(sender)));
 }
 
 template <typename L> SmsMessageReceivedEventHandler::SmsMessageReceivedEventHandler(L lambda) :
@@ -45,7 +48,7 @@ template <typename O, typename M> SmsMessageReceivedEventHandler::SmsMessageRece
 
 inline void SmsMessageReceivedEventHandler::operator()(const Windows::Devices::Sms::SmsDevice & sender, const Windows::Devices::Sms::SmsMessageReceivedEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<SmsMessageReceivedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 }
@@ -55,11 +58,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windows::Devices::Sms::ISmsAppMessage>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -68,11 +72,12 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -82,10 +87,11 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_To(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_To(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().To(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -95,11 +101,12 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_From(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_From(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().From());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().From());
             return S_OK;
         }
         catch (...)
@@ -109,11 +116,12 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
             return S_OK;
         }
         catch (...)
@@ -123,10 +131,11 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_Body(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Body(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Body(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -136,11 +145,12 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_CallbackNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CallbackNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CallbackNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallbackNumber());
             return S_OK;
         }
         catch (...)
@@ -150,10 +160,11 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_CallbackNumber(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CallbackNumber(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CallbackNumber(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -167,7 +178,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().IsDeliveryNotificationEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsDeliveryNotificationEnabled());
             return S_OK;
         }
         catch (...)
@@ -180,6 +192,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsDeliveryNotificationEnabled(value);
             return S_OK;
         }
@@ -193,7 +206,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().RetryAttemptCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RetryAttemptCount());
             return S_OK;
         }
         catch (...)
@@ -206,6 +220,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RetryAttemptCount(value);
             return S_OK;
         }
@@ -219,7 +234,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().Encoding());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Encoding());
             return S_OK;
         }
         catch (...)
@@ -232,6 +248,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Encoding(value);
             return S_OK;
         }
@@ -245,7 +262,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().PortNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PortNumber());
             return S_OK;
         }
         catch (...)
@@ -258,6 +276,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PortNumber(value);
             return S_OK;
         }
@@ -271,7 +290,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().TeleserviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TeleserviceId());
             return S_OK;
         }
         catch (...)
@@ -284,6 +304,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TeleserviceId(value);
             return S_OK;
         }
@@ -297,7 +318,8 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().ProtocolId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtocolId());
             return S_OK;
         }
         catch (...)
@@ -310,6 +332,7 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProtocolId(value);
             return S_OK;
         }
@@ -319,11 +342,12 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_BinaryBody(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_BinaryBody(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BinaryBody());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BinaryBody());
             return S_OK;
         }
         catch (...)
@@ -333,10 +357,11 @@ struct produce<D, Windows::Devices::Sms::ISmsAppMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_BinaryBody(abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_BinaryBody(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BinaryBody(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
             return S_OK;
         }
@@ -354,7 +379,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBinaryMessage> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().Format());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Format());
             return S_OK;
         }
         catch (...)
@@ -367,6 +393,7 @@ struct produce<D, Windows::Devices::Sms::ISmsBinaryMessage> : produce_base<D, Wi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Format(value);
             return S_OK;
         }
@@ -376,11 +403,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBinaryMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetData(uint32_t * __valueSize, abi_arg_out<uint8_t> * value) noexcept override
+    HRESULT __stdcall abi_GetData(uint32_t * __valueSize, impl::abi_arg_out<uint8_t> * value) noexcept override
     {
         try
         {
-            std::tie(*__valueSize, *value) = detach(this->shim().GetData());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__valueSize, *value) = detach_abi(this->shim().GetData());
             return S_OK;
         }
         catch (...)
@@ -391,11 +419,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBinaryMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_SetData(uint32_t __valueSize, abi_arg_in<uint8_t> * value) noexcept override
+    HRESULT __stdcall abi_SetData(uint32_t __valueSize, impl::abi_arg_in<uint8_t> * value) noexcept override
     {
         try
         {
-            this->shim().SetData(array_ref<const uint8_t>(value, value + __valueSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().SetData(array_view<const uint8_t>(value, value + __valueSize));
             return S_OK;
         }
         catch (...)
@@ -408,11 +437,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBinaryMessage> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D, Windows::Devices::Sms::ISmsBroadcastMessage>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -421,11 +451,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -435,11 +466,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
             return S_OK;
         }
         catch (...)
@@ -453,7 +485,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().Channel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Channel());
             return S_OK;
         }
         catch (...)
@@ -466,7 +499,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().GeographicalScope());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GeographicalScope());
             return S_OK;
         }
         catch (...)
@@ -479,7 +513,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().MessageCode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageCode());
             return S_OK;
         }
         catch (...)
@@ -492,7 +527,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().UpdateNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UpdateNumber());
             return S_OK;
         }
         catch (...)
@@ -505,7 +541,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().BroadcastType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BroadcastType());
             return S_OK;
         }
         catch (...)
@@ -518,7 +555,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().IsEmergencyAlert());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsEmergencyAlert());
             return S_OK;
         }
         catch (...)
@@ -531,7 +569,8 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().IsUserPopupRequested());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsUserPopupRequested());
             return S_OK;
         }
         catch (...)
@@ -544,11 +583,12 @@ struct produce<D, Windows::Devices::Sms::ISmsBroadcastMessage> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::Devices::Sms::ISmsDevice>
 {
-    HRESULT __stdcall abi_SendMessageAsync(abi_arg_in<Windows::Devices::Sms::ISmsMessage> message, abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_SendMessageAsync(impl::abi_arg_in<Windows::Devices::Sms::ISmsMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().SendMessageAsync(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessage *>(&message)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().SendMessageAsync(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessage *>(&message)));
             return S_OK;
         }
         catch (...)
@@ -558,11 +598,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_CalculateLength(abi_arg_in<Windows::Devices::Sms::ISmsTextMessage> message, abi_arg_out<Windows::Devices::Sms::SmsEncodedLength> encodedLength) noexcept override
+    HRESULT __stdcall abi_CalculateLength(impl::abi_arg_in<Windows::Devices::Sms::ISmsTextMessage> message, impl::abi_arg_out<Windows::Devices::Sms::SmsEncodedLength> encodedLength) noexcept override
     {
         try
         {
-            *encodedLength = detach(this->shim().CalculateLength(*reinterpret_cast<const Windows::Devices::Sms::SmsTextMessage *>(&message)));
+            typename D::abi_guard guard(this->shim());
+            *encodedLength = detach_abi(this->shim().CalculateLength(*reinterpret_cast<const Windows::Devices::Sms::SmsTextMessage *>(&message)));
             return S_OK;
         }
         catch (...)
@@ -571,11 +612,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_AccountPhoneNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AccountPhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AccountPhoneNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccountPhoneNumber());
             return S_OK;
         }
         catch (...)
@@ -589,7 +631,8 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
     {
         try
         {
-            *value = detach(this->shim().CellularClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CellularClass());
             return S_OK;
         }
         catch (...)
@@ -598,11 +641,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_MessageStore(abi_arg_out<Windows::Devices::Sms::ISmsDeviceMessageStore> value) noexcept override
+    HRESULT __stdcall get_MessageStore(impl::abi_arg_out<Windows::Devices::Sms::ISmsDeviceMessageStore> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageStore());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageStore());
             return S_OK;
         }
         catch (...)
@@ -616,7 +660,8 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
     {
         try
         {
-            *value = detach(this->shim().DeviceStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceStatus());
             return S_OK;
         }
         catch (...)
@@ -625,11 +670,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall add_SmsMessageReceived(abi_arg_in<Windows::Devices::Sms::SmsMessageReceivedEventHandler> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_SmsMessageReceived(impl::abi_arg_in<Windows::Devices::Sms::SmsMessageReceivedEventHandler> eventHandler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().SmsMessageReceived(*reinterpret_cast<const Windows::Devices::Sms::SmsMessageReceivedEventHandler *>(&eventHandler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().SmsMessageReceived(*reinterpret_cast<const Windows::Devices::Sms::SmsMessageReceivedEventHandler *>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -642,6 +688,7 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SmsMessageReceived(eventCookie);
             return S_OK;
         }
@@ -651,11 +698,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall add_SmsDeviceStatusChanged(abi_arg_in<Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_SmsDeviceStatusChanged(impl::abi_arg_in<Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler> eventHandler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().SmsDeviceStatusChanged(*reinterpret_cast<const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler *>(&eventHandler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().SmsDeviceStatusChanged(*reinterpret_cast<const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler *>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -668,6 +716,7 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SmsDeviceStatusChanged(eventCookie);
             return S_OK;
         }
@@ -681,11 +730,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows::Devices::Sms::ISmsDevice2>
 {
-    HRESULT __stdcall get_SmscAddress(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SmscAddress(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SmscAddress());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SmscAddress());
             return S_OK;
         }
         catch (...)
@@ -695,10 +745,11 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_SmscAddress(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SmscAddress(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SmscAddress(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -708,11 +759,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -722,11 +774,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_ParentDeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ParentDeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentDeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentDeviceId());
             return S_OK;
         }
         catch (...)
@@ -736,11 +789,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_AccountPhoneNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AccountPhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AccountPhoneNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccountPhoneNumber());
             return S_OK;
         }
         catch (...)
@@ -754,7 +808,8 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().CellularClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CellularClass());
             return S_OK;
         }
         catch (...)
@@ -767,7 +822,8 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().DeviceStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceStatus());
             return S_OK;
         }
         catch (...)
@@ -776,11 +832,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_CalculateLength(abi_arg_in<Windows::Devices::Sms::ISmsMessageBase> message, abi_arg_out<Windows::Devices::Sms::SmsEncodedLength> value) noexcept override
+    HRESULT __stdcall abi_CalculateLength(impl::abi_arg_in<Windows::Devices::Sms::ISmsMessageBase> message, impl::abi_arg_out<Windows::Devices::Sms::SmsEncodedLength> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CalculateLength(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessageBase *>(&message)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CalculateLength(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessageBase *>(&message)));
             return S_OK;
         }
         catch (...)
@@ -789,11 +846,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_SendMessageAndGetResultAsync(abi_arg_in<Windows::Devices::Sms::ISmsMessageBase> message, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsSendMessageResult>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_SendMessageAndGetResultAsync(impl::abi_arg_in<Windows::Devices::Sms::ISmsMessageBase> message, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsSendMessageResult>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().SendMessageAndGetResultAsync(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessageBase *>(&message)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().SendMessageAndGetResultAsync(*reinterpret_cast<const Windows::Devices::Sms::ISmsMessageBase *>(&message)));
             return S_OK;
         }
         catch (...)
@@ -803,11 +861,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall add_DeviceStatusChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable>> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_DeviceStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable>> eventHandler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().DeviceStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> *>(&eventHandler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().DeviceStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable> *>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -820,6 +879,7 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DeviceStatusChanged(eventCookie);
             return S_OK;
         }
@@ -833,11 +893,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDevice2Statics> : produce_base<D, Windows::Devices::Sms::ISmsDevice2Statics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -847,11 +908,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2Statics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_FromId(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
+    HRESULT __stdcall abi_FromId(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FromId(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FromId(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -861,11 +923,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2Statics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_GetDefault(abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
+    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDefault());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDefault());
             return S_OK;
         }
         catch (...)
@@ -875,11 +938,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2Statics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_FromParentId(abi_arg_in<hstring> parentDeviceId, abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
+    HRESULT __stdcall abi_FromParentId(impl::abi_arg_in<hstring> parentDeviceId, impl::abi_arg_out<Windows::Devices::Sms::ISmsDevice2> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FromParentId(*reinterpret_cast<const hstring *>(&parentDeviceId)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FromParentId(*reinterpret_cast<const hstring *>(&parentDeviceId)));
             return S_OK;
         }
         catch (...)
@@ -893,11 +957,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDevice2Statics> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<D, Windows::Devices::Sms::ISmsDeviceMessageStore>
 {
-    HRESULT __stdcall abi_DeleteMessageAsync(uint32_t messageId, abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_DeleteMessageAsync(uint32_t messageId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().DeleteMessageAsync(messageId));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().DeleteMessageAsync(messageId));
             return S_OK;
         }
         catch (...)
@@ -907,11 +972,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter, abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().DeleteMessagesAsync(messageFilter));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().DeleteMessagesAsync(messageFilter));
             return S_OK;
         }
         catch (...)
@@ -921,11 +987,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMessageAsync(uint32_t messageId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_GetMessageAsync(uint32_t messageId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().GetMessageAsync(messageId));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().GetMessageAsync(messageId));
             return S_OK;
         }
         catch (...)
@@ -935,11 +1002,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter, abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().GetMessagesAsync(messageFilter));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().GetMessagesAsync(messageFilter));
             return S_OK;
         }
         catch (...)
@@ -953,7 +1021,8 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().MaxMessages());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MaxMessages());
             return S_OK;
         }
         catch (...)
@@ -966,11 +1035,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceMessageStore> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDeviceStatics> : produce_base<D, Windows::Devices::Sms::ISmsDeviceStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> phstrDeviceClassSelector) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> phstrDeviceClassSelector) noexcept override
     {
         try
         {
-            *phstrDeviceClassSelector = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *phstrDeviceClassSelector = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -980,11 +1050,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -994,11 +1065,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().GetDefaultAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().GetDefaultAsync());
             return S_OK;
         }
         catch (...)
@@ -1012,11 +1084,12 @@ struct produce<D, Windows::Devices::Sms::ISmsDeviceStatics> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsDeviceStatics2> : produce_base<D, Windows::Devices::Sms::ISmsDeviceStatics2>
 {
-    HRESULT __stdcall abi_FromNetworkAccountIdAsync(abi_arg_in<hstring> networkAccountId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_FromNetworkAccountIdAsync(impl::abi_arg_in<hstring> networkAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().FromNetworkAccountIdAsync(*reinterpret_cast<const hstring *>(&networkAccountId)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().FromNetworkAccountIdAsync(*reinterpret_cast<const hstring *>(&networkAccountId)));
             return S_OK;
         }
         catch (...)
@@ -1034,7 +1107,8 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().MessageType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageType());
             return S_OK;
         }
         catch (...)
@@ -1043,25 +1117,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ImsiPrefixes(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_ImsiPrefixes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ImsiPrefixes());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_DeviceIds(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().DeviceIds());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ImsiPrefixes());
             return S_OK;
         }
         catch (...)
@@ -1071,11 +1132,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_SenderNumbers(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_DeviceIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SenderNumbers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceIds());
             return S_OK;
         }
         catch (...)
@@ -1085,11 +1147,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_TextMessagePrefixes(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_SenderNumbers(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TextMessagePrefixes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SenderNumbers());
             return S_OK;
         }
         catch (...)
@@ -1099,11 +1162,27 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_PortNumbers(abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
+    HRESULT __stdcall get_TextMessagePrefixes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PortNumbers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TextMessagePrefixes());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_PortNumbers(impl::abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PortNumbers());
             return S_OK;
         }
         catch (...)
@@ -1117,7 +1196,8 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
     {
         try
         {
-            *value = detach(this->shim().CellularClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CellularClass());
             return S_OK;
         }
         catch (...)
@@ -1130,6 +1210,7 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CellularClass(value);
             return S_OK;
         }
@@ -1139,11 +1220,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ProtocolIds(abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
+    HRESULT __stdcall get_ProtocolIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProtocolIds());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtocolIds());
             return S_OK;
         }
         catch (...)
@@ -1153,11 +1235,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_TeleserviceIds(abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
+    HRESULT __stdcall get_TeleserviceIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TeleserviceIds());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TeleserviceIds());
             return S_OK;
         }
         catch (...)
@@ -1167,11 +1250,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_WapApplicationIds(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_WapApplicationIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().WapApplicationIds());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WapApplicationIds());
             return S_OK;
         }
         catch (...)
@@ -1181,11 +1265,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_WapContentTypes(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_WapContentTypes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().WapContentTypes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WapContentTypes());
             return S_OK;
         }
         catch (...)
@@ -1195,11 +1280,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_BroadcastTypes(abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sms::SmsBroadcastType>> value) noexcept override
+    HRESULT __stdcall get_BroadcastTypes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sms::SmsBroadcastType>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BroadcastTypes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BroadcastTypes());
             return S_OK;
         }
         catch (...)
@@ -1209,11 +1295,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_BroadcastChannels(abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
+    HRESULT __stdcall get_BroadcastChannels(impl::abi_arg_out<Windows::Foundation::Collections::IVector<int32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BroadcastChannels());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BroadcastChannels());
             return S_OK;
         }
         catch (...)
@@ -1227,11 +1314,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRule> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsFilterRuleFactory> : produce_base<D, Windows::Devices::Sms::ISmsFilterRuleFactory>
 {
-    HRESULT __stdcall abi_CreateFilterRule(Windows::Devices::Sms::SmsMessageType messageType, abi_arg_out<Windows::Devices::Sms::ISmsFilterRule> value) noexcept override
+    HRESULT __stdcall abi_CreateFilterRule(Windows::Devices::Sms::SmsMessageType messageType, impl::abi_arg_out<Windows::Devices::Sms::ISmsFilterRule> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFilterRule(messageType));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFilterRule(messageType));
             return S_OK;
         }
         catch (...)
@@ -1249,7 +1337,8 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRules> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().ActionType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ActionType());
             return S_OK;
         }
         catch (...)
@@ -1258,11 +1347,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRules> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_Rules(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Devices::Sms::SmsFilterRule>> value) noexcept override
+    HRESULT __stdcall get_Rules(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Devices::Sms::SmsFilterRule>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Rules());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Rules());
             return S_OK;
         }
         catch (...)
@@ -1276,11 +1366,12 @@ struct produce<D, Windows::Devices::Sms::ISmsFilterRules> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsFilterRulesFactory> : produce_base<D, Windows::Devices::Sms::ISmsFilterRulesFactory>
 {
-    HRESULT __stdcall abi_CreateFilterRules(Windows::Devices::Sms::SmsFilterActionType actionType, abi_arg_out<Windows::Devices::Sms::ISmsFilterRules> value) noexcept override
+    HRESULT __stdcall abi_CreateFilterRules(Windows::Devices::Sms::SmsFilterActionType actionType, impl::abi_arg_out<Windows::Devices::Sms::ISmsFilterRules> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFilterRules(actionType));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFilterRules(actionType));
             return S_OK;
         }
         catch (...)
@@ -1298,7 +1389,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessage> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -1311,7 +1403,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessage> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().MessageClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageClass());
             return S_OK;
         }
         catch (...)
@@ -1328,7 +1421,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().MessageType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageType());
             return S_OK;
         }
         catch (...)
@@ -1337,11 +1431,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1355,7 +1450,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().CellularClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CellularClass());
             return S_OK;
         }
         catch (...)
@@ -1368,7 +1464,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().MessageClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageClass());
             return S_OK;
         }
         catch (...)
@@ -1377,11 +1474,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_SimIccId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SimIccId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SimIccId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SimIccId());
             return S_OK;
         }
         catch (...)
@@ -1395,11 +1493,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageBase> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedEventArgs> : produce_base<D, Windows::Devices::Sms::ISmsMessageReceivedEventArgs>
 {
-    HRESULT __stdcall get_TextMessage(abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> value) noexcept override
+    HRESULT __stdcall get_TextMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TextMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TextMessage());
             return S_OK;
         }
         catch (...)
@@ -1409,11 +1508,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedEventArgs> : produce
         }
     }
 
-    HRESULT __stdcall get_BinaryMessage(abi_arg_out<Windows::Devices::Sms::ISmsBinaryMessage> value) noexcept override
+    HRESULT __stdcall get_BinaryMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsBinaryMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BinaryMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BinaryMessage());
             return S_OK;
         }
         catch (...)
@@ -1431,7 +1531,8 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
     {
         try
         {
-            *value = detach(this->shim().MessageType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageType());
             return S_OK;
         }
         catch (...)
@@ -1440,25 +1541,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
         }
     }
 
-    HRESULT __stdcall get_TextMessage(abi_arg_out<Windows::Devices::Sms::ISmsTextMessage2> value) noexcept override
+    HRESULT __stdcall get_TextMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsTextMessage2> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TextMessage());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_WapMessage(abi_arg_out<Windows::Devices::Sms::ISmsWapMessage> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().WapMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TextMessage());
             return S_OK;
         }
         catch (...)
@@ -1468,11 +1556,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
         }
     }
 
-    HRESULT __stdcall get_AppMessage(abi_arg_out<Windows::Devices::Sms::ISmsAppMessage> value) noexcept override
+    HRESULT __stdcall get_WapMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsWapMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WapMessage());
             return S_OK;
         }
         catch (...)
@@ -1482,11 +1571,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
         }
     }
 
-    HRESULT __stdcall get_BroadcastMessage(abi_arg_out<Windows::Devices::Sms::ISmsBroadcastMessage> value) noexcept override
+    HRESULT __stdcall get_AppMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsAppMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BroadcastMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppMessage());
             return S_OK;
         }
         catch (...)
@@ -1496,11 +1586,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
         }
     }
 
-    HRESULT __stdcall get_VoicemailMessage(abi_arg_out<Windows::Devices::Sms::ISmsVoicemailMessage> value) noexcept override
+    HRESULT __stdcall get_BroadcastMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsBroadcastMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VoicemailMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BroadcastMessage());
             return S_OK;
         }
         catch (...)
@@ -1510,11 +1601,27 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
         }
     }
 
-    HRESULT __stdcall get_StatusMessage(abi_arg_out<Windows::Devices::Sms::ISmsStatusMessage> value) noexcept override
+    HRESULT __stdcall get_VoicemailMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsVoicemailMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StatusMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VoicemailMessage());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_StatusMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsStatusMessage> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StatusMessage());
             return S_OK;
         }
         catch (...)
@@ -1528,6 +1635,7 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Drop();
             return S_OK;
         }
@@ -1541,6 +1649,7 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Accept();
             return S_OK;
         }
@@ -1554,11 +1663,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsMessageRegistration> : produce_base<D, Windows::Devices::Sms::ISmsMessageRegistration>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -1572,6 +1682,7 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistration> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Unregister();
             return S_OK;
         }
@@ -1581,11 +1692,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistration> : produce_base
         }
     }
 
-    HRESULT __stdcall add_MessageReceived(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails>> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_MessageReceived(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails>> eventHandler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().MessageReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails> *>(&eventHandler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().MessageReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails> *>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -1598,6 +1710,7 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistration> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MessageReceived(eventCookie);
             return S_OK;
         }
@@ -1611,11 +1724,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistration> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsMessageRegistrationStatics> : produce_base<D, Windows::Devices::Sms::ISmsMessageRegistrationStatics>
 {
-    HRESULT __stdcall get_AllRegistrations(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsMessageRegistration>> value) noexcept override
+    HRESULT __stdcall get_AllRegistrations(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsMessageRegistration>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AllRegistrations());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AllRegistrations());
             return S_OK;
         }
         catch (...)
@@ -1625,11 +1739,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistrationStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_Register(abi_arg_in<hstring> id, abi_arg_in<Windows::Devices::Sms::ISmsFilterRules> filterRules, abi_arg_out<Windows::Devices::Sms::ISmsMessageRegistration> value) noexcept override
+    HRESULT __stdcall abi_Register(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::Devices::Sms::ISmsFilterRules> filterRules, impl::abi_arg_out<Windows::Devices::Sms::ISmsMessageRegistration> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Register(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Sms::SmsFilterRules *>(&filterRules)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Register(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Sms::SmsFilterRules *>(&filterRules)));
             return S_OK;
         }
         catch (...)
@@ -1643,11 +1758,12 @@ struct produce<D, Windows::Devices::Sms::ISmsMessageRegistrationStatics> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsReceivedEventDetails> : produce_base<D, Windows::Devices::Sms::ISmsReceivedEventDetails>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1661,7 +1777,8 @@ struct produce<D, Windows::Devices::Sms::ISmsReceivedEventDetails> : produce_bas
     {
         try
         {
-            *value = detach(this->shim().MessageIndex());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageIndex());
             return S_OK;
         }
         catch (...)
@@ -1678,7 +1795,8 @@ struct produce<D, Windows::Devices::Sms::ISmsReceivedEventDetails2> : produce_ba
     {
         try
         {
-            *value = detach(this->shim().MessageClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageClass());
             return S_OK;
         }
         catch (...)
@@ -1687,11 +1805,12 @@ struct produce<D, Windows::Devices::Sms::ISmsReceivedEventDetails2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_BinaryMessage(abi_arg_out<Windows::Devices::Sms::ISmsBinaryMessage> value) noexcept override
+    HRESULT __stdcall get_BinaryMessage(impl::abi_arg_out<Windows::Devices::Sms::ISmsBinaryMessage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BinaryMessage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BinaryMessage());
             return S_OK;
         }
         catch (...)
@@ -1709,7 +1828,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().IsSuccessful());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsSuccessful());
             return S_OK;
         }
         catch (...)
@@ -1718,11 +1838,12 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_MessageReferenceNumbers(abi_arg_out<Windows::Foundation::Collections::IVectorView<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MessageReferenceNumbers(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<int32_t>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageReferenceNumbers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageReferenceNumbers());
             return S_OK;
         }
         catch (...)
@@ -1736,7 +1857,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().CellularClass());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CellularClass());
             return S_OK;
         }
         catch (...)
@@ -1749,7 +1871,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().ModemErrorCode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ModemErrorCode());
             return S_OK;
         }
         catch (...)
@@ -1762,7 +1885,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().IsErrorTransient());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsErrorTransient());
             return S_OK;
         }
         catch (...)
@@ -1775,7 +1899,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().NetworkCauseCode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NetworkCauseCode());
             return S_OK;
         }
         catch (...)
@@ -1788,7 +1913,8 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().TransportFailureCause());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TransportFailureCause());
             return S_OK;
         }
         catch (...)
@@ -1801,11 +1927,12 @@ struct produce<D, Windows::Devices::Sms::ISmsSendMessageResult> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Windows::Devices::Sms::ISmsStatusMessage>
 {
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -1815,11 +1942,12 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_From(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_From(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().From());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().From());
             return S_OK;
         }
         catch (...)
@@ -1829,11 +1957,12 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
             return S_OK;
         }
         catch (...)
@@ -1847,7 +1976,8 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().Status());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Status());
             return S_OK;
         }
         catch (...)
@@ -1860,7 +1990,8 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
     {
         try
         {
-            *value = detach(this->shim().MessageReferenceNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageReferenceNumber());
             return S_OK;
         }
         catch (...)
@@ -1869,11 +2000,12 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ServiceCenterTimestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_ServiceCenterTimestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ServiceCenterTimestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ServiceCenterTimestamp());
             return S_OK;
         }
         catch (...)
@@ -1882,11 +2014,12 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DischargeTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_DischargeTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DischargeTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DischargeTime());
             return S_OK;
         }
         catch (...)
@@ -1899,11 +2032,12 @@ struct produce<D, Windows::Devices::Sms::ISmsStatusMessage> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Windows::Devices::Sms::ISmsTextMessage>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -1916,7 +2050,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().PartReferenceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PartReferenceId());
             return S_OK;
         }
         catch (...)
@@ -1929,7 +2064,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().PartNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PartNumber());
             return S_OK;
         }
         catch (...)
@@ -1942,7 +2078,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().PartCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PartCount());
             return S_OK;
         }
         catch (...)
@@ -1951,11 +2088,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -1965,10 +2103,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall put_To(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_To(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().To(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -1978,11 +2117,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_From(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_From(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().From());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().From());
             return S_OK;
         }
         catch (...)
@@ -1992,10 +2132,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall put_From(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_From(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().From(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2005,11 +2146,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
             return S_OK;
         }
         catch (...)
@@ -2019,10 +2161,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall put_Body(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Body(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Body(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2036,7 +2179,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
     {
         try
         {
-            *value = detach(this->shim().Encoding());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Encoding());
             return S_OK;
         }
         catch (...)
@@ -2049,6 +2193,7 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Encoding(value);
             return S_OK;
         }
@@ -2058,11 +2203,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage>> messages) noexcept override
+    HRESULT __stdcall abi_ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage>> messages) noexcept override
     {
         try
         {
-            *messages = detach(this->shim().ToBinaryMessages(format));
+            typename D::abi_guard guard(this->shim());
+            *messages = detach_abi(this->shim().ToBinaryMessages(format));
             return S_OK;
         }
         catch (...)
@@ -2076,11 +2222,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Windows::Devices::Sms::ISmsTextMessage2>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2089,11 +2236,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -2103,10 +2251,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_To(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_To(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().To(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2116,11 +2265,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_From(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_From(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().From());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().From());
             return S_OK;
         }
         catch (...)
@@ -2130,11 +2280,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
             return S_OK;
         }
         catch (...)
@@ -2144,10 +2295,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_Body(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Body(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Body(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2161,7 +2313,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().Encoding());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Encoding());
             return S_OK;
         }
         catch (...)
@@ -2174,6 +2327,7 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Encoding(value);
             return S_OK;
         }
@@ -2183,11 +2337,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_CallbackNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CallbackNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CallbackNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CallbackNumber());
             return S_OK;
         }
         catch (...)
@@ -2197,10 +2352,11 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_CallbackNumber(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CallbackNumber(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CallbackNumber(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2214,7 +2370,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().IsDeliveryNotificationEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsDeliveryNotificationEnabled());
             return S_OK;
         }
         catch (...)
@@ -2227,6 +2384,7 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsDeliveryNotificationEnabled(value);
             return S_OK;
         }
@@ -2240,7 +2398,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().RetryAttemptCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RetryAttemptCount());
             return S_OK;
         }
         catch (...)
@@ -2253,6 +2412,7 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RetryAttemptCount(value);
             return S_OK;
         }
@@ -2266,7 +2426,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().TeleserviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TeleserviceId());
             return S_OK;
         }
         catch (...)
@@ -2279,7 +2440,8 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().ProtocolId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtocolId());
             return S_OK;
         }
         catch (...)
@@ -2292,11 +2454,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessage2> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsTextMessageStatics> : produce_base<D, Windows::Devices::Sms::ISmsTextMessageStatics>
 {
-    HRESULT __stdcall abi_FromBinaryMessage(abi_arg_in<Windows::Devices::Sms::ISmsBinaryMessage> binaryMessage, abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> textMessage) noexcept override
+    HRESULT __stdcall abi_FromBinaryMessage(impl::abi_arg_in<Windows::Devices::Sms::ISmsBinaryMessage> binaryMessage, impl::abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> textMessage) noexcept override
     {
         try
         {
-            *textMessage = detach(this->shim().FromBinaryMessage(*reinterpret_cast<const Windows::Devices::Sms::SmsBinaryMessage *>(&binaryMessage)));
+            typename D::abi_guard guard(this->shim());
+            *textMessage = detach_abi(this->shim().FromBinaryMessage(*reinterpret_cast<const Windows::Devices::Sms::SmsBinaryMessage *>(&binaryMessage)));
             return S_OK;
         }
         catch (...)
@@ -2306,11 +2469,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessageStatics> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, uint32_t __valueSize, abi_arg_in<uint8_t> * value, abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> textMessage) noexcept override
+    HRESULT __stdcall abi_FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, uint32_t __valueSize, impl::abi_arg_in<uint8_t> * value, impl::abi_arg_out<Windows::Devices::Sms::ISmsTextMessage> textMessage) noexcept override
     {
         try
         {
-            *textMessage = detach(this->shim().FromBinaryData(format, array_ref<const uint8_t>(value, value + __valueSize)));
+            typename D::abi_guard guard(this->shim());
+            *textMessage = detach_abi(this->shim().FromBinaryData(format, array_view<const uint8_t>(value, value + __valueSize)));
             return S_OK;
         }
         catch (...)
@@ -2324,11 +2488,12 @@ struct produce<D, Windows::Devices::Sms::ISmsTextMessageStatics> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsVoicemailMessage> : produce_base<D, Windows::Devices::Sms::ISmsVoicemailMessage>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2337,25 +2502,12 @@ struct produce<D, Windows::Devices::Sms::ISmsVoicemailMessage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Body(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Body());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -2365,11 +2517,27 @@ struct produce<D, Windows::Devices::Sms::ISmsVoicemailMessage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_MessageCount(abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Body());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_MessageCount(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageCount());
             return S_OK;
         }
         catch (...)
@@ -2383,11 +2551,12 @@ struct produce<D, Windows::Devices::Sms::ISmsVoicemailMessage> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windows::Devices::Sms::ISmsWapMessage>
 {
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2396,25 +2565,12 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_To(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_To(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().To());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_From(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().From());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().To());
             return S_OK;
         }
         catch (...)
@@ -2424,11 +2580,12 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ApplicationId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_From(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ApplicationId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().From());
             return S_OK;
         }
         catch (...)
@@ -2438,11 +2595,12 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ContentType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ApplicationId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContentType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ApplicationId());
             return S_OK;
         }
         catch (...)
@@ -2452,11 +2610,12 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_BinaryBody(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_ContentType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BinaryBody());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContentType());
             return S_OK;
         }
         catch (...)
@@ -2466,11 +2625,27 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_Headers(abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_BinaryBody(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Headers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BinaryBody());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_Headers(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Headers());
             return S_OK;
         }
         catch (...)
@@ -2488,836 +2663,836 @@ namespace Windows::Devices::Sms {
 template <typename D> Windows::Devices::Sms::SmsMessageType impl_ISmsMessageBase<D>::MessageType() const
 {
     Windows::Devices::Sms::SmsMessageType value {};
-    check_hresult(static_cast<const ISmsMessageBase &>(static_cast<const D &>(*this))->get_MessageType(&value));
+    check_hresult(WINRT_SHIM(ISmsMessageBase)->get_MessageType(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISmsMessageBase<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsMessageBase &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageBase)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsMessageBase<D>::CellularClass() const
 {
     Windows::Devices::Sms::CellularClass value {};
-    check_hresult(static_cast<const ISmsMessageBase &>(static_cast<const D &>(*this))->get_CellularClass(&value));
+    check_hresult(WINRT_SHIM(ISmsMessageBase)->get_CellularClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsMessageBase<D>::MessageClass() const
 {
     Windows::Devices::Sms::SmsMessageClass value {};
-    check_hresult(static_cast<const ISmsMessageBase &>(static_cast<const D &>(*this))->get_MessageClass(&value));
+    check_hresult(WINRT_SHIM(ISmsMessageBase)->get_MessageClass(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISmsMessageBase<D>::SimIccId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsMessageBase &>(static_cast<const D &>(*this))->get_SimIccId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageBase)->get_SimIccId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsTextMessage2<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsTextMessage2<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_To(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage2<D>::To(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage2<D>::To(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_To(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_To(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsTextMessage2<D>::From() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_From(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_From(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsTextMessage2<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_Body(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage2<D>::Body(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage2<D>::Body(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_Body(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_Body(get_abi(value)));
 }
 
 template <typename D> Windows::Devices::Sms::SmsEncoding impl_ISmsTextMessage2<D>::Encoding() const
 {
     Windows::Devices::Sms::SmsEncoding value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_Encoding(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_Encoding(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsTextMessage2<D>::Encoding(Windows::Devices::Sms::SmsEncoding value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_Encoding(value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_Encoding(value));
 }
 
 template <typename D> hstring impl_ISmsTextMessage2<D>::CallbackNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_CallbackNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_CallbackNumber(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage2<D>::CallbackNumber(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage2<D>::CallbackNumber(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_CallbackNumber(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_CallbackNumber(get_abi(value)));
 }
 
 template <typename D> bool impl_ISmsTextMessage2<D>::IsDeliveryNotificationEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_IsDeliveryNotificationEnabled(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_IsDeliveryNotificationEnabled(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsTextMessage2<D>::IsDeliveryNotificationEnabled(bool value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_IsDeliveryNotificationEnabled(value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_IsDeliveryNotificationEnabled(value));
 }
 
 template <typename D> int32_t impl_ISmsTextMessage2<D>::RetryAttemptCount() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_RetryAttemptCount(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_RetryAttemptCount(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsTextMessage2<D>::RetryAttemptCount(int32_t value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->put_RetryAttemptCount(value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->put_RetryAttemptCount(value));
 }
 
 template <typename D> int32_t impl_ISmsTextMessage2<D>::TeleserviceId() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_TeleserviceId(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_TeleserviceId(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsTextMessage2<D>::ProtocolId() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage2 &>(static_cast<const D &>(*this))->get_ProtocolId(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage2)->get_ProtocolId(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsWapMessage<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsWapMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_To(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsWapMessage<D>::From() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_From(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_From(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsWapMessage<D>::ApplicationId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_ApplicationId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_ApplicationId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsWapMessage<D>::ContentType() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_ContentType(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_ContentType(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_ISmsWapMessage<D>::BinaryBody() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_BinaryBody(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_BinaryBody(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_ISmsWapMessage<D>::Headers() const
 {
     Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(static_cast<const ISmsWapMessage &>(static_cast<const D &>(*this))->get_Headers(put(value)));
+    check_hresult(WINRT_SHIM(ISmsWapMessage)->get_Headers(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsAppMessage<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsAppMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_To(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsAppMessage<D>::To(hstring_ref value) const
+template <typename D> void impl_ISmsAppMessage<D>::To(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_To(get(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_To(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsAppMessage<D>::From() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_From(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_From(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsAppMessage<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_Body(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsAppMessage<D>::Body(hstring_ref value) const
+template <typename D> void impl_ISmsAppMessage<D>::Body(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_Body(get(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_Body(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsAppMessage<D>::CallbackNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_CallbackNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_CallbackNumber(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsAppMessage<D>::CallbackNumber(hstring_ref value) const
+template <typename D> void impl_ISmsAppMessage<D>::CallbackNumber(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_CallbackNumber(get(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_CallbackNumber(get_abi(value)));
 }
 
 template <typename D> bool impl_ISmsAppMessage<D>::IsDeliveryNotificationEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_IsDeliveryNotificationEnabled(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_IsDeliveryNotificationEnabled(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::IsDeliveryNotificationEnabled(bool value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_IsDeliveryNotificationEnabled(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_IsDeliveryNotificationEnabled(value));
 }
 
 template <typename D> int32_t impl_ISmsAppMessage<D>::RetryAttemptCount() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_RetryAttemptCount(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_RetryAttemptCount(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::RetryAttemptCount(int32_t value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_RetryAttemptCount(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_RetryAttemptCount(value));
 }
 
 template <typename D> Windows::Devices::Sms::SmsEncoding impl_ISmsAppMessage<D>::Encoding() const
 {
     Windows::Devices::Sms::SmsEncoding value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_Encoding(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_Encoding(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::Encoding(Windows::Devices::Sms::SmsEncoding value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_Encoding(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_Encoding(value));
 }
 
 template <typename D> int32_t impl_ISmsAppMessage<D>::PortNumber() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_PortNumber(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_PortNumber(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::PortNumber(int32_t value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_PortNumber(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_PortNumber(value));
 }
 
 template <typename D> int32_t impl_ISmsAppMessage<D>::TeleserviceId() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_TeleserviceId(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_TeleserviceId(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::TeleserviceId(int32_t value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_TeleserviceId(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_TeleserviceId(value));
 }
 
 template <typename D> int32_t impl_ISmsAppMessage<D>::ProtocolId() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_ProtocolId(&value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_ProtocolId(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::ProtocolId(int32_t value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_ProtocolId(value));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_ProtocolId(value));
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_ISmsAppMessage<D>::BinaryBody() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->get_BinaryBody(put(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->get_BinaryBody(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISmsAppMessage<D>::BinaryBody(const Windows::Storage::Streams::IBuffer & value) const
 {
-    check_hresult(static_cast<const ISmsAppMessage &>(static_cast<const D &>(*this))->put_BinaryBody(get(value)));
+    check_hresult(WINRT_SHIM(ISmsAppMessage)->put_BinaryBody(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsBroadcastMessage<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsBroadcastMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_To(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsBroadcastMessage<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_Body(put_abi(value)));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsBroadcastMessage<D>::Channel() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_Channel(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_Channel(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsGeographicalScope impl_ISmsBroadcastMessage<D>::GeographicalScope() const
 {
     Windows::Devices::Sms::SmsGeographicalScope value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_GeographicalScope(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_GeographicalScope(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsBroadcastMessage<D>::MessageCode() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_MessageCode(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_MessageCode(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsBroadcastMessage<D>::UpdateNumber() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_UpdateNumber(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_UpdateNumber(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsBroadcastType impl_ISmsBroadcastMessage<D>::BroadcastType() const
 {
     Windows::Devices::Sms::SmsBroadcastType value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_BroadcastType(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_BroadcastType(&value));
     return value;
 }
 
 template <typename D> bool impl_ISmsBroadcastMessage<D>::IsEmergencyAlert() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_IsEmergencyAlert(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_IsEmergencyAlert(&value));
     return value;
 }
 
 template <typename D> bool impl_ISmsBroadcastMessage<D>::IsUserPopupRequested() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsBroadcastMessage &>(static_cast<const D &>(*this))->get_IsUserPopupRequested(&value));
+    check_hresult(WINRT_SHIM(ISmsBroadcastMessage)->get_IsUserPopupRequested(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsVoicemailMessage<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsVoicemailMessage &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsVoicemailMessage)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsVoicemailMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsVoicemailMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsVoicemailMessage)->get_To(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsVoicemailMessage<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsVoicemailMessage &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsVoicemailMessage)->get_Body(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<int32_t> impl_ISmsVoicemailMessage<D>::MessageCount() const
 {
     Windows::Foundation::IReference<int32_t> value;
-    check_hresult(static_cast<const ISmsVoicemailMessage &>(static_cast<const D &>(*this))->get_MessageCount(put(value)));
+    check_hresult(WINRT_SHIM(ISmsVoicemailMessage)->get_MessageCount(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsStatusMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_To(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsStatusMessage<D>::From() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_From(put(value)));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_From(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsStatusMessage<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_Body(put_abi(value)));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsStatusMessage<D>::Status() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_Status(&value));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_Status(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsStatusMessage<D>::MessageReferenceNumber() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_MessageReferenceNumber(&value));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_MessageReferenceNumber(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsStatusMessage<D>::ServiceCenterTimestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_ServiceCenterTimestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_ServiceCenterTimestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsStatusMessage<D>::DischargeTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsStatusMessage &>(static_cast<const D &>(*this))->get_DischargeTime(put(value)));
+    check_hresult(WINRT_SHIM(ISmsStatusMessage)->get_DischargeTime(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_ISmsSendMessageResult<D>::IsSuccessful() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_IsSuccessful(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_IsSuccessful(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<int32_t> impl_ISmsSendMessageResult<D>::MessageReferenceNumbers() const
 {
     Windows::Foundation::Collections::IVectorView<int32_t> value;
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_MessageReferenceNumbers(put(value)));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_MessageReferenceNumbers(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsSendMessageResult<D>::CellularClass() const
 {
     Windows::Devices::Sms::CellularClass value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_CellularClass(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_CellularClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsModemErrorCode impl_ISmsSendMessageResult<D>::ModemErrorCode() const
 {
     Windows::Devices::Sms::SmsModemErrorCode value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_ModemErrorCode(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_ModemErrorCode(&value));
     return value;
 }
 
 template <typename D> bool impl_ISmsSendMessageResult<D>::IsErrorTransient() const
 {
     bool value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_IsErrorTransient(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_IsErrorTransient(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsSendMessageResult<D>::NetworkCauseCode() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_NetworkCauseCode(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_NetworkCauseCode(&value));
     return value;
 }
 
 template <typename D> int32_t impl_ISmsSendMessageResult<D>::TransportFailureCause() const
 {
     int32_t value {};
-    check_hresult(static_cast<const ISmsSendMessageResult &>(static_cast<const D &>(*this))->get_TransportFailureCause(&value));
+    check_hresult(WINRT_SHIM(ISmsSendMessageResult)->get_TransportFailureCause(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISmsDevice2Statics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice2Statics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2Statics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Devices::Sms::SmsDevice2 impl_ISmsDevice2Statics<D>::FromId(hstring_ref deviceId) const
+template <typename D> Windows::Devices::Sms::SmsDevice2 impl_ISmsDevice2Statics<D>::FromId(hstring_view deviceId) const
 {
     Windows::Devices::Sms::SmsDevice2 value { nullptr };
-    check_hresult(static_cast<const ISmsDevice2Statics &>(static_cast<const D &>(*this))->abi_FromId(get(deviceId), put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2Statics)->abi_FromId(get_abi(deviceId), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsDevice2 impl_ISmsDevice2Statics<D>::GetDefault() const
 {
     Windows::Devices::Sms::SmsDevice2 value { nullptr };
-    check_hresult(static_cast<const ISmsDevice2Statics &>(static_cast<const D &>(*this))->abi_GetDefault(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2Statics)->abi_GetDefault(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Devices::Sms::SmsDevice2 impl_ISmsDevice2Statics<D>::FromParentId(hstring_ref parentDeviceId) const
+template <typename D> Windows::Devices::Sms::SmsDevice2 impl_ISmsDevice2Statics<D>::FromParentId(hstring_view parentDeviceId) const
 {
     Windows::Devices::Sms::SmsDevice2 value { nullptr };
-    check_hresult(static_cast<const ISmsDevice2Statics &>(static_cast<const D &>(*this))->abi_FromParentId(get(parentDeviceId), put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2Statics)->abi_FromParentId(get_abi(parentDeviceId), put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsDevice2<D>::SmscAddress() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_SmscAddress(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_SmscAddress(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsDevice2<D>::SmscAddress(hstring_ref value) const
+template <typename D> void impl_ISmsDevice2<D>::SmscAddress(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->put_SmscAddress(get(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->put_SmscAddress(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsDevice2<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsDevice2<D>::ParentDeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_ParentDeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_ParentDeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsDevice2<D>::AccountPhoneNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_AccountPhoneNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_AccountPhoneNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsDevice2<D>::CellularClass() const
 {
     Windows::Devices::Sms::CellularClass value {};
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_CellularClass(&value));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_CellularClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsDeviceStatus impl_ISmsDevice2<D>::DeviceStatus() const
 {
     Windows::Devices::Sms::SmsDeviceStatus value {};
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->get_DeviceStatus(&value));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->get_DeviceStatus(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsEncodedLength impl_ISmsDevice2<D>::CalculateLength(const Windows::Devices::Sms::ISmsMessageBase & message) const
 {
     Windows::Devices::Sms::SmsEncodedLength value {};
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->abi_CalculateLength(get(message), put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->abi_CalculateLength(get_abi(message), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsSendMessageResult> impl_ISmsDevice2<D>::SendMessageAndGetResultAsync(const Windows::Devices::Sms::ISmsMessageBase & message) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsSendMessageResult> asyncInfo;
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->abi_SendMessageAndGetResultAsync(get(message), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->abi_SendMessageAndGetResultAsync(get_abi(message), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
-template <typename D> event_token impl_ISmsDevice2<D>::DeviceStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> & eventHandler) const
+template <typename D> event_token impl_ISmsDevice2<D>::DeviceStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable> & eventHandler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->add_DeviceStatusChanged(get(eventHandler), &eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->add_DeviceStatusChanged(get_abi(eventHandler), &eventCookie));
     return eventCookie;
 }
 
-template <typename D> event_revoker<ISmsDevice2> impl_ISmsDevice2<D>::DeviceStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> & eventHandler) const
+template <typename D> event_revoker<ISmsDevice2> impl_ISmsDevice2<D>::DeviceStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable> & eventHandler) const
 {
     return impl::make_event_revoker<D, ISmsDevice2>(this, &ABI::Windows::Devices::Sms::ISmsDevice2::remove_DeviceStatusChanged, DeviceStatusChanged(eventHandler));
 }
 
 template <typename D> void impl_ISmsDevice2<D>::DeviceStatusChanged(event_token eventCookie) const
 {
-    check_hresult(static_cast<const ISmsDevice2 &>(static_cast<const D &>(*this))->remove_DeviceStatusChanged(eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice2)->remove_DeviceStatusChanged(eventCookie));
 }
 
 template <typename D> Windows::Devices::Sms::SmsMessageType impl_ISmsMessageReceivedTriggerDetails<D>::MessageType() const
 {
     Windows::Devices::Sms::SmsMessageType value {};
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_MessageType(&value));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_MessageType(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsTextMessage2 impl_ISmsMessageReceivedTriggerDetails<D>::TextMessage() const
 {
     Windows::Devices::Sms::SmsTextMessage2 value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_TextMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_TextMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsWapMessage impl_ISmsMessageReceivedTriggerDetails<D>::WapMessage() const
 {
     Windows::Devices::Sms::SmsWapMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_WapMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_WapMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsAppMessage impl_ISmsMessageReceivedTriggerDetails<D>::AppMessage() const
 {
     Windows::Devices::Sms::SmsAppMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_AppMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_AppMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsBroadcastMessage impl_ISmsMessageReceivedTriggerDetails<D>::BroadcastMessage() const
 {
     Windows::Devices::Sms::SmsBroadcastMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_BroadcastMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_BroadcastMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsVoicemailMessage impl_ISmsMessageReceivedTriggerDetails<D>::VoicemailMessage() const
 {
     Windows::Devices::Sms::SmsVoicemailMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_VoicemailMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_VoicemailMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsStatusMessage impl_ISmsMessageReceivedTriggerDetails<D>::StatusMessage() const
 {
     Windows::Devices::Sms::SmsStatusMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->get_StatusMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->get_StatusMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISmsMessageReceivedTriggerDetails<D>::Drop() const
 {
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->abi_Drop());
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->abi_Drop());
 }
 
 template <typename D> void impl_ISmsMessageReceivedTriggerDetails<D>::Accept() const
 {
-    check_hresult(static_cast<const ISmsMessageReceivedTriggerDetails &>(static_cast<const D &>(*this))->abi_Accept());
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedTriggerDetails)->abi_Accept());
 }
 
 template <typename D> Windows::Devices::Sms::SmsMessageType impl_ISmsFilterRule<D>::MessageType() const
 {
     Windows::Devices::Sms::SmsMessageType value {};
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_MessageType(&value));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_MessageType(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::ImsiPrefixes() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_ImsiPrefixes(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_ImsiPrefixes(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::DeviceIds() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_DeviceIds(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_DeviceIds(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::SenderNumbers() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_SenderNumbers(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_SenderNumbers(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::TextMessagePrefixes() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_TextMessagePrefixes(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_TextMessagePrefixes(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<int32_t> impl_ISmsFilterRule<D>::PortNumbers() const
 {
     Windows::Foundation::Collections::IVector<int32_t> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_PortNumbers(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_PortNumbers(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsFilterRule<D>::CellularClass() const
 {
     Windows::Devices::Sms::CellularClass value {};
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_CellularClass(&value));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_CellularClass(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsFilterRule<D>::CellularClass(Windows::Devices::Sms::CellularClass value) const
 {
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->put_CellularClass(value));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->put_CellularClass(value));
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<int32_t> impl_ISmsFilterRule<D>::ProtocolIds() const
 {
     Windows::Foundation::Collections::IVector<int32_t> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_ProtocolIds(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_ProtocolIds(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<int32_t> impl_ISmsFilterRule<D>::TeleserviceIds() const
 {
     Windows::Foundation::Collections::IVector<int32_t> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_TeleserviceIds(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_TeleserviceIds(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::WapApplicationIds() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_WapApplicationIds(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_WapApplicationIds(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ISmsFilterRule<D>::WapContentTypes() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_WapContentTypes(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_WapContentTypes(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sms::SmsBroadcastType> impl_ISmsFilterRule<D>::BroadcastTypes() const
 {
     Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sms::SmsBroadcastType> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_BroadcastTypes(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_BroadcastTypes(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<int32_t> impl_ISmsFilterRule<D>::BroadcastChannels() const
 {
     Windows::Foundation::Collections::IVector<int32_t> value;
-    check_hresult(static_cast<const ISmsFilterRule &>(static_cast<const D &>(*this))->get_BroadcastChannels(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRule)->get_BroadcastChannels(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsFilterRule impl_ISmsFilterRuleFactory<D>::CreateFilterRule(Windows::Devices::Sms::SmsMessageType messageType) const
 {
     Windows::Devices::Sms::SmsFilterRule value { nullptr };
-    check_hresult(static_cast<const ISmsFilterRuleFactory &>(static_cast<const D &>(*this))->abi_CreateFilterRule(messageType, put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRuleFactory)->abi_CreateFilterRule(messageType, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsFilterActionType impl_ISmsFilterRules<D>::ActionType() const
 {
     Windows::Devices::Sms::SmsFilterActionType value {};
-    check_hresult(static_cast<const ISmsFilterRules &>(static_cast<const D &>(*this))->get_ActionType(&value));
+    check_hresult(WINRT_SHIM(ISmsFilterRules)->get_ActionType(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<Windows::Devices::Sms::SmsFilterRule> impl_ISmsFilterRules<D>::Rules() const
 {
     Windows::Foundation::Collections::IVector<Windows::Devices::Sms::SmsFilterRule> value;
-    check_hresult(static_cast<const ISmsFilterRules &>(static_cast<const D &>(*this))->get_Rules(put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRules)->get_Rules(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsFilterRules impl_ISmsFilterRulesFactory<D>::CreateFilterRules(Windows::Devices::Sms::SmsFilterActionType actionType) const
 {
     Windows::Devices::Sms::SmsFilterRules value { nullptr };
-    check_hresult(static_cast<const ISmsFilterRulesFactory &>(static_cast<const D &>(*this))->abi_CreateFilterRules(actionType, put(value)));
+    check_hresult(WINRT_SHIM(ISmsFilterRulesFactory)->abi_CreateFilterRules(actionType, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsMessageRegistration> impl_ISmsMessageRegistrationStatics<D>::AllRegistrations() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsMessageRegistration> value;
-    check_hresult(static_cast<const ISmsMessageRegistrationStatics &>(static_cast<const D &>(*this))->get_AllRegistrations(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageRegistrationStatics)->get_AllRegistrations(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Devices::Sms::SmsMessageRegistration impl_ISmsMessageRegistrationStatics<D>::Register(hstring_ref id, const Windows::Devices::Sms::SmsFilterRules & filterRules) const
+template <typename D> Windows::Devices::Sms::SmsMessageRegistration impl_ISmsMessageRegistrationStatics<D>::Register(hstring_view id, const Windows::Devices::Sms::SmsFilterRules & filterRules) const
 {
     Windows::Devices::Sms::SmsMessageRegistration value { nullptr };
-    check_hresult(static_cast<const ISmsMessageRegistrationStatics &>(static_cast<const D &>(*this))->abi_Register(get(id), get(filterRules), put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageRegistrationStatics)->abi_Register(get_abi(id), get_abi(filterRules), put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsMessageRegistration<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsMessageRegistration &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageRegistration)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISmsMessageRegistration<D>::Unregister() const
 {
-    check_hresult(static_cast<const ISmsMessageRegistration &>(static_cast<const D &>(*this))->abi_Unregister());
+    check_hresult(WINRT_SHIM(ISmsMessageRegistration)->abi_Unregister());
 }
 
 template <typename D> event_token impl_ISmsMessageRegistration<D>::MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails> & eventHandler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const ISmsMessageRegistration &>(static_cast<const D &>(*this))->add_MessageReceived(get(eventHandler), &eventCookie));
+    check_hresult(WINRT_SHIM(ISmsMessageRegistration)->add_MessageReceived(get_abi(eventHandler), &eventCookie));
     return eventCookie;
 }
 
@@ -3328,267 +3503,267 @@ template <typename D> event_revoker<ISmsMessageRegistration> impl_ISmsMessageReg
 
 template <typename D> void impl_ISmsMessageRegistration<D>::MessageReceived(event_token eventCookie) const
 {
-    check_hresult(static_cast<const ISmsMessageRegistration &>(static_cast<const D &>(*this))->remove_MessageReceived(eventCookie));
+    check_hresult(WINRT_SHIM(ISmsMessageRegistration)->remove_MessageReceived(eventCookie));
 }
 
 template <typename D> uint32_t impl_ISmsMessage<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsMessage &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(ISmsMessage)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsMessage<D>::MessageClass() const
 {
     Windows::Devices::Sms::SmsMessageClass value {};
-    check_hresult(static_cast<const ISmsMessage &>(static_cast<const D &>(*this))->get_MessageClass(&value));
+    check_hresult(WINRT_SHIM(ISmsMessage)->get_MessageClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsDataFormat impl_ISmsBinaryMessage<D>::Format() const
 {
     Windows::Devices::Sms::SmsDataFormat value {};
-    check_hresult(static_cast<const ISmsBinaryMessage &>(static_cast<const D &>(*this))->get_Format(&value));
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->get_Format(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsBinaryMessage<D>::Format(Windows::Devices::Sms::SmsDataFormat value) const
 {
-    check_hresult(static_cast<const ISmsBinaryMessage &>(static_cast<const D &>(*this))->put_Format(value));
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->put_Format(value));
 }
 
 template <typename D> com_array<uint8_t> impl_ISmsBinaryMessage<D>::GetData() const
 {
     com_array<uint8_t> value {};
-    check_hresult(static_cast<const ISmsBinaryMessage &>(static_cast<const D &>(*this))->abi_GetData(put_size(value), put(value)));
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_GetData(impl::put_size_abi(value), put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsBinaryMessage<D>::SetData(array_ref<const uint8_t> value) const
+template <typename D> void impl_ISmsBinaryMessage<D>::SetData(array_view<const uint8_t> value) const
 {
-    check_hresult(static_cast<const ISmsBinaryMessage &>(static_cast<const D &>(*this))->abi_SetData(value.size(), get(value)));
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_SetData(value.size(), get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISmsTextMessage<D>::Timestamp() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_Timestamp(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Timestamp(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ISmsTextMessage<D>::PartReferenceId() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_PartReferenceId(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartReferenceId(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISmsTextMessage<D>::PartNumber() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_PartNumber(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartNumber(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISmsTextMessage<D>::PartCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_PartCount(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartCount(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISmsTextMessage<D>::To() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_To(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_To(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage<D>::To(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage<D>::To(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->put_To(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_To(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsTextMessage<D>::From() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_From(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_From(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage<D>::From(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage<D>::From(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->put_From(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_From(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISmsTextMessage<D>::Body() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_Body(put(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Body(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISmsTextMessage<D>::Body(hstring_ref value) const
+template <typename D> void impl_ISmsTextMessage<D>::Body(hstring_view value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->put_Body(get(value)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Body(get_abi(value)));
 }
 
 template <typename D> Windows::Devices::Sms::SmsEncoding impl_ISmsTextMessage<D>::Encoding() const
 {
     Windows::Devices::Sms::SmsEncoding value {};
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->get_Encoding(&value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Encoding(&value));
     return value;
 }
 
 template <typename D> void impl_ISmsTextMessage<D>::Encoding(Windows::Devices::Sms::SmsEncoding value) const
 {
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->put_Encoding(value));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Encoding(value));
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> impl_ISmsTextMessage<D>::ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> messages;
-    check_hresult(static_cast<const ISmsTextMessage &>(static_cast<const D &>(*this))->abi_ToBinaryMessages(format, put(messages)));
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->abi_ToBinaryMessages(format, put_abi(messages)));
     return messages;
 }
 
 template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryMessage(const Windows::Devices::Sms::SmsBinaryMessage & binaryMessage) const
 {
     Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
-    check_hresult(static_cast<const ISmsTextMessageStatics &>(static_cast<const D &>(*this))->abi_FromBinaryMessage(get(binaryMessage), put(textMessage)));
+    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryMessage(get_abi(binaryMessage), put_abi(textMessage)));
     return textMessage;
 }
 
-template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_ref<const uint8_t> value) const
+template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_view<const uint8_t> value) const
 {
     Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
-    check_hresult(static_cast<const ISmsTextMessageStatics &>(static_cast<const D &>(*this))->abi_FromBinaryData(format, value.size(), get(value), put(textMessage)));
+    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryData(format, value.size(), get_abi(value), put_abi(textMessage)));
     return textMessage;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessageAsync(uint32_t messageId) const
 {
     Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceMessageStore &>(static_cast<const D &>(*this))->abi_DeleteMessageAsync(messageId, put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessageAsync(messageId, put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
 {
     Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceMessageStore &>(static_cast<const D &>(*this))->abi_DeleteMessagesAsync(messageFilter, put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessagesAsync(messageFilter, put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> impl_ISmsDeviceMessageStore<D>::GetMessageAsync(uint32_t messageId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceMessageStore &>(static_cast<const D &>(*this))->abi_GetMessageAsync(messageId, put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessageAsync(messageId, put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> impl_ISmsDeviceMessageStore<D>::GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
 {
     Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceMessageStore &>(static_cast<const D &>(*this))->abi_GetMessagesAsync(messageFilter, put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessagesAsync(messageFilter, put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> uint32_t impl_ISmsDeviceMessageStore<D>::MaxMessages() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsDeviceMessageStore &>(static_cast<const D &>(*this))->get_MaxMessages(&value));
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->get_MaxMessages(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsMessageReceivedEventArgs<D>::TextMessage() const
 {
     Windows::Devices::Sms::SmsTextMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedEventArgs &>(static_cast<const D &>(*this))->get_TextMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_TextMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsMessageReceivedEventArgs<D>::BinaryMessage() const
 {
     Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
-    check_hresult(static_cast<const ISmsMessageReceivedEventArgs &>(static_cast<const D &>(*this))->get_BinaryMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_BinaryMessage(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISmsDeviceStatics<D>::GetDeviceSelector() const
 {
     hstring phstrDeviceClassSelector;
-    check_hresult(static_cast<const ISmsDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(phstrDeviceClassSelector)));
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDeviceSelector(put_abi(phstrDeviceClassSelector)));
     return phstrDeviceClassSelector;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::FromIdAsync(hstring_ref deviceId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::FromIdAsync(hstring_view deviceId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::GetDefaultAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDefaultAsync(put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDefaultAsync(put_abi(asyncInfo)));
     return asyncInfo;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics2<D>::FromNetworkAccountIdAsync(hstring_ref networkAccountId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics2<D>::FromNetworkAccountIdAsync(hstring_view networkAccountId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(static_cast<const ISmsDeviceStatics2 &>(static_cast<const D &>(*this))->abi_FromNetworkAccountIdAsync(get(networkAccountId), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics2)->abi_FromNetworkAccountIdAsync(get_abi(networkAccountId), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Devices::Sms::SendSmsMessageOperation impl_ISmsDevice<D>::SendMessageAsync(const Windows::Devices::Sms::ISmsMessage & message) const
 {
     Windows::Devices::Sms::SendSmsMessageOperation asyncInfo { nullptr };
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->abi_SendMessageAsync(get(message), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(ISmsDevice)->abi_SendMessageAsync(get_abi(message), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Devices::Sms::SmsEncodedLength impl_ISmsDevice<D>::CalculateLength(const Windows::Devices::Sms::SmsTextMessage & message) const
 {
     Windows::Devices::Sms::SmsEncodedLength encodedLength {};
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->abi_CalculateLength(get(message), put(encodedLength)));
+    check_hresult(WINRT_SHIM(ISmsDevice)->abi_CalculateLength(get_abi(message), put_abi(encodedLength)));
     return encodedLength;
 }
 
 template <typename D> hstring impl_ISmsDevice<D>::AccountPhoneNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->get_AccountPhoneNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_AccountPhoneNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsDevice<D>::CellularClass() const
 {
     Windows::Devices::Sms::CellularClass value {};
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->get_CellularClass(&value));
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_CellularClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsDeviceMessageStore impl_ISmsDevice<D>::MessageStore() const
 {
     Windows::Devices::Sms::SmsDeviceMessageStore value { nullptr };
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->get_MessageStore(put(value)));
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_MessageStore(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsDeviceStatus impl_ISmsDevice<D>::DeviceStatus() const
 {
     Windows::Devices::Sms::SmsDeviceStatus value {};
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->get_DeviceStatus(&value));
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_DeviceStatus(&value));
     return value;
 }
 
 template <typename D> event_token impl_ISmsDevice<D>::SmsMessageReceived(const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->add_SmsMessageReceived(get(eventHandler), &eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsMessageReceived(get_abi(eventHandler), &eventCookie));
     return eventCookie;
 }
 
@@ -3599,13 +3774,13 @@ template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsMessageRe
 
 template <typename D> void impl_ISmsDevice<D>::SmsMessageReceived(event_token eventCookie) const
 {
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->remove_SmsMessageReceived(eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsMessageReceived(eventCookie));
 }
 
 template <typename D> event_token impl_ISmsDevice<D>::SmsDeviceStatusChanged(const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->add_SmsDeviceStatusChanged(get(eventHandler), &eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsDeviceStatusChanged(get_abi(eventHandler), &eventCookie));
     return eventCookie;
 }
 
@@ -3616,34 +3791,34 @@ template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsDeviceSta
 
 template <typename D> void impl_ISmsDevice<D>::SmsDeviceStatusChanged(event_token eventCookie) const
 {
-    check_hresult(static_cast<const ISmsDevice &>(static_cast<const D &>(*this))->remove_SmsDeviceStatusChanged(eventCookie));
+    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsDeviceStatusChanged(eventCookie));
 }
 
 template <typename D> hstring impl_ISmsReceivedEventDetails<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ISmsReceivedEventDetails &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ISmsReceivedEventDetails<D>::MessageIndex() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISmsReceivedEventDetails &>(static_cast<const D &>(*this))->get_MessageIndex(&value));
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_MessageIndex(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsReceivedEventDetails2<D>::MessageClass() const
 {
     Windows::Devices::Sms::SmsMessageClass value {};
-    check_hresult(static_cast<const ISmsReceivedEventDetails2 &>(static_cast<const D &>(*this))->get_MessageClass(&value));
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_MessageClass(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsReceivedEventDetails2<D>::BinaryMessage() const
 {
     Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
-    check_hresult(static_cast<const ISmsReceivedEventDetails2 &>(static_cast<const D &>(*this))->get_BinaryMessage(put(value)));
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_BinaryMessage(put_abi(value)));
     return value;
 }
 
@@ -3660,7 +3835,7 @@ inline hstring SmsDevice::GetDeviceSelector()
     return get_activation_factory<SmsDevice, ISmsDeviceStatics>().GetDeviceSelector();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> SmsDevice::FromIdAsync(hstring_ref deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> SmsDevice::FromIdAsync(hstring_view deviceId)
 {
     return get_activation_factory<SmsDevice, ISmsDeviceStatics>().FromIdAsync(deviceId);
 }
@@ -3670,7 +3845,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> Sm
     return get_activation_factory<SmsDevice, ISmsDeviceStatics>().GetDefaultAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> SmsDevice::FromNetworkAccountIdAsync(hstring_ref networkAccountId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> SmsDevice::FromNetworkAccountIdAsync(hstring_view networkAccountId)
 {
     return get_activation_factory<SmsDevice, ISmsDeviceStatics2>().FromNetworkAccountIdAsync(networkAccountId);
 }
@@ -3680,7 +3855,7 @@ inline hstring SmsDevice2::GetDeviceSelector()
     return get_activation_factory<SmsDevice2, ISmsDevice2Statics>().GetDeviceSelector();
 }
 
-inline Windows::Devices::Sms::SmsDevice2 SmsDevice2::FromId(hstring_ref deviceId)
+inline Windows::Devices::Sms::SmsDevice2 SmsDevice2::FromId(hstring_view deviceId)
 {
     return get_activation_factory<SmsDevice2, ISmsDevice2Statics>().FromId(deviceId);
 }
@@ -3690,7 +3865,7 @@ inline Windows::Devices::Sms::SmsDevice2 SmsDevice2::GetDefault()
     return get_activation_factory<SmsDevice2, ISmsDevice2Statics>().GetDefault();
 }
 
-inline Windows::Devices::Sms::SmsDevice2 SmsDevice2::FromParentId(hstring_ref parentDeviceId)
+inline Windows::Devices::Sms::SmsDevice2 SmsDevice2::FromParentId(hstring_view parentDeviceId)
 {
     return get_activation_factory<SmsDevice2, ISmsDevice2Statics>().FromParentId(parentDeviceId);
 }
@@ -3708,7 +3883,7 @@ inline Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsM
     return get_activation_factory<SmsMessageRegistration, ISmsMessageRegistrationStatics>().AllRegistrations();
 }
 
-inline Windows::Devices::Sms::SmsMessageRegistration SmsMessageRegistration::Register(hstring_ref id, const Windows::Devices::Sms::SmsFilterRules & filterRules)
+inline Windows::Devices::Sms::SmsMessageRegistration SmsMessageRegistration::Register(hstring_view id, const Windows::Devices::Sms::SmsFilterRules & filterRules)
 {
     return get_activation_factory<SmsMessageRegistration, ISmsMessageRegistrationStatics>().Register(id, filterRules);
 }
@@ -3722,7 +3897,7 @@ inline Windows::Devices::Sms::SmsTextMessage SmsTextMessage::FromBinaryMessage(c
     return get_activation_factory<SmsTextMessage, ISmsTextMessageStatics>().FromBinaryMessage(binaryMessage);
 }
 
-inline Windows::Devices::Sms::SmsTextMessage SmsTextMessage::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_ref<const uint8_t> value)
+inline Windows::Devices::Sms::SmsTextMessage SmsTextMessage::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_view<const uint8_t> value)
 {
     return get_activation_factory<SmsTextMessage, ISmsTextMessageStatics>().FromBinaryData(format, value);
 }
@@ -3734,3 +3909,473 @@ inline SmsTextMessage2::SmsTextMessage2() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsAppMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsAppMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsBinaryMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsBinaryMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsBroadcastMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsBroadcastMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDevice2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDevice2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDevice2Statics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDevice2Statics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDeviceMessageStore>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDeviceMessageStore & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDeviceStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDeviceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsDeviceStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsDeviceStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsFilterRule>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsFilterRule & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsFilterRuleFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsFilterRuleFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsFilterRules>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsFilterRules & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsFilterRulesFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsFilterRulesFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessageBase>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessageBase & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessageReceivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessageReceivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessageRegistration>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessageRegistration & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsMessageRegistrationStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsMessageRegistrationStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsReceivedEventDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsReceivedEventDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsReceivedEventDetails2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsReceivedEventDetails2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsSendMessageResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsSendMessageResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsStatusMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsStatusMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsTextMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsTextMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsTextMessage2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsTextMessage2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsTextMessageStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsTextMessageStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsVoicemailMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsVoicemailMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::ISmsWapMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::ISmsWapMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::DeleteSmsMessageOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::DeleteSmsMessageOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::DeleteSmsMessagesOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::DeleteSmsMessagesOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::GetSmsDeviceOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::GetSmsDeviceOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::GetSmsMessageOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::GetSmsMessageOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::GetSmsMessagesOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::GetSmsMessagesOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SendSmsMessageOperation>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SendSmsMessageOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsAppMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsAppMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsBinaryMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsBinaryMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsBroadcastMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsBroadcastMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsDevice2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsDevice2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsDeviceMessageStore>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsDeviceMessageStore & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsFilterRule>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsFilterRule & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsFilterRules>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsFilterRules & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsMessageReceivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsMessageReceivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsMessageReceivedTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsMessageReceivedTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsMessageRegistration>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsMessageRegistration & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsReceivedEventDetails>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsReceivedEventDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsSendMessageResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsSendMessageResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsStatusMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsStatusMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsTextMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsTextMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsTextMessage2>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsTextMessage2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsVoicemailMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsVoicemailMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Sms::SmsWapMessage>
+{
+    size_t operator()(const winrt::Windows::Devices::Sms::SmsWapMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

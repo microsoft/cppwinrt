@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,8 +18,8 @@ struct WINRT_EBO ChatCapabilities :
 struct ChatCapabilitiesManager
 {
     ChatCapabilitiesManager() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCachedCapabilitiesAsync(hstring_ref address);
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCapabilitiesFromNetworkAsync(hstring_ref address);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCachedCapabilitiesAsync(hstring_view address);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCapabilitiesFromNetworkAsync(hstring_view address);
 };
 
 struct WINRT_EBO ChatConversation :
@@ -73,13 +73,13 @@ struct WINRT_EBO ChatMessageAttachment :
     impl::require<ChatMessageAttachment, Windows::ApplicationModel::Chat::IChatMessageAttachment2>
 {
     ChatMessageAttachment(std::nullptr_t) noexcept {}
-    ChatMessageAttachment(hstring_ref mimeType, const Windows::Storage::Streams::IRandomAccessStreamReference & dataStreamReference);
+    ChatMessageAttachment(hstring_view mimeType, const Windows::Storage::Streams::IRandomAccessStreamReference & dataStreamReference);
 };
 
 struct ChatMessageBlocking
 {
     ChatMessageBlocking() = delete;
-    static Windows::Foundation::IAsyncAction MarkMessageAsBlockedAsync(hstring_ref localChatMessageId, bool blocked);
+    static Windows::Foundation::IAsyncAction MarkMessageAsBlockedAsync(hstring_view localChatMessageId, bool blocked);
 };
 
 struct WINRT_EBO ChatMessageChange :
@@ -116,7 +116,7 @@ struct ChatMessageManager
 {
     ChatMessageManager() = delete;
     static Windows::Foundation::IAsyncOperation<hstring> RegisterTransportAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessageTransport> GetTransportAsync(hstring_ref transportId);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessageTransport> GetTransportAsync(hstring_view transportId);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatMessageTransport>> GetTransportsAsync();
     static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessageStore> RequestStoreAsync();
     static Windows::Foundation::IAsyncAction ShowComposeSmsMessageAsync(const Windows::ApplicationModel::Chat::ChatMessage & message);
@@ -239,7 +239,7 @@ struct RcsManager
     RcsManager() = delete;
     static Windows::ApplicationModel::Chat::RcsEndUserMessageManager GetEndUserMessageManager();
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::RcsTransport>> GetTransportsAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::RcsTransport> GetTransportAsync(hstring_ref transportId);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::RcsTransport> GetTransportAsync(hstring_view transportId);
     static Windows::Foundation::IAsyncAction LeaveConversationAsync(const Windows::ApplicationModel::Chat::ChatConversation & conversation);
 };
 

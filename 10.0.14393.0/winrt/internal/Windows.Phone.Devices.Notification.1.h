@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,13 +11,13 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::Devices::Notification {
 
-struct __declspec(uuid("1b4a6595-cfcd-4e08-92fb-c1906d04498c")) __declspec(novtable) IVibrationDevice : Windows::IInspectable
+struct __declspec(uuid("1b4a6595-cfcd-4e08-92fb-c1906d04498c")) __declspec(novtable) IVibrationDevice : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Vibrate(Windows::Foundation::TimeSpan duration) = 0;
     virtual HRESULT __stdcall abi_Cancel() = 0;
 };
 
-struct __declspec(uuid("332fd2f1-1c69-4c91-949e-4bb67a85bdc7")) __declspec(novtable) IVibrationDeviceStatics : Windows::IInspectable
+struct __declspec(uuid("332fd2f1-1c69-4c91-949e-4bb67a85bdc7")) __declspec(novtable) IVibrationDeviceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetDefault(Windows::Phone::Devices::Notification::IVibrationDevice ** result) = 0;
 };
@@ -32,8 +32,18 @@ template <> struct traits<Windows::Phone::Devices::Notification::VibrationDevice
 
 namespace Windows::Phone::Devices::Notification {
 
-template <typename T> struct impl_IVibrationDevice;
-template <typename T> struct impl_IVibrationDeviceStatics;
+template <typename D>
+struct WINRT_EBO impl_IVibrationDevice
+{
+    void Vibrate(const Windows::Foundation::TimeSpan & duration) const;
+    void Cancel() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IVibrationDeviceStatics
+{
+    Windows::Phone::Devices::Notification::VibrationDevice GetDefault() const;
+};
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -20,7 +20,7 @@ struct WINRT_EBO NDCustomData :
     Windows::Media::Protection::PlayReady::INDCustomData
 {
     NDCustomData(std::nullptr_t) noexcept {}
-    NDCustomData(array_ref<const uint8_t> customDataTypeIDBytes, array_ref<const uint8_t> customDataBytes);
+    NDCustomData(array_view<const uint8_t> customDataTypeIDBytes, array_view<const uint8_t> customDataBytes);
 };
 
 struct WINRT_EBO NDDownloadEngineNotifier :
@@ -34,7 +34,7 @@ struct WINRT_EBO NDLicenseFetchDescriptor :
     Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor
 {
     NDLicenseFetchDescriptor(std::nullptr_t) noexcept {}
-    NDLicenseFetchDescriptor(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_ref<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData);
+    NDLicenseFetchDescriptor(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_view<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData);
 };
 
 struct WINRT_EBO NDStorageFileHelper :
@@ -55,7 +55,7 @@ struct WINRT_EBO NDTCPMessenger :
     Windows::Media::Protection::PlayReady::INDMessenger
 {
     NDTCPMessenger(std::nullptr_t) noexcept {}
-    NDTCPMessenger(hstring_ref remoteHostName, uint32_t remoteHostPort);
+    NDTCPMessenger(hstring_view remoteHostName, uint32_t remoteHostPort);
 };
 
 struct WINRT_EBO PlayReadyContentHeader :
@@ -63,10 +63,10 @@ struct WINRT_EBO PlayReadyContentHeader :
     impl::require<PlayReadyContentHeader, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader2>
 {
     PlayReadyContentHeader(std::nullptr_t) noexcept {}
-    PlayReadyContentHeader(array_ref<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId);
-    PlayReadyContentHeader(GUID contentKeyId, hstring_ref contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId);
-    PlayReadyContentHeader(array_ref<const uint8_t> headerBytes);
-    PlayReadyContentHeader(uint32_t dwFlags, array_ref<const GUID> contentKeyIds, array_ref<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId);
+    PlayReadyContentHeader(array_view<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId);
+    PlayReadyContentHeader(GUID contentKeyId, hstring_view contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId);
+    PlayReadyContentHeader(array_view<const uint8_t> headerBytes);
+    PlayReadyContentHeader(uint32_t dwFlags, array_view<const GUID> contentKeyIds, array_view<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId);
 };
 
 struct PlayReadyContentResolver
@@ -181,7 +181,7 @@ struct WINRT_EBO PlayReadySecureStopIterable :
     Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest>
 {
     PlayReadySecureStopIterable(std::nullptr_t) noexcept {}
-    PlayReadySecureStopIterable(array_ref<const uint8_t> publisherCertBytes);
+    PlayReadySecureStopIterable(array_view<const uint8_t> publisherCertBytes);
 };
 
 struct WINRT_EBO PlayReadySecureStopIterator :
@@ -194,8 +194,8 @@ struct WINRT_EBO PlayReadySecureStopServiceRequest :
     Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest
 {
     PlayReadySecureStopServiceRequest(std::nullptr_t) noexcept {}
-    PlayReadySecureStopServiceRequest(array_ref<const uint8_t> publisherCertBytes);
-    PlayReadySecureStopServiceRequest(GUID sessionID, array_ref<const uint8_t> publisherCertBytes);
+    PlayReadySecureStopServiceRequest(array_view<const uint8_t> publisherCertBytes);
+    PlayReadySecureStopServiceRequest(GUID sessionID, array_view<const uint8_t> publisherCertBytes);
 };
 
 struct WINRT_EBO PlayReadySoapMessage :

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -29,6 +29,16 @@ struct IGeofenceStateChangeReport;
 struct Geofence;
 struct GeofenceMonitor;
 struct GeofenceStateChangeReport;
+
+}
+
+namespace Windows::Devices::Geolocation::Geofencing {
+
+template <typename T> struct impl_IGeofence;
+template <typename T> struct impl_IGeofenceFactory;
+template <typename T> struct impl_IGeofenceMonitor;
+template <typename T> struct impl_IGeofenceMonitorStatics;
+template <typename T> struct impl_IGeofenceStateChangeReport;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -40,7 +40,7 @@ struct WINRT_EBO AsymmetricKeyAlgorithmProvider :
     impl::require<AsymmetricKeyAlgorithmProvider, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2>
 {
     AsymmetricKeyAlgorithmProvider(std::nullptr_t) noexcept {}
-    static Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider OpenAlgorithm(hstring_ref algorithm);
+    static Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider OpenAlgorithm(hstring_view algorithm);
 };
 
 struct CryptographicEngine
@@ -143,7 +143,7 @@ struct WINRT_EBO HashAlgorithmProvider :
     Windows::Security::Cryptography::Core::IHashAlgorithmProvider
 {
     HashAlgorithmProvider(std::nullptr_t) noexcept {}
-    static Windows::Security::Cryptography::Core::HashAlgorithmProvider OpenAlgorithm(hstring_ref algorithm);
+    static Windows::Security::Cryptography::Core::HashAlgorithmProvider OpenAlgorithm(hstring_view algorithm);
 };
 
 struct KeyDerivationAlgorithmNames
@@ -175,7 +175,7 @@ struct WINRT_EBO KeyDerivationAlgorithmProvider :
     Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider
 {
     KeyDerivationAlgorithmProvider(std::nullptr_t) noexcept {}
-    static Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider OpenAlgorithm(hstring_ref algorithm);
+    static Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider OpenAlgorithm(hstring_view algorithm);
 };
 
 struct WINRT_EBO KeyDerivationParameters :
@@ -205,14 +205,14 @@ struct WINRT_EBO MacAlgorithmProvider :
     impl::require<MacAlgorithmProvider, Windows::Security::Cryptography::Core::IMacAlgorithmProvider2>
 {
     MacAlgorithmProvider(std::nullptr_t) noexcept {}
-    static Windows::Security::Cryptography::Core::MacAlgorithmProvider OpenAlgorithm(hstring_ref algorithm);
+    static Windows::Security::Cryptography::Core::MacAlgorithmProvider OpenAlgorithm(hstring_view algorithm);
 };
 
 struct PersistedKeyProvider
 {
     PersistedKeyProvider() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> OpenKeyPairFromCertificateAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_ref hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding);
-    static Windows::Security::Cryptography::Core::CryptographicKey OpenPublicKeyFromCertificate(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_ref hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> OpenKeyPairFromCertificateAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding);
+    static Windows::Security::Cryptography::Core::CryptographicKey OpenPublicKeyFromCertificate(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding);
 };
 
 struct SymmetricAlgorithmNames
@@ -243,7 +243,7 @@ struct WINRT_EBO SymmetricKeyAlgorithmProvider :
     Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider
 {
     SymmetricKeyAlgorithmProvider(std::nullptr_t) noexcept {}
-    static Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider OpenAlgorithm(hstring_ref algorithm);
+    static Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider OpenAlgorithm(hstring_view algorithm);
 };
 
 }

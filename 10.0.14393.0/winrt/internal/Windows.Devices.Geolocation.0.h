@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -101,6 +101,37 @@ struct Geoposition;
 struct PositionChangedEventArgs;
 struct StatusChangedEventArgs;
 struct VenueData;
+
+}
+
+namespace Windows::Devices::Geolocation {
+
+template <typename T> struct impl_ICivicAddress;
+template <typename T> struct impl_IGeoboundingBox;
+template <typename T> struct impl_IGeoboundingBoxFactory;
+template <typename T> struct impl_IGeoboundingBoxStatics;
+template <typename T> struct impl_IGeocircle;
+template <typename T> struct impl_IGeocircleFactory;
+template <typename T> struct impl_IGeocoordinate;
+template <typename T> struct impl_IGeocoordinateSatelliteData;
+template <typename T> struct impl_IGeocoordinateWithPoint;
+template <typename T> struct impl_IGeocoordinateWithPositionData;
+template <typename T> struct impl_IGeocoordinateWithPositionSourceTimestamp;
+template <typename T> struct impl_IGeolocator;
+template <typename T> struct impl_IGeolocator2;
+template <typename T> struct impl_IGeolocatorStatics;
+template <typename T> struct impl_IGeolocatorStatics2;
+template <typename T> struct impl_IGeolocatorWithScalarAccuracy;
+template <typename T> struct impl_IGeopath;
+template <typename T> struct impl_IGeopathFactory;
+template <typename T> struct impl_IGeopoint;
+template <typename T> struct impl_IGeopointFactory;
+template <typename T> struct impl_IGeoposition;
+template <typename T> struct impl_IGeoposition2;
+template <typename T> struct impl_IGeoshape;
+template <typename T> struct impl_IPositionChangedEventArgs;
+template <typename T> struct impl_IStatusChangedEventArgs;
+template <typename T> struct impl_IVenueData;
 
 }
 

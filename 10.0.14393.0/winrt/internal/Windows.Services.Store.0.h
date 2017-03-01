@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -120,6 +120,36 @@ struct StoreSendRequestResult;
 struct StoreSku;
 struct StoreSubscriptionInfo;
 struct StoreVideo;
+
+}
+
+namespace Windows::Services::Store {
+
+template <typename T> struct impl_IStoreAcquireLicenseResult;
+template <typename T> struct impl_IStoreAppLicense;
+template <typename T> struct impl_IStoreAvailability;
+template <typename T> struct impl_IStoreCollectionData;
+template <typename T> struct impl_IStoreConsumableResult;
+template <typename T> struct impl_IStoreContext;
+template <typename T> struct impl_IStoreContextStatics;
+template <typename T> struct impl_IStoreImage;
+template <typename T> struct impl_IStoreLicense;
+template <typename T> struct impl_IStorePackageLicense;
+template <typename T> struct impl_IStorePackageUpdate;
+template <typename T> struct impl_IStorePackageUpdateResult;
+template <typename T> struct impl_IStorePrice;
+template <typename T> struct impl_IStoreProduct;
+template <typename T> struct impl_IStoreProductPagedQueryResult;
+template <typename T> struct impl_IStoreProductQueryResult;
+template <typename T> struct impl_IStoreProductResult;
+template <typename T> struct impl_IStorePurchaseProperties;
+template <typename T> struct impl_IStorePurchasePropertiesFactory;
+template <typename T> struct impl_IStorePurchaseResult;
+template <typename T> struct impl_IStoreRequestHelperStatics;
+template <typename T> struct impl_IStoreSendRequestResult;
+template <typename T> struct impl_IStoreSku;
+template <typename T> struct impl_IStoreSubscriptionInfo;
+template <typename T> struct impl_IStoreVideo;
 
 }
 

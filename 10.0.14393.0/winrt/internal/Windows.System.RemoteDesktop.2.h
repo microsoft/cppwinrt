@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,18 +9,11 @@ WINRT_EXPORT namespace winrt {
 
 namespace Windows::System::RemoteDesktop {
 
-template <typename D>
-struct WINRT_EBO impl_IInteractiveSessionStatics
-{
-    bool IsRemote() const;
-};
-
 struct IInteractiveSessionStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInteractiveSessionStatics>
 {
     IInteractiveSessionStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInteractiveSessionStatics>(m_ptr); }
 };
 
 }

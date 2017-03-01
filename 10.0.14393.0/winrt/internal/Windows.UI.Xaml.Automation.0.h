@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -179,6 +179,69 @@ struct TransformPattern2Identifiers;
 struct TransformPatternIdentifiers;
 struct ValuePatternIdentifiers;
 struct WindowPatternIdentifiers;
+
+}
+
+namespace Windows::UI::Xaml::Automation {
+
+template <typename T> struct impl_IAnnotationPatternIdentifiers;
+template <typename T> struct impl_IAnnotationPatternIdentifiersStatics;
+template <typename T> struct impl_IAutomationAnnotation;
+template <typename T> struct impl_IAutomationAnnotationFactory;
+template <typename T> struct impl_IAutomationAnnotationStatics;
+template <typename T> struct impl_IAutomationElementIdentifiers;
+template <typename T> struct impl_IAutomationElementIdentifiersStatics;
+template <typename T> struct impl_IAutomationElementIdentifiersStatics2;
+template <typename T> struct impl_IAutomationElementIdentifiersStatics3;
+template <typename T> struct impl_IAutomationElementIdentifiersStatics4;
+template <typename T> struct impl_IAutomationElementIdentifiersStatics5;
+template <typename T> struct impl_IAutomationProperties;
+template <typename T> struct impl_IAutomationPropertiesStatics;
+template <typename T> struct impl_IAutomationPropertiesStatics2;
+template <typename T> struct impl_IAutomationPropertiesStatics3;
+template <typename T> struct impl_IAutomationPropertiesStatics4;
+template <typename T> struct impl_IAutomationPropertiesStatics5;
+template <typename T> struct impl_IAutomationProperty;
+template <typename T> struct impl_IDockPatternIdentifiers;
+template <typename T> struct impl_IDockPatternIdentifiersStatics;
+template <typename T> struct impl_IDragPatternIdentifiers;
+template <typename T> struct impl_IDragPatternIdentifiersStatics;
+template <typename T> struct impl_IDropTargetPatternIdentifiers;
+template <typename T> struct impl_IDropTargetPatternIdentifiersStatics;
+template <typename T> struct impl_IExpandCollapsePatternIdentifiers;
+template <typename T> struct impl_IExpandCollapsePatternIdentifiersStatics;
+template <typename T> struct impl_IGridItemPatternIdentifiers;
+template <typename T> struct impl_IGridItemPatternIdentifiersStatics;
+template <typename T> struct impl_IGridPatternIdentifiers;
+template <typename T> struct impl_IGridPatternIdentifiersStatics;
+template <typename T> struct impl_IMultipleViewPatternIdentifiers;
+template <typename T> struct impl_IMultipleViewPatternIdentifiersStatics;
+template <typename T> struct impl_IRangeValuePatternIdentifiers;
+template <typename T> struct impl_IRangeValuePatternIdentifiersStatics;
+template <typename T> struct impl_IScrollPatternIdentifiers;
+template <typename T> struct impl_IScrollPatternIdentifiersStatics;
+template <typename T> struct impl_ISelectionItemPatternIdentifiers;
+template <typename T> struct impl_ISelectionItemPatternIdentifiersStatics;
+template <typename T> struct impl_ISelectionPatternIdentifiers;
+template <typename T> struct impl_ISelectionPatternIdentifiersStatics;
+template <typename T> struct impl_ISpreadsheetItemPatternIdentifiers;
+template <typename T> struct impl_ISpreadsheetItemPatternIdentifiersStatics;
+template <typename T> struct impl_IStylesPatternIdentifiers;
+template <typename T> struct impl_IStylesPatternIdentifiersStatics;
+template <typename T> struct impl_ITableItemPatternIdentifiers;
+template <typename T> struct impl_ITableItemPatternIdentifiersStatics;
+template <typename T> struct impl_ITablePatternIdentifiers;
+template <typename T> struct impl_ITablePatternIdentifiersStatics;
+template <typename T> struct impl_ITogglePatternIdentifiers;
+template <typename T> struct impl_ITogglePatternIdentifiersStatics;
+template <typename T> struct impl_ITransformPattern2Identifiers;
+template <typename T> struct impl_ITransformPattern2IdentifiersStatics;
+template <typename T> struct impl_ITransformPatternIdentifiers;
+template <typename T> struct impl_ITransformPatternIdentifiersStatics;
+template <typename T> struct impl_IValuePatternIdentifiers;
+template <typename T> struct impl_IValuePatternIdentifiersStatics;
+template <typename T> struct impl_IWindowPatternIdentifiers;
+template <typename T> struct impl_IWindowPatternIdentifiersStatics;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ struct ApplicationLanguages
 {
     ApplicationLanguages() = delete;
     static hstring PrimaryLanguageOverride();
-    static void PrimaryLanguageOverride(hstring_ref value);
+    static void PrimaryLanguageOverride(hstring_view value);
     static Windows::Foundation::Collections::IVectorView<hstring> Languages();
     static Windows::Foundation::Collections::IVectorView<hstring> ManifestLanguages();
 };
@@ -24,9 +24,9 @@ struct WINRT_EBO Calendar :
 {
     Calendar(std::nullptr_t) noexcept {}
     Calendar();
-    Calendar(const Windows::Foundation::Collections::IIterable<hstring> & languages, hstring_ref calendar, hstring_ref clock, hstring_ref timeZoneId);
-    Calendar(const Windows::Foundation::Collections::IIterable<hstring> & languages);
-    Calendar(const Windows::Foundation::Collections::IIterable<hstring> & languages, hstring_ref calendar, hstring_ref clock);
+    Calendar(iterable<hstring> languages, hstring_view calendar, hstring_view clock, hstring_view timeZoneId);
+    Calendar(iterable<hstring> languages);
+    Calendar(iterable<hstring> languages, hstring_view calendar, hstring_view clock);
 };
 
 struct CalendarIdentifiers
@@ -223,8 +223,8 @@ struct WINRT_EBO GeographicRegion :
 {
     GeographicRegion(std::nullptr_t) noexcept {}
     GeographicRegion();
-    GeographicRegion(hstring_ref geographicRegionCode);
-    static bool IsSupported(hstring_ref geographicRegionCode);
+    GeographicRegion(hstring_view geographicRegionCode);
+    static bool IsSupported(hstring_view geographicRegionCode);
 };
 
 struct WINRT_EBO JapanesePhoneme :
@@ -236,8 +236,8 @@ struct WINRT_EBO JapanesePhoneme :
 struct JapanesePhoneticAnalyzer
 {
     JapanesePhoneticAnalyzer() = delete;
-    static Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> GetWords(hstring_ref input);
-    static Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> GetWords(hstring_ref input, bool monoRuby);
+    static Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> GetWords(hstring_view input);
+    static Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> GetWords(hstring_view input, bool monoRuby);
 };
 
 struct WINRT_EBO Language :
@@ -245,10 +245,10 @@ struct WINRT_EBO Language :
     impl::require<Language, Windows::Globalization::ILanguageExtensionSubtags>
 {
     Language(std::nullptr_t) noexcept {}
-    Language(hstring_ref languageTag);
-    static bool IsWellFormed(hstring_ref languageTag);
+    Language(hstring_view languageTag);
+    static bool IsWellFormed(hstring_view languageTag);
     static hstring CurrentInputMethodLanguageTag();
-    static bool TrySetInputMethodLanguageTag(hstring_ref languageTag);
+    static bool TrySetInputMethodLanguageTag(hstring_view languageTag);
 };
 
 struct NumeralSystemIdentifiers

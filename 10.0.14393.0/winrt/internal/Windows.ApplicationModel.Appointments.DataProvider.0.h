@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -69,6 +69,25 @@ struct AppointmentCalendarUpdateMeetingResponseRequest;
 struct AppointmentCalendarUpdateMeetingResponseRequestEventArgs;
 struct AppointmentDataProviderConnection;
 struct AppointmentDataProviderTriggerDetails;
+
+}
+
+namespace Windows::ApplicationModel::Appointments::DataProvider {
+
+template <typename T> struct impl_IAppointmentCalendarCancelMeetingRequest;
+template <typename T> struct impl_IAppointmentCalendarCancelMeetingRequestEventArgs;
+template <typename T> struct impl_IAppointmentCalendarCreateOrUpdateAppointmentRequest;
+template <typename T> struct impl_IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs;
+template <typename T> struct impl_IAppointmentCalendarForwardMeetingRequest;
+template <typename T> struct impl_IAppointmentCalendarForwardMeetingRequestEventArgs;
+template <typename T> struct impl_IAppointmentCalendarProposeNewTimeForMeetingRequest;
+template <typename T> struct impl_IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs;
+template <typename T> struct impl_IAppointmentCalendarSyncManagerSyncRequest;
+template <typename T> struct impl_IAppointmentCalendarSyncManagerSyncRequestEventArgs;
+template <typename T> struct impl_IAppointmentCalendarUpdateMeetingResponseRequest;
+template <typename T> struct impl_IAppointmentCalendarUpdateMeetingResponseRequestEventArgs;
+template <typename T> struct impl_IAppointmentDataProviderConnection;
+template <typename T> struct impl_IAppointmentDataProviderTriggerDetails;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -44,6 +44,19 @@ struct ITextRange;
 struct ITextSelection;
 struct FontWeights;
 struct TextConstants;
+
+}
+
+namespace Windows::UI::Text {
+
+template <typename T> struct impl_IFontWeights;
+template <typename T> struct impl_IFontWeightsStatics;
+template <typename T> struct impl_ITextCharacterFormat;
+template <typename T> struct impl_ITextConstantsStatics;
+template <typename T> struct impl_ITextDocument;
+template <typename T> struct impl_ITextParagraphFormat;
+template <typename T> struct impl_ITextRange;
+template <typename T> struct impl_ITextSelection;
 
 }
 

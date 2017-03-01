@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -47,6 +47,21 @@ struct INotifyCollectionChanged;
 struct INotifyCollectionChangedEventArgs;
 struct INotifyCollectionChangedEventArgsFactory;
 struct NotifyCollectionChangedEventArgs;
+
+}
+
+namespace Windows::UI::Xaml::Interop {
+
+template <typename T> struct impl_IBindableIterable;
+template <typename T> struct impl_IBindableIterator;
+template <typename T> struct impl_IBindableObservableVector;
+template <typename T> struct impl_IBindableVector;
+template <typename T> struct impl_IBindableVectorView;
+template <typename T> struct impl_INotifyCollectionChanged;
+template <typename T> struct impl_INotifyCollectionChangedEventArgs;
+template <typename T> struct impl_INotifyCollectionChangedEventArgsFactory;
+template <typename T> struct impl_BindableVectorChangedEventHandler;
+template <typename T> struct impl_NotifyCollectionChangedEventHandler;
 
 }
 

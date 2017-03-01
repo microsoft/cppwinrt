@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -54,6 +54,24 @@ struct WalletManager;
 struct WalletRelevantLocation;
 struct WalletTransaction;
 struct WalletVerb;
+
+}
+
+namespace Windows::ApplicationModel::Wallet {
+
+template <typename T> struct impl_IWalletBarcode;
+template <typename T> struct impl_IWalletBarcodeFactory;
+template <typename T> struct impl_IWalletItem;
+template <typename T> struct impl_IWalletItemCustomProperty;
+template <typename T> struct impl_IWalletItemCustomPropertyFactory;
+template <typename T> struct impl_IWalletItemFactory;
+template <typename T> struct impl_IWalletItemStore;
+template <typename T> struct impl_IWalletItemStore2;
+template <typename T> struct impl_IWalletManagerStatics;
+template <typename T> struct impl_IWalletRelevantLocation;
+template <typename T> struct impl_IWalletTransaction;
+template <typename T> struct impl_IWalletVerb;
+template <typename T> struct impl_IWalletVerbFactory;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -59,125 +59,39 @@ template <> struct __declspec(uuid("47415452-db79-567e-84d5-e9912330f944")) __de
 
 namespace Windows::UI::Input::Inking::Core {
 
-template <typename D>
-struct WINRT_EBO impl_ICoreInkIndependentInputSource
-{
-    event_token PointerEntering(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerEntering_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerEntering_revoker PointerEntering(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerEntering(event_token cookie) const;
-    event_token PointerHovering(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerHovering_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerHovering_revoker PointerHovering(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerHovering(event_token cookie) const;
-    event_token PointerExiting(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerExiting_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerExiting_revoker PointerExiting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerExiting(event_token cookie) const;
-    event_token PointerPressing(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerPressing_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerPressing_revoker PointerPressing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerPressing(event_token cookie) const;
-    event_token PointerMoving(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerMoving_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerMoving_revoker PointerMoving(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerMoving(event_token cookie) const;
-    event_token PointerReleasing(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerReleasing_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerReleasing_revoker PointerReleasing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerReleasing(event_token cookie) const;
-    event_token PointerLost(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    using PointerLost_revoker = event_revoker<ICoreInkIndependentInputSource>;
-    PointerLost_revoker PointerLost(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource, Windows::UI::Core::PointerEventArgs> & handler) const;
-    void PointerLost(event_token cookie) const;
-    Windows::UI::Input::Inking::InkPresenter InkPresenter() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreInkIndependentInputSourceStatics
-{
-    Windows::UI::Input::Inking::Core::CoreInkIndependentInputSource Create(const Windows::UI::Input::Inking::InkPresenter & inkPresenter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreWetStrokeUpdateEventArgs
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::Input::Inking::InkPoint> NewInkPoints() const;
-    uint32_t PointerId() const;
-    Windows::UI::Input::Inking::Core::CoreWetStrokeDisposition Disposition() const;
-    void Disposition(Windows::UI::Input::Inking::Core::CoreWetStrokeDisposition value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreWetStrokeUpdateSource
-{
-    event_token WetStrokeStarting(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    using WetStrokeStarting_revoker = event_revoker<ICoreWetStrokeUpdateSource>;
-    WetStrokeStarting_revoker WetStrokeStarting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    void WetStrokeStarting(event_token cookie) const;
-    event_token WetStrokeContinuing(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    using WetStrokeContinuing_revoker = event_revoker<ICoreWetStrokeUpdateSource>;
-    WetStrokeContinuing_revoker WetStrokeContinuing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    void WetStrokeContinuing(event_token cookie) const;
-    event_token WetStrokeStopping(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    using WetStrokeStopping_revoker = event_revoker<ICoreWetStrokeUpdateSource>;
-    WetStrokeStopping_revoker WetStrokeStopping(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    void WetStrokeStopping(event_token cookie) const;
-    event_token WetStrokeCompleted(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    using WetStrokeCompleted_revoker = event_revoker<ICoreWetStrokeUpdateSource>;
-    WetStrokeCompleted_revoker WetStrokeCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    void WetStrokeCompleted(event_token cookie) const;
-    event_token WetStrokeCanceled(const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    using WetStrokeCanceled_revoker = event_revoker<ICoreWetStrokeUpdateSource>;
-    WetStrokeCanceled_revoker WetStrokeCanceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource, Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateEventArgs> & handler) const;
-    void WetStrokeCanceled(event_token cookie) const;
-    Windows::UI::Input::Inking::InkPresenter InkPresenter() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICoreWetStrokeUpdateSourceStatics
-{
-    Windows::UI::Input::Inking::Core::CoreWetStrokeUpdateSource Create(const Windows::UI::Input::Inking::InkPresenter & inkPresenter) const;
-};
-
 struct ICoreInkIndependentInputSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreInkIndependentInputSource>
 {
     ICoreInkIndependentInputSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreInkIndependentInputSource>(m_ptr); }
 };
 
 struct ICoreInkIndependentInputSourceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreInkIndependentInputSourceStatics>
 {
     ICoreInkIndependentInputSourceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreInkIndependentInputSourceStatics>(m_ptr); }
 };
 
 struct ICoreWetStrokeUpdateEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreWetStrokeUpdateEventArgs>
 {
     ICoreWetStrokeUpdateEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreWetStrokeUpdateEventArgs>(m_ptr); }
 };
 
 struct ICoreWetStrokeUpdateSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreWetStrokeUpdateSource>
 {
     ICoreWetStrokeUpdateSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreWetStrokeUpdateSource>(m_ptr); }
 };
 
 struct ICoreWetStrokeUpdateSourceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICoreWetStrokeUpdateSourceStatics>
 {
     ICoreWetStrokeUpdateSourceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICoreWetStrokeUpdateSourceStatics>(m_ptr); }
 };
 
 }

@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Networking.ServiceDiscovery.Dnssd.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -37,7 +37,7 @@ template <> struct __declspec(uuid("e617711e-cdd5-5975-8fb3-8eaaaed24e7b")) __de
 
 #ifndef WINRT_GENERIC_6a6cc5d5_9f43_545a_91d7_3a40055475da
 #define WINRT_GENERIC_6a6cc5d5_9f43_545a_91d7_3a40055475da
-template <> struct __declspec(uuid("6a6cc5d5-9f43-545a-91d7-3a40055475da")) __declspec(novtable) TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> : impl_TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> {};
+template <> struct __declspec(uuid("6a6cc5d5-9f43-545a-91d7-3a40055475da")) __declspec(novtable) TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_0c251e73_52c9_5026_a875_f685a50cbffd
@@ -75,6 +75,11 @@ template <> struct __declspec(uuid("f3632f52-894a-5345-9be6-8389751c5189")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_6fdec6e8_71f2_5821_9955_238d32989f7c
+#define WINRT_GENERIC_6fdec6e8_71f2_5821_9955_238d32989f7c
+template <> struct __declspec(uuid("6fdec6e8-71f2-5821-9955-238d32989f7c")) __declspec(novtable) IVector<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> : impl_IVector<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> {};
+#endif
+
 #ifndef WINRT_GENERIC_bc0cca83_44e5_5544_ab5b_e09d66f5fd5f
 #define WINRT_GENERIC_bc0cca83_44e5_5544_ab5b_e09d66f5fd5f
 template <> struct __declspec(uuid("bc0cca83-44e5-5544-ab5b-e09d66f5fd5f")) __declspec(novtable) IIterator<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> : impl_IIterator<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> {};
@@ -95,90 +100,32 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Networking::ServiceDiscovery::Dnssd {
 
-template <typename D>
-struct WINRT_EBO impl_IDnssdRegistrationResult
-{
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus Status() const;
-    Windows::Networking::HostName IPAddress() const;
-    bool HasInstanceNameChanged() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDnssdServiceInstance
-{
-    hstring DnssdServiceInstanceName() const;
-    void DnssdServiceInstanceName(hstring_ref value) const;
-    Windows::Networking::HostName HostName() const;
-    void HostName(const Windows::Networking::HostName & value) const;
-    uint16_t Port() const;
-    void Port(uint16_t value) const;
-    uint16_t Priority() const;
-    void Priority(uint16_t value) const;
-    uint16_t Weight() const;
-    void Weight(uint16_t value) const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> TextAttributes() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> RegisterStreamSocketListenerAsync(const Windows::Networking::Sockets::StreamSocketListener & socket) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> RegisterStreamSocketListenerAsync(const Windows::Networking::Sockets::StreamSocketListener & socket, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> RegisterDatagramSocketAsync(const Windows::Networking::Sockets::DatagramSocket & socket) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> RegisterDatagramSocketAsync(const Windows::Networking::Sockets::DatagramSocket & socket, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDnssdServiceInstanceFactory
-{
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance Create(hstring_ref dnssdServiceInstanceName, const Windows::Networking::HostName & hostName, uint16_t port) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDnssdServiceWatcher
-{
-    event_token Added(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> & handler) const;
-    using Added_revoker = event_revoker<IDnssdServiceWatcher>;
-    Added_revoker Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> & handler) const;
-    void Added(event_token token) const;
-    event_token EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> & handler) const;
-    using EnumerationCompleted_revoker = event_revoker<IDnssdServiceWatcher>;
-    EnumerationCompleted_revoker EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> & handler) const;
-    void EnumerationCompleted(event_token token) const;
-    event_token Stopped(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> & handler) const;
-    using Stopped_revoker = event_revoker<IDnssdServiceWatcher>;
-    Stopped_revoker Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::IInspectable> & handler) const;
-    void Stopped(event_token token) const;
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus Status() const;
-    void Start() const;
-    void Stop() const;
-};
-
 struct IDnssdRegistrationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDnssdRegistrationResult>
 {
     IDnssdRegistrationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDnssdRegistrationResult>(m_ptr); }
 };
 
 struct IDnssdServiceInstance :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDnssdServiceInstance>
 {
     IDnssdServiceInstance(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDnssdServiceInstance>(m_ptr); }
 };
 
 struct IDnssdServiceInstanceFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDnssdServiceInstanceFactory>
 {
     IDnssdServiceInstanceFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDnssdServiceInstanceFactory>(m_ptr); }
 };
 
 struct IDnssdServiceWatcher :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDnssdServiceWatcher>
 {
     IDnssdServiceWatcher(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDnssdServiceWatcher>(m_ptr); }
 };
 
 }

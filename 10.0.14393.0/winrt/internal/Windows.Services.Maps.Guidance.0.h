@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -67,6 +67,27 @@ struct GuidanceRoadSignpost;
 struct GuidanceRoute;
 struct GuidanceTelemetryCollector;
 struct GuidanceUpdatedEventArgs;
+
+}
+
+namespace Windows::Services::Maps::Guidance {
+
+template <typename T> struct impl_IGuidanceAudioNotificationRequestedEventArgs;
+template <typename T> struct impl_IGuidanceLaneInfo;
+template <typename T> struct impl_IGuidanceManeuver;
+template <typename T> struct impl_IGuidanceMapMatchedCoordinate;
+template <typename T> struct impl_IGuidanceNavigator;
+template <typename T> struct impl_IGuidanceNavigator2;
+template <typename T> struct impl_IGuidanceNavigatorStatics;
+template <typename T> struct impl_IGuidanceNavigatorStatics2;
+template <typename T> struct impl_IGuidanceReroutedEventArgs;
+template <typename T> struct impl_IGuidanceRoadSegment;
+template <typename T> struct impl_IGuidanceRoadSignpost;
+template <typename T> struct impl_IGuidanceRoute;
+template <typename T> struct impl_IGuidanceRouteStatics;
+template <typename T> struct impl_IGuidanceTelemetryCollector;
+template <typename T> struct impl_IGuidanceTelemetryCollectorStatics;
+template <typename T> struct impl_IGuidanceUpdatedEventArgs;
 
 }
 

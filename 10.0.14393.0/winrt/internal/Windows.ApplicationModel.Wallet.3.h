@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ struct WINRT_EBO WalletBarcode :
     Windows::ApplicationModel::Wallet::IWalletBarcode
 {
     WalletBarcode(std::nullptr_t) noexcept {}
-    WalletBarcode(Windows::ApplicationModel::Wallet::WalletBarcodeSymbology symbology, hstring_ref value);
+    WalletBarcode(Windows::ApplicationModel::Wallet::WalletBarcodeSymbology symbology, hstring_view value);
     WalletBarcode(const Windows::Storage::Streams::IRandomAccessStreamReference & streamToBarcodeImage);
 };
 
@@ -21,14 +21,14 @@ struct WINRT_EBO WalletItem :
     Windows::ApplicationModel::Wallet::IWalletItem
 {
     WalletItem(std::nullptr_t) noexcept {}
-    WalletItem(Windows::ApplicationModel::Wallet::WalletItemKind kind, hstring_ref displayName);
+    WalletItem(Windows::ApplicationModel::Wallet::WalletItemKind kind, hstring_view displayName);
 };
 
 struct WINRT_EBO WalletItemCustomProperty :
     Windows::ApplicationModel::Wallet::IWalletItemCustomProperty
 {
     WalletItemCustomProperty(std::nullptr_t) noexcept {}
-    WalletItemCustomProperty(hstring_ref name, hstring_ref value);
+    WalletItemCustomProperty(hstring_view name, hstring_view value);
 };
 
 struct WINRT_EBO WalletItemStore :
@@ -61,7 +61,7 @@ struct WINRT_EBO WalletVerb :
     Windows::ApplicationModel::Wallet::IWalletVerb
 {
     WalletVerb(std::nullptr_t) noexcept {}
-    WalletVerb(hstring_ref name);
+    WalletVerb(hstring_view name);
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -31,6 +31,16 @@ struct AtomPubClient;
 struct ResourceCollection;
 struct ServiceDocument;
 struct Workspace;
+
+}
+
+namespace Windows::Web::AtomPub {
+
+template <typename T> struct impl_IAtomPubClient;
+template <typename T> struct impl_IAtomPubClientFactory;
+template <typename T> struct impl_IResourceCollection;
+template <typename T> struct impl_IServiceDocument;
+template <typename T> struct impl_IWorkspace;
 
 }
 

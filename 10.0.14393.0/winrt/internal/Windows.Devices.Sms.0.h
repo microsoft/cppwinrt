@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -138,6 +138,41 @@ struct SmsWapMessage;
 
 namespace Windows::Devices::Sms {
 
+template <typename T> struct impl_ISmsAppMessage;
+template <typename T> struct impl_ISmsBinaryMessage;
+template <typename T> struct impl_ISmsBroadcastMessage;
+template <typename T> struct impl_ISmsDevice;
+template <typename T> struct impl_ISmsDevice2;
+template <typename T> struct impl_ISmsDevice2Statics;
+template <typename T> struct impl_ISmsDeviceMessageStore;
+template <typename T> struct impl_ISmsDeviceStatics;
+template <typename T> struct impl_ISmsDeviceStatics2;
+template <typename T> struct impl_ISmsFilterRule;
+template <typename T> struct impl_ISmsFilterRuleFactory;
+template <typename T> struct impl_ISmsFilterRules;
+template <typename T> struct impl_ISmsFilterRulesFactory;
+template <typename T> struct impl_ISmsMessage;
+template <typename T> struct impl_ISmsMessageBase;
+template <typename T> struct impl_ISmsMessageReceivedEventArgs;
+template <typename T> struct impl_ISmsMessageReceivedTriggerDetails;
+template <typename T> struct impl_ISmsMessageRegistration;
+template <typename T> struct impl_ISmsMessageRegistrationStatics;
+template <typename T> struct impl_ISmsReceivedEventDetails;
+template <typename T> struct impl_ISmsReceivedEventDetails2;
+template <typename T> struct impl_ISmsSendMessageResult;
+template <typename T> struct impl_ISmsStatusMessage;
+template <typename T> struct impl_ISmsTextMessage;
+template <typename T> struct impl_ISmsTextMessage2;
+template <typename T> struct impl_ISmsTextMessageStatics;
+template <typename T> struct impl_ISmsVoicemailMessage;
+template <typename T> struct impl_ISmsWapMessage;
+template <typename T> struct impl_SmsDeviceStatusChangedEventHandler;
+template <typename T> struct impl_SmsMessageReceivedEventHandler;
+
+}
+
+namespace Windows::Devices::Sms {
+
 enum class CellularClass
 {
     None = 0,
@@ -226,7 +261,7 @@ enum class SmsMessageClass
     Class3 = 4,
 };
 
-enum class SmsMessageFilter
+enum class [[deprecated("SmsMessageFilter may be altered or unavailable for releases after Windows 10.")]] SmsMessageFilter
 {
     All = 0,
     Unread = 1,

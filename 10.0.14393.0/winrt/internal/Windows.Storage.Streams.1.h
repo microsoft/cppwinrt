@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,30 +13,30 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Storage::Streams {
 
-struct __declspec(uuid("905a0fe0-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IBuffer : Windows::IInspectable
+struct __declspec(uuid("905a0fe0-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IBuffer : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Capacity(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_Length(uint32_t * value) = 0;
     virtual HRESULT __stdcall put_Length(uint32_t value) = 0;
 };
 
-struct __declspec(uuid("71af914d-c10f-484b-bc50-14bc623b3a27")) __declspec(novtable) IBufferFactory : Windows::IInspectable
+struct __declspec(uuid("71af914d-c10f-484b-bc50-14bc623b3a27")) __declspec(novtable) IBufferFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(uint32_t capacity, Windows::Storage::Streams::IBuffer ** value) = 0;
 };
 
-struct __declspec(uuid("e901e65b-d716-475a-a90a-af7229b1e741")) __declspec(novtable) IBufferStatics : Windows::IInspectable
+struct __declspec(uuid("e901e65b-d716-475a-a90a-af7229b1e741")) __declspec(novtable) IBufferStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateCopyFromMemoryBuffer(Windows::Foundation::IMemoryBuffer * input, Windows::Storage::Streams::IBuffer ** value) = 0;
     virtual HRESULT __stdcall abi_CreateMemoryBufferOverIBuffer(Windows::Storage::Streams::IBuffer * input, Windows::Foundation::IMemoryBuffer ** value) = 0;
 };
 
-struct __declspec(uuid("97d098a5-3b99-4de9-88a5-e11d2f50c795")) __declspec(novtable) IContentTypeProvider : Windows::IInspectable
+struct __declspec(uuid("97d098a5-3b99-4de9-88a5-e11d2f50c795")) __declspec(novtable) IContentTypeProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContentType(hstring * value) = 0;
 };
 
-struct __declspec(uuid("e2b50029-b4c1-4314-a4b8-fb813a2f275e")) __declspec(novtable) IDataReader : Windows::IInspectable
+struct __declspec(uuid("e2b50029-b4c1-4314-a4b8-fb813a2f275e")) __declspec(novtable) IDataReader : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UnconsumedBufferLength(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding * value) = 0;
@@ -66,17 +66,17 @@ struct __declspec(uuid("e2b50029-b4c1-4314-a4b8-fb813a2f275e")) __declspec(novta
     virtual HRESULT __stdcall abi_DetachStream(Windows::Storage::Streams::IInputStream ** stream) = 0;
 };
 
-struct __declspec(uuid("d7527847-57da-4e15-914c-06806699a098")) __declspec(novtable) IDataReaderFactory : Windows::IInspectable
+struct __declspec(uuid("d7527847-57da-4e15-914c-06806699a098")) __declspec(novtable) IDataReaderFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateDataReader(Windows::Storage::Streams::IInputStream * inputStream, Windows::Storage::Streams::IDataReader ** dataReader) = 0;
 };
 
-struct __declspec(uuid("11fcbfc8-f93a-471b-b121-f379e349313c")) __declspec(novtable) IDataReaderStatics : Windows::IInspectable
+struct __declspec(uuid("11fcbfc8-f93a-471b-b121-f379e349313c")) __declspec(novtable) IDataReaderStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FromBuffer(Windows::Storage::Streams::IBuffer * buffer, Windows::Storage::Streams::IDataReader ** dataReader) = 0;
 };
 
-struct __declspec(uuid("64b89265-d341-4922-b38a-dd4af8808c4e")) __declspec(novtable) IDataWriter : Windows::IInspectable
+struct __declspec(uuid("64b89265-d341-4922-b38a-dd4af8808c4e")) __declspec(novtable) IDataWriter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UnstoredBufferLength(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding * value) = 0;
@@ -107,28 +107,28 @@ struct __declspec(uuid("64b89265-d341-4922-b38a-dd4af8808c4e")) __declspec(novta
     virtual HRESULT __stdcall abi_DetachStream(Windows::Storage::Streams::IOutputStream ** outputStream) = 0;
 };
 
-struct __declspec(uuid("338c67c2-8b84-4c2b-9c50-7b8767847a1f")) __declspec(novtable) IDataWriterFactory : Windows::IInspectable
+struct __declspec(uuid("338c67c2-8b84-4c2b-9c50-7b8767847a1f")) __declspec(novtable) IDataWriterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateDataWriter(Windows::Storage::Streams::IOutputStream * outputStream, Windows::Storage::Streams::IDataWriter ** dataWriter) = 0;
 };
 
-struct __declspec(uuid("905a0fe2-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IInputStream : Windows::IInspectable
+struct __declspec(uuid("905a0fe2-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IInputStream : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ReadAsync(Windows::Storage::Streams::IBuffer * buffer, uint32_t count, winrt::Windows::Storage::Streams::InputStreamOptions options, Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t> ** operation) = 0;
 };
 
-struct __declspec(uuid("43929d18-5ec9-4b5a-919c-4205b0c804b6")) __declspec(novtable) IInputStreamReference : Windows::IInspectable
+struct __declspec(uuid("43929d18-5ec9-4b5a-919c-4205b0c804b6")) __declspec(novtable) IInputStreamReference : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_OpenSequentialReadAsync(Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> ** operation) = 0;
 };
 
-struct __declspec(uuid("905a0fe6-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IOutputStream : Windows::IInspectable
+struct __declspec(uuid("905a0fe6-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IOutputStream : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_WriteAsync(Windows::Storage::Streams::IBuffer * buffer, Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t> ** operation) = 0;
     virtual HRESULT __stdcall abi_FlushAsync(Windows::Foundation::IAsyncOperation<bool> ** operation) = 0;
 };
 
-struct __declspec(uuid("905a0fe1-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IRandomAccessStream : Windows::IInspectable
+struct __declspec(uuid("905a0fe1-bc53-11df-8c49-001e4fc686da")) __declspec(novtable) IRandomAccessStream : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Size(uint64_t * value) = 0;
     virtual HRESULT __stdcall put_Size(uint64_t value) = 0;
@@ -141,26 +141,26 @@ struct __declspec(uuid("905a0fe1-bc53-11df-8c49-001e4fc686da")) __declspec(novta
     virtual HRESULT __stdcall get_CanWrite(bool * value) = 0;
 };
 
-struct __declspec(uuid("33ee3134-1dd6-4e3a-8067-d1c162e8642b")) __declspec(novtable) IRandomAccessStreamReference : Windows::IInspectable
+struct __declspec(uuid("33ee3134-1dd6-4e3a-8067-d1c162e8642b")) __declspec(novtable) IRandomAccessStreamReference : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_OpenReadAsync(Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> ** operation) = 0;
 };
 
-struct __declspec(uuid("857309dc-3fbf-4e7d-986f-ef3b1a07a964")) __declspec(novtable) IRandomAccessStreamReferenceStatics : Windows::IInspectable
+struct __declspec(uuid("857309dc-3fbf-4e7d-986f-ef3b1a07a964")) __declspec(novtable) IRandomAccessStreamReferenceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateFromFile(Windows::Storage::IStorageFile * file, Windows::Storage::Streams::IRandomAccessStreamReference ** streamReference) = 0;
     virtual HRESULT __stdcall abi_CreateFromUri(Windows::Foundation::IUriRuntimeClass * uri, Windows::Storage::Streams::IRandomAccessStreamReference ** streamReference) = 0;
     virtual HRESULT __stdcall abi_CreateFromStream(Windows::Storage::Streams::IRandomAccessStream * stream, Windows::Storage::Streams::IRandomAccessStreamReference ** streamReference) = 0;
 };
 
-struct __declspec(uuid("524cedcf-6e29-4ce5-9573-6b753db66c3a")) __declspec(novtable) IRandomAccessStreamStatics : Windows::IInspectable
+struct __declspec(uuid("524cedcf-6e29-4ce5-9573-6b753db66c3a")) __declspec(novtable) IRandomAccessStreamStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CopyAsync(Windows::Storage::Streams::IInputStream * source, Windows::Storage::Streams::IOutputStream * destination, Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> ** operation) = 0;
     virtual HRESULT __stdcall abi_CopySizeAsync(Windows::Storage::Streams::IInputStream * source, Windows::Storage::Streams::IOutputStream * destination, uint64_t bytesToCopy, Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> ** operation) = 0;
     virtual HRESULT __stdcall abi_CopyAndCloseAsync(Windows::Storage::Streams::IInputStream * source, Windows::Storage::Streams::IOutputStream * destination, Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> ** operation) = 0;
 };
 
-struct __declspec(uuid("cc254827-4b3d-438f-9232-10c76bc7e038")) __declspec(novtable) IRandomAccessStreamWithContentType : Windows::IInspectable
+struct __declspec(uuid("cc254827-4b3d-438f-9232-10c76bc7e038")) __declspec(novtable) IRandomAccessStreamWithContentType : Windows::Foundation::IInspectable
 {
 };
 
@@ -186,23 +186,173 @@ template <> struct traits<Windows::Storage::Streams::RandomAccessStreamReference
 
 namespace Windows::Storage::Streams {
 
-template <typename T> struct impl_IBuffer;
-template <typename T> struct impl_IBufferFactory;
-template <typename T> struct impl_IBufferStatics;
-template <typename T> struct impl_IContentTypeProvider;
-template <typename T> struct impl_IDataReader;
-template <typename T> struct impl_IDataReaderFactory;
-template <typename T> struct impl_IDataReaderStatics;
-template <typename T> struct impl_IDataWriter;
-template <typename T> struct impl_IDataWriterFactory;
-template <typename T> struct impl_IInputStream;
-template <typename T> struct impl_IInputStreamReference;
-template <typename T> struct impl_IOutputStream;
-template <typename T> struct impl_IRandomAccessStream;
-template <typename T> struct impl_IRandomAccessStreamReference;
-template <typename T> struct impl_IRandomAccessStreamReferenceStatics;
-template <typename T> struct impl_IRandomAccessStreamStatics;
-template <typename T> struct impl_IRandomAccessStreamWithContentType;
+template <typename D>
+struct WINRT_EBO impl_IBuffer
+{
+    uint32_t Capacity() const;
+    uint32_t Length() const;
+    void Length(uint32_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBufferFactory
+{
+    Windows::Storage::Streams::Buffer Create(uint32_t capacity) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBufferStatics
+{
+    Windows::Storage::Streams::Buffer CreateCopyFromMemoryBuffer(const Windows::Foundation::IMemoryBuffer & input) const;
+    Windows::Foundation::MemoryBuffer CreateMemoryBufferOverIBuffer(const Windows::Storage::Streams::IBuffer & input) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IContentTypeProvider
+{
+    hstring ContentType() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataReader
+{
+    uint32_t UnconsumedBufferLength() const;
+    Windows::Storage::Streams::UnicodeEncoding UnicodeEncoding() const;
+    void UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const;
+    Windows::Storage::Streams::ByteOrder ByteOrder() const;
+    void ByteOrder(Windows::Storage::Streams::ByteOrder value) const;
+    Windows::Storage::Streams::InputStreamOptions InputStreamOptions() const;
+    void InputStreamOptions(Windows::Storage::Streams::InputStreamOptions value) const;
+    uint8_t ReadByte() const;
+    void ReadBytes(array_view<uint8_t> value) const;
+    Windows::Storage::Streams::IBuffer ReadBuffer(uint32_t length) const;
+    bool ReadBoolean() const;
+    GUID ReadGuid() const;
+    int16_t ReadInt16() const;
+    int32_t ReadInt32() const;
+    int64_t ReadInt64() const;
+    uint16_t ReadUInt16() const;
+    uint32_t ReadUInt32() const;
+    uint64_t ReadUInt64() const;
+    float ReadSingle() const;
+    double ReadDouble() const;
+    hstring ReadString(uint32_t codeUnitCount) const;
+    Windows::Foundation::DateTime ReadDateTime() const;
+    Windows::Foundation::TimeSpan ReadTimeSpan() const;
+    Windows::Storage::Streams::DataReaderLoadOperation LoadAsync(uint32_t count) const;
+    Windows::Storage::Streams::IBuffer DetachBuffer() const;
+    Windows::Storage::Streams::IInputStream DetachStream() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataReaderFactory
+{
+    Windows::Storage::Streams::DataReader CreateDataReader(const Windows::Storage::Streams::IInputStream & inputStream) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataReaderStatics
+{
+    Windows::Storage::Streams::DataReader FromBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataWriter
+{
+    uint32_t UnstoredBufferLength() const;
+    Windows::Storage::Streams::UnicodeEncoding UnicodeEncoding() const;
+    void UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const;
+    Windows::Storage::Streams::ByteOrder ByteOrder() const;
+    void ByteOrder(Windows::Storage::Streams::ByteOrder value) const;
+    void WriteByte(uint8_t value) const;
+    void WriteBytes(array_view<const uint8_t> value) const;
+    void WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
+    void WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer, uint32_t start, uint32_t count) const;
+    void WriteBoolean(bool value) const;
+    void WriteGuid(GUID value) const;
+    void WriteInt16(int16_t value) const;
+    void WriteInt32(int32_t value) const;
+    void WriteInt64(int64_t value) const;
+    void WriteUInt16(uint16_t value) const;
+    void WriteUInt32(uint32_t value) const;
+    void WriteUInt64(uint64_t value) const;
+    void WriteSingle(float value) const;
+    void WriteDouble(double value) const;
+    void WriteDateTime(const Windows::Foundation::DateTime & value) const;
+    void WriteTimeSpan(const Windows::Foundation::TimeSpan & value) const;
+    uint32_t WriteString(hstring_view value) const;
+    uint32_t MeasureString(hstring_view value) const;
+    Windows::Storage::Streams::DataWriterStoreOperation StoreAsync() const;
+    Windows::Foundation::IAsyncOperation<bool> FlushAsync() const;
+    Windows::Storage::Streams::IBuffer DetachBuffer() const;
+    Windows::Storage::Streams::IOutputStream DetachStream() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataWriterFactory
+{
+    Windows::Storage::Streams::DataWriter CreateDataWriter(const Windows::Storage::Streams::IOutputStream & outputStream) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInputStream
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t> ReadAsync(const Windows::Storage::Streams::IBuffer & buffer, uint32_t count, Windows::Storage::Streams::InputStreamOptions options) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInputStreamReference
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> OpenSequentialReadAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOutputStream
+{
+    Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t> WriteAsync(const Windows::Storage::Streams::IBuffer & buffer) const;
+    Windows::Foundation::IAsyncOperation<bool> FlushAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRandomAccessStream
+{
+    uint64_t Size() const;
+    void Size(uint64_t value) const;
+    Windows::Storage::Streams::IInputStream GetInputStreamAt(uint64_t position) const;
+    Windows::Storage::Streams::IOutputStream GetOutputStreamAt(uint64_t position) const;
+    uint64_t Position() const;
+    void Seek(uint64_t position) const;
+    Windows::Storage::Streams::IRandomAccessStream CloneStream() const;
+    bool CanRead() const;
+    bool CanWrite() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRandomAccessStreamReference
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> OpenReadAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRandomAccessStreamReferenceStatics
+{
+    Windows::Storage::Streams::RandomAccessStreamReference CreateFromFile(const Windows::Storage::IStorageFile & file) const;
+    Windows::Storage::Streams::RandomAccessStreamReference CreateFromUri(const Windows::Foundation::Uri & uri) const;
+    Windows::Storage::Streams::RandomAccessStreamReference CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRandomAccessStreamStatics
+{
+    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const;
+    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination, uint64_t bytesToCopy) const;
+    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAndCloseAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRandomAccessStreamWithContentType
+{
+};
 
 }
 

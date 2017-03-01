@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,32 +12,32 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::UserDataAccounts::Provider {
 
-struct __declspec(uuid("5f200037-f6ef-4ec3-8630-012c59c1149f")) __declspec(novtable) IUserDataAccountPartnerAccountInfo : Windows::IInspectable
+struct __declspec(uuid("5f200037-f6ef-4ec3-8630-012c59c1149f")) __declspec(novtable) IUserDataAccountPartnerAccountInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Priority(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_AccountKind(winrt::Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountProviderPartnerAccountKind * value) = 0;
 };
 
-struct __declspec(uuid("b9c72530-3f84-4b5d-8eaa-45e97aa842ed")) __declspec(novtable) IUserDataAccountProviderAddAccountOperation : Windows::IInspectable
+struct __declspec(uuid("b9c72530-3f84-4b5d-8eaa-45e97aa842ed")) __declspec(novtable) IUserDataAccountProviderAddAccountOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContentKinds(winrt::Windows::ApplicationModel::UserDataAccounts::UserDataAccountContentKinds * value) = 0;
     virtual HRESULT __stdcall get_PartnerAccountInfos(Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountPartnerAccountInfo> ** value) = 0;
     virtual HRESULT __stdcall abi_ReportCompleted(hstring userDataAccountId) = 0;
 };
 
-struct __declspec(uuid("a20aad63-888c-4a62-a3dd-34d07a802b2b")) __declspec(novtable) IUserDataAccountProviderOperation : Windows::IInspectable
+struct __declspec(uuid("a20aad63-888c-4a62-a3dd-34d07a802b2b")) __declspec(novtable) IUserDataAccountProviderOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Kind(winrt::Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountProviderOperationKind * value) = 0;
 };
 
-struct __declspec(uuid("6235dc15-bfcb-41e1-9957-9759a28846cc")) __declspec(novtable) IUserDataAccountProviderResolveErrorsOperation : Windows::IInspectable
+struct __declspec(uuid("6235dc15-bfcb-41e1-9957-9759a28846cc")) __declspec(novtable) IUserDataAccountProviderResolveErrorsOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UserDataAccountId(hstring * value) = 0;
     virtual HRESULT __stdcall abi_ReportCompleted() = 0;
 };
 
-struct __declspec(uuid("92034db7-8648-4f30-acfa-3002658ca80d")) __declspec(novtable) IUserDataAccountProviderSettingsOperation : Windows::IInspectable
+struct __declspec(uuid("92034db7-8648-4f30-acfa-3002658ca80d")) __declspec(novtable) IUserDataAccountProviderSettingsOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UserDataAccountId(hstring * value) = 0;
     virtual HRESULT __stdcall abi_ReportCompleted() = 0;
@@ -56,11 +56,41 @@ template <> struct traits<Windows::ApplicationModel::UserDataAccounts::Provider:
 
 namespace Windows::ApplicationModel::UserDataAccounts::Provider {
 
-template <typename T> struct impl_IUserDataAccountPartnerAccountInfo;
-template <typename T> struct impl_IUserDataAccountProviderAddAccountOperation;
-template <typename T> struct impl_IUserDataAccountProviderOperation;
-template <typename T> struct impl_IUserDataAccountProviderResolveErrorsOperation;
-template <typename T> struct impl_IUserDataAccountProviderSettingsOperation;
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountPartnerAccountInfo
+{
+    hstring DisplayName() const;
+    uint32_t Priority() const;
+    Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountProviderPartnerAccountKind AccountKind() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountProviderAddAccountOperation
+{
+    Windows::ApplicationModel::UserDataAccounts::UserDataAccountContentKinds ContentKinds() const;
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountPartnerAccountInfo> PartnerAccountInfos() const;
+    void ReportCompleted(hstring_view userDataAccountId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountProviderOperation
+{
+    Windows::ApplicationModel::UserDataAccounts::Provider::UserDataAccountProviderOperationKind Kind() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountProviderResolveErrorsOperation
+{
+    hstring UserDataAccountId() const;
+    void ReportCompleted() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountProviderSettingsOperation
+{
+    hstring UserDataAccountId() const;
+    void ReportCompleted() const;
+};
 
 }
 

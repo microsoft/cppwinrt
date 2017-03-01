@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -21,36 +21,36 @@ struct WINRT_EBO MuteChangeRequestedEventArgs :
     MuteChangeRequestedEventArgs(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToConnection :
+struct [[deprecated("PlayToConnection may be altered or unavailable for releases after Windows 10. Instead, use CastingConnection.")]] WINRT_EBO PlayToConnection :
     Windows::Media::PlayTo::IPlayToConnection
 {
     PlayToConnection(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToConnectionErrorEventArgs :
+struct [[deprecated("PlayToConnectionErrorEventArgs may be altered or unavailable for releases after Windows 10. Instead, use CastingConnectionErrorOccurredEventArgs.")]] WINRT_EBO PlayToConnectionErrorEventArgs :
     Windows::Media::PlayTo::IPlayToConnectionErrorEventArgs
 {
     PlayToConnectionErrorEventArgs(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToConnectionStateChangedEventArgs :
+struct [[deprecated("PlayToConnectionStateChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToConnectionStateChangedEventArgs :
     Windows::Media::PlayTo::IPlayToConnectionStateChangedEventArgs
 {
     PlayToConnectionStateChangedEventArgs(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToConnectionTransferredEventArgs :
+struct [[deprecated("PlayToConnectionTransferredEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToConnectionTransferredEventArgs :
     Windows::Media::PlayTo::IPlayToConnectionTransferredEventArgs
 {
     PlayToConnectionTransferredEventArgs(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToManager :
+struct [[deprecated("PlayToManager may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToManager :
     Windows::Media::PlayTo::IPlayToManager
 {
     PlayToManager(std::nullptr_t) noexcept {}
-    static Windows::Media::PlayTo::PlayToManager GetForCurrentView();
-    static void ShowPlayToUI();
+    [[deprecated("PlayToManager may be altered or unavailable for releases after Windows 10.")]] static Windows::Media::PlayTo::PlayToManager GetForCurrentView();
+    [[deprecated("PlayToManager may be altered or unavailable for releases after Windows 10.")]] static void ShowPlayToUI();
 };
 
 struct WINRT_EBO PlayToReceiver :
@@ -60,32 +60,32 @@ struct WINRT_EBO PlayToReceiver :
     PlayToReceiver();
 };
 
-struct WINRT_EBO PlayToSource :
+struct [[deprecated("PlayToSource may be altered or unavailable for releases after Windows 10. Instead, use CastingSource.")]] WINRT_EBO PlayToSource :
     Windows::Media::PlayTo::IPlayToSource,
     impl::require<PlayToSource, Windows::Media::PlayTo::IPlayToSourceWithPreferredSourceUri>
 {
     PlayToSource(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToSourceDeferral :
+struct [[deprecated("PlayToSourceDeferral may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToSourceDeferral :
     Windows::Media::PlayTo::IPlayToSourceDeferral
 {
     PlayToSourceDeferral(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToSourceRequest :
+struct [[deprecated("PlayToSourceRequest may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToSourceRequest :
     Windows::Media::PlayTo::IPlayToSourceRequest
 {
     PlayToSourceRequest(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToSourceRequestedEventArgs :
+struct [[deprecated("PlayToSourceRequestedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToSourceRequestedEventArgs :
     Windows::Media::PlayTo::IPlayToSourceRequestedEventArgs
 {
     PlayToSourceRequestedEventArgs(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO PlayToSourceSelectedEventArgs :
+struct [[deprecated("PlayToSourceSelectedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO PlayToSourceSelectedEventArgs :
     Windows::Media::PlayTo::IPlayToSourceSelectedEventArgs
 {
     PlayToSourceSelectedEventArgs(std::nullptr_t) noexcept {}

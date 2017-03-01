@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.UI.3.h"
 
@@ -16,11 +19,12 @@ struct produce<D, Windows::UI::IColorHelper> : produce_base<D, Windows::UI::ICol
 template <typename D>
 struct produce<D, Windows::UI::IColorHelperStatics> : produce_base<D, Windows::UI::IColorHelperStatics>
 {
-    HRESULT __stdcall abi_FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b, abi_arg_out<Windows::UI::Color> returnValue) noexcept override
+    HRESULT __stdcall abi_FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b, impl::abi_arg_out<Windows::UI::Color> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().FromArgb(a, r, g, b));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().FromArgb(a, r, g, b));
             return S_OK;
         }
         catch (...)
@@ -37,11 +41,12 @@ struct produce<D, Windows::UI::IColors> : produce_base<D, Windows::UI::IColors>
 template <typename D>
 struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IColorsStatics>
 {
-    HRESULT __stdcall get_AliceBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_AliceBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AliceBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AliceBlue());
             return S_OK;
         }
         catch (...)
@@ -50,11 +55,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_AntiqueWhite(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_AntiqueWhite(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AntiqueWhite());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AntiqueWhite());
             return S_OK;
         }
         catch (...)
@@ -63,11 +69,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Aqua(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Aqua(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Aqua());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Aqua());
             return S_OK;
         }
         catch (...)
@@ -76,11 +83,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Aquamarine(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Aquamarine(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Aquamarine());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Aquamarine());
             return S_OK;
         }
         catch (...)
@@ -89,11 +97,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Azure(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Azure(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Azure());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Azure());
             return S_OK;
         }
         catch (...)
@@ -102,11 +111,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Beige(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Beige(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Beige());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Beige());
             return S_OK;
         }
         catch (...)
@@ -115,11 +125,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Bisque(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Bisque(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Bisque());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Bisque());
             return S_OK;
         }
         catch (...)
@@ -128,11 +139,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Black(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Black(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Black());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Black());
             return S_OK;
         }
         catch (...)
@@ -141,11 +153,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_BlanchedAlmond(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_BlanchedAlmond(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BlanchedAlmond());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BlanchedAlmond());
             return S_OK;
         }
         catch (...)
@@ -154,11 +167,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Blue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Blue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Blue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Blue());
             return S_OK;
         }
         catch (...)
@@ -167,11 +181,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_BlueViolet(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_BlueViolet(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BlueViolet());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BlueViolet());
             return S_OK;
         }
         catch (...)
@@ -180,11 +195,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Brown(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Brown(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Brown());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Brown());
             return S_OK;
         }
         catch (...)
@@ -193,11 +209,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_BurlyWood(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_BurlyWood(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BurlyWood());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BurlyWood());
             return S_OK;
         }
         catch (...)
@@ -206,11 +223,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_CadetBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_CadetBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CadetBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CadetBlue());
             return S_OK;
         }
         catch (...)
@@ -219,11 +237,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Chartreuse(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Chartreuse(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Chartreuse());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Chartreuse());
             return S_OK;
         }
         catch (...)
@@ -232,11 +251,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Chocolate(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Chocolate(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Chocolate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Chocolate());
             return S_OK;
         }
         catch (...)
@@ -245,11 +265,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Coral(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Coral(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Coral());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Coral());
             return S_OK;
         }
         catch (...)
@@ -258,11 +279,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_CornflowerBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_CornflowerBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CornflowerBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CornflowerBlue());
             return S_OK;
         }
         catch (...)
@@ -271,11 +293,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Cornsilk(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Cornsilk(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Cornsilk());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Cornsilk());
             return S_OK;
         }
         catch (...)
@@ -284,11 +307,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Crimson(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Crimson(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Crimson());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Crimson());
             return S_OK;
         }
         catch (...)
@@ -297,11 +321,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Cyan(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Cyan(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Cyan());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Cyan());
             return S_OK;
         }
         catch (...)
@@ -310,11 +335,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkBlue());
             return S_OK;
         }
         catch (...)
@@ -323,11 +349,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkCyan(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkCyan(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkCyan());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkCyan());
             return S_OK;
         }
         catch (...)
@@ -336,11 +363,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkGoldenrod(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkGoldenrod(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkGoldenrod());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkGoldenrod());
             return S_OK;
         }
         catch (...)
@@ -349,11 +377,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkGray());
             return S_OK;
         }
         catch (...)
@@ -362,11 +391,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkGreen());
             return S_OK;
         }
         catch (...)
@@ -375,11 +405,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkKhaki(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkKhaki(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkKhaki());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkKhaki());
             return S_OK;
         }
         catch (...)
@@ -388,11 +419,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkMagenta(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkMagenta(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkMagenta());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkMagenta());
             return S_OK;
         }
         catch (...)
@@ -401,11 +433,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkOliveGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkOliveGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkOliveGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkOliveGreen());
             return S_OK;
         }
         catch (...)
@@ -414,11 +447,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkOrange(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkOrange(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkOrange());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkOrange());
             return S_OK;
         }
         catch (...)
@@ -427,11 +461,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkOrchid(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkOrchid(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkOrchid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkOrchid());
             return S_OK;
         }
         catch (...)
@@ -440,11 +475,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkRed(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkRed(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkRed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkRed());
             return S_OK;
         }
         catch (...)
@@ -453,11 +489,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkSalmon(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkSalmon(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkSalmon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkSalmon());
             return S_OK;
         }
         catch (...)
@@ -466,11 +503,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkSeaGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkSeaGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkSeaGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkSeaGreen());
             return S_OK;
         }
         catch (...)
@@ -479,11 +517,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkSlateBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkSlateBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkSlateBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkSlateBlue());
             return S_OK;
         }
         catch (...)
@@ -492,11 +531,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkSlateGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkSlateGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkSlateGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkSlateGray());
             return S_OK;
         }
         catch (...)
@@ -505,11 +545,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkTurquoise(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkTurquoise(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkTurquoise());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkTurquoise());
             return S_OK;
         }
         catch (...)
@@ -518,11 +559,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DarkViolet(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DarkViolet(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DarkViolet());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DarkViolet());
             return S_OK;
         }
         catch (...)
@@ -531,11 +573,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DeepPink(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DeepPink(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeepPink());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeepPink());
             return S_OK;
         }
         catch (...)
@@ -544,11 +587,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DeepSkyBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DeepSkyBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeepSkyBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeepSkyBlue());
             return S_OK;
         }
         catch (...)
@@ -557,11 +601,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DimGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DimGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DimGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DimGray());
             return S_OK;
         }
         catch (...)
@@ -570,11 +615,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_DodgerBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_DodgerBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DodgerBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DodgerBlue());
             return S_OK;
         }
         catch (...)
@@ -583,11 +629,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Firebrick(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Firebrick(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Firebrick());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Firebrick());
             return S_OK;
         }
         catch (...)
@@ -596,11 +643,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_FloralWhite(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_FloralWhite(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FloralWhite());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FloralWhite());
             return S_OK;
         }
         catch (...)
@@ -609,11 +657,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_ForestGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_ForestGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ForestGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ForestGreen());
             return S_OK;
         }
         catch (...)
@@ -622,11 +671,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Fuchsia(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Fuchsia(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Fuchsia());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Fuchsia());
             return S_OK;
         }
         catch (...)
@@ -635,11 +685,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Gainsboro(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Gainsboro(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Gainsboro());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Gainsboro());
             return S_OK;
         }
         catch (...)
@@ -648,11 +699,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_GhostWhite(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_GhostWhite(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GhostWhite());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GhostWhite());
             return S_OK;
         }
         catch (...)
@@ -661,11 +713,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Gold(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Gold(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Gold());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Gold());
             return S_OK;
         }
         catch (...)
@@ -674,11 +727,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Goldenrod(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Goldenrod(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Goldenrod());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Goldenrod());
             return S_OK;
         }
         catch (...)
@@ -687,11 +741,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Gray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Gray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Gray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Gray());
             return S_OK;
         }
         catch (...)
@@ -700,11 +755,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Green(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Green(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Green());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Green());
             return S_OK;
         }
         catch (...)
@@ -713,11 +769,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_GreenYellow(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_GreenYellow(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GreenYellow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GreenYellow());
             return S_OK;
         }
         catch (...)
@@ -726,11 +783,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Honeydew(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Honeydew(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Honeydew());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Honeydew());
             return S_OK;
         }
         catch (...)
@@ -739,11 +797,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_HotPink(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_HotPink(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HotPink());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HotPink());
             return S_OK;
         }
         catch (...)
@@ -752,11 +811,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_IndianRed(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_IndianRed(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IndianRed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IndianRed());
             return S_OK;
         }
         catch (...)
@@ -765,11 +825,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Indigo(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Indigo(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Indigo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Indigo());
             return S_OK;
         }
         catch (...)
@@ -778,11 +839,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Ivory(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Ivory(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Ivory());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Ivory());
             return S_OK;
         }
         catch (...)
@@ -791,11 +853,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Khaki(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Khaki(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Khaki());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Khaki());
             return S_OK;
         }
         catch (...)
@@ -804,11 +867,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Lavender(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Lavender(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Lavender());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Lavender());
             return S_OK;
         }
         catch (...)
@@ -817,11 +881,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LavenderBlush(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LavenderBlush(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LavenderBlush());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LavenderBlush());
             return S_OK;
         }
         catch (...)
@@ -830,11 +895,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LawnGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LawnGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LawnGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LawnGreen());
             return S_OK;
         }
         catch (...)
@@ -843,11 +909,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LemonChiffon(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LemonChiffon(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LemonChiffon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LemonChiffon());
             return S_OK;
         }
         catch (...)
@@ -856,11 +923,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightBlue());
             return S_OK;
         }
         catch (...)
@@ -869,11 +937,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightCoral(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightCoral(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightCoral());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightCoral());
             return S_OK;
         }
         catch (...)
@@ -882,11 +951,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightCyan(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightCyan(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightCyan());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightCyan());
             return S_OK;
         }
         catch (...)
@@ -895,11 +965,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightGoldenrodYellow(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightGoldenrodYellow(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightGoldenrodYellow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightGoldenrodYellow());
             return S_OK;
         }
         catch (...)
@@ -908,11 +979,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightGreen());
             return S_OK;
         }
         catch (...)
@@ -921,11 +993,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightGray());
             return S_OK;
         }
         catch (...)
@@ -934,11 +1007,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightPink(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightPink(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightPink());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightPink());
             return S_OK;
         }
         catch (...)
@@ -947,11 +1021,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightSalmon(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightSalmon(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightSalmon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightSalmon());
             return S_OK;
         }
         catch (...)
@@ -960,11 +1035,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightSeaGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightSeaGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightSeaGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightSeaGreen());
             return S_OK;
         }
         catch (...)
@@ -973,11 +1049,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightSkyBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightSkyBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightSkyBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightSkyBlue());
             return S_OK;
         }
         catch (...)
@@ -986,11 +1063,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightSlateGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightSlateGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightSlateGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightSlateGray());
             return S_OK;
         }
         catch (...)
@@ -999,11 +1077,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightSteelBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightSteelBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightSteelBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightSteelBlue());
             return S_OK;
         }
         catch (...)
@@ -1012,11 +1091,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LightYellow(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LightYellow(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LightYellow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LightYellow());
             return S_OK;
         }
         catch (...)
@@ -1025,11 +1105,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Lime(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Lime(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Lime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Lime());
             return S_OK;
         }
         catch (...)
@@ -1038,11 +1119,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_LimeGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_LimeGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LimeGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LimeGreen());
             return S_OK;
         }
         catch (...)
@@ -1051,11 +1133,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Linen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Linen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Linen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Linen());
             return S_OK;
         }
         catch (...)
@@ -1064,11 +1147,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Magenta(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Magenta(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Magenta());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Magenta());
             return S_OK;
         }
         catch (...)
@@ -1077,11 +1161,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Maroon(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Maroon(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Maroon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Maroon());
             return S_OK;
         }
         catch (...)
@@ -1090,11 +1175,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumAquamarine(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumAquamarine(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumAquamarine());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumAquamarine());
             return S_OK;
         }
         catch (...)
@@ -1103,11 +1189,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumBlue());
             return S_OK;
         }
         catch (...)
@@ -1116,11 +1203,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumOrchid(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumOrchid(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumOrchid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumOrchid());
             return S_OK;
         }
         catch (...)
@@ -1129,11 +1217,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumPurple(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumPurple(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumPurple());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumPurple());
             return S_OK;
         }
         catch (...)
@@ -1142,11 +1231,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumSeaGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumSeaGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumSeaGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumSeaGreen());
             return S_OK;
         }
         catch (...)
@@ -1155,11 +1245,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumSlateBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumSlateBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumSlateBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumSlateBlue());
             return S_OK;
         }
         catch (...)
@@ -1168,11 +1259,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumSpringGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumSpringGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumSpringGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumSpringGreen());
             return S_OK;
         }
         catch (...)
@@ -1181,11 +1273,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumTurquoise(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumTurquoise(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumTurquoise());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumTurquoise());
             return S_OK;
         }
         catch (...)
@@ -1194,11 +1287,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MediumVioletRed(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MediumVioletRed(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediumVioletRed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediumVioletRed());
             return S_OK;
         }
         catch (...)
@@ -1207,11 +1301,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MidnightBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MidnightBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MidnightBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MidnightBlue());
             return S_OK;
         }
         catch (...)
@@ -1220,11 +1315,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MintCream(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MintCream(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MintCream());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MintCream());
             return S_OK;
         }
         catch (...)
@@ -1233,11 +1329,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_MistyRose(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_MistyRose(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MistyRose());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MistyRose());
             return S_OK;
         }
         catch (...)
@@ -1246,11 +1343,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Moccasin(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Moccasin(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Moccasin());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Moccasin());
             return S_OK;
         }
         catch (...)
@@ -1259,11 +1357,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_NavajoWhite(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_NavajoWhite(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NavajoWhite());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NavajoWhite());
             return S_OK;
         }
         catch (...)
@@ -1272,11 +1371,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Navy(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Navy(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Navy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Navy());
             return S_OK;
         }
         catch (...)
@@ -1285,11 +1385,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_OldLace(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_OldLace(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OldLace());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OldLace());
             return S_OK;
         }
         catch (...)
@@ -1298,11 +1399,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Olive(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Olive(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Olive());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Olive());
             return S_OK;
         }
         catch (...)
@@ -1311,11 +1413,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_OliveDrab(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_OliveDrab(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OliveDrab());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OliveDrab());
             return S_OK;
         }
         catch (...)
@@ -1324,11 +1427,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Orange(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Orange(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Orange());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Orange());
             return S_OK;
         }
         catch (...)
@@ -1337,11 +1441,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_OrangeRed(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_OrangeRed(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().OrangeRed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OrangeRed());
             return S_OK;
         }
         catch (...)
@@ -1350,11 +1455,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Orchid(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Orchid(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Orchid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Orchid());
             return S_OK;
         }
         catch (...)
@@ -1363,11 +1469,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PaleGoldenrod(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PaleGoldenrod(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PaleGoldenrod());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PaleGoldenrod());
             return S_OK;
         }
         catch (...)
@@ -1376,11 +1483,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PaleGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PaleGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PaleGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PaleGreen());
             return S_OK;
         }
         catch (...)
@@ -1389,11 +1497,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PaleTurquoise(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PaleTurquoise(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PaleTurquoise());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PaleTurquoise());
             return S_OK;
         }
         catch (...)
@@ -1402,11 +1511,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PaleVioletRed(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PaleVioletRed(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PaleVioletRed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PaleVioletRed());
             return S_OK;
         }
         catch (...)
@@ -1415,11 +1525,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PapayaWhip(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PapayaWhip(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PapayaWhip());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PapayaWhip());
             return S_OK;
         }
         catch (...)
@@ -1428,11 +1539,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PeachPuff(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PeachPuff(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PeachPuff());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeachPuff());
             return S_OK;
         }
         catch (...)
@@ -1441,11 +1553,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Peru(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Peru(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Peru());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Peru());
             return S_OK;
         }
         catch (...)
@@ -1454,11 +1567,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Pink(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Pink(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Pink());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Pink());
             return S_OK;
         }
         catch (...)
@@ -1467,11 +1581,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Plum(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Plum(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Plum());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Plum());
             return S_OK;
         }
         catch (...)
@@ -1480,11 +1595,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_PowderBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_PowderBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PowderBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PowderBlue());
             return S_OK;
         }
         catch (...)
@@ -1493,11 +1609,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Purple(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Purple(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Purple());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Purple());
             return S_OK;
         }
         catch (...)
@@ -1506,11 +1623,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Red(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Red(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Red());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Red());
             return S_OK;
         }
         catch (...)
@@ -1519,11 +1637,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_RosyBrown(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_RosyBrown(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RosyBrown());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RosyBrown());
             return S_OK;
         }
         catch (...)
@@ -1532,11 +1651,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_RoyalBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_RoyalBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RoyalBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RoyalBlue());
             return S_OK;
         }
         catch (...)
@@ -1545,11 +1665,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SaddleBrown(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SaddleBrown(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SaddleBrown());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SaddleBrown());
             return S_OK;
         }
         catch (...)
@@ -1558,11 +1679,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Salmon(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Salmon(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Salmon());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Salmon());
             return S_OK;
         }
         catch (...)
@@ -1571,11 +1693,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SandyBrown(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SandyBrown(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SandyBrown());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SandyBrown());
             return S_OK;
         }
         catch (...)
@@ -1584,11 +1707,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SeaGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SeaGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SeaGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SeaGreen());
             return S_OK;
         }
         catch (...)
@@ -1597,11 +1721,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SeaShell(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SeaShell(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SeaShell());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SeaShell());
             return S_OK;
         }
         catch (...)
@@ -1610,11 +1735,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Sienna(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Sienna(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Sienna());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Sienna());
             return S_OK;
         }
         catch (...)
@@ -1623,11 +1749,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Silver(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Silver(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Silver());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Silver());
             return S_OK;
         }
         catch (...)
@@ -1636,11 +1763,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SkyBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SkyBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SkyBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SkyBlue());
             return S_OK;
         }
         catch (...)
@@ -1649,11 +1777,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SlateBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SlateBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SlateBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SlateBlue());
             return S_OK;
         }
         catch (...)
@@ -1662,11 +1791,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SlateGray(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SlateGray(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SlateGray());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SlateGray());
             return S_OK;
         }
         catch (...)
@@ -1675,11 +1805,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Snow(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Snow(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Snow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Snow());
             return S_OK;
         }
         catch (...)
@@ -1688,11 +1819,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SpringGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SpringGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SpringGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SpringGreen());
             return S_OK;
         }
         catch (...)
@@ -1701,11 +1833,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_SteelBlue(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_SteelBlue(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SteelBlue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SteelBlue());
             return S_OK;
         }
         catch (...)
@@ -1714,11 +1847,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Tan(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Tan(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Tan());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Tan());
             return S_OK;
         }
         catch (...)
@@ -1727,11 +1861,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Teal(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Teal(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Teal());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Teal());
             return S_OK;
         }
         catch (...)
@@ -1740,11 +1875,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Thistle(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Thistle(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Thistle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Thistle());
             return S_OK;
         }
         catch (...)
@@ -1753,11 +1889,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Tomato(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Tomato(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Tomato());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Tomato());
             return S_OK;
         }
         catch (...)
@@ -1766,11 +1903,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Transparent(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Transparent(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Transparent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Transparent());
             return S_OK;
         }
         catch (...)
@@ -1779,11 +1917,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Turquoise(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Turquoise(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Turquoise());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Turquoise());
             return S_OK;
         }
         catch (...)
@@ -1792,11 +1931,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Violet(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Violet(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Violet());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Violet());
             return S_OK;
         }
         catch (...)
@@ -1805,11 +1945,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Wheat(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Wheat(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Wheat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Wheat());
             return S_OK;
         }
         catch (...)
@@ -1818,11 +1959,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_White(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_White(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().White());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().White());
             return S_OK;
         }
         catch (...)
@@ -1831,11 +1973,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_WhiteSmoke(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_WhiteSmoke(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().WhiteSmoke());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WhiteSmoke());
             return S_OK;
         }
         catch (...)
@@ -1844,11 +1987,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_Yellow(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Yellow(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Yellow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Yellow());
             return S_OK;
         }
         catch (...)
@@ -1857,11 +2001,12 @@ struct produce<D, Windows::UI::IColorsStatics> : produce_base<D, Windows::UI::IC
         }
     }
 
-    HRESULT __stdcall get_YellowGreen(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_YellowGreen(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().YellowGreen());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().YellowGreen());
             return S_OK;
         }
         catch (...)
@@ -1878,994 +2023,994 @@ namespace Windows::UI {
 template <typename D> Windows::UI::Color impl_IColorHelperStatics<D>::FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b) const
 {
     Windows::UI::Color returnValue {};
-    check_hresult(static_cast<const IColorHelperStatics &>(static_cast<const D &>(*this))->abi_FromArgb(a, r, g, b, put(returnValue)));
+    check_hresult(WINRT_SHIM(IColorHelperStatics)->abi_FromArgb(a, r, g, b, put_abi(returnValue)));
     return returnValue;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::AliceBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_AliceBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_AliceBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::AntiqueWhite() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_AntiqueWhite(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_AntiqueWhite(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Aqua() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Aqua(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Aqua(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Aquamarine() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Aquamarine(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Aquamarine(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Azure() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Azure(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Azure(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Beige() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Beige(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Beige(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Bisque() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Bisque(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Bisque(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Black() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Black(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Black(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::BlanchedAlmond() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_BlanchedAlmond(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_BlanchedAlmond(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Blue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Blue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Blue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::BlueViolet() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_BlueViolet(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_BlueViolet(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Brown() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Brown(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Brown(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::BurlyWood() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_BurlyWood(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_BurlyWood(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::CadetBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_CadetBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_CadetBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Chartreuse() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Chartreuse(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Chartreuse(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Chocolate() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Chocolate(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Chocolate(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Coral() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Coral(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Coral(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::CornflowerBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_CornflowerBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_CornflowerBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Cornsilk() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Cornsilk(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Cornsilk(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Crimson() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Crimson(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Crimson(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Cyan() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Cyan(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Cyan(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkCyan() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkCyan(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkCyan(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkGoldenrod() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkGoldenrod(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkGoldenrod(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkKhaki() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkKhaki(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkKhaki(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkMagenta() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkMagenta(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkMagenta(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkOliveGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkOliveGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkOliveGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkOrange() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkOrange(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkOrange(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkOrchid() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkOrchid(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkOrchid(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkRed() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkRed(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkRed(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkSalmon() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkSalmon(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkSalmon(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkSeaGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkSeaGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkSeaGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkSlateBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkSlateBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkSlateBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkSlateGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkSlateGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkSlateGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkTurquoise() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkTurquoise(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkTurquoise(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DarkViolet() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DarkViolet(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DarkViolet(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DeepPink() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DeepPink(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DeepPink(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DeepSkyBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DeepSkyBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DeepSkyBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DimGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DimGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DimGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::DodgerBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_DodgerBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_DodgerBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Firebrick() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Firebrick(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Firebrick(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::FloralWhite() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_FloralWhite(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_FloralWhite(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::ForestGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_ForestGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_ForestGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Fuchsia() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Fuchsia(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Fuchsia(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Gainsboro() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Gainsboro(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Gainsboro(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::GhostWhite() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_GhostWhite(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_GhostWhite(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Gold() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Gold(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Gold(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Goldenrod() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Goldenrod(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Goldenrod(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Gray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Gray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Gray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Green() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Green(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Green(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::GreenYellow() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_GreenYellow(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_GreenYellow(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Honeydew() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Honeydew(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Honeydew(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::HotPink() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_HotPink(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_HotPink(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::IndianRed() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_IndianRed(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_IndianRed(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Indigo() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Indigo(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Indigo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Ivory() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Ivory(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Ivory(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Khaki() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Khaki(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Khaki(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Lavender() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Lavender(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Lavender(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LavenderBlush() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LavenderBlush(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LavenderBlush(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LawnGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LawnGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LawnGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LemonChiffon() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LemonChiffon(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LemonChiffon(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightCoral() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightCoral(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightCoral(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightCyan() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightCyan(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightCyan(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightGoldenrodYellow() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightGoldenrodYellow(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightGoldenrodYellow(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightPink() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightPink(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightPink(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightSalmon() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightSalmon(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightSalmon(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightSeaGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightSeaGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightSeaGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightSkyBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightSkyBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightSkyBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightSlateGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightSlateGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightSlateGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightSteelBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightSteelBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightSteelBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LightYellow() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LightYellow(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LightYellow(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Lime() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Lime(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Lime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::LimeGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_LimeGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_LimeGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Linen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Linen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Linen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Magenta() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Magenta(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Magenta(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Maroon() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Maroon(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Maroon(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumAquamarine() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumAquamarine(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumAquamarine(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumOrchid() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumOrchid(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumOrchid(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumPurple() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumPurple(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumPurple(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumSeaGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumSeaGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumSeaGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumSlateBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumSlateBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumSlateBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumSpringGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumSpringGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumSpringGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumTurquoise() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumTurquoise(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumTurquoise(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MediumVioletRed() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MediumVioletRed(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MediumVioletRed(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MidnightBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MidnightBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MidnightBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MintCream() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MintCream(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MintCream(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::MistyRose() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_MistyRose(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_MistyRose(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Moccasin() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Moccasin(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Moccasin(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::NavajoWhite() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_NavajoWhite(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_NavajoWhite(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Navy() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Navy(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Navy(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::OldLace() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_OldLace(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_OldLace(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Olive() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Olive(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Olive(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::OliveDrab() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_OliveDrab(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_OliveDrab(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Orange() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Orange(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Orange(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::OrangeRed() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_OrangeRed(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_OrangeRed(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Orchid() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Orchid(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Orchid(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PaleGoldenrod() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PaleGoldenrod(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PaleGoldenrod(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PaleGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PaleGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PaleGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PaleTurquoise() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PaleTurquoise(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PaleTurquoise(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PaleVioletRed() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PaleVioletRed(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PaleVioletRed(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PapayaWhip() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PapayaWhip(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PapayaWhip(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PeachPuff() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PeachPuff(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PeachPuff(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Peru() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Peru(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Peru(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Pink() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Pink(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Pink(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Plum() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Plum(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Plum(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::PowderBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_PowderBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_PowderBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Purple() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Purple(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Purple(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Red() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Red(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Red(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::RosyBrown() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_RosyBrown(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_RosyBrown(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::RoyalBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_RoyalBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_RoyalBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SaddleBrown() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SaddleBrown(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SaddleBrown(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Salmon() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Salmon(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Salmon(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SandyBrown() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SandyBrown(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SandyBrown(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SeaGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SeaGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SeaGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SeaShell() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SeaShell(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SeaShell(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Sienna() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Sienna(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Sienna(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Silver() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Silver(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Silver(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SkyBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SkyBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SkyBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SlateBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SlateBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SlateBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SlateGray() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SlateGray(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SlateGray(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Snow() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Snow(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Snow(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SpringGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SpringGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SpringGreen(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::SteelBlue() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_SteelBlue(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_SteelBlue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Tan() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Tan(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Tan(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Teal() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Teal(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Teal(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Thistle() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Thistle(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Thistle(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Tomato() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Tomato(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Tomato(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Transparent() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Transparent(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Transparent(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Turquoise() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Turquoise(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Turquoise(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Violet() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Violet(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Violet(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Wheat() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Wheat(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Wheat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::White() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_White(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_White(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::WhiteSmoke() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_WhiteSmoke(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_WhiteSmoke(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::Yellow() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_Yellow(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_Yellow(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_IColorsStatics<D>::YellowGreen() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IColorsStatics &>(static_cast<const D &>(*this))->get_YellowGreen(put(value)));
+    check_hresult(WINRT_SHIM(IColorsStatics)->get_YellowGreen(put_abi(value)));
     return value;
 }
 
@@ -3582,3 +3727,59 @@ inline Windows::UI::Color Colors::YellowGreen()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::UI::IColorHelper>
+{
+    size_t operator()(const winrt::Windows::UI::IColorHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::IColorHelperStatics>
+{
+    size_t operator()(const winrt::Windows::UI::IColorHelperStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::IColors>
+{
+    size_t operator()(const winrt::Windows::UI::IColors & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::IColorsStatics>
+{
+    size_t operator()(const winrt::Windows::UI::IColorsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::ColorHelper>
+{
+    size_t operator()(const winrt::Windows::UI::ColorHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::Colors>
+{
+    size_t operator()(const winrt::Windows::UI::Colors & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,11 +1,11 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Storage.Compression.1.h"
-#include "Windows.Foundation.2.h"
-#include "Windows.Storage.Streams.2.h"
+#include "Windows.Foundation.1.h"
+#include "Windows.Storage.Streams.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -26,64 +26,34 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 
 namespace Windows::Storage::Compression {
 
-template <typename D>
-struct WINRT_EBO impl_ICompressor
-{
-    Windows::Foundation::IAsyncOperation<bool> FinishAsync() const;
-    Windows::Storage::Streams::IOutputStream DetachStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICompressorFactory
-{
-    Windows::Storage::Compression::Compressor CreateCompressor(const Windows::Storage::Streams::IOutputStream & underlyingStream) const;
-    Windows::Storage::Compression::Compressor CreateCompressorEx(const Windows::Storage::Streams::IOutputStream & underlyingStream, Windows::Storage::Compression::CompressAlgorithm algorithm, uint32_t blockSize) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDecompressor
-{
-    Windows::Storage::Streams::IInputStream DetachStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDecompressorFactory
-{
-    Windows::Storage::Compression::Decompressor CreateDecompressor(const Windows::Storage::Streams::IInputStream & underlyingStream) const;
-};
-
 struct ICompressor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICompressor>,
     impl::require<ICompressor, Windows::Foundation::IClosable, Windows::Storage::Streams::IOutputStream>
 {
     ICompressor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICompressor>(m_ptr); }
 };
 
 struct ICompressorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICompressorFactory>
 {
     ICompressorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICompressorFactory>(m_ptr); }
 };
 
 struct IDecompressor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDecompressor>,
     impl::require<IDecompressor, Windows::Foundation::IClosable, Windows::Storage::Streams::IInputStream>
 {
     IDecompressor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDecompressor>(m_ptr); }
 };
 
 struct IDecompressorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDecompressorFactory>
 {
     IDecompressorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDecompressorFactory>(m_ptr); }
 };
 
 }

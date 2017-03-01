@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,6 +43,19 @@ struct CastingDevicePicker;
 struct CastingDevicePickerFilter;
 struct CastingDeviceSelectedEventArgs;
 struct CastingSource;
+
+}
+
+namespace Windows::Media::Casting {
+
+template <typename T> struct impl_ICastingConnection;
+template <typename T> struct impl_ICastingConnectionErrorOccurredEventArgs;
+template <typename T> struct impl_ICastingDevice;
+template <typename T> struct impl_ICastingDevicePicker;
+template <typename T> struct impl_ICastingDevicePickerFilter;
+template <typename T> struct impl_ICastingDeviceSelectedEventArgs;
+template <typename T> struct impl_ICastingDeviceStatics;
+template <typename T> struct impl_ICastingSource;
 
 }
 

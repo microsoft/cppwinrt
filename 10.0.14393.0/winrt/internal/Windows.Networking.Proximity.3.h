@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_DeviceArrivedEventHandler : implements<impl_De
 {
     impl_DeviceArrivedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_DeviceDepartedEventHandler : implements<impl_D
 {
     impl_DeviceDepartedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender) noexcept override
     {
         try
         {
@@ -49,7 +49,7 @@ template <typename H> struct impl_MessageReceivedHandler : implements<impl_Messa
 {
     impl_MessageReceivedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender, abi_arg_in<Windows::Networking::Proximity::IProximityMessage> message) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender, impl::abi_arg_in<Windows::Networking::Proximity::IProximityMessage> message) noexcept override
     {
         try
         {
@@ -67,7 +67,7 @@ template <typename H> struct impl_MessageTransmittedHandler : implements<impl_Me
 {
     impl_MessageTransmittedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender, int64_t messageId) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Networking::Proximity::IProximityDevice> sender, int64_t messageId) noexcept override
     {
         try
         {
@@ -101,19 +101,19 @@ struct PeerFinder
     static bool AllowWiFiDirect();
     static void AllowWiFiDirect(bool value);
     static hstring DisplayName();
-    static void DisplayName(hstring_ref value);
+    static void DisplayName(hstring_view value);
     static Windows::Networking::Proximity::PeerDiscoveryTypes SupportedDiscoveryTypes();
     static Windows::Foundation::Collections::IMap<hstring, hstring> AlternateIdentities();
     static void Start();
-    static void Start(hstring_ref peerMessage);
+    static void Start(hstring_view peerMessage);
     static void Stop();
-    static event_token TriggeredConnectionStateChanged(const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler);
+    static event_token TriggeredConnectionStateChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler);
     using TriggeredConnectionStateChanged_revoker = factory_event_revoker<IPeerFinderStatics>;
-    static TriggeredConnectionStateChanged_revoker TriggeredConnectionStateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler);
+    static TriggeredConnectionStateChanged_revoker TriggeredConnectionStateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler);
     static void TriggeredConnectionStateChanged(event_token cookie);
-    static event_token ConnectionRequested(const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler);
+    static event_token ConnectionRequested(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler);
     using ConnectionRequested_revoker = factory_event_revoker<IPeerFinderStatics>;
-    static ConnectionRequested_revoker ConnectionRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler);
+    static ConnectionRequested_revoker ConnectionRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler);
     static void ConnectionRequested(event_token cookie);
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> FindAllPeersAsync();
     static Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> ConnectAsync(const Windows::Networking::Proximity::PeerInformation & peerInformation);
@@ -143,7 +143,7 @@ struct WINRT_EBO ProximityDevice :
     ProximityDevice(std::nullptr_t) noexcept {}
     static hstring GetDeviceSelector();
     static Windows::Networking::Proximity::ProximityDevice GetDefault();
-    static Windows::Networking::Proximity::ProximityDevice FromId(hstring_ref deviceId);
+    static Windows::Networking::Proximity::ProximityDevice FromId(hstring_view deviceId);
 };
 
 struct WINRT_EBO ProximityMessage :

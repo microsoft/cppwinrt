@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,7 +12,7 @@ namespace Windows::Foundation::Diagnostics {
 struct AsyncCausalityTracer
 {
     AsyncCausalityTracer() = delete;
-    static void TraceOperationCreation(Windows::Foundation::Diagnostics::CausalityTraceLevel traceLevel, Windows::Foundation::Diagnostics::CausalitySource source, GUID platformId, uint64_t operationId, hstring_ref operationName, uint64_t relatedContext);
+    static void TraceOperationCreation(Windows::Foundation::Diagnostics::CausalityTraceLevel traceLevel, Windows::Foundation::Diagnostics::CausalitySource source, GUID platformId, uint64_t operationId, hstring_view operationName, uint64_t relatedContext);
     static void TraceOperationCompletion(Windows::Foundation::Diagnostics::CausalityTraceLevel traceLevel, Windows::Foundation::Diagnostics::CausalitySource source, GUID platformId, uint64_t operationId, Windows::Foundation::AsyncStatus status);
     static void TraceOperationRelation(Windows::Foundation::Diagnostics::CausalityTraceLevel traceLevel, Windows::Foundation::Diagnostics::CausalitySource source, GUID platformId, uint64_t operationId, Windows::Foundation::Diagnostics::CausalityRelation relation);
     static void TraceSynchronousWorkStart(Windows::Foundation::Diagnostics::CausalityTraceLevel traceLevel, Windows::Foundation::Diagnostics::CausalitySource source, GUID platformId, uint64_t operationId, Windows::Foundation::Diagnostics::CausalitySynchronousWork work);
@@ -34,7 +34,7 @@ struct WINRT_EBO FileLoggingSession :
     Windows::Foundation::Diagnostics::IFileLoggingSession
 {
     FileLoggingSession(std::nullptr_t) noexcept {}
-    FileLoggingSession(hstring_ref name);
+    FileLoggingSession(hstring_view name);
 };
 
 struct WINRT_EBO LogFileGeneratedEventArgs :
@@ -48,8 +48,8 @@ struct WINRT_EBO LoggingActivity :
     impl::require<LoggingActivity, Windows::Foundation::Diagnostics::ILoggingTarget, Windows::Foundation::Diagnostics::ILoggingActivity2>
 {
     LoggingActivity(std::nullptr_t) noexcept {}
-    LoggingActivity(hstring_ref activityName, const Windows::Foundation::Diagnostics::ILoggingChannel & loggingChannel);
-    LoggingActivity(hstring_ref activityName, const Windows::Foundation::Diagnostics::ILoggingChannel & loggingChannel, Windows::Foundation::Diagnostics::LoggingLevel level);
+    LoggingActivity(hstring_view activityName, const Windows::Foundation::Diagnostics::ILoggingChannel & loggingChannel);
+    LoggingActivity(hstring_view activityName, const Windows::Foundation::Diagnostics::ILoggingChannel & loggingChannel, Windows::Foundation::Diagnostics::LoggingLevel level);
 };
 
 struct WINRT_EBO LoggingChannel :
@@ -57,9 +57,9 @@ struct WINRT_EBO LoggingChannel :
     impl::require<LoggingChannel, Windows::Foundation::Diagnostics::ILoggingTarget, Windows::Foundation::Diagnostics::ILoggingChannel2>
 {
     LoggingChannel(std::nullptr_t) noexcept {}
-    LoggingChannel(hstring_ref name, const Windows::Foundation::Diagnostics::LoggingChannelOptions & options);
-    LoggingChannel(hstring_ref name, const Windows::Foundation::Diagnostics::LoggingChannelOptions & options, GUID id);
-    LoggingChannel(hstring_ref name);
+    LoggingChannel(hstring_view name, const Windows::Foundation::Diagnostics::LoggingChannelOptions & options);
+    LoggingChannel(hstring_view name, const Windows::Foundation::Diagnostics::LoggingChannelOptions & options, GUID id);
+    LoggingChannel(hstring_view name);
 };
 
 struct WINRT_EBO LoggingChannelOptions :
@@ -89,7 +89,7 @@ struct WINRT_EBO LoggingSession :
     Windows::Foundation::Diagnostics::ILoggingSession
 {
     LoggingSession(std::nullptr_t) noexcept {}
-    LoggingSession(hstring_ref name);
+    LoggingSession(hstring_view name);
 };
 
 struct WINRT_EBO RuntimeBrokerErrorSettings :

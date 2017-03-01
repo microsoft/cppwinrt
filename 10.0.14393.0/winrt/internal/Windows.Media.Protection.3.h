@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_ComponentLoadFailedEventHandler : implements<i
 {
     impl_ComponentLoadFailedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender, abi_arg_in<Windows::Media::Protection::IComponentLoadFailedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender, impl::abi_arg_in<Windows::Media::Protection::IComponentLoadFailedEventArgs> e) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_RebootNeededEventHandler : implements<impl_Reb
 {
     impl_RebootNeededEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender) noexcept override
     {
         try
         {
@@ -49,7 +49,7 @@ template <typename H> struct impl_ServiceRequestedEventHandler : implements<impl
 {
     impl_ServiceRequestedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender, abi_arg_in<Windows::Media::Protection::IServiceRequestedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> sender, impl::abi_arg_in<Windows::Media::Protection::IServiceRequestedEventArgs> e) noexcept override
     {
         try
         {

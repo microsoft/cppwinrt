@@ -1,11 +1,11 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.WiFiDirect.1.h"
-#include "Windows.Devices.Enumeration.2.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Devices.Enumeration.1.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -63,7 +63,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_9208929a_2a3c_50ad_aa08_a0a986edbabe
 #define WINRT_GENERIC_9208929a_2a3c_50ad_aa08_a0a986edbabe
-template <> struct __declspec(uuid("9208929a-2a3c-50ad-aa08-a0a986edbabe")) __declspec(novtable) TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::IInspectable> {};
+template <> struct __declspec(uuid("9208929a-2a3c-50ad-aa08-a0a986edbabe")) __declspec(novtable) TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -121,6 +121,11 @@ template <> struct __declspec(uuid("794f12da-2dc6-5277-82dc-b0781610537b")) __de
 template <> struct __declspec(uuid("61a32670-04d3-551d-ad66-bd04e9ef5c78")) __declspec(novtable) IVectorView<winrt::Windows::Devices::WiFiDirect::WiFiDirectConfigurationMethod> : impl_IVectorView<winrt::Windows::Devices::WiFiDirect::WiFiDirectConfigurationMethod> {};
 #endif
 
+#ifndef WINRT_GENERIC_f996138f_a866_5ca4_ba46_09fcb2de7013
+#define WINRT_GENERIC_f996138f_a866_5ca4_ba46_09fcb2de7013
+template <> struct __declspec(uuid("f996138f-a866-5ca4-ba46-09fcb2de7013")) __declspec(novtable) IVector<Windows::Networking::EndpointPair> : impl_IVector<Windows::Networking::EndpointPair> {};
+#endif
+
 #ifndef WINRT_GENERIC_c899ff9f_e6f5_5673_810c_04e2ff98704f
 #define WINRT_GENERIC_c899ff9f_e6f5_5673_810c_04e2ff98704f
 template <> struct __declspec(uuid("c899ff9f-e6f5-5673-810c-04e2ff98704f")) __declspec(novtable) IIterator<Windows::Networking::EndpointPair> : impl_IIterator<Windows::Networking::EndpointPair> {};
@@ -131,269 +136,118 @@ template <> struct __declspec(uuid("c899ff9f-e6f5-5673-810c-04e2ff98704f")) __de
 
 namespace Windows::Devices::WiFiDirect {
 
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectAdvertisement
-{
-    Windows::Foundation::Collections::IVector<Windows::Devices::WiFiDirect::WiFiDirectInformationElement> InformationElements() const;
-    void InformationElements(const Windows::Foundation::Collections::IVector<Windows::Devices::WiFiDirect::WiFiDirectInformationElement> & value) const;
-    Windows::Devices::WiFiDirect::WiFiDirectAdvertisementListenStateDiscoverability ListenStateDiscoverability() const;
-    void ListenStateDiscoverability(Windows::Devices::WiFiDirect::WiFiDirectAdvertisementListenStateDiscoverability value) const;
-    bool IsAutonomousGroupOwnerEnabled() const;
-    void IsAutonomousGroupOwnerEnabled(bool value) const;
-    Windows::Devices::WiFiDirect::WiFiDirectLegacySettings LegacySettings() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectAdvertisement2
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::Devices::WiFiDirect::WiFiDirectConfigurationMethod> SupportedConfigurationMethods() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectAdvertisementPublisher
-{
-    Windows::Devices::WiFiDirect::WiFiDirectAdvertisement Advertisement() const;
-    Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisherStatus Status() const;
-    event_token StatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisher, Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisherStatusChangedEventArgs> & handler) const;
-    using StatusChanged_revoker = event_revoker<IWiFiDirectAdvertisementPublisher>;
-    StatusChanged_revoker StatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisher, Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisherStatusChangedEventArgs> & handler) const;
-    void StatusChanged(event_token token) const;
-    void Start() const;
-    void Stop() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectAdvertisementPublisherStatusChangedEventArgs
-{
-    Windows::Devices::WiFiDirect::WiFiDirectAdvertisementPublisherStatus Status() const;
-    Windows::Devices::WiFiDirect::WiFiDirectError Error() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionListener
-{
-    event_token ConnectionRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectConnectionListener, Windows::Devices::WiFiDirect::WiFiDirectConnectionRequestedEventArgs> & handler) const;
-    using ConnectionRequested_revoker = event_revoker<IWiFiDirectConnectionListener>;
-    ConnectionRequested_revoker ConnectionRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectConnectionListener, Windows::Devices::WiFiDirect::WiFiDirectConnectionRequestedEventArgs> & handler) const;
-    void ConnectionRequested(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionParameters
-{
-    int16_t GroupOwnerIntent() const;
-    void GroupOwnerIntent(int16_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionParameters2
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::Devices::WiFiDirect::WiFiDirectConfigurationMethod> PreferenceOrderedConfigurationMethods() const;
-    Windows::Devices::WiFiDirect::WiFiDirectPairingProcedure PreferredPairingProcedure() const;
-    void PreferredPairingProcedure(Windows::Devices::WiFiDirect::WiFiDirectPairingProcedure value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionParametersStatics
-{
-    Windows::Devices::Enumeration::DevicePairingKinds GetDevicePairingKinds(Windows::Devices::WiFiDirect::WiFiDirectConfigurationMethod configurationMethod) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionRequest
-{
-    Windows::Devices::Enumeration::DeviceInformation DeviceInformation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectConnectionRequestedEventArgs
-{
-    Windows::Devices::WiFiDirect::WiFiDirectConnectionRequest GetConnectionRequest() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectDevice
-{
-    Windows::Devices::WiFiDirect::WiFiDirectConnectionStatus ConnectionStatus() const;
-    hstring DeviceId() const;
-    event_token ConnectionStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::IInspectable> & handler) const;
-    using ConnectionStatusChanged_revoker = event_revoker<IWiFiDirectDevice>;
-    ConnectionStatusChanged_revoker ConnectionStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::WiFiDirect::WiFiDirectDevice, Windows::IInspectable> & handler) const;
-    void ConnectionStatusChanged(event_token token) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair> GetConnectionEndpointPairs() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectDeviceStatics
-{
-    hstring GetDeviceSelector() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::WiFiDirect::WiFiDirectDevice> FromIdAsync(hstring_ref deviceId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectDeviceStatics2
-{
-    hstring GetDeviceSelector(Windows::Devices::WiFiDirect::WiFiDirectDeviceSelectorType type) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::WiFiDirect::WiFiDirectDevice> FromIdAsync(hstring_ref deviceId, const Windows::Devices::WiFiDirect::WiFiDirectConnectionParameters & connectionParameters) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectInformationElement
-{
-    Windows::Storage::Streams::IBuffer Oui() const;
-    void Oui(const Windows::Storage::Streams::IBuffer & value) const;
-    uint8_t OuiType() const;
-    void OuiType(uint8_t value) const;
-    Windows::Storage::Streams::IBuffer Value() const;
-    void Value(const Windows::Storage::Streams::IBuffer & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectInformationElementStatics
-{
-    Windows::Foundation::Collections::IVector<Windows::Devices::WiFiDirect::WiFiDirectInformationElement> CreateFromBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-    Windows::Foundation::Collections::IVector<Windows::Devices::WiFiDirect::WiFiDirectInformationElement> CreateFromDeviceInformation(const Windows::Devices::Enumeration::DeviceInformation & deviceInformation) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWiFiDirectLegacySettings
-{
-    bool IsEnabled() const;
-    void IsEnabled(bool value) const;
-    hstring Ssid() const;
-    void Ssid(hstring_ref value) const;
-    Windows::Security::Credentials::PasswordCredential Passphrase() const;
-    void Passphrase(const Windows::Security::Credentials::PasswordCredential & value) const;
-};
-
 struct IWiFiDirectAdvertisement :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectAdvertisement>
 {
     IWiFiDirectAdvertisement(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectAdvertisement>(m_ptr); }
 };
 
 struct IWiFiDirectAdvertisement2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectAdvertisement2>
 {
     IWiFiDirectAdvertisement2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectAdvertisement2>(m_ptr); }
 };
 
 struct IWiFiDirectAdvertisementPublisher :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectAdvertisementPublisher>
 {
     IWiFiDirectAdvertisementPublisher(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectAdvertisementPublisher>(m_ptr); }
 };
 
 struct IWiFiDirectAdvertisementPublisherStatusChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectAdvertisementPublisherStatusChangedEventArgs>
 {
     IWiFiDirectAdvertisementPublisherStatusChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectAdvertisementPublisherStatusChangedEventArgs>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionListener :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionListener>
 {
     IWiFiDirectConnectionListener(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionListener>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionParameters :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionParameters>
 {
     IWiFiDirectConnectionParameters(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionParameters>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionParameters2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionParameters2>
 {
     IWiFiDirectConnectionParameters2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionParameters2>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionParametersStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionParametersStatics>
 {
     IWiFiDirectConnectionParametersStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionParametersStatics>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionRequest>,
     impl::require<IWiFiDirectConnectionRequest, Windows::Foundation::IClosable>
 {
     IWiFiDirectConnectionRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionRequest>(m_ptr); }
 };
 
 struct IWiFiDirectConnectionRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectConnectionRequestedEventArgs>
 {
     IWiFiDirectConnectionRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectConnectionRequestedEventArgs>(m_ptr); }
 };
 
 struct IWiFiDirectDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectDevice>,
     impl::require<IWiFiDirectDevice, Windows::Foundation::IClosable>
 {
     IWiFiDirectDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectDevice>(m_ptr); }
 };
 
 struct IWiFiDirectDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectDeviceStatics>
 {
     IWiFiDirectDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectDeviceStatics>(m_ptr); }
 };
 
 struct IWiFiDirectDeviceStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectDeviceStatics2>
 {
     IWiFiDirectDeviceStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectDeviceStatics2>(m_ptr); }
 };
 
 struct IWiFiDirectInformationElement :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectInformationElement>
 {
     IWiFiDirectInformationElement(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectInformationElement>(m_ptr); }
 };
 
 struct IWiFiDirectInformationElementStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectInformationElementStatics>
 {
     IWiFiDirectInformationElementStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectInformationElementStatics>(m_ptr); }
 };
 
 struct IWiFiDirectLegacySettings :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWiFiDirectLegacySettings>
 {
     IWiFiDirectLegacySettings(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWiFiDirectLegacySettings>(m_ptr); }
 };
 
 }

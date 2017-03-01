@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -25,6 +25,16 @@ struct IGpioPinProviderValueChangedEventArgs;
 struct IGpioPinProviderValueChangedEventArgsFactory;
 struct IGpioProvider;
 struct GpioPinProviderValueChangedEventArgs;
+
+}
+
+namespace Windows::Devices::Gpio::Provider {
+
+template <typename T> struct impl_IGpioControllerProvider;
+template <typename T> struct impl_IGpioPinProvider;
+template <typename T> struct impl_IGpioPinProviderValueChangedEventArgs;
+template <typename T> struct impl_IGpioPinProviderValueChangedEventArgsFactory;
+template <typename T> struct impl_IGpioProvider;
 
 }
 

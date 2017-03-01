@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.System.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem>
 {
-    HRESULT __stdcall get_ProductId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ProductId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProductId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProductId());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall get_PackageFamilyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PackageFamilyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PackageFamilyName());
             return S_OK;
         }
         catch (...)
@@ -49,7 +54,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().InstallType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstallType());
             return S_OK;
         }
         catch (...)
@@ -62,7 +68,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().IsUserInitiated());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsUserInitiated());
             return S_OK;
         }
         catch (...)
@@ -71,11 +78,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetCurrentStatus(abi_arg_out<Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus> result) noexcept override
+    HRESULT __stdcall abi_GetCurrentStatus(impl::abi_arg_out<Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetCurrentStatus());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetCurrentStatus());
             return S_OK;
         }
         catch (...)
@@ -89,6 +97,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Cancel();
             return S_OK;
         }
@@ -102,6 +111,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Pause();
             return S_OK;
         }
@@ -115,6 +125,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Restart();
             return S_OK;
         }
@@ -124,11 +135,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall add_Completed(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Completed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Completed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Completed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -141,6 +153,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Completed(token);
             return S_OK;
         }
@@ -150,11 +163,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall add_StatusChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_StatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().StatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().StatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -167,6 +181,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StatusChanged(token);
             return S_OK;
         }
@@ -180,10 +195,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem2> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem2>
 {
-    HRESULT __stdcall abi_CancelWithTelemetry(abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_CancelWithTelemetry(impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Cancel(*reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -193,10 +209,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_PauseWithTelemetry(abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_PauseWithTelemetry(impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Pause(*reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -206,10 +223,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_RestartWithTelemetry(abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_RestartWithTelemetry(impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Restart(*reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -223,11 +241,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager>
 {
-    HRESULT __stdcall get_AppInstallItems(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> value) noexcept override
+    HRESULT __stdcall get_AppInstallItems(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppInstallItems());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppInstallItems());
             return S_OK;
         }
         catch (...)
@@ -237,10 +256,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_Cancel(abi_arg_in<hstring> productId) noexcept override
+    HRESULT __stdcall abi_Cancel(impl::abi_arg_in<hstring> productId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Cancel(*reinterpret_cast<const hstring *>(&productId));
             return S_OK;
         }
@@ -250,10 +270,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_Pause(abi_arg_in<hstring> productId) noexcept override
+    HRESULT __stdcall abi_Pause(impl::abi_arg_in<hstring> productId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Pause(*reinterpret_cast<const hstring *>(&productId));
             return S_OK;
         }
@@ -263,10 +284,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_Restart(abi_arg_in<hstring> productId) noexcept override
+    HRESULT __stdcall abi_Restart(impl::abi_arg_in<hstring> productId) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Restart(*reinterpret_cast<const hstring *>(&productId));
             return S_OK;
         }
@@ -276,11 +298,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall add_ItemCompleted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ItemCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ItemCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ItemCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -293,6 +316,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ItemCompleted(token);
             return S_OK;
         }
@@ -302,11 +326,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall add_ItemStatusChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ItemStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ItemStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ItemStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -319,6 +344,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ItemStatusChanged(token);
             return S_OK;
         }
@@ -332,7 +358,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().AutoUpdateSetting());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AutoUpdateSetting());
             return S_OK;
         }
         catch (...)
@@ -345,6 +372,7 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AutoUpdateSetting(value);
             return S_OK;
         }
@@ -354,11 +382,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall get_AcquisitionIdentity(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AcquisitionIdentity(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AcquisitionIdentity());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AcquisitionIdentity());
             return S_OK;
         }
         catch (...)
@@ -368,10 +397,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall put_AcquisitionIdentity(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_AcquisitionIdentity(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AcquisitionIdentity(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -381,11 +411,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetIsApplicableAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_GetIsApplicableAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIsApplicableAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIsApplicableAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
             return S_OK;
         }
         catch (...)
@@ -395,11 +426,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_StartAppInstallAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, bool repair, bool forceUseOfNonRemovableStorage, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_StartAppInstallAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, bool repair, bool forceUseOfNonRemovableStorage, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StartAppInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), repair, forceUseOfNonRemovableStorage));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StartAppInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), repair, forceUseOfNonRemovableStorage));
             return S_OK;
         }
         catch (...)
@@ -409,11 +441,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameAsync(abi_arg_in<hstring> packageFamilyName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameAsync(impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().UpdateAppByPackageFamilyNameAsync(*reinterpret_cast<const hstring *>(&packageFamilyName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().UpdateAppByPackageFamilyNameAsync(*reinterpret_cast<const hstring *>(&packageFamilyName)));
             return S_OK;
         }
         catch (...)
@@ -423,11 +456,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForUpdatesAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForUpdatesAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForUpdatesAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForUpdatesAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
             return S_OK;
         }
         catch (...)
@@ -437,11 +471,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForAllUpdatesAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForAllUpdatesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForAllUpdatesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForAllUpdatesAsync());
             return S_OK;
         }
         catch (...)
@@ -451,11 +486,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_IsStoreBlockedByPolicyAsync(abi_arg_in<hstring> storeClientName, abi_arg_in<hstring> storeClientPublisher, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_IsStoreBlockedByPolicyAsync(impl::abi_arg_in<hstring> storeClientName, impl::abi_arg_in<hstring> storeClientPublisher, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().IsStoreBlockedByPolicyAsync(*reinterpret_cast<const hstring *>(&storeClientName), *reinterpret_cast<const hstring *>(&storeClientPublisher)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().IsStoreBlockedByPolicyAsync(*reinterpret_cast<const hstring *>(&storeClientName), *reinterpret_cast<const hstring *>(&storeClientPublisher)));
             return S_OK;
         }
         catch (...)
@@ -465,11 +501,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetIsAppAllowedToInstallAsync(abi_arg_in<hstring> productId, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_GetIsAppAllowedToInstallAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIsAppAllowedToInstallAsync(*reinterpret_cast<const hstring *>(&productId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIsAppAllowedToInstallAsync(*reinterpret_cast<const hstring *>(&productId)));
             return S_OK;
         }
         catch (...)
@@ -483,11 +520,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager2> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager2>
 {
-    HRESULT __stdcall abi_StartAppInstallWithTelemetryAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, bool repair, bool forceUseOfNonRemovableStorage, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> bundleId, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_StartAppInstallWithTelemetryAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, bool repair, bool forceUseOfNonRemovableStorage, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> bundleId, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StartAppInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&bundleId), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StartAppInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&bundleId), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -497,11 +535,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameWithTelemetryAsync(abi_arg_in<hstring> packageFamilyName, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameWithTelemetryAsync(impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().UpdateAppByPackageFamilyNameAsync(*reinterpret_cast<const hstring *>(&packageFamilyName), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().UpdateAppByPackageFamilyNameAsync(*reinterpret_cast<const hstring *>(&packageFamilyName), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -511,11 +550,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForUpdatesWithTelemetryAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForUpdatesWithTelemetryAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForUpdatesAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForUpdatesAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -525,11 +565,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForAllUpdatesWithTelemetryAsync(abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForAllUpdatesWithTelemetryAsync(impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForAllUpdatesAsync(*reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForAllUpdatesAsync(*reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -539,11 +580,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetIsAppAllowedToInstallWithTelemetryAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_GetIsAppAllowedToInstallWithTelemetryAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIsAppAllowedToInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIsAppAllowedToInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -553,10 +595,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_CancelWithTelemetry(abi_arg_in<hstring> productId, abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_CancelWithTelemetry(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Cancel(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -566,10 +609,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_PauseWithTelemetry(abi_arg_in<hstring> productId, abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_PauseWithTelemetry(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Pause(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -579,10 +623,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_RestartWithTelemetry(abi_arg_in<hstring> productId, abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_RestartWithTelemetry(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Restart(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -596,11 +641,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager3> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager3>
 {
-    HRESULT __stdcall abi_StartProductInstallAsync(abi_arg_in<hstring> productId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> flightId, abi_arg_in<hstring> clientId, bool repair, bool forceUseOfNonRemovableStorage, abi_arg_in<hstring> correlationVector, abi_arg_in<Windows::Management::Deployment::IPackageVolume> targetVolume, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
+    HRESULT __stdcall abi_StartProductInstallAsync(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> flightId, impl::abi_arg_in<hstring> clientId, bool repair, bool forceUseOfNonRemovableStorage, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_in<Windows::Management::Deployment::IPackageVolume> targetVolume, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StartProductInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&flightId), *reinterpret_cast<const hstring *>(&clientId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&correlationVector), *reinterpret_cast<const Windows::Management::Deployment::PackageVolume *>(&targetVolume)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StartProductInstallAsync(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&flightId), *reinterpret_cast<const hstring *>(&clientId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&correlationVector), *reinterpret_cast<const Windows::Management::Deployment::PackageVolume *>(&targetVolume)));
             return S_OK;
         }
         catch (...)
@@ -610,11 +656,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_StartProductInstallForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> productId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> flightId, abi_arg_in<hstring> clientId, bool repair, bool forceUseOfNonRemovableStorage, abi_arg_in<hstring> correlationVector, abi_arg_in<Windows::Management::Deployment::IPackageVolume> targetVolume, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
+    HRESULT __stdcall abi_StartProductInstallForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> flightId, impl::abi_arg_in<hstring> clientId, bool repair, bool forceUseOfNonRemovableStorage, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_in<Windows::Management::Deployment::IPackageVolume> targetVolume, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StartProductInstallForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&flightId), *reinterpret_cast<const hstring *>(&clientId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&correlationVector), *reinterpret_cast<const Windows::Management::Deployment::PackageVolume *>(&targetVolume)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StartProductInstallForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&flightId), *reinterpret_cast<const hstring *>(&clientId), repair, forceUseOfNonRemovableStorage, *reinterpret_cast<const hstring *>(&correlationVector), *reinterpret_cast<const Windows::Management::Deployment::PackageVolume *>(&targetVolume)));
             return S_OK;
         }
         catch (...)
@@ -624,11 +671,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> packageFamilyName, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_UpdateAppByPackageFamilyNameForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().UpdateAppByPackageFamilyNameForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&packageFamilyName), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().UpdateAppByPackageFamilyNameForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&packageFamilyName), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -638,11 +686,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForUpdatesForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForUpdatesForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForUpdatesForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForUpdatesForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -652,11 +701,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_SearchForAllUpdatesForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
+    HRESULT __stdcall abi_SearchForAllUpdatesForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SearchForAllUpdatesForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SearchForAllUpdatesForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -666,11 +716,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetIsAppAllowedToInstallForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_in<hstring> catalogId, abi_arg_in<hstring> correlationVector, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_GetIsAppAllowedToInstallForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_in<hstring> catalogId, impl::abi_arg_in<hstring> correlationVector, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIsAppAllowedToInstallForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIsAppAllowedToInstallForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId), *reinterpret_cast<const hstring *>(&catalogId), *reinterpret_cast<const hstring *>(&correlationVector)));
             return S_OK;
         }
         catch (...)
@@ -680,11 +731,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_GetIsApplicableForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> productId, abi_arg_in<hstring> skuId, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_GetIsApplicableForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> skuId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIsApplicableForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIsApplicableForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&skuId)));
             return S_OK;
         }
         catch (...)
@@ -694,10 +746,11 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
         }
     }
 
-    HRESULT __stdcall abi_MoveToFrontOfDownloadQueue(abi_arg_in<hstring> productId, abi_arg_in<hstring> correlationVector) noexcept override
+    HRESULT __stdcall abi_MoveToFrontOfDownloadQueue(impl::abi_arg_in<hstring> productId, impl::abi_arg_in<hstring> correlationVector) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MoveToFrontOfDownloadQueue(*reinterpret_cast<const hstring *>(&productId), *reinterpret_cast<const hstring *>(&correlationVector));
             return S_OK;
         }
@@ -711,11 +764,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManagerItemEventArgs> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManagerItemEventArgs>
 {
-    HRESULT __stdcall get_Item(abi_arg_out<Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem> value) noexcept override
+    HRESULT __stdcall get_Item(impl::abi_arg_out<Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Item());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Item());
             return S_OK;
         }
         catch (...)
@@ -733,7 +787,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().InstallState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InstallState());
             return S_OK;
         }
         catch (...)
@@ -746,7 +801,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().DownloadSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DownloadSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -759,7 +815,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().BytesDownloaded());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BytesDownloaded());
             return S_OK;
         }
         catch (...)
@@ -772,7 +829,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().PercentComplete());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PercentComplete());
             return S_OK;
         }
         catch (...)
@@ -785,7 +843,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().ErrorCode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ErrorCode());
             return S_OK;
         }
         catch (...)
@@ -798,11 +857,12 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus2> : produce_base<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus2>
 {
-    HRESULT __stdcall get_User(abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().User());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().User());
             return S_OK;
         }
         catch (...)
@@ -816,7 +876,8 @@ struct produce<D, Windows::ApplicationModel::Store::Preview::InstallControl::IAp
     {
         try
         {
-            *value = detach(this->shim().ReadyForLaunch());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadyForLaunch());
             return S_OK;
         }
         catch (...)
@@ -833,184 +894,184 @@ namespace Windows::ApplicationModel::Store::Preview::InstallControl {
 template <typename D> Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallState impl_IAppInstallStatus<D>::InstallState() const
 {
     Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallState value {};
-    check_hresult(static_cast<const IAppInstallStatus &>(static_cast<const D &>(*this))->get_InstallState(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus)->get_InstallState(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IAppInstallStatus<D>::DownloadSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IAppInstallStatus &>(static_cast<const D &>(*this))->get_DownloadSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus)->get_DownloadSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IAppInstallStatus<D>::BytesDownloaded() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IAppInstallStatus &>(static_cast<const D &>(*this))->get_BytesDownloaded(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus)->get_BytesDownloaded(&value));
     return value;
 }
 
 template <typename D> double impl_IAppInstallStatus<D>::PercentComplete() const
 {
     double value {};
-    check_hresult(static_cast<const IAppInstallStatus &>(static_cast<const D &>(*this))->get_PercentComplete(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus)->get_PercentComplete(&value));
     return value;
 }
 
 template <typename D> HRESULT impl_IAppInstallStatus<D>::ErrorCode() const
 {
     HRESULT value {};
-    check_hresult(static_cast<const IAppInstallStatus &>(static_cast<const D &>(*this))->get_ErrorCode(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus)->get_ErrorCode(&value));
     return value;
 }
 
 template <typename D> Windows::System::User impl_IAppInstallStatus2<D>::User() const
 {
     Windows::System::User value { nullptr };
-    check_hresult(static_cast<const IAppInstallStatus2 &>(static_cast<const D &>(*this))->get_User(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallStatus2)->get_User(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IAppInstallStatus2<D>::ReadyForLaunch() const
 {
     bool value {};
-    check_hresult(static_cast<const IAppInstallStatus2 &>(static_cast<const D &>(*this))->get_ReadyForLaunch(&value));
+    check_hresult(WINRT_SHIM(IAppInstallStatus2)->get_ReadyForLaunch(&value));
     return value;
 }
 
 template <typename D> hstring impl_IAppInstallItem<D>::ProductId() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->get_ProductId(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->get_ProductId(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppInstallItem<D>::PackageFamilyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->get_PackageFamilyName(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->get_PackageFamilyName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallType impl_IAppInstallItem<D>::InstallType() const
 {
     Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallType value {};
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->get_InstallType(&value));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->get_InstallType(&value));
     return value;
 }
 
 template <typename D> bool impl_IAppInstallItem<D>::IsUserInitiated() const
 {
     bool value {};
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->get_IsUserInitiated(&value));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->get_IsUserInitiated(&value));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallStatus impl_IAppInstallItem<D>::GetCurrentStatus() const
 {
     Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallStatus result { nullptr };
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->abi_GetCurrentStatus(put(result)));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->abi_GetCurrentStatus(put_abi(result)));
     return result;
 }
 
 template <typename D> void impl_IAppInstallItem<D>::Cancel() const
 {
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->abi_Cancel());
+    check_hresult(WINRT_SHIM(IAppInstallItem)->abi_Cancel());
 }
 
 template <typename D> void impl_IAppInstallItem<D>::Pause() const
 {
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->abi_Pause());
+    check_hresult(WINRT_SHIM(IAppInstallItem)->abi_Pause());
 }
 
 template <typename D> void impl_IAppInstallItem<D>::Restart() const
 {
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->abi_Restart());
+    check_hresult(WINRT_SHIM(IAppInstallItem)->abi_Restart());
 }
 
-template <typename D> event_token impl_IAppInstallItem<D>::Completed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IAppInstallItem<D>::Completed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->add_Completed(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->add_Completed(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IAppInstallItem> impl_IAppInstallItem<D>::Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IAppInstallItem> impl_IAppInstallItem<D>::Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IAppInstallItem>(this, &ABI::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem::remove_Completed, Completed(handler));
 }
 
 template <typename D> void impl_IAppInstallItem<D>::Completed(event_token token) const
 {
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->remove_Completed(token));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->remove_Completed(token));
 }
 
-template <typename D> event_token impl_IAppInstallItem<D>::StatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IAppInstallItem<D>::StatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->add_StatusChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->add_StatusChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IAppInstallItem> impl_IAppInstallItem<D>::StatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IAppInstallItem> impl_IAppInstallItem<D>::StatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IAppInstallItem>(this, &ABI::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem::remove_StatusChanged, StatusChanged(handler));
 }
 
 template <typename D> void impl_IAppInstallItem<D>::StatusChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAppInstallItem &>(static_cast<const D &>(*this))->remove_StatusChanged(token));
+    check_hresult(WINRT_SHIM(IAppInstallItem)->remove_StatusChanged(token));
 }
 
-template <typename D> void impl_IAppInstallItem2<D>::Cancel(hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallItem2<D>::Cancel(hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallItem2 &>(static_cast<const D &>(*this))->abi_CancelWithTelemetry(get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallItem2)->abi_CancelWithTelemetry(get_abi(correlationVector)));
 }
 
-template <typename D> void impl_IAppInstallItem2<D>::Pause(hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallItem2<D>::Pause(hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallItem2 &>(static_cast<const D &>(*this))->abi_PauseWithTelemetry(get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallItem2)->abi_PauseWithTelemetry(get_abi(correlationVector)));
 }
 
-template <typename D> void impl_IAppInstallItem2<D>::Restart(hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallItem2<D>::Restart(hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallItem2 &>(static_cast<const D &>(*this))->abi_RestartWithTelemetry(get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallItem2)->abi_RestartWithTelemetry(get_abi(correlationVector)));
 }
 
 template <typename D> Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem impl_IAppInstallManagerItemEventArgs<D>::Item() const
 {
     Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem value { nullptr };
-    check_hresult(static_cast<const IAppInstallManagerItemEventArgs &>(static_cast<const D &>(*this))->get_Item(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallManagerItemEventArgs)->get_Item(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::AppInstallItems() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> value;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->get_AppInstallItems(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->get_AppInstallItems(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAppInstallManager<D>::Cancel(hstring_ref productId) const
+template <typename D> void impl_IAppInstallManager<D>::Cancel(hstring_view productId) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_Cancel(get(productId)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_Cancel(get_abi(productId)));
 }
 
-template <typename D> void impl_IAppInstallManager<D>::Pause(hstring_ref productId) const
+template <typename D> void impl_IAppInstallManager<D>::Pause(hstring_view productId) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_Pause(get(productId)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_Pause(get_abi(productId)));
 }
 
-template <typename D> void impl_IAppInstallManager<D>::Restart(hstring_ref productId) const
+template <typename D> void impl_IAppInstallManager<D>::Restart(hstring_view productId) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_Restart(get(productId)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_Restart(get_abi(productId)));
 }
 
 template <typename D> event_token impl_IAppInstallManager<D>::ItemCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->add_ItemCompleted(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->add_ItemCompleted(get_abi(handler), &token));
     return token;
 }
 
@@ -1021,13 +1082,13 @@ template <typename D> event_revoker<IAppInstallManager> impl_IAppInstallManager<
 
 template <typename D> void impl_IAppInstallManager<D>::ItemCompleted(event_token token) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->remove_ItemCompleted(token));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->remove_ItemCompleted(token));
 }
 
 template <typename D> event_token impl_IAppInstallManager<D>::ItemStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager, Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->add_ItemStatusChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->add_ItemStatusChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -1038,184 +1099,184 @@ template <typename D> event_revoker<IAppInstallManager> impl_IAppInstallManager<
 
 template <typename D> void impl_IAppInstallManager<D>::ItemStatusChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->remove_ItemStatusChanged(token));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->remove_ItemStatusChanged(token));
 }
 
 template <typename D> Windows::ApplicationModel::Store::Preview::InstallControl::AutoUpdateSetting impl_IAppInstallManager<D>::AutoUpdateSetting() const
 {
     Windows::ApplicationModel::Store::Preview::InstallControl::AutoUpdateSetting value {};
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->get_AutoUpdateSetting(&value));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->get_AutoUpdateSetting(&value));
     return value;
 }
 
 template <typename D> void impl_IAppInstallManager<D>::AutoUpdateSetting(Windows::ApplicationModel::Store::Preview::InstallControl::AutoUpdateSetting value) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->put_AutoUpdateSetting(value));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->put_AutoUpdateSetting(value));
 }
 
 template <typename D> hstring impl_IAppInstallManager<D>::AcquisitionIdentity() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->get_AcquisitionIdentity(put(value)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->get_AcquisitionIdentity(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IAppInstallManager<D>::AcquisitionIdentity(hstring_ref value) const
+template <typename D> void impl_IAppInstallManager<D>::AcquisitionIdentity(hstring_view value) const
 {
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->put_AcquisitionIdentity(get(value)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->put_AcquisitionIdentity(get_abi(value)));
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::GetIsApplicableAsync(hstring_ref productId, hstring_ref skuId) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::GetIsApplicableAsync(hstring_view productId, hstring_view skuId) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_GetIsApplicableAsync(get(productId), get(skuId), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_GetIsApplicableAsync(get_abi(productId), get_abi(skuId), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::StartAppInstallAsync(hstring_ref productId, hstring_ref skuId, bool repair, bool forceUseOfNonRemovableStorage) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::StartAppInstallAsync(hstring_view productId, hstring_view skuId, bool repair, bool forceUseOfNonRemovableStorage) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_StartAppInstallAsync(get(productId), get(skuId), repair, forceUseOfNonRemovableStorage, put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_StartAppInstallAsync(get_abi(productId), get_abi(skuId), repair, forceUseOfNonRemovableStorage, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::UpdateAppByPackageFamilyNameAsync(hstring_ref packageFamilyName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::UpdateAppByPackageFamilyNameAsync(hstring_view packageFamilyName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_UpdateAppByPackageFamilyNameAsync(get(packageFamilyName), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_UpdateAppByPackageFamilyNameAsync(get_abi(packageFamilyName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::SearchForUpdatesAsync(hstring_ref productId, hstring_ref skuId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager<D>::SearchForUpdatesAsync(hstring_view productId, hstring_view skuId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_SearchForUpdatesAsync(get(productId), get(skuId), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_SearchForUpdatesAsync(get_abi(productId), get_abi(skuId), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager<D>::SearchForAllUpdatesAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_SearchForAllUpdatesAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_SearchForAllUpdatesAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::IsStoreBlockedByPolicyAsync(hstring_ref storeClientName, hstring_ref storeClientPublisher) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::IsStoreBlockedByPolicyAsync(hstring_view storeClientName, hstring_view storeClientPublisher) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_IsStoreBlockedByPolicyAsync(get(storeClientName), get(storeClientPublisher), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_IsStoreBlockedByPolicyAsync(get_abi(storeClientName), get_abi(storeClientPublisher), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::GetIsAppAllowedToInstallAsync(hstring_ref productId) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager<D>::GetIsAppAllowedToInstallAsync(hstring_view productId) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager &>(static_cast<const D &>(*this))->abi_GetIsAppAllowedToInstallAsync(get(productId), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager)->abi_GetIsAppAllowedToInstallAsync(get_abi(productId), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::StartAppInstallAsync(hstring_ref productId, hstring_ref skuId, bool repair, bool forceUseOfNonRemovableStorage, hstring_ref catalogId, hstring_ref bundleId, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::StartAppInstallAsync(hstring_view productId, hstring_view skuId, bool repair, bool forceUseOfNonRemovableStorage, hstring_view catalogId, hstring_view bundleId, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_StartAppInstallWithTelemetryAsync(get(productId), get(skuId), repair, forceUseOfNonRemovableStorage, get(catalogId), get(bundleId), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_StartAppInstallWithTelemetryAsync(get_abi(productId), get_abi(skuId), repair, forceUseOfNonRemovableStorage, get_abi(catalogId), get_abi(bundleId), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::UpdateAppByPackageFamilyNameAsync(hstring_ref packageFamilyName, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::UpdateAppByPackageFamilyNameAsync(hstring_view packageFamilyName, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_UpdateAppByPackageFamilyNameWithTelemetryAsync(get(packageFamilyName), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_UpdateAppByPackageFamilyNameWithTelemetryAsync(get_abi(packageFamilyName), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::SearchForUpdatesAsync(hstring_ref productId, hstring_ref skuId, hstring_ref catalogId, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager2<D>::SearchForUpdatesAsync(hstring_view productId, hstring_view skuId, hstring_view catalogId, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_SearchForUpdatesWithTelemetryAsync(get(productId), get(skuId), get(catalogId), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_SearchForUpdatesWithTelemetryAsync(get_abi(productId), get_abi(skuId), get_abi(catalogId), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager2<D>::SearchForAllUpdatesAsync(hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager2<D>::SearchForAllUpdatesAsync(hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation;
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_SearchForAllUpdatesWithTelemetryAsync(get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_SearchForAllUpdatesWithTelemetryAsync(get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager2<D>::GetIsAppAllowedToInstallAsync(hstring_ref productId, hstring_ref skuId, hstring_ref catalogId, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager2<D>::GetIsAppAllowedToInstallAsync(hstring_view productId, hstring_view skuId, hstring_view catalogId, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_GetIsAppAllowedToInstallWithTelemetryAsync(get(productId), get(skuId), get(catalogId), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_GetIsAppAllowedToInstallWithTelemetryAsync(get_abi(productId), get_abi(skuId), get_abi(catalogId), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> void impl_IAppInstallManager2<D>::Cancel(hstring_ref productId, hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallManager2<D>::Cancel(hstring_view productId, hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_CancelWithTelemetry(get(productId), get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_CancelWithTelemetry(get_abi(productId), get_abi(correlationVector)));
 }
 
-template <typename D> void impl_IAppInstallManager2<D>::Pause(hstring_ref productId, hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallManager2<D>::Pause(hstring_view productId, hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_PauseWithTelemetry(get(productId), get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_PauseWithTelemetry(get_abi(productId), get_abi(correlationVector)));
 }
 
-template <typename D> void impl_IAppInstallManager2<D>::Restart(hstring_ref productId, hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallManager2<D>::Restart(hstring_view productId, hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallManager2 &>(static_cast<const D &>(*this))->abi_RestartWithTelemetry(get(productId), get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallManager2)->abi_RestartWithTelemetry(get_abi(productId), get_abi(correlationVector)));
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::StartProductInstallAsync(hstring_ref productId, hstring_ref catalogId, hstring_ref flightId, hstring_ref clientId, bool repair, bool forceUseOfNonRemovableStorage, hstring_ref correlationVector, const Windows::Management::Deployment::PackageVolume & targetVolume) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::StartProductInstallAsync(hstring_view productId, hstring_view catalogId, hstring_view flightId, hstring_view clientId, bool repair, bool forceUseOfNonRemovableStorage, hstring_view correlationVector, const Windows::Management::Deployment::PackageVolume & targetVolume) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_StartProductInstallAsync(get(productId), get(catalogId), get(flightId), get(clientId), repair, forceUseOfNonRemovableStorage, get(correlationVector), get(targetVolume), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_StartProductInstallAsync(get_abi(productId), get_abi(catalogId), get_abi(flightId), get_abi(clientId), repair, forceUseOfNonRemovableStorage, get_abi(correlationVector), get_abi(targetVolume), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::StartProductInstallForUserAsync(const Windows::System::User & user, hstring_ref productId, hstring_ref catalogId, hstring_ref flightId, hstring_ref clientId, bool repair, bool forceUseOfNonRemovableStorage, hstring_ref correlationVector, const Windows::Management::Deployment::PackageVolume & targetVolume) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::StartProductInstallForUserAsync(const Windows::System::User & user, hstring_view productId, hstring_view catalogId, hstring_view flightId, hstring_view clientId, bool repair, bool forceUseOfNonRemovableStorage, hstring_view correlationVector, const Windows::Management::Deployment::PackageVolume & targetVolume) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_StartProductInstallForUserAsync(get(user), get(productId), get(catalogId), get(flightId), get(clientId), repair, forceUseOfNonRemovableStorage, get(correlationVector), get(targetVolume), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_StartProductInstallForUserAsync(get_abi(user), get_abi(productId), get_abi(catalogId), get_abi(flightId), get_abi(clientId), repair, forceUseOfNonRemovableStorage, get_abi(correlationVector), get_abi(targetVolume), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager3<D>::UpdateAppByPackageFamilyNameForUserAsync(const Windows::System::User & user, hstring_ref packageFamilyName, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager3<D>::UpdateAppByPackageFamilyNameForUserAsync(const Windows::System::User & user, hstring_view packageFamilyName, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_UpdateAppByPackageFamilyNameForUserAsync(get(user), get(packageFamilyName), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_UpdateAppByPackageFamilyNameForUserAsync(get_abi(user), get_abi(packageFamilyName), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager3<D>::SearchForUpdatesForUserAsync(const Windows::System::User & user, hstring_ref productId, hstring_ref skuId, hstring_ref catalogId, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> impl_IAppInstallManager3<D>::SearchForUpdatesForUserAsync(const Windows::System::User & user, hstring_view productId, hstring_view skuId, hstring_view catalogId, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_SearchForUpdatesForUserAsync(get(user), get(productId), get(skuId), get(catalogId), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_SearchForUpdatesForUserAsync(get_abi(user), get_abi(productId), get_abi(skuId), get_abi(catalogId), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::SearchForAllUpdatesForUserAsync(const Windows::System::User & user, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> impl_IAppInstallManager3<D>::SearchForAllUpdatesForUserAsync(const Windows::System::User & user, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_SearchForAllUpdatesForUserAsync(get(user), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_SearchForAllUpdatesForUserAsync(get_abi(user), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager3<D>::GetIsAppAllowedToInstallForUserAsync(const Windows::System::User & user, hstring_ref productId, hstring_ref skuId, hstring_ref catalogId, hstring_ref correlationVector) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager3<D>::GetIsAppAllowedToInstallForUserAsync(const Windows::System::User & user, hstring_view productId, hstring_view skuId, hstring_view catalogId, hstring_view correlationVector) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_GetIsAppAllowedToInstallForUserAsync(get(user), get(productId), get(skuId), get(catalogId), get(correlationVector), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_GetIsAppAllowedToInstallForUserAsync(get_abi(user), get_abi(productId), get_abi(skuId), get_abi(catalogId), get_abi(correlationVector), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager3<D>::GetIsApplicableForUserAsync(const Windows::System::User & user, hstring_ref productId, hstring_ref skuId) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppInstallManager3<D>::GetIsApplicableForUserAsync(const Windows::System::User & user, hstring_view productId, hstring_view skuId) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_GetIsApplicableForUserAsync(get(user), get(productId), get(skuId), put(operation)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_GetIsApplicableForUserAsync(get_abi(user), get_abi(productId), get_abi(skuId), put_abi(operation)));
     return operation;
 }
 
-template <typename D> void impl_IAppInstallManager3<D>::MoveToFrontOfDownloadQueue(hstring_ref productId, hstring_ref correlationVector) const
+template <typename D> void impl_IAppInstallManager3<D>::MoveToFrontOfDownloadQueue(hstring_view productId, hstring_view correlationVector) const
 {
-    check_hresult(static_cast<const IAppInstallManager3 &>(static_cast<const D &>(*this))->abi_MoveToFrontOfDownloadQueue(get(productId), get(correlationVector)));
+    check_hresult(WINRT_SHIM(IAppInstallManager3)->abi_MoveToFrontOfDownloadQueue(get_abi(productId), get_abi(correlationVector)));
 }
 
 inline AppInstallManager::AppInstallManager() :
@@ -1225,3 +1286,113 @@ inline AppInstallManager::AppInstallManager() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallItem2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager3>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManager3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManagerItemEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallManagerItemEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::IAppInstallStatus2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallItem & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManager & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallManagerItemEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallStatus>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Store::Preview::InstallControl::AppInstallStatus & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -71,7 +71,7 @@ template <> struct __declspec(uuid("13492af0-1c7f-57e8-b57e-a5ae8f2c462e")) __de
 
 #ifndef WINRT_GENERIC_dac94028_1b44_5f45_b9e3_abcf4ab044bf
 #define WINRT_GENERIC_dac94028_1b44_5f45_b9e3_abcf4ab044bf
-template <> struct __declspec(uuid("dac94028-1b44-5f45-b9e3-abcf4ab044bf")) __declspec(novtable) TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::IInspectable> {};
+template <> struct __declspec(uuid("dac94028-1b44-5f45-b9e3-abcf4ab044bf")) __declspec(novtable) TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -119,157 +119,67 @@ template <> struct __declspec(uuid("81bc7d1b-7d06-555f-811b-42ec0fa71b55")) __de
 
 namespace Windows::Media::DialProtocol {
 
-template <typename D>
-struct WINRT_EBO impl_IDialApp
-{
-    hstring AppName() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::DialProtocol::DialAppLaunchResult> RequestLaunchAsync(hstring_ref appArgument) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::DialProtocol::DialAppStopResult> StopAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::DialProtocol::DialAppStateDetails> GetAppStateAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialAppStateDetails
-{
-    Windows::Media::DialProtocol::DialAppState State() const;
-    hstring FullXml() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDevice
-{
-    hstring Id() const;
-    Windows::Media::DialProtocol::DialApp GetDialApp(hstring_ref appName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDevice2
-{
-    hstring FriendlyName() const;
-    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDevicePicker
-{
-    Windows::Media::DialProtocol::DialDevicePickerFilter Filter() const;
-    Windows::Devices::Enumeration::DevicePickerAppearance Appearance() const;
-    event_token DialDeviceSelected(const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Media::DialProtocol::DialDeviceSelectedEventArgs> & handler) const;
-    using DialDeviceSelected_revoker = event_revoker<IDialDevicePicker>;
-    DialDeviceSelected_revoker DialDeviceSelected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Media::DialProtocol::DialDeviceSelectedEventArgs> & handler) const;
-    void DialDeviceSelected(event_token token) const;
-    event_token DisconnectButtonClicked(const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Media::DialProtocol::DialDisconnectButtonClickedEventArgs> & handler) const;
-    using DisconnectButtonClicked_revoker = event_revoker<IDialDevicePicker>;
-    DisconnectButtonClicked_revoker DisconnectButtonClicked(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::Media::DialProtocol::DialDisconnectButtonClickedEventArgs> & handler) const;
-    void DisconnectButtonClicked(event_token token) const;
-    event_token DialDevicePickerDismissed(const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::IInspectable> & handler) const;
-    using DialDevicePickerDismissed_revoker = event_revoker<IDialDevicePicker>;
-    DialDevicePickerDismissed_revoker DialDevicePickerDismissed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::DialProtocol::DialDevicePicker, Windows::IInspectable> & handler) const;
-    void DialDevicePickerDismissed(event_token token) const;
-    void Show(const Windows::Foundation::Rect & selection) const;
-    void Show(const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::DialProtocol::DialDevice> PickSingleDialDeviceAsync(const Windows::Foundation::Rect & selection) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::DialProtocol::DialDevice> PickSingleDialDeviceAsync(const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const;
-    void Hide() const;
-    void SetDisplayStatus(const Windows::Media::DialProtocol::DialDevice & device, Windows::Media::DialProtocol::DialDeviceDisplayStatus status) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDevicePickerFilter
-{
-    Windows::Foundation::Collections::IVector<hstring> SupportedAppNames() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDeviceSelectedEventArgs
-{
-    Windows::Media::DialProtocol::DialDevice SelectedDialDevice() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDeviceStatics
-{
-    hstring GetDeviceSelector(hstring_ref appName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::DialProtocol::DialDevice> FromIdAsync(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<bool> DeviceInfoSupportsDialAsync(const Windows::Devices::Enumeration::DeviceInformation & device) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDialDisconnectButtonClickedEventArgs
-{
-    Windows::Media::DialProtocol::DialDevice Device() const;
-};
-
 struct IDialApp :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialApp>
 {
     IDialApp(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialApp>(m_ptr); }
 };
 
 struct IDialAppStateDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialAppStateDetails>
 {
     IDialAppStateDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialAppStateDetails>(m_ptr); }
 };
 
 struct IDialDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDevice>
 {
     IDialDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDevice>(m_ptr); }
 };
 
 struct IDialDevice2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDevice2>
 {
     IDialDevice2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDevice2>(m_ptr); }
 };
 
 struct IDialDevicePicker :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDevicePicker>
 {
     IDialDevicePicker(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDevicePicker>(m_ptr); }
 };
 
 struct IDialDevicePickerFilter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDevicePickerFilter>
 {
     IDialDevicePickerFilter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDevicePickerFilter>(m_ptr); }
 };
 
 struct IDialDeviceSelectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDeviceSelectedEventArgs>
 {
     IDialDeviceSelectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDeviceSelectedEventArgs>(m_ptr); }
 };
 
 struct IDialDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDeviceStatics>
 {
     IDialDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDeviceStatics>(m_ptr); }
 };
 
 struct IDialDisconnectButtonClickedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDialDisconnectButtonClickedEventArgs>
 {
     IDialDisconnectButtonClickedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDialDisconnectButtonClickedEventArgs>(m_ptr); }
 };
 
 }

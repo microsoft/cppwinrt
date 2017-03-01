@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.Protection.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -32,7 +32,7 @@ template <> struct __declspec(uuid("5061ee0f-899a-569c-a0a3-c2566eb88142")) __de
 
 #ifndef WINRT_GENERIC_f82ae043_54fb_5366_a607_19b68e6bab8c
 #define WINRT_GENERIC_f82ae043_54fb_5366_a607_19b68e6bab8c
-template <> struct __declspec(uuid("f82ae043-54fb-5366-a607-19b68e6bab8c")) __declspec(novtable) TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::IInspectable> {};
+template <> struct __declspec(uuid("f82ae043-54fb-5366-a607-19b68e6bab8c")) __declspec(novtable) TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_595dcc09_9ad3_5094_800a_0883cce1ef01
@@ -85,133 +85,27 @@ template <> struct __declspec(uuid("ec067827-67d9-59a6-a57b-3e7ca12b89c1")) __de
 
 namespace Windows::Media::Protection {
 
-template <typename D>
-struct WINRT_EBO impl_IComponentLoadFailedEventArgs
-{
-    Windows::Media::Protection::RevocationAndRenewalInformation Information() const;
-    Windows::Media::Protection::MediaProtectionServiceCompletion Completion() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IComponentRenewalStatics
-{
-    Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> RenewSystemComponentsAsync(const Windows::Media::Protection::RevocationAndRenewalInformation & information) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHdcpSession
-{
-    bool IsEffectiveProtectionAtLeast(Windows::Media::Protection::HdcpProtection protection) const;
-    Windows::Foundation::IReference<winrt::Windows::Media::Protection::HdcpProtection> GetEffectiveProtection() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Protection::HdcpSetProtectionResult> SetDesiredMinProtectionAsync(Windows::Media::Protection::HdcpProtection protection) const;
-    event_token ProtectionChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::IInspectable> & handler) const;
-    using ProtectionChanged_revoker = event_revoker<IHdcpSession>;
-    ProtectionChanged_revoker ProtectionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::IInspectable> & handler) const;
-    void ProtectionChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaProtectionManager
-{
-    event_token ServiceRequested(const Windows::Media::Protection::ServiceRequestedEventHandler & handler) const;
-    using ServiceRequested_revoker = event_revoker<IMediaProtectionManager>;
-    ServiceRequested_revoker ServiceRequested(auto_revoke_t, const Windows::Media::Protection::ServiceRequestedEventHandler & handler) const;
-    void ServiceRequested(event_token cookie) const;
-    event_token RebootNeeded(const Windows::Media::Protection::RebootNeededEventHandler & handler) const;
-    using RebootNeeded_revoker = event_revoker<IMediaProtectionManager>;
-    RebootNeeded_revoker RebootNeeded(auto_revoke_t, const Windows::Media::Protection::RebootNeededEventHandler & handler) const;
-    void RebootNeeded(event_token cookie) const;
-    event_token ComponentLoadFailed(const Windows::Media::Protection::ComponentLoadFailedEventHandler & handler) const;
-    using ComponentLoadFailed_revoker = event_revoker<IMediaProtectionManager>;
-    ComponentLoadFailed_revoker ComponentLoadFailed(auto_revoke_t, const Windows::Media::Protection::ComponentLoadFailedEventHandler & handler) const;
-    void ComponentLoadFailed(event_token cookie) const;
-    Windows::Foundation::Collections::IPropertySet Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaProtectionPMPServer
-{
-    Windows::Foundation::Collections::IPropertySet Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaProtectionPMPServerFactory
-{
-    Windows::Media::Protection::MediaProtectionPMPServer CreatePMPServer(const Windows::Foundation::Collections::IPropertySet & pProperties) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaProtectionServiceCompletion
-{
-    void Complete(bool success) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaProtectionServiceRequest
-{
-    GUID ProtectionSystem() const;
-    GUID Type() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProtectionCapabilities
-{
-    Windows::Media::Protection::ProtectionCapabilityResult IsTypeSupported(hstring_ref type, hstring_ref keySystem) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRevocationAndRenewalInformation
-{
-    Windows::Foundation::Collections::IVector<Windows::Media::Protection::RevocationAndRenewalItem> Items() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRevocationAndRenewalItem
-{
-    Windows::Media::Protection::RevocationAndRenewalReasons Reasons() const;
-    hstring HeaderHash() const;
-    hstring PublicKeyHash() const;
-    hstring Name() const;
-    hstring RenewalId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IServiceRequestedEventArgs
-{
-    Windows::Media::Protection::IMediaProtectionServiceRequest Request() const;
-    Windows::Media::Protection::MediaProtectionServiceCompletion Completion() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IServiceRequestedEventArgs2
-{
-    Windows::Media::Playback::MediaPlaybackItem MediaPlaybackItem() const;
-};
-
-struct ComponentLoadFailedEventHandler : Windows::IUnknown
+struct ComponentLoadFailedEventHandler : Windows::Foundation::IUnknown
 {
     ComponentLoadFailedEventHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ComponentLoadFailedEventHandler>(m_ptr); }
     template <typename L> ComponentLoadFailedEventHandler(L lambda);
     template <typename F> ComponentLoadFailedEventHandler (F * function);
     template <typename O, typename M> ComponentLoadFailedEventHandler(O * object, M method);
     void operator()(const Windows::Media::Protection::MediaProtectionManager & sender, const Windows::Media::Protection::ComponentLoadFailedEventArgs & e) const;
 };
 
-struct RebootNeededEventHandler : Windows::IUnknown
+struct RebootNeededEventHandler : Windows::Foundation::IUnknown
 {
     RebootNeededEventHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<RebootNeededEventHandler>(m_ptr); }
     template <typename L> RebootNeededEventHandler(L lambda);
     template <typename F> RebootNeededEventHandler (F * function);
     template <typename O, typename M> RebootNeededEventHandler(O * object, M method);
     void operator()(const Windows::Media::Protection::MediaProtectionManager & sender) const;
 };
 
-struct ServiceRequestedEventHandler : Windows::IUnknown
+struct ServiceRequestedEventHandler : Windows::Foundation::IUnknown
 {
     ServiceRequestedEventHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ServiceRequestedEventHandler>(m_ptr); }
     template <typename L> ServiceRequestedEventHandler(L lambda);
     template <typename F> ServiceRequestedEventHandler (F * function);
     template <typename O, typename M> ServiceRequestedEventHandler(O * object, M method);
@@ -219,108 +113,95 @@ struct ServiceRequestedEventHandler : Windows::IUnknown
 };
 
 struct IComponentLoadFailedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IComponentLoadFailedEventArgs>
 {
     IComponentLoadFailedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IComponentLoadFailedEventArgs>(m_ptr); }
 };
 
 struct IComponentRenewalStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IComponentRenewalStatics>
 {
     IComponentRenewalStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IComponentRenewalStatics>(m_ptr); }
 };
 
 struct IHdcpSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHdcpSession>,
     impl::require<IHdcpSession, Windows::Foundation::IClosable>
 {
     IHdcpSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHdcpSession>(m_ptr); }
 };
 
 struct IMediaProtectionManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaProtectionManager>
 {
     IMediaProtectionManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaProtectionManager>(m_ptr); }
 };
 
 struct IMediaProtectionPMPServer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaProtectionPMPServer>
 {
     IMediaProtectionPMPServer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaProtectionPMPServer>(m_ptr); }
 };
 
 struct IMediaProtectionPMPServerFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaProtectionPMPServerFactory>
 {
     IMediaProtectionPMPServerFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaProtectionPMPServerFactory>(m_ptr); }
 };
 
 struct IMediaProtectionServiceCompletion :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaProtectionServiceCompletion>
 {
     IMediaProtectionServiceCompletion(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaProtectionServiceCompletion>(m_ptr); }
 };
 
 struct IMediaProtectionServiceRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaProtectionServiceRequest>
 {
     IMediaProtectionServiceRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaProtectionServiceRequest>(m_ptr); }
 };
 
 struct IProtectionCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProtectionCapabilities>
 {
     IProtectionCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProtectionCapabilities>(m_ptr); }
 };
 
 struct IRevocationAndRenewalInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRevocationAndRenewalInformation>
 {
     IRevocationAndRenewalInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRevocationAndRenewalInformation>(m_ptr); }
 };
 
 struct IRevocationAndRenewalItem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRevocationAndRenewalItem>
 {
     IRevocationAndRenewalItem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRevocationAndRenewalItem>(m_ptr); }
 };
 
 struct IServiceRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IServiceRequestedEventArgs>
 {
     IServiceRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IServiceRequestedEventArgs>(m_ptr); }
 };
 
 struct IServiceRequestedEventArgs2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IServiceRequestedEventArgs2>
 {
     IServiceRequestedEventArgs2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IServiceRequestedEventArgs2>(m_ptr); }
 };
 
 }

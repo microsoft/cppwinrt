@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -44,6 +44,11 @@ template <> struct __declspec(uuid("f09e843a-13cb-559b-a9fc-015722c2cd57")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_c3a1ccf9_15cc_5a3f_a7c1_b62c5c3fb20c
+#define WINRT_GENERIC_c3a1ccf9_15cc_5a3f_a7c1_b62c5c3fb20c
+template <> struct __declspec(uuid("c3a1ccf9-15cc-5a3f-a7c1-b62c5c3fb20c")) __declspec(novtable) IVector<Windows::UI::Notifications::UserNotification> : impl_IVector<Windows::UI::Notifications::UserNotification> {};
+#endif
+
 #ifndef WINRT_GENERIC_6ee1200d_dd13_5050_88cb_5352af113fd1
 #define WINRT_GENERIC_6ee1200d_dd13_5050_88cb_5352af113fd1
 template <> struct __declspec(uuid("6ee1200d-dd13-5050-88cb-5352af113fd1")) __declspec(novtable) IIterator<Windows::UI::Notifications::UserNotification> : impl_IIterator<Windows::UI::Notifications::UserNotification> {};
@@ -74,41 +79,18 @@ template <> struct __declspec(uuid("9e42ed08-45b3-5643-b5c7-b216f5781594")) __de
 
 namespace Windows::UI::Notifications::Management {
 
-template <typename D>
-struct WINRT_EBO impl_IUserNotificationListener
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::UI::Notifications::Management::UserNotificationListenerAccessStatus> RequestAccessAsync() const;
-    Windows::UI::Notifications::Management::UserNotificationListenerAccessStatus GetAccessStatus() const;
-    event_token NotificationChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::Management::UserNotificationListener, Windows::UI::Notifications::UserNotificationChangedEventArgs> & handler) const;
-    using NotificationChanged_revoker = event_revoker<IUserNotificationListener>;
-    NotificationChanged_revoker NotificationChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::Management::UserNotificationListener, Windows::UI::Notifications::UserNotificationChangedEventArgs> & handler) const;
-    void NotificationChanged(event_token token) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::UserNotification>> GetNotificationsAsync(Windows::UI::Notifications::NotificationKinds kinds) const;
-    Windows::UI::Notifications::UserNotification GetNotification(uint32_t notificationId) const;
-    void ClearNotifications() const;
-    void RemoveNotification(uint32_t notificationId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserNotificationListenerStatics
-{
-    Windows::UI::Notifications::Management::UserNotificationListener Current() const;
-};
-
 struct IUserNotificationListener :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserNotificationListener>
 {
     IUserNotificationListener(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserNotificationListener>(m_ptr); }
 };
 
 struct IUserNotificationListenerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserNotificationListenerStatics>
 {
     IUserNotificationListenerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserNotificationListenerStatics>(m_ptr); }
 };
 
 }

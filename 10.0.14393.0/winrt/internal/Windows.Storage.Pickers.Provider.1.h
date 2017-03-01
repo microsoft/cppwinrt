@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,7 +14,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Storage::Pickers::Provider {
 
-struct __declspec(uuid("dda45a10-f9d4-40c4-8af5-c5b6b5a61d1d")) __declspec(novtable) IFileOpenPickerUI : Windows::IInspectable
+struct __declspec(uuid("dda45a10-f9d4-40c4-8af5-c5b6b5a61d1d")) __declspec(novtable) IFileOpenPickerUI : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddFile(hstring id, Windows::Storage::IStorageFile * file, winrt::Windows::Storage::Pickers::Provider::AddFileResult * addResult) = 0;
     virtual HRESULT __stdcall abi_RemoveFile(hstring id) = 0;
@@ -31,12 +31,12 @@ struct __declspec(uuid("dda45a10-f9d4-40c4-8af5-c5b6b5a61d1d")) __declspec(novta
     virtual HRESULT __stdcall remove_Closing(event_token token) = 0;
 };
 
-struct __declspec(uuid("13043da7-7fca-4c2b-9eca-6890f9f00185")) __declspec(novtable) IFileRemovedEventArgs : Windows::IInspectable
+struct __declspec(uuid("13043da7-7fca-4c2b-9eca-6890f9f00185")) __declspec(novtable) IFileRemovedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
 };
 
-struct __declspec(uuid("9656c1e7-3e56-43cc-8a39-33c73d9d542b")) __declspec(novtable) IFileSavePickerUI : Windows::IInspectable
+struct __declspec(uuid("9656c1e7-3e56-43cc-8a39-33c73d9d542b")) __declspec(novtable) IFileSavePickerUI : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
     virtual HRESULT __stdcall put_Title(hstring value) = 0;
@@ -44,42 +44,42 @@ struct __declspec(uuid("9656c1e7-3e56-43cc-8a39-33c73d9d542b")) __declspec(novta
     virtual HRESULT __stdcall get_SettingsIdentifier(hstring * value) = 0;
     virtual HRESULT __stdcall get_FileName(hstring * value) = 0;
     virtual HRESULT __stdcall abi_TrySetFileName(hstring value, winrt::Windows::Storage::Pickers::Provider::SetFileNameResult * result) = 0;
-    virtual HRESULT __stdcall add_FileNameChanged(Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_FileNameChanged(Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_FileNameChanged(event_token token) = 0;
     virtual HRESULT __stdcall add_TargetFileRequested(Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Storage::Pickers::Provider::TargetFileRequestedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_TargetFileRequested(event_token token) = 0;
 };
 
-struct __declspec(uuid("7af7f71e-1a67-4a31-ae80-e907708a619b")) __declspec(novtable) IPickerClosingDeferral : Windows::IInspectable
+struct __declspec(uuid("7af7f71e-1a67-4a31-ae80-e907708a619b")) __declspec(novtable) IPickerClosingDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("7e59f224-b332-4f12-8b9f-a8c2f06b32cd")) __declspec(novtable) IPickerClosingEventArgs : Windows::IInspectable
+struct __declspec(uuid("7e59f224-b332-4f12-8b9f-a8c2f06b32cd")) __declspec(novtable) IPickerClosingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ClosingOperation(Windows::Storage::Pickers::Provider::IPickerClosingOperation ** value) = 0;
     virtual HRESULT __stdcall get_IsCanceled(bool * value) = 0;
 };
 
-struct __declspec(uuid("4ce9fb84-beee-4e39-a773-fc5f0eae328d")) __declspec(novtable) IPickerClosingOperation : Windows::IInspectable
+struct __declspec(uuid("4ce9fb84-beee-4e39-a773-fc5f0eae328d")) __declspec(novtable) IPickerClosingOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetDeferral(Windows::Storage::Pickers::Provider::IPickerClosingDeferral ** value) = 0;
     virtual HRESULT __stdcall get_Deadline(Windows::Foundation::DateTime * value) = 0;
 };
 
-struct __declspec(uuid("42bd3355-7f88-478b-8e81-690b20340678")) __declspec(novtable) ITargetFileRequest : Windows::IInspectable
+struct __declspec(uuid("42bd3355-7f88-478b-8e81-690b20340678")) __declspec(novtable) ITargetFileRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TargetFile(Windows::Storage::IStorageFile ** value) = 0;
     virtual HRESULT __stdcall put_TargetFile(Windows::Storage::IStorageFile * value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::Storage::Pickers::Provider::ITargetFileRequestDeferral ** value) = 0;
 };
 
-struct __declspec(uuid("4aee9d91-bf15-4da9-95f6-f6b7d558225b")) __declspec(novtable) ITargetFileRequestDeferral : Windows::IInspectable
+struct __declspec(uuid("4aee9d91-bf15-4da9-95f6-f6b7d558225b")) __declspec(novtable) ITargetFileRequestDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("b163dbc1-1b51-4c89-a591-0fd40b3c57c9")) __declspec(novtable) ITargetFileRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("b163dbc1-1b51-4c89-a591-0fd40b3c57c9")) __declspec(novtable) ITargetFileRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Request(Windows::Storage::Pickers::Provider::ITargetFileRequest ** value) = 0;
 };
@@ -102,15 +102,92 @@ template <> struct traits<Windows::Storage::Pickers::Provider::TargetFileRequest
 
 namespace Windows::Storage::Pickers::Provider {
 
-template <typename T> struct impl_IFileOpenPickerUI;
-template <typename T> struct impl_IFileRemovedEventArgs;
-template <typename T> struct impl_IFileSavePickerUI;
-template <typename T> struct impl_IPickerClosingDeferral;
-template <typename T> struct impl_IPickerClosingEventArgs;
-template <typename T> struct impl_IPickerClosingOperation;
-template <typename T> struct impl_ITargetFileRequest;
-template <typename T> struct impl_ITargetFileRequestDeferral;
-template <typename T> struct impl_ITargetFileRequestedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_IFileOpenPickerUI
+{
+    Windows::Storage::Pickers::Provider::AddFileResult AddFile(hstring_view id, const Windows::Storage::IStorageFile & file) const;
+    void RemoveFile(hstring_view id) const;
+    bool ContainsFile(hstring_view id) const;
+    bool CanAddFile(const Windows::Storage::IStorageFile & file) const;
+    Windows::Foundation::Collections::IVectorView<hstring> AllowedFileTypes() const;
+    Windows::Storage::Pickers::Provider::FileSelectionMode SelectionMode() const;
+    hstring SettingsIdentifier() const;
+    hstring Title() const;
+    void Title(hstring_view value) const;
+    [[deprecated("Since Windows 10, only apps can remove files, not end users so the FileRemoved event will not be raised.")]] event_token FileRemoved(const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileOpenPickerUI, Windows::Storage::Pickers::Provider::FileRemovedEventArgs> & handler) const;
+    using FileRemoved_revoker = event_revoker<IFileOpenPickerUI>;
+    [[deprecated("Since Windows 10, only apps can remove files, not end users so the FileRemoved event will not be raised.")]] FileRemoved_revoker FileRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileOpenPickerUI, Windows::Storage::Pickers::Provider::FileRemovedEventArgs> & handler) const;
+    [[deprecated("Since Windows 10, only apps can remove files, not end users so the FileRemoved event will not be raised.")]] void FileRemoved(event_token token) const;
+    event_token Closing(const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileOpenPickerUI, Windows::Storage::Pickers::Provider::PickerClosingEventArgs> & handler) const;
+    using Closing_revoker = event_revoker<IFileOpenPickerUI>;
+    Closing_revoker Closing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileOpenPickerUI, Windows::Storage::Pickers::Provider::PickerClosingEventArgs> & handler) const;
+    void Closing(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileRemovedEventArgs
+{
+    [[deprecated("Since Windows 10, only apps can remove files, not end users so the FileRemoved event will not be raised.")]] hstring Id() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileSavePickerUI
+{
+    hstring Title() const;
+    void Title(hstring_view value) const;
+    Windows::Foundation::Collections::IVectorView<hstring> AllowedFileTypes() const;
+    hstring SettingsIdentifier() const;
+    hstring FileName() const;
+    Windows::Storage::Pickers::Provider::SetFileNameResult TrySetFileName(hstring_view value) const;
+    event_token FileNameChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Foundation::IInspectable> & handler) const;
+    using FileNameChanged_revoker = event_revoker<IFileSavePickerUI>;
+    FileNameChanged_revoker FileNameChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Foundation::IInspectable> & handler) const;
+    void FileNameChanged(event_token token) const;
+    event_token TargetFileRequested(const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Storage::Pickers::Provider::TargetFileRequestedEventArgs> & handler) const;
+    using TargetFileRequested_revoker = event_revoker<IFileSavePickerUI>;
+    TargetFileRequested_revoker TargetFileRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Pickers::Provider::FileSavePickerUI, Windows::Storage::Pickers::Provider::TargetFileRequestedEventArgs> & handler) const;
+    void TargetFileRequested(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPickerClosingDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPickerClosingEventArgs
+{
+    Windows::Storage::Pickers::Provider::PickerClosingOperation ClosingOperation() const;
+    bool IsCanceled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPickerClosingOperation
+{
+    Windows::Storage::Pickers::Provider::PickerClosingDeferral GetDeferral() const;
+    Windows::Foundation::DateTime Deadline() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITargetFileRequest
+{
+    Windows::Storage::IStorageFile TargetFile() const;
+    void TargetFile(const Windows::Storage::IStorageFile & value) const;
+    Windows::Storage::Pickers::Provider::TargetFileRequestDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITargetFileRequestDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITargetFileRequestedEventArgs
+{
+    Windows::Storage::Pickers::Provider::TargetFileRequest Request() const;
+};
 
 }
 

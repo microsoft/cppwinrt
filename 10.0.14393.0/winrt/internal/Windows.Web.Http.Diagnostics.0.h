@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -39,6 +39,18 @@ struct HttpDiagnosticProviderRequestResponseTimestamps;
 struct HttpDiagnosticProviderRequestSentEventArgs;
 struct HttpDiagnosticProviderResponseReceivedEventArgs;
 struct HttpDiagnosticSourceLocation;
+
+}
+
+namespace Windows::Web::Http::Diagnostics {
+
+template <typename T> struct impl_IHttpDiagnosticProvider;
+template <typename T> struct impl_IHttpDiagnosticProviderRequestResponseCompletedEventArgs;
+template <typename T> struct impl_IHttpDiagnosticProviderRequestResponseTimestamps;
+template <typename T> struct impl_IHttpDiagnosticProviderRequestSentEventArgs;
+template <typename T> struct impl_IHttpDiagnosticProviderResponseReceivedEventArgs;
+template <typename T> struct impl_IHttpDiagnosticProviderStatics;
+template <typename T> struct impl_IHttpDiagnosticSourceLocation;
 
 }
 

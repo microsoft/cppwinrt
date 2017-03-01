@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -33,6 +33,18 @@ struct IHttpServerCustomValidationRequestedEventArgs;
 struct HttpBaseProtocolFilter;
 struct HttpCacheControl;
 struct HttpServerCustomValidationRequestedEventArgs;
+
+}
+
+namespace Windows::Web::Http::Filters {
+
+template <typename T> struct impl_IHttpBaseProtocolFilter;
+template <typename T> struct impl_IHttpBaseProtocolFilter2;
+template <typename T> struct impl_IHttpBaseProtocolFilter3;
+template <typename T> struct impl_IHttpBaseProtocolFilter4;
+template <typename T> struct impl_IHttpCacheControl;
+template <typename T> struct impl_IHttpFilter;
+template <typename T> struct impl_IHttpServerCustomValidationRequestedEventArgs;
 
 }
 

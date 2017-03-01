@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_UICommandInvokedHandler : implements<impl_UICo
 {
     impl_UICommandInvokedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::Popups::IUICommand> command) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::Popups::IUICommand> command) noexcept override
     {
         try
         {
@@ -35,8 +35,8 @@ struct WINRT_EBO MessageDialog :
     Windows::UI::Popups::IMessageDialog
 {
     MessageDialog(std::nullptr_t) noexcept {}
-    MessageDialog(hstring_ref content);
-    MessageDialog(hstring_ref content, hstring_ref title);
+    MessageDialog(hstring_view content);
+    MessageDialog(hstring_view content, hstring_view title);
 };
 
 struct WINRT_EBO PopupMenu :
@@ -51,9 +51,9 @@ struct WINRT_EBO UICommand :
 {
     UICommand(std::nullptr_t) noexcept {}
     UICommand();
-    UICommand(hstring_ref label);
-    UICommand(hstring_ref label, const Windows::UI::Popups::UICommandInvokedHandler & action);
-    UICommand(hstring_ref label, const Windows::UI::Popups::UICommandInvokedHandler & action, const Windows::IInspectable & commandId);
+    UICommand(hstring_view label);
+    UICommand(hstring_view label, const Windows::UI::Popups::UICommandInvokedHandler & action);
+    UICommand(hstring_view label, const Windows::UI::Popups::UICommandInvokedHandler & action, const Windows::Foundation::IInspectable & commandId);
 };
 
 struct WINRT_EBO UICommandSeparator :

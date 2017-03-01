@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -31,7 +31,7 @@ template <typename H> struct impl_IdleDispatchedHandler : implements<impl_IdleDi
 {
     impl_IdleDispatchedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::Core::IIdleDispatchedHandlerArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::Core::IIdleDispatchedHandlerArgs> e) noexcept override
     {
         try
         {
@@ -129,7 +129,7 @@ struct WINRT_EBO CoreWindowDialog :
 {
     CoreWindowDialog(std::nullptr_t) noexcept {}
     CoreWindowDialog();
-    CoreWindowDialog(hstring_ref title);
+    CoreWindowDialog(hstring_view title);
 };
 
 struct WINRT_EBO CoreWindowEventArgs :
@@ -143,7 +143,7 @@ struct WINRT_EBO CoreWindowFlyout :
 {
     CoreWindowFlyout(std::nullptr_t) noexcept {}
     CoreWindowFlyout(const Windows::Foundation::Point & position);
-    CoreWindowFlyout(const Windows::Foundation::Point & position, hstring_ref title);
+    CoreWindowFlyout(const Windows::Foundation::Point & position, hstring_view title);
 };
 
 struct WINRT_EBO CoreWindowPopupShowingEventArgs :

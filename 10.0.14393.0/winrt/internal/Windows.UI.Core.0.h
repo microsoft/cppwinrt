@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -173,6 +173,59 @@ struct TouchHitTestingEventArgs;
 struct VisibilityChangedEventArgs;
 struct WindowActivatedEventArgs;
 struct WindowSizeChangedEventArgs;
+
+}
+
+namespace Windows::UI::Core {
+
+template <typename T> struct impl_IAcceleratorKeyEventArgs;
+template <typename T> struct impl_IAcceleratorKeyEventArgs2;
+template <typename T> struct impl_IAutomationProviderRequestedEventArgs;
+template <typename T> struct impl_IBackRequestedEventArgs;
+template <typename T> struct impl_ICharacterReceivedEventArgs;
+template <typename T> struct impl_IClosestInteractiveBoundsRequestedEventArgs;
+template <typename T> struct impl_ICoreAcceleratorKeys;
+template <typename T> struct impl_ICoreClosestInteractiveBoundsRequested;
+template <typename T> struct impl_ICoreComponentFocusable;
+template <typename T> struct impl_ICoreCursor;
+template <typename T> struct impl_ICoreCursorFactory;
+template <typename T> struct impl_ICoreDispatcher;
+template <typename T> struct impl_ICoreDispatcher2;
+template <typename T> struct impl_ICoreDispatcherWithTaskPriority;
+template <typename T> struct impl_ICoreInputSourceBase;
+template <typename T> struct impl_ICoreKeyboardInputSource;
+template <typename T> struct impl_ICoreKeyboardInputSource2;
+template <typename T> struct impl_ICorePointerInputSource;
+template <typename T> struct impl_ICorePointerRedirector;
+template <typename T> struct impl_ICoreTouchHitTesting;
+template <typename T> struct impl_ICoreWindow;
+template <typename T> struct impl_ICoreWindow2;
+template <typename T> struct impl_ICoreWindow3;
+template <typename T> struct impl_ICoreWindowDialog;
+template <typename T> struct impl_ICoreWindowDialogFactory;
+template <typename T> struct impl_ICoreWindowEventArgs;
+template <typename T> struct impl_ICoreWindowFlyout;
+template <typename T> struct impl_ICoreWindowFlyoutFactory;
+template <typename T> struct impl_ICoreWindowPopupShowingEventArgs;
+template <typename T> struct impl_ICoreWindowResizeManager;
+template <typename T> struct impl_ICoreWindowResizeManagerLayoutCapability;
+template <typename T> struct impl_ICoreWindowResizeManagerStatics;
+template <typename T> struct impl_ICoreWindowStatic;
+template <typename T> struct impl_IIdleDispatchedHandlerArgs;
+template <typename T> struct impl_IInitializeWithCoreWindow;
+template <typename T> struct impl_IInputEnabledEventArgs;
+template <typename T> struct impl_IKeyEventArgs;
+template <typename T> struct impl_IKeyEventArgs2;
+template <typename T> struct impl_IPointerEventArgs;
+template <typename T> struct impl_ISystemNavigationManager;
+template <typename T> struct impl_ISystemNavigationManager2;
+template <typename T> struct impl_ISystemNavigationManagerStatics;
+template <typename T> struct impl_ITouchHitTestingEventArgs;
+template <typename T> struct impl_IVisibilityChangedEventArgs;
+template <typename T> struct impl_IWindowActivatedEventArgs;
+template <typename T> struct impl_IWindowSizeChangedEventArgs;
+template <typename T> struct impl_DispatchedHandler;
+template <typename T> struct impl_IdleDispatchedHandler;
 
 }
 

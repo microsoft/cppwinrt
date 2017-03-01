@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,7 +11,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Globalization::Fonts {
 
-struct __declspec(uuid("b12e5c3a-b76d-459b-beeb-901151cd77d1")) __declspec(novtable) ILanguageFont : Windows::IInspectable
+struct __declspec(uuid("b12e5c3a-b76d-459b-beeb-901151cd77d1")) __declspec(novtable) ILanguageFont : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FontFamily(hstring * value) = 0;
     virtual HRESULT __stdcall get_FontWeight(Windows::UI::Text::FontWeight * weight) = 0;
@@ -20,7 +20,7 @@ struct __declspec(uuid("b12e5c3a-b76d-459b-beeb-901151cd77d1")) __declspec(novta
     virtual HRESULT __stdcall get_ScaleFactor(double * scale) = 0;
 };
 
-struct __declspec(uuid("f33a7fc3-3a5c-4aea-b9ff-b39fb242f7f6")) __declspec(novtable) ILanguageFontGroup : Windows::IInspectable
+struct __declspec(uuid("f33a7fc3-3a5c-4aea-b9ff-b39fb242f7f6")) __declspec(novtable) ILanguageFontGroup : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UITextFont(Windows::Globalization::Fonts::ILanguageFont ** value) = 0;
     virtual HRESULT __stdcall get_UIHeadingFont(Windows::Globalization::Fonts::ILanguageFont ** value) = 0;
@@ -35,7 +35,7 @@ struct __declspec(uuid("f33a7fc3-3a5c-4aea-b9ff-b39fb242f7f6")) __declspec(novta
     virtual HRESULT __stdcall get_DocumentAlternate2Font(Windows::Globalization::Fonts::ILanguageFont ** value) = 0;
 };
 
-struct __declspec(uuid("fcaeac67-4e77-49c7-b856-dde934fc735b")) __declspec(novtable) ILanguageFontGroupFactory : Windows::IInspectable
+struct __declspec(uuid("fcaeac67-4e77-49c7-b856-dde934fc735b")) __declspec(novtable) ILanguageFontGroupFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateLanguageFontGroup(hstring languageTag, Windows::Globalization::Fonts::ILanguageFontGroup ** recommendedFonts) = 0;
 };
@@ -51,9 +51,37 @@ template <> struct traits<Windows::Globalization::Fonts::LanguageFontGroup> { us
 
 namespace Windows::Globalization::Fonts {
 
-template <typename T> struct impl_ILanguageFont;
-template <typename T> struct impl_ILanguageFontGroup;
-template <typename T> struct impl_ILanguageFontGroupFactory;
+template <typename D>
+struct WINRT_EBO impl_ILanguageFont
+{
+    hstring FontFamily() const;
+    Windows::UI::Text::FontWeight FontWeight() const;
+    Windows::UI::Text::FontStretch FontStretch() const;
+    Windows::UI::Text::FontStyle FontStyle() const;
+    double ScaleFactor() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILanguageFontGroup
+{
+    Windows::Globalization::Fonts::LanguageFont UITextFont() const;
+    Windows::Globalization::Fonts::LanguageFont UIHeadingFont() const;
+    Windows::Globalization::Fonts::LanguageFont UITitleFont() const;
+    Windows::Globalization::Fonts::LanguageFont UICaptionFont() const;
+    Windows::Globalization::Fonts::LanguageFont UINotificationHeadingFont() const;
+    Windows::Globalization::Fonts::LanguageFont TraditionalDocumentFont() const;
+    Windows::Globalization::Fonts::LanguageFont ModernDocumentFont() const;
+    Windows::Globalization::Fonts::LanguageFont DocumentHeadingFont() const;
+    Windows::Globalization::Fonts::LanguageFont FixedWidthTextFont() const;
+    Windows::Globalization::Fonts::LanguageFont DocumentAlternate1Font() const;
+    Windows::Globalization::Fonts::LanguageFont DocumentAlternate2Font() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILanguageFontGroupFactory
+{
+    Windows::Globalization::Fonts::LanguageFontGroup CreateLanguageFontGroup(hstring_view languageTag) const;
+};
 
 }
 

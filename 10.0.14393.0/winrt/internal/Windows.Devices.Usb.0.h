@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -113,6 +113,39 @@ struct UsbInterruptInPipe;
 struct UsbInterruptOutEndpointDescriptor;
 struct UsbInterruptOutPipe;
 struct UsbSetupPacket;
+
+}
+
+namespace Windows::Devices::Usb {
+
+template <typename T> struct impl_IUsbBulkInEndpointDescriptor;
+template <typename T> struct impl_IUsbBulkInPipe;
+template <typename T> struct impl_IUsbBulkOutEndpointDescriptor;
+template <typename T> struct impl_IUsbBulkOutPipe;
+template <typename T> struct impl_IUsbConfiguration;
+template <typename T> struct impl_IUsbConfigurationDescriptor;
+template <typename T> struct impl_IUsbConfigurationDescriptorStatics;
+template <typename T> struct impl_IUsbControlRequestType;
+template <typename T> struct impl_IUsbDescriptor;
+template <typename T> struct impl_IUsbDevice;
+template <typename T> struct impl_IUsbDeviceClass;
+template <typename T> struct impl_IUsbDeviceClasses;
+template <typename T> struct impl_IUsbDeviceClassesStatics;
+template <typename T> struct impl_IUsbDeviceDescriptor;
+template <typename T> struct impl_IUsbDeviceStatics;
+template <typename T> struct impl_IUsbEndpointDescriptor;
+template <typename T> struct impl_IUsbEndpointDescriptorStatics;
+template <typename T> struct impl_IUsbInterface;
+template <typename T> struct impl_IUsbInterfaceDescriptor;
+template <typename T> struct impl_IUsbInterfaceDescriptorStatics;
+template <typename T> struct impl_IUsbInterfaceSetting;
+template <typename T> struct impl_IUsbInterruptInEndpointDescriptor;
+template <typename T> struct impl_IUsbInterruptInEventArgs;
+template <typename T> struct impl_IUsbInterruptInPipe;
+template <typename T> struct impl_IUsbInterruptOutEndpointDescriptor;
+template <typename T> struct impl_IUsbInterruptOutPipe;
+template <typename T> struct impl_IUsbSetupPacket;
+template <typename T> struct impl_IUsbSetupPacketFactory;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_BindableVectorChangedEventHandler : implements
 {
     impl_BindableVectorChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::UI::Xaml::Interop::IBindableObservableVector> vector, abi_arg_in<Windows::IInspectable> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::UI::Xaml::Interop::IBindableObservableVector> vector, impl::abi_arg_in<Windows::Foundation::IInspectable> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::UI::Xaml::Interop::IBindableObservableVector *>(&vector), *reinterpret_cast<const Windows::IInspectable *>(&e));
+            (*this)(*reinterpret_cast<const Windows::UI::Xaml::Interop::IBindableObservableVector *>(&vector), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&e));
             return S_OK;
         }
         catch (...)
@@ -31,11 +31,11 @@ template <typename H> struct impl_NotifyCollectionChangedEventHandler : implemen
 {
     impl_NotifyCollectionChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Interop::INotifyCollectionChangedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Interop::INotifyCollectionChangedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Interop::NotifyCollectionChangedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Interop::NotifyCollectionChangedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)

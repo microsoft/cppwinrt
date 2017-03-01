@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Graphics.DirectX.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -22,7 +25,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> :
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> :
         }
     }
 
-    HRESULT __stdcall get_UpdateTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_UpdateTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UpdateTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UpdateTime());
             return S_OK;
         }
         catch (...)
@@ -44,25 +49,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> :
         }
     }
 
-    HRESULT __stdcall abi_TryGetBounds(abi_arg_in<Windows::Perception::Spatial::ISpatialCoordinateSystem> coordinateSystem, abi_arg_out<Windows::Foundation::IReference<Windows::Perception::Spatial::SpatialBoundingOrientedBox>> value) noexcept override
+    HRESULT __stdcall abi_TryGetBounds(impl::abi_arg_in<Windows::Perception::Spatial::ISpatialCoordinateSystem> coordinateSystem, impl::abi_arg_out<Windows::Foundation::IReference<Windows::Perception::Spatial::SpatialBoundingOrientedBox>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TryGetBounds(*reinterpret_cast<const Windows::Perception::Spatial::SpatialCoordinateSystem *>(&coordinateSystem)));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_TryComputeLatestMeshAsync(double maxTrianglesPerCubicMeter, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryGetBounds(*reinterpret_cast<const Windows::Perception::Spatial::SpatialCoordinateSystem *>(&coordinateSystem)));
             return S_OK;
         }
         catch (...)
@@ -72,11 +64,27 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> :
         }
     }
 
-    HRESULT __stdcall abi_TryComputeLatestMeshWithOptionsAsync(double maxTrianglesPerCubicMeter, abi_arg_in<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptions> options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh>> value) noexcept override
+    HRESULT __stdcall abi_TryComputeLatestMeshAsync(double maxTrianglesPerCubicMeter, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter, *reinterpret_cast<const Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshOptions *>(&options)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_TryComputeLatestMeshWithOptionsAsync(double maxTrianglesPerCubicMeter, impl::abi_arg_in<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter, *reinterpret_cast<const Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshOptions *>(&options)));
             return S_OK;
         }
         catch (...)
@@ -90,11 +98,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> :
 template <typename D>
 struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> : produce_base<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh>
 {
-    HRESULT __stdcall get_SurfaceInfo(abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> value) noexcept override
+    HRESULT __stdcall get_SurfaceInfo(impl::abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SurfaceInfo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SurfaceInfo());
             return S_OK;
         }
         catch (...)
@@ -104,11 +113,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> :
         }
     }
 
-    HRESULT __stdcall get_CoordinateSystem(abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
+    HRESULT __stdcall get_CoordinateSystem(impl::abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CoordinateSystem());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CoordinateSystem());
             return S_OK;
         }
         catch (...)
@@ -118,11 +128,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> :
         }
     }
 
-    HRESULT __stdcall get_TriangleIndices(abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
+    HRESULT __stdcall get_TriangleIndices(impl::abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TriangleIndices());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TriangleIndices());
             return S_OK;
         }
         catch (...)
@@ -132,11 +143,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> :
         }
     }
 
-    HRESULT __stdcall get_VertexPositions(abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
+    HRESULT __stdcall get_VertexPositions(impl::abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VertexPositions());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VertexPositions());
             return S_OK;
         }
         catch (...)
@@ -146,11 +158,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> :
         }
     }
 
-    HRESULT __stdcall get_VertexPositionScale(abi_arg_out<Windows::Foundation::Numerics::float3> value) noexcept override
+    HRESULT __stdcall get_VertexPositionScale(impl::abi_arg_out<Windows::Foundation::Numerics::float3> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VertexPositionScale());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VertexPositionScale());
             return S_OK;
         }
         catch (...)
@@ -159,11 +172,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh> :
         }
     }
 
-    HRESULT __stdcall get_VertexNormals(abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
+    HRESULT __stdcall get_VertexNormals(impl::abi_arg_out<Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VertexNormals());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VertexNormals());
             return S_OK;
         }
         catch (...)
@@ -181,7 +195,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuf
     {
         try
         {
-            *value = detach(this->shim().Format());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Format());
             return S_OK;
         }
         catch (...)
@@ -194,7 +209,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuf
     {
         try
         {
-            *value = detach(this->shim().Stride());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Stride());
             return S_OK;
         }
         catch (...)
@@ -207,7 +223,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuf
     {
         try
         {
-            *value = detach(this->shim().ElementCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ElementCount());
             return S_OK;
         }
         catch (...)
@@ -216,11 +233,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuf
         }
     }
 
-    HRESULT __stdcall get_Data(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Data());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Data());
             return S_OK;
         }
         catch (...)
@@ -238,7 +256,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
-            *value = detach(this->shim().VertexPositionFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VertexPositionFormat());
             return S_OK;
         }
         catch (...)
@@ -251,6 +270,7 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().VertexPositionFormat(value);
             return S_OK;
         }
@@ -264,7 +284,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
-            *value = detach(this->shim().TriangleIndexFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TriangleIndexFormat());
             return S_OK;
         }
         catch (...)
@@ -277,6 +298,7 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TriangleIndexFormat(value);
             return S_OK;
         }
@@ -290,7 +312,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
-            *value = detach(this->shim().VertexNormalFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VertexNormalFormat());
             return S_OK;
         }
         catch (...)
@@ -303,6 +326,7 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().VertexNormalFormat(value);
             return S_OK;
         }
@@ -316,7 +340,8 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
-            *value = detach(this->shim().IncludeVertexNormals());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IncludeVertexNormals());
             return S_OK;
         }
         catch (...)
@@ -329,6 +354,7 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IncludeVertexNormals(value);
             return S_OK;
         }
@@ -342,11 +368,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
 template <typename D>
 struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptionsStatics> : produce_base<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptionsStatics>
 {
-    HRESULT __stdcall get_SupportedVertexPositionFormats(abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
+    HRESULT __stdcall get_SupportedVertexPositionFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SupportedVertexPositionFormats());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedVertexPositionFormats());
             return S_OK;
         }
         catch (...)
@@ -356,11 +383,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
         }
     }
 
-    HRESULT __stdcall get_SupportedTriangleIndexFormats(abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
+    HRESULT __stdcall get_SupportedTriangleIndexFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SupportedTriangleIndexFormats());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedTriangleIndexFormats());
             return S_OK;
         }
         catch (...)
@@ -370,11 +398,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
         }
     }
 
-    HRESULT __stdcall get_SupportedVertexNormalFormats(abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
+    HRESULT __stdcall get_SupportedVertexNormalFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SupportedVertexNormalFormats());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedVertexNormalFormats());
             return S_OK;
         }
         catch (...)
@@ -388,11 +417,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOpt
 template <typename D>
 struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserver> : produce_base<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserver>
 {
-    HRESULT __stdcall abi_GetObservedSurfaces(abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo>> value) noexcept override
+    HRESULT __stdcall abi_GetObservedSurfaces(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetObservedSurfaces());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetObservedSurfaces());
             return S_OK;
         }
         catch (...)
@@ -402,10 +432,11 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserve
         }
     }
 
-    HRESULT __stdcall abi_SetBoundingVolume(abi_arg_in<Windows::Perception::Spatial::ISpatialBoundingVolume> bounds) noexcept override
+    HRESULT __stdcall abi_SetBoundingVolume(impl::abi_arg_in<Windows::Perception::Spatial::ISpatialBoundingVolume> bounds) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetBoundingVolume(*reinterpret_cast<const Windows::Perception::Spatial::SpatialBoundingVolume *>(&bounds));
             return S_OK;
         }
@@ -415,10 +446,11 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserve
         }
     }
 
-    HRESULT __stdcall abi_SetBoundingVolumes(abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Perception::Spatial::SpatialBoundingVolume>> bounds) noexcept override
+    HRESULT __stdcall abi_SetBoundingVolumes(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Perception::Spatial::SpatialBoundingVolume>> bounds) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetBoundingVolumes(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Perception::Spatial::SpatialBoundingVolume> *>(&bounds));
             return S_OK;
         }
@@ -428,11 +460,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserve
         }
     }
 
-    HRESULT __stdcall add_ObservedSurfacesChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ObservedSurfacesChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ObservedSurfacesChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ObservedSurfacesChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -445,6 +478,7 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserve
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ObservedSurfacesChanged(token);
             return S_OK;
         }
@@ -458,11 +492,12 @@ struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserve
 template <typename D>
 struct produce<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserverStatics> : produce_base<D, Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserverStatics>
 {
-    HRESULT __stdcall abi_RequestAccessAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial::SpatialPerceptionAccessStatus>> result) noexcept override
+    HRESULT __stdcall abi_RequestAccessAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial::SpatialPerceptionAccessStatus>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().RequestAccessAsync());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().RequestAccessAsync());
             return S_OK;
         }
         catch (...)
@@ -480,216 +515,216 @@ namespace Windows::Perception::Spatial::Surfaces {
 template <typename D> Windows::Graphics::DirectX::DirectXPixelFormat impl_ISpatialSurfaceMeshBuffer<D>::Format() const
 {
     Windows::Graphics::DirectX::DirectXPixelFormat value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshBuffer &>(static_cast<const D &>(*this))->get_Format(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshBuffer)->get_Format(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISpatialSurfaceMeshBuffer<D>::Stride() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshBuffer &>(static_cast<const D &>(*this))->get_Stride(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshBuffer)->get_Stride(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISpatialSurfaceMeshBuffer<D>::ElementCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshBuffer &>(static_cast<const D &>(*this))->get_ElementCount(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshBuffer)->get_ElementCount(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_ISpatialSurfaceMeshBuffer<D>::Data() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const ISpatialSurfaceMeshBuffer &>(static_cast<const D &>(*this))->get_Data(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshBuffer)->get_Data(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo impl_ISpatialSurfaceMesh<D>::SurfaceInfo() const
 {
     Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo value { nullptr };
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_SurfaceInfo(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_SurfaceInfo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::SpatialCoordinateSystem impl_ISpatialSurfaceMesh<D>::CoordinateSystem() const
 {
     Windows::Perception::Spatial::SpatialCoordinateSystem value { nullptr };
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_CoordinateSystem(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_CoordinateSystem(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer impl_ISpatialSurfaceMesh<D>::TriangleIndices() const
 {
     Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer value { nullptr };
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_TriangleIndices(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_TriangleIndices(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer impl_ISpatialSurfaceMesh<D>::VertexPositions() const
 {
     Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer value { nullptr };
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_VertexPositions(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_VertexPositions(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Numerics::float3 impl_ISpatialSurfaceMesh<D>::VertexPositionScale() const
 {
     Windows::Foundation::Numerics::float3 value {};
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_VertexPositionScale(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_VertexPositionScale(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer impl_ISpatialSurfaceMesh<D>::VertexNormals() const
 {
     Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer value { nullptr };
-    check_hresult(static_cast<const ISpatialSurfaceMesh &>(static_cast<const D &>(*this))->get_VertexNormals(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMesh)->get_VertexNormals(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> impl_ISpatialSurfaceMeshOptionsStatics<D>::SupportedVertexPositionFormats() const
 {
     Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> value;
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptionsStatics &>(static_cast<const D &>(*this))->get_SupportedVertexPositionFormats(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptionsStatics)->get_SupportedVertexPositionFormats(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> impl_ISpatialSurfaceMeshOptionsStatics<D>::SupportedTriangleIndexFormats() const
 {
     Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> value;
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptionsStatics &>(static_cast<const D &>(*this))->get_SupportedTriangleIndexFormats(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptionsStatics)->get_SupportedTriangleIndexFormats(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> impl_ISpatialSurfaceMeshOptionsStatics<D>::SupportedVertexNormalFormats() const
 {
     Windows::Foundation::Collections::IVectorView<winrt::Windows::Graphics::DirectX::DirectXPixelFormat> value;
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptionsStatics &>(static_cast<const D &>(*this))->get_SupportedVertexNormalFormats(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptionsStatics)->get_SupportedVertexNormalFormats(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Graphics::DirectX::DirectXPixelFormat impl_ISpatialSurfaceMeshOptions<D>::VertexPositionFormat() const
 {
     Windows::Graphics::DirectX::DirectXPixelFormat value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->get_VertexPositionFormat(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->get_VertexPositionFormat(&value));
     return value;
 }
 
 template <typename D> void impl_ISpatialSurfaceMeshOptions<D>::VertexPositionFormat(Windows::Graphics::DirectX::DirectXPixelFormat value) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->put_VertexPositionFormat(value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->put_VertexPositionFormat(value));
 }
 
 template <typename D> Windows::Graphics::DirectX::DirectXPixelFormat impl_ISpatialSurfaceMeshOptions<D>::TriangleIndexFormat() const
 {
     Windows::Graphics::DirectX::DirectXPixelFormat value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->get_TriangleIndexFormat(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->get_TriangleIndexFormat(&value));
     return value;
 }
 
 template <typename D> void impl_ISpatialSurfaceMeshOptions<D>::TriangleIndexFormat(Windows::Graphics::DirectX::DirectXPixelFormat value) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->put_TriangleIndexFormat(value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->put_TriangleIndexFormat(value));
 }
 
 template <typename D> Windows::Graphics::DirectX::DirectXPixelFormat impl_ISpatialSurfaceMeshOptions<D>::VertexNormalFormat() const
 {
     Windows::Graphics::DirectX::DirectXPixelFormat value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->get_VertexNormalFormat(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->get_VertexNormalFormat(&value));
     return value;
 }
 
 template <typename D> void impl_ISpatialSurfaceMeshOptions<D>::VertexNormalFormat(Windows::Graphics::DirectX::DirectXPixelFormat value) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->put_VertexNormalFormat(value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->put_VertexNormalFormat(value));
 }
 
 template <typename D> bool impl_ISpatialSurfaceMeshOptions<D>::IncludeVertexNormals() const
 {
     bool value {};
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->get_IncludeVertexNormals(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->get_IncludeVertexNormals(&value));
     return value;
 }
 
 template <typename D> void impl_ISpatialSurfaceMeshOptions<D>::IncludeVertexNormals(bool value) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceMeshOptions &>(static_cast<const D &>(*this))->put_IncludeVertexNormals(value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceMeshOptions)->put_IncludeVertexNormals(value));
 }
 
 template <typename D> GUID impl_ISpatialSurfaceInfo<D>::Id() const
 {
     GUID value {};
-    check_hresult(static_cast<const ISpatialSurfaceInfo &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceInfo)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_ISpatialSurfaceInfo<D>::UpdateTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const ISpatialSurfaceInfo &>(static_cast<const D &>(*this))->get_UpdateTime(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceInfo)->get_UpdateTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<Windows::Perception::Spatial::SpatialBoundingOrientedBox> impl_ISpatialSurfaceInfo<D>::TryGetBounds(const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const
 {
     Windows::Foundation::IReference<Windows::Perception::Spatial::SpatialBoundingOrientedBox> value;
-    check_hresult(static_cast<const ISpatialSurfaceInfo &>(static_cast<const D &>(*this))->abi_TryGetBounds(get(coordinateSystem), put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceInfo)->abi_TryGetBounds(get_abi(coordinateSystem), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh> impl_ISpatialSurfaceInfo<D>::TryComputeLatestMeshAsync(double maxTrianglesPerCubicMeter) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh> value;
-    check_hresult(static_cast<const ISpatialSurfaceInfo &>(static_cast<const D &>(*this))->abi_TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter, put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceInfo)->abi_TryComputeLatestMeshAsync(maxTrianglesPerCubicMeter, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh> impl_ISpatialSurfaceInfo<D>::TryComputeLatestMeshAsync(double maxTrianglesPerCubicMeter, const Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshOptions & options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh> value;
-    check_hresult(static_cast<const ISpatialSurfaceInfo &>(static_cast<const D &>(*this))->abi_TryComputeLatestMeshWithOptionsAsync(maxTrianglesPerCubicMeter, get(options), put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceInfo)->abi_TryComputeLatestMeshWithOptionsAsync(maxTrianglesPerCubicMeter, get_abi(options), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial::SpatialPerceptionAccessStatus> impl_ISpatialSurfaceObserverStatics<D>::RequestAccessAsync() const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial::SpatialPerceptionAccessStatus> result;
-    check_hresult(static_cast<const ISpatialSurfaceObserverStatics &>(static_cast<const D &>(*this))->abi_RequestAccessAsync(put(result)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserverStatics)->abi_RequestAccessAsync(put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo> impl_ISpatialSurfaceObserver<D>::GetObservedSurfaces() const
 {
     Windows::Foundation::Collections::IMapView<GUID, Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo> value;
-    check_hresult(static_cast<const ISpatialSurfaceObserver &>(static_cast<const D &>(*this))->abi_GetObservedSurfaces(put(value)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserver)->abi_GetObservedSurfaces(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISpatialSurfaceObserver<D>::SetBoundingVolume(const Windows::Perception::Spatial::SpatialBoundingVolume & bounds) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceObserver &>(static_cast<const D &>(*this))->abi_SetBoundingVolume(get(bounds)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserver)->abi_SetBoundingVolume(get_abi(bounds)));
 }
 
-template <typename D> void impl_ISpatialSurfaceObserver<D>::SetBoundingVolumes(const Windows::Foundation::Collections::IIterable<Windows::Perception::Spatial::SpatialBoundingVolume> & bounds) const
+template <typename D> void impl_ISpatialSurfaceObserver<D>::SetBoundingVolumes(iterable<Windows::Perception::Spatial::SpatialBoundingVolume> bounds) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceObserver &>(static_cast<const D &>(*this))->abi_SetBoundingVolumes(get(bounds)));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserver)->abi_SetBoundingVolumes(get_abi(bounds)));
 }
 
-template <typename D> event_token impl_ISpatialSurfaceObserver<D>::ObservedSurfacesChanged(const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_ISpatialSurfaceObserver<D>::ObservedSurfacesChanged(const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISpatialSurfaceObserver &>(static_cast<const D &>(*this))->add_ObservedSurfacesChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserver)->add_ObservedSurfacesChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<ISpatialSurfaceObserver> impl_ISpatialSurfaceObserver<D>::ObservedSurfacesChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<ISpatialSurfaceObserver> impl_ISpatialSurfaceObserver<D>::ObservedSurfacesChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, ISpatialSurfaceObserver>(this, &ABI::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserver::remove_ObservedSurfacesChanged, ObservedSurfacesChanged(handler));
 }
 
 template <typename D> void impl_ISpatialSurfaceObserver<D>::ObservedSurfacesChanged(event_token token) const
 {
-    check_hresult(static_cast<const ISpatialSurfaceObserver &>(static_cast<const D &>(*this))->remove_ObservedSurfacesChanged(token));
+    check_hresult(WINRT_SHIM(ISpatialSurfaceObserver)->remove_ObservedSurfacesChanged(token));
 }
 
 inline SpatialSurfaceMeshOptions::SpatialSurfaceMeshOptions() :
@@ -723,3 +758,113 @@ inline Windows::Foundation::IAsyncOperation<winrt::Windows::Perception::Spatial:
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMesh & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshBuffer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptions>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptionsStatics>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceMeshOptionsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserver>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserver & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserverStatics>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::ISpatialSurfaceObserverStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMesh & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshBuffer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshOptions>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceMeshOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver>
+{
+    size_t operator()(const winrt::Windows::Perception::Spatial::Surfaces::SpatialSurfaceObserver & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,7 +11,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Devices::Pwm::Provider {
 
-struct __declspec(uuid("1300593b-e2e3-40a4-b7d9-48dff0377a52")) __declspec(novtable) IPwmControllerProvider : Windows::IInspectable
+struct __declspec(uuid("1300593b-e2e3-40a4-b7d9-48dff0377a52")) __declspec(novtable) IPwmControllerProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PinCount(int32_t * value) = 0;
     virtual HRESULT __stdcall get_ActualFrequency(double * value) = 0;
@@ -25,7 +25,7 @@ struct __declspec(uuid("1300593b-e2e3-40a4-b7d9-48dff0377a52")) __declspec(novta
     virtual HRESULT __stdcall abi_SetPulseParameters(int32_t pin, double dutyCycle, bool invertPolarity) = 0;
 };
 
-struct __declspec(uuid("a3301228-52f1-47b0-9349-66ba43d25902")) __declspec(novtable) IPwmProvider : Windows::IInspectable
+struct __declspec(uuid("a3301228-52f1-47b0-9349-66ba43d25902")) __declspec(novtable) IPwmProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetControllers(Windows::Foundation::Collections::IVectorView<Windows::Devices::Pwm::Provider::IPwmControllerProvider> ** result) = 0;
 };
@@ -39,8 +39,26 @@ namespace ABI {
 
 namespace Windows::Devices::Pwm::Provider {
 
-template <typename T> struct impl_IPwmControllerProvider;
-template <typename T> struct impl_IPwmProvider;
+template <typename D>
+struct WINRT_EBO impl_IPwmControllerProvider
+{
+    int32_t PinCount() const;
+    double ActualFrequency() const;
+    double SetDesiredFrequency(double frequency) const;
+    double MaxFrequency() const;
+    double MinFrequency() const;
+    void AcquirePin(int32_t pin) const;
+    void ReleasePin(int32_t pin) const;
+    void EnablePin(int32_t pin) const;
+    void DisablePin(int32_t pin) const;
+    void SetPulseParameters(int32_t pin, double dutyCycle, bool invertPolarity) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPwmProvider
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Pwm::Provider::IPwmControllerProvider> GetControllers() const;
+};
 
 }
 

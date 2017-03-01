@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,15 +19,15 @@ struct WINRT_EBO AllJoynAboutDataView :
     Windows::Devices::AllJoyn::IAllJoynAboutDataView
 {
     AllJoynAboutDataView(std::nullptr_t) noexcept {}
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_ref uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_ref uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort, const Windows::Globalization::Language & language);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_view uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_view uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort, const Windows::Globalization::Language & language);
 };
 
 struct WINRT_EBO AllJoynAcceptSessionJoinerEventArgs :
     Windows::Devices::AllJoyn::IAllJoynAcceptSessionJoinerEventArgs
 {
     AllJoynAcceptSessionJoinerEventArgs(std::nullptr_t) noexcept {}
-    AllJoynAcceptSessionJoinerEventArgs(hstring_ref uniqueName, uint16_t sessionPort, Windows::Devices::AllJoyn::AllJoynTrafficType trafficType, uint8_t proximity, const Windows::Devices::AllJoyn::IAllJoynAcceptSessionJoiner & acceptSessionJoiner);
+    AllJoynAcceptSessionJoinerEventArgs(hstring_view uniqueName, uint16_t sessionPort, Windows::Devices::AllJoyn::AllJoynTrafficType trafficType, uint8_t proximity, const Windows::Devices::AllJoyn::IAllJoynAcceptSessionJoiner & acceptSessionJoiner);
 };
 
 struct WINRT_EBO AllJoynAuthenticationCompleteEventArgs :
@@ -42,9 +42,9 @@ struct WINRT_EBO AllJoynBusAttachment :
 {
     AllJoynBusAttachment(std::nullptr_t) noexcept {}
     AllJoynBusAttachment();
-    AllJoynBusAttachment(hstring_ref connectionSpecification);
+    AllJoynBusAttachment(hstring_view connectionSpecification);
     static Windows::Devices::AllJoyn::AllJoynBusAttachment GetDefault();
-    static Windows::Devices::Enumeration::DeviceWatcher GetWatcher(const Windows::Foundation::Collections::IIterable<hstring> & requiredInterfaces);
+    static Windows::Devices::Enumeration::DeviceWatcher GetWatcher(iterable<hstring> requiredInterfaces);
 };
 
 struct WINRT_EBO AllJoynBusAttachmentStateChangedEventArgs :
@@ -58,8 +58,8 @@ struct WINRT_EBO AllJoynBusObject :
 {
     AllJoynBusObject(std::nullptr_t) noexcept {}
     AllJoynBusObject();
-    AllJoynBusObject(hstring_ref objectPath);
-    AllJoynBusObject(hstring_ref objectPath, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment);
+    AllJoynBusObject(hstring_view objectPath);
+    AllJoynBusObject(hstring_view objectPath, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment);
 };
 
 struct WINRT_EBO AllJoynBusObjectStoppedEventArgs :
@@ -91,7 +91,7 @@ struct WINRT_EBO AllJoynMessageInfo :
     Windows::Devices::AllJoyn::IAllJoynMessageInfo
 {
     AllJoynMessageInfo(std::nullptr_t) noexcept {}
-    AllJoynMessageInfo(hstring_ref senderUniqueName);
+    AllJoynMessageInfo(hstring_view senderUniqueName);
 };
 
 struct WINRT_EBO AllJoynProducerStoppedEventArgs :
@@ -105,15 +105,15 @@ struct WINRT_EBO AllJoynServiceInfo :
     Windows::Devices::AllJoyn::IAllJoynServiceInfo
 {
     AllJoynServiceInfo(std::nullptr_t) noexcept {}
-    AllJoynServiceInfo(hstring_ref uniqueName, hstring_ref objectPath, uint16_t sessionPort);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynServiceInfo> FromIdAsync(hstring_ref deviceId);
+    AllJoynServiceInfo(hstring_view uniqueName, hstring_view objectPath, uint16_t sessionPort);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynServiceInfo> FromIdAsync(hstring_view deviceId);
 };
 
 struct WINRT_EBO AllJoynServiceInfoRemovedEventArgs :
     Windows::Devices::AllJoyn::IAllJoynServiceInfoRemovedEventArgs
 {
     AllJoynServiceInfoRemovedEventArgs(std::nullptr_t) noexcept {}
-    AllJoynServiceInfoRemovedEventArgs(hstring_ref uniqueName);
+    AllJoynServiceInfoRemovedEventArgs(hstring_view uniqueName);
 };
 
 struct WINRT_EBO AllJoynSession :
@@ -142,14 +142,14 @@ struct WINRT_EBO AllJoynSessionMemberAddedEventArgs :
     Windows::Devices::AllJoyn::IAllJoynSessionMemberAddedEventArgs
 {
     AllJoynSessionMemberAddedEventArgs(std::nullptr_t) noexcept {}
-    AllJoynSessionMemberAddedEventArgs(hstring_ref uniqueName);
+    AllJoynSessionMemberAddedEventArgs(hstring_view uniqueName);
 };
 
 struct WINRT_EBO AllJoynSessionMemberRemovedEventArgs :
     Windows::Devices::AllJoyn::IAllJoynSessionMemberRemovedEventArgs
 {
     AllJoynSessionMemberRemovedEventArgs(std::nullptr_t) noexcept {}
-    AllJoynSessionMemberRemovedEventArgs(hstring_ref uniqueName);
+    AllJoynSessionMemberRemovedEventArgs(hstring_view uniqueName);
 };
 
 struct AllJoynStatus

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,141 +34,64 @@ template <> struct __declspec(uuid("f8220a41-f738-51e8-89ba-76bbd66158cb")) __de
 
 namespace Windows::Gaming::Input::ForceFeedback {
 
-template <typename D>
-struct WINRT_EBO impl_IConditionForceEffect
-{
-    Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind Kind() const;
-    void SetParameters(const Windows::Foundation::Numerics::float3 & direction, float positiveCoefficient, float negativeCoefficient, float maxPositiveMagnitude, float maxNegativeMagnitude, float deadZone, float bias) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IConditionForceEffectFactory
-{
-    Windows::Gaming::Input::ForceFeedback::ConditionForceEffect CreateInstance(Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind effectKind) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IConstantForceEffect
-{
-    void SetParameters(const Windows::Foundation::Numerics::float3 & vector, const Windows::Foundation::TimeSpan & duration) const;
-    void SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & vector, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IForceFeedbackEffect
-{
-    double Gain() const;
-    void Gain(double value) const;
-    Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectState State() const;
-    void Start() const;
-    void Stop() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IForceFeedbackMotor
-{
-    bool AreEffectsPaused() const;
-    double MasterGain() const;
-    void MasterGain(double value) const;
-    bool IsEnabled() const;
-    Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectAxes SupportedAxes() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackLoadEffectResult> LoadEffectAsync(const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect & effect) const;
-    void PauseAllEffects() const;
-    void ResumeAllEffects() const;
-    void StopAllEffects() const;
-    Windows::Foundation::IAsyncOperation<bool> TryDisableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> TryEnableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> TryResetAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> TryUnloadEffectAsync(const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect & effect) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPeriodicForceEffect
-{
-    Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind Kind() const;
-    void SetParameters(const Windows::Foundation::Numerics::float3 & vector, float frequency, float phase, float bias, const Windows::Foundation::TimeSpan & duration) const;
-    void SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & vector, float frequency, float phase, float bias, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPeriodicForceEffectFactory
-{
-    Windows::Gaming::Input::ForceFeedback::PeriodicForceEffect CreateInstance(Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind effectKind) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRampForceEffect
-{
-    void SetParameters(const Windows::Foundation::Numerics::float3 & startVector, const Windows::Foundation::Numerics::float3 & endVector, const Windows::Foundation::TimeSpan & duration) const;
-    void SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & startVector, const Windows::Foundation::Numerics::float3 & endVector, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const;
-};
-
 struct IConditionForceEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IConditionForceEffect>,
     impl::require<IConditionForceEffect, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect>
 {
     IConditionForceEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IConditionForceEffect>(m_ptr); }
 };
 
 struct IConditionForceEffectFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IConditionForceEffectFactory>
 {
     IConditionForceEffectFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IConditionForceEffectFactory>(m_ptr); }
 };
 
 struct IConstantForceEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IConstantForceEffect>,
     impl::require<IConstantForceEffect, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect>
 {
     IConstantForceEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IConstantForceEffect>(m_ptr); }
 };
 
 struct IForceFeedbackEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IForceFeedbackEffect>
 {
     IForceFeedbackEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IForceFeedbackEffect>(m_ptr); }
 };
 
 struct IForceFeedbackMotor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IForceFeedbackMotor>
 {
     IForceFeedbackMotor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IForceFeedbackMotor>(m_ptr); }
 };
 
 struct IPeriodicForceEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPeriodicForceEffect>,
     impl::require<IPeriodicForceEffect, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect>
 {
     IPeriodicForceEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPeriodicForceEffect>(m_ptr); }
 };
 
 struct IPeriodicForceEffectFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPeriodicForceEffectFactory>
 {
     IPeriodicForceEffectFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPeriodicForceEffectFactory>(m_ptr); }
 };
 
 struct IRampForceEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRampForceEffect>,
     impl::require<IRampForceEffect, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect>
 {
     IRampForceEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRampForceEffect>(m_ptr); }
 };
 
 }

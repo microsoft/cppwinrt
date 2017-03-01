@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -74,6 +79,11 @@ template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __de
 template <> struct __declspec(uuid("a932bfda-2ce5-5012-ae83-f397976e4a86")) __declspec(novtable) IKeyValuePair<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> : impl_IKeyValuePair<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> {};
 #endif
 
+#ifndef WINRT_GENERIC_c4c9b3e4_0df7_56af_8ead_52633456e8a1
+#define WINRT_GENERIC_c4c9b3e4_0df7_56af_8ead_52633456e8a1
+template <> struct __declspec(uuid("c4c9b3e4-0df7-56af-8ead-52633456e8a1")) __declspec(novtable) IMap<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> : impl_IMap<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> {};
+#endif
+
 
 }
 
@@ -99,14 +109,14 @@ template <> struct __declspec(uuid("46b96890-2942-5564-82d8-31a4851bd7b8")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_968d589c_0710_52f0_85ed_112fac4cff35
-#define WINRT_GENERIC_968d589c_0710_52f0_85ed_112fac4cff35
-template <> struct __declspec(uuid("968d589c-0710-52f0-85ed-112fac4cff35")) __declspec(novtable) IIterator<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> : impl_IIterator<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> {};
-#endif
-
 #ifndef WINRT_GENERIC_cb2c6693_1fc9_5b95_99b5_7239679619b9
 #define WINRT_GENERIC_cb2c6693_1fc9_5b95_99b5_7239679619b9
 template <> struct __declspec(uuid("cb2c6693-1fc9-5b95-99b5-7239679619b9")) __declspec(novtable) IVectorView<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> : impl_IVectorView<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> {};
+#endif
+
+#ifndef WINRT_GENERIC_968d589c_0710_52f0_85ed_112fac4cff35
+#define WINRT_GENERIC_968d589c_0710_52f0_85ed_112fac4cff35
+template <> struct __declspec(uuid("968d589c-0710-52f0-85ed-112fac4cff35")) __declspec(novtable) IIterator<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> : impl_IIterator<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> {};
 #endif
 
 #ifndef WINRT_GENERIC_2843d34f_d3e5_5fca_9fdc_b568dd5c1e64
@@ -129,6 +139,11 @@ template <> struct __declspec(uuid("67693dd1-ac45-5ef3-9ba6-4d78709d9ee0")) __de
 template <> struct __declspec(uuid("bcde03ad-ea71-5077-a961-1c0ecff57202")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
 #endif
 
+#ifndef WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+#define WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+template <> struct __declspec(uuid("b63397c9-5d89-530b-becf-2b843a15c4e4")) __declspec(novtable) IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
+#endif
+
 #ifndef WINRT_GENERIC_643b6d83_457e_5a43_800f_b0449f91d96b
 #define WINRT_GENERIC_643b6d83_457e_5a43_800f_b0449f91d96b
 template <> struct __declspec(uuid("643b6d83-457e-5a43-800f-b0449f91d96b")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>>> {};
@@ -144,216 +159,88 @@ template <> struct __declspec(uuid("a4cd6151-2cc1-56f1-9014-df6ba3410beb")) __de
 
 namespace Windows::ApplicationModel::VoiceCommands {
 
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommand
-{
-    hstring CommandName() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> Properties() const;
-    Windows::Media::SpeechRecognition::SpeechRecognitionResult SpeechRecognitionResult() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandCompletedEventArgs
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandConfirmationResult
-{
-    bool Confirmed() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandContentTile
-{
-    hstring Title() const;
-    void Title(hstring_ref value) const;
-    hstring TextLine1() const;
-    void TextLine1(hstring_ref value) const;
-    hstring TextLine2() const;
-    void TextLine2(hstring_ref value) const;
-    hstring TextLine3() const;
-    void TextLine3(hstring_ref value) const;
-    Windows::Storage::IStorageFile Image() const;
-    void Image(const Windows::Storage::IStorageFile & value) const;
-    Windows::IInspectable AppContext() const;
-    void AppContext(const Windows::IInspectable & value) const;
-    hstring AppLaunchArgument() const;
-    void AppLaunchArgument(hstring_ref value) const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType ContentTileType() const;
-    void ContentTileType(Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandDefinition
-{
-    hstring Language() const;
-    hstring Name() const;
-    Windows::Foundation::IAsyncAction SetPhraseListAsync(hstring_ref phraseListName, const Windows::Foundation::Collections::IIterable<hstring> & phraseList) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandDefinitionManagerStatics
-{
-    Windows::Foundation::IAsyncAction InstallCommandDefinitionsFromStorageFileAsync(const Windows::Storage::StorageFile & file) const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> InstalledCommandDefinitions() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandDisambiguationResult
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile SelectedItem() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandResponse
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage Message() const;
-    void Message(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & value) const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage RepeatMessage() const;
-    void RepeatMessage(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & value) const;
-    hstring AppLaunchArgument() const;
-    void AppLaunchArgument(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> VoiceCommandContentTiles() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandResponseStatics
-{
-    uint32_t MaxSupportedVoiceCommandContentTiles() const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & userMessage) const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> & contentTiles) const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage) const;
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage, const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> & contentTiles) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandServiceConnection
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand> GetVoiceCommandAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> RequestConfirmationAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> RequestDisambiguationAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Foundation::IAsyncAction ReportProgressAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Foundation::IAsyncAction ReportSuccessAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Foundation::IAsyncAction ReportFailureAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Foundation::IAsyncAction RequestAppLaunchAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const;
-    Windows::Globalization::Language Language() const;
-    event_token VoiceCommandCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> & handler) const;
-    using VoiceCommandCompleted_revoker = event_revoker<IVoiceCommandServiceConnection>;
-    VoiceCommandCompleted_revoker VoiceCommandCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> & handler) const;
-    void VoiceCommandCompleted(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandServiceConnectionStatics
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection FromAppServiceTriggerDetails(const Windows::ApplicationModel::AppService::AppServiceTriggerDetails & triggerDetails) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceCommandUserMessage
-{
-    hstring DisplayMessage() const;
-    void DisplayMessage(hstring_ref value) const;
-    hstring SpokenMessage() const;
-    void SpokenMessage(hstring_ref value) const;
-};
-
 struct IVoiceCommand :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommand>
 {
     IVoiceCommand(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommand>(m_ptr); }
 };
 
 struct IVoiceCommandCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandCompletedEventArgs>
 {
     IVoiceCommandCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandCompletedEventArgs>(m_ptr); }
 };
 
 struct IVoiceCommandConfirmationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandConfirmationResult>
 {
     IVoiceCommandConfirmationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandConfirmationResult>(m_ptr); }
 };
 
 struct IVoiceCommandContentTile :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandContentTile>
 {
     IVoiceCommandContentTile(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandContentTile>(m_ptr); }
 };
 
 struct IVoiceCommandDefinition :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandDefinition>
 {
     IVoiceCommandDefinition(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandDefinition>(m_ptr); }
 };
 
 struct IVoiceCommandDefinitionManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandDefinitionManagerStatics>
 {
     IVoiceCommandDefinitionManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandDefinitionManagerStatics>(m_ptr); }
 };
 
 struct IVoiceCommandDisambiguationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandDisambiguationResult>
 {
     IVoiceCommandDisambiguationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandDisambiguationResult>(m_ptr); }
 };
 
 struct IVoiceCommandResponse :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandResponse>
 {
     IVoiceCommandResponse(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandResponse>(m_ptr); }
 };
 
 struct IVoiceCommandResponseStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandResponseStatics>
 {
     IVoiceCommandResponseStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandResponseStatics>(m_ptr); }
 };
 
 struct IVoiceCommandServiceConnection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandServiceConnection>
 {
     IVoiceCommandServiceConnection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandServiceConnection>(m_ptr); }
 };
 
 struct IVoiceCommandServiceConnectionStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandServiceConnectionStatics>
 {
     IVoiceCommandServiceConnectionStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandServiceConnectionStatics>(m_ptr); }
 };
 
 struct IVoiceCommandUserMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceCommandUserMessage>
 {
     IVoiceCommandUserMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceCommandUserMessage>(m_ptr); }
 };
 
 }

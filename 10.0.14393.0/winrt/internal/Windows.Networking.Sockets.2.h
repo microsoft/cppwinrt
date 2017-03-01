@@ -1,11 +1,12 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Networking.Sockets.1.h"
+#include "Windows.ApplicationModel.Background.1.h"
+#include "Windows.Foundation.1.h"
 #include "Windows.ApplicationModel.Background.2.h"
-#include "Windows.Foundation.2.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -116,6 +117,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("d7ec83c4-a17b-51bf-8997-aa33b9102dc9")) __declspec(novtable) IIterable<Windows::Networking::EndpointPair> : impl_IIterable<Windows::Networking::EndpointPair> {};
 #endif
 
+#ifndef WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+#define WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+template <> struct __declspec(uuid("36282c0f-2f1f-57f4-b2b1-867af90c3d13")) __declspec(novtable) IVector<Windows::Security::Cryptography::Certificates::Certificate> : impl_IVector<Windows::Security::Cryptography::Certificates::Certificate> {};
+#endif
+
 #ifndef WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 #define WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
@@ -136,6 +142,11 @@ template <> struct __declspec(uuid("8bcad2b7-0e3b-5eae-bf69-e1f6d9c888f8")) __de
 template <> struct __declspec(uuid("2628f58f-3f02-54f2-808f-e1117709d6d0")) __declspec(novtable) IIterable<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> : impl_IIterable<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> {};
 #endif
 
+#ifndef WINRT_GENERIC_f996138f_a866_5ca4_ba46_09fcb2de7013
+#define WINRT_GENERIC_f996138f_a866_5ca4_ba46_09fcb2de7013
+template <> struct __declspec(uuid("f996138f-a866-5ca4-ba46-09fcb2de7013")) __declspec(novtable) IVector<Windows::Networking::EndpointPair> : impl_IVector<Windows::Networking::EndpointPair> {};
+#endif
+
 #ifndef WINRT_GENERIC_c899ff9f_e6f5_5673_810c_04e2ff98704f
 #define WINRT_GENERIC_c899ff9f_e6f5_5673_810c_04e2ff98704f
 template <> struct __declspec(uuid("c899ff9f-e6f5-5673-810c-04e2ff98704f")) __declspec(novtable) IIterator<Windows::Networking::EndpointPair> : impl_IIterator<Windows::Networking::EndpointPair> {};
@@ -144,6 +155,11 @@ template <> struct __declspec(uuid("c899ff9f-e6f5-5673-810c-04e2ff98704f")) __de
 #ifndef WINRT_GENERIC_7e4bda2c_0125_587d_8806_1285060f3b2d
 #define WINRT_GENERIC_7e4bda2c_0125_587d_8806_1285060f3b2d
 template <> struct __declspec(uuid("7e4bda2c-0125-587d-8806-1285060f3b2d")) __declspec(novtable) IKeyValuePair<hstring, Windows::Networking::Sockets::SocketActivityInformation> : impl_IKeyValuePair<hstring, Windows::Networking::Sockets::SocketActivityInformation> {};
+#endif
+
+#ifndef WINRT_GENERIC_4420dd78_f60c_57f8_863c_c716e0fdccc3
+#define WINRT_GENERIC_4420dd78_f60c_57f8_863c_c716e0fdccc3
+template <> struct __declspec(uuid("4420dd78-f60c-57f8-863c-c716e0fdccc3")) __declspec(novtable) IMap<hstring, Windows::Networking::Sockets::SocketActivityInformation> : impl_IMap<hstring, Windows::Networking::Sockets::SocketActivityInformation> {};
 #endif
 
 
@@ -191,898 +207,387 @@ template <> struct __declspec(uuid("20d6faab-3b8e-5a1f-8397-b01cb219a18d")) __de
 
 namespace Windows::Networking::Sockets {
 
-template <typename D>
-struct WINRT_EBO impl_IControlChannelTrigger
-{
-    hstring ControlChannelTriggerId() const;
-    uint32_t ServerKeepAliveIntervalInMinutes() const;
-    void ServerKeepAliveIntervalInMinutes(uint32_t value) const;
-    uint32_t CurrentKeepAliveIntervalInMinutes() const;
-    Windows::IInspectable TransportObject() const;
-    Windows::ApplicationModel::Background::IBackgroundTrigger KeepAliveTrigger() const;
-    Windows::ApplicationModel::Background::IBackgroundTrigger PushNotificationTrigger() const;
-    void UsingTransport(const Windows::IInspectable & transport) const;
-    Windows::Networking::Sockets::ControlChannelTriggerStatus WaitForPushEnabled() const;
-    void DecreaseNetworkKeepAliveInterval() const;
-    void FlushTransport() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IControlChannelTrigger2
-{
-    bool IsWakeFromLowPowerSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IControlChannelTriggerEventDetails
-{
-    Windows::Networking::Sockets::ControlChannelTrigger ControlChannelTrigger() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IControlChannelTriggerFactory
-{
-    Windows::Networking::Sockets::ControlChannelTrigger CreateControlChannelTrigger(hstring_ref channelId, uint32_t serverKeepAliveIntervalInMinutes) const;
-    Windows::Networking::Sockets::ControlChannelTrigger CreateControlChannelTriggerEx(hstring_ref channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IControlChannelTriggerResetEventDetails
-{
-    Windows::Networking::Sockets::ControlChannelTriggerResetReason ResetReason() const;
-    bool HardwareSlotReset() const;
-    bool SoftwareSlotReset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocket
-{
-    Windows::Networking::Sockets::DatagramSocketControl Control() const;
-    Windows::Networking::Sockets::DatagramSocketInformation Information() const;
-    Windows::Storage::Streams::IOutputStream OutputStream() const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair) const;
-    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_ref localServiceName) const;
-    Windows::Foundation::IAsyncAction BindEndpointAsync(const Windows::Networking::HostName & localHostName, hstring_ref localServiceName) const;
-    void JoinMulticastGroup(const Windows::Networking::HostName & host) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IOutputStream> GetOutputStreamAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IOutputStream> GetOutputStreamAsync(const Windows::Networking::EndpointPair & endpointPair) const;
-    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::DatagramSocket, Windows::Networking::Sockets::DatagramSocketMessageReceivedEventArgs> & eventHandler) const;
-    using MessageReceived_revoker = event_revoker<IDatagramSocket>;
-    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::DatagramSocket, Windows::Networking::Sockets::DatagramSocketMessageReceivedEventArgs> & eventHandler) const;
-    void MessageReceived(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocket2
-{
-    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_ref localServiceName, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocket3
-{
-    Windows::Foundation::IAsyncAction CancelIOAsync() const;
-    void EnableTransferOwnership(GUID taskId) const;
-    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
-    void TransferOwnership(hstring_ref socketId) const;
-    void TransferOwnership(hstring_ref socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
-    void TransferOwnership(hstring_ref socketId, const Windows::Networking::Sockets::SocketActivityContext & data, const Windows::Foundation::TimeSpan & keepAliveTime) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketControl
-{
-    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
-    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
-    uint8_t OutboundUnicastHopLimit() const;
-    void OutboundUnicastHopLimit(uint8_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketControl2
-{
-    uint32_t InboundBufferSizeInBytes() const;
-    void InboundBufferSizeInBytes(uint32_t value) const;
-    bool DontFragment() const;
-    void DontFragment(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketControl3
-{
-    bool MulticastOnly() const;
-    void MulticastOnly(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketInformation
-{
-    Windows::Networking::HostName LocalAddress() const;
-    hstring LocalPort() const;
-    Windows::Networking::HostName RemoteAddress() const;
-    hstring RemotePort() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketMessageReceivedEventArgs
-{
-    Windows::Networking::HostName RemoteAddress() const;
-    hstring RemotePort() const;
-    Windows::Networking::HostName LocalAddress() const;
-    Windows::Storage::Streams::DataReader GetDataReader() const;
-    Windows::Storage::Streams::IInputStream GetDataStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDatagramSocketStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMessageWebSocket
-{
-    Windows::Networking::Sockets::MessageWebSocketControl Control() const;
-    Windows::Networking::Sockets::MessageWebSocketInformation Information() const;
-    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> & eventHandler) const;
-    using MessageReceived_revoker = event_revoker<IMessageWebSocket>;
-    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> & eventHandler) const;
-    void MessageReceived(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMessageWebSocket2
-{
-    event_token ServerCustomValidationRequested(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    using ServerCustomValidationRequested_revoker = event_revoker<IMessageWebSocket2>;
-    ServerCustomValidationRequested_revoker ServerCustomValidationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    void ServerCustomValidationRequested(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMessageWebSocketControl
-{
-    uint32_t MaxMessageSize() const;
-    void MaxMessageSize(uint32_t value) const;
-    Windows::Networking::Sockets::SocketMessageType MessageType() const;
-    void MessageType(Windows::Networking::Sockets::SocketMessageType value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMessageWebSocketMessageReceivedEventArgs
-{
-    Windows::Networking::Sockets::SocketMessageType MessageType() const;
-    Windows::Storage::Streams::DataReader GetDataReader() const;
-    Windows::Storage::Streams::IInputStream GetDataStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketActivityContext
-{
-    Windows::Storage::Streams::IBuffer Data() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketActivityContextFactory
-{
-    Windows::Networking::Sockets::SocketActivityContext Create(const Windows::Storage::Streams::IBuffer & data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketActivityInformation
-{
-    GUID TaskId() const;
-    hstring Id() const;
-    Windows::Networking::Sockets::SocketActivityKind SocketKind() const;
-    Windows::Networking::Sockets::SocketActivityContext Context() const;
-    Windows::Networking::Sockets::DatagramSocket DatagramSocket() const;
-    Windows::Networking::Sockets::StreamSocket StreamSocket() const;
-    Windows::Networking::Sockets::StreamSocketListener StreamSocketListener() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketActivityInformationStatics
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Networking::Sockets::SocketActivityInformation> AllSockets() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketActivityTriggerDetails
-{
-    Windows::Networking::Sockets::SocketActivityTriggerReason Reason() const;
-    Windows::Networking::Sockets::SocketActivityInformation SocketInformation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocketErrorStatics
-{
-    Windows::Networking::Sockets::SocketErrorStatus GetStatus(int32_t hresult) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocket
-{
-    Windows::Networking::Sockets::StreamSocketControl Control() const;
-    Windows::Networking::Sockets::StreamSocketInformation Information() const;
-    Windows::Storage::Streams::IInputStream InputStream() const;
-    Windows::Storage::Streams::IOutputStream OutputStream() const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair) const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
-    Windows::Foundation::IAsyncAction UpgradeToSslAsync(Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::HostName & validationHostName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocket2
-{
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocket3
-{
-    Windows::Foundation::IAsyncAction CancelIOAsync() const;
-    void EnableTransferOwnership(GUID taskId) const;
-    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
-    void TransferOwnership(hstring_ref socketId) const;
-    void TransferOwnership(hstring_ref socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
-    void TransferOwnership(hstring_ref socketId, const Windows::Networking::Sockets::SocketActivityContext & data, const Windows::Foundation::TimeSpan & keepAliveTime) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketControl
-{
-    bool NoDelay() const;
-    void NoDelay(bool value) const;
-    bool KeepAlive() const;
-    void KeepAlive(bool value) const;
-    uint32_t OutboundBufferSizeInBytes() const;
-    void OutboundBufferSizeInBytes(uint32_t value) const;
-    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
-    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
-    uint8_t OutboundUnicastHopLimit() const;
-    void OutboundUnicastHopLimit(uint8_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketControl2
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> IgnorableServerCertificateErrors() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketControl3
-{
-    bool SerializeConnectionAttempts() const;
-    void SerializeConnectionAttempts(bool value) const;
-    Windows::Security::Cryptography::Certificates::Certificate ClientCertificate() const;
-    void ClientCertificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketInformation
-{
-    Windows::Networking::HostName LocalAddress() const;
-    hstring LocalPort() const;
-    Windows::Networking::HostName RemoteHostName() const;
-    Windows::Networking::HostName RemoteAddress() const;
-    hstring RemoteServiceName() const;
-    hstring RemotePort() const;
-    Windows::Networking::Sockets::RoundTripTimeStatistics RoundTripTimeStatistics() const;
-    Windows::Networking::Sockets::BandwidthStatistics BandwidthStatistics() const;
-    Windows::Networking::Sockets::SocketProtectionLevel ProtectionLevel() const;
-    Windows::Storage::Streams::IBuffer SessionKey() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketInformation2
-{
-    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
-    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListener
-{
-    Windows::Networking::Sockets::StreamSocketListenerControl Control() const;
-    Windows::Networking::Sockets::StreamSocketListenerInformation Information() const;
-    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_ref localServiceName) const;
-    Windows::Foundation::IAsyncAction BindEndpointAsync(const Windows::Networking::HostName & localHostName, hstring_ref localServiceName) const;
-    event_token ConnectionReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamSocketListener, Windows::Networking::Sockets::StreamSocketListenerConnectionReceivedEventArgs> & eventHandler) const;
-    using ConnectionReceived_revoker = event_revoker<IStreamSocketListener>;
-    ConnectionReceived_revoker ConnectionReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamSocketListener, Windows::Networking::Sockets::StreamSocketListenerConnectionReceivedEventArgs> & eventHandler) const;
-    void ConnectionReceived(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListener2
-{
-    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_ref localServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
-    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_ref localServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListener3
-{
-    Windows::Foundation::IAsyncAction CancelIOAsync() const;
-    void EnableTransferOwnership(GUID taskId) const;
-    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
-    void TransferOwnership(hstring_ref socketId) const;
-    void TransferOwnership(hstring_ref socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListenerConnectionReceivedEventArgs
-{
-    Windows::Networking::Sockets::StreamSocket Socket() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListenerControl
-{
-    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
-    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListenerControl2
-{
-    bool NoDelay() const;
-    void NoDelay(bool value) const;
-    bool KeepAlive() const;
-    void KeepAlive(bool value) const;
-    uint32_t OutboundBufferSizeInBytes() const;
-    void OutboundBufferSizeInBytes(uint32_t value) const;
-    uint8_t OutboundUnicastHopLimit() const;
-    void OutboundUnicastHopLimit(uint8_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketListenerInformation
-{
-    hstring LocalPort() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamSocketStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamWebSocket
-{
-    Windows::Networking::Sockets::StreamWebSocketControl Control() const;
-    Windows::Networking::Sockets::StreamWebSocketInformation Information() const;
-    Windows::Storage::Streams::IInputStream InputStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamWebSocket2
-{
-    event_token ServerCustomValidationRequested(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    using ServerCustomValidationRequested_revoker = event_revoker<IStreamWebSocket2>;
-    ServerCustomValidationRequested_revoker ServerCustomValidationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
-    void ServerCustomValidationRequested(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStreamWebSocketControl
-{
-    bool NoDelay() const;
-    void NoDelay(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocket
-{
-    Windows::Storage::Streams::IOutputStream OutputStream() const;
-    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Foundation::Uri & uri) const;
-    void SetRequestHeader(hstring_ref headerName, hstring_ref headerValue) const;
-    event_token Closed(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::IWebSocket, Windows::Networking::Sockets::WebSocketClosedEventArgs> & eventHandler) const;
-    using Closed_revoker = event_revoker<IWebSocket>;
-    Closed_revoker Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::IWebSocket, Windows::Networking::Sockets::WebSocketClosedEventArgs> & eventHandler) const;
-    void Closed(event_token eventCookie) const;
-    void Close(uint16_t code, hstring_ref reason) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketClosedEventArgs
-{
-    uint16_t Code() const;
-    hstring Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketControl
-{
-    uint32_t OutboundBufferSizeInBytes() const;
-    void OutboundBufferSizeInBytes(uint32_t value) const;
-    Windows::Security::Credentials::PasswordCredential ServerCredential() const;
-    void ServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    Windows::Security::Credentials::PasswordCredential ProxyCredential() const;
-    void ProxyCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    Windows::Foundation::Collections::IVector<hstring> SupportedProtocols() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketControl2
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> IgnorableServerCertificateErrors() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketErrorStatics
-{
-    Windows::Web::WebErrorStatus GetStatus(int32_t hresult) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketInformation
-{
-    Windows::Networking::HostName LocalAddress() const;
-    Windows::Networking::Sockets::BandwidthStatistics BandwidthStatistics() const;
-    hstring Protocol() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketInformation2
-{
-    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
-    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebSocketServerCustomValidationRequestedEventArgs
-{
-    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
-    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
-    void Reject() const;
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
 struct IControlChannelTrigger :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IControlChannelTrigger>,
     impl::require<IControlChannelTrigger, Windows::Foundation::IClosable>
 {
     IControlChannelTrigger(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IControlChannelTrigger>(m_ptr); }
 };
 
 struct IControlChannelTrigger2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IControlChannelTrigger2>
 {
     IControlChannelTrigger2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IControlChannelTrigger2>(m_ptr); }
 };
 
 struct IControlChannelTriggerEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IControlChannelTriggerEventDetails>
 {
     IControlChannelTriggerEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IControlChannelTriggerEventDetails>(m_ptr); }
 };
 
 struct IControlChannelTriggerFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IControlChannelTriggerFactory>
 {
     IControlChannelTriggerFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IControlChannelTriggerFactory>(m_ptr); }
 };
 
 struct IControlChannelTriggerResetEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IControlChannelTriggerResetEventDetails>
 {
     IControlChannelTriggerResetEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IControlChannelTriggerResetEventDetails>(m_ptr); }
 };
 
 struct IDatagramSocket :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocket>,
     impl::require<IDatagramSocket, Windows::Foundation::IClosable>
 {
     IDatagramSocket(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocket>(m_ptr); }
 };
 
 struct IDatagramSocket2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocket2>,
     impl::require<IDatagramSocket2, Windows::Foundation::IClosable>
 {
     IDatagramSocket2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocket2>(m_ptr); }
 };
 
 struct IDatagramSocket3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocket3>
 {
     IDatagramSocket3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocket3>(m_ptr); }
 };
 
 struct IDatagramSocketControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketControl>
 {
     IDatagramSocketControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketControl>(m_ptr); }
 };
 
 struct IDatagramSocketControl2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketControl2>
 {
     IDatagramSocketControl2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketControl2>(m_ptr); }
 };
 
 struct IDatagramSocketControl3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketControl3>
 {
     IDatagramSocketControl3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketControl3>(m_ptr); }
 };
 
 struct IDatagramSocketInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketInformation>
 {
     IDatagramSocketInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketInformation>(m_ptr); }
 };
 
 struct IDatagramSocketMessageReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketMessageReceivedEventArgs>
 {
     IDatagramSocketMessageReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketMessageReceivedEventArgs>(m_ptr); }
 };
 
 struct IDatagramSocketStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDatagramSocketStatics>
 {
     IDatagramSocketStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDatagramSocketStatics>(m_ptr); }
 };
 
 struct IMessageWebSocket :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMessageWebSocket>,
     impl::require<IMessageWebSocket, Windows::Foundation::IClosable, Windows::Networking::Sockets::IWebSocket>
 {
     IMessageWebSocket(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMessageWebSocket>(m_ptr); }
     using impl_IClosable::Close;
     using impl_IWebSocket::Close;
 };
 
 struct IMessageWebSocket2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMessageWebSocket2>,
     impl::require<IMessageWebSocket2, Windows::Foundation::IClosable, Windows::Networking::Sockets::IMessageWebSocket, Windows::Networking::Sockets::IWebSocket>
 {
     IMessageWebSocket2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMessageWebSocket2>(m_ptr); }
     using impl_IClosable::Close;
     using impl_IWebSocket::Close;
 };
 
 struct IMessageWebSocketControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMessageWebSocketControl>,
     impl::require<IMessageWebSocketControl, Windows::Networking::Sockets::IWebSocketControl>
 {
     IMessageWebSocketControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMessageWebSocketControl>(m_ptr); }
 };
 
 struct IMessageWebSocketMessageReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMessageWebSocketMessageReceivedEventArgs>
 {
     IMessageWebSocketMessageReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMessageWebSocketMessageReceivedEventArgs>(m_ptr); }
 };
 
 struct ISocketActivityContext :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketActivityContext>
 {
     ISocketActivityContext(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketActivityContext>(m_ptr); }
 };
 
 struct ISocketActivityContextFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketActivityContextFactory>
 {
     ISocketActivityContextFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketActivityContextFactory>(m_ptr); }
 };
 
 struct ISocketActivityInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketActivityInformation>
 {
     ISocketActivityInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketActivityInformation>(m_ptr); }
 };
 
 struct ISocketActivityInformationStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketActivityInformationStatics>
 {
     ISocketActivityInformationStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketActivityInformationStatics>(m_ptr); }
 };
 
 struct ISocketActivityTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketActivityTriggerDetails>
 {
     ISocketActivityTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketActivityTriggerDetails>(m_ptr); }
 };
 
 struct ISocketErrorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocketErrorStatics>
 {
     ISocketErrorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocketErrorStatics>(m_ptr); }
 };
 
 struct IStreamSocket :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocket>,
     impl::require<IStreamSocket, Windows::Foundation::IClosable>
 {
     IStreamSocket(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocket>(m_ptr); }
 };
 
 struct IStreamSocket2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocket2>,
     impl::require<IStreamSocket2, Windows::Foundation::IClosable>
 {
     IStreamSocket2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocket2>(m_ptr); }
 };
 
 struct IStreamSocket3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocket3>
 {
     IStreamSocket3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocket3>(m_ptr); }
 };
 
 struct IStreamSocketControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketControl>
 {
     IStreamSocketControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketControl>(m_ptr); }
 };
 
 struct IStreamSocketControl2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketControl2>
 {
     IStreamSocketControl2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketControl2>(m_ptr); }
 };
 
 struct IStreamSocketControl3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketControl3>
 {
     IStreamSocketControl3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketControl3>(m_ptr); }
 };
 
 struct IStreamSocketInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketInformation>
 {
     IStreamSocketInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketInformation>(m_ptr); }
 };
 
 struct IStreamSocketInformation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketInformation2>
 {
     IStreamSocketInformation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketInformation2>(m_ptr); }
 };
 
 struct IStreamSocketListener :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListener>,
     impl::require<IStreamSocketListener, Windows::Foundation::IClosable>
 {
     IStreamSocketListener(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListener>(m_ptr); }
 };
 
 struct IStreamSocketListener2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListener2>,
     impl::require<IStreamSocketListener2, Windows::Foundation::IClosable>
 {
     IStreamSocketListener2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListener2>(m_ptr); }
 };
 
 struct IStreamSocketListener3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListener3>
 {
     IStreamSocketListener3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListener3>(m_ptr); }
 };
 
 struct IStreamSocketListenerConnectionReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListenerConnectionReceivedEventArgs>
 {
     IStreamSocketListenerConnectionReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListenerConnectionReceivedEventArgs>(m_ptr); }
 };
 
 struct IStreamSocketListenerControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListenerControl>
 {
     IStreamSocketListenerControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListenerControl>(m_ptr); }
 };
 
 struct IStreamSocketListenerControl2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListenerControl2>
 {
     IStreamSocketListenerControl2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListenerControl2>(m_ptr); }
 };
 
 struct IStreamSocketListenerInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketListenerInformation>
 {
     IStreamSocketListenerInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketListenerInformation>(m_ptr); }
 };
 
 struct IStreamSocketStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamSocketStatics>
 {
     IStreamSocketStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamSocketStatics>(m_ptr); }
 };
 
 struct IStreamWebSocket :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamWebSocket>,
     impl::require<IStreamWebSocket, Windows::Foundation::IClosable, Windows::Networking::Sockets::IWebSocket>
 {
     IStreamWebSocket(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamWebSocket>(m_ptr); }
     using impl_IClosable::Close;
     using impl_IWebSocket::Close;
 };
 
 struct IStreamWebSocket2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamWebSocket2>,
     impl::require<IStreamWebSocket2, Windows::Foundation::IClosable, Windows::Networking::Sockets::IStreamWebSocket, Windows::Networking::Sockets::IWebSocket>
 {
     IStreamWebSocket2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamWebSocket2>(m_ptr); }
     using impl_IClosable::Close;
     using impl_IWebSocket::Close;
 };
 
 struct IStreamWebSocketControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStreamWebSocketControl>,
     impl::require<IStreamWebSocketControl, Windows::Networking::Sockets::IWebSocketControl>
 {
     IStreamWebSocketControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStreamWebSocketControl>(m_ptr); }
 };
 
 struct IWebSocket :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocket>,
     impl::require<IWebSocket, Windows::Foundation::IClosable>
 {
     IWebSocket(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocket>(m_ptr); }
     using impl_IClosable::Close;
     using impl_IWebSocket::Close;
 };
 
 struct IWebSocketClosedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketClosedEventArgs>
 {
     IWebSocketClosedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketClosedEventArgs>(m_ptr); }
 };
 
 struct IWebSocketControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketControl>
 {
     IWebSocketControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketControl>(m_ptr); }
 };
 
 struct IWebSocketControl2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketControl2>,
     impl::require<IWebSocketControl2, Windows::Networking::Sockets::IWebSocketControl>
 {
     IWebSocketControl2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketControl2>(m_ptr); }
 };
 
 struct IWebSocketErrorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketErrorStatics>
 {
     IWebSocketErrorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketErrorStatics>(m_ptr); }
 };
 
 struct IWebSocketInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketInformation>
 {
     IWebSocketInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketInformation>(m_ptr); }
 };
 
 struct IWebSocketInformation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketInformation2>,
     impl::require<IWebSocketInformation2, Windows::Networking::Sockets::IWebSocketInformation>
 {
     IWebSocketInformation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketInformation2>(m_ptr); }
 };
 
 struct IWebSocketServerCustomValidationRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebSocketServerCustomValidationRequestedEventArgs>
 {
     IWebSocketServerCustomValidationRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebSocketServerCustomValidationRequestedEventArgs>(m_ptr); }
 };
 
 }

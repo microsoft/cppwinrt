@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,14 +24,44 @@ template <> struct __declspec(uuid("6c34e5bd-0fa4-5244-89fb-04bfd480ecd8")) __de
 template <> struct __declspec(uuid("ac5fac0b-82a0-5436-9284-e7db0bf4e615")) __declspec(novtable) IIterable<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> : impl_IIterable<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> {};
 #endif
 
+#ifndef WINRT_GENERIC_b178b47d_b7b9_5320_a937_4b98ecc95e08
+#define WINRT_GENERIC_b178b47d_b7b9_5320_a937_4b98ecc95e08
+template <> struct __declspec(uuid("b178b47d-b7b9-5320-a937-4b98ecc95e08")) __declspec(novtable) IVector<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> : impl_IVector<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> {};
+#endif
+
+#ifndef WINRT_GENERIC_4025770c_361c_5973_8db9_968c6a6a86c8
+#define WINRT_GENERIC_4025770c_361c_5973_8db9_968c6a6a86c8
+template <> struct __declspec(uuid("4025770c-361c-5973-8db9-968c6a6a86c8")) __declspec(novtable) IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> : impl_IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_500e5efe_3bc1_5d9b_bcfc_c1f439505f12
 #define WINRT_GENERIC_500e5efe_3bc1_5d9b_bcfc_c1f439505f12
 template <> struct __declspec(uuid("500e5efe-3bc1-5d9b-bcfc-c1f439505f12")) __declspec(novtable) IIterator<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> : impl_IIterator<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> {};
 #endif
 
+#ifndef WINRT_GENERIC_470cf3be_96d7_53e7_962c_d97752ade262
+#define WINRT_GENERIC_470cf3be_96d7_53e7_962c_d97752ade262
+template <> struct __declspec(uuid("470cf3be-96d7-53e7-962c-d97752ade262")) __declspec(novtable) IVector<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> : impl_IVector<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> {};
+#endif
+
+#ifndef WINRT_GENERIC_e1078fe4_c3c1_59cb_98ae_0bde5669e77b
+#define WINRT_GENERIC_e1078fe4_c3c1_59cb_98ae_0bde5669e77b
+template <> struct __declspec(uuid("e1078fe4-c3c1-59cb-98ae-0bde5669e77b")) __declspec(novtable) IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> : impl_IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_9604d1d9_1744_5bd3_b5b9_d47b9434facb
 #define WINRT_GENERIC_9604d1d9_1744_5bd3_b5b9_d47b9434facb
 template <> struct __declspec(uuid("9604d1d9-1744-5bd3-b5b9-d47b9434facb")) __declspec(novtable) IIterator<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> : impl_IIterator<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> {};
+#endif
+
+#ifndef WINRT_GENERIC_58f77649_26a5_525b_9e3a_ac99b4bef46a
+#define WINRT_GENERIC_58f77649_26a5_525b_9e3a_ac99b4bef46a
+template <> struct __declspec(uuid("58f77649-26a5-525b-9e3a-ac99b4bef46a")) __declspec(novtable) IVector<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> : impl_IVector<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> {};
+#endif
+
+#ifndef WINRT_GENERIC_fd1eef30_7e70_55b9_97cb_b6f1bab1fa8f
+#define WINRT_GENERIC_fd1eef30_7e70_55b9_97cb_b6f1bab1fa8f
+template <> struct __declspec(uuid("fd1eef30-7e70-55b9-97cb-b6f1bab1fa8f")) __declspec(novtable) IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> : impl_IVectorView<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> {};
 #endif
 
 #ifndef WINRT_GENERIC_4bc92e92_d32e_597a_ae24_b38861c5fb08
@@ -44,132 +74,46 @@ template <> struct __declspec(uuid("4bc92e92-d32e-597a-ae24-b38861c5fb08")) __de
 
 namespace Windows::UI::Input::Preview::Injection {
 
-template <typename D>
-struct WINRT_EBO impl_IInjectedInputKeyboardInfo
-{
-    Windows::UI::Input::Preview::Injection::InjectedInputKeyOptions KeyOptions() const;
-    void KeyOptions(Windows::UI::Input::Preview::Injection::InjectedInputKeyOptions value) const;
-    uint16_t ScanCode() const;
-    void ScanCode(uint16_t value) const;
-    uint16_t VirtualKey() const;
-    void VirtualKey(uint16_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInjectedInputMouseInfo
-{
-    Windows::UI::Input::Preview::Injection::InjectedInputMouseOptions MouseOptions() const;
-    void MouseOptions(Windows::UI::Input::Preview::Injection::InjectedInputMouseOptions value) const;
-    uint32_t MouseData() const;
-    void MouseData(uint32_t value) const;
-    int32_t DeltaY() const;
-    void DeltaY(int32_t value) const;
-    int32_t DeltaX() const;
-    void DeltaX(int32_t value) const;
-    uint32_t TimeOffsetInMilliseconds() const;
-    void TimeOffsetInMilliseconds(uint32_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInjectedInputPenInfo
-{
-    Windows::UI::Input::Preview::Injection::InjectedInputPointerInfo PointerInfo() const;
-    void PointerInfo(const Windows::UI::Input::Preview::Injection::InjectedInputPointerInfo & value) const;
-    Windows::UI::Input::Preview::Injection::InjectedInputPenButtons PenButtons() const;
-    void PenButtons(Windows::UI::Input::Preview::Injection::InjectedInputPenButtons value) const;
-    Windows::UI::Input::Preview::Injection::InjectedInputPenParameters PenParameters() const;
-    void PenParameters(Windows::UI::Input::Preview::Injection::InjectedInputPenParameters value) const;
-    double Pressure() const;
-    void Pressure(double value) const;
-    double Rotation() const;
-    void Rotation(double value) const;
-    int32_t TiltX() const;
-    void TiltX(int32_t value) const;
-    int32_t TiltY() const;
-    void TiltY(int32_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInjectedInputTouchInfo
-{
-    Windows::UI::Input::Preview::Injection::InjectedInputRectangle Contact() const;
-    void Contact(const Windows::UI::Input::Preview::Injection::InjectedInputRectangle & value) const;
-    int32_t Orientation() const;
-    void Orientation(int32_t value) const;
-    Windows::UI::Input::Preview::Injection::InjectedInputPointerInfo PointerInfo() const;
-    void PointerInfo(const Windows::UI::Input::Preview::Injection::InjectedInputPointerInfo & value) const;
-    double Pressure() const;
-    void Pressure(double value) const;
-    Windows::UI::Input::Preview::Injection::InjectedInputTouchParameters TouchParameters() const;
-    void TouchParameters(Windows::UI::Input::Preview::Injection::InjectedInputTouchParameters value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInputInjector
-{
-    void InjectKeyboardInput(const Windows::Foundation::Collections::IIterable<Windows::UI::Input::Preview::Injection::InjectedInputKeyboardInfo> & input) const;
-    void InjectMouseInput(const Windows::Foundation::Collections::IIterable<Windows::UI::Input::Preview::Injection::InjectedInputMouseInfo> & input) const;
-    void InitializeTouchInjection(Windows::UI::Input::Preview::Injection::InjectedInputVisualizationMode visualMode) const;
-    void InjectTouchInput(const Windows::Foundation::Collections::IIterable<Windows::UI::Input::Preview::Injection::InjectedInputTouchInfo> & input) const;
-    void UninitializeTouchInjection() const;
-    void InitializePenInjection(Windows::UI::Input::Preview::Injection::InjectedInputVisualizationMode visualMode) const;
-    void InjectPenInput(const Windows::UI::Input::Preview::Injection::InjectedInputPenInfo & input) const;
-    void UninitializePenInjection() const;
-    void InjectShortcut(Windows::UI::Input::Preview::Injection::InjectedInputShortcut shortcut) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInputInjectorStatics
-{
-    Windows::UI::Input::Preview::Injection::InputInjector TryCreate() const;
-};
-
 struct IInjectedInputKeyboardInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInjectedInputKeyboardInfo>
 {
     IInjectedInputKeyboardInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInjectedInputKeyboardInfo>(m_ptr); }
 };
 
 struct IInjectedInputMouseInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInjectedInputMouseInfo>
 {
     IInjectedInputMouseInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInjectedInputMouseInfo>(m_ptr); }
 };
 
 struct IInjectedInputPenInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInjectedInputPenInfo>
 {
     IInjectedInputPenInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInjectedInputPenInfo>(m_ptr); }
 };
 
 struct IInjectedInputTouchInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInjectedInputTouchInfo>
 {
     IInjectedInputTouchInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInjectedInputTouchInfo>(m_ptr); }
 };
 
 struct IInputInjector :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInputInjector>
 {
     IInputInjector(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInputInjector>(m_ptr); }
 };
 
 struct IInputInjectorStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInputInjectorStatics>
 {
     IInputInjectorStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInputInjectorStatics>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -28,6 +28,17 @@ struct IThreadPoolTimer;
 struct IThreadPoolTimerStatics;
 struct ThreadPool;
 struct ThreadPoolTimer;
+
+}
+
+namespace Windows::System::Threading {
+
+template <typename T> struct impl_IThreadPoolStatics;
+template <typename T> struct impl_IThreadPoolTimer;
+template <typename T> struct impl_IThreadPoolTimerStatics;
+template <typename T> struct impl_TimerDestroyedHandler;
+template <typename T> struct impl_TimerElapsedHandler;
+template <typename T> struct impl_WorkItemHandler;
 
 }
 

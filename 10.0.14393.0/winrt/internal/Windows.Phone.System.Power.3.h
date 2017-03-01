@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,9 +13,9 @@ struct PowerManager
 {
     PowerManager() = delete;
     static Windows::Phone::System::Power::PowerSavingMode PowerSavingMode();
-    static event_token PowerSavingModeChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & changeHandler);
+    static event_token PowerSavingModeChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler);
     using PowerSavingModeChanged_revoker = factory_event_revoker<IPowerManagerStatics>;
-    static PowerSavingModeChanged_revoker PowerSavingModeChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & changeHandler);
+    static PowerSavingModeChanged_revoker PowerSavingModeChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler);
     static void PowerSavingModeChanged(event_token token);
     static bool PowerSavingModeEnabled();
 };

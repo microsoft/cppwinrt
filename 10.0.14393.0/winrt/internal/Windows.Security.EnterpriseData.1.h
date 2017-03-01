@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,19 +16,19 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Security::EnterpriseData {
 
-struct __declspec(uuid("47995edc-6cec-4e3a-b251-9e7485d79e7a")) __declspec(novtable) IBufferProtectUnprotectResult : Windows::IInspectable
+struct __declspec(uuid("47995edc-6cec-4e3a-b251-9e7485d79e7a")) __declspec(novtable) IBufferProtectUnprotectResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Buffer(Windows::Storage::Streams::IBuffer ** value) = 0;
     virtual HRESULT __stdcall get_ProtectionInfo(Windows::Security::EnterpriseData::IDataProtectionInfo ** value) = 0;
 };
 
-struct __declspec(uuid("8420b0c1-5e31-4405-9540-3f943af0cb26")) __declspec(novtable) IDataProtectionInfo : Windows::IInspectable
+struct __declspec(uuid("8420b0c1-5e31-4405-9540-3f943af0cb26")) __declspec(novtable) IDataProtectionInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Status(winrt::Windows::Security::EnterpriseData::DataProtectionStatus * value) = 0;
     virtual HRESULT __stdcall get_Identity(hstring * value) = 0;
 };
 
-struct __declspec(uuid("b6149b74-9144-4ee4-8a8a-30b5f361430e")) __declspec(novtable) IDataProtectionManagerStatics : Windows::IInspectable
+struct __declspec(uuid("b6149b74-9144-4ee4-8a8a-30b5f361430e")) __declspec(novtable) IDataProtectionManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ProtectAsync(Windows::Storage::Streams::IBuffer * data, hstring identity, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> ** result) = 0;
     virtual HRESULT __stdcall abi_UnprotectAsync(Windows::Storage::Streams::IBuffer * data, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> ** result) = 0;
@@ -38,14 +38,14 @@ struct __declspec(uuid("b6149b74-9144-4ee4-8a8a-30b5f361430e")) __declspec(novta
     virtual HRESULT __stdcall abi_GetStreamProtectionInfoAsync(Windows::Storage::Streams::IInputStream * protectedStream, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> ** result) = 0;
 };
 
-struct __declspec(uuid("4ee96486-147e-4dd0-8faf-5253ed91ad0c")) __declspec(novtable) IFileProtectionInfo : Windows::IInspectable
+struct __declspec(uuid("4ee96486-147e-4dd0-8faf-5253ed91ad0c")) __declspec(novtable) IFileProtectionInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Status(winrt::Windows::Security::EnterpriseData::FileProtectionStatus * value) = 0;
     virtual HRESULT __stdcall get_IsRoamable(bool * value) = 0;
     virtual HRESULT __stdcall get_Identity(hstring * value) = 0;
 };
 
-struct __declspec(uuid("5846fc9b-e613-426b-bb38-88cba1dc9adb")) __declspec(novtable) IFileProtectionManagerStatics : Windows::IInspectable
+struct __declspec(uuid("5846fc9b-e613-426b-bb38-88cba1dc9adb")) __declspec(novtable) IFileProtectionManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ProtectAsync(Windows::Storage::IStorageItem * target, hstring identity, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> ** result) = 0;
     virtual HRESULT __stdcall abi_CopyProtectionAsync(Windows::Storage::IStorageItem * source, Windows::Storage::IStorageItem * target, Windows::Foundation::IAsyncOperation<bool> ** result) = 0;
@@ -56,14 +56,14 @@ struct __declspec(uuid("5846fc9b-e613-426b-bb38-88cba1dc9adb")) __declspec(novta
     virtual HRESULT __stdcall abi_CreateProtectedAndOpenAsync(Windows::Storage::IStorageFolder * parentFolder, hstring desiredName, hstring identity, winrt::Windows::Storage::CreationCollisionOption collisionOption, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedFileCreateResult> ** result) = 0;
 };
 
-struct __declspec(uuid("83d2a745-0483-41ab-b2d5-bc7f23d74ebb")) __declspec(novtable) IFileProtectionManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("83d2a745-0483-41ab-b2d5-bc7f23d74ebb")) __declspec(novtable) IFileProtectionManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsContainerAsync(Windows::Storage::IStorageFile * file, Windows::Foundation::IAsyncOperation<bool> ** result) = 0;
     virtual HRESULT __stdcall abi_LoadFileFromContainerWithTargetAndNameCollisionOptionAsync(Windows::Storage::IStorageFile * containerFile, Windows::Storage::IStorageItem * target, winrt::Windows::Storage::NameCollisionOption collisionOption, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> ** result) = 0;
     virtual HRESULT __stdcall abi_SaveFileAsContainerWithSharingAsync(Windows::Storage::IStorageFile * protectedFile, Windows::Foundation::Collections::IIterable<hstring> * sharedWithIdentities, Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> ** result) = 0;
 };
 
-struct __declspec(uuid("256bbc3d-1c5d-4260-8c75-9144cfb78ba9")) __declspec(novtable) IFileRevocationManagerStatics : Windows::IInspectable
+struct __declspec(uuid("256bbc3d-1c5d-4260-8c75-9144cfb78ba9")) __declspec(novtable) IFileRevocationManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ProtectAsync(Windows::Storage::IStorageItem * storageItem, hstring enterpriseIdentity, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> ** result) = 0;
     virtual HRESULT __stdcall abi_CopyProtectionAsync(Windows::Storage::IStorageItem * sourceStorageItem, Windows::Storage::IStorageItem * targetStorageItem, Windows::Foundation::IAsyncOperation<bool> ** result) = 0;
@@ -71,43 +71,43 @@ struct __declspec(uuid("256bbc3d-1c5d-4260-8c75-9144cfb78ba9")) __declspec(novta
     virtual HRESULT __stdcall abi_GetStatusAsync(Windows::Storage::IStorageItem * storageItem, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> ** result) = 0;
 };
 
-struct __declspec(uuid("ac4dca59-5d80-4e95-8c5f-8539450eebe0")) __declspec(novtable) IProtectedAccessResumedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ac4dca59-5d80-4e95-8c5f-8539450eebe0")) __declspec(novtable) IProtectedAccessResumedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Identities(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("75a193e0-a344-429f-b975-04fc1f88c185")) __declspec(novtable) IProtectedAccessSuspendingEventArgs : Windows::IInspectable
+struct __declspec(uuid("75a193e0-a344-429f-b975-04fc1f88c185")) __declspec(novtable) IProtectedAccessSuspendingEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Identities(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
     virtual HRESULT __stdcall get_Deadline(Windows::Foundation::DateTime * value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::Foundation::IDeferral ** result) = 0;
 };
 
-struct __declspec(uuid("3948ef95-f7fb-4b42-afb0-df70b41543c1")) __declspec(novtable) IProtectedContainerExportResult : Windows::IInspectable
+struct __declspec(uuid("3948ef95-f7fb-4b42-afb0-df70b41543c1")) __declspec(novtable) IProtectedContainerExportResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Status(winrt::Windows::Security::EnterpriseData::ProtectedImportExportStatus * value) = 0;
     virtual HRESULT __stdcall get_File(Windows::Storage::IStorageFile ** value) = 0;
 };
 
-struct __declspec(uuid("cdb780d1-e7bb-4d1a-9339-34dc41149f9b")) __declspec(novtable) IProtectedContainerImportResult : Windows::IInspectable
+struct __declspec(uuid("cdb780d1-e7bb-4d1a-9339-34dc41149f9b")) __declspec(novtable) IProtectedContainerImportResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Status(winrt::Windows::Security::EnterpriseData::ProtectedImportExportStatus * value) = 0;
     virtual HRESULT __stdcall get_File(Windows::Storage::IStorageFile ** value) = 0;
 };
 
-struct __declspec(uuid("63686821-58b9-47ee-93d9-f0f741cf43f0")) __declspec(novtable) IProtectedContentRevokedEventArgs : Windows::IInspectable
+struct __declspec(uuid("63686821-58b9-47ee-93d9-f0f741cf43f0")) __declspec(novtable) IProtectedContentRevokedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Identities(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("28e3ed6a-e9e7-4a03-9f53-bdb16172699b")) __declspec(novtable) IProtectedFileCreateResult : Windows::IInspectable
+struct __declspec(uuid("28e3ed6a-e9e7-4a03-9f53-bdb16172699b")) __declspec(novtable) IProtectedFileCreateResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_File(Windows::Storage::IStorageFile ** value) = 0;
     virtual HRESULT __stdcall get_Stream(Windows::Storage::Streams::IRandomAccessStream ** value) = 0;
     virtual HRESULT __stdcall get_ProtectionInfo(Windows::Security::EnterpriseData::IFileProtectionInfo ** value) = 0;
 };
 
-struct __declspec(uuid("425ab7e4-feb7-44fc-b3bb-c3c4d7ecbebb")) __declspec(novtable) IProtectionPolicyAuditInfo : Windows::IInspectable
+struct __declspec(uuid("425ab7e4-feb7-44fc-b3bb-c3c4d7ecbebb")) __declspec(novtable) IProtectionPolicyAuditInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_Action(winrt::Windows::Security::EnterpriseData::ProtectionPolicyAuditAction value) = 0;
     virtual HRESULT __stdcall get_Action(winrt::Windows::Security::EnterpriseData::ProtectionPolicyAuditAction * value) = 0;
@@ -119,25 +119,25 @@ struct __declspec(uuid("425ab7e4-feb7-44fc-b3bb-c3c4d7ecbebb")) __declspec(novta
     virtual HRESULT __stdcall get_TargetDescription(hstring * value) = 0;
 };
 
-struct __declspec(uuid("7ed4180b-92e8-42d5-83d4-25440b423549")) __declspec(novtable) IProtectionPolicyAuditInfoFactory : Windows::IInspectable
+struct __declspec(uuid("7ed4180b-92e8-42d5-83d4-25440b423549")) __declspec(novtable) IProtectionPolicyAuditInfoFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(winrt::Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring dataDescription, hstring sourceDescription, hstring targetDescription, Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo ** result) = 0;
     virtual HRESULT __stdcall abi_CreateWithActionAndDataDescription(winrt::Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring dataDescription, Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo ** result) = 0;
 };
 
-struct __declspec(uuid("d5703e18-a08d-47e6-a240-9934d7165eb5")) __declspec(novtable) IProtectionPolicyManager : Windows::IInspectable
+struct __declspec(uuid("d5703e18-a08d-47e6-a240-9934d7165eb5")) __declspec(novtable) IProtectionPolicyManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_Identity(hstring value) = 0;
     virtual HRESULT __stdcall get_Identity(hstring * value) = 0;
 };
 
-struct __declspec(uuid("abf7527a-8435-417f-99b6-51beaf365888")) __declspec(novtable) IProtectionPolicyManager2 : Windows::IInspectable
+struct __declspec(uuid("abf7527a-8435-417f-99b6-51beaf365888")) __declspec(novtable) IProtectionPolicyManager2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_ShowEnterpriseIndicator(bool value) = 0;
     virtual HRESULT __stdcall get_ShowEnterpriseIndicator(bool * value) = 0;
 };
 
-struct __declspec(uuid("c0bffc66-8c3d-4d56-8804-c68f0ad32ec5")) __declspec(novtable) IProtectionPolicyManagerStatics : Windows::IInspectable
+struct __declspec(uuid("c0bffc66-8c3d-4d56-8804-c68f0ad32ec5")) __declspec(novtable) IProtectionPolicyManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsIdentityManaged(hstring identity, bool * result) = 0;
     virtual HRESULT __stdcall abi_TryApplyProcessUIPolicy(hstring identity, bool * result) = 0;
@@ -156,7 +156,7 @@ struct __declspec(uuid("c0bffc66-8c3d-4d56-8804-c68f0ad32ec5")) __declspec(novta
     virtual HRESULT __stdcall abi_RequestAccessAsync(hstring sourceIdentity, hstring targetIdentity, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> ** result) = 0;
 };
 
-struct __declspec(uuid("b68f9a8c-39e0-4649-b2e4-070ab8a579b3")) __declspec(novtable) IProtectionPolicyManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("b68f9a8c-39e0-4649-b2e4-070ab8a579b3")) __declspec(novtable) IProtectionPolicyManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_HasContentBeenRevokedSince(hstring identity, Windows::Foundation::DateTime since, bool * result) = 0;
     virtual HRESULT __stdcall abi_CheckAccessForApp(hstring sourceIdentity, hstring appPackageFamilyName, winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult * result) = 0;
@@ -164,12 +164,12 @@ struct __declspec(uuid("b68f9a8c-39e0-4649-b2e4-070ab8a579b3")) __declspec(novta
     virtual HRESULT __stdcall abi_GetEnforcementLevel(hstring identity, winrt::Windows::Security::EnterpriseData::EnforcementLevel * value) = 0;
     virtual HRESULT __stdcall abi_IsUserDecryptionAllowed(hstring identity, bool * value) = 0;
     virtual HRESULT __stdcall abi_IsProtectionUnderLockRequired(hstring identity, bool * value) = 0;
-    virtual HRESULT __stdcall add_PolicyChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_PolicyChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_PolicyChanged(event_token token) = 0;
     virtual HRESULT __stdcall get_IsProtectionEnabled(bool * value) = 0;
 };
 
-struct __declspec(uuid("48ff9e8c-6a6f-4d9f-bced-18ab537aa015")) __declspec(novtable) IProtectionPolicyManagerStatics3 : Windows::IInspectable
+struct __declspec(uuid("48ff9e8c-6a6f-4d9f-bced-18ab537aa015")) __declspec(novtable) IProtectionPolicyManagerStatics3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RequestAccessWithAuditingInfoAsync(hstring sourceIdentity, hstring targetIdentity, Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo * auditInfo, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> ** result) = 0;
     virtual HRESULT __stdcall abi_RequestAccessWithMessageAsync(hstring sourceIdentity, hstring targetIdentity, Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo * auditInfo, hstring messageFromApp, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> ** result) = 0;
@@ -178,7 +178,7 @@ struct __declspec(uuid("48ff9e8c-6a6f-4d9f-bced-18ab537aa015")) __declspec(novta
     virtual HRESULT __stdcall abi_LogAuditEvent(hstring sourceIdentity, hstring targetIdentity, Windows::Security::EnterpriseData::IProtectionPolicyAuditInfo * auditInfo) = 0;
 };
 
-struct __declspec(uuid("fa4ea8e9-ef13-405a-b12c-d7348c6f41fc")) __declspec(novtable) IThreadNetworkContext : Windows::IInspectable
+struct __declspec(uuid("fa4ea8e9-ef13-405a-b12c-d7348c6f41fc")) __declspec(novtable) IThreadNetworkContext : Windows::Foundation::IInspectable
 {
 };
 
@@ -203,27 +203,200 @@ template <> struct traits<Windows::Security::EnterpriseData::ThreadNetworkContex
 
 namespace Windows::Security::EnterpriseData {
 
-template <typename T> struct impl_IBufferProtectUnprotectResult;
-template <typename T> struct impl_IDataProtectionInfo;
-template <typename T> struct impl_IDataProtectionManagerStatics;
-template <typename T> struct impl_IFileProtectionInfo;
-template <typename T> struct impl_IFileProtectionManagerStatics;
-template <typename T> struct impl_IFileProtectionManagerStatics2;
-template <typename T> struct impl_IFileRevocationManagerStatics;
-template <typename T> struct impl_IProtectedAccessResumedEventArgs;
-template <typename T> struct impl_IProtectedAccessSuspendingEventArgs;
-template <typename T> struct impl_IProtectedContainerExportResult;
-template <typename T> struct impl_IProtectedContainerImportResult;
-template <typename T> struct impl_IProtectedContentRevokedEventArgs;
-template <typename T> struct impl_IProtectedFileCreateResult;
-template <typename T> struct impl_IProtectionPolicyAuditInfo;
-template <typename T> struct impl_IProtectionPolicyAuditInfoFactory;
-template <typename T> struct impl_IProtectionPolicyManager;
-template <typename T> struct impl_IProtectionPolicyManager2;
-template <typename T> struct impl_IProtectionPolicyManagerStatics;
-template <typename T> struct impl_IProtectionPolicyManagerStatics2;
-template <typename T> struct impl_IProtectionPolicyManagerStatics3;
-template <typename T> struct impl_IThreadNetworkContext;
+template <typename D>
+struct WINRT_EBO impl_IBufferProtectUnprotectResult
+{
+    Windows::Storage::Streams::IBuffer Buffer() const;
+    Windows::Security::EnterpriseData::DataProtectionInfo ProtectionInfo() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataProtectionInfo
+{
+    Windows::Security::EnterpriseData::DataProtectionStatus Status() const;
+    hstring Identity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataProtectionManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> ProtectAsync(const Windows::Storage::Streams::IBuffer & data, hstring_view identity) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::BufferProtectUnprotectResult> UnprotectAsync(const Windows::Storage::Streams::IBuffer & data) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> ProtectStreamAsync(const Windows::Storage::Streams::IInputStream & unprotectedStream, hstring_view identity, const Windows::Storage::Streams::IOutputStream & protectedStream) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> UnprotectStreamAsync(const Windows::Storage::Streams::IInputStream & protectedStream, const Windows::Storage::Streams::IOutputStream & unprotectedStream) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> GetProtectionInfoAsync(const Windows::Storage::Streams::IBuffer & protectedData) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::DataProtectionInfo> GetStreamProtectionInfoAsync(const Windows::Storage::Streams::IInputStream & protectedStream) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileProtectionInfo
+{
+    Windows::Security::EnterpriseData::FileProtectionStatus Status() const;
+    bool IsRoamable() const;
+    hstring Identity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileProtectionManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> ProtectAsync(const Windows::Storage::IStorageItem & target, hstring_view identity) const;
+    Windows::Foundation::IAsyncOperation<bool> CopyProtectionAsync(const Windows::Storage::IStorageItem & source, const Windows::Storage::IStorageItem & target) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::FileProtectionInfo> GetProtectionInfoAsync(const Windows::Storage::IStorageItem & source) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> SaveFileAsContainerAsync(const Windows::Storage::IStorageFile & protectedFile) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile, const Windows::Storage::IStorageItem & target) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedFileCreateResult> CreateProtectedAndOpenAsync(const Windows::Storage::IStorageFolder & parentFolder, hstring_view desiredName, hstring_view identity, Windows::Storage::CreationCollisionOption collisionOption) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileProtectionManagerStatics2
+{
+    Windows::Foundation::IAsyncOperation<bool> IsContainerAsync(const Windows::Storage::IStorageFile & file) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerImportResult> LoadFileFromContainerAsync(const Windows::Storage::IStorageFile & containerFile, const Windows::Storage::IStorageItem & target, Windows::Storage::NameCollisionOption collisionOption) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::EnterpriseData::ProtectedContainerExportResult> SaveFileAsContainerAsync(const Windows::Storage::IStorageFile & protectedFile, iterable<hstring> sharedWithIdentities) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileRevocationManagerStatics
+{
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> ProtectAsync(const Windows::Storage::IStorageItem & storageItem, hstring_view enterpriseIdentity) const;
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] Windows::Foundation::IAsyncOperation<bool> CopyProtectionAsync(const Windows::Storage::IStorageItem & sourceStorageItem, const Windows::Storage::IStorageItem & targetStorageItem) const;
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] void Revoke(hstring_view enterpriseIdentity) const;
+    [[deprecated("FileRevocationManager might be unavailable after Windows 10. Instead, use FileProtectionManager.")]] Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::FileProtectionStatus> GetStatusAsync(const Windows::Storage::IStorageItem & storageItem) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedAccessResumedEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<hstring> Identities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedAccessSuspendingEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<hstring> Identities() const;
+    Windows::Foundation::DateTime Deadline() const;
+    Windows::Foundation::Deferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedContainerExportResult
+{
+    Windows::Security::EnterpriseData::ProtectedImportExportStatus Status() const;
+    Windows::Storage::StorageFile File() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedContainerImportResult
+{
+    Windows::Security::EnterpriseData::ProtectedImportExportStatus Status() const;
+    Windows::Storage::StorageFile File() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedContentRevokedEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<hstring> Identities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectedFileCreateResult
+{
+    Windows::Storage::StorageFile File() const;
+    Windows::Storage::Streams::IRandomAccessStream Stream() const;
+    Windows::Security::EnterpriseData::FileProtectionInfo ProtectionInfo() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyAuditInfo
+{
+    void Action(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction value) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyAuditAction Action() const;
+    void DataDescription(hstring_view value) const;
+    hstring DataDescription() const;
+    void SourceDescription(hstring_view value) const;
+    hstring SourceDescription() const;
+    void TargetDescription(hstring_view value) const;
+    hstring TargetDescription() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyAuditInfoFactory
+{
+    Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo Create(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_view dataDescription, hstring_view sourceDescription, hstring_view targetDescription) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo CreateWithActionAndDataDescription(Windows::Security::EnterpriseData::ProtectionPolicyAuditAction action, hstring_view dataDescription) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyManager
+{
+    void Identity(hstring_view value) const;
+    hstring Identity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyManager2
+{
+    void ShowEnterpriseIndicator(bool value) const;
+    bool ShowEnterpriseIndicator() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyManagerStatics
+{
+    bool IsIdentityManaged(hstring_view identity) const;
+    bool TryApplyProcessUIPolicy(hstring_view identity) const;
+    void ClearProcessUIPolicy() const;
+    Windows::Security::EnterpriseData::ThreadNetworkContext CreateCurrentThreadNetworkContext(hstring_view identity) const;
+    Windows::Foundation::IAsyncOperation<hstring> GetPrimaryManagedIdentityForNetworkEndpointAsync(const Windows::Networking::HostName & endpointHost) const;
+    void RevokeContent(hstring_view identity) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyManager GetForCurrentView() const;
+    event_token ProtectedAccessSuspending(const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedAccessSuspendingEventArgs> & handler) const;
+    using ProtectedAccessSuspending_revoker = event_revoker<IProtectionPolicyManagerStatics>;
+    ProtectedAccessSuspending_revoker ProtectedAccessSuspending(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedAccessSuspendingEventArgs> & handler) const;
+    void ProtectedAccessSuspending(event_token token) const;
+    event_token ProtectedAccessResumed(const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedAccessResumedEventArgs> & handler) const;
+    using ProtectedAccessResumed_revoker = event_revoker<IProtectionPolicyManagerStatics>;
+    ProtectedAccessResumed_revoker ProtectedAccessResumed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedAccessResumedEventArgs> & handler) const;
+    void ProtectedAccessResumed(event_token token) const;
+    event_token ProtectedContentRevoked(const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedContentRevokedEventArgs> & handler) const;
+    using ProtectedContentRevoked_revoker = event_revoker<IProtectionPolicyManagerStatics>;
+    ProtectedContentRevoked_revoker ProtectedContentRevoked(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::EnterpriseData::ProtectedContentRevokedEventArgs> & handler) const;
+    void ProtectedContentRevoked(event_token token) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccess(hstring_view sourceIdentity, hstring_view targetIdentity) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyManagerStatics2
+{
+    bool HasContentBeenRevokedSince(hstring_view identity, const Windows::Foundation::DateTime & since) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult CheckAccessForApp(hstring_view sourceIdentity, hstring_view appPackageFamilyName) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName) const;
+    Windows::Security::EnterpriseData::EnforcementLevel GetEnforcementLevel(hstring_view identity) const;
+    bool IsUserDecryptionAllowed(hstring_view identity) const;
+    bool IsProtectionUnderLockRequired(hstring_view identity) const;
+    event_token PolicyChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    using PolicyChanged_revoker = event_revoker<IProtectionPolicyManagerStatics2>;
+    PolicyChanged_revoker PolicyChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    void PolicyChanged(event_token token) const;
+    bool IsProtectionEnabled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionPolicyManagerStatics3
+{
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_view messageFromApp) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessForAppAsync(hstring_view sourceIdentity, hstring_view appPackageFamilyName, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo, hstring_view messageFromApp) const;
+    void LogAuditEvent(hstring_view sourceIdentity, hstring_view targetIdentity, const Windows::Security::EnterpriseData::ProtectionPolicyAuditInfo & auditInfo) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IThreadNetworkContext
+{
+};
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -175,6 +175,61 @@ struct VpnRouteAssignment;
 struct VpnSystemHealth;
 struct VpnTrafficFilter;
 struct VpnTrafficFilterAssignment;
+
+}
+
+namespace Windows::Networking::Vpn {
+
+template <typename T> struct impl_IVpnAppId;
+template <typename T> struct impl_IVpnAppIdFactory;
+template <typename T> struct impl_IVpnChannel;
+template <typename T> struct impl_IVpnChannel2;
+template <typename T> struct impl_IVpnChannelActivityEventArgs;
+template <typename T> struct impl_IVpnChannelActivityStateChangedArgs;
+template <typename T> struct impl_IVpnChannelConfiguration;
+template <typename T> struct impl_IVpnChannelConfiguration2;
+template <typename T> struct impl_IVpnChannelStatics;
+template <typename T> struct impl_IVpnCredential;
+template <typename T> struct impl_IVpnCustomCheckBox;
+template <typename T> struct impl_IVpnCustomComboBox;
+template <typename T> struct impl_IVpnCustomEditBox;
+template <typename T> struct impl_IVpnCustomErrorBox;
+template <typename T> struct impl_IVpnCustomPrompt;
+template <typename T> struct impl_IVpnCustomPromptBooleanInput;
+template <typename T> struct impl_IVpnCustomPromptElement;
+template <typename T> struct impl_IVpnCustomPromptOptionSelector;
+template <typename T> struct impl_IVpnCustomPromptText;
+template <typename T> struct impl_IVpnCustomPromptTextInput;
+template <typename T> struct impl_IVpnCustomTextBox;
+template <typename T> struct impl_IVpnDomainNameAssignment;
+template <typename T> struct impl_IVpnDomainNameInfo;
+template <typename T> struct impl_IVpnDomainNameInfo2;
+template <typename T> struct impl_IVpnDomainNameInfoFactory;
+template <typename T> struct impl_IVpnInterfaceId;
+template <typename T> struct impl_IVpnInterfaceIdFactory;
+template <typename T> struct impl_IVpnManagementAgent;
+template <typename T> struct impl_IVpnNamespaceAssignment;
+template <typename T> struct impl_IVpnNamespaceInfo;
+template <typename T> struct impl_IVpnNamespaceInfoFactory;
+template <typename T> struct impl_IVpnNativeProfile;
+template <typename T> struct impl_IVpnNativeProfile2;
+template <typename T> struct impl_IVpnPacketBuffer;
+template <typename T> struct impl_IVpnPacketBuffer2;
+template <typename T> struct impl_IVpnPacketBufferFactory;
+template <typename T> struct impl_IVpnPacketBufferList;
+template <typename T> struct impl_IVpnPacketBufferList2;
+template <typename T> struct impl_IVpnPickedCredential;
+template <typename T> struct impl_IVpnPlugIn;
+template <typename T> struct impl_IVpnPlugInProfile;
+template <typename T> struct impl_IVpnPlugInProfile2;
+template <typename T> struct impl_IVpnProfile;
+template <typename T> struct impl_IVpnRoute;
+template <typename T> struct impl_IVpnRouteAssignment;
+template <typename T> struct impl_IVpnRouteFactory;
+template <typename T> struct impl_IVpnSystemHealth;
+template <typename T> struct impl_IVpnTrafficFilter;
+template <typename T> struct impl_IVpnTrafficFilterAssignment;
+template <typename T> struct impl_IVpnTrafficFilterFactory;
 
 }
 

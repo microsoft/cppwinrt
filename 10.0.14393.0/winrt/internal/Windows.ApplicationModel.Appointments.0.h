@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -111,6 +111,42 @@ struct AppointmentStoreChangedDeferral;
 struct AppointmentStoreChangedEventArgs;
 struct AppointmentStoreNotificationTriggerDetails;
 struct FindAppointmentsOptions;
+
+}
+
+namespace Windows::ApplicationModel::Appointments {
+
+template <typename T> struct impl_IAppointment;
+template <typename T> struct impl_IAppointment2;
+template <typename T> struct impl_IAppointment3;
+template <typename T> struct impl_IAppointmentCalendar;
+template <typename T> struct impl_IAppointmentCalendar2;
+template <typename T> struct impl_IAppointmentCalendar3;
+template <typename T> struct impl_IAppointmentCalendarSyncManager;
+template <typename T> struct impl_IAppointmentCalendarSyncManager2;
+template <typename T> struct impl_IAppointmentConflictResult;
+template <typename T> struct impl_IAppointmentException;
+template <typename T> struct impl_IAppointmentInvitee;
+template <typename T> struct impl_IAppointmentManagerForUser;
+template <typename T> struct impl_IAppointmentManagerStatics;
+template <typename T> struct impl_IAppointmentManagerStatics2;
+template <typename T> struct impl_IAppointmentManagerStatics3;
+template <typename T> struct impl_IAppointmentParticipant;
+template <typename T> struct impl_IAppointmentPropertiesStatics;
+template <typename T> struct impl_IAppointmentPropertiesStatics2;
+template <typename T> struct impl_IAppointmentRecurrence;
+template <typename T> struct impl_IAppointmentRecurrence2;
+template <typename T> struct impl_IAppointmentRecurrence3;
+template <typename T> struct impl_IAppointmentStore;
+template <typename T> struct impl_IAppointmentStore2;
+template <typename T> struct impl_IAppointmentStoreChange;
+template <typename T> struct impl_IAppointmentStoreChange2;
+template <typename T> struct impl_IAppointmentStoreChangeReader;
+template <typename T> struct impl_IAppointmentStoreChangeTracker;
+template <typename T> struct impl_IAppointmentStoreChangedDeferral;
+template <typename T> struct impl_IAppointmentStoreChangedEventArgs;
+template <typename T> struct impl_IAppointmentStoreNotificationTriggerDetails;
+template <typename T> struct impl_IFindAppointmentsOptions;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,6 +43,22 @@ struct RfcommDeviceService;
 struct RfcommDeviceServicesResult;
 struct RfcommServiceId;
 struct RfcommServiceProvider;
+
+}
+
+namespace Windows::Devices::Bluetooth::Rfcomm {
+
+template <typename T> struct impl_IRfcommDeviceService;
+template <typename T> struct impl_IRfcommDeviceService2;
+template <typename T> struct impl_IRfcommDeviceService3;
+template <typename T> struct impl_IRfcommDeviceServiceStatics;
+template <typename T> struct impl_IRfcommDeviceServiceStatics2;
+template <typename T> struct impl_IRfcommDeviceServicesResult;
+template <typename T> struct impl_IRfcommServiceId;
+template <typename T> struct impl_IRfcommServiceIdStatics;
+template <typename T> struct impl_IRfcommServiceProvider;
+template <typename T> struct impl_IRfcommServiceProvider2;
+template <typename T> struct impl_IRfcommServiceProviderStatics;
 
 }
 

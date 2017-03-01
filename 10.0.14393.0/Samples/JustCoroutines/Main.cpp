@@ -48,7 +48,7 @@ IAsyncAction Consume()
 
 int main()
 {
-    initialize();
+    init_apartment();
 
     Consume().get();
 }

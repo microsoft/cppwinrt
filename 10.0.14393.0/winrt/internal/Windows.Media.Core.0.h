@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -295,6 +295,84 @@ struct VideoStreamDescriptor;
 struct VideoTrack;
 struct VideoTrackOpenFailedEventArgs;
 struct VideoTrackSupportInfo;
+
+}
+
+namespace Windows::Media::Core {
+
+template <typename T> struct impl_IAudioStreamDescriptor;
+template <typename T> struct impl_IAudioStreamDescriptor2;
+template <typename T> struct impl_IAudioStreamDescriptorFactory;
+template <typename T> struct impl_IAudioTrack;
+template <typename T> struct impl_IAudioTrackOpenFailedEventArgs;
+template <typename T> struct impl_IAudioTrackSupportInfo;
+template <typename T> struct impl_IDataCue;
+template <typename T> struct impl_IFaceDetectedEventArgs;
+template <typename T> struct impl_IFaceDetectionEffect;
+template <typename T> struct impl_IFaceDetectionEffectDefinition;
+template <typename T> struct impl_IFaceDetectionEffectFrame;
+template <typename T> struct impl_IHighDynamicRangeControl;
+template <typename T> struct impl_IHighDynamicRangeOutput;
+template <typename T> struct impl_IMediaBinder;
+template <typename T> struct impl_IMediaBindingEventArgs;
+template <typename T> struct impl_IMediaCue;
+template <typename T> struct impl_IMediaCueEventArgs;
+template <typename T> struct impl_IMediaSource;
+template <typename T> struct impl_IMediaSource2;
+template <typename T> struct impl_IMediaSource3;
+template <typename T> struct impl_IMediaSourceError;
+template <typename T> struct impl_IMediaSourceOpenOperationCompletedEventArgs;
+template <typename T> struct impl_IMediaSourceStateChangedEventArgs;
+template <typename T> struct impl_IMediaSourceStatics;
+template <typename T> struct impl_IMediaSourceStatics2;
+template <typename T> struct impl_IMediaStreamDescriptor;
+template <typename T> struct impl_IMediaStreamSample;
+template <typename T> struct impl_IMediaStreamSampleProtectionProperties;
+template <typename T> struct impl_IMediaStreamSampleStatics;
+template <typename T> struct impl_IMediaStreamSource;
+template <typename T> struct impl_IMediaStreamSource2;
+template <typename T> struct impl_IMediaStreamSourceClosedEventArgs;
+template <typename T> struct impl_IMediaStreamSourceClosedRequest;
+template <typename T> struct impl_IMediaStreamSourceFactory;
+template <typename T> struct impl_IMediaStreamSourceSampleRenderedEventArgs;
+template <typename T> struct impl_IMediaStreamSourceSampleRequest;
+template <typename T> struct impl_IMediaStreamSourceSampleRequestDeferral;
+template <typename T> struct impl_IMediaStreamSourceSampleRequestedEventArgs;
+template <typename T> struct impl_IMediaStreamSourceStartingEventArgs;
+template <typename T> struct impl_IMediaStreamSourceStartingRequest;
+template <typename T> struct impl_IMediaStreamSourceStartingRequestDeferral;
+template <typename T> struct impl_IMediaStreamSourceSwitchStreamsRequest;
+template <typename T> struct impl_IMediaStreamSourceSwitchStreamsRequestDeferral;
+template <typename T> struct impl_IMediaStreamSourceSwitchStreamsRequestedEventArgs;
+template <typename T> struct impl_IMediaTrack;
+template <typename T> struct impl_IMseSourceBuffer;
+template <typename T> struct impl_IMseSourceBufferList;
+template <typename T> struct impl_IMseStreamSource;
+template <typename T> struct impl_IMseStreamSourceStatics;
+template <typename T> struct impl_ISceneAnalysisEffect;
+template <typename T> struct impl_ISceneAnalysisEffectFrame;
+template <typename T> struct impl_ISceneAnalyzedEventArgs;
+template <typename T> struct impl_ISingleSelectMediaTrackList;
+template <typename T> struct impl_ITimedMetadataTrack;
+template <typename T> struct impl_ITimedMetadataTrack2;
+template <typename T> struct impl_ITimedMetadataTrackError;
+template <typename T> struct impl_ITimedMetadataTrackFactory;
+template <typename T> struct impl_ITimedMetadataTrackFailedEventArgs;
+template <typename T> struct impl_ITimedTextCue;
+template <typename T> struct impl_ITimedTextLine;
+template <typename T> struct impl_ITimedTextRegion;
+template <typename T> struct impl_ITimedTextSource;
+template <typename T> struct impl_ITimedTextSourceResolveResultEventArgs;
+template <typename T> struct impl_ITimedTextSourceStatics;
+template <typename T> struct impl_ITimedTextStyle;
+template <typename T> struct impl_ITimedTextSubformat;
+template <typename T> struct impl_IVideoStabilizationEffect;
+template <typename T> struct impl_IVideoStabilizationEffectEnabledChangedEventArgs;
+template <typename T> struct impl_IVideoStreamDescriptor;
+template <typename T> struct impl_IVideoStreamDescriptorFactory;
+template <typename T> struct impl_IVideoTrack;
+template <typename T> struct impl_IVideoTrackOpenFailedEventArgs;
+template <typename T> struct impl_IVideoTrackSupportInfo;
 
 }
 

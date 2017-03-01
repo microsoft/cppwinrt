@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.ApplicationModel.AppService.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -65,6 +65,11 @@ template <> struct __declspec(uuid("b824383d-32e0-5579-8670-a06a61457f20")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_d1e8852e_d987_5357_a3ab_7e9b7168cbea
+#define WINRT_GENERIC_d1e8852e_d987_5357_a3ab_7e9b7168cbea
+template <> struct __declspec(uuid("d1e8852e-d987-5357-a3ab-7e9b7168cbea")) __declspec(novtable) IVector<Windows::ApplicationModel::AppInfo> : impl_IVector<Windows::ApplicationModel::AppInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_69cec62c_41eb_5d69_a475_29ee22323dd8
 #define WINRT_GENERIC_69cec62c_41eb_5d69_a475_29ee22323dd8
 template <> struct __declspec(uuid("69cec62c-41eb-5d69-a475-29ee22323dd8")) __declspec(novtable) IIterator<Windows::ApplicationModel::AppInfo> : impl_IIterator<Windows::ApplicationModel::AppInfo> {};
@@ -100,165 +105,75 @@ template <> struct __declspec(uuid("07f25b6f-f054-5649-a5ce-b348ddc618b6")) __de
 
 namespace Windows::ApplicationModel::AppService {
 
-template <typename D>
-struct WINRT_EBO impl_IAppServiceCatalogStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindAppServiceProvidersAsync(hstring_ref appServiceName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceClosedEventArgs
-{
-    Windows::ApplicationModel::AppService::AppServiceClosedStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceConnection
-{
-    hstring AppServiceName() const;
-    void AppServiceName(hstring_ref value) const;
-    hstring PackageFamilyName() const;
-    void PackageFamilyName(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceConnectionStatus> OpenAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::AppService::AppServiceResponse> SendMessageAsync(const Windows::Foundation::Collections::ValueSet & message) const;
-    event_token RequestReceived(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceRequestReceivedEventArgs> & handler) const;
-    using RequestReceived_revoker = event_revoker<IAppServiceConnection>;
-    RequestReceived_revoker RequestReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceRequestReceivedEventArgs> & handler) const;
-    void RequestReceived(event_token token) const;
-    event_token ServiceClosed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceClosedEventArgs> & handler) const;
-    using ServiceClosed_revoker = event_revoker<IAppServiceConnection>;
-    ServiceClosed_revoker ServiceClosed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppService::AppServiceConnection, Windows::ApplicationModel::AppService::AppServiceClosedEventArgs> & handler) const;
-    void ServiceClosed(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceConnection2
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceConnectionStatus> OpenRemoteAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest) const;
-    Windows::System::User User() const;
-    void User(const Windows::System::User & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceRequest
-{
-    Windows::Foundation::Collections::ValueSet Message() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::AppService::AppServiceResponseStatus> SendResponseAsync(const Windows::Foundation::Collections::ValueSet & message) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceRequestReceivedEventArgs
-{
-    Windows::ApplicationModel::AppService::AppServiceRequest Request() const;
-    Windows::ApplicationModel::AppService::AppServiceDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceResponse
-{
-    Windows::Foundation::Collections::ValueSet Message() const;
-    Windows::ApplicationModel::AppService::AppServiceResponseStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceTriggerDetails
-{
-    hstring Name() const;
-    hstring CallerPackageFamilyName() const;
-    Windows::ApplicationModel::AppService::AppServiceConnection AppServiceConnection() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppServiceTriggerDetails2
-{
-    bool IsRemoteSystemConnection() const;
-};
-
 struct IAppServiceCatalogStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceCatalogStatics>
 {
     IAppServiceCatalogStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceCatalogStatics>(m_ptr); }
 };
 
 struct IAppServiceClosedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceClosedEventArgs>
 {
     IAppServiceClosedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceClosedEventArgs>(m_ptr); }
 };
 
 struct IAppServiceConnection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceConnection>,
     impl::require<IAppServiceConnection, Windows::Foundation::IClosable>
 {
     IAppServiceConnection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceConnection>(m_ptr); }
 };
 
 struct IAppServiceConnection2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceConnection2>
 {
     IAppServiceConnection2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceConnection2>(m_ptr); }
 };
 
 struct IAppServiceDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceDeferral>
 {
     IAppServiceDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceDeferral>(m_ptr); }
 };
 
 struct IAppServiceRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceRequest>
 {
     IAppServiceRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceRequest>(m_ptr); }
 };
 
 struct IAppServiceRequestReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceRequestReceivedEventArgs>
 {
     IAppServiceRequestReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceRequestReceivedEventArgs>(m_ptr); }
 };
 
 struct IAppServiceResponse :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceResponse>
 {
     IAppServiceResponse(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceResponse>(m_ptr); }
 };
 
 struct IAppServiceTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceTriggerDetails>
 {
     IAppServiceTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceTriggerDetails>(m_ptr); }
 };
 
 struct IAppServiceTriggerDetails2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppServiceTriggerDetails2>
 {
     IAppServiceTriggerDetails2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppServiceTriggerDetails2>(m_ptr); }
 };
 
 }

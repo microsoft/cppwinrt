@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -86,6 +86,31 @@ struct TextReverseConversionGenerator;
 struct UnicodeCharacters;
 struct WordSegment;
 struct WordsSegmenter;
+
+}
+
+namespace Windows::Data::Text {
+
+template <typename T> struct impl_IAlternateWordForm;
+template <typename T> struct impl_ISelectableWordSegment;
+template <typename T> struct impl_ISelectableWordsSegmenter;
+template <typename T> struct impl_ISelectableWordsSegmenterFactory;
+template <typename T> struct impl_ISemanticTextQuery;
+template <typename T> struct impl_ISemanticTextQueryFactory;
+template <typename T> struct impl_ITextConversionGenerator;
+template <typename T> struct impl_ITextConversionGeneratorFactory;
+template <typename T> struct impl_ITextPhoneme;
+template <typename T> struct impl_ITextPredictionGenerator;
+template <typename T> struct impl_ITextPredictionGeneratorFactory;
+template <typename T> struct impl_ITextReverseConversionGenerator;
+template <typename T> struct impl_ITextReverseConversionGenerator2;
+template <typename T> struct impl_ITextReverseConversionGeneratorFactory;
+template <typename T> struct impl_IUnicodeCharactersStatics;
+template <typename T> struct impl_IWordSegment;
+template <typename T> struct impl_IWordsSegmenter;
+template <typename T> struct impl_IWordsSegmenterFactory;
+template <typename T> struct impl_SelectableWordSegmentsTokenizingHandler;
+template <typename T> struct impl_WordSegmentsTokenizingHandler;
 
 }
 

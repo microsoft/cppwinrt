@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -14,11 +17,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation> : produce_base<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation>
 {
-    HRESULT __stdcall get_Name(abi_arg_out<hstring> phProfileName) noexcept override
+    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> phProfileName) noexcept override
     {
         try
         {
-            *phProfileName = detach(this->shim().Name());
+            typename D::abi_guard guard(this->shim());
+            *phProfileName = detach_abi(this->shim().Name());
             return S_OK;
         }
         catch (...)
@@ -32,11 +36,12 @@ struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInfor
 template <typename D>
 struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStatics> : produce_base<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStatics>
 {
-    HRESULT __stdcall abi_GetSupportedLockdownProfiles(abi_arg_out<Windows::Foundation::Collections::IVectorView<GUID>> ppProfileIDs) noexcept override
+    HRESULT __stdcall abi_GetSupportedLockdownProfiles(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<GUID>> ppProfileIDs) noexcept override
     {
         try
         {
-            *ppProfileIDs = detach(this->shim().GetSupportedLockdownProfiles());
+            typename D::abi_guard guard(this->shim());
+            *ppProfileIDs = detach_abi(this->shim().GetSupportedLockdownProfiles());
             return S_OK;
         }
         catch (...)
@@ -50,7 +55,8 @@ struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStati
     {
         try
         {
-            *pProfileID = detach(this->shim().GetCurrentLockdownProfile());
+            typename D::abi_guard guard(this->shim());
+            *pProfileID = detach_abi(this->shim().GetCurrentLockdownProfile());
             return S_OK;
         }
         catch (...)
@@ -59,11 +65,12 @@ struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStati
         }
     }
 
-    HRESULT __stdcall abi_ApplyLockdownProfileAsync(GUID profileID, abi_arg_out<Windows::Foundation::IAsyncAction> ppWaitableOperation) noexcept override
+    HRESULT __stdcall abi_ApplyLockdownProfileAsync(GUID profileID, impl::abi_arg_out<Windows::Foundation::IAsyncAction> ppWaitableOperation) noexcept override
     {
         try
         {
-            *ppWaitableOperation = detach(this->shim().ApplyLockdownProfileAsync(profileID));
+            typename D::abi_guard guard(this->shim());
+            *ppWaitableOperation = detach_abi(this->shim().ApplyLockdownProfileAsync(profileID));
             return S_OK;
         }
         catch (...)
@@ -73,11 +80,12 @@ struct produce<D, Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStati
         }
     }
 
-    HRESULT __stdcall abi_GetLockdownProfileInformation(GUID profileID, abi_arg_out<Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation> ppInformation) noexcept override
+    HRESULT __stdcall abi_GetLockdownProfileInformation(GUID profileID, impl::abi_arg_out<Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation> ppInformation) noexcept override
     {
         try
         {
-            *ppInformation = detach(this->shim().GetLockdownProfileInformation(profileID));
+            typename D::abi_guard guard(this->shim());
+            *ppInformation = detach_abi(this->shim().GetLockdownProfileInformation(profileID));
             return S_OK;
         }
         catch (...)
@@ -95,35 +103,35 @@ namespace Windows::Embedded::DeviceLockdown {
 template <typename D> hstring impl_IDeviceLockdownProfileInformation<D>::Name() const
 {
     hstring phProfileName;
-    check_hresult(static_cast<const IDeviceLockdownProfileInformation &>(static_cast<const D &>(*this))->get_Name(put(phProfileName)));
+    check_hresult(WINRT_SHIM(IDeviceLockdownProfileInformation)->get_Name(put_abi(phProfileName)));
     return phProfileName;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<GUID> impl_IDeviceLockdownProfileStatics<D>::GetSupportedLockdownProfiles() const
 {
     Windows::Foundation::Collections::IVectorView<GUID> ppProfileIDs;
-    check_hresult(static_cast<const IDeviceLockdownProfileStatics &>(static_cast<const D &>(*this))->abi_GetSupportedLockdownProfiles(put(ppProfileIDs)));
+    check_hresult(WINRT_SHIM(IDeviceLockdownProfileStatics)->abi_GetSupportedLockdownProfiles(put_abi(ppProfileIDs)));
     return ppProfileIDs;
 }
 
 template <typename D> GUID impl_IDeviceLockdownProfileStatics<D>::GetCurrentLockdownProfile() const
 {
     GUID pProfileID {};
-    check_hresult(static_cast<const IDeviceLockdownProfileStatics &>(static_cast<const D &>(*this))->abi_GetCurrentLockdownProfile(&pProfileID));
+    check_hresult(WINRT_SHIM(IDeviceLockdownProfileStatics)->abi_GetCurrentLockdownProfile(&pProfileID));
     return pProfileID;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IDeviceLockdownProfileStatics<D>::ApplyLockdownProfileAsync(GUID profileID) const
 {
     Windows::Foundation::IAsyncAction ppWaitableOperation;
-    check_hresult(static_cast<const IDeviceLockdownProfileStatics &>(static_cast<const D &>(*this))->abi_ApplyLockdownProfileAsync(profileID, put(ppWaitableOperation)));
+    check_hresult(WINRT_SHIM(IDeviceLockdownProfileStatics)->abi_ApplyLockdownProfileAsync(profileID, put_abi(ppWaitableOperation)));
     return ppWaitableOperation;
 }
 
 template <typename D> Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation impl_IDeviceLockdownProfileStatics<D>::GetLockdownProfileInformation(GUID profileID) const
 {
     Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation ppInformation { nullptr };
-    check_hresult(static_cast<const IDeviceLockdownProfileStatics &>(static_cast<const D &>(*this))->abi_GetLockdownProfileInformation(profileID, put(ppInformation)));
+    check_hresult(WINRT_SHIM(IDeviceLockdownProfileStatics)->abi_GetLockdownProfileInformation(profileID, put_abi(ppInformation)));
     return ppInformation;
 }
 
@@ -150,3 +158,32 @@ inline Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation Devic
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation>
+{
+    size_t operator()(const winrt::Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStatics>
+{
+    size_t operator()(const winrt::Windows::Embedded::DeviceLockdown::IDeviceLockdownProfileStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation>
+{
+    size_t operator()(const winrt::Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

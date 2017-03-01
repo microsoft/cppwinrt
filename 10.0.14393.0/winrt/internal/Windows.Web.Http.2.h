@@ -1,11 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Web.Http.1.h"
 #include "Windows.Foundation.1.h"
-#include "Windows.Foundation.2.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -13,12 +12,17 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
 #define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::IInspectable> : impl_IMap<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
@@ -43,7 +47,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_0c7d1423_e8fd_5a91_b55c_8bfbe7ac2d40
@@ -71,6 +75,11 @@ template <> struct __declspec(uuid("8f1db6e3-6556-5516-825c-1021ee27cd0c")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
+
 #ifndef WINRT_GENERIC_cb383486_c2bc_5756_912d_6a708a07e5bd
 #define WINRT_GENERIC_cb383486_c2bc_5756_912d_6a708a07e5bd
 template <> struct __declspec(uuid("cb383486-c2bc-5756-912d-6a708a07e5bd")) __declspec(novtable) IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> : impl_IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> {};
@@ -91,9 +100,24 @@ template <> struct __declspec(uuid("6755e376-53bb-568b-a11d-17239868309e")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
+#define WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
+template <> struct __declspec(uuid("d7828cf7-4301-58d3-aab5-06e5eefcf79f")) __declspec(novtable) IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> : impl_IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> {};
+#endif
+
 #ifndef WINRT_GENERIC_0064c4f6_3fca_5823_9d92_86c40b28adbc
 #define WINRT_GENERIC_0064c4f6_3fca_5823_9d92_86c40b28adbc
 template <> struct __declspec(uuid("0064c4f6-3fca-5823-9d92-86c40b28adbc")) __declspec(novtable) IVectorView<Windows::Web::Http::HttpCookie> : impl_IVectorView<Windows::Web::Http::HttpCookie> {};
+#endif
+
+#ifndef WINRT_GENERIC_98a6c2fe_469b_5bdd_a16d_7002c3a0853d
+#define WINRT_GENERIC_98a6c2fe_469b_5bdd_a16d_7002c3a0853d
+template <> struct __declspec(uuid("98a6c2fe-469b-5bdd-a16d-7002c3a0853d")) __declspec(novtable) IVector<Windows::Web::Http::HttpCookie> : impl_IVector<Windows::Web::Http::HttpCookie> {};
+#endif
+
+#ifndef WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+#define WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+template <> struct __declspec(uuid("36282c0f-2f1f-57f4-b2b1-867af90c3d13")) __declspec(novtable) IVector<Windows::Security::Cryptography::Certificates::Certificate> : impl_IVector<Windows::Security::Cryptography::Certificates::Certificate> {};
 #endif
 
 
@@ -271,6 +295,16 @@ template <> struct __declspec(uuid("bd75eebe-e7b5-5af6-8415-a4b9c9045202")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_d849e2ec_0dd5_5090_abe4_4d4017682f3d
+#define WINRT_GENERIC_d849e2ec_0dd5_5090_abe4_4d4017682f3d
+template <> struct __declspec(uuid("d849e2ec-0dd5-5090-abe4-4d4017682f3d")) __declspec(novtable) IVector<Windows::Web::Http::IHttpContent> : impl_IVector<Windows::Web::Http::IHttpContent> {};
+#endif
+
+#ifndef WINRT_GENERIC_38a4f2bb_a661_5b8c_aa96_7cf9c7764f06
+#define WINRT_GENERIC_38a4f2bb_a661_5b8c_aa96_7cf9c7764f06
+template <> struct __declspec(uuid("38a4f2bb-a661-5b8c-aa96-7cf9c7764f06")) __declspec(novtable) IVectorView<Windows::Web::Http::IHttpContent> : impl_IVectorView<Windows::Web::Http::IHttpContent> {};
+#endif
+
 #ifndef WINRT_GENERIC_59f44f31_695e_5af7_a3c5_85c01939cec8
 #define WINRT_GENERIC_59f44f31_695e_5af7_a3c5_85c01939cec8
 template <> struct __declspec(uuid("59f44f31-695e-5af7-a3c5-85c01939cec8")) __declspec(novtable) IIterator<Windows::Web::Http::IHttpContent> : impl_IIterator<Windows::Web::Http::IHttpContent> {};
@@ -278,7 +312,7 @@ template <> struct __declspec(uuid("59f44f31-695e-5af7-a3c5-85c01939cec8")) __de
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
@@ -288,7 +322,7 @@ template <> struct __declspec(uuid("e9bdaaf0-cbf6-5c72-be90-29cbf3a1319b")) __de
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_05eb86f1_7140_5517_b88d_cbaebe57e6b1
@@ -301,384 +335,164 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Web::Http {
 
-template <typename D>
-struct WINRT_EBO impl_IHttpBufferContentFactory
-{
-    Windows::Web::Http::HttpBufferContent CreateFromBuffer(const Windows::Storage::Streams::IBuffer & content) const;
-    Windows::Web::Http::HttpBufferContent CreateFromBufferWithOffset(const Windows::Storage::Streams::IBuffer & content, uint32_t offset, uint32_t count) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpClient
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> DeleteAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> GetAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> GetAsync(const Windows::Foundation::Uri & uri, Windows::Web::Http::HttpCompletionOption completionOption) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, Windows::Web::Http::HttpProgress> GetBufferAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Http::HttpProgress> GetInputStreamAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperationWithProgress<hstring, Windows::Web::Http::HttpProgress> GetStringAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> PostAsync(const Windows::Foundation::Uri & uri, const Windows::Web::Http::IHttpContent & content) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> PutAsync(const Windows::Foundation::Uri & uri, const Windows::Web::Http::IHttpContent & content) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> SendRequestAsync(const Windows::Web::Http::HttpRequestMessage & request) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Http::HttpResponseMessage, Windows::Web::Http::HttpProgress> SendRequestAsync(const Windows::Web::Http::HttpRequestMessage & request, Windows::Web::Http::HttpCompletionOption completionOption) const;
-    Windows::Web::Http::Headers::HttpRequestHeaderCollection DefaultRequestHeaders() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpClientFactory
-{
-    Windows::Web::Http::HttpClient Create(const Windows::Web::Http::Filters::IHttpFilter & filter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContent
-{
-    Windows::Web::Http::Headers::HttpContentHeaderCollection Headers() const;
-    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> BufferAllAsync() const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint64_t> ReadAsBufferAsync() const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, uint64_t> ReadAsInputStreamAsync() const;
-    Windows::Foundation::IAsyncOperationWithProgress<hstring, uint64_t> ReadAsStringAsync() const;
-    bool TryComputeLength(uint64_t & length) const;
-    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> WriteToStreamAsync(const Windows::Storage::Streams::IOutputStream & outputStream) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookie
-{
-    hstring Name() const;
-    hstring Domain() const;
-    hstring Path() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Expires() const;
-    void Expires(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    bool HttpOnly() const;
-    void HttpOnly(bool value) const;
-    bool Secure() const;
-    void Secure(bool value) const;
-    hstring Value() const;
-    void Value(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookieFactory
-{
-    Windows::Web::Http::HttpCookie Create(hstring_ref name, hstring_ref domain, hstring_ref path) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookieManager
-{
-    bool SetCookie(const Windows::Web::Http::HttpCookie & cookie) const;
-    bool SetCookie(const Windows::Web::Http::HttpCookie & cookie, bool thirdParty) const;
-    void DeleteCookie(const Windows::Web::Http::HttpCookie & cookie) const;
-    Windows::Web::Http::HttpCookieCollection GetCookies(const Windows::Foundation::Uri & uri) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpFormUrlEncodedContentFactory
-{
-    Windows::Web::Http::HttpFormUrlEncodedContent Create(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMethod
-{
-    hstring Method() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMethodFactory
-{
-    Windows::Web::Http::HttpMethod Create(hstring_ref method) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMethodStatics
-{
-    Windows::Web::Http::HttpMethod Delete() const;
-    Windows::Web::Http::HttpMethod Get() const;
-    Windows::Web::Http::HttpMethod Head() const;
-    Windows::Web::Http::HttpMethod Options() const;
-    Windows::Web::Http::HttpMethod Patch() const;
-    Windows::Web::Http::HttpMethod Post() const;
-    Windows::Web::Http::HttpMethod Put() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMultipartContent
-{
-    void Add(const Windows::Web::Http::IHttpContent & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMultipartContentFactory
-{
-    Windows::Web::Http::HttpMultipartContent CreateWithSubtype(hstring_ref subtype) const;
-    Windows::Web::Http::HttpMultipartContent CreateWithSubtypeAndBoundary(hstring_ref subtype, hstring_ref boundary) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMultipartFormDataContent
-{
-    void Add(const Windows::Web::Http::IHttpContent & content) const;
-    void Add(const Windows::Web::Http::IHttpContent & content, hstring_ref name) const;
-    void Add(const Windows::Web::Http::IHttpContent & content, hstring_ref name, hstring_ref fileName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMultipartFormDataContentFactory
-{
-    Windows::Web::Http::HttpMultipartFormDataContent CreateWithBoundary(hstring_ref boundary) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpRequestMessage
-{
-    Windows::Web::Http::IHttpContent Content() const;
-    void Content(const Windows::Web::Http::IHttpContent & value) const;
-    Windows::Web::Http::Headers::HttpRequestHeaderCollection Headers() const;
-    Windows::Web::Http::HttpMethod Method() const;
-    void Method(const Windows::Web::Http::HttpMethod & value) const;
-    Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable> Properties() const;
-    Windows::Foundation::Uri RequestUri() const;
-    void RequestUri(const Windows::Foundation::Uri & value) const;
-    Windows::Web::Http::HttpTransportInformation TransportInformation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpRequestMessageFactory
-{
-    Windows::Web::Http::HttpRequestMessage Create(const Windows::Web::Http::HttpMethod & method, const Windows::Foundation::Uri & uri) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpResponseMessage
-{
-    Windows::Web::Http::IHttpContent Content() const;
-    void Content(const Windows::Web::Http::IHttpContent & value) const;
-    Windows::Web::Http::Headers::HttpResponseHeaderCollection Headers() const;
-    bool IsSuccessStatusCode() const;
-    hstring ReasonPhrase() const;
-    void ReasonPhrase(hstring_ref value) const;
-    Windows::Web::Http::HttpRequestMessage RequestMessage() const;
-    void RequestMessage(const Windows::Web::Http::HttpRequestMessage & value) const;
-    Windows::Web::Http::HttpResponseMessageSource Source() const;
-    void Source(Windows::Web::Http::HttpResponseMessageSource value) const;
-    Windows::Web::Http::HttpStatusCode StatusCode() const;
-    void StatusCode(Windows::Web::Http::HttpStatusCode value) const;
-    Windows::Web::Http::HttpVersion Version() const;
-    void Version(Windows::Web::Http::HttpVersion value) const;
-    Windows::Web::Http::HttpResponseMessage EnsureSuccessStatusCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpResponseMessageFactory
-{
-    Windows::Web::Http::HttpResponseMessage Create(Windows::Web::Http::HttpStatusCode statusCode) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpStreamContentFactory
-{
-    Windows::Web::Http::HttpStreamContent CreateFromInputStream(const Windows::Storage::Streams::IInputStream & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpStringContentFactory
-{
-    Windows::Web::Http::HttpStringContent CreateFromString(hstring_ref content) const;
-    Windows::Web::Http::HttpStringContent CreateFromStringWithEncoding(hstring_ref content, Windows::Storage::Streams::UnicodeEncoding encoding) const;
-    Windows::Web::Http::HttpStringContent CreateFromStringWithEncodingAndMediaType(hstring_ref content, Windows::Storage::Streams::UnicodeEncoding encoding, hstring_ref mediaType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpTransportInformation
-{
-    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
-    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
-};
-
 struct IHttpBufferContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpBufferContentFactory>
 {
     IHttpBufferContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpBufferContentFactory>(m_ptr); }
 };
 
 struct IHttpClient :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpClient>,
     impl::require<IHttpClient, Windows::Foundation::IClosable>
 {
     IHttpClient(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpClient>(m_ptr); }
 };
 
 struct IHttpClientFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpClientFactory>
 {
     IHttpClientFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpClientFactory>(m_ptr); }
 };
 
 struct IHttpContent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContent>,
     impl::require<IHttpContent, Windows::Foundation::IClosable>
 {
     IHttpContent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContent>(m_ptr); }
 };
 
 struct IHttpCookie :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookie>
 {
     IHttpCookie(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookie>(m_ptr); }
 };
 
 struct IHttpCookieFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookieFactory>
 {
     IHttpCookieFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookieFactory>(m_ptr); }
 };
 
 struct IHttpCookieManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookieManager>
 {
     IHttpCookieManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookieManager>(m_ptr); }
 };
 
 struct IHttpFormUrlEncodedContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpFormUrlEncodedContentFactory>
 {
     IHttpFormUrlEncodedContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpFormUrlEncodedContentFactory>(m_ptr); }
 };
 
 struct IHttpMethod :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMethod>
 {
     IHttpMethod(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMethod>(m_ptr); }
 };
 
 struct IHttpMethodFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMethodFactory>
 {
     IHttpMethodFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMethodFactory>(m_ptr); }
 };
 
 struct IHttpMethodStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMethodStatics>
 {
     IHttpMethodStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMethodStatics>(m_ptr); }
 };
 
 struct IHttpMultipartContent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMultipartContent>,
     impl::require<IHttpMultipartContent, Windows::Foundation::Collections::IIterable<Windows::Web::Http::IHttpContent>>
 {
     IHttpMultipartContent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMultipartContent>(m_ptr); }
 };
 
 struct IHttpMultipartContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMultipartContentFactory>
 {
     IHttpMultipartContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMultipartContentFactory>(m_ptr); }
 };
 
 struct IHttpMultipartFormDataContent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMultipartFormDataContent>,
     impl::require<IHttpMultipartFormDataContent, Windows::Foundation::Collections::IIterable<Windows::Web::Http::IHttpContent>>
 {
     IHttpMultipartFormDataContent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMultipartFormDataContent>(m_ptr); }
 };
 
 struct IHttpMultipartFormDataContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMultipartFormDataContentFactory>
 {
     IHttpMultipartFormDataContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMultipartFormDataContentFactory>(m_ptr); }
 };
 
 struct IHttpRequestMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpRequestMessage>,
     impl::require<IHttpRequestMessage, Windows::Foundation::IClosable>
 {
     IHttpRequestMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpRequestMessage>(m_ptr); }
 };
 
 struct IHttpRequestMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpRequestMessageFactory>
 {
     IHttpRequestMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpRequestMessageFactory>(m_ptr); }
 };
 
 struct IHttpResponseMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpResponseMessage>,
     impl::require<IHttpResponseMessage, Windows::Foundation::IClosable>
 {
     IHttpResponseMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpResponseMessage>(m_ptr); }
 };
 
 struct IHttpResponseMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpResponseMessageFactory>
 {
     IHttpResponseMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpResponseMessageFactory>(m_ptr); }
 };
 
 struct IHttpStreamContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpStreamContentFactory>
 {
     IHttpStreamContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpStreamContentFactory>(m_ptr); }
 };
 
 struct IHttpStringContentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpStringContentFactory>
 {
     IHttpStringContentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpStringContentFactory>(m_ptr); }
 };
 
 struct IHttpTransportInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpTransportInformation>
 {
     IHttpTransportInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpTransportInformation>(m_ptr); }
 };
 
 }

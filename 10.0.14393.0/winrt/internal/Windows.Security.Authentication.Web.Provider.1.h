@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -21,20 +21,20 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Security::Authentication::Web::Provider {
 
-struct __declspec(uuid("e7bd66ba-0bc7-4c66-bfd4-65d3082cbca8")) __declspec(novtable) IWebAccountClientView : Windows::IInspectable
+struct __declspec(uuid("e7bd66ba-0bc7-4c66-bfd4-65d3082cbca8")) __declspec(novtable) IWebAccountClientView : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ApplicationCallbackUri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
     virtual HRESULT __stdcall get_Type(winrt::Windows::Security::Authentication::Web::Provider::WebAccountClientViewType * value) = 0;
     virtual HRESULT __stdcall get_AccountPairwiseId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("616d16a4-de22-4855-a326-06cebf2a3f23")) __declspec(novtable) IWebAccountClientViewFactory : Windows::IInspectable
+struct __declspec(uuid("616d16a4-de22-4855-a326-06cebf2a3f23")) __declspec(novtable) IWebAccountClientViewFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(winrt::Windows::Security::Authentication::Web::Provider::WebAccountClientViewType viewType, Windows::Foundation::IUriRuntimeClass * applicationCallbackUri, Windows::Security::Authentication::Web::Provider::IWebAccountClientView ** view) = 0;
     virtual HRESULT __stdcall abi_CreateWithPairwiseId(winrt::Windows::Security::Authentication::Web::Provider::WebAccountClientViewType viewType, Windows::Foundation::IUriRuntimeClass * applicationCallbackUri, hstring accountPairwiseId, Windows::Security::Authentication::Web::Provider::IWebAccountClientView ** view) = 0;
 };
 
-struct __declspec(uuid("b2e8e1a6-d49a-4032-84bf-1a2847747bf1")) __declspec(novtable) IWebAccountManagerStatics : Windows::IInspectable
+struct __declspec(uuid("b2e8e1a6-d49a-4032-84bf-1a2847747bf1")) __declspec(novtable) IWebAccountManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_UpdateWebAccountPropertiesAsync(Windows::Security::Credentials::IWebAccount * webAccount, hstring webAccountUserName, Windows::Foundation::Collections::IMapView<hstring, hstring> * additionalProperties, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_AddWebAccountAsync(hstring webAccountId, hstring webAccountUserName, Windows::Foundation::Collections::IMapView<hstring, hstring> * props, Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> ** asyncInfo) = 0;
@@ -48,12 +48,12 @@ struct __declspec(uuid("b2e8e1a6-d49a-4032-84bf-1a2847747bf1")) __declspec(novta
     virtual HRESULT __stdcall abi_ClearWebAccountPictureAsync(Windows::Security::Credentials::IWebAccount * webAccount, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("68a7a829-2d5f-4653-8bb0-bd2fa6bd2d87")) __declspec(novtable) IWebAccountManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("68a7a829-2d5f-4653-8bb0-bd2fa6bd2d87")) __declspec(novtable) IWebAccountManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_PullCookiesAsync(hstring uriString, hstring callerPFN, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("e8fa446f-3a1b-48a4-8e90-1e59ca6f54db")) __declspec(novtable) IWebAccountMapManagerStatics : Windows::IInspectable
+struct __declspec(uuid("e8fa446f-3a1b-48a4-8e90-1e59ca6f54db")) __declspec(novtable) IWebAccountMapManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddWebAccountWithScopeAndMapAsync(hstring webAccountId, hstring webAccountUserName, Windows::Foundation::Collections::IMapView<hstring, hstring> * props, winrt::Windows::Security::Authentication::Web::Provider::WebAccountScope scope, hstring perUserWebAccountId, Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_SetPerAppToPerUserAccountAsync(Windows::Security::Credentials::IWebAccount * perAppAccount, hstring perUserWebAccountId, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
@@ -61,34 +61,34 @@ struct __declspec(uuid("e8fa446f-3a1b-48a4-8e90-1e59ca6f54db")) __declspec(novta
     virtual HRESULT __stdcall abi_ClearPerUserFromPerAppAccountAsync(Windows::Security::Credentials::IWebAccount * perAppAccount, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("73ebdccf-4378-4c79-9335-a5d7ab81594e")) __declspec(novtable) IWebAccountProviderAddAccountOperation : Windows::IInspectable
+struct __declspec(uuid("73ebdccf-4378-4c79-9335-a5d7ab81594e")) __declspec(novtable) IWebAccountProviderAddAccountOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ReportCompleted() = 0;
 };
 
-struct __declspec(uuid("bba4acbb-993b-4d57-bbe4-1421e3668b4c")) __declspec(novtable) IWebAccountProviderBaseReportOperation : Windows::IInspectable
+struct __declspec(uuid("bba4acbb-993b-4d57-bbe4-1421e3668b4c")) __declspec(novtable) IWebAccountProviderBaseReportOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ReportCompleted() = 0;
     virtual HRESULT __stdcall abi_ReportError(Windows::Security::Authentication::Web::Core::IWebProviderError * value) = 0;
 };
 
-struct __declspec(uuid("0abb48b8-9e01-49c9-a355-7d48caf7d6ca")) __declspec(novtable) IWebAccountProviderDeleteAccountOperation : Windows::IInspectable
+struct __declspec(uuid("0abb48b8-9e01-49c9-a355-7d48caf7d6ca")) __declspec(novtable) IWebAccountProviderDeleteAccountOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccount(Windows::Security::Credentials::IWebAccount ** value) = 0;
 };
 
-struct __declspec(uuid("ed20dc5c-d21b-463e-a9b7-c1fd0edae978")) __declspec(novtable) IWebAccountProviderManageAccountOperation : Windows::IInspectable
+struct __declspec(uuid("ed20dc5c-d21b-463e-a9b7-c1fd0edae978")) __declspec(novtable) IWebAccountProviderManageAccountOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccount(Windows::Security::Credentials::IWebAccount ** value) = 0;
     virtual HRESULT __stdcall abi_ReportCompleted() = 0;
 };
 
-struct __declspec(uuid("6d5d2426-10b1-419a-a44e-f9c5161574e6")) __declspec(novtable) IWebAccountProviderOperation : Windows::IInspectable
+struct __declspec(uuid("6d5d2426-10b1-419a-a44e-f9c5161574e6")) __declspec(novtable) IWebAccountProviderOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Kind(winrt::Windows::Security::Authentication::Web::Provider::WebAccountProviderOperationKind * value) = 0;
 };
 
-struct __declspec(uuid("5a040441-0fa3-4ab1-a01c-20b110358594")) __declspec(novtable) IWebAccountProviderRetrieveCookiesOperation : Windows::IInspectable
+struct __declspec(uuid("5a040441-0fa3-4ab1-a01c-20b110358594")) __declspec(novtable) IWebAccountProviderRetrieveCookiesOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Context(Windows::Foundation::IUriRuntimeClass ** webCookieRequestContext) = 0;
     virtual HRESULT __stdcall get_Cookies(Windows::Foundation::Collections::IVector<Windows::Web::Http::HttpCookie> ** cookies) = 0;
@@ -97,25 +97,25 @@ struct __declspec(uuid("5a040441-0fa3-4ab1-a01c-20b110358594")) __declspec(novta
     virtual HRESULT __stdcall get_ApplicationCallbackUri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
 };
 
-struct __declspec(uuid("b890e21d-0c55-47bc-8c72-04a6fc7cac07")) __declspec(novtable) IWebAccountProviderSignOutAccountOperation : Windows::IInspectable
+struct __declspec(uuid("b890e21d-0c55-47bc-8c72-04a6fc7cac07")) __declspec(novtable) IWebAccountProviderSignOutAccountOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccount(Windows::Security::Credentials::IWebAccount ** value) = 0;
     virtual HRESULT __stdcall get_ApplicationCallbackUri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
     virtual HRESULT __stdcall get_ClientId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("e0b545f8-3b0f-44da-924c-7b18baaa62a9")) __declspec(novtable) IWebAccountProviderSilentReportOperation : Windows::IInspectable
+struct __declspec(uuid("e0b545f8-3b0f-44da-924c-7b18baaa62a9")) __declspec(novtable) IWebAccountProviderSilentReportOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ReportUserInteractionRequired() = 0;
     virtual HRESULT __stdcall abi_ReportUserInteractionRequiredWithError(Windows::Security::Authentication::Web::Core::IWebProviderError * value) = 0;
 };
 
-struct __declspec(uuid("408f284b-1328-42db-89a4-0bce7a717d8e")) __declspec(novtable) IWebAccountProviderTokenObjects : Windows::IInspectable
+struct __declspec(uuid("408f284b-1328-42db-89a4-0bce7a717d8e")) __declspec(novtable) IWebAccountProviderTokenObjects : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Operation(Windows::Security::Authentication::Web::Provider::IWebAccountProviderOperation ** value) = 0;
 };
 
-struct __declspec(uuid("95c613be-2034-4c38-9434-d26c14b2b4b2")) __declspec(novtable) IWebAccountProviderTokenOperation : Windows::IInspectable
+struct __declspec(uuid("95c613be-2034-4c38-9434-d26c14b2b4b2")) __declspec(novtable) IWebAccountProviderTokenOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ProviderRequest(Windows::Security::Authentication::Web::Provider::IWebProviderTokenRequest ** webTokenRequest) = 0;
     virtual HRESULT __stdcall get_ProviderResponses(Windows::Foundation::Collections::IVector<Windows::Security::Authentication::Web::Provider::WebProviderTokenResponse> ** value) = 0;
@@ -123,19 +123,19 @@ struct __declspec(uuid("95c613be-2034-4c38-9434-d26c14b2b4b2")) __declspec(novta
     virtual HRESULT __stdcall get_CacheExpirationTime(Windows::Foundation::DateTime * value) = 0;
 };
 
-struct __declspec(uuid("28ff92d3-8f80-42fb-944f-b2107bbd42e6")) __declspec(novtable) IWebAccountProviderUIReportOperation : Windows::IInspectable
+struct __declspec(uuid("28ff92d3-8f80-42fb-944f-b2107bbd42e6")) __declspec(novtable) IWebAccountProviderUIReportOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ReportUserCanceled() = 0;
 };
 
-struct __declspec(uuid("5c6ce37c-12b2-423a-bf3d-85b8d7e53656")) __declspec(novtable) IWebAccountScopeManagerStatics : Windows::IInspectable
+struct __declspec(uuid("5c6ce37c-12b2-423a-bf3d-85b8d7e53656")) __declspec(novtable) IWebAccountScopeManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddWebAccountWithScopeAsync(hstring webAccountId, hstring webAccountUserName, Windows::Foundation::Collections::IMapView<hstring, hstring> * props, winrt::Windows::Security::Authentication::Web::Provider::WebAccountScope scope, Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_SetScopeAsync(Windows::Security::Credentials::IWebAccount * webAccount, winrt::Windows::Security::Authentication::Web::Provider::WebAccountScope scope, Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_GetScope(Windows::Security::Credentials::IWebAccount * webAccount, winrt::Windows::Security::Authentication::Web::Provider::WebAccountScope * scope) = 0;
 };
 
-struct __declspec(uuid("1e18778b-8805-454b-9f11-468d2af1095a")) __declspec(novtable) IWebProviderTokenRequest : Windows::IInspectable
+struct __declspec(uuid("1e18778b-8805-454b-9f11-468d2af1095a")) __declspec(novtable) IWebProviderTokenRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ClientRequest(Windows::Security::Authentication::Web::Core::IWebTokenRequest ** value) = 0;
     virtual HRESULT __stdcall get_WebAccounts(Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::WebAccount> ** value) = 0;
@@ -144,17 +144,17 @@ struct __declspec(uuid("1e18778b-8805-454b-9f11-468d2af1095a")) __declspec(novta
     virtual HRESULT __stdcall abi_GetApplicationTokenBindingKeyAsync(winrt::Windows::Security::Authentication::Web::TokenBindingKeyType keyType, Windows::Foundation::IUriRuntimeClass * target, Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("b5d72e4c-10b1-4aa6-88b1-0b6c9e0c1e46")) __declspec(novtable) IWebProviderTokenRequest2 : Windows::IInspectable
+struct __declspec(uuid("b5d72e4c-10b1-4aa6-88b1-0b6c9e0c1e46")) __declspec(novtable) IWebProviderTokenRequest2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetApplicationTokenBindingKeyIdAsync(winrt::Windows::Security::Authentication::Web::TokenBindingKeyType keyType, Windows::Foundation::IUriRuntimeClass * target, Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("ef213793-ef55-4186-b7ce-8cb2e7f9849e")) __declspec(novtable) IWebProviderTokenResponse : Windows::IInspectable
+struct __declspec(uuid("ef213793-ef55-4186-b7ce-8cb2e7f9849e")) __declspec(novtable) IWebProviderTokenResponse : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ClientResponse(Windows::Security::Authentication::Web::Core::IWebTokenResponse ** value) = 0;
 };
 
-struct __declspec(uuid("fa49d99a-25ba-4077-9cfa-9db4dea7b71a")) __declspec(novtable) IWebProviderTokenResponseFactory : Windows::IInspectable
+struct __declspec(uuid("fa49d99a-25ba-4077-9cfa-9db4dea7b71a")) __declspec(novtable) IWebProviderTokenResponseFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::Security::Authentication::Web::Core::IWebTokenResponse * webTokenResponse, Windows::Security::Authentication::Web::Provider::IWebProviderTokenResponse ** webProviderTokenResponse) = 0;
 };
@@ -179,27 +179,164 @@ template <> struct traits<Windows::Security::Authentication::Web::Provider::WebP
 
 namespace Windows::Security::Authentication::Web::Provider {
 
-template <typename T> struct impl_IWebAccountClientView;
-template <typename T> struct impl_IWebAccountClientViewFactory;
-template <typename T> struct impl_IWebAccountManagerStatics;
-template <typename T> struct impl_IWebAccountManagerStatics2;
-template <typename T> struct impl_IWebAccountMapManagerStatics;
-template <typename T> struct impl_IWebAccountProviderAddAccountOperation;
-template <typename T> struct impl_IWebAccountProviderBaseReportOperation;
-template <typename T> struct impl_IWebAccountProviderDeleteAccountOperation;
-template <typename T> struct impl_IWebAccountProviderManageAccountOperation;
-template <typename T> struct impl_IWebAccountProviderOperation;
-template <typename T> struct impl_IWebAccountProviderRetrieveCookiesOperation;
-template <typename T> struct impl_IWebAccountProviderSignOutAccountOperation;
-template <typename T> struct impl_IWebAccountProviderSilentReportOperation;
-template <typename T> struct impl_IWebAccountProviderTokenObjects;
-template <typename T> struct impl_IWebAccountProviderTokenOperation;
-template <typename T> struct impl_IWebAccountProviderUIReportOperation;
-template <typename T> struct impl_IWebAccountScopeManagerStatics;
-template <typename T> struct impl_IWebProviderTokenRequest;
-template <typename T> struct impl_IWebProviderTokenRequest2;
-template <typename T> struct impl_IWebProviderTokenResponse;
-template <typename T> struct impl_IWebProviderTokenResponseFactory;
+template <typename D>
+struct WINRT_EBO impl_IWebAccountClientView
+{
+    Windows::Foundation::Uri ApplicationCallbackUri() const;
+    Windows::Security::Authentication::Web::Provider::WebAccountClientViewType Type() const;
+    hstring AccountPairwiseId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountClientViewFactory
+{
+    Windows::Security::Authentication::Web::Provider::WebAccountClientView Create(Windows::Security::Authentication::Web::Provider::WebAccountClientViewType viewType, const Windows::Foundation::Uri & applicationCallbackUri) const;
+    Windows::Security::Authentication::Web::Provider::WebAccountClientView CreateWithPairwiseId(Windows::Security::Authentication::Web::Provider::WebAccountClientViewType viewType, const Windows::Foundation::Uri & applicationCallbackUri, hstring_view accountPairwiseId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountManagerStatics
+{
+    Windows::Foundation::IAsyncAction UpdateWebAccountPropertiesAsync(const Windows::Security::Credentials::WebAccount & webAccount, hstring_view webAccountUserName, map_view<hstring, hstring> additionalProperties) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> AddWebAccountAsync(hstring_view webAccountId, hstring_view webAccountUserName, map_view<hstring, hstring> props) const;
+    Windows::Foundation::IAsyncAction DeleteWebAccountAsync(const Windows::Security::Credentials::WebAccount & webAccount) const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::WebAccount>> FindAllProviderWebAccountsAsync() const;
+    Windows::Foundation::IAsyncAction PushCookiesAsync(const Windows::Foundation::Uri & uri, vector_view<Windows::Web::Http::HttpCookie> cookies) const;
+    Windows::Foundation::IAsyncAction SetViewAsync(const Windows::Security::Credentials::WebAccount & webAccount, const Windows::Security::Authentication::Web::Provider::WebAccountClientView & view) const;
+    Windows::Foundation::IAsyncAction ClearViewAsync(const Windows::Security::Credentials::WebAccount & webAccount, const Windows::Foundation::Uri & applicationCallbackUri) const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Web::Provider::WebAccountClientView>> GetViewsAsync(const Windows::Security::Credentials::WebAccount & webAccount) const;
+    Windows::Foundation::IAsyncAction SetWebAccountPictureAsync(const Windows::Security::Credentials::WebAccount & webAccount, const Windows::Storage::Streams::IRandomAccessStream & webAccountPicture) const;
+    Windows::Foundation::IAsyncAction ClearWebAccountPictureAsync(const Windows::Security::Credentials::WebAccount & webAccount) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountManagerStatics2
+{
+    Windows::Foundation::IAsyncAction PullCookiesAsync(hstring_view uriString, hstring_view callerPFN) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountMapManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> AddWebAccountAsync(hstring_view webAccountId, hstring_view webAccountUserName, map_view<hstring, hstring> props, Windows::Security::Authentication::Web::Provider::WebAccountScope scope, hstring_view perUserWebAccountId) const;
+    Windows::Foundation::IAsyncAction SetPerAppToPerUserAccountAsync(const Windows::Security::Credentials::WebAccount & perAppAccount, hstring_view perUserWebAccountId) const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> GetPerUserFromPerAppAccountAsync(const Windows::Security::Credentials::WebAccount & perAppAccount) const;
+    Windows::Foundation::IAsyncAction ClearPerUserFromPerAppAccountAsync(const Windows::Security::Credentials::WebAccount & perAppAccount) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderAddAccountOperation
+{
+    void ReportCompleted() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderBaseReportOperation
+{
+    void ReportCompleted() const;
+    void ReportError(const Windows::Security::Authentication::Web::Core::WebProviderError & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderDeleteAccountOperation
+{
+    Windows::Security::Credentials::WebAccount WebAccount() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderManageAccountOperation
+{
+    Windows::Security::Credentials::WebAccount WebAccount() const;
+    void ReportCompleted() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderOperation
+{
+    Windows::Security::Authentication::Web::Provider::WebAccountProviderOperationKind Kind() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderRetrieveCookiesOperation
+{
+    Windows::Foundation::Uri Context() const;
+    Windows::Foundation::Collections::IVector<Windows::Web::Http::HttpCookie> Cookies() const;
+    void Uri(const Windows::Foundation::Uri & uri) const;
+    Windows::Foundation::Uri Uri() const;
+    Windows::Foundation::Uri ApplicationCallbackUri() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderSignOutAccountOperation
+{
+    Windows::Security::Credentials::WebAccount WebAccount() const;
+    Windows::Foundation::Uri ApplicationCallbackUri() const;
+    hstring ClientId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderSilentReportOperation
+{
+    void ReportUserInteractionRequired() const;
+    void ReportUserInteractionRequired(const Windows::Security::Authentication::Web::Core::WebProviderError & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderTokenObjects
+{
+    Windows::Security::Authentication::Web::Provider::IWebAccountProviderOperation Operation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderTokenOperation
+{
+    Windows::Security::Authentication::Web::Provider::WebProviderTokenRequest ProviderRequest() const;
+    Windows::Foundation::Collections::IVector<Windows::Security::Authentication::Web::Provider::WebProviderTokenResponse> ProviderResponses() const;
+    void CacheExpirationTime(const Windows::Foundation::DateTime & value) const;
+    Windows::Foundation::DateTime CacheExpirationTime() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderUIReportOperation
+{
+    void ReportUserCanceled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountScopeManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> AddWebAccountAsync(hstring_view webAccountId, hstring_view webAccountUserName, map_view<hstring, hstring> props, Windows::Security::Authentication::Web::Provider::WebAccountScope scope) const;
+    Windows::Foundation::IAsyncAction SetScopeAsync(const Windows::Security::Credentials::WebAccount & webAccount, Windows::Security::Authentication::Web::Provider::WebAccountScope scope) const;
+    Windows::Security::Authentication::Web::Provider::WebAccountScope GetScope(const Windows::Security::Credentials::WebAccount & webAccount) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebProviderTokenRequest
+{
+    Windows::Security::Authentication::Web::Core::WebTokenRequest ClientRequest() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Security::Credentials::WebAccount> WebAccounts() const;
+    Windows::Security::Authentication::Web::Provider::WebAccountSelectionOptions WebAccountSelectionOptions() const;
+    Windows::Foundation::Uri ApplicationCallbackUri() const;
+    Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> GetApplicationTokenBindingKeyAsync(Windows::Security::Authentication::Web::TokenBindingKeyType keyType, const Windows::Foundation::Uri & target) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebProviderTokenRequest2
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> GetApplicationTokenBindingKeyIdAsync(Windows::Security::Authentication::Web::TokenBindingKeyType keyType, const Windows::Foundation::Uri & target) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebProviderTokenResponse
+{
+    Windows::Security::Authentication::Web::Core::WebTokenResponse ClientResponse() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebProviderTokenResponseFactory
+{
+    Windows::Security::Authentication::Web::Provider::WebProviderTokenResponse Create(const Windows::Security::Authentication::Web::Core::WebTokenResponse & webTokenResponse) const;
+};
 
 }
 

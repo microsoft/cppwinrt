@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -8,6 +8,16 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+#define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 #define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -44,6 +54,11 @@ template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __de
 template <> struct __declspec(uuid("69426b8f-88d8-5546-92ee-53f75307845b")) __declspec(novtable) IKeyValuePair<hstring, Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionInfo> : impl_IKeyValuePair<hstring, Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionInfo> {};
 #endif
 
+#ifndef WINRT_GENERIC_6b6d4bef_1669_5c38_ad8e_f825cbdd7260
+#define WINRT_GENERIC_6b6d4bef_1669_5c38_ad8e_f825cbdd7260
+template <> struct __declspec(uuid("6b6d4bef-1669-5c38-ad8e-f825cbdd7260")) __declspec(novtable) IMap<hstring, Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionInfo> : impl_IMap<hstring, Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionInfo> {};
+#endif
+
 
 }
 
@@ -74,54 +89,25 @@ template <> struct __declspec(uuid("ac935021-e04b-5226-8119-5b73d0b8be5b")) __de
 
 namespace Windows::ApplicationModel::Store::LicenseManagement {
 
-template <typename D>
-struct WINRT_EBO impl_ILicenseManagerStatics
-{
-    Windows::Foundation::IAsyncAction AddLicenseAsync(const Windows::Storage::Streams::IBuffer & license) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionResult> GetSatisfactionInfosAsync(const Windows::Foundation::Collections::IIterable<hstring> & contentIds, const Windows::Foundation::Collections::IIterable<hstring> & keyIds) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILicenseSatisfactionInfo
-{
-    bool SatisfiedByDevice() const;
-    bool SatisfiedByOpenLicense() const;
-    bool SatisfiedByTrial() const;
-    bool SatisfiedByPass() const;
-    bool SatisfiedByInstallMedia() const;
-    bool SatisfiedBySignedInUser() const;
-    bool IsSatisfied() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILicenseSatisfactionResult
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::Store::LicenseManagement::LicenseSatisfactionInfo> LicenseSatisfactionInfos() const;
-    HRESULT ExtendedError() const;
-};
-
 struct ILicenseManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILicenseManagerStatics>
 {
     ILicenseManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILicenseManagerStatics>(m_ptr); }
 };
 
 struct ILicenseSatisfactionInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILicenseSatisfactionInfo>
 {
     ILicenseSatisfactionInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILicenseSatisfactionInfo>(m_ptr); }
 };
 
 struct ILicenseSatisfactionResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILicenseSatisfactionResult>
 {
     ILicenseSatisfactionResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILicenseSatisfactionResult>(m_ptr); }
 };
 
 }

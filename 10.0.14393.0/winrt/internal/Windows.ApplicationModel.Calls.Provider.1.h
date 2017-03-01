@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,7 +12,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::Calls::Provider {
 
-struct __declspec(uuid("20613479-0ef9-4454-871c-afb66a14b6a5")) __declspec(novtable) IPhoneCallOrigin : Windows::IInspectable
+struct __declspec(uuid("20613479-0ef9-4454-871c-afb66a14b6a5")) __declspec(novtable) IPhoneCallOrigin : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Category(hstring * value) = 0;
     virtual HRESULT __stdcall put_Category(hstring value) = 0;
@@ -22,26 +22,26 @@ struct __declspec(uuid("20613479-0ef9-4454-871c-afb66a14b6a5")) __declspec(novta
     virtual HRESULT __stdcall put_Location(hstring value) = 0;
 };
 
-struct __declspec(uuid("04c7e980-9ac2-4768-b536-b68da4957d02")) __declspec(novtable) IPhoneCallOrigin2 : Windows::IInspectable
+struct __declspec(uuid("04c7e980-9ac2-4768-b536-b68da4957d02")) __declspec(novtable) IPhoneCallOrigin2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall put_DisplayName(hstring value) = 0;
 };
 
-struct __declspec(uuid("49330fb4-d1a7-43a2-aeee-c07b6dbaf068")) __declspec(novtable) IPhoneCallOrigin3 : Windows::IInspectable
+struct __declspec(uuid("49330fb4-d1a7-43a2-aeee-c07b6dbaf068")) __declspec(novtable) IPhoneCallOrigin3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayPicture(Windows::Storage::IStorageFile ** value) = 0;
     virtual HRESULT __stdcall put_DisplayPicture(Windows::Storage::IStorageFile * value) = 0;
 };
 
-struct __declspec(uuid("ccfc5a0a-9af7-6149-39d0-e076fcce1395")) __declspec(novtable) IPhoneCallOriginManagerStatics : Windows::IInspectable
+struct __declspec(uuid("ccfc5a0a-9af7-6149-39d0-e076fcce1395")) __declspec(novtable) IPhoneCallOriginManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsCurrentAppActiveCallOriginApp(bool * value) = 0;
     virtual HRESULT __stdcall abi_ShowPhoneCallOriginSettingsUI() = 0;
     virtual HRESULT __stdcall abi_SetCallOrigin(GUID requestId, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin * callOrigin) = 0;
 };
 
-struct __declspec(uuid("8bf3ee3f-40f4-4380-8c7c-aea2c9b8dd7a")) __declspec(novtable) IPhoneCallOriginManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("8bf3ee3f-40f4-4380-8c7c-aea2c9b8dd7a")) __declspec(novtable) IPhoneCallOriginManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RequestSetAsActiveCallOriginAppAsync(Windows::Foundation::IAsyncOperation<bool> ** result) = 0;
 };
@@ -56,11 +56,44 @@ template <> struct traits<Windows::ApplicationModel::Calls::Provider::PhoneCallO
 
 namespace Windows::ApplicationModel::Calls::Provider {
 
-template <typename T> struct impl_IPhoneCallOrigin;
-template <typename T> struct impl_IPhoneCallOrigin2;
-template <typename T> struct impl_IPhoneCallOrigin3;
-template <typename T> struct impl_IPhoneCallOriginManagerStatics;
-template <typename T> struct impl_IPhoneCallOriginManagerStatics2;
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallOrigin
+{
+    hstring Category() const;
+    void Category(hstring_view value) const;
+    hstring CategoryDescription() const;
+    void CategoryDescription(hstring_view value) const;
+    hstring Location() const;
+    void Location(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallOrigin2
+{
+    hstring DisplayName() const;
+    void DisplayName(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallOrigin3
+{
+    Windows::Storage::StorageFile DisplayPicture() const;
+    void DisplayPicture(const Windows::Storage::StorageFile & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallOriginManagerStatics
+{
+    bool IsCurrentAppActiveCallOriginApp() const;
+    void ShowPhoneCallOriginSettingsUI() const;
+    void SetCallOrigin(GUID requestId, const Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin & callOrigin) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallOriginManagerStatics2
+{
+    Windows::Foundation::IAsyncOperation<bool> RequestSetAsActiveCallOriginAppAsync() const;
+};
 
 }
 

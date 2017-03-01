@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -58,7 +58,7 @@ struct PhoneCallBlocking
     static void BlockUnknownNumbers(bool value);
     static bool BlockPrivateNumbers();
     static void BlockPrivateNumbers(bool value);
-    static Windows::Foundation::IAsyncOperation<bool> SetCallBlockingListAsync(const Windows::Foundation::Collections::IIterable<hstring> & phoneNumberList);
+    static Windows::Foundation::IAsyncOperation<bool> SetCallBlockingListAsync(iterable<hstring> phoneNumberList);
 };
 
 struct WINRT_EBO PhoneCallHistoryEntry :
@@ -73,7 +73,7 @@ struct WINRT_EBO PhoneCallHistoryEntryAddress :
 {
     PhoneCallHistoryEntryAddress(std::nullptr_t) noexcept {}
     PhoneCallHistoryEntryAddress();
-    PhoneCallHistoryEntryAddress(hstring_ref rawAddress, Windows::ApplicationModel::Calls::PhoneCallHistoryEntryRawAddressKind rawAddressKind);
+    PhoneCallHistoryEntryAddress(hstring_view rawAddress, Windows::ApplicationModel::Calls::PhoneCallHistoryEntryRawAddressKind rawAddressKind);
 };
 
 struct WINRT_EBO PhoneCallHistoryEntryQueryOptions :
@@ -111,10 +111,10 @@ struct WINRT_EBO PhoneCallHistoryStore :
 struct PhoneCallManager
 {
     PhoneCallManager() = delete;
-    static void ShowPhoneCallUI(hstring_ref phoneNumber, hstring_ref displayName);
-    static event_token CallStateChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static void ShowPhoneCallUI(hstring_view phoneNumber, hstring_view displayName);
+    static event_token CallStateChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using CallStateChanged_revoker = factory_event_revoker<IPhoneCallManagerStatics2>;
-    static CallStateChanged_revoker CallStateChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    static CallStateChanged_revoker CallStateChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     static void CallStateChanged(event_token token);
     static bool IsCallActive();
     static bool IsCallIncoming();
@@ -137,7 +137,7 @@ struct WINRT_EBO PhoneCallVideoCapabilities :
 struct PhoneCallVideoCapabilitiesManager
 {
     PhoneCallVideoCapabilitiesManager() = delete;
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> GetCapabilitiesAsync(hstring_ref phoneNumber);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> GetCapabilitiesAsync(hstring_view phoneNumber);
 };
 
 struct WINRT_EBO PhoneDialOptions :

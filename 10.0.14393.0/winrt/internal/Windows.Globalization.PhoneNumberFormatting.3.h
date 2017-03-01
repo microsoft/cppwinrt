@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,10 +14,10 @@ struct WINRT_EBO PhoneNumberFormatter :
 {
     PhoneNumberFormatter(std::nullptr_t) noexcept {}
     PhoneNumberFormatter();
-    static void TryCreate(hstring_ref regionCode, Windows::Globalization::PhoneNumberFormatting::PhoneNumberFormatter & phoneNumber);
-    static int32_t GetCountryCodeForRegion(hstring_ref regionCode);
-    static hstring GetNationalDirectDialingPrefixForRegion(hstring_ref regionCode, bool stripNonDigit);
-    static hstring WrapWithLeftToRightMarkers(hstring_ref number);
+    static void TryCreate(hstring_view regionCode, Windows::Globalization::PhoneNumberFormatting::PhoneNumberFormatter & phoneNumber);
+    static int32_t GetCountryCodeForRegion(hstring_view regionCode);
+    static hstring GetNationalDirectDialingPrefixForRegion(hstring_view regionCode, bool stripNonDigit);
+    static hstring WrapWithLeftToRightMarkers(hstring_view number);
 };
 
 struct WINRT_EBO PhoneNumberInfo :
@@ -25,9 +25,9 @@ struct WINRT_EBO PhoneNumberInfo :
     impl::require<PhoneNumberInfo, Windows::Foundation::IStringable>
 {
     PhoneNumberInfo(std::nullptr_t) noexcept {}
-    PhoneNumberInfo(hstring_ref number);
-    static Windows::Globalization::PhoneNumberFormatting::PhoneNumberParseResult TryParse(hstring_ref input, Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo & phoneNumber);
-    static Windows::Globalization::PhoneNumberFormatting::PhoneNumberParseResult TryParse(hstring_ref input, hstring_ref regionCode, Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo & phoneNumber);
+    PhoneNumberInfo(hstring_view number);
+    static Windows::Globalization::PhoneNumberFormatting::PhoneNumberParseResult TryParse(hstring_view input, Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo & phoneNumber);
+    static Windows::Globalization::PhoneNumberFormatting::PhoneNumberParseResult TryParse(hstring_view input, hstring_view regionCode, Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo & phoneNumber);
 };
 
 }

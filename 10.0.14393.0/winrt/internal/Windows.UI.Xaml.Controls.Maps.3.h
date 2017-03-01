@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -25,7 +25,7 @@ struct WINRT_EBO HttpMapTileDataSource :
 {
     HttpMapTileDataSource(std::nullptr_t) noexcept {}
     HttpMapTileDataSource();
-    HttpMapTileDataSource(hstring_ref uriFormatString);
+    HttpMapTileDataSource(hstring_view uriFormatString);
 };
 
 struct WINRT_EBO LocalMapTileDataSource :
@@ -35,7 +35,7 @@ struct WINRT_EBO LocalMapTileDataSource :
 {
     LocalMapTileDataSource(std::nullptr_t) noexcept {}
     LocalMapTileDataSource();
-    LocalMapTileDataSource(hstring_ref uriFormatString);
+    LocalMapTileDataSource(hstring_view uriFormatString);
 };
 
 struct WINRT_EBO MapActualCameraChangedEventArgs :
@@ -312,8 +312,8 @@ struct WINRT_EBO MapScene :
     static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocation(const Windows::Devices::Geolocation::Geopoint & location, double headingInDegrees, double pitchInDegrees);
     static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocationAndRadius(const Windows::Devices::Geolocation::Geopoint & location, double radiusInMeters);
     static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocationAndRadius(const Windows::Devices::Geolocation::Geopoint & location, double radiusInMeters, double headingInDegrees, double pitchInDegrees);
-    static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & locations);
-    static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & locations, double headingInDegrees, double pitchInDegrees);
+    static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(iterable<Windows::Devices::Geolocation::Geopoint> locations);
+    static Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(iterable<Windows::Devices::Geolocation::Geopoint> locations, double headingInDegrees, double pitchInDegrees);
 };
 
 struct WINRT_EBO MapTargetCameraChangedEventArgs :

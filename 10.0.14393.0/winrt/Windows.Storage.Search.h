@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -19,11 +22,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, Windows::Storage::Search::IContentIndexer>
 {
-    HRESULT __stdcall abi_AddAsync(abi_arg_in<Windows::Storage::Search::IIndexableContent> indexableContent, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AddAsync(impl::abi_arg_in<Windows::Storage::Search::IIndexableContent> indexableContent, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AddAsync(*reinterpret_cast<const Windows::Storage::Search::IIndexableContent *>(&indexableContent)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AddAsync(*reinterpret_cast<const Windows::Storage::Search::IIndexableContent *>(&indexableContent)));
             return S_OK;
         }
         catch (...)
@@ -33,11 +37,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_UpdateAsync(abi_arg_in<Windows::Storage::Search::IIndexableContent> indexableContent, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_UpdateAsync(impl::abi_arg_in<Windows::Storage::Search::IIndexableContent> indexableContent, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().UpdateAsync(*reinterpret_cast<const Windows::Storage::Search::IIndexableContent *>(&indexableContent)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().UpdateAsync(*reinterpret_cast<const Windows::Storage::Search::IIndexableContent *>(&indexableContent)));
             return S_OK;
         }
         catch (...)
@@ -47,11 +52,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(abi_arg_in<hstring> contentId, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_in<hstring> contentId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteAsync(*reinterpret_cast<const hstring *>(&contentId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteAsync(*reinterpret_cast<const hstring *>(&contentId)));
             return S_OK;
         }
         catch (...)
@@ -61,11 +67,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_DeleteMultipleAsync(abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> contentIds, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteMultipleAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> contentIds, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteMultipleAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&contentIds)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteMultipleAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&contentIds)));
             return S_OK;
         }
         catch (...)
@@ -75,11 +82,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_DeleteAllAsync(abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteAllAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteAllAsync());
             return S_OK;
         }
         catch (...)
@@ -89,11 +97,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_RetrievePropertiesAsync(abi_arg_in<hstring> contentId, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>> operation) noexcept override
+    HRESULT __stdcall abi_RetrievePropertiesAsync(impl::abi_arg_in<hstring> contentId, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RetrievePropertiesAsync(*reinterpret_cast<const hstring *>(&contentId), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RetrievePropertiesAsync(*reinterpret_cast<const hstring *>(&contentId), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve)));
             return S_OK;
         }
         catch (...)
@@ -107,7 +116,8 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().Revision());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Revision());
             return S_OK;
         }
         catch (...)
@@ -120,11 +130,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexer> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base<D, Windows::Storage::Search::IContentIndexerQuery>
 {
-    HRESULT __stdcall abi_GetCountAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_GetCountAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetCountAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetCountAsync());
             return S_OK;
         }
         catch (...)
@@ -134,11 +145,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetPropertiesAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>>> operation) noexcept override
+    HRESULT __stdcall abi_GetPropertiesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPropertiesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPropertiesAsync());
             return S_OK;
         }
         catch (...)
@@ -148,11 +160,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetPropertiesRangeAsync(uint32_t startIndex, uint32_t maxItems, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>>> operation) noexcept override
+    HRESULT __stdcall abi_GetPropertiesRangeAsync(uint32_t startIndex, uint32_t maxItems, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPropertiesAsync(startIndex, maxItems));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPropertiesAsync(startIndex, maxItems));
             return S_OK;
         }
         catch (...)
@@ -162,11 +175,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>>> operation) noexcept override
+    HRESULT __stdcall abi_GetAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetAsync());
             return S_OK;
         }
         catch (...)
@@ -176,11 +190,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetRangeAsync(uint32_t startIndex, uint32_t maxItems, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>>> operation) noexcept override
+    HRESULT __stdcall abi_GetRangeAsync(uint32_t startIndex, uint32_t maxItems, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetAsync(startIndex, maxItems));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetAsync(startIndex, maxItems));
             return S_OK;
         }
         catch (...)
@@ -190,11 +205,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
         }
     }
 
-    HRESULT __stdcall get_QueryFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_QueryFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryFolder());
             return S_OK;
         }
         catch (...)
@@ -208,11 +224,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQuery> : produce_base
 template <typename D>
 struct produce<D, Windows::Storage::Search::IContentIndexerQueryOperations> : produce_base<D, Windows::Storage::Search::IContentIndexerQueryOperations>
 {
-    HRESULT __stdcall abi_CreateQueryWithSortOrderAndLanguage(abi_arg_in<hstring> searchFilter, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry>> sortOrder, abi_arg_in<hstring> searchFilterLanguage, abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
+    HRESULT __stdcall abi_CreateQueryWithSortOrderAndLanguage(impl::abi_arg_in<hstring> searchFilter, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry>> sortOrder, impl::abi_arg_in<hstring> searchFilterLanguage, impl::abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
     {
         try
         {
-            *query = detach(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> *>(&sortOrder), *reinterpret_cast<const hstring *>(&searchFilterLanguage)));
+            typename D::abi_guard guard(this->shim());
+            *query = detach_abi(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> *>(&sortOrder), *reinterpret_cast<const hstring *>(&searchFilterLanguage)));
             return S_OK;
         }
         catch (...)
@@ -222,11 +239,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQueryOperations> : pr
         }
     }
 
-    HRESULT __stdcall abi_CreateQueryWithSortOrder(abi_arg_in<hstring> searchFilter, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry>> sortOrder, abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
+    HRESULT __stdcall abi_CreateQueryWithSortOrder(impl::abi_arg_in<hstring> searchFilter, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry>> sortOrder, impl::abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
     {
         try
         {
-            *query = detach(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> *>(&sortOrder)));
+            typename D::abi_guard guard(this->shim());
+            *query = detach_abi(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> *>(&sortOrder)));
             return S_OK;
         }
         catch (...)
@@ -236,11 +254,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQueryOperations> : pr
         }
     }
 
-    HRESULT __stdcall abi_CreateQuery(abi_arg_in<hstring> searchFilter, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
+    HRESULT __stdcall abi_CreateQuery(impl::abi_arg_in<hstring> searchFilter, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve, impl::abi_arg_out<Windows::Storage::Search::IContentIndexerQuery> query) noexcept override
     {
         try
         {
-            *query = detach(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve)));
+            typename D::abi_guard guard(this->shim());
+            *query = detach_abi(this->shim().CreateQuery(*reinterpret_cast<const hstring *>(&searchFilter), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve)));
             return S_OK;
         }
         catch (...)
@@ -254,11 +273,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerQueryOperations> : pr
 template <typename D>
 struct produce<D, Windows::Storage::Search::IContentIndexerStatics> : produce_base<D, Windows::Storage::Search::IContentIndexerStatics>
 {
-    HRESULT __stdcall abi_GetIndexerWithName(abi_arg_in<hstring> indexName, abi_arg_out<Windows::Storage::Search::IContentIndexer> index) noexcept override
+    HRESULT __stdcall abi_GetIndexerWithName(impl::abi_arg_in<hstring> indexName, impl::abi_arg_out<Windows::Storage::Search::IContentIndexer> index) noexcept override
     {
         try
         {
-            *index = detach(this->shim().GetIndexer(*reinterpret_cast<const hstring *>(&indexName)));
+            typename D::abi_guard guard(this->shim());
+            *index = detach_abi(this->shim().GetIndexer(*reinterpret_cast<const hstring *>(&indexName)));
             return S_OK;
         }
         catch (...)
@@ -268,11 +288,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_GetIndexer(abi_arg_out<Windows::Storage::Search::IContentIndexer> index) noexcept override
+    HRESULT __stdcall abi_GetIndexer(impl::abi_arg_out<Windows::Storage::Search::IContentIndexer> index) noexcept override
     {
         try
         {
-            *index = detach(this->shim().GetIndexer());
+            typename D::abi_guard guard(this->shim());
+            *index = detach_abi(this->shim().GetIndexer());
             return S_OK;
         }
         catch (...)
@@ -286,11 +307,12 @@ struct produce<D, Windows::Storage::Search::IContentIndexerStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D, Windows::Storage::Search::IIndexableContent>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -300,10 +322,11 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_Id(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Id(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -313,11 +336,12 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -327,11 +351,12 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_Stream(abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall get_Stream(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Stream());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Stream());
             return S_OK;
         }
         catch (...)
@@ -341,10 +366,11 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_Stream(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall put_Stream(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Stream(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&value));
             return S_OK;
         }
@@ -354,11 +380,12 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_StreamContentType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_StreamContentType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StreamContentType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StreamContentType());
             return S_OK;
         }
         catch (...)
@@ -368,10 +395,11 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_StreamContentType(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_StreamContentType(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StreamContentType(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -385,11 +413,12 @@ struct produce<D, Windows::Storage::Search::IIndexableContent> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Windows::Storage::Search::IQueryOptions>
 {
-    HRESULT __stdcall get_FileTypeFilter(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_FileTypeFilter(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FileTypeFilter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FileTypeFilter());
             return S_OK;
         }
         catch (...)
@@ -403,7 +432,8 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().FolderDepth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FolderDepth());
             return S_OK;
         }
         catch (...)
@@ -416,6 +446,7 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FolderDepth(value);
             return S_OK;
         }
@@ -425,11 +456,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_ApplicationSearchFilter(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ApplicationSearchFilter(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ApplicationSearchFilter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ApplicationSearchFilter());
             return S_OK;
         }
         catch (...)
@@ -439,10 +471,11 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_ApplicationSearchFilter(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ApplicationSearchFilter(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ApplicationSearchFilter(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -452,11 +485,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_UserSearchFilter(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserSearchFilter(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UserSearchFilter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UserSearchFilter());
             return S_OK;
         }
         catch (...)
@@ -466,10 +500,11 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_UserSearchFilter(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_UserSearchFilter(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().UserSearchFilter(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -479,11 +514,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -493,10 +529,11 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_Language(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Language(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Language(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -510,7 +547,8 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().IndexerOption());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IndexerOption());
             return S_OK;
         }
         catch (...)
@@ -523,6 +561,7 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IndexerOption(value);
             return S_OK;
         }
@@ -532,11 +571,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_SortOrder(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Storage::Search::SortEntry>> value) noexcept override
+    HRESULT __stdcall get_SortOrder(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Storage::Search::SortEntry>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SortOrder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SortOrder());
             return S_OK;
         }
         catch (...)
@@ -546,11 +586,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_GroupPropertyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GroupPropertyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GroupPropertyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GroupPropertyName());
             return S_OK;
         }
         catch (...)
@@ -564,7 +605,8 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().DateStackOption());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DateStackOption());
             return S_OK;
         }
         catch (...)
@@ -573,11 +615,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_SaveToString(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_SaveToString(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SaveToString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SaveToString());
             return S_OK;
         }
         catch (...)
@@ -587,10 +630,11 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LoadFromString(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall abi_LoadFromString(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LoadFromString(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -604,6 +648,7 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetThumbnailPrefetch(mode, requestedSize, options);
             return S_OK;
         }
@@ -613,10 +658,11 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_SetPropertyPrefetch(Windows::Storage::FileProperties::PropertyPrefetchOptions options, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve) noexcept override
+    HRESULT __stdcall abi_SetPropertyPrefetch(Windows::Storage::FileProperties::PropertyPrefetchOptions options, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> propertiesToRetrieve) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetPropertyPrefetch(options, *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&propertiesToRetrieve));
             return S_OK;
         }
@@ -630,11 +676,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptions> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::Search::IQueryOptionsFactory> : produce_base<D, Windows::Storage::Search::IQueryOptionsFactory>
 {
-    HRESULT __stdcall abi_CreateCommonFileQuery(Windows::Storage::Search::CommonFileQuery query, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> fileTypeFilter, abi_arg_out<Windows::Storage::Search::IQueryOptions> queryOptions) noexcept override
+    HRESULT __stdcall abi_CreateCommonFileQuery(Windows::Storage::Search::CommonFileQuery query, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> fileTypeFilter, impl::abi_arg_out<Windows::Storage::Search::IQueryOptions> queryOptions) noexcept override
     {
         try
         {
-            *queryOptions = detach(this->shim().CreateCommonFileQuery(query, *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&fileTypeFilter)));
+            typename D::abi_guard guard(this->shim());
+            *queryOptions = detach_abi(this->shim().CreateCommonFileQuery(query, *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&fileTypeFilter)));
             return S_OK;
         }
         catch (...)
@@ -644,11 +691,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptionsFactory> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateCommonFolderQuery(Windows::Storage::Search::CommonFolderQuery query, abi_arg_out<Windows::Storage::Search::IQueryOptions> queryOptions) noexcept override
+    HRESULT __stdcall abi_CreateCommonFolderQuery(Windows::Storage::Search::CommonFolderQuery query, impl::abi_arg_out<Windows::Storage::Search::IQueryOptions> queryOptions) noexcept override
     {
         try
         {
-            *queryOptions = detach(this->shim().CreateCommonFolderQuery(query));
+            typename D::abi_guard guard(this->shim());
+            *queryOptions = detach_abi(this->shim().CreateCommonFolderQuery(query));
             return S_OK;
         }
         catch (...)
@@ -662,11 +710,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptionsFactory> : produce_base
 template <typename D>
 struct produce<D, Windows::Storage::Search::IQueryOptionsWithProviderFilter> : produce_base<D, Windows::Storage::Search::IQueryOptionsWithProviderFilter>
 {
-    HRESULT __stdcall get_StorageProviderIdFilter(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_StorageProviderIdFilter(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StorageProviderIdFilter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StorageProviderIdFilter());
             return S_OK;
         }
         catch (...)
@@ -680,11 +729,12 @@ struct produce<D, Windows::Storage::Search::IQueryOptionsWithProviderFilter> : p
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageFileQueryResult> : produce_base<D, Windows::Storage::Search::IStorageFileQueryResult>
 {
-    HRESULT __stdcall abi_GetFilesAsync(uint32_t startIndex, uint32_t maxNumberOfItems, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFilesAsync(uint32_t startIndex, uint32_t maxNumberOfItems, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFilesAsync(startIndex, maxNumberOfItems));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFilesAsync(startIndex, maxNumberOfItems));
             return S_OK;
         }
         catch (...)
@@ -694,11 +744,12 @@ struct produce<D, Windows::Storage::Search::IStorageFileQueryResult> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsyncDefaultStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFilesAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFilesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFilesAsync());
             return S_OK;
         }
         catch (...)
@@ -712,11 +763,12 @@ struct produce<D, Windows::Storage::Search::IStorageFileQueryResult> : produce_b
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageFileQueryResult2> : produce_base<D, Windows::Storage::Search::IStorageFileQueryResult2>
 {
-    HRESULT __stdcall abi_GetMatchingPropertiesWithRanges(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment>>> result) noexcept override
+    HRESULT __stdcall abi_GetMatchingPropertiesWithRanges(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment>>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().GetMatchingPropertiesWithRanges(*reinterpret_cast<const Windows::Storage::StorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().GetMatchingPropertiesWithRanges(*reinterpret_cast<const Windows::Storage::StorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -730,11 +782,12 @@ struct produce<D, Windows::Storage::Search::IStorageFileQueryResult2> : produce_
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : produce_base<D, Windows::Storage::Search::IStorageFolderQueryOperations>
 {
-    HRESULT __stdcall abi_GetIndexedStateAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Search::IndexedState>> operation) noexcept override
+    HRESULT __stdcall abi_GetIndexedStateAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Search::IndexedState>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetIndexedStateAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetIndexedStateAsync());
             return S_OK;
         }
         catch (...)
@@ -744,11 +797,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFileQueryOverloadDefault(abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFileQueryOverloadDefault(impl::abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFileQuery());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFileQuery());
             return S_OK;
         }
         catch (...)
@@ -758,11 +812,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFileQuery(Windows::Storage::Search::CommonFileQuery query, abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFileQuery(Windows::Storage::Search::CommonFileQuery query, impl::abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFileQuery(query));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFileQuery(query));
             return S_OK;
         }
         catch (...)
@@ -772,11 +827,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFileQueryWithOptions(abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFileQueryWithOptions(impl::abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, impl::abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFileQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFileQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
             return S_OK;
         }
         catch (...)
@@ -786,11 +842,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderQueryOverloadDefault(abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFolderQueryOverloadDefault(impl::abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFolderQuery());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFolderQuery());
             return S_OK;
         }
         catch (...)
@@ -800,11 +857,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderQuery(Windows::Storage::Search::CommonFolderQuery query, abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFolderQuery(Windows::Storage::Search::CommonFolderQuery query, impl::abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFolderQuery(query));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFolderQuery(query));
             return S_OK;
         }
         catch (...)
@@ -814,11 +872,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderQueryWithOptions(abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateFolderQueryWithOptions(impl::abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, impl::abi_arg_out<Windows::Storage::Search::IStorageFolderQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateFolderQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateFolderQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
             return S_OK;
         }
         catch (...)
@@ -828,11 +887,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateItemQuery(abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateItemQuery(impl::abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateItemQuery());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateItemQuery());
             return S_OK;
         }
         catch (...)
@@ -842,11 +902,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_CreateItemQueryWithOptions(abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> value) noexcept override
+    HRESULT __stdcall abi_CreateItemQueryWithOptions(impl::abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, impl::abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateItemQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateItemQueryWithOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
             return S_OK;
         }
         catch (...)
@@ -856,11 +917,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsync(Windows::Storage::Search::CommonFileQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFilesAsync(Windows::Storage::Search::CommonFileQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFilesAsync(query, startIndex, maxItemsToRetrieve));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFilesAsync(query, startIndex, maxItemsToRetrieve));
             return S_OK;
         }
         catch (...)
@@ -870,11 +932,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsyncOverloadDefaultStartAndCount(Windows::Storage::Search::CommonFileQuery query, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFilesAsyncOverloadDefaultStartAndCount(Windows::Storage::Search::CommonFileQuery query, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFilesAsync(query));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFilesAsync(query));
             return S_OK;
         }
         catch (...)
@@ -884,11 +947,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsync(Windows::Storage::Search::CommonFolderQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFoldersAsync(Windows::Storage::Search::CommonFolderQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFoldersAsync(query, startIndex, maxItemsToRetrieve));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFoldersAsync(query, startIndex, maxItemsToRetrieve));
             return S_OK;
         }
         catch (...)
@@ -898,11 +962,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsyncOverloadDefaultStartAndCount(Windows::Storage::Search::CommonFolderQuery query, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFoldersAsyncOverloadDefaultStartAndCount(Windows::Storage::Search::CommonFolderQuery query, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFoldersAsync(query));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFoldersAsync(query));
             return S_OK;
         }
         catch (...)
@@ -912,11 +977,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemsAsync(startIndex, maxItemsToRetrieve));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemsAsync(startIndex, maxItemsToRetrieve));
             return S_OK;
         }
         catch (...)
@@ -926,11 +992,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
         }
     }
 
-    HRESULT __stdcall abi_AreQueryOptionsSupported(abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, bool * value) noexcept override
+    HRESULT __stdcall abi_AreQueryOptionsSupported(impl::abi_arg_in<Windows::Storage::Search::IQueryOptions> queryOptions, bool * value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AreQueryOptionsSupported(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AreQueryOptionsSupported(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&queryOptions)));
             return S_OK;
         }
         catch (...)
@@ -943,7 +1010,8 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
     {
         try
         {
-            *value = detach(this->shim().IsCommonFolderQuerySupported(query));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCommonFolderQuerySupported(query));
             return S_OK;
         }
         catch (...)
@@ -956,7 +1024,8 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
     {
         try
         {
-            *value = detach(this->shim().IsCommonFileQuerySupported(query));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCommonFileQuerySupported(query));
             return S_OK;
         }
         catch (...)
@@ -969,11 +1038,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryOperations> : pro
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageFolderQueryResult> : produce_base<D, Windows::Storage::Search::IStorageFolderQueryResult>
 {
-    HRESULT __stdcall abi_GetFoldersAsync(uint32_t startIndex, uint32_t maxNumberOfItems, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFoldersAsync(uint32_t startIndex, uint32_t maxNumberOfItems, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFoldersAsync(startIndex, maxNumberOfItems));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFoldersAsync(startIndex, maxNumberOfItems));
             return S_OK;
         }
         catch (...)
@@ -983,11 +1053,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryResult> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsyncDefaultStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFoldersAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFoldersAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFoldersAsync());
             return S_OK;
         }
         catch (...)
@@ -1001,11 +1072,12 @@ struct produce<D, Windows::Storage::Search::IStorageFolderQueryResult> : produce
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageItemQueryResult> : produce_base<D, Windows::Storage::Search::IStorageItemQueryResult>
 {
-    HRESULT __stdcall abi_GetItemsAsync(uint32_t startIndex, uint32_t maxNumberOfItems, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemsAsync(uint32_t startIndex, uint32_t maxNumberOfItems, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemsAsync(startIndex, maxNumberOfItems));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemsAsync(startIndex, maxNumberOfItems));
             return S_OK;
         }
         catch (...)
@@ -1015,11 +1087,12 @@ struct produce<D, Windows::Storage::Search::IStorageItemQueryResult> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetItemsAsyncDefaultStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemsAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemsAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemsAsync());
             return S_OK;
         }
         catch (...)
@@ -1033,11 +1106,12 @@ struct produce<D, Windows::Storage::Search::IStorageItemQueryResult> : produce_b
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageLibraryContentChangedTriggerDetails> : produce_base<D, Windows::Storage::Search::IStorageLibraryContentChangedTriggerDetails>
 {
-    HRESULT __stdcall get_Folder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_Folder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Folder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Folder());
             return S_OK;
         }
         catch (...)
@@ -1047,11 +1121,12 @@ struct produce<D, Windows::Storage::Search::IStorageLibraryContentChangedTrigger
         }
     }
 
-    HRESULT __stdcall abi_CreateModifiedSinceQuery(abi_arg_in<Windows::Foundation::DateTime> lastQueryTime, abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> result) noexcept override
+    HRESULT __stdcall abi_CreateModifiedSinceQuery(impl::abi_arg_in<Windows::Foundation::DateTime> lastQueryTime, impl::abi_arg_out<Windows::Storage::Search::IStorageItemQueryResult> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().CreateModifiedSinceQuery(*reinterpret_cast<const Windows::Foundation::DateTime *>(&lastQueryTime)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().CreateModifiedSinceQuery(*reinterpret_cast<const Windows::Foundation::DateTime *>(&lastQueryTime)));
             return S_OK;
         }
         catch (...)
@@ -1065,11 +1140,12 @@ struct produce<D, Windows::Storage::Search::IStorageLibraryContentChangedTrigger
 template <typename D>
 struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_base<D, Windows::Storage::Search::IStorageQueryResultBase>
 {
-    HRESULT __stdcall abi_GetItemCountAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemCountAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemCountAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemCountAsync());
             return S_OK;
         }
         catch (...)
@@ -1079,11 +1155,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Folder(abi_arg_out<Windows::Storage::IStorageFolder> container) noexcept override
+    HRESULT __stdcall get_Folder(impl::abi_arg_out<Windows::Storage::IStorageFolder> container) noexcept override
     {
         try
         {
-            *container = detach(this->shim().Folder());
+            typename D::abi_guard guard(this->shim());
+            *container = detach_abi(this->shim().Folder());
             return S_OK;
         }
         catch (...)
@@ -1093,11 +1170,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall add_ContentsChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable>> handler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_ContentsChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable>> handler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().ContentsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().ContentsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1110,6 +1188,7 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ContentsChanged(eventCookie);
             return S_OK;
         }
@@ -1119,11 +1198,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall add_OptionsChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable>> changedHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_OptionsChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable>> changedHandler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().OptionsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> *>(&changedHandler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().OptionsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> *>(&changedHandler)));
             return S_OK;
         }
         catch (...)
@@ -1136,6 +1216,7 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OptionsChanged(eventCookie);
             return S_OK;
         }
@@ -1145,11 +1226,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_FindStartIndexAsync(abi_arg_in<Windows::IInspectable> value, abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_FindStartIndexAsync(impl::abi_arg_in<Windows::Foundation::IInspectable> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FindStartIndexAsync(*reinterpret_cast<const Windows::IInspectable *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FindStartIndexAsync(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1159,11 +1241,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetCurrentQueryOptions(abi_arg_out<Windows::Storage::Search::IQueryOptions> value) noexcept override
+    HRESULT __stdcall abi_GetCurrentQueryOptions(impl::abi_arg_out<Windows::Storage::Search::IQueryOptions> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCurrentQueryOptions());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCurrentQueryOptions());
             return S_OK;
         }
         catch (...)
@@ -1173,10 +1256,11 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_ApplyNewQueryOptions(abi_arg_in<Windows::Storage::Search::IQueryOptions> newQueryOptions) noexcept override
+    HRESULT __stdcall abi_ApplyNewQueryOptions(impl::abi_arg_in<Windows::Storage::Search::IQueryOptions> newQueryOptions) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ApplyNewQueryOptions(*reinterpret_cast<const Windows::Storage::Search::QueryOptions *>(&newQueryOptions));
             return S_OK;
         }
@@ -1190,11 +1274,12 @@ struct produce<D, Windows::Storage::Search::IStorageQueryResultBase> : produce_b
 template <typename D>
 struct produce<D, Windows::Storage::Search::IValueAndLanguage> : produce_base<D, Windows::Storage::Search::IValueAndLanguage>
 {
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -1204,10 +1289,11 @@ struct produce<D, Windows::Storage::Search::IValueAndLanguage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_Language(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Language(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Language(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -1217,11 +1303,12 @@ struct produce<D, Windows::Storage::Search::IValueAndLanguage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_Value(abi_arg_out<Windows::IInspectable> value) noexcept override
+    HRESULT __stdcall get_Value(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Value());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Value());
             return S_OK;
         }
         catch (...)
@@ -1231,11 +1318,12 @@ struct produce<D, Windows::Storage::Search::IValueAndLanguage> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_Value(abi_arg_in<Windows::IInspectable> value) noexcept override
+    HRESULT __stdcall put_Value(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
     {
         try
         {
-            this->shim().Value(*reinterpret_cast<const Windows::IInspectable *>(&value));
+            typename D::abi_guard guard(this->shim());
+            this->shim().Value(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
             return S_OK;
         }
         catch (...)
@@ -1249,580 +1337,580 @@ struct produce<D, Windows::Storage::Search::IValueAndLanguage> : produce_base<D,
 
 namespace Windows::Storage::Search {
 
-template <typename D> Windows::Storage::Search::ContentIndexer impl_IContentIndexerStatics<D>::GetIndexer(hstring_ref indexName) const
+template <typename D> Windows::Storage::Search::ContentIndexer impl_IContentIndexerStatics<D>::GetIndexer(hstring_view indexName) const
 {
     Windows::Storage::Search::ContentIndexer index { nullptr };
-    check_hresult(static_cast<const IContentIndexerStatics &>(static_cast<const D &>(*this))->abi_GetIndexerWithName(get(indexName), put(index)));
+    check_hresult(WINRT_SHIM(IContentIndexerStatics)->abi_GetIndexerWithName(get_abi(indexName), put_abi(index)));
     return index;
 }
 
 template <typename D> Windows::Storage::Search::ContentIndexer impl_IContentIndexerStatics<D>::GetIndexer() const
 {
     Windows::Storage::Search::ContentIndexer index { nullptr };
-    check_hresult(static_cast<const IContentIndexerStatics &>(static_cast<const D &>(*this))->abi_GetIndexer(put(index)));
+    check_hresult(WINRT_SHIM(IContentIndexerStatics)->abi_GetIndexer(put_abi(index)));
     return index;
 }
 
 template <typename D> hstring impl_IIndexableContent<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->get_Id(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IIndexableContent<D>::Id(hstring_ref value) const
+template <typename D> void impl_IIndexableContent<D>::Id(hstring_view value) const
 {
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->put_Id(get(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->put_Id(get_abi(value)));
 }
 
-template <typename D> Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable> impl_IIndexableContent<D>::Properties() const
+template <typename D> Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable> impl_IIndexableContent<D>::Properties() const
 {
-    Windows::Foundation::Collections::IMap<hstring, Windows::IInspectable> value;
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IIndexableContent)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IRandomAccessStream impl_IIndexableContent<D>::Stream() const
 {
     Windows::Storage::Streams::IRandomAccessStream value;
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->get_Stream(put(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->get_Stream(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IIndexableContent<D>::Stream(const Windows::Storage::Streams::IRandomAccessStream & value) const
 {
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->put_Stream(get(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->put_Stream(get_abi(value)));
 }
 
 template <typename D> hstring impl_IIndexableContent<D>::StreamContentType() const
 {
     hstring value;
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->get_StreamContentType(put(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->get_StreamContentType(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IIndexableContent<D>::StreamContentType(hstring_ref value) const
+template <typename D> void impl_IIndexableContent<D>::StreamContentType(hstring_view value) const
 {
-    check_hresult(static_cast<const IIndexableContent &>(static_cast<const D &>(*this))->put_StreamContentType(get(value)));
+    check_hresult(WINRT_SHIM(IIndexableContent)->put_StreamContentType(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::AddAsync(const Windows::Storage::Search::IIndexableContent & indexableContent) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_AddAsync(get(indexableContent), put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_AddAsync(get_abi(indexableContent), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::UpdateAsync(const Windows::Storage::Search::IIndexableContent & indexableContent) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_UpdateAsync(get(indexableContent), put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_UpdateAsync(get_abi(indexableContent), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::DeleteAsync(hstring_ref contentId) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::DeleteAsync(hstring_view contentId) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_DeleteAsync(get(contentId), put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_DeleteAsync(get_abi(contentId), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::DeleteMultipleAsync(const Windows::Foundation::Collections::IIterable<hstring> & contentIds) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::DeleteMultipleAsync(iterable<hstring> contentIds) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_DeleteMultipleAsync(get(contentIds), put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_DeleteMultipleAsync(get_abi(contentIds), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IContentIndexer<D>::DeleteAllAsync() const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_DeleteAllAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_DeleteAllAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>> impl_IContentIndexer<D>::RetrievePropertiesAsync(hstring_ref contentId, const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> impl_IContentIndexer<D>::RetrievePropertiesAsync(hstring_view contentId, iterable<hstring> propertiesToRetrieve) const
 {
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>> operation;
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->abi_RetrievePropertiesAsync(get(contentId), get(propertiesToRetrieve), put(operation)));
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> operation;
+    check_hresult(WINRT_SHIM(IContentIndexer)->abi_RetrievePropertiesAsync(get_abi(contentId), get_abi(propertiesToRetrieve), put_abi(operation)));
     return operation;
 }
 
 template <typename D> uint64_t impl_IContentIndexer<D>::Revision() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IContentIndexer &>(static_cast<const D &>(*this))->get_Revision(&value));
+    check_hresult(WINRT_SHIM(IContentIndexer)->get_Revision(&value));
     return value;
 }
 
 template <typename D> hstring impl_IValueAndLanguage<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const IValueAndLanguage &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(IValueAndLanguage)->get_Language(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IValueAndLanguage<D>::Language(hstring_ref value) const
+template <typename D> void impl_IValueAndLanguage<D>::Language(hstring_view value) const
 {
-    check_hresult(static_cast<const IValueAndLanguage &>(static_cast<const D &>(*this))->put_Language(get(value)));
+    check_hresult(WINRT_SHIM(IValueAndLanguage)->put_Language(get_abi(value)));
 }
 
-template <typename D> Windows::IInspectable impl_IValueAndLanguage<D>::Value() const
+template <typename D> Windows::Foundation::IInspectable impl_IValueAndLanguage<D>::Value() const
 {
-    Windows::IInspectable value;
-    check_hresult(static_cast<const IValueAndLanguage &>(static_cast<const D &>(*this))->get_Value(put(value)));
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(IValueAndLanguage)->get_Value(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IValueAndLanguage<D>::Value(const Windows::IInspectable & value) const
+template <typename D> void impl_IValueAndLanguage<D>::Value(const Windows::Foundation::IInspectable & value) const
 {
-    check_hresult(static_cast<const IValueAndLanguage &>(static_cast<const D &>(*this))->put_Value(get(value)));
+    check_hresult(WINRT_SHIM(IValueAndLanguage)->put_Value(get_abi(value)));
 }
 
-template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_ref searchFilter, const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve, const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> & sortOrder, hstring_ref searchFilterLanguage) const
+template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_view searchFilter, iterable<hstring> propertiesToRetrieve, iterable<Windows::Storage::Search::SortEntry> sortOrder, hstring_view searchFilterLanguage) const
 {
     Windows::Storage::Search::ContentIndexerQuery query { nullptr };
-    check_hresult(static_cast<const IContentIndexerQueryOperations &>(static_cast<const D &>(*this))->abi_CreateQueryWithSortOrderAndLanguage(get(searchFilter), get(propertiesToRetrieve), get(sortOrder), get(searchFilterLanguage), put(query)));
+    check_hresult(WINRT_SHIM(IContentIndexerQueryOperations)->abi_CreateQueryWithSortOrderAndLanguage(get_abi(searchFilter), get_abi(propertiesToRetrieve), get_abi(sortOrder), get_abi(searchFilterLanguage), put_abi(query)));
     return query;
 }
 
-template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_ref searchFilter, const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve, const Windows::Foundation::Collections::IIterable<Windows::Storage::Search::SortEntry> & sortOrder) const
+template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_view searchFilter, iterable<hstring> propertiesToRetrieve, iterable<Windows::Storage::Search::SortEntry> sortOrder) const
 {
     Windows::Storage::Search::ContentIndexerQuery query { nullptr };
-    check_hresult(static_cast<const IContentIndexerQueryOperations &>(static_cast<const D &>(*this))->abi_CreateQueryWithSortOrder(get(searchFilter), get(propertiesToRetrieve), get(sortOrder), put(query)));
+    check_hresult(WINRT_SHIM(IContentIndexerQueryOperations)->abi_CreateQueryWithSortOrder(get_abi(searchFilter), get_abi(propertiesToRetrieve), get_abi(sortOrder), put_abi(query)));
     return query;
 }
 
-template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_ref searchFilter, const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve) const
+template <typename D> Windows::Storage::Search::ContentIndexerQuery impl_IContentIndexerQueryOperations<D>::CreateQuery(hstring_view searchFilter, iterable<hstring> propertiesToRetrieve) const
 {
     Windows::Storage::Search::ContentIndexerQuery query { nullptr };
-    check_hresult(static_cast<const IContentIndexerQueryOperations &>(static_cast<const D &>(*this))->abi_CreateQuery(get(searchFilter), get(propertiesToRetrieve), put(query)));
+    check_hresult(WINRT_SHIM(IContentIndexerQueryOperations)->abi_CreateQuery(get_abi(searchFilter), get_abi(propertiesToRetrieve), put_abi(query)));
     return query;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IContentIndexerQuery<D>::GetCountAsync() const
 {
     Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->abi_GetCountAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->abi_GetCountAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>> impl_IContentIndexerQuery<D>::GetPropertiesAsync() const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> impl_IContentIndexerQuery<D>::GetPropertiesAsync() const
 {
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>> operation;
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->abi_GetPropertiesAsync(put(operation)));
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> operation;
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->abi_GetPropertiesAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>> impl_IContentIndexerQuery<D>::GetPropertiesAsync(uint32_t startIndex, uint32_t maxItems) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> impl_IContentIndexerQuery<D>::GetPropertiesAsync(uint32_t startIndex, uint32_t maxItems) const
 {
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>>> operation;
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->abi_GetPropertiesRangeAsync(startIndex, maxItems, put(operation)));
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> operation;
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->abi_GetPropertiesRangeAsync(startIndex, maxItems, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>> impl_IContentIndexerQuery<D>::GetAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>> operation;
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->abi_GetAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->abi_GetAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>> impl_IContentIndexerQuery<D>::GetAsync(uint32_t startIndex, uint32_t maxItems) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::Search::IIndexableContent>> operation;
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->abi_GetRangeAsync(startIndex, maxItems, put(operation)));
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->abi_GetRangeAsync(startIndex, maxItems, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IContentIndexerQuery<D>::QueryFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IContentIndexerQuery &>(static_cast<const D &>(*this))->get_QueryFolder(put(value)));
+    check_hresult(WINRT_SHIM(IContentIndexerQuery)->get_QueryFolder(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IQueryOptions<D>::FileTypeFilter() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_FileTypeFilter(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_FileTypeFilter(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::FolderDepth impl_IQueryOptions<D>::FolderDepth() const
 {
     Windows::Storage::Search::FolderDepth value {};
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_FolderDepth(&value));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_FolderDepth(&value));
     return value;
 }
 
 template <typename D> void impl_IQueryOptions<D>::FolderDepth(Windows::Storage::Search::FolderDepth value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->put_FolderDepth(value));
+    check_hresult(WINRT_SHIM(IQueryOptions)->put_FolderDepth(value));
 }
 
 template <typename D> hstring impl_IQueryOptions<D>::ApplicationSearchFilter() const
 {
     hstring value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_ApplicationSearchFilter(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_ApplicationSearchFilter(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IQueryOptions<D>::ApplicationSearchFilter(hstring_ref value) const
+template <typename D> void impl_IQueryOptions<D>::ApplicationSearchFilter(hstring_view value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->put_ApplicationSearchFilter(get(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->put_ApplicationSearchFilter(get_abi(value)));
 }
 
 template <typename D> hstring impl_IQueryOptions<D>::UserSearchFilter() const
 {
     hstring value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_UserSearchFilter(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_UserSearchFilter(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IQueryOptions<D>::UserSearchFilter(hstring_ref value) const
+template <typename D> void impl_IQueryOptions<D>::UserSearchFilter(hstring_view value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->put_UserSearchFilter(get(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->put_UserSearchFilter(get_abi(value)));
 }
 
 template <typename D> hstring impl_IQueryOptions<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_Language(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IQueryOptions<D>::Language(hstring_ref value) const
+template <typename D> void impl_IQueryOptions<D>::Language(hstring_view value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->put_Language(get(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->put_Language(get_abi(value)));
 }
 
 template <typename D> Windows::Storage::Search::IndexerOption impl_IQueryOptions<D>::IndexerOption() const
 {
     Windows::Storage::Search::IndexerOption value {};
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_IndexerOption(&value));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_IndexerOption(&value));
     return value;
 }
 
 template <typename D> void impl_IQueryOptions<D>::IndexerOption(Windows::Storage::Search::IndexerOption value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->put_IndexerOption(value));
+    check_hresult(WINRT_SHIM(IQueryOptions)->put_IndexerOption(value));
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<Windows::Storage::Search::SortEntry> impl_IQueryOptions<D>::SortOrder() const
 {
     Windows::Foundation::Collections::IVector<Windows::Storage::Search::SortEntry> value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_SortOrder(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_SortOrder(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IQueryOptions<D>::GroupPropertyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_GroupPropertyName(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_GroupPropertyName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::DateStackOption impl_IQueryOptions<D>::DateStackOption() const
 {
     Windows::Storage::Search::DateStackOption value {};
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->get_DateStackOption(&value));
+    check_hresult(WINRT_SHIM(IQueryOptions)->get_DateStackOption(&value));
     return value;
 }
 
 template <typename D> hstring impl_IQueryOptions<D>::SaveToString() const
 {
     hstring value;
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->abi_SaveToString(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->abi_SaveToString(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IQueryOptions<D>::LoadFromString(hstring_ref value) const
+template <typename D> void impl_IQueryOptions<D>::LoadFromString(hstring_view value) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->abi_LoadFromString(get(value)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->abi_LoadFromString(get_abi(value)));
 }
 
 template <typename D> void impl_IQueryOptions<D>::SetThumbnailPrefetch(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->abi_SetThumbnailPrefetch(mode, requestedSize, options));
+    check_hresult(WINRT_SHIM(IQueryOptions)->abi_SetThumbnailPrefetch(mode, requestedSize, options));
 }
 
-template <typename D> void impl_IQueryOptions<D>::SetPropertyPrefetch(Windows::Storage::FileProperties::PropertyPrefetchOptions options, const Windows::Foundation::Collections::IIterable<hstring> & propertiesToRetrieve) const
+template <typename D> void impl_IQueryOptions<D>::SetPropertyPrefetch(Windows::Storage::FileProperties::PropertyPrefetchOptions options, iterable<hstring> propertiesToRetrieve) const
 {
-    check_hresult(static_cast<const IQueryOptions &>(static_cast<const D &>(*this))->abi_SetPropertyPrefetch(options, get(propertiesToRetrieve)));
+    check_hresult(WINRT_SHIM(IQueryOptions)->abi_SetPropertyPrefetch(options, get_abi(propertiesToRetrieve)));
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IQueryOptionsWithProviderFilter<D>::StorageProviderIdFilter() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const IQueryOptionsWithProviderFilter &>(static_cast<const D &>(*this))->get_StorageProviderIdFilter(put(value)));
+    check_hresult(WINRT_SHIM(IQueryOptionsWithProviderFilter)->get_StorageProviderIdFilter(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Storage::Search::QueryOptions impl_IQueryOptionsFactory<D>::CreateCommonFileQuery(Windows::Storage::Search::CommonFileQuery query, const Windows::Foundation::Collections::IIterable<hstring> & fileTypeFilter) const
+template <typename D> Windows::Storage::Search::QueryOptions impl_IQueryOptionsFactory<D>::CreateCommonFileQuery(Windows::Storage::Search::CommonFileQuery query, iterable<hstring> fileTypeFilter) const
 {
     Windows::Storage::Search::QueryOptions queryOptions { nullptr };
-    check_hresult(static_cast<const IQueryOptionsFactory &>(static_cast<const D &>(*this))->abi_CreateCommonFileQuery(query, get(fileTypeFilter), put(queryOptions)));
+    check_hresult(WINRT_SHIM(IQueryOptionsFactory)->abi_CreateCommonFileQuery(query, get_abi(fileTypeFilter), put_abi(queryOptions)));
     return queryOptions;
 }
 
 template <typename D> Windows::Storage::Search::QueryOptions impl_IQueryOptionsFactory<D>::CreateCommonFolderQuery(Windows::Storage::Search::CommonFolderQuery query) const
 {
     Windows::Storage::Search::QueryOptions queryOptions { nullptr };
-    check_hresult(static_cast<const IQueryOptionsFactory &>(static_cast<const D &>(*this))->abi_CreateCommonFolderQuery(query, put(queryOptions)));
+    check_hresult(WINRT_SHIM(IQueryOptionsFactory)->abi_CreateCommonFolderQuery(query, put_abi(queryOptions)));
     return queryOptions;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IStorageQueryResultBase<D>::GetItemCountAsync() const
 {
     Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->abi_GetItemCountAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->abi_GetItemCountAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IStorageQueryResultBase<D>::Folder() const
 {
     Windows::Storage::StorageFolder container { nullptr };
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->get_Folder(put(container)));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->get_Folder(put_abi(container)));
     return container;
 }
 
-template <typename D> event_token impl_IStorageQueryResultBase<D>::ContentsChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IStorageQueryResultBase<D>::ContentsChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> & handler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->add_ContentsChanged(get(handler), &eventCookie));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->add_ContentsChanged(get_abi(handler), &eventCookie));
     return eventCookie;
 }
 
-template <typename D> event_revoker<IStorageQueryResultBase> impl_IStorageQueryResultBase<D>::ContentsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IStorageQueryResultBase> impl_IStorageQueryResultBase<D>::ContentsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IStorageQueryResultBase>(this, &ABI::Windows::Storage::Search::IStorageQueryResultBase::remove_ContentsChanged, ContentsChanged(handler));
 }
 
 template <typename D> void impl_IStorageQueryResultBase<D>::ContentsChanged(event_token eventCookie) const
 {
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->remove_ContentsChanged(eventCookie));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->remove_ContentsChanged(eventCookie));
 }
 
-template <typename D> event_token impl_IStorageQueryResultBase<D>::OptionsChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> & changedHandler) const
+template <typename D> event_token impl_IStorageQueryResultBase<D>::OptionsChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> & changedHandler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->add_OptionsChanged(get(changedHandler), &eventCookie));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->add_OptionsChanged(get_abi(changedHandler), &eventCookie));
     return eventCookie;
 }
 
-template <typename D> event_revoker<IStorageQueryResultBase> impl_IStorageQueryResultBase<D>::OptionsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::IInspectable> & changedHandler) const
+template <typename D> event_revoker<IStorageQueryResultBase> impl_IStorageQueryResultBase<D>::OptionsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::Search::IStorageQueryResultBase, Windows::Foundation::IInspectable> & changedHandler) const
 {
     return impl::make_event_revoker<D, IStorageQueryResultBase>(this, &ABI::Windows::Storage::Search::IStorageQueryResultBase::remove_OptionsChanged, OptionsChanged(changedHandler));
 }
 
 template <typename D> void impl_IStorageQueryResultBase<D>::OptionsChanged(event_token eventCookie) const
 {
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->remove_OptionsChanged(eventCookie));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->remove_OptionsChanged(eventCookie));
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IStorageQueryResultBase<D>::FindStartIndexAsync(const Windows::IInspectable & value) const
+template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IStorageQueryResultBase<D>::FindStartIndexAsync(const Windows::Foundation::IInspectable & value) const
 {
     Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->abi_FindStartIndexAsync(get(value), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->abi_FindStartIndexAsync(get_abi(value), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Search::QueryOptions impl_IStorageQueryResultBase<D>::GetCurrentQueryOptions() const
 {
     Windows::Storage::Search::QueryOptions value { nullptr };
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->abi_GetCurrentQueryOptions(put(value)));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->abi_GetCurrentQueryOptions(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IStorageQueryResultBase<D>::ApplyNewQueryOptions(const Windows::Storage::Search::QueryOptions & newQueryOptions) const
 {
-    check_hresult(static_cast<const IStorageQueryResultBase &>(static_cast<const D &>(*this))->abi_ApplyNewQueryOptions(get(newQueryOptions)));
+    check_hresult(WINRT_SHIM(IStorageQueryResultBase)->abi_ApplyNewQueryOptions(get_abi(newQueryOptions)));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IStorageFileQueryResult<D>::GetFilesAsync(uint32_t startIndex, uint32_t maxNumberOfItems) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> operation;
-    check_hresult(static_cast<const IStorageFileQueryResult &>(static_cast<const D &>(*this))->abi_GetFilesAsync(startIndex, maxNumberOfItems, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileQueryResult)->abi_GetFilesAsync(startIndex, maxNumberOfItems, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IStorageFileQueryResult<D>::GetFilesAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> operation;
-    check_hresult(static_cast<const IStorageFileQueryResult &>(static_cast<const D &>(*this))->abi_GetFilesAsyncDefaultStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileQueryResult)->abi_GetFilesAsyncDefaultStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment>> impl_IStorageFileQueryResult2<D>::GetMatchingPropertiesWithRanges(const Windows::Storage::StorageFile & file) const
 {
     Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment>> result;
-    check_hresult(static_cast<const IStorageFileQueryResult2 &>(static_cast<const D &>(*this))->abi_GetMatchingPropertiesWithRanges(get(file), put(result)));
+    check_hresult(WINRT_SHIM(IStorageFileQueryResult2)->abi_GetMatchingPropertiesWithRanges(get_abi(file), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> impl_IStorageFolderQueryResult<D>::GetFoldersAsync(uint32_t startIndex, uint32_t maxNumberOfItems) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryResult &>(static_cast<const D &>(*this))->abi_GetFoldersAsync(startIndex, maxNumberOfItems, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryResult)->abi_GetFoldersAsync(startIndex, maxNumberOfItems, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> impl_IStorageFolderQueryResult<D>::GetFoldersAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryResult &>(static_cast<const D &>(*this))->abi_GetFoldersAsyncDefaultStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryResult)->abi_GetFoldersAsyncDefaultStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> impl_IStorageItemQueryResult<D>::GetItemsAsync(uint32_t startIndex, uint32_t maxNumberOfItems) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> operation;
-    check_hresult(static_cast<const IStorageItemQueryResult &>(static_cast<const D &>(*this))->abi_GetItemsAsync(startIndex, maxNumberOfItems, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemQueryResult)->abi_GetItemsAsync(startIndex, maxNumberOfItems, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> impl_IStorageItemQueryResult<D>::GetItemsAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> operation;
-    check_hresult(static_cast<const IStorageItemQueryResult &>(static_cast<const D &>(*this))->abi_GetItemsAsyncDefaultStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemQueryResult)->abi_GetItemsAsyncDefaultStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Search::IndexedState> impl_IStorageFolderQueryOperations<D>::GetIndexedStateAsync() const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Search::IndexedState> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetIndexedStateAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetIndexedStateAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::Search::StorageFileQueryResult impl_IStorageFolderQueryOperations<D>::CreateFileQuery() const
 {
     Windows::Storage::Search::StorageFileQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFileQueryOverloadDefault(put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFileQueryOverloadDefault(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageFileQueryResult impl_IStorageFolderQueryOperations<D>::CreateFileQuery(Windows::Storage::Search::CommonFileQuery query) const
 {
     Windows::Storage::Search::StorageFileQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFileQuery(query, put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFileQuery(query, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageFileQueryResult impl_IStorageFolderQueryOperations<D>::CreateFileQueryWithOptions(const Windows::Storage::Search::QueryOptions & queryOptions) const
 {
     Windows::Storage::Search::StorageFileQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFileQueryWithOptions(get(queryOptions), put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFileQueryWithOptions(get_abi(queryOptions), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageFolderQueryResult impl_IStorageFolderQueryOperations<D>::CreateFolderQuery() const
 {
     Windows::Storage::Search::StorageFolderQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFolderQueryOverloadDefault(put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFolderQueryOverloadDefault(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageFolderQueryResult impl_IStorageFolderQueryOperations<D>::CreateFolderQuery(Windows::Storage::Search::CommonFolderQuery query) const
 {
     Windows::Storage::Search::StorageFolderQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFolderQuery(query, put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFolderQuery(query, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageFolderQueryResult impl_IStorageFolderQueryOperations<D>::CreateFolderQueryWithOptions(const Windows::Storage::Search::QueryOptions & queryOptions) const
 {
     Windows::Storage::Search::StorageFolderQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateFolderQueryWithOptions(get(queryOptions), put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateFolderQueryWithOptions(get_abi(queryOptions), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageItemQueryResult impl_IStorageFolderQueryOperations<D>::CreateItemQuery() const
 {
     Windows::Storage::Search::StorageItemQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateItemQuery(put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateItemQuery(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageItemQueryResult impl_IStorageFolderQueryOperations<D>::CreateItemQueryWithOptions(const Windows::Storage::Search::QueryOptions & queryOptions) const
 {
     Windows::Storage::Search::StorageItemQueryResult value { nullptr };
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_CreateItemQueryWithOptions(get(queryOptions), put(value)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_CreateItemQueryWithOptions(get_abi(queryOptions), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IStorageFolderQueryOperations<D>::GetFilesAsync(Windows::Storage::Search::CommonFileQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetFilesAsync(query, startIndex, maxItemsToRetrieve, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetFilesAsync(query, startIndex, maxItemsToRetrieve, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IStorageFolderQueryOperations<D>::GetFilesAsync(Windows::Storage::Search::CommonFileQuery query) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetFilesAsyncOverloadDefaultStartAndCount(query, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetFilesAsyncOverloadDefaultStartAndCount(query, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> impl_IStorageFolderQueryOperations<D>::GetFoldersAsync(Windows::Storage::Search::CommonFolderQuery query, uint32_t startIndex, uint32_t maxItemsToRetrieve) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetFoldersAsync(query, startIndex, maxItemsToRetrieve, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetFoldersAsync(query, startIndex, maxItemsToRetrieve, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> impl_IStorageFolderQueryOperations<D>::GetFoldersAsync(Windows::Storage::Search::CommonFolderQuery query) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetFoldersAsyncOverloadDefaultStartAndCount(query, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetFoldersAsyncOverloadDefaultStartAndCount(query, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> impl_IStorageFolderQueryOperations<D>::GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> operation;
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_GetItemsAsync(startIndex, maxItemsToRetrieve, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_GetItemsAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_IStorageFolderQueryOperations<D>::AreQueryOptionsSupported(const Windows::Storage::Search::QueryOptions & queryOptions) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_AreQueryOptionsSupported(get(queryOptions), &value));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_AreQueryOptionsSupported(get_abi(queryOptions), &value));
     return value;
 }
 
 template <typename D> bool impl_IStorageFolderQueryOperations<D>::IsCommonFolderQuerySupported(Windows::Storage::Search::CommonFolderQuery query) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_IsCommonFolderQuerySupported(query, &value));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_IsCommonFolderQuerySupported(query, &value));
     return value;
 }
 
 template <typename D> bool impl_IStorageFolderQueryOperations<D>::IsCommonFileQuerySupported(Windows::Storage::Search::CommonFileQuery query) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageFolderQueryOperations &>(static_cast<const D &>(*this))->abi_IsCommonFileQuerySupported(query, &value));
+    check_hresult(WINRT_SHIM(IStorageFolderQueryOperations)->abi_IsCommonFileQuerySupported(query, &value));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IStorageLibraryContentChangedTriggerDetails<D>::Folder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IStorageLibraryContentChangedTriggerDetails &>(static_cast<const D &>(*this))->get_Folder(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibraryContentChangedTriggerDetails)->get_Folder(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Search::StorageItemQueryResult impl_IStorageLibraryContentChangedTriggerDetails<D>::CreateModifiedSinceQuery(const Windows::Foundation::DateTime & lastQueryTime) const
 {
     Windows::Storage::Search::StorageItemQueryResult result { nullptr };
-    check_hresult(static_cast<const IStorageLibraryContentChangedTriggerDetails &>(static_cast<const D &>(*this))->abi_CreateModifiedSinceQuery(get(lastQueryTime), put(result)));
+    check_hresult(WINRT_SHIM(IStorageLibraryContentChangedTriggerDetails)->abi_CreateModifiedSinceQuery(get_abi(lastQueryTime), put_abi(result)));
     return result;
 }
 
-inline Windows::Storage::Search::ContentIndexer ContentIndexer::GetIndexer(hstring_ref indexName)
+inline Windows::Storage::Search::ContentIndexer ContentIndexer::GetIndexer(hstring_view indexName)
 {
     return get_activation_factory<ContentIndexer, IContentIndexerStatics>().GetIndexer(indexName);
 }
@@ -1840,7 +1928,7 @@ inline QueryOptions::QueryOptions() :
     QueryOptions(activate_instance<QueryOptions>())
 {}
 
-inline QueryOptions::QueryOptions(Windows::Storage::Search::CommonFileQuery query, const Windows::Foundation::Collections::IIterable<hstring> & fileTypeFilter) :
+inline QueryOptions::QueryOptions(Windows::Storage::Search::CommonFileQuery query, iterable<hstring> fileTypeFilter) :
     QueryOptions(get_activation_factory<QueryOptions, IQueryOptionsFactory>().CreateCommonFileQuery(query, fileTypeFilter))
 {}
 
@@ -1855,3 +1943,239 @@ inline ValueAndLanguage::ValueAndLanguage() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IContentIndexer>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IContentIndexer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IContentIndexerQuery>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IContentIndexerQuery & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IContentIndexerQueryOperations>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IContentIndexerQueryOperations & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IContentIndexerStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IContentIndexerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IIndexableContent>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IIndexableContent & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IQueryOptions>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IQueryOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IQueryOptionsFactory>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IQueryOptionsFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IQueryOptionsWithProviderFilter>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IQueryOptionsWithProviderFilter & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageFileQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageFileQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageFileQueryResult2>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageFileQueryResult2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageFolderQueryOperations>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageFolderQueryOperations & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageFolderQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageFolderQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageItemQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageItemQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageLibraryContentChangedTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageLibraryContentChangedTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IStorageQueryResultBase>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IStorageQueryResultBase & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IValueAndLanguage>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IValueAndLanguage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::ContentIndexer>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::ContentIndexer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::ContentIndexerQuery>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::ContentIndexerQuery & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::IndexableContent>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::IndexableContent & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::QueryOptions>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::QueryOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::SortEntryVector>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::SortEntryVector & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::StorageFileQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::StorageFileQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::StorageFolderQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::StorageFolderQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::StorageItemQueryResult>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::StorageItemQueryResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::StorageLibraryContentChangedTriggerDetails>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::StorageLibraryContentChangedTriggerDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::Search::ValueAndLanguage>
+{
+    size_t operator()(const winrt::Windows::Storage::Search::ValueAndLanguage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

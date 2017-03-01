@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -49,6 +49,16 @@ template <> struct __declspec(uuid("b0d63b78-78ad-5e31-b6d8-e32a0e16c447")) __de
 template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_0d82bd8d_fe62_5d67_a7b9_7886dd75bc4e
+#define WINRT_GENERIC_0d82bd8d_fe62_5d67_a7b9_7886dd75bc4e
+template <> struct __declspec(uuid("0d82bd8d-fe62-5d67-a7b9-7886dd75bc4e")) __declspec(novtable) IVector<Windows::Foundation::Uri> : impl_IVector<Windows::Foundation::Uri> {};
+#endif
+
+#ifndef WINRT_GENERIC_4b8385bd_a2cd_5ff1_bf74_7ea580423e50
+#define WINRT_GENERIC_4b8385bd_a2cd_5ff1_bf74_7ea580423e50
+template <> struct __declspec(uuid("4b8385bd-a2cd-5ff1-bf74-7ea580423e50")) __declspec(novtable) IVectorView<Windows::Foundation::Uri> : impl_IVectorView<Windows::Foundation::Uri> {};
+#endif
+
 #ifndef WINRT_GENERIC_7f7d8ad7_b4d2_5a03_be6f_2b89875fb32d
 #define WINRT_GENERIC_7f7d8ad7_b4d2_5a03_be6f_2b89875fb32d
 template <> struct __declspec(uuid("7f7d8ad7-b4d2-5a03-be6f-2b89875fb32d")) __declspec(novtable) IVector<Windows::UI::Notifications::NotificationBinding> : impl_IVector<Windows::UI::Notifications::NotificationBinding> {};
@@ -81,7 +91,7 @@ template <> struct __declspec(uuid("61c2402f-0ed0-5a18-ab69-59f4aa99a368")) __de
 
 #ifndef WINRT_GENERIC_ab54de2d_97d9_5528_b6ad_105afe156530
 #define WINRT_GENERIC_ab54de2d_97d9_5528_b6ad_105afe156530
-template <> struct __declspec(uuid("ab54de2d-97d9-5528-b6ad-105afe156530")) __declspec(novtable) TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::IInspectable> : impl_TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::IInspectable> {};
+template <> struct __declspec(uuid("ab54de2d-97d9-5528-b6ad-105afe156530")) __declspec(novtable) TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_95e3e803_c969_5e3a_9753_ea2ad22a9a33
@@ -119,6 +129,11 @@ template <> struct __declspec(uuid("e8d9489c-635e-5153-8ab7-389f2ee9faca")) __de
 template <> struct __declspec(uuid("9e4d0240-6d5c-582a-a29d-734e84750738")) __declspec(novtable) IVectorView<Windows::UI::Notifications::NotificationBinding> : impl_IVectorView<Windows::UI::Notifications::NotificationBinding> {};
 #endif
 
+#ifndef WINRT_GENERIC_13cf8eab_bcf0_5f03_a79b_fafde70516f3
+#define WINRT_GENERIC_13cf8eab_bcf0_5f03_a79b_fafde70516f3
+template <> struct __declspec(uuid("13cf8eab-bcf0-5f03-a79b-fafde70516f3")) __declspec(novtable) IVector<Windows::UI::Notifications::AdaptiveNotificationText> : impl_IVector<Windows::UI::Notifications::AdaptiveNotificationText> {};
+#endif
+
 #ifndef WINRT_GENERIC_18015daa_cbc3_5a51_9f4b_3c069135b0e0
 #define WINRT_GENERIC_18015daa_cbc3_5a51_9f4b_3c069135b0e0
 template <> struct __declspec(uuid("18015daa-cbc3-5a51-9f4b-3c069135b0e0")) __declspec(novtable) IIterator<Windows::UI::Notifications::AdaptiveNotificationText> : impl_IIterator<Windows::UI::Notifications::AdaptiveNotificationText> {};
@@ -127,6 +142,11 @@ template <> struct __declspec(uuid("18015daa-cbc3-5a51-9f4b-3c069135b0e0")) __de
 #ifndef WINRT_GENERIC_0343e8f2_ca4c_5f40_b8d1_3ff47047ce43
 #define WINRT_GENERIC_0343e8f2_ca4c_5f40_b8d1_3ff47047ce43
 template <> struct __declspec(uuid("0343e8f2-ca4c-5f40-b8d1-3ff47047ce43")) __declspec(novtable) IIterable<Windows::UI::Notifications::AdaptiveNotificationText> : impl_IIterable<Windows::UI::Notifications::AdaptiveNotificationText> {};
+#endif
+
+#ifndef WINRT_GENERIC_69272d2c_74a5_5cd9_b2c5_51af99fcc732
+#define WINRT_GENERIC_69272d2c_74a5_5cd9_b2c5_51af99fcc732
+template <> struct __declspec(uuid("69272d2c-74a5-5cd9-b2c5-51af99fcc732")) __declspec(novtable) IVector<Windows::UI::Notifications::ScheduledTileNotification> : impl_IVector<Windows::UI::Notifications::ScheduledTileNotification> {};
 #endif
 
 #ifndef WINRT_GENERIC_5665e491_6543_5036_935f_b5157950b359
@@ -139,6 +159,11 @@ template <> struct __declspec(uuid("5665e491-6543-5036-935f-b5157950b359")) __de
 template <> struct __declspec(uuid("4b60d1e5-52ae-5766-9720-be4ad086f952")) __declspec(novtable) IIterable<Windows::UI::Notifications::ScheduledTileNotification> : impl_IIterable<Windows::UI::Notifications::ScheduledTileNotification> {};
 #endif
 
+#ifndef WINRT_GENERIC_693ec648_d35a_5be9_a9c1_ba334c337b83
+#define WINRT_GENERIC_693ec648_d35a_5be9_a9c1_ba334c337b83
+template <> struct __declspec(uuid("693ec648-d35a-5be9-a9c1-ba334c337b83")) __declspec(novtable) IVector<Windows::UI::Notifications::ScheduledToastNotification> : impl_IVector<Windows::UI::Notifications::ScheduledToastNotification> {};
+#endif
+
 #ifndef WINRT_GENERIC_304238b6_888a_5dd2_96cd_bfca8927483b
 #define WINRT_GENERIC_304238b6_888a_5dd2_96cd_bfca8927483b
 template <> struct __declspec(uuid("304238b6-888a-5dd2-96cd-bfca8927483b")) __declspec(novtable) IIterator<Windows::UI::Notifications::ScheduledToastNotification> : impl_IIterator<Windows::UI::Notifications::ScheduledToastNotification> {};
@@ -147,6 +172,11 @@ template <> struct __declspec(uuid("304238b6-888a-5dd2-96cd-bfca8927483b")) __de
 #ifndef WINRT_GENERIC_7a7b2a51_c182_5846_a861_4f9c036f24ad
 #define WINRT_GENERIC_7a7b2a51_c182_5846_a861_4f9c036f24ad
 template <> struct __declspec(uuid("7a7b2a51-c182-5846-a861-4f9c036f24ad")) __declspec(novtable) IIterable<Windows::UI::Notifications::ScheduledToastNotification> : impl_IIterable<Windows::UI::Notifications::ScheduledToastNotification> {};
+#endif
+
+#ifndef WINRT_GENERIC_810f8c42_a267_5ba0_9538_48b9ecc433b8
+#define WINRT_GENERIC_810f8c42_a267_5ba0_9538_48b9ecc433b8
+template <> struct __declspec(uuid("810f8c42-a267-5ba0-9538-48b9ecc433b8")) __declspec(novtable) IVector<Windows::UI::Notifications::ToastNotification> : impl_IVector<Windows::UI::Notifications::ToastNotification> {};
 #endif
 
 #ifndef WINRT_GENERIC_fe1e726a_3aa9_5d98_b19b_97e3e17eec7b
@@ -174,854 +204,355 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::UI::Notifications {
 
-template <typename D>
-struct WINRT_EBO impl_IAdaptiveNotificationContent
-{
-    Windows::UI::Notifications::AdaptiveNotificationContentKind Kind() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Hints() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAdaptiveNotificationText
-{
-    hstring Text() const;
-    void Text(hstring_ref value) const;
-    hstring Language() const;
-    void Language(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeNotificationFactory
-{
-    Windows::UI::Notifications::BadgeNotification CreateBadgeNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeUpdateManagerForUser
-{
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication() const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_ref applicationId) const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_ref tileId) const;
-    Windows::System::User User() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeUpdateManagerStatics
-{
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication() const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForApplication(hstring_ref applicationId) const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSecondaryTile(hstring_ref tileId) const;
-    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeUpdateManagerStatics2
-{
-    Windows::UI::Notifications::BadgeUpdateManagerForUser GetForUser(const Windows::System::User & user) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBadgeUpdater
-{
-    void Update(const Windows::UI::Notifications::BadgeNotification & notification) const;
-    void Clear() const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StopPeriodicUpdate() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownAdaptiveNotificationHintsStatics
-{
-    hstring Style() const;
-    hstring Wrap() const;
-    hstring MaxLines() const;
-    hstring MinLines() const;
-    hstring TextStacking() const;
-    hstring Align() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownAdaptiveNotificationTextStylesStatics
-{
-    hstring Caption() const;
-    hstring Body() const;
-    hstring Base() const;
-    hstring Subtitle() const;
-    hstring Title() const;
-    hstring Subheader() const;
-    hstring Header() const;
-    hstring TitleNumeral() const;
-    hstring SubheaderNumeral() const;
-    hstring HeaderNumeral() const;
-    hstring CaptionSubtle() const;
-    hstring BodySubtle() const;
-    hstring BaseSubtle() const;
-    hstring SubtitleSubtle() const;
-    hstring TitleSubtle() const;
-    hstring SubheaderSubtle() const;
-    hstring SubheaderNumeralSubtle() const;
-    hstring HeaderSubtle() const;
-    hstring HeaderNumeralSubtle() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownNotificationBindingsStatics
-{
-    hstring ToastGeneric() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INotification
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::UI::Notifications::NotificationVisual Visual() const;
-    void Visual(const Windows::UI::Notifications::NotificationVisual & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INotificationBinding
-{
-    hstring Template() const;
-    void Template(hstring_ref value) const;
-    hstring Language() const;
-    void Language(hstring_ref value) const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Hints() const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> GetTextElements() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INotificationVisual
-{
-    hstring Language() const;
-    void Language(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> Bindings() const;
-    Windows::UI::Notifications::NotificationBinding GetBinding(hstring_ref templateName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledTileNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    Windows::Foundation::DateTime DeliveryTime() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-    void Tag(hstring_ref value) const;
-    hstring Tag() const;
-    void Id(hstring_ref value) const;
-    hstring Id() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledTileNotificationFactory
-{
-    Windows::UI::Notifications::ScheduledTileNotification CreateScheduledTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledToastNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    Windows::Foundation::DateTime DeliveryTime() const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> SnoozeInterval() const;
-    uint32_t MaximumSnoozeCount() const;
-    void Id(hstring_ref value) const;
-    hstring Id() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledToastNotification2
-{
-    void Tag(hstring_ref value) const;
-    hstring Tag() const;
-    void Group(hstring_ref value) const;
-    hstring Group() const;
-    void SuppressPopup(bool value) const;
-    bool SuppressPopup() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledToastNotification3
-{
-    Windows::UI::Notifications::NotificationMirroring NotificationMirroring() const;
-    void NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
-    hstring RemoteId() const;
-    void RemoteId(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IScheduledToastNotificationFactory
-{
-    Windows::UI::Notifications::ScheduledToastNotification CreateScheduledToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const;
-    Windows::UI::Notifications::ScheduledToastNotification CreateScheduledToastNotificationRecurring(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime, const Windows::Foundation::TimeSpan & snoozeInterval, uint32_t maximumSnoozeCount) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IShownTileNotification
-{
-    hstring Arguments() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileFlyoutNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileFlyoutNotificationFactory
-{
-    Windows::UI::Notifications::TileFlyoutNotification CreateTileFlyoutNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileFlyoutUpdateManagerStatics
-{
-    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication() const;
-    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForApplication(hstring_ref applicationId) const;
-    Windows::UI::Notifications::TileFlyoutUpdater CreateTileFlyoutUpdaterForSecondaryTile(hstring_ref tileId) const;
-    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileFlyoutUpdater
-{
-    void Update(const Windows::UI::Notifications::TileFlyoutNotification & notification) const;
-    void Clear() const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StopPeriodicUpdate() const;
-    Windows::UI::Notifications::NotificationSetting Setting() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-    void Tag(hstring_ref value) const;
-    hstring Tag() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileNotificationFactory
-{
-    Windows::UI::Notifications::TileNotification CreateTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileUpdateManagerForUser
-{
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplicationForUser() const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_ref applicationId) const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_ref tileId) const;
-    Windows::System::User User() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileUpdateManagerStatics
-{
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication() const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForApplication(hstring_ref applicationId) const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSecondaryTile(hstring_ref tileId) const;
-    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::TileTemplateType type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileUpdateManagerStatics2
-{
-    Windows::UI::Notifications::TileUpdateManagerForUser GetForUser(const Windows::System::User & user) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileUpdater
-{
-    void Update(const Windows::UI::Notifications::TileNotification & notification) const;
-    void Clear() const;
-    void EnableNotificationQueue(bool enable) const;
-    Windows::UI::Notifications::NotificationSetting Setting() const;
-    void AddToSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const;
-    void RemoveFromSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> GetScheduledTileNotifications() const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StopPeriodicUpdate() const;
-    void StartPeriodicUpdateBatch(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> & tileContents, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-    void StartPeriodicUpdateBatch(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> & tileContents, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITileUpdater2
-{
-    void EnableNotificationQueueForSquare150x150(bool enable) const;
-    void EnableNotificationQueueForWide310x150(bool enable) const;
-    void EnableNotificationQueueForSquare310x310(bool enable) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastActivatedEventArgs
-{
-    hstring Arguments() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastDismissedEventArgs
-{
-    Windows::UI::Notifications::ToastDismissalReason Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastFailedEventArgs
-{
-    HRESULT ErrorCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotification
-{
-    Windows::Data::Xml::Dom::XmlDocument Content() const;
-    void ExpirationTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationTime() const;
-    event_token Dismissed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const;
-    using Dismissed_revoker = event_revoker<IToastNotification>;
-    Dismissed_revoker Dismissed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const;
-    void Dismissed(event_token cookie) const;
-    event_token Activated(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::IInspectable> & handler) const;
-    using Activated_revoker = event_revoker<IToastNotification>;
-    Activated_revoker Activated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::IInspectable> & handler) const;
-    void Activated(event_token cookie) const;
-    event_token Failed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const;
-    using Failed_revoker = event_revoker<IToastNotification>;
-    Failed_revoker Failed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const;
-    void Failed(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotification2
-{
-    void Tag(hstring_ref value) const;
-    hstring Tag() const;
-    void Group(hstring_ref value) const;
-    hstring Group() const;
-    void SuppressPopup(bool value) const;
-    bool SuppressPopup() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotification3
-{
-    Windows::UI::Notifications::NotificationMirroring NotificationMirroring() const;
-    void NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
-    hstring RemoteId() const;
-    void RemoteId(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationActionTriggerDetail
-{
-    hstring Argument() const;
-    Windows::Foundation::Collections::ValueSet UserInput() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationFactory
-{
-    Windows::UI::Notifications::ToastNotification CreateToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationHistory
-{
-    void RemoveGroup(hstring_ref group) const;
-    void RemoveGroup(hstring_ref group, hstring_ref applicationId) const;
-    void Remove(hstring_ref tag, hstring_ref group, hstring_ref applicationId) const;
-    void Remove(hstring_ref tag, hstring_ref group) const;
-    void Remove(hstring_ref tag) const;
-    void Clear() const;
-    void Clear(hstring_ref applicationId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationHistory2
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> GetHistory() const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> GetHistory(hstring_ref applicationId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationHistoryChangedTriggerDetail
-{
-    Windows::UI::Notifications::ToastHistoryChangedType ChangeType() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationManagerForUser
-{
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifier() const;
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_ref applicationId) const;
-    Windows::UI::Notifications::ToastNotificationHistory History() const;
-    Windows::System::User User() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationManagerStatics
-{
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifier() const;
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifier(hstring_ref applicationId) const;
-    Windows::Data::Xml::Dom::XmlDocument GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationManagerStatics2
-{
-    Windows::UI::Notifications::ToastNotificationHistory History() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationManagerStatics4
-{
-    Windows::UI::Notifications::ToastNotificationManagerForUser GetForUser(const Windows::System::User & user) const;
-    void ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotifier
-{
-    void Show(const Windows::UI::Notifications::ToastNotification & notification) const;
-    void Hide(const Windows::UI::Notifications::ToastNotification & notification) const;
-    Windows::UI::Notifications::NotificationSetting Setting() const;
-    void AddToSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const;
-    void RemoveFromSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const;
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> GetScheduledToastNotifications() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserNotification
-{
-    Windows::UI::Notifications::Notification Notification() const;
-    Windows::ApplicationModel::AppInfo AppInfo() const;
-    uint32_t Id() const;
-    Windows::Foundation::DateTime CreationTime() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserNotificationChangedEventArgs
-{
-    Windows::UI::Notifications::UserNotificationChangedKind ChangeKind() const;
-    uint32_t UserNotificationId() const;
-};
-
 struct IAdaptiveNotificationContent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAdaptiveNotificationContent>
 {
     IAdaptiveNotificationContent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAdaptiveNotificationContent>(m_ptr); }
 };
 
 struct IAdaptiveNotificationText :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAdaptiveNotificationText>,
     impl::require<IAdaptiveNotificationText, Windows::UI::Notifications::IAdaptiveNotificationContent>
 {
     IAdaptiveNotificationText(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAdaptiveNotificationText>(m_ptr); }
 };
 
 struct IBadgeNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeNotification>
 {
     IBadgeNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeNotification>(m_ptr); }
 };
 
 struct IBadgeNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeNotificationFactory>
 {
     IBadgeNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeNotificationFactory>(m_ptr); }
 };
 
 struct IBadgeUpdateManagerForUser :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeUpdateManagerForUser>
 {
     IBadgeUpdateManagerForUser(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeUpdateManagerForUser>(m_ptr); }
 };
 
 struct IBadgeUpdateManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeUpdateManagerStatics>
 {
     IBadgeUpdateManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeUpdateManagerStatics>(m_ptr); }
 };
 
 struct IBadgeUpdateManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeUpdateManagerStatics2>
 {
     IBadgeUpdateManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeUpdateManagerStatics2>(m_ptr); }
 };
 
 struct IBadgeUpdater :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBadgeUpdater>
 {
     IBadgeUpdater(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBadgeUpdater>(m_ptr); }
 };
 
 struct IKnownAdaptiveNotificationHintsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownAdaptiveNotificationHintsStatics>
 {
     IKnownAdaptiveNotificationHintsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownAdaptiveNotificationHintsStatics>(m_ptr); }
 };
 
 struct IKnownAdaptiveNotificationTextStylesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownAdaptiveNotificationTextStylesStatics>
 {
     IKnownAdaptiveNotificationTextStylesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownAdaptiveNotificationTextStylesStatics>(m_ptr); }
 };
 
 struct IKnownNotificationBindingsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownNotificationBindingsStatics>
 {
     IKnownNotificationBindingsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownNotificationBindingsStatics>(m_ptr); }
 };
 
 struct INotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INotification>
 {
     INotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INotification>(m_ptr); }
 };
 
 struct INotificationBinding :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INotificationBinding>
 {
     INotificationBinding(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INotificationBinding>(m_ptr); }
 };
 
 struct INotificationVisual :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INotificationVisual>
 {
     INotificationVisual(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INotificationVisual>(m_ptr); }
 };
 
 struct IScheduledTileNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledTileNotification>
 {
     IScheduledTileNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledTileNotification>(m_ptr); }
 };
 
 struct IScheduledTileNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledTileNotificationFactory>
 {
     IScheduledTileNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledTileNotificationFactory>(m_ptr); }
 };
 
 struct IScheduledToastNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledToastNotification>
 {
     IScheduledToastNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledToastNotification>(m_ptr); }
 };
 
 struct IScheduledToastNotification2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledToastNotification2>
 {
     IScheduledToastNotification2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledToastNotification2>(m_ptr); }
 };
 
 struct IScheduledToastNotification3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledToastNotification3>
 {
     IScheduledToastNotification3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledToastNotification3>(m_ptr); }
 };
 
 struct IScheduledToastNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IScheduledToastNotificationFactory>
 {
     IScheduledToastNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IScheduledToastNotificationFactory>(m_ptr); }
 };
 
 struct IShownTileNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IShownTileNotification>
 {
     IShownTileNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IShownTileNotification>(m_ptr); }
 };
 
 struct ITileFlyoutNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileFlyoutNotification>
 {
     ITileFlyoutNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileFlyoutNotification>(m_ptr); }
 };
 
 struct ITileFlyoutNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileFlyoutNotificationFactory>
 {
     ITileFlyoutNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileFlyoutNotificationFactory>(m_ptr); }
 };
 
 struct ITileFlyoutUpdateManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileFlyoutUpdateManagerStatics>
 {
     ITileFlyoutUpdateManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileFlyoutUpdateManagerStatics>(m_ptr); }
 };
 
 struct ITileFlyoutUpdater :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileFlyoutUpdater>
 {
     ITileFlyoutUpdater(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileFlyoutUpdater>(m_ptr); }
 };
 
 struct ITileNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileNotification>
 {
     ITileNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileNotification>(m_ptr); }
 };
 
 struct ITileNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileNotificationFactory>
 {
     ITileNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileNotificationFactory>(m_ptr); }
 };
 
 struct ITileUpdateManagerForUser :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileUpdateManagerForUser>
 {
     ITileUpdateManagerForUser(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileUpdateManagerForUser>(m_ptr); }
 };
 
 struct ITileUpdateManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileUpdateManagerStatics>
 {
     ITileUpdateManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileUpdateManagerStatics>(m_ptr); }
 };
 
 struct ITileUpdateManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileUpdateManagerStatics2>
 {
     ITileUpdateManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileUpdateManagerStatics2>(m_ptr); }
 };
 
 struct ITileUpdater :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileUpdater>
 {
     ITileUpdater(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileUpdater>(m_ptr); }
 };
 
 struct ITileUpdater2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITileUpdater2>
 {
     ITileUpdater2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITileUpdater2>(m_ptr); }
 };
 
 struct IToastActivatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastActivatedEventArgs>
 {
     IToastActivatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastActivatedEventArgs>(m_ptr); }
 };
 
 struct IToastDismissedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastDismissedEventArgs>
 {
     IToastDismissedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastDismissedEventArgs>(m_ptr); }
 };
 
 struct IToastFailedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastFailedEventArgs>
 {
     IToastFailedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastFailedEventArgs>(m_ptr); }
 };
 
 struct IToastNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotification>
 {
     IToastNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotification>(m_ptr); }
 };
 
 struct IToastNotification2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotification2>
 {
     IToastNotification2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotification2>(m_ptr); }
 };
 
 struct IToastNotification3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotification3>
 {
     IToastNotification3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotification3>(m_ptr); }
 };
 
 struct IToastNotificationActionTriggerDetail :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationActionTriggerDetail>
 {
     IToastNotificationActionTriggerDetail(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationActionTriggerDetail>(m_ptr); }
 };
 
 struct IToastNotificationFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationFactory>
 {
     IToastNotificationFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationFactory>(m_ptr); }
 };
 
 struct IToastNotificationHistory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationHistory>
 {
     IToastNotificationHistory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationHistory>(m_ptr); }
 };
 
 struct IToastNotificationHistory2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationHistory2>
 {
     IToastNotificationHistory2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationHistory2>(m_ptr); }
 };
 
 struct IToastNotificationHistoryChangedTriggerDetail :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationHistoryChangedTriggerDetail>
 {
     IToastNotificationHistoryChangedTriggerDetail(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationHistoryChangedTriggerDetail>(m_ptr); }
 };
 
 struct IToastNotificationManagerForUser :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationManagerForUser>
 {
     IToastNotificationManagerForUser(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationManagerForUser>(m_ptr); }
 };
 
 struct IToastNotificationManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationManagerStatics>
 {
     IToastNotificationManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationManagerStatics>(m_ptr); }
 };
 
 struct IToastNotificationManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationManagerStatics2>
 {
     IToastNotificationManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationManagerStatics2>(m_ptr); }
 };
 
 struct IToastNotificationManagerStatics4 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationManagerStatics4>
 {
     IToastNotificationManagerStatics4(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationManagerStatics4>(m_ptr); }
 };
 
 struct IToastNotifier :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotifier>
 {
     IToastNotifier(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotifier>(m_ptr); }
 };
 
 struct IUserNotification :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserNotification>
 {
     IUserNotification(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserNotification>(m_ptr); }
 };
 
 struct IUserNotificationChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserNotificationChangedEventArgs>
 {
     IUserNotificationChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserNotificationChangedEventArgs>(m_ptr); }
 };
 
 }

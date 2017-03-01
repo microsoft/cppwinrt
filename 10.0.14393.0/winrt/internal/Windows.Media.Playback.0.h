@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -205,6 +205,65 @@ struct TimedMetadataPresentationModeChangedEventArgs;
 
 namespace Windows::Media::Playback {
 
+template <typename T> struct impl_IBackgroundMediaPlayerStatics;
+template <typename T> struct impl_ICurrentMediaPlaybackItemChangedEventArgs;
+template <typename T> struct impl_IMediaBreak;
+template <typename T> struct impl_IMediaBreakEndedEventArgs;
+template <typename T> struct impl_IMediaBreakFactory;
+template <typename T> struct impl_IMediaBreakManager;
+template <typename T> struct impl_IMediaBreakSchedule;
+template <typename T> struct impl_IMediaBreakSeekedOverEventArgs;
+template <typename T> struct impl_IMediaBreakSkippedEventArgs;
+template <typename T> struct impl_IMediaBreakStartedEventArgs;
+template <typename T> struct impl_IMediaEnginePlaybackSource;
+template <typename T> struct impl_IMediaItemDisplayProperties;
+template <typename T> struct impl_IMediaPlaybackCommandManager;
+template <typename T> struct impl_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerCommandBehavior;
+template <typename T> struct impl_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerNextReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerPauseReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerPlayReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerPositionReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerPreviousReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerRateReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerRewindReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackCommandManagerShuffleReceivedEventArgs;
+template <typename T> struct impl_IMediaPlaybackItem;
+template <typename T> struct impl_IMediaPlaybackItem2;
+template <typename T> struct impl_IMediaPlaybackItemError;
+template <typename T> struct impl_IMediaPlaybackItemFactory;
+template <typename T> struct impl_IMediaPlaybackItemFactory2;
+template <typename T> struct impl_IMediaPlaybackItemFailedEventArgs;
+template <typename T> struct impl_IMediaPlaybackItemOpenedEventArgs;
+template <typename T> struct impl_IMediaPlaybackItemStatics;
+template <typename T> struct impl_IMediaPlaybackList;
+template <typename T> struct impl_IMediaPlaybackList2;
+template <typename T> struct impl_IMediaPlaybackSession;
+template <typename T> struct impl_IMediaPlaybackSource;
+template <typename T> struct impl_IMediaPlaybackTimedMetadataTrackList;
+template <typename T> struct impl_IMediaPlayer;
+template <typename T> struct impl_IMediaPlayer2;
+template <typename T> struct impl_IMediaPlayer3;
+template <typename T> struct impl_IMediaPlayer4;
+template <typename T> struct impl_IMediaPlayerDataReceivedEventArgs;
+template <typename T> struct impl_IMediaPlayerEffects;
+template <typename T> struct impl_IMediaPlayerEffects2;
+template <typename T> struct impl_IMediaPlayerFailedEventArgs;
+template <typename T> struct impl_IMediaPlayerRateChangedEventArgs;
+template <typename T> struct impl_IMediaPlayerSource;
+template <typename T> struct impl_IMediaPlayerSource2;
+template <typename T> struct impl_IMediaPlayerSurface;
+template <typename T> struct impl_IPlaybackMediaMarker;
+template <typename T> struct impl_IPlaybackMediaMarkerFactory;
+template <typename T> struct impl_IPlaybackMediaMarkerReachedEventArgs;
+template <typename T> struct impl_IPlaybackMediaMarkerSequence;
+template <typename T> struct impl_ITimedMetadataPresentationModeChangedEventArgs;
+
+}
+
+namespace Windows::Media::Playback {
+
 enum class FailedMediaStreamKind
 {
     Unknown = 0,
@@ -274,7 +333,7 @@ enum class MediaPlayerError
     SourceNotSupported = 4,
 };
 
-enum class MediaPlayerState
+enum class [[deprecated("Use MediaPlaybackState instead of MediaPlayerState.  For more info, see MSDN.")]] MediaPlayerState
 {
     Closed = 0,
     Opening = 1,

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -25,17 +25,17 @@ struct WINRT_EBO AudioEffectDefinition :
     Windows::Media::Effects::IAudioEffectDefinition
 {
     AudioEffectDefinition(std::nullptr_t) noexcept {}
-    AudioEffectDefinition(hstring_ref activatableClassId);
-    AudioEffectDefinition(hstring_ref activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
+    AudioEffectDefinition(hstring_view activatableClassId);
+    AudioEffectDefinition(hstring_view activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
 };
 
 struct AudioEffectsManager
 {
     AudioEffectsManager() = delete;
-    static Windows::Media::Effects::AudioRenderEffectsManager CreateAudioRenderEffectsManager(hstring_ref deviceId, Windows::Media::Render::AudioRenderCategory category);
-    static Windows::Media::Effects::AudioRenderEffectsManager CreateAudioRenderEffectsManager(hstring_ref deviceId, Windows::Media::Render::AudioRenderCategory category, Windows::Media::AudioProcessing mode);
-    static Windows::Media::Effects::AudioCaptureEffectsManager CreateAudioCaptureEffectsManager(hstring_ref deviceId, Windows::Media::Capture::MediaCategory category);
-    static Windows::Media::Effects::AudioCaptureEffectsManager CreateAudioCaptureEffectsManager(hstring_ref deviceId, Windows::Media::Capture::MediaCategory category, Windows::Media::AudioProcessing mode);
+    static Windows::Media::Effects::AudioRenderEffectsManager CreateAudioRenderEffectsManager(hstring_view deviceId, Windows::Media::Render::AudioRenderCategory category);
+    static Windows::Media::Effects::AudioRenderEffectsManager CreateAudioRenderEffectsManager(hstring_view deviceId, Windows::Media::Render::AudioRenderCategory category, Windows::Media::AudioProcessing mode);
+    static Windows::Media::Effects::AudioCaptureEffectsManager CreateAudioCaptureEffectsManager(hstring_view deviceId, Windows::Media::Capture::MediaCategory category);
+    static Windows::Media::Effects::AudioCaptureEffectsManager CreateAudioCaptureEffectsManager(hstring_view deviceId, Windows::Media::Capture::MediaCategory category, Windows::Media::AudioProcessing mode);
 };
 
 struct WINRT_EBO AudioRenderEffectsManager :
@@ -74,16 +74,16 @@ struct WINRT_EBO VideoCompositorDefinition :
     Windows::Media::Effects::IVideoCompositorDefinition
 {
     VideoCompositorDefinition(std::nullptr_t) noexcept {}
-    VideoCompositorDefinition(hstring_ref activatableClassId);
-    VideoCompositorDefinition(hstring_ref activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
+    VideoCompositorDefinition(hstring_view activatableClassId);
+    VideoCompositorDefinition(hstring_view activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
 };
 
 struct WINRT_EBO VideoEffectDefinition :
     Windows::Media::Effects::IVideoEffectDefinition
 {
     VideoEffectDefinition(std::nullptr_t) noexcept {}
-    VideoEffectDefinition(hstring_ref activatableClassId);
-    VideoEffectDefinition(hstring_ref activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
+    VideoEffectDefinition(hstring_view activatableClassId);
+    VideoEffectDefinition(hstring_view activatableClassId, const Windows::Foundation::Collections::IPropertySet & props);
 };
 
 struct WINRT_EBO VideoTransformEffectDefinition :

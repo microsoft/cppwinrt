@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::System::Profile {
 
-struct __declspec(uuid("d7ded029-fdda-43e7-93fb-e53ab6e89ec3")) __declspec(novtable) IRetailModeStatics : Windows::IInspectable
+struct __declspec(uuid("d7ded029-fdda-43e7-93fb-e53ab6e89ec3")) __declspec(novtable) IRetailModeStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RetailModeEnabled(bool * value) = 0;
 };
@@ -24,7 +24,11 @@ namespace ABI {
 
 namespace Windows::Phone::System::Profile {
 
-template <typename T> struct impl_IRetailModeStatics;
+template <typename D>
+struct WINRT_EBO impl_IRetailModeStatics
+{
+    [[deprecated("Use Windows.System.Profile.IRetailInfoStatics instead.")]] bool RetailModeEnabled() const;
+};
 
 }
 

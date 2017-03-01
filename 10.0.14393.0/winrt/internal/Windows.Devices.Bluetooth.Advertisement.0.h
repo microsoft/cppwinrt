@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -66,6 +66,27 @@ struct BluetoothLEAdvertisementReceivedEventArgs;
 struct BluetoothLEAdvertisementWatcher;
 struct BluetoothLEAdvertisementWatcherStoppedEventArgs;
 struct BluetoothLEManufacturerData;
+
+}
+
+namespace Windows::Devices::Bluetooth::Advertisement {
+
+template <typename T> struct impl_IBluetoothLEAdvertisement;
+template <typename T> struct impl_IBluetoothLEAdvertisementBytePattern;
+template <typename T> struct impl_IBluetoothLEAdvertisementBytePatternFactory;
+template <typename T> struct impl_IBluetoothLEAdvertisementDataSection;
+template <typename T> struct impl_IBluetoothLEAdvertisementDataSectionFactory;
+template <typename T> struct impl_IBluetoothLEAdvertisementDataTypesStatics;
+template <typename T> struct impl_IBluetoothLEAdvertisementFilter;
+template <typename T> struct impl_IBluetoothLEAdvertisementPublisher;
+template <typename T> struct impl_IBluetoothLEAdvertisementPublisherFactory;
+template <typename T> struct impl_IBluetoothLEAdvertisementPublisherStatusChangedEventArgs;
+template <typename T> struct impl_IBluetoothLEAdvertisementReceivedEventArgs;
+template <typename T> struct impl_IBluetoothLEAdvertisementWatcher;
+template <typename T> struct impl_IBluetoothLEAdvertisementWatcherFactory;
+template <typename T> struct impl_IBluetoothLEAdvertisementWatcherStoppedEventArgs;
+template <typename T> struct impl_IBluetoothLEManufacturerData;
+template <typename T> struct impl_IBluetoothLEManufacturerDataFactory;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -135,6 +135,43 @@ struct ProxyConfiguration;
 struct RoutePolicy;
 struct WlanConnectionProfileDetails;
 struct WwanConnectionProfileDetails;
+
+}
+
+namespace Windows::Networking::Connectivity {
+
+template <typename T> struct impl_IAttributedNetworkUsage;
+template <typename T> struct impl_ICellularApnContext;
+template <typename T> struct impl_IConnectionCost;
+template <typename T> struct impl_IConnectionCost2;
+template <typename T> struct impl_IConnectionProfile;
+template <typename T> struct impl_IConnectionProfile2;
+template <typename T> struct impl_IConnectionProfile3;
+template <typename T> struct impl_IConnectionProfileFilter;
+template <typename T> struct impl_IConnectionProfileFilter2;
+template <typename T> struct impl_IConnectionSession;
+template <typename T> struct impl_IConnectivityInterval;
+template <typename T> struct impl_IConnectivityManagerStatics;
+template <typename T> struct impl_IDataPlanStatus;
+template <typename T> struct impl_IDataPlanUsage;
+template <typename T> struct impl_IDataUsage;
+template <typename T> struct impl_IIPInformation;
+template <typename T> struct impl_ILanIdentifier;
+template <typename T> struct impl_ILanIdentifierData;
+template <typename T> struct impl_INetworkAdapter;
+template <typename T> struct impl_INetworkInformationStatics;
+template <typename T> struct impl_INetworkInformationStatics2;
+template <typename T> struct impl_INetworkItem;
+template <typename T> struct impl_INetworkSecuritySettings;
+template <typename T> struct impl_INetworkStateChangeEventDetails;
+template <typename T> struct impl_INetworkStateChangeEventDetails2;
+template <typename T> struct impl_INetworkUsage;
+template <typename T> struct impl_IProxyConfiguration;
+template <typename T> struct impl_IRoutePolicy;
+template <typename T> struct impl_IRoutePolicyFactory;
+template <typename T> struct impl_IWlanConnectionProfileDetails;
+template <typename T> struct impl_IWwanConnectionProfileDetails;
+template <typename T> struct impl_NetworkStatusChangedEventHandler;
 
 }
 

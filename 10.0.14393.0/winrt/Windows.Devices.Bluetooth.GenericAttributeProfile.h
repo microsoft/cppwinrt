@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
@@ -18,11 +21,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic>
 {
-    HRESULT __stdcall abi_GetDescriptors(GUID descriptorUuid, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor>> value) noexcept override
+    HRESULT __stdcall abi_GetDescriptors(GUID descriptorUuid, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDescriptors(descriptorUuid));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDescriptors(descriptorUuid));
             return S_OK;
         }
         catch (...)
@@ -36,7 +40,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CharacteristicProperties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicProperties());
             return S_OK;
         }
         catch (...)
@@ -49,7 +54,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ProtectionLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtectionLevel());
             return S_OK;
         }
         catch (...)
@@ -62,6 +68,7 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProtectionLevel(value);
             return S_OK;
         }
@@ -71,11 +78,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall get_UserDescription(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserDescription(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UserDescription());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UserDescription());
             return S_OK;
         }
         catch (...)
@@ -89,7 +97,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().Uuid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Uuid());
             return S_OK;
         }
         catch (...)
@@ -102,7 +111,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AttributeHandle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AttributeHandle());
             return S_OK;
         }
         catch (...)
@@ -111,25 +121,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall get_PresentationFormats(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat>> value) noexcept override
+    HRESULT __stdcall get_PresentationFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PresentationFormats());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_ReadValueAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ReadValueAsync());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PresentationFormats());
             return S_OK;
         }
         catch (...)
@@ -139,11 +136,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_ReadValueWithCacheModeAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
+    HRESULT __stdcall abi_ReadValueAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadValueAsync(cacheMode));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadValueAsync());
             return S_OK;
         }
         catch (...)
@@ -153,11 +151,27 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_WriteValueAsync(abi_arg_in<Windows::Storage::Streams::IBuffer> value, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
+    HRESULT __stdcall abi_ReadValueWithCacheModeAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
     {
         try
         {
-            *asyncOp = detach(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadValueAsync(cacheMode));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_WriteValueAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *asyncOp = detach_abi(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -167,11 +181,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_WriteValueWithOptionAsync(abi_arg_in<Windows::Storage::Streams::IBuffer> value, Windows::Devices::Bluetooth::GenericAttributeProfile::GattWriteOption writeOption, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
+    HRESULT __stdcall abi_WriteValueWithOptionAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value, Windows::Devices::Bluetooth::GenericAttributeProfile::GattWriteOption writeOption, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
     {
         try
         {
-            *asyncOp = detach(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value), writeOption));
+            typename D::abi_guard guard(this->shim());
+            *asyncOp = detach_abi(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value), writeOption));
             return S_OK;
         }
         catch (...)
@@ -181,11 +196,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_ReadClientCharacteristicConfigurationDescriptorAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult>> asyncOp) noexcept override
+    HRESULT __stdcall abi_ReadClientCharacteristicConfigurationDescriptorAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult>> asyncOp) noexcept override
     {
         try
         {
-            *asyncOp = detach(this->shim().ReadClientCharacteristicConfigurationDescriptorAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncOp = detach_abi(this->shim().ReadClientCharacteristicConfigurationDescriptorAsync());
             return S_OK;
         }
         catch (...)
@@ -195,11 +211,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_WriteClientCharacteristicConfigurationDescriptorAsync(Windows::Devices::Bluetooth::GenericAttributeProfile::GattClientCharacteristicConfigurationDescriptorValue clientCharacteristicConfigurationDescriptorValue, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
+    HRESULT __stdcall abi_WriteClientCharacteristicConfigurationDescriptorAsync(Windows::Devices::Bluetooth::GenericAttributeProfile::GattClientCharacteristicConfigurationDescriptorValue clientCharacteristicConfigurationDescriptorValue, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
     {
         try
         {
-            *asyncOp = detach(this->shim().WriteClientCharacteristicConfigurationDescriptorAsync(clientCharacteristicConfigurationDescriptorValue));
+            typename D::abi_guard guard(this->shim());
+            *asyncOp = detach_abi(this->shim().WriteClientCharacteristicConfigurationDescriptorAsync(clientCharacteristicConfigurationDescriptorValue));
             return S_OK;
         }
         catch (...)
@@ -209,11 +226,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall add_ValueChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic, Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs>> valueChangedHandler, event_token * valueChangedEventCookie) noexcept override
+    HRESULT __stdcall add_ValueChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic, Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs>> valueChangedHandler, event_token * valueChangedEventCookie) noexcept override
     {
         try
         {
-            *valueChangedEventCookie = detach(this->shim().ValueChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic, Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs> *>(&valueChangedHandler)));
+            typename D::abi_guard guard(this->shim());
+            *valueChangedEventCookie = detach_abi(this->shim().ValueChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic, Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs> *>(&valueChangedHandler)));
             return S_OK;
         }
         catch (...)
@@ -226,6 +244,7 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ValueChanged(valueChangedEventCookie);
             return S_OK;
         }
@@ -239,11 +258,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic2> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic2>
 {
-    HRESULT __stdcall get_Service(abi_arg_out<Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService> value) noexcept override
+    HRESULT __stdcall get_Service(impl::abi_arg_out<Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Service());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Service());
             return S_OK;
         }
         catch (...)
@@ -253,11 +273,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
         }
     }
 
-    HRESULT __stdcall abi_GetAllDescriptors(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor>> descriptors) noexcept override
+    HRESULT __stdcall abi_GetAllDescriptors(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor>> descriptors) noexcept override
     {
         try
         {
-            *descriptors = detach(this->shim().GetAllDescriptors());
+            typename D::abi_guard guard(this->shim());
+            *descriptors = detach_abi(this->shim().GetAllDescriptors());
             return S_OK;
         }
         catch (...)
@@ -275,7 +296,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *characteristicUuid = detach(this->shim().ConvertShortIdToUuid(shortId));
+            typename D::abi_guard guard(this->shim());
+            *characteristicUuid = detach_abi(this->shim().ConvertShortIdToUuid(shortId));
             return S_OK;
         }
         catch (...)
@@ -292,7 +314,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BatteryLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BatteryLevel());
             return S_OK;
         }
         catch (...)
@@ -305,7 +328,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BloodPressureFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BloodPressureFeature());
             return S_OK;
         }
         catch (...)
@@ -318,7 +342,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BloodPressureMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BloodPressureMeasurement());
             return S_OK;
         }
         catch (...)
@@ -331,7 +356,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BodySensorLocation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BodySensorLocation());
             return S_OK;
         }
         catch (...)
@@ -344,7 +370,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CscFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CscFeature());
             return S_OK;
         }
         catch (...)
@@ -357,7 +384,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CscMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CscMeasurement());
             return S_OK;
         }
         catch (...)
@@ -370,7 +398,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GlucoseFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlucoseFeature());
             return S_OK;
         }
         catch (...)
@@ -383,7 +412,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GlucoseMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlucoseMeasurement());
             return S_OK;
         }
         catch (...)
@@ -396,7 +426,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GlucoseMeasurementContext());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GlucoseMeasurementContext());
             return S_OK;
         }
         catch (...)
@@ -409,7 +440,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().HeartRateControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeartRateControlPoint());
             return S_OK;
         }
         catch (...)
@@ -422,7 +454,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().HeartRateMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeartRateMeasurement());
             return S_OK;
         }
         catch (...)
@@ -435,7 +468,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().IntermediateCuffPressure());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IntermediateCuffPressure());
             return S_OK;
         }
         catch (...)
@@ -448,7 +482,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().IntermediateTemperature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IntermediateTemperature());
             return S_OK;
         }
         catch (...)
@@ -461,7 +496,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().MeasurementInterval());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MeasurementInterval());
             return S_OK;
         }
         catch (...)
@@ -474,7 +510,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().RecordAccessControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RecordAccessControlPoint());
             return S_OK;
         }
         catch (...)
@@ -487,7 +524,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().RscFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RscFeature());
             return S_OK;
         }
         catch (...)
@@ -500,7 +538,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().RscMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RscMeasurement());
             return S_OK;
         }
         catch (...)
@@ -513,7 +552,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SCControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SCControlPoint());
             return S_OK;
         }
         catch (...)
@@ -526,7 +566,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SensorLocation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SensorLocation());
             return S_OK;
         }
         catch (...)
@@ -539,7 +580,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TemperatureMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TemperatureMeasurement());
             return S_OK;
         }
         catch (...)
@@ -552,7 +594,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TemperatureType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TemperatureType());
             return S_OK;
         }
         catch (...)
@@ -569,7 +612,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AlertCategoryId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertCategoryId());
             return S_OK;
         }
         catch (...)
@@ -582,7 +626,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AlertCategoryIdBitMask());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertCategoryIdBitMask());
             return S_OK;
         }
         catch (...)
@@ -595,7 +640,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AlertLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertLevel());
             return S_OK;
         }
         catch (...)
@@ -608,7 +654,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AlertNotificationControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertNotificationControlPoint());
             return S_OK;
         }
         catch (...)
@@ -621,7 +668,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().AlertStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertStatus());
             return S_OK;
         }
         catch (...)
@@ -634,7 +682,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GapAppearance());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GapAppearance());
             return S_OK;
         }
         catch (...)
@@ -647,7 +696,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BootKeyboardInputReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BootKeyboardInputReport());
             return S_OK;
         }
         catch (...)
@@ -660,7 +710,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BootKeyboardOutputReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BootKeyboardOutputReport());
             return S_OK;
         }
         catch (...)
@@ -673,7 +724,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().BootMouseInputReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BootMouseInputReport());
             return S_OK;
         }
         catch (...)
@@ -686,7 +738,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CurrentTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentTime());
             return S_OK;
         }
         catch (...)
@@ -699,7 +752,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CyclingPowerControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingPowerControlPoint());
             return S_OK;
         }
         catch (...)
@@ -712,7 +766,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CyclingPowerFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingPowerFeature());
             return S_OK;
         }
         catch (...)
@@ -725,7 +780,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CyclingPowerMeasurement());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingPowerMeasurement());
             return S_OK;
         }
         catch (...)
@@ -738,7 +794,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().CyclingPowerVector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingPowerVector());
             return S_OK;
         }
         catch (...)
@@ -751,7 +808,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().DateTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DateTime());
             return S_OK;
         }
         catch (...)
@@ -764,7 +822,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().DayDateTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DayDateTime());
             return S_OK;
         }
         catch (...)
@@ -777,7 +836,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().DayOfWeek());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DayOfWeek());
             return S_OK;
         }
         catch (...)
@@ -790,7 +850,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GapDeviceName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GapDeviceName());
             return S_OK;
         }
         catch (...)
@@ -803,7 +864,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().DstOffset());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DstOffset());
             return S_OK;
         }
         catch (...)
@@ -816,7 +878,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ExactTime256());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExactTime256());
             return S_OK;
         }
         catch (...)
@@ -829,7 +892,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().FirmwareRevisionString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FirmwareRevisionString());
             return S_OK;
         }
         catch (...)
@@ -842,7 +906,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().HardwareRevisionString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HardwareRevisionString());
             return S_OK;
         }
         catch (...)
@@ -855,7 +920,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().HidControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HidControlPoint());
             return S_OK;
         }
         catch (...)
@@ -868,7 +934,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().HidInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HidInformation());
             return S_OK;
         }
         catch (...)
@@ -881,7 +948,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().Ieee1107320601RegulatoryCertificationDataList());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Ieee1107320601RegulatoryCertificationDataList());
             return S_OK;
         }
         catch (...)
@@ -894,7 +962,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().LnControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LnControlPoint());
             return S_OK;
         }
         catch (...)
@@ -907,7 +976,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().LnFeature());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LnFeature());
             return S_OK;
         }
         catch (...)
@@ -920,7 +990,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().LocalTimeInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalTimeInformation());
             return S_OK;
         }
         catch (...)
@@ -933,7 +1004,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().LocationAndSpeed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocationAndSpeed());
             return S_OK;
         }
         catch (...)
@@ -946,7 +1018,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ManufacturerNameString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ManufacturerNameString());
             return S_OK;
         }
         catch (...)
@@ -959,7 +1032,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ModelNumberString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ModelNumberString());
             return S_OK;
         }
         catch (...)
@@ -972,7 +1046,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().Navigation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Navigation());
             return S_OK;
         }
         catch (...)
@@ -985,7 +1060,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().NewAlert());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NewAlert());
             return S_OK;
         }
         catch (...)
@@ -998,7 +1074,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GapPeripheralPreferredConnectionParameters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GapPeripheralPreferredConnectionParameters());
             return S_OK;
         }
         catch (...)
@@ -1011,7 +1088,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GapPeripheralPrivacyFlag());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GapPeripheralPrivacyFlag());
             return S_OK;
         }
         catch (...)
@@ -1024,7 +1102,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().PnpId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PnpId());
             return S_OK;
         }
         catch (...)
@@ -1037,7 +1116,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().PositionQuality());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PositionQuality());
             return S_OK;
         }
         catch (...)
@@ -1050,7 +1130,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ProtocolMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtocolMode());
             return S_OK;
         }
         catch (...)
@@ -1063,7 +1144,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GapReconnectionAddress());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GapReconnectionAddress());
             return S_OK;
         }
         catch (...)
@@ -1076,7 +1158,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ReferenceTimeInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReferenceTimeInformation());
             return S_OK;
         }
         catch (...)
@@ -1089,7 +1172,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().Report());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Report());
             return S_OK;
         }
         catch (...)
@@ -1102,7 +1186,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ReportMap());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportMap());
             return S_OK;
         }
         catch (...)
@@ -1115,7 +1200,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().RingerControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RingerControlPoint());
             return S_OK;
         }
         catch (...)
@@ -1128,7 +1214,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().RingerSetting());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RingerSetting());
             return S_OK;
         }
         catch (...)
@@ -1141,7 +1228,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ScanIntervalWindow());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScanIntervalWindow());
             return S_OK;
         }
         catch (...)
@@ -1154,7 +1242,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().ScanRefresh());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScanRefresh());
             return S_OK;
         }
         catch (...)
@@ -1167,7 +1256,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SerialNumberString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SerialNumberString());
             return S_OK;
         }
         catch (...)
@@ -1180,7 +1270,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().GattServiceChanged());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GattServiceChanged());
             return S_OK;
         }
         catch (...)
@@ -1193,7 +1284,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SoftwareRevisionString());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SoftwareRevisionString());
             return S_OK;
         }
         catch (...)
@@ -1206,7 +1298,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SupportedNewAlertCategory());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedNewAlertCategory());
             return S_OK;
         }
         catch (...)
@@ -1219,7 +1312,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SupportUnreadAlertCategory());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportUnreadAlertCategory());
             return S_OK;
         }
         catch (...)
@@ -1232,7 +1326,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().SystemId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemId());
             return S_OK;
         }
         catch (...)
@@ -1245,7 +1340,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeAccuracy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeAccuracy());
             return S_OK;
         }
         catch (...)
@@ -1258,7 +1354,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeSource());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeSource());
             return S_OK;
         }
         catch (...)
@@ -1271,7 +1368,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeUpdateControlPoint());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeUpdateControlPoint());
             return S_OK;
         }
         catch (...)
@@ -1284,7 +1382,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeUpdateState());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeUpdateState());
             return S_OK;
         }
         catch (...)
@@ -1297,7 +1396,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeWithDst());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeWithDst());
             return S_OK;
         }
         catch (...)
@@ -1310,7 +1410,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TimeZone());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TimeZone());
             return S_OK;
         }
         catch (...)
@@ -1323,7 +1424,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().TxPowerLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TxPowerLevel());
             return S_OK;
         }
         catch (...)
@@ -1336,7 +1438,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCha
     {
         try
         {
-            *value = detach(this->shim().UnreadAlertStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnreadAlertStatus());
             return S_OK;
         }
         catch (...)
@@ -1353,7 +1456,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().ProtectionLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtectionLevel());
             return S_OK;
         }
         catch (...)
@@ -1366,6 +1470,7 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProtectionLevel(value);
             return S_OK;
         }
@@ -1379,7 +1484,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().Uuid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Uuid());
             return S_OK;
         }
         catch (...)
@@ -1392,7 +1498,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().AttributeHandle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AttributeHandle());
             return S_OK;
         }
         catch (...)
@@ -1401,25 +1508,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
         }
     }
 
-    HRESULT __stdcall abi_ReadValueAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
+    HRESULT __stdcall abi_ReadValueAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ReadValueAsync());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_ReadValueWithCacheModeAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ReadValueAsync(cacheMode));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadValueAsync());
             return S_OK;
         }
         catch (...)
@@ -1429,11 +1523,27 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
         }
     }
 
-    HRESULT __stdcall abi_WriteValueAsync(abi_arg_in<Windows::Storage::Streams::IBuffer> value, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> action) noexcept override
+    HRESULT __stdcall abi_ReadValueWithCacheModeAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>> value) noexcept override
     {
         try
         {
-            *action = detach(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadValueAsync(cacheMode));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_WriteValueAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> action) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *action = detach_abi(this->shim().WriteValueAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1451,7 +1561,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *descriptorUuid = detach(this->shim().ConvertShortIdToUuid(shortId));
+            typename D::abi_guard guard(this->shim());
+            *descriptorUuid = detach_abi(this->shim().ConvertShortIdToUuid(shortId));
             return S_OK;
         }
         catch (...)
@@ -1468,7 +1579,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().CharacteristicAggregateFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicAggregateFormat());
             return S_OK;
         }
         catch (...)
@@ -1481,7 +1593,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().CharacteristicExtendedProperties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicExtendedProperties());
             return S_OK;
         }
         catch (...)
@@ -1494,7 +1607,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().CharacteristicPresentationFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicPresentationFormat());
             return S_OK;
         }
         catch (...)
@@ -1507,7 +1621,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().CharacteristicUserDescription());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicUserDescription());
             return S_OK;
         }
         catch (...)
@@ -1520,7 +1635,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().ClientCharacteristicConfiguration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ClientCharacteristicConfiguration());
             return S_OK;
         }
         catch (...)
@@ -1533,7 +1649,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
     {
         try
         {
-            *value = detach(this->shim().ServerCharacteristicConfiguration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ServerCharacteristicConfiguration());
             return S_OK;
         }
         catch (...)
@@ -1546,11 +1663,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDes
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService>
 {
-    HRESULT __stdcall abi_GetCharacteristics(GUID characteristicUuid, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic>> value) noexcept override
+    HRESULT __stdcall abi_GetCharacteristics(GUID characteristicUuid, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetCharacteristics(characteristicUuid));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetCharacteristics(characteristicUuid));
             return S_OK;
         }
         catch (...)
@@ -1560,11 +1678,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall abi_GetIncludedServices(GUID serviceUuid, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> value) noexcept override
+    HRESULT __stdcall abi_GetIncludedServices(GUID serviceUuid, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetIncludedServices(serviceUuid));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetIncludedServices(serviceUuid));
             return S_OK;
         }
         catch (...)
@@ -1574,11 +1693,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -1592,7 +1712,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
     {
         try
         {
-            *value = detach(this->shim().Uuid());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Uuid());
             return S_OK;
         }
         catch (...)
@@ -1605,7 +1726,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
     {
         try
         {
-            *value = detach(this->shim().AttributeHandle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AttributeHandle());
             return S_OK;
         }
         catch (...)
@@ -1618,11 +1740,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService2> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService2>
 {
-    HRESULT __stdcall get_Device(abi_arg_out<Windows::Devices::Bluetooth::IBluetoothLEDevice> value) noexcept override
+    HRESULT __stdcall get_Device(impl::abi_arg_out<Windows::Devices::Bluetooth::IBluetoothLEDevice> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Device());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Device());
             return S_OK;
         }
         catch (...)
@@ -1632,11 +1755,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall get_ParentServices(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> value) noexcept override
+    HRESULT __stdcall get_ParentServices(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentServices());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentServices());
             return S_OK;
         }
         catch (...)
@@ -1646,11 +1770,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall abi_GetAllCharacteristics(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic>> characteristics) noexcept override
+    HRESULT __stdcall abi_GetAllCharacteristics(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic>> characteristics) noexcept override
     {
         try
         {
-            *characteristics = detach(this->shim().GetAllCharacteristics());
+            typename D::abi_guard guard(this->shim());
+            *characteristics = detach_abi(this->shim().GetAllCharacteristics());
             return S_OK;
         }
         catch (...)
@@ -1660,11 +1785,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall abi_GetAllIncludedServices(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> includedServices) noexcept override
+    HRESULT __stdcall abi_GetAllIncludedServices(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> includedServices) noexcept override
     {
         try
         {
-            *includedServices = detach(this->shim().GetAllIncludedServices());
+            typename D::abi_guard guard(this->shim());
+            *includedServices = detach_abi(this->shim().GetAllIncludedServices());
             return S_OK;
         }
         catch (...)
@@ -1678,11 +1804,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceServiceStatics> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceServiceStatics>
 {
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> gattDeviceService) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>> gattDeviceService) noexcept override
     {
         try
         {
-            *gattDeviceService = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *gattDeviceService = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -1692,11 +1819,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelectorFromUuid(GUID serviceUuid, abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelectorFromUuid(GUID serviceUuid, impl::abi_arg_out<hstring> selector) noexcept override
     {
         try
         {
-            *selector = detach(this->shim().GetDeviceSelectorFromUuid(serviceUuid));
+            typename D::abi_guard guard(this->shim());
+            *selector = detach_abi(this->shim().GetDeviceSelectorFromUuid(serviceUuid));
             return S_OK;
         }
         catch (...)
@@ -1706,11 +1834,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelectorFromShortId(uint16_t serviceShortId, abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelectorFromShortId(uint16_t serviceShortId, impl::abi_arg_out<hstring> selector) noexcept override
     {
         try
         {
-            *selector = detach(this->shim().GetDeviceSelectorFromShortId(serviceShortId));
+            typename D::abi_guard guard(this->shim());
+            *selector = detach_abi(this->shim().GetDeviceSelectorFromShortId(serviceShortId));
             return S_OK;
         }
         catch (...)
@@ -1724,7 +1853,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDev
     {
         try
         {
-            *serviceUuid = detach(this->shim().ConvertShortIdToUuid(shortId));
+            typename D::abi_guard guard(this->shim());
+            *serviceUuid = detach_abi(this->shim().ConvertShortIdToUuid(shortId));
             return S_OK;
         }
         catch (...)
@@ -1741,7 +1871,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().FormatType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FormatType());
             return S_OK;
         }
         catch (...)
@@ -1754,7 +1885,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Exponent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Exponent());
             return S_OK;
         }
         catch (...)
@@ -1767,7 +1899,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Unit());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Unit());
             return S_OK;
         }
         catch (...)
@@ -1780,7 +1913,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Namespace());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Namespace());
             return S_OK;
         }
         catch (...)
@@ -1793,7 +1927,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Description());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Description());
             return S_OK;
         }
         catch (...)
@@ -1810,7 +1945,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().BluetoothSigAssignedNumbers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BluetoothSigAssignedNumbers());
             return S_OK;
         }
         catch (...)
@@ -1827,7 +1963,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Boolean());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Boolean());
             return S_OK;
         }
         catch (...)
@@ -1840,7 +1977,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Bit2());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Bit2());
             return S_OK;
         }
         catch (...)
@@ -1853,7 +1991,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Nibble());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Nibble());
             return S_OK;
         }
         catch (...)
@@ -1866,7 +2005,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt8());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt8());
             return S_OK;
         }
         catch (...)
@@ -1879,7 +2019,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt12());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt12());
             return S_OK;
         }
         catch (...)
@@ -1892,7 +2033,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt16());
             return S_OK;
         }
         catch (...)
@@ -1905,7 +2047,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt24());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt24());
             return S_OK;
         }
         catch (...)
@@ -1918,7 +2061,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt32());
             return S_OK;
         }
         catch (...)
@@ -1931,7 +2075,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt48());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt48());
             return S_OK;
         }
         catch (...)
@@ -1944,7 +2089,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt64());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt64());
             return S_OK;
         }
         catch (...)
@@ -1957,7 +2103,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().UInt128());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UInt128());
             return S_OK;
         }
         catch (...)
@@ -1970,7 +2117,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt8());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt8());
             return S_OK;
         }
         catch (...)
@@ -1983,7 +2131,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt12());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt12());
             return S_OK;
         }
         catch (...)
@@ -1996,7 +2145,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt16());
             return S_OK;
         }
         catch (...)
@@ -2009,7 +2159,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt24());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt24());
             return S_OK;
         }
         catch (...)
@@ -2022,7 +2173,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt32());
             return S_OK;
         }
         catch (...)
@@ -2035,7 +2187,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt48());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt48());
             return S_OK;
         }
         catch (...)
@@ -2048,7 +2201,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt64());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt64());
             return S_OK;
         }
         catch (...)
@@ -2061,7 +2215,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SInt128());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SInt128());
             return S_OK;
         }
         catch (...)
@@ -2074,7 +2229,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Float32());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Float32());
             return S_OK;
         }
         catch (...)
@@ -2087,7 +2243,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Float64());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Float64());
             return S_OK;
         }
         catch (...)
@@ -2100,7 +2257,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().SFloat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SFloat());
             return S_OK;
         }
         catch (...)
@@ -2113,7 +2271,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Float());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Float());
             return S_OK;
         }
         catch (...)
@@ -2126,7 +2285,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().DUInt16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DUInt16());
             return S_OK;
         }
         catch (...)
@@ -2139,7 +2299,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Utf8());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Utf8());
             return S_OK;
         }
         catch (...)
@@ -2152,7 +2313,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Utf16());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Utf16());
             return S_OK;
         }
         catch (...)
@@ -2165,7 +2327,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPre
     {
         try
         {
-            *value = detach(this->shim().Struct());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Struct());
             return S_OK;
         }
         catch (...)
@@ -2182,7 +2345,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRea
     {
         try
         {
-            *value = detach(this->shim().Status());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Status());
             return S_OK;
         }
         catch (...)
@@ -2195,7 +2359,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRea
     {
         try
         {
-            *value = detach(this->shim().ClientCharacteristicConfigurationDescriptor());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ClientCharacteristicConfigurationDescriptor());
             return S_OK;
         }
         catch (...)
@@ -2212,7 +2377,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRea
     {
         try
         {
-            *value = detach(this->shim().Status());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Status());
             return S_OK;
         }
         catch (...)
@@ -2221,11 +2387,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRea
         }
     }
 
-    HRESULT __stdcall get_Value(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Value(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Value());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Value());
             return S_OK;
         }
         catch (...)
@@ -2239,10 +2406,11 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRea
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReliableWriteTransaction> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReliableWriteTransaction>
 {
-    HRESULT __stdcall abi_WriteValue(abi_arg_in<Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic> characteristic, abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall abi_WriteValue(impl::abi_arg_in<Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic> characteristic, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().WriteValue(*reinterpret_cast<const Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic *>(&characteristic), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
             return S_OK;
         }
@@ -2252,11 +2420,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattRel
         }
     }
 
-    HRESULT __stdcall abi_CommitAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
+    HRESULT __stdcall abi_CommitAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus>> asyncOp) noexcept override
     {
         try
         {
-            *asyncOp = detach(this->shim().CommitAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncOp = detach_abi(this->shim().CommitAsync());
             return S_OK;
         }
         catch (...)
@@ -2274,7 +2443,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().Battery());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Battery());
             return S_OK;
         }
         catch (...)
@@ -2287,7 +2457,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().BloodPressure());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BloodPressure());
             return S_OK;
         }
         catch (...)
@@ -2300,7 +2471,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().CyclingSpeedAndCadence());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingSpeedAndCadence());
             return S_OK;
         }
         catch (...)
@@ -2313,7 +2485,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().GenericAccess());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GenericAccess());
             return S_OK;
         }
         catch (...)
@@ -2326,7 +2499,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().GenericAttribute());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GenericAttribute());
             return S_OK;
         }
         catch (...)
@@ -2339,7 +2513,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().Glucose());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Glucose());
             return S_OK;
         }
         catch (...)
@@ -2352,7 +2527,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().HealthThermometer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HealthThermometer());
             return S_OK;
         }
         catch (...)
@@ -2365,7 +2541,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().HeartRate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeartRate());
             return S_OK;
         }
         catch (...)
@@ -2378,7 +2555,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().RunningSpeedAndCadence());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RunningSpeedAndCadence());
             return S_OK;
         }
         catch (...)
@@ -2395,7 +2573,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().AlertNotification());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlertNotification());
             return S_OK;
         }
         catch (...)
@@ -2408,7 +2587,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().CurrentTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentTime());
             return S_OK;
         }
         catch (...)
@@ -2421,7 +2601,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().CyclingPower());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CyclingPower());
             return S_OK;
         }
         catch (...)
@@ -2434,7 +2615,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().DeviceInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceInformation());
             return S_OK;
         }
         catch (...)
@@ -2447,7 +2629,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().HumanInterfaceDevice());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HumanInterfaceDevice());
             return S_OK;
         }
         catch (...)
@@ -2460,7 +2643,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().ImmediateAlert());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ImmediateAlert());
             return S_OK;
         }
         catch (...)
@@ -2473,7 +2657,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().LinkLoss());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LinkLoss());
             return S_OK;
         }
         catch (...)
@@ -2486,7 +2671,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().LocationAndNavigation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocationAndNavigation());
             return S_OK;
         }
         catch (...)
@@ -2499,7 +2685,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().NextDstChange());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NextDstChange());
             return S_OK;
         }
         catch (...)
@@ -2512,7 +2699,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().PhoneAlertStatus());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhoneAlertStatus());
             return S_OK;
         }
         catch (...)
@@ -2525,7 +2713,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().ReferenceTimeUpdate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReferenceTimeUpdate());
             return S_OK;
         }
         catch (...)
@@ -2538,7 +2727,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().ScanParameters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScanParameters());
             return S_OK;
         }
         catch (...)
@@ -2551,7 +2741,8 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
     {
         try
         {
-            *value = detach(this->shim().TxPower());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TxPower());
             return S_OK;
         }
         catch (...)
@@ -2564,11 +2755,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattSer
 template <typename D>
 struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattValueChangedEventArgs> : produce_base<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattValueChangedEventArgs>
 {
-    HRESULT __stdcall get_CharacteristicValue(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_CharacteristicValue(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CharacteristicValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CharacteristicValue());
             return S_OK;
         }
         catch (...)
@@ -2578,11 +2770,12 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattVal
         }
     }
 
-    HRESULT __stdcall get_Timestamp(abi_arg_out<Windows::Foundation::DateTime> timestamp) noexcept override
+    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> timestamp) noexcept override
     {
         try
         {
-            *timestamp = detach(this->shim().Timestamp());
+            typename D::abi_guard guard(this->shim());
+            *timestamp = detach_abi(this->shim().Timestamp());
             return S_OK;
         }
         catch (...)
@@ -2596,141 +2789,141 @@ struct produce<D, Windows::Devices::Bluetooth::GenericAttributeProfile::IGattVal
 
 namespace Windows::Devices::Bluetooth::GenericAttributeProfile {
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> impl_IGattDeviceServiceStatics<D>::FromIdAsync(hstring_ref deviceId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> impl_IGattDeviceServiceStatics<D>::FromIdAsync(hstring_view deviceId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> gattDeviceService;
-    check_hresult(static_cast<const IGattDeviceServiceStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), put(gattDeviceService)));
+    check_hresult(WINRT_SHIM(IGattDeviceServiceStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(gattDeviceService)));
     return gattDeviceService;
 }
 
 template <typename D> hstring impl_IGattDeviceServiceStatics<D>::GetDeviceSelectorFromUuid(GUID serviceUuid) const
 {
     hstring selector;
-    check_hresult(static_cast<const IGattDeviceServiceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelectorFromUuid(serviceUuid, put(selector)));
+    check_hresult(WINRT_SHIM(IGattDeviceServiceStatics)->abi_GetDeviceSelectorFromUuid(serviceUuid, put_abi(selector)));
     return selector;
 }
 
 template <typename D> hstring impl_IGattDeviceServiceStatics<D>::GetDeviceSelectorFromShortId(uint16_t serviceShortId) const
 {
     hstring selector;
-    check_hresult(static_cast<const IGattDeviceServiceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelectorFromShortId(serviceShortId, put(selector)));
+    check_hresult(WINRT_SHIM(IGattDeviceServiceStatics)->abi_GetDeviceSelectorFromShortId(serviceShortId, put_abi(selector)));
     return selector;
 }
 
 template <typename D> GUID impl_IGattDeviceServiceStatics<D>::ConvertShortIdToUuid(uint16_t shortId) const
 {
     GUID serviceUuid {};
-    check_hresult(static_cast<const IGattDeviceServiceStatics &>(static_cast<const D &>(*this))->abi_ConvertShortIdToUuid(shortId, &serviceUuid));
+    check_hresult(WINRT_SHIM(IGattDeviceServiceStatics)->abi_ConvertShortIdToUuid(shortId, &serviceUuid));
     return serviceUuid;
 }
 
 template <typename D> GUID impl_IGattCharacteristicStatics<D>::ConvertShortIdToUuid(uint16_t shortId) const
 {
     GUID characteristicUuid {};
-    check_hresult(static_cast<const IGattCharacteristicStatics &>(static_cast<const D &>(*this))->abi_ConvertShortIdToUuid(shortId, &characteristicUuid));
+    check_hresult(WINRT_SHIM(IGattCharacteristicStatics)->abi_ConvertShortIdToUuid(shortId, &characteristicUuid));
     return characteristicUuid;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor> impl_IGattCharacteristic<D>::GetDescriptors(GUID descriptorUuid) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor> value;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_GetDescriptors(descriptorUuid, put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_GetDescriptors(descriptorUuid, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristicProperties impl_IGattCharacteristic<D>::CharacteristicProperties() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristicProperties value {};
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_CharacteristicProperties(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_CharacteristicProperties(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel impl_IGattCharacteristic<D>::ProtectionLevel() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel value {};
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_ProtectionLevel(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_ProtectionLevel(&value));
     return value;
 }
 
 template <typename D> void impl_IGattCharacteristic<D>::ProtectionLevel(Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel value) const
 {
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->put_ProtectionLevel(value));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->put_ProtectionLevel(value));
 }
 
 template <typename D> hstring impl_IGattCharacteristic<D>::UserDescription() const
 {
     hstring value;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_UserDescription(put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_UserDescription(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristic<D>::Uuid() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_Uuid(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_Uuid(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IGattCharacteristic<D>::AttributeHandle() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_AttributeHandle(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_AttributeHandle(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat> impl_IGattCharacteristic<D>::PresentationFormats() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat> value;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->get_PresentationFormats(put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->get_PresentationFormats(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> impl_IGattCharacteristic<D>::ReadValueAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> value;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_ReadValueAsync(put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_ReadValueAsync(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> impl_IGattCharacteristic<D>::ReadValueAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> value;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_ReadValueWithCacheModeAsync(cacheMode, put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_ReadValueWithCacheModeAsync(cacheMode, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> impl_IGattCharacteristic<D>::WriteValueAsync(const Windows::Storage::Streams::IBuffer & value) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> asyncOp;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_WriteValueAsync(get(value), put(asyncOp)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_WriteValueAsync(get_abi(value), put_abi(asyncOp)));
     return asyncOp;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> impl_IGattCharacteristic<D>::WriteValueAsync(const Windows::Storage::Streams::IBuffer & value, Windows::Devices::Bluetooth::GenericAttributeProfile::GattWriteOption writeOption) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> asyncOp;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_WriteValueWithOptionAsync(get(value), writeOption, put(asyncOp)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_WriteValueWithOptionAsync(get_abi(value), writeOption, put_abi(asyncOp)));
     return asyncOp;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult> impl_IGattCharacteristic<D>::ReadClientCharacteristicConfigurationDescriptorAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult> asyncOp;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_ReadClientCharacteristicConfigurationDescriptorAsync(put(asyncOp)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_ReadClientCharacteristicConfigurationDescriptorAsync(put_abi(asyncOp)));
     return asyncOp;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> impl_IGattCharacteristic<D>::WriteClientCharacteristicConfigurationDescriptorAsync(Windows::Devices::Bluetooth::GenericAttributeProfile::GattClientCharacteristicConfigurationDescriptorValue clientCharacteristicConfigurationDescriptorValue) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> asyncOp;
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->abi_WriteClientCharacteristicConfigurationDescriptorAsync(clientCharacteristicConfigurationDescriptorValue, put(asyncOp)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->abi_WriteClientCharacteristicConfigurationDescriptorAsync(clientCharacteristicConfigurationDescriptorValue, put_abi(asyncOp)));
     return asyncOp;
 }
 
 template <typename D> event_token impl_IGattCharacteristic<D>::ValueChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic, Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs> & valueChangedHandler) const
 {
     event_token valueChangedEventCookie {};
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->add_ValueChanged(get(valueChangedHandler), &valueChangedEventCookie));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->add_ValueChanged(get_abi(valueChangedHandler), &valueChangedEventCookie));
     return valueChangedEventCookie;
 }
 
@@ -2741,1185 +2934,1185 @@ template <typename D> event_revoker<IGattCharacteristic> impl_IGattCharacteristi
 
 template <typename D> void impl_IGattCharacteristic<D>::ValueChanged(event_token valueChangedEventCookie) const
 {
-    check_hresult(static_cast<const IGattCharacteristic &>(static_cast<const D &>(*this))->remove_ValueChanged(valueChangedEventCookie));
+    check_hresult(WINRT_SHIM(IGattCharacteristic)->remove_ValueChanged(valueChangedEventCookie));
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService impl_IGattCharacteristic2<D>::Service() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService value { nullptr };
-    check_hresult(static_cast<const IGattCharacteristic2 &>(static_cast<const D &>(*this))->get_Service(put(value)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic2)->get_Service(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor> impl_IGattCharacteristic2<D>::GetAllDescriptors() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor> descriptors;
-    check_hresult(static_cast<const IGattCharacteristic2 &>(static_cast<const D &>(*this))->abi_GetAllDescriptors(put(descriptors)));
+    check_hresult(WINRT_SHIM(IGattCharacteristic2)->abi_GetAllDescriptors(put_abi(descriptors)));
     return descriptors;
 }
 
 template <typename D> GUID impl_IGattDescriptorStatics<D>::ConvertShortIdToUuid(uint16_t shortId) const
 {
     GUID descriptorUuid {};
-    check_hresult(static_cast<const IGattDescriptorStatics &>(static_cast<const D &>(*this))->abi_ConvertShortIdToUuid(shortId, &descriptorUuid));
+    check_hresult(WINRT_SHIM(IGattDescriptorStatics)->abi_ConvertShortIdToUuid(shortId, &descriptorUuid));
     return descriptorUuid;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel impl_IGattDescriptor<D>::ProtectionLevel() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel value {};
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->get_ProtectionLevel(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->get_ProtectionLevel(&value));
     return value;
 }
 
 template <typename D> void impl_IGattDescriptor<D>::ProtectionLevel(Windows::Devices::Bluetooth::GenericAttributeProfile::GattProtectionLevel value) const
 {
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->put_ProtectionLevel(value));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->put_ProtectionLevel(value));
 }
 
 template <typename D> GUID impl_IGattDescriptor<D>::Uuid() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->get_Uuid(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->get_Uuid(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IGattDescriptor<D>::AttributeHandle() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->get_AttributeHandle(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->get_AttributeHandle(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> impl_IGattDescriptor<D>::ReadValueAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> value;
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->abi_ReadValueAsync(put(value)));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->abi_ReadValueAsync(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> impl_IGattDescriptor<D>::ReadValueAsync(Windows::Devices::Bluetooth::BluetoothCacheMode cacheMode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult> value;
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->abi_ReadValueWithCacheModeAsync(cacheMode, put(value)));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->abi_ReadValueWithCacheModeAsync(cacheMode, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> impl_IGattDescriptor<D>::WriteValueAsync(const Windows::Storage::Streams::IBuffer & value) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> action;
-    check_hresult(static_cast<const IGattDescriptor &>(static_cast<const D &>(*this))->abi_WriteValueAsync(get(value), put(action)));
+    check_hresult(WINRT_SHIM(IGattDescriptor)->abi_WriteValueAsync(get_abi(value), put_abi(action)));
     return action;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatStatics<D>::BluetoothSigAssignedNumbers() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatStatics &>(static_cast<const D &>(*this))->get_BluetoothSigAssignedNumbers(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatStatics)->get_BluetoothSigAssignedNumbers(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Boolean() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Boolean(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Boolean(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Bit2() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Bit2(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Bit2(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Nibble() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Nibble(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Nibble(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt8() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt8(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt8(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt12() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt12(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt12(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt16() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt16(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt16(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt24() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt24(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt24(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt32() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt32(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt32(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt48() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt48(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt48(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt64() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt64(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt64(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::UInt128() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_UInt128(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_UInt128(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt8() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt8(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt8(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt12() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt12(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt12(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt16() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt16(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt16(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt24() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt24(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt24(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt32() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt32(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt32(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt48() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt48(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt48(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt64() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt64(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt64(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SInt128() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SInt128(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SInt128(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Float32() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Float32(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Float32(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Float64() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Float64(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Float64(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::SFloat() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_SFloat(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_SFloat(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Float() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Float(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Float(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::DUInt16() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_DUInt16(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_DUInt16(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Utf8() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Utf8(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Utf8(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Utf16() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Utf16(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Utf16(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormatTypesStatics<D>::Struct() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormatTypesStatics &>(static_cast<const D &>(*this))->get_Struct(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormatTypesStatics)->get_Struct(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormat<D>::FormatType() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormat &>(static_cast<const D &>(*this))->get_FormatType(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormat)->get_FormatType(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IGattPresentationFormat<D>::Exponent() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IGattPresentationFormat &>(static_cast<const D &>(*this))->get_Exponent(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormat)->get_Exponent(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IGattPresentationFormat<D>::Unit() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IGattPresentationFormat &>(static_cast<const D &>(*this))->get_Unit(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormat)->get_Unit(&value));
     return value;
 }
 
 template <typename D> uint8_t impl_IGattPresentationFormat<D>::Namespace() const
 {
     uint8_t value {};
-    check_hresult(static_cast<const IGattPresentationFormat &>(static_cast<const D &>(*this))->get_Namespace(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormat)->get_Namespace(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IGattPresentationFormat<D>::Description() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IGattPresentationFormat &>(static_cast<const D &>(*this))->get_Description(&value));
+    check_hresult(WINRT_SHIM(IGattPresentationFormat)->get_Description(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IGattValueChangedEventArgs<D>::CharacteristicValue() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IGattValueChangedEventArgs &>(static_cast<const D &>(*this))->get_CharacteristicValue(put(value)));
+    check_hresult(WINRT_SHIM(IGattValueChangedEventArgs)->get_CharacteristicValue(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IGattValueChangedEventArgs<D>::Timestamp() const
 {
     Windows::Foundation::DateTime timestamp {};
-    check_hresult(static_cast<const IGattValueChangedEventArgs &>(static_cast<const D &>(*this))->get_Timestamp(put(timestamp)));
+    check_hresult(WINRT_SHIM(IGattValueChangedEventArgs)->get_Timestamp(put_abi(timestamp)));
     return timestamp;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::Battery() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_Battery(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_Battery(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::BloodPressure() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_BloodPressure(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_BloodPressure(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::CyclingSpeedAndCadence() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_CyclingSpeedAndCadence(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_CyclingSpeedAndCadence(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::GenericAccess() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_GenericAccess(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_GenericAccess(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::GenericAttribute() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_GenericAttribute(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_GenericAttribute(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::Glucose() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_Glucose(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_Glucose(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::HealthThermometer() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_HealthThermometer(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_HealthThermometer(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::HeartRate() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_HeartRate(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_HeartRate(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics<D>::RunningSpeedAndCadence() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics &>(static_cast<const D &>(*this))->get_RunningSpeedAndCadence(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics)->get_RunningSpeedAndCadence(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::AlertNotification() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertNotification(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_AlertNotification(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::CurrentTime() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_CurrentTime(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_CurrentTime(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::CyclingPower() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_CyclingPower(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_CyclingPower(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::DeviceInformation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_DeviceInformation(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_DeviceInformation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::HumanInterfaceDevice() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_HumanInterfaceDevice(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_HumanInterfaceDevice(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::ImmediateAlert() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_ImmediateAlert(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_ImmediateAlert(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::LinkLoss() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_LinkLoss(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_LinkLoss(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::LocationAndNavigation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_LocationAndNavigation(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_LocationAndNavigation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::NextDstChange() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_NextDstChange(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_NextDstChange(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::PhoneAlertStatus() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_PhoneAlertStatus(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_PhoneAlertStatus(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::ReferenceTimeUpdate() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_ReferenceTimeUpdate(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_ReferenceTimeUpdate(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::ScanParameters() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_ScanParameters(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_ScanParameters(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattServiceUuidsStatics2<D>::TxPower() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattServiceUuidsStatics2 &>(static_cast<const D &>(*this))->get_TxPower(&value));
+    check_hresult(WINRT_SHIM(IGattServiceUuidsStatics2)->get_TxPower(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::BatteryLevel() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_BatteryLevel(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_BatteryLevel(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::BloodPressureFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_BloodPressureFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_BloodPressureFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::BloodPressureMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_BloodPressureMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_BloodPressureMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::BodySensorLocation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_BodySensorLocation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_BodySensorLocation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::CscFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_CscFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_CscFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::CscMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_CscMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_CscMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::GlucoseFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_GlucoseFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_GlucoseFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::GlucoseMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_GlucoseMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_GlucoseMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::GlucoseMeasurementContext() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_GlucoseMeasurementContext(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_GlucoseMeasurementContext(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::HeartRateControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_HeartRateControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_HeartRateControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::HeartRateMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_HeartRateMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_HeartRateMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::IntermediateCuffPressure() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_IntermediateCuffPressure(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_IntermediateCuffPressure(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::IntermediateTemperature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_IntermediateTemperature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_IntermediateTemperature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::MeasurementInterval() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_MeasurementInterval(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_MeasurementInterval(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::RecordAccessControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_RecordAccessControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_RecordAccessControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::RscFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_RscFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_RscFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::RscMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_RscMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_RscMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::SCControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_SCControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_SCControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::SensorLocation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_SensorLocation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_SensorLocation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::TemperatureMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_TemperatureMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_TemperatureMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics<D>::TemperatureType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics &>(static_cast<const D &>(*this))->get_TemperatureType(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics)->get_TemperatureType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::AlertCategoryId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertCategoryId(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_AlertCategoryId(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::AlertCategoryIdBitMask() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertCategoryIdBitMask(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_AlertCategoryIdBitMask(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::AlertLevel() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertLevel(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_AlertLevel(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::AlertNotificationControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertNotificationControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_AlertNotificationControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::AlertStatus() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_AlertStatus(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_AlertStatus(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GapAppearance() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GapAppearance(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GapAppearance(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::BootKeyboardInputReport() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_BootKeyboardInputReport(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_BootKeyboardInputReport(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::BootKeyboardOutputReport() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_BootKeyboardOutputReport(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_BootKeyboardOutputReport(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::BootMouseInputReport() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_BootMouseInputReport(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_BootMouseInputReport(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::CurrentTime() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_CurrentTime(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_CurrentTime(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::CyclingPowerControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_CyclingPowerControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_CyclingPowerControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::CyclingPowerFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_CyclingPowerFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_CyclingPowerFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::CyclingPowerMeasurement() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_CyclingPowerMeasurement(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_CyclingPowerMeasurement(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::CyclingPowerVector() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_CyclingPowerVector(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_CyclingPowerVector(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::DateTime() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_DateTime(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_DateTime(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::DayDateTime() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_DayDateTime(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_DayDateTime(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::DayOfWeek() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_DayOfWeek(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_DayOfWeek(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GapDeviceName() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GapDeviceName(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GapDeviceName(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::DstOffset() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_DstOffset(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_DstOffset(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ExactTime256() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ExactTime256(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ExactTime256(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::FirmwareRevisionString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_FirmwareRevisionString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_FirmwareRevisionString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::HardwareRevisionString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_HardwareRevisionString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_HardwareRevisionString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::HidControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_HidControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_HidControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::HidInformation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_HidInformation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_HidInformation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::Ieee1107320601RegulatoryCertificationDataList() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_Ieee1107320601RegulatoryCertificationDataList(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_Ieee1107320601RegulatoryCertificationDataList(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::LnControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_LnControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_LnControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::LnFeature() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_LnFeature(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_LnFeature(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::LocalTimeInformation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_LocalTimeInformation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_LocalTimeInformation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::LocationAndSpeed() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_LocationAndSpeed(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_LocationAndSpeed(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ManufacturerNameString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ManufacturerNameString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ManufacturerNameString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ModelNumberString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ModelNumberString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ModelNumberString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::Navigation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_Navigation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_Navigation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::NewAlert() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_NewAlert(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_NewAlert(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GapPeripheralPreferredConnectionParameters() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GapPeripheralPreferredConnectionParameters(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GapPeripheralPreferredConnectionParameters(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GapPeripheralPrivacyFlag() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GapPeripheralPrivacyFlag(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GapPeripheralPrivacyFlag(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::PnpId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_PnpId(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_PnpId(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::PositionQuality() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_PositionQuality(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_PositionQuality(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ProtocolMode() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ProtocolMode(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ProtocolMode(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GapReconnectionAddress() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GapReconnectionAddress(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GapReconnectionAddress(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ReferenceTimeInformation() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ReferenceTimeInformation(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ReferenceTimeInformation(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::Report() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_Report(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_Report(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ReportMap() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ReportMap(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ReportMap(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::RingerControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_RingerControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_RingerControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::RingerSetting() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_RingerSetting(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_RingerSetting(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ScanIntervalWindow() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ScanIntervalWindow(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ScanIntervalWindow(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::ScanRefresh() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_ScanRefresh(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_ScanRefresh(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::SerialNumberString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_SerialNumberString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_SerialNumberString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::GattServiceChanged() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_GattServiceChanged(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_GattServiceChanged(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::SoftwareRevisionString() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_SoftwareRevisionString(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_SoftwareRevisionString(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::SupportedNewAlertCategory() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_SupportedNewAlertCategory(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_SupportedNewAlertCategory(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::SupportUnreadAlertCategory() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_SupportUnreadAlertCategory(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_SupportUnreadAlertCategory(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::SystemId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_SystemId(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_SystemId(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeAccuracy() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeAccuracy(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeAccuracy(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeSource() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeSource(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeSource(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeUpdateControlPoint() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeUpdateControlPoint(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeUpdateControlPoint(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeUpdateState() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeUpdateState(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeUpdateState(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeWithDst() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeWithDst(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeWithDst(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TimeZone() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TimeZone(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TimeZone(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::TxPowerLevel() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_TxPowerLevel(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_TxPowerLevel(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattCharacteristicUuidsStatics2<D>::UnreadAlertStatus() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattCharacteristicUuidsStatics2 &>(static_cast<const D &>(*this))->get_UnreadAlertStatus(&value));
+    check_hresult(WINRT_SHIM(IGattCharacteristicUuidsStatics2)->get_UnreadAlertStatus(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::CharacteristicAggregateFormat() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_CharacteristicAggregateFormat(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_CharacteristicAggregateFormat(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::CharacteristicExtendedProperties() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_CharacteristicExtendedProperties(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_CharacteristicExtendedProperties(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::CharacteristicPresentationFormat() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_CharacteristicPresentationFormat(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_CharacteristicPresentationFormat(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::CharacteristicUserDescription() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_CharacteristicUserDescription(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_CharacteristicUserDescription(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::ClientCharacteristicConfiguration() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_ClientCharacteristicConfiguration(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_ClientCharacteristicConfiguration(&value));
     return value;
 }
 
 template <typename D> GUID impl_IGattDescriptorUuidsStatics<D>::ServerCharacteristicConfiguration() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDescriptorUuidsStatics &>(static_cast<const D &>(*this))->get_ServerCharacteristicConfiguration(&value));
+    check_hresult(WINRT_SHIM(IGattDescriptorUuidsStatics)->get_ServerCharacteristicConfiguration(&value));
     return value;
 }
 
 template <typename D> void impl_IGattReliableWriteTransaction<D>::WriteValue(const Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic & characteristic, const Windows::Storage::Streams::IBuffer & value) const
 {
-    check_hresult(static_cast<const IGattReliableWriteTransaction &>(static_cast<const D &>(*this))->abi_WriteValue(get(characteristic), get(value)));
+    check_hresult(WINRT_SHIM(IGattReliableWriteTransaction)->abi_WriteValue(get_abi(characteristic), get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> impl_IGattReliableWriteTransaction<D>::CommitAsync() const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus> asyncOp;
-    check_hresult(static_cast<const IGattReliableWriteTransaction &>(static_cast<const D &>(*this))->abi_CommitAsync(put(asyncOp)));
+    check_hresult(WINRT_SHIM(IGattReliableWriteTransaction)->abi_CommitAsync(put_abi(asyncOp)));
     return asyncOp;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus impl_IGattReadResult<D>::Status() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus value {};
-    check_hresult(static_cast<const IGattReadResult &>(static_cast<const D &>(*this))->get_Status(&value));
+    check_hresult(WINRT_SHIM(IGattReadResult)->get_Status(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IGattReadResult<D>::Value() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IGattReadResult &>(static_cast<const D &>(*this))->get_Value(put(value)));
+    check_hresult(WINRT_SHIM(IGattReadResult)->get_Value(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus impl_IGattReadClientCharacteristicConfigurationDescriptorResult<D>::Status() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattCommunicationStatus value {};
-    check_hresult(static_cast<const IGattReadClientCharacteristicConfigurationDescriptorResult &>(static_cast<const D &>(*this))->get_Status(&value));
+    check_hresult(WINRT_SHIM(IGattReadClientCharacteristicConfigurationDescriptorResult)->get_Status(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Bluetooth::GenericAttributeProfile::GattClientCharacteristicConfigurationDescriptorValue impl_IGattReadClientCharacteristicConfigurationDescriptorResult<D>::ClientCharacteristicConfigurationDescriptor() const
 {
     Windows::Devices::Bluetooth::GenericAttributeProfile::GattClientCharacteristicConfigurationDescriptorValue value {};
-    check_hresult(static_cast<const IGattReadClientCharacteristicConfigurationDescriptorResult &>(static_cast<const D &>(*this))->get_ClientCharacteristicConfigurationDescriptor(&value));
+    check_hresult(WINRT_SHIM(IGattReadClientCharacteristicConfigurationDescriptorResult)->get_ClientCharacteristicConfigurationDescriptor(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic> impl_IGattDeviceService<D>::GetCharacteristics(GUID characteristicUuid) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic> value;
-    check_hresult(static_cast<const IGattDeviceService &>(static_cast<const D &>(*this))->abi_GetCharacteristics(characteristicUuid, put(value)));
+    check_hresult(WINRT_SHIM(IGattDeviceService)->abi_GetCharacteristics(characteristicUuid, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> impl_IGattDeviceService<D>::GetIncludedServices(GUID serviceUuid) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> value;
-    check_hresult(static_cast<const IGattDeviceService &>(static_cast<const D &>(*this))->abi_GetIncludedServices(serviceUuid, put(value)));
+    check_hresult(WINRT_SHIM(IGattDeviceService)->abi_GetIncludedServices(serviceUuid, put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IGattDeviceService<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const IGattDeviceService &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(IGattDeviceService)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IGattDeviceService<D>::Uuid() const
 {
     GUID value {};
-    check_hresult(static_cast<const IGattDeviceService &>(static_cast<const D &>(*this))->get_Uuid(&value));
+    check_hresult(WINRT_SHIM(IGattDeviceService)->get_Uuid(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IGattDeviceService<D>::AttributeHandle() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IGattDeviceService &>(static_cast<const D &>(*this))->get_AttributeHandle(&value));
+    check_hresult(WINRT_SHIM(IGattDeviceService)->get_AttributeHandle(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::Bluetooth::BluetoothLEDevice impl_IGattDeviceService2<D>::Device() const
 {
     Windows::Devices::Bluetooth::BluetoothLEDevice value { nullptr };
-    check_hresult(static_cast<const IGattDeviceService2 &>(static_cast<const D &>(*this))->get_Device(put(value)));
+    check_hresult(WINRT_SHIM(IGattDeviceService2)->get_Device(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> impl_IGattDeviceService2<D>::ParentServices() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> value;
-    check_hresult(static_cast<const IGattDeviceService2 &>(static_cast<const D &>(*this))->get_ParentServices(put(value)));
+    check_hresult(WINRT_SHIM(IGattDeviceService2)->get_ParentServices(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic> impl_IGattDeviceService2<D>::GetAllCharacteristics() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic> characteristics;
-    check_hresult(static_cast<const IGattDeviceService2 &>(static_cast<const D &>(*this))->abi_GetAllCharacteristics(put(characteristics)));
+    check_hresult(WINRT_SHIM(IGattDeviceService2)->abi_GetAllCharacteristics(put_abi(characteristics)));
     return characteristics;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> impl_IGattDeviceService2<D>::GetAllIncludedServices() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> includedServices;
-    check_hresult(static_cast<const IGattDeviceService2 &>(static_cast<const D &>(*this))->abi_GetAllIncludedServices(put(includedServices)));
+    check_hresult(WINRT_SHIM(IGattDeviceService2)->abi_GetAllIncludedServices(put_abi(includedServices)));
     return includedServices;
 }
 
@@ -4368,7 +4561,7 @@ inline GUID GattDescriptorUuids::ServerCharacteristicConfiguration()
     return get_activation_factory<GattDescriptorUuids, IGattDescriptorUuidsStatics>().ServerCharacteristicConfiguration();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> GattDeviceService::FromIdAsync(hstring_ref deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService> GattDeviceService::FromIdAsync(hstring_view deviceId)
 {
     return get_activation_factory<GattDeviceService, IGattDeviceServiceStatics>().FromIdAsync(deviceId);
 }
@@ -4645,3 +4838,257 @@ inline GUID GattServiceUuids::TxPower()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic2>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristic2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicUuidsStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicUuidsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicUuidsStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattCharacteristicUuidsStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptor>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptorStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptorStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptorUuidsStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDescriptorUuidsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService2>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceService2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceServiceStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattDeviceServiceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormat>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormatStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormatStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormatTypesStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattPresentationFormatTypesStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReadClientCharacteristicConfigurationDescriptorResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReadClientCharacteristicConfigurationDescriptorResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReadResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReadResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReliableWriteTransaction>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattReliableWriteTransaction & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattServiceUuidsStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattServiceUuidsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattServiceUuidsStatics2>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattServiceUuidsStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattValueChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::IGattValueChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattDescriptor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattDeviceService & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattPresentationFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadClientCharacteristicConfigurationDescriptorResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReadResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReliableWriteTransaction>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattReliableWriteTransaction & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Bluetooth::GenericAttributeProfile::GattValueChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

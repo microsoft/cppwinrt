@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -186,6 +186,65 @@ struct EmailRecipient;
 struct EmailRecipientResolutionResult;
 struct EmailStore;
 struct EmailStoreNotificationTriggerDetails;
+
+}
+
+namespace Windows::ApplicationModel::Email {
+
+template <typename T> struct impl_IEmailAttachment;
+template <typename T> struct impl_IEmailAttachment2;
+template <typename T> struct impl_IEmailAttachmentFactory;
+template <typename T> struct impl_IEmailAttachmentFactory2;
+template <typename T> struct impl_IEmailConversation;
+template <typename T> struct impl_IEmailConversationBatch;
+template <typename T> struct impl_IEmailConversationReader;
+template <typename T> struct impl_IEmailFolder;
+template <typename T> struct impl_IEmailIrmInfo;
+template <typename T> struct impl_IEmailIrmInfoFactory;
+template <typename T> struct impl_IEmailIrmTemplate;
+template <typename T> struct impl_IEmailIrmTemplateFactory;
+template <typename T> struct impl_IEmailItemCounts;
+template <typename T> struct impl_IEmailMailbox;
+template <typename T> struct impl_IEmailMailbox2;
+template <typename T> struct impl_IEmailMailbox3;
+template <typename T> struct impl_IEmailMailbox4;
+template <typename T> struct impl_IEmailMailboxAction;
+template <typename T> struct impl_IEmailMailboxAutoReply;
+template <typename T> struct impl_IEmailMailboxAutoReplySettings;
+template <typename T> struct impl_IEmailMailboxCapabilities;
+template <typename T> struct impl_IEmailMailboxCapabilities2;
+template <typename T> struct impl_IEmailMailboxCapabilities3;
+template <typename T> struct impl_IEmailMailboxChange;
+template <typename T> struct impl_IEmailMailboxChangeReader;
+template <typename T> struct impl_IEmailMailboxChangeTracker;
+template <typename T> struct impl_IEmailMailboxChangedDeferral;
+template <typename T> struct impl_IEmailMailboxChangedEventArgs;
+template <typename T> struct impl_IEmailMailboxCreateFolderResult;
+template <typename T> struct impl_IEmailMailboxPolicies;
+template <typename T> struct impl_IEmailMailboxPolicies2;
+template <typename T> struct impl_IEmailMailboxPolicies3;
+template <typename T> struct impl_IEmailMailboxSyncManager;
+template <typename T> struct impl_IEmailMailboxSyncManager2;
+template <typename T> struct impl_IEmailManagerForUser;
+template <typename T> struct impl_IEmailManagerStatics;
+template <typename T> struct impl_IEmailManagerStatics2;
+template <typename T> struct impl_IEmailManagerStatics3;
+template <typename T> struct impl_IEmailMeetingInfo;
+template <typename T> struct impl_IEmailMeetingInfo2;
+template <typename T> struct impl_IEmailMessage;
+template <typename T> struct impl_IEmailMessage2;
+template <typename T> struct impl_IEmailMessage3;
+template <typename T> struct impl_IEmailMessageBatch;
+template <typename T> struct impl_IEmailMessageReader;
+template <typename T> struct impl_IEmailQueryOptions;
+template <typename T> struct impl_IEmailQueryOptionsFactory;
+template <typename T> struct impl_IEmailQueryTextSearch;
+template <typename T> struct impl_IEmailRecipient;
+template <typename T> struct impl_IEmailRecipientFactory;
+template <typename T> struct impl_IEmailRecipientResolutionResult;
+template <typename T> struct impl_IEmailRecipientResolutionResult2;
+template <typename T> struct impl_IEmailStore;
+template <typename T> struct impl_IEmailStoreNotificationTriggerDetails;
 
 }
 

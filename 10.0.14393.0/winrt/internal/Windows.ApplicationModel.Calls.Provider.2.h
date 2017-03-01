@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,86 +24,42 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 
 namespace Windows::ApplicationModel::Calls::Provider {
 
-template <typename D>
-struct WINRT_EBO impl_IPhoneCallOrigin
-{
-    hstring Category() const;
-    void Category(hstring_ref value) const;
-    hstring CategoryDescription() const;
-    void CategoryDescription(hstring_ref value) const;
-    hstring Location() const;
-    void Location(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPhoneCallOrigin2
-{
-    hstring DisplayName() const;
-    void DisplayName(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPhoneCallOrigin3
-{
-    Windows::Storage::StorageFile DisplayPicture() const;
-    void DisplayPicture(const Windows::Storage::StorageFile & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPhoneCallOriginManagerStatics
-{
-    bool IsCurrentAppActiveCallOriginApp() const;
-    void ShowPhoneCallOriginSettingsUI() const;
-    void SetCallOrigin(GUID requestId, const Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin & callOrigin) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPhoneCallOriginManagerStatics2
-{
-    Windows::Foundation::IAsyncOperation<bool> RequestSetAsActiveCallOriginAppAsync() const;
-};
-
 struct IPhoneCallOrigin :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPhoneCallOrigin>
 {
     IPhoneCallOrigin(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPhoneCallOrigin>(m_ptr); }
 };
 
 struct IPhoneCallOrigin2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPhoneCallOrigin2>,
     impl::require<IPhoneCallOrigin2, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin>
 {
     IPhoneCallOrigin2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPhoneCallOrigin2>(m_ptr); }
 };
 
 struct IPhoneCallOrigin3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPhoneCallOrigin3>,
     impl::require<IPhoneCallOrigin3, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2>
 {
     IPhoneCallOrigin3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPhoneCallOrigin3>(m_ptr); }
 };
 
 struct IPhoneCallOriginManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPhoneCallOriginManagerStatics>
 {
     IPhoneCallOriginManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPhoneCallOriginManagerStatics>(m_ptr); }
 };
 
 struct IPhoneCallOriginManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPhoneCallOriginManagerStatics2>,
     impl::require<IPhoneCallOriginManagerStatics2, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics>
 {
     IPhoneCallOriginManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPhoneCallOriginManagerStatics2>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -33,6 +33,17 @@ struct MessageDialog;
 struct PopupMenu;
 struct UICommand;
 struct UICommandSeparator;
+
+}
+
+namespace Windows::UI::Popups {
+
+template <typename T> struct impl_IMessageDialog;
+template <typename T> struct impl_IMessageDialogFactory;
+template <typename T> struct impl_IPopupMenu;
+template <typename T> struct impl_IUICommand;
+template <typename T> struct impl_IUICommandFactory;
+template <typename T> struct impl_UICommandInvokedHandler;
 
 }
 

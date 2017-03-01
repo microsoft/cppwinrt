@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.Midi.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -50,449 +50,220 @@ template <> struct __declspec(uuid("5d716335-d087-516f-ad0a-63f61cbcf342")) __de
 
 namespace Windows::Devices::Midi {
 
-template <typename D>
-struct WINRT_EBO impl_IMidiChannelPressureMessage
-{
-    uint8_t Channel() const;
-    uint8_t Pressure() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiChannelPressureMessageFactory
-{
-    Windows::Devices::Midi::MidiChannelPressureMessage CreateMidiChannelPressureMessage(uint8_t channel, uint8_t pressure) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiControlChangeMessage
-{
-    uint8_t Channel() const;
-    uint8_t Controller() const;
-    uint8_t ControlValue() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiControlChangeMessageFactory
-{
-    Windows::Devices::Midi::MidiControlChangeMessage CreateMidiControlChangeMessage(uint8_t channel, uint8_t controller, uint8_t controlValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiInPort
-{
-    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::Midi::MidiInPort, Windows::Devices::Midi::MidiMessageReceivedEventArgs> & handler) const;
-    using MessageReceived_revoker = event_revoker<IMidiInPort>;
-    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Midi::MidiInPort, Windows::Devices::Midi::MidiMessageReceivedEventArgs> & handler) const;
-    void MessageReceived(event_token token) const;
-    hstring DeviceId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiInPortStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Midi::MidiInPort> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiMessage
-{
-    Windows::Foundation::TimeSpan Timestamp() const;
-    Windows::Storage::Streams::IBuffer RawData() const;
-    Windows::Devices::Midi::MidiMessageType Type() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiMessageReceivedEventArgs
-{
-    Windows::Devices::Midi::IMidiMessage Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiNoteOffMessage
-{
-    uint8_t Channel() const;
-    uint8_t Note() const;
-    uint8_t Velocity() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiNoteOffMessageFactory
-{
-    Windows::Devices::Midi::MidiNoteOffMessage CreateMidiNoteOffMessage(uint8_t channel, uint8_t note, uint8_t velocity) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiNoteOnMessage
-{
-    uint8_t Channel() const;
-    uint8_t Note() const;
-    uint8_t Velocity() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiNoteOnMessageFactory
-{
-    Windows::Devices::Midi::MidiNoteOnMessage CreateMidiNoteOnMessage(uint8_t channel, uint8_t note, uint8_t velocity) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiOutPort
-{
-    void SendMessage(const Windows::Devices::Midi::IMidiMessage & midiMessage) const;
-    void SendBuffer(const Windows::Storage::Streams::IBuffer & midiData) const;
-    hstring DeviceId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiOutPortStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Midi::IMidiOutPort> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiPitchBendChangeMessage
-{
-    uint8_t Channel() const;
-    uint16_t Bend() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiPitchBendChangeMessageFactory
-{
-    Windows::Devices::Midi::MidiPitchBendChangeMessage CreateMidiPitchBendChangeMessage(uint8_t channel, uint16_t bend) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiPolyphonicKeyPressureMessage
-{
-    uint8_t Channel() const;
-    uint8_t Note() const;
-    uint8_t Pressure() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiPolyphonicKeyPressureMessageFactory
-{
-    Windows::Devices::Midi::MidiPolyphonicKeyPressureMessage CreateMidiPolyphonicKeyPressureMessage(uint8_t channel, uint8_t note, uint8_t pressure) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiProgramChangeMessage
-{
-    uint8_t Channel() const;
-    uint8_t Program() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiProgramChangeMessageFactory
-{
-    Windows::Devices::Midi::MidiProgramChangeMessage CreateMidiProgramChangeMessage(uint8_t channel, uint8_t program) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSongPositionPointerMessage
-{
-    uint16_t Beats() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSongPositionPointerMessageFactory
-{
-    Windows::Devices::Midi::MidiSongPositionPointerMessage CreateMidiSongPositionPointerMessage(uint16_t beats) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSongSelectMessage
-{
-    uint8_t Song() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSongSelectMessageFactory
-{
-    Windows::Devices::Midi::MidiSongSelectMessage CreateMidiSongSelectMessage(uint8_t song) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSynthesizer
-{
-    Windows::Devices::Enumeration::DeviceInformation AudioDevice() const;
-    double Volume() const;
-    void Volume(double value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSynthesizerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Midi::MidiSynthesizer> CreateAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Midi::MidiSynthesizer> CreateAsync(const Windows::Devices::Enumeration::DeviceInformation & audioDevice) const;
-    bool IsSynthesizer(const Windows::Devices::Enumeration::DeviceInformation & midiDevice) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiSystemExclusiveMessageFactory
-{
-    Windows::Devices::Midi::MidiSystemExclusiveMessage CreateMidiSystemExclusiveMessage(const Windows::Storage::Streams::IBuffer & rawData) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiTimeCodeMessage
-{
-    uint8_t FrameType() const;
-    uint8_t Values() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMidiTimeCodeMessageFactory
-{
-    Windows::Devices::Midi::MidiTimeCodeMessage CreateMidiTimeCodeMessage(uint8_t frameType, uint8_t values) const;
-};
-
 struct IMidiChannelPressureMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiChannelPressureMessage>,
     impl::require<IMidiChannelPressureMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiChannelPressureMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiChannelPressureMessage>(m_ptr); }
 };
 
 struct IMidiChannelPressureMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiChannelPressureMessageFactory>
 {
     IMidiChannelPressureMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiChannelPressureMessageFactory>(m_ptr); }
 };
 
 struct IMidiControlChangeMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiControlChangeMessage>,
     impl::require<IMidiControlChangeMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiControlChangeMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiControlChangeMessage>(m_ptr); }
 };
 
 struct IMidiControlChangeMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiControlChangeMessageFactory>
 {
     IMidiControlChangeMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiControlChangeMessageFactory>(m_ptr); }
 };
 
 struct IMidiInPort :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiInPort>,
     impl::require<IMidiInPort, Windows::Foundation::IClosable>
 {
     IMidiInPort(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiInPort>(m_ptr); }
 };
 
 struct IMidiInPortStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiInPortStatics>
 {
     IMidiInPortStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiInPortStatics>(m_ptr); }
 };
 
 struct IMidiMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiMessage>
 {
     IMidiMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiMessage>(m_ptr); }
 };
 
 struct IMidiMessageReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiMessageReceivedEventArgs>
 {
     IMidiMessageReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiMessageReceivedEventArgs>(m_ptr); }
 };
 
 struct IMidiNoteOffMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiNoteOffMessage>,
     impl::require<IMidiNoteOffMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiNoteOffMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiNoteOffMessage>(m_ptr); }
 };
 
 struct IMidiNoteOffMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiNoteOffMessageFactory>
 {
     IMidiNoteOffMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiNoteOffMessageFactory>(m_ptr); }
 };
 
 struct IMidiNoteOnMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiNoteOnMessage>,
     impl::require<IMidiNoteOnMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiNoteOnMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiNoteOnMessage>(m_ptr); }
 };
 
 struct IMidiNoteOnMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiNoteOnMessageFactory>
 {
     IMidiNoteOnMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiNoteOnMessageFactory>(m_ptr); }
 };
 
 struct IMidiOutPort :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiOutPort>,
     impl::require<IMidiOutPort, Windows::Foundation::IClosable>
 {
     IMidiOutPort(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiOutPort>(m_ptr); }
 };
 
 struct IMidiOutPortStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiOutPortStatics>
 {
     IMidiOutPortStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiOutPortStatics>(m_ptr); }
 };
 
 struct IMidiPitchBendChangeMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiPitchBendChangeMessage>,
     impl::require<IMidiPitchBendChangeMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiPitchBendChangeMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiPitchBendChangeMessage>(m_ptr); }
 };
 
 struct IMidiPitchBendChangeMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiPitchBendChangeMessageFactory>
 {
     IMidiPitchBendChangeMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiPitchBendChangeMessageFactory>(m_ptr); }
 };
 
 struct IMidiPolyphonicKeyPressureMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiPolyphonicKeyPressureMessage>,
     impl::require<IMidiPolyphonicKeyPressureMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiPolyphonicKeyPressureMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiPolyphonicKeyPressureMessage>(m_ptr); }
 };
 
 struct IMidiPolyphonicKeyPressureMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiPolyphonicKeyPressureMessageFactory>
 {
     IMidiPolyphonicKeyPressureMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiPolyphonicKeyPressureMessageFactory>(m_ptr); }
 };
 
 struct IMidiProgramChangeMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiProgramChangeMessage>,
     impl::require<IMidiProgramChangeMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiProgramChangeMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiProgramChangeMessage>(m_ptr); }
 };
 
 struct IMidiProgramChangeMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiProgramChangeMessageFactory>
 {
     IMidiProgramChangeMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiProgramChangeMessageFactory>(m_ptr); }
 };
 
 struct IMidiSongPositionPointerMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSongPositionPointerMessage>,
     impl::require<IMidiSongPositionPointerMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiSongPositionPointerMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSongPositionPointerMessage>(m_ptr); }
 };
 
 struct IMidiSongPositionPointerMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSongPositionPointerMessageFactory>
 {
     IMidiSongPositionPointerMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSongPositionPointerMessageFactory>(m_ptr); }
 };
 
 struct IMidiSongSelectMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSongSelectMessage>,
     impl::require<IMidiSongSelectMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiSongSelectMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSongSelectMessage>(m_ptr); }
 };
 
 struct IMidiSongSelectMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSongSelectMessageFactory>
 {
     IMidiSongSelectMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSongSelectMessageFactory>(m_ptr); }
 };
 
 struct IMidiSynthesizer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSynthesizer>,
     impl::require<IMidiSynthesizer, Windows::Devices::Midi::IMidiOutPort, Windows::Foundation::IClosable>
 {
     IMidiSynthesizer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSynthesizer>(m_ptr); }
 };
 
 struct IMidiSynthesizerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSynthesizerStatics>
 {
     IMidiSynthesizerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSynthesizerStatics>(m_ptr); }
 };
 
 struct IMidiSystemExclusiveMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiSystemExclusiveMessageFactory>
 {
     IMidiSystemExclusiveMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiSystemExclusiveMessageFactory>(m_ptr); }
 };
 
 struct IMidiTimeCodeMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiTimeCodeMessage>,
     impl::require<IMidiTimeCodeMessage, Windows::Devices::Midi::IMidiMessage>
 {
     IMidiTimeCodeMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiTimeCodeMessage>(m_ptr); }
 };
 
 struct IMidiTimeCodeMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMidiTimeCodeMessageFactory>
 {
     IMidiTimeCodeMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMidiTimeCodeMessageFactory>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -96,6 +96,34 @@ struct SyndicationLink;
 struct SyndicationNode;
 struct SyndicationPerson;
 struct SyndicationText;
+
+}
+
+namespace Windows::Web::Syndication {
+
+template <typename T> struct impl_ISyndicationAttribute;
+template <typename T> struct impl_ISyndicationAttributeFactory;
+template <typename T> struct impl_ISyndicationCategory;
+template <typename T> struct impl_ISyndicationCategoryFactory;
+template <typename T> struct impl_ISyndicationClient;
+template <typename T> struct impl_ISyndicationClientFactory;
+template <typename T> struct impl_ISyndicationContent;
+template <typename T> struct impl_ISyndicationContentFactory;
+template <typename T> struct impl_ISyndicationErrorStatics;
+template <typename T> struct impl_ISyndicationFeed;
+template <typename T> struct impl_ISyndicationFeedFactory;
+template <typename T> struct impl_ISyndicationGenerator;
+template <typename T> struct impl_ISyndicationGeneratorFactory;
+template <typename T> struct impl_ISyndicationItem;
+template <typename T> struct impl_ISyndicationItemFactory;
+template <typename T> struct impl_ISyndicationLink;
+template <typename T> struct impl_ISyndicationLinkFactory;
+template <typename T> struct impl_ISyndicationNode;
+template <typename T> struct impl_ISyndicationNodeFactory;
+template <typename T> struct impl_ISyndicationPerson;
+template <typename T> struct impl_ISyndicationPersonFactory;
+template <typename T> struct impl_ISyndicationText;
+template <typename T> struct impl_ISyndicationTextFactory;
 
 }
 

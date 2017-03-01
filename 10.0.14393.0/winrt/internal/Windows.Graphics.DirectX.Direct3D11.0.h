@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -31,6 +31,13 @@ namespace Windows::Graphics::DirectX::Direct3D11 {
 
 struct IDirect3DDevice;
 struct IDirect3DSurface;
+
+}
+
+namespace Windows::Graphics::DirectX::Direct3D11 {
+
+template <typename T> struct impl_IDirect3DDevice;
+template <typename T> struct impl_IDirect3DSurface;
 
 }
 

@@ -32,7 +32,7 @@ IAsyncOperation<hstring> AsyncSample()
 
 int main()
 {
-    initialize();
+    init_apartment();
 
     try
     {

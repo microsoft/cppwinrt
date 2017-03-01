@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -48,6 +48,21 @@ struct AppServiceRequest;
 struct AppServiceRequestReceivedEventArgs;
 struct AppServiceResponse;
 struct AppServiceTriggerDetails;
+
+}
+
+namespace Windows::ApplicationModel::AppService {
+
+template <typename T> struct impl_IAppServiceCatalogStatics;
+template <typename T> struct impl_IAppServiceClosedEventArgs;
+template <typename T> struct impl_IAppServiceConnection;
+template <typename T> struct impl_IAppServiceConnection2;
+template <typename T> struct impl_IAppServiceDeferral;
+template <typename T> struct impl_IAppServiceRequest;
+template <typename T> struct impl_IAppServiceRequestReceivedEventArgs;
+template <typename T> struct impl_IAppServiceResponse;
+template <typename T> struct impl_IAppServiceTriggerDetails;
+template <typename T> struct impl_IAppServiceTriggerDetails2;
 
 }
 

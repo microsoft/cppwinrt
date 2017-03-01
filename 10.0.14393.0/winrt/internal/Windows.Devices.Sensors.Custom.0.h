@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -27,6 +27,15 @@ struct ICustomSensorStatics;
 struct CustomSensor;
 struct CustomSensorReading;
 struct CustomSensorReadingChangedEventArgs;
+
+}
+
+namespace Windows::Devices::Sensors::Custom {
+
+template <typename T> struct impl_ICustomSensor;
+template <typename T> struct impl_ICustomSensorReading;
+template <typename T> struct impl_ICustomSensorReadingChangedEventArgs;
+template <typename T> struct impl_ICustomSensorStatics;
 
 }
 

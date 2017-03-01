@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -35,6 +35,17 @@ struct MicrosoftAccountMultiFactorGetSessionsResult;
 struct MicrosoftAccountMultiFactorOneTimeCodedInfo;
 struct MicrosoftAccountMultiFactorSessionInfo;
 struct MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo;
+
+}
+
+namespace Windows::Security::Authentication::Identity::Core {
+
+template <typename T> struct impl_IMicrosoftAccountMultiFactorAuthenticationManager;
+template <typename T> struct impl_IMicrosoftAccountMultiFactorAuthenticatorStatics;
+template <typename T> struct impl_IMicrosoftAccountMultiFactorGetSessionsResult;
+template <typename T> struct impl_IMicrosoftAccountMultiFactorOneTimeCodedInfo;
+template <typename T> struct impl_IMicrosoftAccountMultiFactorSessionInfo;
+template <typename T> struct impl_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo;
 
 }
 

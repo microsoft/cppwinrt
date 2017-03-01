@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Storage.Streams.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -100,312 +100,127 @@ template <> struct __declspec(uuid("1e466dc5-840f-54f9-b877-5e3a9f4b6c74")) __de
 
 namespace Windows::Storage::Streams {
 
-template <typename D>
-struct WINRT_EBO impl_IBuffer
-{
-    uint32_t Capacity() const;
-    uint32_t Length() const;
-    void Length(uint32_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBufferFactory
-{
-    Windows::Storage::Streams::Buffer Create(uint32_t capacity) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBufferStatics
-{
-    Windows::Storage::Streams::Buffer CreateCopyFromMemoryBuffer(const Windows::Foundation::IMemoryBuffer & input) const;
-    Windows::Foundation::MemoryBuffer CreateMemoryBufferOverIBuffer(const Windows::Storage::Streams::IBuffer & input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IContentTypeProvider
-{
-    hstring ContentType() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataReader
-{
-    uint32_t UnconsumedBufferLength() const;
-    Windows::Storage::Streams::UnicodeEncoding UnicodeEncoding() const;
-    void UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const;
-    Windows::Storage::Streams::ByteOrder ByteOrder() const;
-    void ByteOrder(Windows::Storage::Streams::ByteOrder value) const;
-    Windows::Storage::Streams::InputStreamOptions InputStreamOptions() const;
-    void InputStreamOptions(Windows::Storage::Streams::InputStreamOptions value) const;
-    uint8_t ReadByte() const;
-    void ReadBytes(array_ref<uint8_t> value) const;
-    Windows::Storage::Streams::IBuffer ReadBuffer(uint32_t length) const;
-    bool ReadBoolean() const;
-    GUID ReadGuid() const;
-    int16_t ReadInt16() const;
-    int32_t ReadInt32() const;
-    int64_t ReadInt64() const;
-    uint16_t ReadUInt16() const;
-    uint32_t ReadUInt32() const;
-    uint64_t ReadUInt64() const;
-    float ReadSingle() const;
-    double ReadDouble() const;
-    hstring ReadString(uint32_t codeUnitCount) const;
-    Windows::Foundation::DateTime ReadDateTime() const;
-    Windows::Foundation::TimeSpan ReadTimeSpan() const;
-    Windows::Storage::Streams::DataReaderLoadOperation LoadAsync(uint32_t count) const;
-    Windows::Storage::Streams::IBuffer DetachBuffer() const;
-    Windows::Storage::Streams::IInputStream DetachStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataReaderFactory
-{
-    Windows::Storage::Streams::DataReader CreateDataReader(const Windows::Storage::Streams::IInputStream & inputStream) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataReaderStatics
-{
-    Windows::Storage::Streams::DataReader FromBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataWriter
-{
-    uint32_t UnstoredBufferLength() const;
-    Windows::Storage::Streams::UnicodeEncoding UnicodeEncoding() const;
-    void UnicodeEncoding(Windows::Storage::Streams::UnicodeEncoding value) const;
-    Windows::Storage::Streams::ByteOrder ByteOrder() const;
-    void ByteOrder(Windows::Storage::Streams::ByteOrder value) const;
-    void WriteByte(uint8_t value) const;
-    void WriteBytes(array_ref<const uint8_t> value) const;
-    void WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-    void WriteBuffer(const Windows::Storage::Streams::IBuffer & buffer, uint32_t start, uint32_t count) const;
-    void WriteBoolean(bool value) const;
-    void WriteGuid(GUID value) const;
-    void WriteInt16(int16_t value) const;
-    void WriteInt32(int32_t value) const;
-    void WriteInt64(int64_t value) const;
-    void WriteUInt16(uint16_t value) const;
-    void WriteUInt32(uint32_t value) const;
-    void WriteUInt64(uint64_t value) const;
-    void WriteSingle(float value) const;
-    void WriteDouble(double value) const;
-    void WriteDateTime(const Windows::Foundation::DateTime & value) const;
-    void WriteTimeSpan(const Windows::Foundation::TimeSpan & value) const;
-    uint32_t WriteString(hstring_ref value) const;
-    uint32_t MeasureString(hstring_ref value) const;
-    Windows::Storage::Streams::DataWriterStoreOperation StoreAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> FlushAsync() const;
-    Windows::Storage::Streams::IBuffer DetachBuffer() const;
-    Windows::Storage::Streams::IOutputStream DetachStream() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataWriterFactory
-{
-    Windows::Storage::Streams::DataWriter CreateDataWriter(const Windows::Storage::Streams::IOutputStream & outputStream) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInputStream
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IBuffer, uint32_t> ReadAsync(const Windows::Storage::Streams::IBuffer & buffer, uint32_t count, Windows::Storage::Streams::InputStreamOptions options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IInputStreamReference
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IInputStream> OpenSequentialReadAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IOutputStream
-{
-    Windows::Foundation::IAsyncOperationWithProgress<uint32_t, uint32_t> WriteAsync(const Windows::Storage::Streams::IBuffer & buffer) const;
-    Windows::Foundation::IAsyncOperation<bool> FlushAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRandomAccessStream
-{
-    uint64_t Size() const;
-    void Size(uint64_t value) const;
-    Windows::Storage::Streams::IInputStream GetInputStreamAt(uint64_t position) const;
-    Windows::Storage::Streams::IOutputStream GetOutputStreamAt(uint64_t position) const;
-    uint64_t Position() const;
-    void Seek(uint64_t position) const;
-    Windows::Storage::Streams::IRandomAccessStream CloneStream() const;
-    bool CanRead() const;
-    bool CanWrite() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRandomAccessStreamReference
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> OpenReadAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRandomAccessStreamReferenceStatics
-{
-    Windows::Storage::Streams::RandomAccessStreamReference CreateFromFile(const Windows::Storage::IStorageFile & file) const;
-    Windows::Storage::Streams::RandomAccessStreamReference CreateFromUri(const Windows::Foundation::Uri & uri) const;
-    Windows::Storage::Streams::RandomAccessStreamReference CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRandomAccessStreamStatics
-{
-    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const;
-    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination, uint64_t bytesToCopy) const;
-    Windows::Foundation::IAsyncOperationWithProgress<uint64_t, uint64_t> CopyAndCloseAsync(const Windows::Storage::Streams::IInputStream & source, const Windows::Storage::Streams::IOutputStream & destination) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRandomAccessStreamWithContentType
-{
-};
-
 struct IBuffer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBuffer>
 {
     IBuffer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBuffer>(m_ptr); }
 };
 
 struct IBufferFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBufferFactory>
 {
     IBufferFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBufferFactory>(m_ptr); }
 };
 
 struct IBufferStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBufferStatics>
 {
     IBufferStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBufferStatics>(m_ptr); }
 };
 
 struct IContentTypeProvider :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IContentTypeProvider>
 {
     IContentTypeProvider(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IContentTypeProvider>(m_ptr); }
 };
 
 struct IDataReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataReader>
 {
     IDataReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataReader>(m_ptr); }
 };
 
 struct IDataReaderFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataReaderFactory>
 {
     IDataReaderFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataReaderFactory>(m_ptr); }
 };
 
 struct IDataReaderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataReaderStatics>
 {
     IDataReaderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataReaderStatics>(m_ptr); }
 };
 
 struct IDataWriter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataWriter>
 {
     IDataWriter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataWriter>(m_ptr); }
 };
 
 struct IDataWriterFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataWriterFactory>
 {
     IDataWriterFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataWriterFactory>(m_ptr); }
 };
 
 struct IInputStream :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInputStream>,
     impl::require<IInputStream, Windows::Foundation::IClosable>
 {
     IInputStream(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInputStream>(m_ptr); }
 };
 
 struct IInputStreamReference :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInputStreamReference>
 {
     IInputStreamReference(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInputStreamReference>(m_ptr); }
 };
 
 struct IOutputStream :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IOutputStream>,
     impl::require<IOutputStream, Windows::Foundation::IClosable>
 {
     IOutputStream(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IOutputStream>(m_ptr); }
 };
 
 struct IRandomAccessStream :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRandomAccessStream>,
     impl::require<IRandomAccessStream, Windows::Foundation::IClosable, Windows::Storage::Streams::IInputStream, Windows::Storage::Streams::IOutputStream>
 {
     IRandomAccessStream(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRandomAccessStream>(m_ptr); }
 };
 
 struct IRandomAccessStreamReference :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRandomAccessStreamReference>
 {
     IRandomAccessStreamReference(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRandomAccessStreamReference>(m_ptr); }
 };
 
 struct IRandomAccessStreamReferenceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRandomAccessStreamReferenceStatics>
 {
     IRandomAccessStreamReferenceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRandomAccessStreamReferenceStatics>(m_ptr); }
 };
 
 struct IRandomAccessStreamStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRandomAccessStreamStatics>
 {
     IRandomAccessStreamStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRandomAccessStreamStatics>(m_ptr); }
 };
 
 struct IRandomAccessStreamWithContentType :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRandomAccessStreamWithContentType>,
     impl::require<IRandomAccessStreamWithContentType, Windows::Foundation::IClosable, Windows::Storage::Streams::IContentTypeProvider, Windows::Storage::Streams::IInputStream, Windows::Storage::Streams::IOutputStream, Windows::Storage::Streams::IRandomAccessStream>
 {
     IRandomAccessStreamWithContentType(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRandomAccessStreamWithContentType>(m_ptr); }
 };
 
 }

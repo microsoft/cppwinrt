@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -145,13 +145,60 @@ struct AllJoynWatcherStoppedEventArgs;
 
 namespace Windows::Devices::AllJoyn {
 
+template <typename T> struct impl_IAllJoynAboutData;
+template <typename T> struct impl_IAllJoynAboutDataView;
+template <typename T> struct impl_IAllJoynAboutDataViewStatics;
+template <typename T> struct impl_IAllJoynAcceptSessionJoiner;
+template <typename T> struct impl_IAllJoynAcceptSessionJoinerEventArgs;
+template <typename T> struct impl_IAllJoynAcceptSessionJoinerEventArgsFactory;
+template <typename T> struct impl_IAllJoynAuthenticationCompleteEventArgs;
+template <typename T> struct impl_IAllJoynBusAttachment;
+template <typename T> struct impl_IAllJoynBusAttachment2;
+template <typename T> struct impl_IAllJoynBusAttachmentFactory;
+template <typename T> struct impl_IAllJoynBusAttachmentStateChangedEventArgs;
+template <typename T> struct impl_IAllJoynBusAttachmentStatics;
+template <typename T> struct impl_IAllJoynBusObject;
+template <typename T> struct impl_IAllJoynBusObjectFactory;
+template <typename T> struct impl_IAllJoynBusObjectStoppedEventArgs;
+template <typename T> struct impl_IAllJoynBusObjectStoppedEventArgsFactory;
+template <typename T> struct impl_IAllJoynCredentials;
+template <typename T> struct impl_IAllJoynCredentialsRequestedEventArgs;
+template <typename T> struct impl_IAllJoynCredentialsVerificationRequestedEventArgs;
+template <typename T> struct impl_IAllJoynMessageInfo;
+template <typename T> struct impl_IAllJoynMessageInfoFactory;
+template <typename T> struct impl_IAllJoynProducer;
+template <typename T> struct impl_IAllJoynProducerStoppedEventArgs;
+template <typename T> struct impl_IAllJoynProducerStoppedEventArgsFactory;
+template <typename T> struct impl_IAllJoynServiceInfo;
+template <typename T> struct impl_IAllJoynServiceInfoFactory;
+template <typename T> struct impl_IAllJoynServiceInfoRemovedEventArgs;
+template <typename T> struct impl_IAllJoynServiceInfoRemovedEventArgsFactory;
+template <typename T> struct impl_IAllJoynServiceInfoStatics;
+template <typename T> struct impl_IAllJoynSession;
+template <typename T> struct impl_IAllJoynSessionJoinedEventArgs;
+template <typename T> struct impl_IAllJoynSessionJoinedEventArgsFactory;
+template <typename T> struct impl_IAllJoynSessionLostEventArgs;
+template <typename T> struct impl_IAllJoynSessionLostEventArgsFactory;
+template <typename T> struct impl_IAllJoynSessionMemberAddedEventArgs;
+template <typename T> struct impl_IAllJoynSessionMemberAddedEventArgsFactory;
+template <typename T> struct impl_IAllJoynSessionMemberRemovedEventArgs;
+template <typename T> struct impl_IAllJoynSessionMemberRemovedEventArgsFactory;
+template <typename T> struct impl_IAllJoynSessionStatics;
+template <typename T> struct impl_IAllJoynStatusStatics;
+template <typename T> struct impl_IAllJoynWatcherStoppedEventArgs;
+template <typename T> struct impl_IAllJoynWatcherStoppedEventArgsFactory;
+
+}
+
+namespace Windows::Devices::AllJoyn {
+
 enum class AllJoynAuthenticationMechanism
 {
     None = 0,
-    SrpAnonymous = 1,
-    SrpLogon = 2,
+    SrpAnonymous [[deprecated("SrpAnonymous is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 1,
+    SrpLogon [[deprecated("SrpLogon is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 2,
     EcdheNull = 3,
-    EcdhePsk = 4,
+    EcdhePsk [[deprecated("EcdhePsk is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 4,
     EcdheEcdsa = 5,
     EcdheSpeke = 6,
 };

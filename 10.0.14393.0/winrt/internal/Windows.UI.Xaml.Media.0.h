@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -342,6 +342,111 @@ struct VisualTreeHelper;
 
 namespace Windows::UI::Xaml::Media {
 
+template <typename T> struct impl_IArcSegment;
+template <typename T> struct impl_IArcSegmentStatics;
+template <typename T> struct impl_IBezierSegment;
+template <typename T> struct impl_IBezierSegmentStatics;
+template <typename T> struct impl_IBitmapCache;
+template <typename T> struct impl_IBrush;
+template <typename T> struct impl_IBrushFactory;
+template <typename T> struct impl_IBrushStatics;
+template <typename T> struct impl_ICacheMode;
+template <typename T> struct impl_ICacheModeFactory;
+template <typename T> struct impl_ICompositeTransform;
+template <typename T> struct impl_ICompositeTransformStatics;
+template <typename T> struct impl_ICompositionTarget;
+template <typename T> struct impl_ICompositionTargetStatics;
+template <typename T> struct impl_IEllipseGeometry;
+template <typename T> struct impl_IEllipseGeometryStatics;
+template <typename T> struct impl_IFontFamily;
+template <typename T> struct impl_IFontFamilyFactory;
+template <typename T> struct impl_IFontFamilyStatics2;
+template <typename T> struct impl_IGeneralTransform;
+template <typename T> struct impl_IGeneralTransformFactory;
+template <typename T> struct impl_IGeneralTransformOverrides;
+template <typename T> struct impl_IGeometry;
+template <typename T> struct impl_IGeometryFactory;
+template <typename T> struct impl_IGeometryGroup;
+template <typename T> struct impl_IGeometryGroupStatics;
+template <typename T> struct impl_IGeometryStatics;
+template <typename T> struct impl_IGradientBrush;
+template <typename T> struct impl_IGradientBrushFactory;
+template <typename T> struct impl_IGradientBrushStatics;
+template <typename T> struct impl_IGradientStop;
+template <typename T> struct impl_IGradientStopStatics;
+template <typename T> struct impl_IImageBrush;
+template <typename T> struct impl_IImageBrushStatics;
+template <typename T> struct impl_IImageSource;
+template <typename T> struct impl_IImageSourceFactory;
+template <typename T> struct impl_ILineGeometry;
+template <typename T> struct impl_ILineGeometryStatics;
+template <typename T> struct impl_ILineSegment;
+template <typename T> struct impl_ILineSegmentStatics;
+template <typename T> struct impl_ILinearGradientBrush;
+template <typename T> struct impl_ILinearGradientBrushFactory;
+template <typename T> struct impl_ILinearGradientBrushStatics;
+template <typename T> struct impl_IMatrix3DProjection;
+template <typename T> struct impl_IMatrix3DProjectionStatics;
+template <typename T> struct impl_IMatrixHelper;
+template <typename T> struct impl_IMatrixHelperStatics;
+template <typename T> struct impl_IMatrixTransform;
+template <typename T> struct impl_IMatrixTransformStatics;
+template <typename T> struct impl_IMediaTransportControlsThumbnailRequestedEventArgs;
+template <typename T> struct impl_IPartialMediaFailureDetectedEventArgs;
+template <typename T> struct impl_IPartialMediaFailureDetectedEventArgs2;
+template <typename T> struct impl_IPathFigure;
+template <typename T> struct impl_IPathFigureStatics;
+template <typename T> struct impl_IPathGeometry;
+template <typename T> struct impl_IPathGeometryStatics;
+template <typename T> struct impl_IPathSegment;
+template <typename T> struct impl_IPathSegmentFactory;
+template <typename T> struct impl_IPlaneProjection;
+template <typename T> struct impl_IPlaneProjectionStatics;
+template <typename T> struct impl_IPolyBezierSegment;
+template <typename T> struct impl_IPolyBezierSegmentStatics;
+template <typename T> struct impl_IPolyLineSegment;
+template <typename T> struct impl_IPolyLineSegmentStatics;
+template <typename T> struct impl_IPolyQuadraticBezierSegment;
+template <typename T> struct impl_IPolyQuadraticBezierSegmentStatics;
+template <typename T> struct impl_IProjection;
+template <typename T> struct impl_IProjectionFactory;
+template <typename T> struct impl_IQuadraticBezierSegment;
+template <typename T> struct impl_IQuadraticBezierSegmentStatics;
+template <typename T> struct impl_IRateChangedRoutedEventArgs;
+template <typename T> struct impl_IRectangleGeometry;
+template <typename T> struct impl_IRectangleGeometryStatics;
+template <typename T> struct impl_IRenderingEventArgs;
+template <typename T> struct impl_IRotateTransform;
+template <typename T> struct impl_IRotateTransformStatics;
+template <typename T> struct impl_IScaleTransform;
+template <typename T> struct impl_IScaleTransformStatics;
+template <typename T> struct impl_ISkewTransform;
+template <typename T> struct impl_ISkewTransformStatics;
+template <typename T> struct impl_ISolidColorBrush;
+template <typename T> struct impl_ISolidColorBrushFactory;
+template <typename T> struct impl_ISolidColorBrushStatics;
+template <typename T> struct impl_ITileBrush;
+template <typename T> struct impl_ITileBrushFactory;
+template <typename T> struct impl_ITileBrushStatics;
+template <typename T> struct impl_ITimelineMarker;
+template <typename T> struct impl_ITimelineMarkerRoutedEventArgs;
+template <typename T> struct impl_ITimelineMarkerStatics;
+template <typename T> struct impl_ITransform;
+template <typename T> struct impl_ITransformFactory;
+template <typename T> struct impl_ITransformGroup;
+template <typename T> struct impl_ITransformGroupStatics;
+template <typename T> struct impl_ITranslateTransform;
+template <typename T> struct impl_ITranslateTransformStatics;
+template <typename T> struct impl_IVisualTreeHelper;
+template <typename T> struct impl_IVisualTreeHelperStatics;
+template <typename T> struct impl_IVisualTreeHelperStatics2;
+template <typename T> struct impl_RateChangedRoutedEventHandler;
+template <typename T> struct impl_TimelineMarkerRoutedEventHandler;
+
+}
+
+namespace Windows::UI::Xaml::Media {
+
 enum class AlignmentX
 {
     Left = 0,
@@ -359,8 +464,8 @@ enum class AlignmentY
 enum class AudioCategory
 {
     Other = 0,
-    ForegroundOnlyMedia = 1,
-    BackgroundCapableMedia = 2,
+    ForegroundOnlyMedia [[deprecated("ForegroundOnlyMedia is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 1,
+    BackgroundCapableMedia [[deprecated("BackgroundCapableMedia is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 2,
     Communications = 3,
     Alerts = 4,
     SoundEffects = 5,

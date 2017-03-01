@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,7 +11,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Media::ClosedCaptioning {
 
-struct __declspec(uuid("10aa1f84-cc30-4141-b503-5272289e0c20")) __declspec(novtable) IClosedCaptionPropertiesStatics : Windows::IInspectable
+struct __declspec(uuid("10aa1f84-cc30-4141-b503-5272289e0c20")) __declspec(novtable) IClosedCaptionPropertiesStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FontColor(winrt::Windows::Media::ClosedCaptioning::ClosedCaptionColor * value) = 0;
     virtual HRESULT __stdcall get_ComputedFontColor(Windows::UI::Color * value) = 0;
@@ -36,7 +36,22 @@ namespace ABI {
 
 namespace Windows::Media::ClosedCaptioning {
 
-template <typename T> struct impl_IClosedCaptionPropertiesStatics;
+template <typename D>
+struct WINRT_EBO impl_IClosedCaptionPropertiesStatics
+{
+    Windows::Media::ClosedCaptioning::ClosedCaptionColor FontColor() const;
+    Windows::UI::Color ComputedFontColor() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionOpacity FontOpacity() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionSize FontSize() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionStyle FontStyle() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionEdgeEffect FontEffect() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionColor BackgroundColor() const;
+    Windows::UI::Color ComputedBackgroundColor() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionOpacity BackgroundOpacity() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionColor RegionColor() const;
+    Windows::UI::Color ComputedRegionColor() const;
+    Windows::Media::ClosedCaptioning::ClosedCaptionOpacity RegionOpacity() const;
+};
 
 }
 

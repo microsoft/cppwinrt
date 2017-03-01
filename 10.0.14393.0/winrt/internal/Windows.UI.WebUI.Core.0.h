@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -57,6 +57,26 @@ struct WebUICommandBarIconButton;
 struct WebUICommandBarItemInvokedEventArgs;
 struct WebUICommandBarSizeChangedEventArgs;
 struct WebUICommandBarSymbolIcon;
+
+}
+
+namespace Windows::UI::WebUI::Core {
+
+template <typename T> struct impl_IWebUICommandBar;
+template <typename T> struct impl_IWebUICommandBarBitmapIcon;
+template <typename T> struct impl_IWebUICommandBarBitmapIconFactory;
+template <typename T> struct impl_IWebUICommandBarConfirmationButton;
+template <typename T> struct impl_IWebUICommandBarElement;
+template <typename T> struct impl_IWebUICommandBarIcon;
+template <typename T> struct impl_IWebUICommandBarIconButton;
+template <typename T> struct impl_IWebUICommandBarItemInvokedEventArgs;
+template <typename T> struct impl_IWebUICommandBarSizeChangedEventArgs;
+template <typename T> struct impl_IWebUICommandBarStatics;
+template <typename T> struct impl_IWebUICommandBarSymbolIcon;
+template <typename T> struct impl_IWebUICommandBarSymbolIconFactory;
+template <typename T> struct impl_MenuClosedEventHandler;
+template <typename T> struct impl_MenuOpenedEventHandler;
+template <typename T> struct impl_SizeChangedEventHandler;
 
 }
 

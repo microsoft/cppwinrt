@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -52,45 +52,45 @@ using BandwidthStatistics = ABI::Windows::Networking::Sockets::BandwidthStatisti
 
 namespace ABI::Windows::Networking::Sockets {
 
-struct __declspec(uuid("7d1431a7-ee96-40e8-a199-8703cd969ec3")) __declspec(novtable) IControlChannelTrigger : Windows::IInspectable
+struct __declspec(uuid("7d1431a7-ee96-40e8-a199-8703cd969ec3")) __declspec(novtable) IControlChannelTrigger : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ControlChannelTriggerId(hstring * value) = 0;
     virtual HRESULT __stdcall get_ServerKeepAliveIntervalInMinutes(uint32_t * value) = 0;
     virtual HRESULT __stdcall put_ServerKeepAliveIntervalInMinutes(uint32_t value) = 0;
     virtual HRESULT __stdcall get_CurrentKeepAliveIntervalInMinutes(uint32_t * value) = 0;
-    virtual HRESULT __stdcall get_TransportObject(Windows::IInspectable ** value) = 0;
+    virtual HRESULT __stdcall get_TransportObject(Windows::Foundation::IInspectable ** value) = 0;
     virtual HRESULT __stdcall get_KeepAliveTrigger(Windows::ApplicationModel::Background::IBackgroundTrigger ** trigger) = 0;
     virtual HRESULT __stdcall get_PushNotificationTrigger(Windows::ApplicationModel::Background::IBackgroundTrigger ** trigger) = 0;
-    virtual HRESULT __stdcall abi_UsingTransport(Windows::IInspectable * transport) = 0;
+    virtual HRESULT __stdcall abi_UsingTransport(Windows::Foundation::IInspectable * transport) = 0;
     virtual HRESULT __stdcall abi_WaitForPushEnabled(winrt::Windows::Networking::Sockets::ControlChannelTriggerStatus * channelTriggerStatus) = 0;
     virtual HRESULT __stdcall abi_DecreaseNetworkKeepAliveInterval() = 0;
     virtual HRESULT __stdcall abi_FlushTransport() = 0;
 };
 
-struct __declspec(uuid("af00d237-51be-4514-9725-3556e1879580")) __declspec(novtable) IControlChannelTrigger2 : Windows::IInspectable
+struct __declspec(uuid("af00d237-51be-4514-9725-3556e1879580")) __declspec(novtable) IControlChannelTrigger2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsWakeFromLowPowerSupported(bool * value) = 0;
 };
 
-struct __declspec(uuid("1b36e047-89bb-4236-96ac-71d012bb4869")) __declspec(novtable) IControlChannelTriggerEventDetails : Windows::IInspectable
+struct __declspec(uuid("1b36e047-89bb-4236-96ac-71d012bb4869")) __declspec(novtable) IControlChannelTriggerEventDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ControlChannelTrigger(Windows::Networking::Sockets::IControlChannelTrigger ** value) = 0;
 };
 
-struct __declspec(uuid("da4b7cf0-8d71-446f-88c3-b95184a2d6cd")) __declspec(novtable) IControlChannelTriggerFactory : Windows::IInspectable
+struct __declspec(uuid("da4b7cf0-8d71-446f-88c3-b95184a2d6cd")) __declspec(novtable) IControlChannelTriggerFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateControlChannelTrigger(hstring channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::IControlChannelTrigger ** notificationChannel) = 0;
     virtual HRESULT __stdcall abi_CreateControlChannelTriggerEx(hstring channelId, uint32_t serverKeepAliveIntervalInMinutes, winrt::Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType, Windows::Networking::Sockets::IControlChannelTrigger ** notificationChannel) = 0;
 };
 
-struct __declspec(uuid("6851038e-8ec4-42fe-9bb2-21e91b7bfcb1")) __declspec(novtable) IControlChannelTriggerResetEventDetails : Windows::IInspectable
+struct __declspec(uuid("6851038e-8ec4-42fe-9bb2-21e91b7bfcb1")) __declspec(novtable) IControlChannelTriggerResetEventDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ResetReason(winrt::Windows::Networking::Sockets::ControlChannelTriggerResetReason * value) = 0;
     virtual HRESULT __stdcall get_HardwareSlotReset(bool * value) = 0;
     virtual HRESULT __stdcall get_SoftwareSlotReset(bool * value) = 0;
 };
 
-struct __declspec(uuid("7fe25bbb-c3bc-4677-8446-ca28a465a3af")) __declspec(novtable) IDatagramSocket : Windows::IInspectable
+struct __declspec(uuid("7fe25bbb-c3bc-4677-8446-ca28a465a3af")) __declspec(novtable) IDatagramSocket : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Control(Windows::Networking::Sockets::IDatagramSocketControl ** value) = 0;
     virtual HRESULT __stdcall get_Information(Windows::Networking::Sockets::IDatagramSocketInformation ** value) = 0;
@@ -106,12 +106,12 @@ struct __declspec(uuid("7fe25bbb-c3bc-4677-8446-ca28a465a3af")) __declspec(novta
     virtual HRESULT __stdcall remove_MessageReceived(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("d83ba354-9a9d-4185-a20a-1424c9c2a7cd")) __declspec(novtable) IDatagramSocket2 : Windows::IInspectable
+struct __declspec(uuid("d83ba354-9a9d-4185-a20a-1424c9c2a7cd")) __declspec(novtable) IDatagramSocket2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_BindServiceNameAndAdapterAsync(hstring localServiceName, Windows::Networking::Connectivity::INetworkAdapter * adapter, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("37544f09-ab92-4306-9ac1-0c381283d9c6")) __declspec(novtable) IDatagramSocket3 : Windows::IInspectable
+struct __declspec(uuid("37544f09-ab92-4306-9ac1-0c381283d9c6")) __declspec(novtable) IDatagramSocket3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CancelIOAsync(Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_EnableTransferOwnership(GUID taskId) = 0;
@@ -121,7 +121,7 @@ struct __declspec(uuid("37544f09-ab92-4306-9ac1-0c381283d9c6")) __declspec(novta
     virtual HRESULT __stdcall abi_TransferOwnershipWithContextAndKeepAliveTime(hstring socketId, Windows::Networking::Sockets::ISocketActivityContext * data, Windows::Foundation::TimeSpan keepAliveTime) = 0;
 };
 
-struct __declspec(uuid("52ac3f2e-349a-4135-bb58-b79b2647d390")) __declspec(novtable) IDatagramSocketControl : Windows::IInspectable
+struct __declspec(uuid("52ac3f2e-349a-4135-bb58-b79b2647d390")) __declspec(novtable) IDatagramSocketControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_QualityOfService(winrt::Windows::Networking::Sockets::SocketQualityOfService * value) = 0;
     virtual HRESULT __stdcall put_QualityOfService(winrt::Windows::Networking::Sockets::SocketQualityOfService value) = 0;
@@ -129,7 +129,7 @@ struct __declspec(uuid("52ac3f2e-349a-4135-bb58-b79b2647d390")) __declspec(novta
     virtual HRESULT __stdcall put_OutboundUnicastHopLimit(uint8_t value) = 0;
 };
 
-struct __declspec(uuid("33ead5c2-979c-4415-82a1-3cfaf646c192")) __declspec(novtable) IDatagramSocketControl2 : Windows::IInspectable
+struct __declspec(uuid("33ead5c2-979c-4415-82a1-3cfaf646c192")) __declspec(novtable) IDatagramSocketControl2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InboundBufferSizeInBytes(uint32_t * value) = 0;
     virtual HRESULT __stdcall put_InboundBufferSizeInBytes(uint32_t value) = 0;
@@ -137,13 +137,13 @@ struct __declspec(uuid("33ead5c2-979c-4415-82a1-3cfaf646c192")) __declspec(novta
     virtual HRESULT __stdcall put_DontFragment(bool value) = 0;
 };
 
-struct __declspec(uuid("d4eb8256-1f6d-4598-9b57-d42a001df349")) __declspec(novtable) IDatagramSocketControl3 : Windows::IInspectable
+struct __declspec(uuid("d4eb8256-1f6d-4598-9b57-d42a001df349")) __declspec(novtable) IDatagramSocketControl3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MulticastOnly(bool * value) = 0;
     virtual HRESULT __stdcall put_MulticastOnly(bool value) = 0;
 };
 
-struct __declspec(uuid("5f1a569a-55fb-48cd-9706-7a974f7b1585")) __declspec(novtable) IDatagramSocketInformation : Windows::IInspectable
+struct __declspec(uuid("5f1a569a-55fb-48cd-9706-7a974f7b1585")) __declspec(novtable) IDatagramSocketInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalAddress(Windows::Networking::IHostName ** value) = 0;
     virtual HRESULT __stdcall get_LocalPort(hstring * value) = 0;
@@ -151,7 +151,7 @@ struct __declspec(uuid("5f1a569a-55fb-48cd-9706-7a974f7b1585")) __declspec(novta
     virtual HRESULT __stdcall get_RemotePort(hstring * value) = 0;
 };
 
-struct __declspec(uuid("9e2ddca2-1712-4ce4-b179-8c652c6d107e")) __declspec(novtable) IDatagramSocketMessageReceivedEventArgs : Windows::IInspectable
+struct __declspec(uuid("9e2ddca2-1712-4ce4-b179-8c652c6d107e")) __declspec(novtable) IDatagramSocketMessageReceivedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteAddress(Windows::Networking::IHostName ** value) = 0;
     virtual HRESULT __stdcall get_RemotePort(hstring * value) = 0;
@@ -160,13 +160,13 @@ struct __declspec(uuid("9e2ddca2-1712-4ce4-b179-8c652c6d107e")) __declspec(novta
     virtual HRESULT __stdcall abi_GetDataStream(Windows::Storage::Streams::IInputStream ** inputStream) = 0;
 };
 
-struct __declspec(uuid("e9c62aee-1494-4a21-bb7e-8589fc751d9d")) __declspec(novtable) IDatagramSocketStatics : Windows::IInspectable
+struct __declspec(uuid("e9c62aee-1494-4a21-bb7e-8589fc751d9d")) __declspec(novtable) IDatagramSocketStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetEndpointPairsAsync(Windows::Networking::IHostName * remoteHostName, hstring remoteServiceName, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetEndpointPairsWithSortOptionsAsync(Windows::Networking::IHostName * remoteHostName, hstring remoteServiceName, winrt::Windows::Networking::HostNameSortOptions sortOptions, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> ** operation) = 0;
 };
 
-struct __declspec(uuid("33727d08-34d5-4746-ad7b-8dde5bc2ef88")) __declspec(novtable) IMessageWebSocket : Windows::IInspectable
+struct __declspec(uuid("33727d08-34d5-4746-ad7b-8dde5bc2ef88")) __declspec(novtable) IMessageWebSocket : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Control(Windows::Networking::Sockets::IMessageWebSocketControl ** value) = 0;
     virtual HRESULT __stdcall get_Information(Windows::Networking::Sockets::IWebSocketInformation ** value) = 0;
@@ -174,13 +174,13 @@ struct __declspec(uuid("33727d08-34d5-4746-ad7b-8dde5bc2ef88")) __declspec(novta
     virtual HRESULT __stdcall remove_MessageReceived(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("bed0cee7-f9c8-440a-9ad5-737281d9742e")) __declspec(novtable) IMessageWebSocket2 : Windows::IInspectable
+struct __declspec(uuid("bed0cee7-f9c8-440a-9ad5-737281d9742e")) __declspec(novtable) IMessageWebSocket2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_ServerCustomValidationRequested(Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> * eventHandler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_ServerCustomValidationRequested(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("8118388a-c629-4f0a-80fb-81fc05538862")) __declspec(novtable) IMessageWebSocketControl : Windows::IInspectable
+struct __declspec(uuid("8118388a-c629-4f0a-80fb-81fc05538862")) __declspec(novtable) IMessageWebSocketControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MaxMessageSize(uint32_t * value) = 0;
     virtual HRESULT __stdcall put_MaxMessageSize(uint32_t value) = 0;
@@ -188,24 +188,24 @@ struct __declspec(uuid("8118388a-c629-4f0a-80fb-81fc05538862")) __declspec(novta
     virtual HRESULT __stdcall put_MessageType(winrt::Windows::Networking::Sockets::SocketMessageType value) = 0;
 };
 
-struct __declspec(uuid("478c22ac-4c4b-42ed-9ed7-1ef9f94fa3d5")) __declspec(novtable) IMessageWebSocketMessageReceivedEventArgs : Windows::IInspectable
+struct __declspec(uuid("478c22ac-4c4b-42ed-9ed7-1ef9f94fa3d5")) __declspec(novtable) IMessageWebSocketMessageReceivedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MessageType(winrt::Windows::Networking::Sockets::SocketMessageType * value) = 0;
     virtual HRESULT __stdcall abi_GetDataReader(Windows::Storage::Streams::IDataReader ** dataReader) = 0;
     virtual HRESULT __stdcall abi_GetDataStream(Windows::Storage::Streams::IInputStream ** inputStream) = 0;
 };
 
-struct __declspec(uuid("43b04d64-4c85-4396-a637-1d973f6ebd49")) __declspec(novtable) ISocketActivityContext : Windows::IInspectable
+struct __declspec(uuid("43b04d64-4c85-4396-a637-1d973f6ebd49")) __declspec(novtable) ISocketActivityContext : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Data(Windows::Storage::Streams::IBuffer ** value) = 0;
 };
 
-struct __declspec(uuid("b99fc3c3-088c-4388-83ae-2525138e049a")) __declspec(novtable) ISocketActivityContextFactory : Windows::IInspectable
+struct __declspec(uuid("b99fc3c3-088c-4388-83ae-2525138e049a")) __declspec(novtable) ISocketActivityContextFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::Storage::Streams::IBuffer * data, Windows::Networking::Sockets::ISocketActivityContext ** context) = 0;
 };
 
-struct __declspec(uuid("8d8a42e4-a87e-4b74-9968-185b2511defe")) __declspec(novtable) ISocketActivityInformation : Windows::IInspectable
+struct __declspec(uuid("8d8a42e4-a87e-4b74-9968-185b2511defe")) __declspec(novtable) ISocketActivityInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TaskId(GUID * value) = 0;
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
@@ -216,23 +216,23 @@ struct __declspec(uuid("8d8a42e4-a87e-4b74-9968-185b2511defe")) __declspec(novta
     virtual HRESULT __stdcall get_StreamSocketListener(Windows::Networking::Sockets::IStreamSocketListener ** value) = 0;
 };
 
-struct __declspec(uuid("8570b47a-7e7d-4736-8041-1327a6543c56")) __declspec(novtable) ISocketActivityInformationStatics : Windows::IInspectable
+struct __declspec(uuid("8570b47a-7e7d-4736-8041-1327a6543c56")) __declspec(novtable) ISocketActivityInformationStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AllSockets(Windows::Foundation::Collections::IMapView<hstring, Windows::Networking::Sockets::SocketActivityInformation> ** sockets) = 0;
 };
 
-struct __declspec(uuid("45f406a7-fc9f-4f81-acad-355fef51e67b")) __declspec(novtable) ISocketActivityTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("45f406a7-fc9f-4f81-acad-355fef51e67b")) __declspec(novtable) ISocketActivityTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Reason(winrt::Windows::Networking::Sockets::SocketActivityTriggerReason * value) = 0;
     virtual HRESULT __stdcall get_SocketInformation(Windows::Networking::Sockets::ISocketActivityInformation ** value) = 0;
 };
 
-struct __declspec(uuid("828337f4-7d56-4d8e-b7b4-a07dd7c1bca9")) __declspec(novtable) ISocketErrorStatics : Windows::IInspectable
+struct __declspec(uuid("828337f4-7d56-4d8e-b7b4-a07dd7c1bca9")) __declspec(novtable) ISocketErrorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetStatus(int32_t hresult, winrt::Windows::Networking::Sockets::SocketErrorStatus * status) = 0;
 };
 
-struct __declspec(uuid("69a22cf3-fc7b-4857-af38-f6e7de6a5b49")) __declspec(novtable) IStreamSocket : Windows::IInspectable
+struct __declspec(uuid("69a22cf3-fc7b-4857-af38-f6e7de6a5b49")) __declspec(novtable) IStreamSocket : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Control(Windows::Networking::Sockets::IStreamSocketControl ** value) = 0;
     virtual HRESULT __stdcall get_Information(Windows::Networking::Sockets::IStreamSocketInformation ** value) = 0;
@@ -245,12 +245,12 @@ struct __declspec(uuid("69a22cf3-fc7b-4857-af38-f6e7de6a5b49")) __declspec(novta
     virtual HRESULT __stdcall abi_UpgradeToSslAsync(winrt::Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, Windows::Networking::IHostName * validationHostName, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("29d0e575-f314-4d09-adf0-0fbd967fbd9f")) __declspec(novtable) IStreamSocket2 : Windows::IInspectable
+struct __declspec(uuid("29d0e575-f314-4d09-adf0-0fbd967fbd9f")) __declspec(novtable) IStreamSocket2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ConnectWithProtectionLevelAndAdapterAsync(Windows::Networking::IHostName * remoteHostName, hstring remoteServiceName, winrt::Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, Windows::Networking::Connectivity::INetworkAdapter * adapter, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("3f430b00-9d28-4854-bac3-2301941ec223")) __declspec(novtable) IStreamSocket3 : Windows::IInspectable
+struct __declspec(uuid("3f430b00-9d28-4854-bac3-2301941ec223")) __declspec(novtable) IStreamSocket3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CancelIOAsync(Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_EnableTransferOwnership(GUID taskId) = 0;
@@ -260,7 +260,7 @@ struct __declspec(uuid("3f430b00-9d28-4854-bac3-2301941ec223")) __declspec(novta
     virtual HRESULT __stdcall abi_TransferOwnershipWithContextAndKeepAliveTime(hstring socketId, Windows::Networking::Sockets::ISocketActivityContext * data, Windows::Foundation::TimeSpan keepAliveTime) = 0;
 };
 
-struct __declspec(uuid("fe25adf1-92ab-4af3-9992-0f4c85e36cc4")) __declspec(novtable) IStreamSocketControl : Windows::IInspectable
+struct __declspec(uuid("fe25adf1-92ab-4af3-9992-0f4c85e36cc4")) __declspec(novtable) IStreamSocketControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NoDelay(bool * value) = 0;
     virtual HRESULT __stdcall put_NoDelay(bool value) = 0;
@@ -274,12 +274,12 @@ struct __declspec(uuid("fe25adf1-92ab-4af3-9992-0f4c85e36cc4")) __declspec(novta
     virtual HRESULT __stdcall put_OutboundUnicastHopLimit(uint8_t value) = 0;
 };
 
-struct __declspec(uuid("c2d09a56-060f-44c1-b8e2-1fbf60bd62c5")) __declspec(novtable) IStreamSocketControl2 : Windows::IInspectable
+struct __declspec(uuid("c2d09a56-060f-44c1-b8e2-1fbf60bd62c5")) __declspec(novtable) IStreamSocketControl2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IgnorableServerCertificateErrors(Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ** value) = 0;
 };
 
-struct __declspec(uuid("c56a444c-4e74-403e-894c-b31cae5c7342")) __declspec(novtable) IStreamSocketControl3 : Windows::IInspectable
+struct __declspec(uuid("c56a444c-4e74-403e-894c-b31cae5c7342")) __declspec(novtable) IStreamSocketControl3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SerializeConnectionAttempts(bool * value) = 0;
     virtual HRESULT __stdcall put_SerializeConnectionAttempts(bool value) = 0;
@@ -287,7 +287,7 @@ struct __declspec(uuid("c56a444c-4e74-403e-894c-b31cae5c7342")) __declspec(novta
     virtual HRESULT __stdcall put_ClientCertificate(Windows::Security::Cryptography::Certificates::ICertificate * value) = 0;
 };
 
-struct __declspec(uuid("3b80ae30-5e68-4205-88f0-dc85d2e25ded")) __declspec(novtable) IStreamSocketInformation : Windows::IInspectable
+struct __declspec(uuid("3b80ae30-5e68-4205-88f0-dc85d2e25ded")) __declspec(novtable) IStreamSocketInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalAddress(Windows::Networking::IHostName ** value) = 0;
     virtual HRESULT __stdcall get_LocalPort(hstring * value) = 0;
@@ -301,7 +301,7 @@ struct __declspec(uuid("3b80ae30-5e68-4205-88f0-dc85d2e25ded")) __declspec(novta
     virtual HRESULT __stdcall get_SessionKey(Windows::Storage::Streams::IBuffer ** value) = 0;
 };
 
-struct __declspec(uuid("12c28452-4bdc-4ee4-976a-cf130e9d92e3")) __declspec(novtable) IStreamSocketInformation2 : Windows::IInspectable
+struct __declspec(uuid("12c28452-4bdc-4ee4-976a-cf130e9d92e3")) __declspec(novtable) IStreamSocketInformation2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ServerCertificateErrorSeverity(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity * value) = 0;
     virtual HRESULT __stdcall get_ServerCertificateErrors(Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ** value) = 0;
@@ -309,7 +309,7 @@ struct __declspec(uuid("12c28452-4bdc-4ee4-976a-cf130e9d92e3")) __declspec(novta
     virtual HRESULT __stdcall get_ServerIntermediateCertificates(Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ** value) = 0;
 };
 
-struct __declspec(uuid("ff513437-df9f-4df0-bf82-0ec5d7b35aae")) __declspec(novtable) IStreamSocketListener : Windows::IInspectable
+struct __declspec(uuid("ff513437-df9f-4df0-bf82-0ec5d7b35aae")) __declspec(novtable) IStreamSocketListener : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Control(Windows::Networking::Sockets::IStreamSocketListenerControl ** value) = 0;
     virtual HRESULT __stdcall get_Information(Windows::Networking::Sockets::IStreamSocketListenerInformation ** value) = 0;
@@ -319,13 +319,13 @@ struct __declspec(uuid("ff513437-df9f-4df0-bf82-0ec5d7b35aae")) __declspec(novta
     virtual HRESULT __stdcall remove_ConnectionReceived(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("658dc13e-bb3e-4458-b232-ed1088694b98")) __declspec(novtable) IStreamSocketListener2 : Windows::IInspectable
+struct __declspec(uuid("658dc13e-bb3e-4458-b232-ed1088694b98")) __declspec(novtable) IStreamSocketListener2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_BindServiceNameWithProtectionLevelAsync(hstring localServiceName, winrt::Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_BindServiceNameWithProtectionLevelAndAdapterAsync(hstring localServiceName, winrt::Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, Windows::Networking::Connectivity::INetworkAdapter * adapter, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("4798201c-bdf8-4919-8542-28d450e74507")) __declspec(novtable) IStreamSocketListener3 : Windows::IInspectable
+struct __declspec(uuid("4798201c-bdf8-4919-8542-28d450e74507")) __declspec(novtable) IStreamSocketListener3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CancelIOAsync(Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_EnableTransferOwnership(GUID taskId) = 0;
@@ -334,18 +334,18 @@ struct __declspec(uuid("4798201c-bdf8-4919-8542-28d450e74507")) __declspec(novta
     virtual HRESULT __stdcall abi_TransferOwnershipWithContext(hstring socketId, Windows::Networking::Sockets::ISocketActivityContext * data) = 0;
 };
 
-struct __declspec(uuid("0c472ea9-373f-447b-85b1-ddd4548803ba")) __declspec(novtable) IStreamSocketListenerConnectionReceivedEventArgs : Windows::IInspectable
+struct __declspec(uuid("0c472ea9-373f-447b-85b1-ddd4548803ba")) __declspec(novtable) IStreamSocketListenerConnectionReceivedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Socket(Windows::Networking::Sockets::IStreamSocket ** value) = 0;
 };
 
-struct __declspec(uuid("20d8c576-8d8a-4dba-9722-a16c4d984980")) __declspec(novtable) IStreamSocketListenerControl : Windows::IInspectable
+struct __declspec(uuid("20d8c576-8d8a-4dba-9722-a16c4d984980")) __declspec(novtable) IStreamSocketListenerControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_QualityOfService(winrt::Windows::Networking::Sockets::SocketQualityOfService * value) = 0;
     virtual HRESULT __stdcall put_QualityOfService(winrt::Windows::Networking::Sockets::SocketQualityOfService value) = 0;
 };
 
-struct __declspec(uuid("948bb665-2c3e-404b-b8b0-8eb249a2b0a1")) __declspec(novtable) IStreamSocketListenerControl2 : Windows::IInspectable
+struct __declspec(uuid("948bb665-2c3e-404b-b8b0-8eb249a2b0a1")) __declspec(novtable) IStreamSocketListenerControl2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NoDelay(bool * value) = 0;
     virtual HRESULT __stdcall put_NoDelay(bool value) = 0;
@@ -357,37 +357,37 @@ struct __declspec(uuid("948bb665-2c3e-404b-b8b0-8eb249a2b0a1")) __declspec(novta
     virtual HRESULT __stdcall put_OutboundUnicastHopLimit(uint8_t value) = 0;
 };
 
-struct __declspec(uuid("e62ba82f-a63a-430b-bf62-29e93e5633b4")) __declspec(novtable) IStreamSocketListenerInformation : Windows::IInspectable
+struct __declspec(uuid("e62ba82f-a63a-430b-bf62-29e93e5633b4")) __declspec(novtable) IStreamSocketListenerInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalPort(hstring * value) = 0;
 };
 
-struct __declspec(uuid("a420bc4a-6e2e-4af5-b556-355ae0cd4f29")) __declspec(novtable) IStreamSocketStatics : Windows::IInspectable
+struct __declspec(uuid("a420bc4a-6e2e-4af5-b556-355ae0cd4f29")) __declspec(novtable) IStreamSocketStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetEndpointPairsAsync(Windows::Networking::IHostName * remoteHostName, hstring remoteServiceName, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetEndpointPairsWithSortOptionsAsync(Windows::Networking::IHostName * remoteHostName, hstring remoteServiceName, winrt::Windows::Networking::HostNameSortOptions sortOptions, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> ** operation) = 0;
 };
 
-struct __declspec(uuid("bd4a49d8-b289-45bb-97eb-c7525205a843")) __declspec(novtable) IStreamWebSocket : Windows::IInspectable
+struct __declspec(uuid("bd4a49d8-b289-45bb-97eb-c7525205a843")) __declspec(novtable) IStreamWebSocket : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Control(Windows::Networking::Sockets::IStreamWebSocketControl ** value) = 0;
     virtual HRESULT __stdcall get_Information(Windows::Networking::Sockets::IWebSocketInformation ** value) = 0;
     virtual HRESULT __stdcall get_InputStream(Windows::Storage::Streams::IInputStream ** value) = 0;
 };
 
-struct __declspec(uuid("aa4d08cb-93f5-4678-8236-57cce5417ed5")) __declspec(novtable) IStreamWebSocket2 : Windows::IInspectable
+struct __declspec(uuid("aa4d08cb-93f5-4678-8236-57cce5417ed5")) __declspec(novtable) IStreamWebSocket2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_ServerCustomValidationRequested(Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> * eventHandler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_ServerCustomValidationRequested(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("b4f478b1-a45a-48db-953a-645b7d964c07")) __declspec(novtable) IStreamWebSocketControl : Windows::IInspectable
+struct __declspec(uuid("b4f478b1-a45a-48db-953a-645b7d964c07")) __declspec(novtable) IStreamWebSocketControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NoDelay(bool * value) = 0;
     virtual HRESULT __stdcall put_NoDelay(bool value) = 0;
 };
 
-struct __declspec(uuid("f877396f-99b1-4e18-bc08-850c9adf156e")) __declspec(novtable) IWebSocket : Windows::IInspectable
+struct __declspec(uuid("f877396f-99b1-4e18-bc08-850c9adf156e")) __declspec(novtable) IWebSocket : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_OutputStream(Windows::Storage::Streams::IOutputStream ** value) = 0;
     virtual HRESULT __stdcall abi_ConnectAsync(Windows::Foundation::IUriRuntimeClass * uri, Windows::Foundation::IAsyncAction ** operation) = 0;
@@ -397,13 +397,13 @@ struct __declspec(uuid("f877396f-99b1-4e18-bc08-850c9adf156e")) __declspec(novta
     virtual HRESULT __stdcall abi_CloseWithStatus(uint16_t code, hstring reason) = 0;
 };
 
-struct __declspec(uuid("ceb78d07-d0a8-4703-a091-c8c2c0915bc3")) __declspec(novtable) IWebSocketClosedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ceb78d07-d0a8-4703-a091-c8c2c0915bc3")) __declspec(novtable) IWebSocketClosedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Code(uint16_t * value) = 0;
     virtual HRESULT __stdcall get_Reason(hstring * value) = 0;
 };
 
-struct __declspec(uuid("2ec4bdc3-d9a5-455a-9811-de24d45337e9")) __declspec(novtable) IWebSocketControl : Windows::IInspectable
+struct __declspec(uuid("2ec4bdc3-d9a5-455a-9811-de24d45337e9")) __declspec(novtable) IWebSocketControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_OutboundBufferSizeInBytes(uint32_t * value) = 0;
     virtual HRESULT __stdcall put_OutboundBufferSizeInBytes(uint32_t value) = 0;
@@ -414,24 +414,24 @@ struct __declspec(uuid("2ec4bdc3-d9a5-455a-9811-de24d45337e9")) __declspec(novta
     virtual HRESULT __stdcall get_SupportedProtocols(Windows::Foundation::Collections::IVector<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("79c3be03-f2ca-461e-af4e-9665bc2d0620")) __declspec(novtable) IWebSocketControl2 : Windows::IInspectable
+struct __declspec(uuid("79c3be03-f2ca-461e-af4e-9665bc2d0620")) __declspec(novtable) IWebSocketControl2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IgnorableServerCertificateErrors(Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ** value) = 0;
 };
 
-struct __declspec(uuid("27cdf35b-1f61-4709-8e02-61283ada4e9d")) __declspec(novtable) IWebSocketErrorStatics : Windows::IInspectable
+struct __declspec(uuid("27cdf35b-1f61-4709-8e02-61283ada4e9d")) __declspec(novtable) IWebSocketErrorStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetStatus(int32_t hresult, winrt::Windows::Web::WebErrorStatus * status) = 0;
 };
 
-struct __declspec(uuid("5e01e316-c92a-47a5-b25f-07847639d181")) __declspec(novtable) IWebSocketInformation : Windows::IInspectable
+struct __declspec(uuid("5e01e316-c92a-47a5-b25f-07847639d181")) __declspec(novtable) IWebSocketInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalAddress(Windows::Networking::IHostName ** value) = 0;
     virtual HRESULT __stdcall get_BandwidthStatistics(Windows::Networking::Sockets::BandwidthStatistics * value) = 0;
     virtual HRESULT __stdcall get_Protocol(hstring * value) = 0;
 };
 
-struct __declspec(uuid("ce1d39ce-a1b7-4d43-8269-8d5b981bd47a")) __declspec(novtable) IWebSocketInformation2 : Windows::IInspectable
+struct __declspec(uuid("ce1d39ce-a1b7-4d43-8269-8d5b981bd47a")) __declspec(novtable) IWebSocketInformation2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ServerCertificate(Windows::Security::Cryptography::Certificates::ICertificate ** value) = 0;
     virtual HRESULT __stdcall get_ServerCertificateErrorSeverity(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity * value) = 0;
@@ -439,7 +439,7 @@ struct __declspec(uuid("ce1d39ce-a1b7-4d43-8269-8d5b981bd47a")) __declspec(novta
     virtual HRESULT __stdcall get_ServerIntermediateCertificates(Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ** value) = 0;
 };
 
-struct __declspec(uuid("ffeffe48-022a-4ab7-8b36-e10af4640e6b")) __declspec(novtable) IWebSocketServerCustomValidationRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ffeffe48-022a-4ab7-8b36-e10af4640e6b")) __declspec(novtable) IWebSocketServerCustomValidationRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ServerCertificate(Windows::Security::Cryptography::Certificates::ICertificate ** value) = 0;
     virtual HRESULT __stdcall get_ServerCertificateErrorSeverity(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity * value) = 0;
@@ -483,57 +483,465 @@ template <> struct traits<Windows::Networking::Sockets::WebSocketServerCustomVal
 
 namespace Windows::Networking::Sockets {
 
-template <typename T> struct impl_IControlChannelTrigger;
-template <typename T> struct impl_IControlChannelTrigger2;
-template <typename T> struct impl_IControlChannelTriggerEventDetails;
-template <typename T> struct impl_IControlChannelTriggerFactory;
-template <typename T> struct impl_IControlChannelTriggerResetEventDetails;
-template <typename T> struct impl_IDatagramSocket;
-template <typename T> struct impl_IDatagramSocket2;
-template <typename T> struct impl_IDatagramSocket3;
-template <typename T> struct impl_IDatagramSocketControl;
-template <typename T> struct impl_IDatagramSocketControl2;
-template <typename T> struct impl_IDatagramSocketControl3;
-template <typename T> struct impl_IDatagramSocketInformation;
-template <typename T> struct impl_IDatagramSocketMessageReceivedEventArgs;
-template <typename T> struct impl_IDatagramSocketStatics;
-template <typename T> struct impl_IMessageWebSocket;
-template <typename T> struct impl_IMessageWebSocket2;
-template <typename T> struct impl_IMessageWebSocketControl;
-template <typename T> struct impl_IMessageWebSocketMessageReceivedEventArgs;
-template <typename T> struct impl_ISocketActivityContext;
-template <typename T> struct impl_ISocketActivityContextFactory;
-template <typename T> struct impl_ISocketActivityInformation;
-template <typename T> struct impl_ISocketActivityInformationStatics;
-template <typename T> struct impl_ISocketActivityTriggerDetails;
-template <typename T> struct impl_ISocketErrorStatics;
-template <typename T> struct impl_IStreamSocket;
-template <typename T> struct impl_IStreamSocket2;
-template <typename T> struct impl_IStreamSocket3;
-template <typename T> struct impl_IStreamSocketControl;
-template <typename T> struct impl_IStreamSocketControl2;
-template <typename T> struct impl_IStreamSocketControl3;
-template <typename T> struct impl_IStreamSocketInformation;
-template <typename T> struct impl_IStreamSocketInformation2;
-template <typename T> struct impl_IStreamSocketListener;
-template <typename T> struct impl_IStreamSocketListener2;
-template <typename T> struct impl_IStreamSocketListener3;
-template <typename T> struct impl_IStreamSocketListenerConnectionReceivedEventArgs;
-template <typename T> struct impl_IStreamSocketListenerControl;
-template <typename T> struct impl_IStreamSocketListenerControl2;
-template <typename T> struct impl_IStreamSocketListenerInformation;
-template <typename T> struct impl_IStreamSocketStatics;
-template <typename T> struct impl_IStreamWebSocket;
-template <typename T> struct impl_IStreamWebSocket2;
-template <typename T> struct impl_IStreamWebSocketControl;
-template <typename T> struct impl_IWebSocket;
-template <typename T> struct impl_IWebSocketClosedEventArgs;
-template <typename T> struct impl_IWebSocketControl;
-template <typename T> struct impl_IWebSocketControl2;
-template <typename T> struct impl_IWebSocketErrorStatics;
-template <typename T> struct impl_IWebSocketInformation;
-template <typename T> struct impl_IWebSocketInformation2;
-template <typename T> struct impl_IWebSocketServerCustomValidationRequestedEventArgs;
+template <typename D>
+struct WINRT_EBO impl_IControlChannelTrigger
+{
+    hstring ControlChannelTriggerId() const;
+    uint32_t ServerKeepAliveIntervalInMinutes() const;
+    void ServerKeepAliveIntervalInMinutes(uint32_t value) const;
+    uint32_t CurrentKeepAliveIntervalInMinutes() const;
+    Windows::Foundation::IInspectable TransportObject() const;
+    Windows::ApplicationModel::Background::IBackgroundTrigger KeepAliveTrigger() const;
+    Windows::ApplicationModel::Background::IBackgroundTrigger PushNotificationTrigger() const;
+    void UsingTransport(const Windows::Foundation::IInspectable & transport) const;
+    Windows::Networking::Sockets::ControlChannelTriggerStatus WaitForPushEnabled() const;
+    void DecreaseNetworkKeepAliveInterval() const;
+    void FlushTransport() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IControlChannelTrigger2
+{
+    bool IsWakeFromLowPowerSupported() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IControlChannelTriggerEventDetails
+{
+    Windows::Networking::Sockets::ControlChannelTrigger ControlChannelTrigger() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IControlChannelTriggerFactory
+{
+    Windows::Networking::Sockets::ControlChannelTrigger CreateControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes) const;
+    Windows::Networking::Sockets::ControlChannelTrigger CreateControlChannelTriggerEx(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IControlChannelTriggerResetEventDetails
+{
+    Windows::Networking::Sockets::ControlChannelTriggerResetReason ResetReason() const;
+    bool HardwareSlotReset() const;
+    bool SoftwareSlotReset() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocket
+{
+    Windows::Networking::Sockets::DatagramSocketControl Control() const;
+    Windows::Networking::Sockets::DatagramSocketInformation Information() const;
+    Windows::Storage::Streams::IOutputStream OutputStream() const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair) const;
+    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_view localServiceName) const;
+    Windows::Foundation::IAsyncAction BindEndpointAsync(const Windows::Networking::HostName & localHostName, hstring_view localServiceName) const;
+    void JoinMulticastGroup(const Windows::Networking::HostName & host) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IOutputStream> GetOutputStreamAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IOutputStream> GetOutputStreamAsync(const Windows::Networking::EndpointPair & endpointPair) const;
+    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::DatagramSocket, Windows::Networking::Sockets::DatagramSocketMessageReceivedEventArgs> & eventHandler) const;
+    using MessageReceived_revoker = event_revoker<IDatagramSocket>;
+    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::DatagramSocket, Windows::Networking::Sockets::DatagramSocketMessageReceivedEventArgs> & eventHandler) const;
+    void MessageReceived(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocket2
+{
+    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_view localServiceName, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocket3
+{
+    Windows::Foundation::IAsyncAction CancelIOAsync() const;
+    void EnableTransferOwnership(GUID taskId) const;
+    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
+    void TransferOwnership(hstring_view socketId) const;
+    void TransferOwnership(hstring_view socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
+    void TransferOwnership(hstring_view socketId, const Windows::Networking::Sockets::SocketActivityContext & data, const Windows::Foundation::TimeSpan & keepAliveTime) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketControl
+{
+    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
+    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
+    uint8_t OutboundUnicastHopLimit() const;
+    void OutboundUnicastHopLimit(uint8_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketControl2
+{
+    uint32_t InboundBufferSizeInBytes() const;
+    void InboundBufferSizeInBytes(uint32_t value) const;
+    bool DontFragment() const;
+    void DontFragment(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketControl3
+{
+    bool MulticastOnly() const;
+    void MulticastOnly(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketInformation
+{
+    Windows::Networking::HostName LocalAddress() const;
+    hstring LocalPort() const;
+    Windows::Networking::HostName RemoteAddress() const;
+    hstring RemotePort() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketMessageReceivedEventArgs
+{
+    Windows::Networking::HostName RemoteAddress() const;
+    hstring RemotePort() const;
+    Windows::Networking::HostName LocalAddress() const;
+    Windows::Storage::Streams::DataReader GetDataReader() const;
+    Windows::Storage::Streams::IInputStream GetDataStream() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDatagramSocketStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMessageWebSocket
+{
+    Windows::Networking::Sockets::MessageWebSocketControl Control() const;
+    Windows::Networking::Sockets::MessageWebSocketInformation Information() const;
+    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> & eventHandler) const;
+    using MessageReceived_revoker = event_revoker<IMessageWebSocket>;
+    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> & eventHandler) const;
+    void MessageReceived(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMessageWebSocket2
+{
+    event_token ServerCustomValidationRequested(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
+    using ServerCustomValidationRequested_revoker = event_revoker<IMessageWebSocket2>;
+    ServerCustomValidationRequested_revoker ServerCustomValidationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::MessageWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
+    void ServerCustomValidationRequested(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMessageWebSocketControl
+{
+    uint32_t MaxMessageSize() const;
+    void MaxMessageSize(uint32_t value) const;
+    Windows::Networking::Sockets::SocketMessageType MessageType() const;
+    void MessageType(Windows::Networking::Sockets::SocketMessageType value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMessageWebSocketMessageReceivedEventArgs
+{
+    Windows::Networking::Sockets::SocketMessageType MessageType() const;
+    Windows::Storage::Streams::DataReader GetDataReader() const;
+    Windows::Storage::Streams::IInputStream GetDataStream() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketActivityContext
+{
+    Windows::Storage::Streams::IBuffer Data() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketActivityContextFactory
+{
+    Windows::Networking::Sockets::SocketActivityContext Create(const Windows::Storage::Streams::IBuffer & data) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketActivityInformation
+{
+    GUID TaskId() const;
+    hstring Id() const;
+    Windows::Networking::Sockets::SocketActivityKind SocketKind() const;
+    Windows::Networking::Sockets::SocketActivityContext Context() const;
+    Windows::Networking::Sockets::DatagramSocket DatagramSocket() const;
+    Windows::Networking::Sockets::StreamSocket StreamSocket() const;
+    Windows::Networking::Sockets::StreamSocketListener StreamSocketListener() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketActivityInformationStatics
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Networking::Sockets::SocketActivityInformation> AllSockets() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketActivityTriggerDetails
+{
+    Windows::Networking::Sockets::SocketActivityTriggerReason Reason() const;
+    Windows::Networking::Sockets::SocketActivityInformation SocketInformation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocketErrorStatics
+{
+    Windows::Networking::Sockets::SocketErrorStatus GetStatus(int32_t hresult) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocket
+{
+    Windows::Networking::Sockets::StreamSocketControl Control() const;
+    Windows::Networking::Sockets::StreamSocketInformation Information() const;
+    Windows::Storage::Streams::IInputStream InputStream() const;
+    Windows::Storage::Streams::IOutputStream OutputStream() const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair) const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::EndpointPair & endpointPair, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
+    Windows::Foundation::IAsyncAction UpgradeToSslAsync(Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::HostName & validationHostName) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocket2
+{
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocket3
+{
+    Windows::Foundation::IAsyncAction CancelIOAsync() const;
+    void EnableTransferOwnership(GUID taskId) const;
+    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
+    void TransferOwnership(hstring_view socketId) const;
+    void TransferOwnership(hstring_view socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
+    void TransferOwnership(hstring_view socketId, const Windows::Networking::Sockets::SocketActivityContext & data, const Windows::Foundation::TimeSpan & keepAliveTime) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketControl
+{
+    bool NoDelay() const;
+    void NoDelay(bool value) const;
+    bool KeepAlive() const;
+    void KeepAlive(bool value) const;
+    uint32_t OutboundBufferSizeInBytes() const;
+    void OutboundBufferSizeInBytes(uint32_t value) const;
+    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
+    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
+    uint8_t OutboundUnicastHopLimit() const;
+    void OutboundUnicastHopLimit(uint8_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketControl2
+{
+    Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> IgnorableServerCertificateErrors() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketControl3
+{
+    bool SerializeConnectionAttempts() const;
+    void SerializeConnectionAttempts(bool value) const;
+    Windows::Security::Cryptography::Certificates::Certificate ClientCertificate() const;
+    void ClientCertificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketInformation
+{
+    Windows::Networking::HostName LocalAddress() const;
+    hstring LocalPort() const;
+    Windows::Networking::HostName RemoteHostName() const;
+    Windows::Networking::HostName RemoteAddress() const;
+    hstring RemoteServiceName() const;
+    hstring RemotePort() const;
+    Windows::Networking::Sockets::RoundTripTimeStatistics RoundTripTimeStatistics() const;
+    Windows::Networking::Sockets::BandwidthStatistics BandwidthStatistics() const;
+    Windows::Networking::Sockets::SocketProtectionLevel ProtectionLevel() const;
+    Windows::Storage::Streams::IBuffer SessionKey() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketInformation2
+{
+    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
+    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
+    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListener
+{
+    Windows::Networking::Sockets::StreamSocketListenerControl Control() const;
+    Windows::Networking::Sockets::StreamSocketListenerInformation Information() const;
+    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_view localServiceName) const;
+    Windows::Foundation::IAsyncAction BindEndpointAsync(const Windows::Networking::HostName & localHostName, hstring_view localServiceName) const;
+    event_token ConnectionReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamSocketListener, Windows::Networking::Sockets::StreamSocketListenerConnectionReceivedEventArgs> & eventHandler) const;
+    using ConnectionReceived_revoker = event_revoker<IStreamSocketListener>;
+    ConnectionReceived_revoker ConnectionReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamSocketListener, Windows::Networking::Sockets::StreamSocketListenerConnectionReceivedEventArgs> & eventHandler) const;
+    void ConnectionReceived(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListener2
+{
+    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_view localServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel) const;
+    Windows::Foundation::IAsyncAction BindServiceNameAsync(hstring_view localServiceName, Windows::Networking::Sockets::SocketProtectionLevel protectionLevel, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListener3
+{
+    Windows::Foundation::IAsyncAction CancelIOAsync() const;
+    void EnableTransferOwnership(GUID taskId) const;
+    void EnableTransferOwnership(GUID taskId, Windows::Networking::Sockets::SocketActivityConnectedStandbyAction connectedStandbyAction) const;
+    void TransferOwnership(hstring_view socketId) const;
+    void TransferOwnership(hstring_view socketId, const Windows::Networking::Sockets::SocketActivityContext & data) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListenerConnectionReceivedEventArgs
+{
+    Windows::Networking::Sockets::StreamSocket Socket() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListenerControl
+{
+    Windows::Networking::Sockets::SocketQualityOfService QualityOfService() const;
+    void QualityOfService(Windows::Networking::Sockets::SocketQualityOfService value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListenerControl2
+{
+    bool NoDelay() const;
+    void NoDelay(bool value) const;
+    bool KeepAlive() const;
+    void KeepAlive(bool value) const;
+    uint32_t OutboundBufferSizeInBytes() const;
+    void OutboundBufferSizeInBytes(uint32_t value) const;
+    uint8_t OutboundUnicastHopLimit() const;
+    void OutboundUnicastHopLimit(uint8_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketListenerInformation
+{
+    hstring LocalPort() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamSocketStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair>> GetEndpointPairsAsync(const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName, Windows::Networking::HostNameSortOptions sortOptions) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamWebSocket
+{
+    Windows::Networking::Sockets::StreamWebSocketControl Control() const;
+    Windows::Networking::Sockets::StreamWebSocketInformation Information() const;
+    Windows::Storage::Streams::IInputStream InputStream() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamWebSocket2
+{
+    event_token ServerCustomValidationRequested(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
+    using ServerCustomValidationRequested_revoker = event_revoker<IStreamWebSocket2>;
+    ServerCustomValidationRequested_revoker ServerCustomValidationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::StreamWebSocket, Windows::Networking::Sockets::WebSocketServerCustomValidationRequestedEventArgs> & eventHandler) const;
+    void ServerCustomValidationRequested(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreamWebSocketControl
+{
+    bool NoDelay() const;
+    void NoDelay(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocket
+{
+    Windows::Storage::Streams::IOutputStream OutputStream() const;
+    Windows::Foundation::IAsyncAction ConnectAsync(const Windows::Foundation::Uri & uri) const;
+    void SetRequestHeader(hstring_view headerName, hstring_view headerValue) const;
+    event_token Closed(const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::IWebSocket, Windows::Networking::Sockets::WebSocketClosedEventArgs> & eventHandler) const;
+    using Closed_revoker = event_revoker<IWebSocket>;
+    Closed_revoker Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Sockets::IWebSocket, Windows::Networking::Sockets::WebSocketClosedEventArgs> & eventHandler) const;
+    void Closed(event_token eventCookie) const;
+    void Close(uint16_t code, hstring_view reason) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketClosedEventArgs
+{
+    uint16_t Code() const;
+    hstring Reason() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketControl
+{
+    uint32_t OutboundBufferSizeInBytes() const;
+    void OutboundBufferSizeInBytes(uint32_t value) const;
+    Windows::Security::Credentials::PasswordCredential ServerCredential() const;
+    void ServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
+    Windows::Security::Credentials::PasswordCredential ProxyCredential() const;
+    void ProxyCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
+    Windows::Foundation::Collections::IVector<hstring> SupportedProtocols() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketControl2
+{
+    Windows::Foundation::Collections::IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> IgnorableServerCertificateErrors() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketErrorStatics
+{
+    Windows::Web::WebErrorStatus GetStatus(int32_t hresult) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketInformation
+{
+    Windows::Networking::HostName LocalAddress() const;
+    Windows::Networking::Sockets::BandwidthStatistics BandwidthStatistics() const;
+    hstring Protocol() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketInformation2
+{
+    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
+    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
+    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebSocketServerCustomValidationRequestedEventArgs
+{
+    Windows::Security::Cryptography::Certificates::Certificate ServerCertificate() const;
+    Windows::Networking::Sockets::SocketSslErrorSeverity ServerCertificateErrorSeverity() const;
+    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> ServerCertificateErrors() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> ServerIntermediateCertificates() const;
+    void Reject() const;
+    Windows::Foundation::Deferral GetDeferral() const;
+};
 
 }
 

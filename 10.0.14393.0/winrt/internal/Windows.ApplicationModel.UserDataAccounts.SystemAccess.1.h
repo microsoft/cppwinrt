@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,7 +14,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::UserDataAccounts::SystemAccess {
 
-struct __declspec(uuid("ad0123a3-fbdc-4d1b-be43-5a27ea4a1b63")) __declspec(novtable) IDeviceAccountConfiguration : Windows::IInspectable
+struct __declspec(uuid("ad0123a3-fbdc-4d1b-be43-5a27ea4a1b63")) __declspec(novtable) IDeviceAccountConfiguration : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AccountName(hstring * value) = 0;
     virtual HRESULT __stdcall put_AccountName(hstring value) = 0;
@@ -50,7 +50,7 @@ struct __declspec(uuid("ad0123a3-fbdc-4d1b-be43-5a27ea4a1b63")) __declspec(novta
     virtual HRESULT __stdcall put_OutgoingServerUsername(hstring value) = 0;
 };
 
-struct __declspec(uuid("f2b2e5a6-728d-4a4a-8945-2bf8580136de")) __declspec(novtable) IDeviceAccountConfiguration2 : Windows::IInspectable
+struct __declspec(uuid("f2b2e5a6-728d-4a4a-8945-2bf8580136de")) __declspec(novtable) IDeviceAccountConfiguration2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IncomingServerCredential(Windows::Security::Credentials::IPasswordCredential ** value) = 0;
     virtual HRESULT __stdcall put_IncomingServerCredential(Windows::Security::Credentials::IPasswordCredential * value) = 0;
@@ -110,12 +110,12 @@ struct __declspec(uuid("f2b2e5a6-728d-4a4a-8945-2bf8580136de")) __declspec(novta
     virtual HRESULT __stdcall put_IsSyncScheduleManagedBySystem(bool value) = 0;
 };
 
-struct __declspec(uuid("9d6b11b9-cbe5-45f5-822b-c267b81dbdb6")) __declspec(novtable) IUserDataAccountSystemAccessManagerStatics : Windows::IInspectable
+struct __declspec(uuid("9d6b11b9-cbe5-45f5-822b-c267b81dbdb6")) __declspec(novtable) IUserDataAccountSystemAccessManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddAndShowDeviceAccountsAsync(Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> * accounts, Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> ** result) = 0;
 };
 
-struct __declspec(uuid("943f854d-4b4e-439f-83d3-979b27c05ac7")) __declspec(novtable) IUserDataAccountSystemAccessManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("943f854d-4b4e-439f-83d3-979b27c05ac7")) __declspec(novtable) IUserDataAccountSystemAccessManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SuppressLocalAccountWithAccountAsync(hstring userDataAccountId, Windows::Foundation::IAsyncAction ** result) = 0;
     virtual HRESULT __stdcall abi_CreateDeviceAccountAsync(Windows::ApplicationModel::UserDataAccounts::SystemAccess::IDeviceAccountConfiguration * account, Windows::Foundation::IAsyncOperation<hstring> ** result) = 0;
@@ -133,10 +133,118 @@ template <> struct traits<Windows::ApplicationModel::UserDataAccounts::SystemAcc
 
 namespace Windows::ApplicationModel::UserDataAccounts::SystemAccess {
 
-template <typename T> struct impl_IDeviceAccountConfiguration;
-template <typename T> struct impl_IDeviceAccountConfiguration2;
-template <typename T> struct impl_IUserDataAccountSystemAccessManagerStatics;
-template <typename T> struct impl_IUserDataAccountSystemAccessManagerStatics2;
+template <typename D>
+struct WINRT_EBO impl_IDeviceAccountConfiguration
+{
+    hstring AccountName() const;
+    void AccountName(hstring_view value) const;
+    hstring DeviceAccountTypeId() const;
+    void DeviceAccountTypeId(hstring_view value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountServerType ServerType() const;
+    void ServerType(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountServerType value) const;
+    hstring EmailAddress() const;
+    void EmailAddress(hstring_view value) const;
+    hstring Domain() const;
+    void Domain(hstring_view value) const;
+    bool EmailSyncEnabled() const;
+    void EmailSyncEnabled(bool value) const;
+    bool ContactsSyncEnabled() const;
+    void ContactsSyncEnabled(bool value) const;
+    bool CalendarSyncEnabled() const;
+    void CalendarSyncEnabled(bool value) const;
+    hstring IncomingServerAddress() const;
+    void IncomingServerAddress(hstring_view value) const;
+    int32_t IncomingServerPort() const;
+    void IncomingServerPort(int32_t value) const;
+    bool IncomingServerRequiresSsl() const;
+    void IncomingServerRequiresSsl(bool value) const;
+    hstring IncomingServerUsername() const;
+    void IncomingServerUsername(hstring_view value) const;
+    hstring OutgoingServerAddress() const;
+    void OutgoingServerAddress(hstring_view value) const;
+    int32_t OutgoingServerPort() const;
+    void OutgoingServerPort(int32_t value) const;
+    bool OutgoingServerRequiresSsl() const;
+    void OutgoingServerRequiresSsl(bool value) const;
+    hstring OutgoingServerUsername() const;
+    void OutgoingServerUsername(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDeviceAccountConfiguration2
+{
+    Windows::Security::Credentials::PasswordCredential IncomingServerCredential() const;
+    void IncomingServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
+    Windows::Security::Credentials::PasswordCredential OutgoingServerCredential() const;
+    void OutgoingServerCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
+    hstring OAuthRefreshToken() const;
+    void OAuthRefreshToken(hstring_view value) const;
+    bool IsExternallyManaged() const;
+    void IsExternallyManaged(bool value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountIconId AccountIconId() const;
+    void AccountIconId(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountIconId value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountAuthenticationType AuthenticationType() const;
+    void AuthenticationType(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountAuthenticationType value) const;
+    bool IsSsoAuthenticationSupported() const;
+    hstring SsoAccountId() const;
+    void SsoAccountId(hstring_view value) const;
+    bool AlwaysDownloadFullMessage() const;
+    void AlwaysDownloadFullMessage(bool value) const;
+    bool DoesPolicyAllowMailSync() const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind SyncScheduleKind() const;
+    void SyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountMailAgeFilter MailAgeFilter() const;
+    void MailAgeFilter(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountMailAgeFilter value) const;
+    bool IsClientAuthenticationCertificateRequired() const;
+    void IsClientAuthenticationCertificateRequired(bool value) const;
+    bool AutoSelectAuthenticationCertificate() const;
+    void AutoSelectAuthenticationCertificate(bool value) const;
+    hstring AuthenticationCertificateId() const;
+    void AuthenticationCertificateId(hstring_view value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind CardDavSyncScheduleKind() const;
+    void CardDavSyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
+    Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind CalDavSyncScheduleKind() const;
+    void CalDavSyncScheduleKind(Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountSyncScheduleKind value) const;
+    Windows::Foundation::Uri CardDavServerUrl() const;
+    void CardDavServerUrl(const Windows::Foundation::Uri & value) const;
+    bool CardDavRequiresSsl() const;
+    void CardDavRequiresSsl(bool value) const;
+    Windows::Foundation::Uri CalDavServerUrl() const;
+    void CalDavServerUrl(const Windows::Foundation::Uri & value) const;
+    bool CalDavRequiresSsl() const;
+    void CalDavRequiresSsl(bool value) const;
+    bool WasModifiedByUser() const;
+    void WasModifiedByUser(bool value) const;
+    bool WasIncomingServerCertificateHashConfirmed() const;
+    void WasIncomingServerCertificateHashConfirmed(bool value) const;
+    hstring IncomingServerCertificateHash() const;
+    void IncomingServerCertificateHash(hstring_view value) const;
+    bool IsOutgoingServerAuthenticationRequired() const;
+    void IsOutgoingServerAuthenticationRequired(bool value) const;
+    bool IsOutgoingServerAuthenticationEnabled() const;
+    void IsOutgoingServerAuthenticationEnabled(bool value) const;
+    bool WasOutgoingServerCertificateHashConfirmed() const;
+    void WasOutgoingServerCertificateHashConfirmed(bool value) const;
+    hstring OutgoingServerCertificateHash() const;
+    void OutgoingServerCertificateHash(hstring_view value) const;
+    bool IsSyncScheduleManagedBySystem() const;
+    void IsSyncScheduleManagedBySystem(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountSystemAccessManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> AddAndShowDeviceAccountsAsync(iterable<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> accounts) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUserDataAccountSystemAccessManagerStatics2
+{
+    Windows::Foundation::IAsyncAction SuppressLocalAccountWithAccountAsync(hstring_view userDataAccountId) const;
+    Windows::Foundation::IAsyncOperation<hstring> CreateDeviceAccountAsync(const Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration & account) const;
+    Windows::Foundation::IAsyncAction DeleteDeviceAccountAsync(hstring_view accountId) const;
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::UserDataAccounts::SystemAccess::DeviceAccountConfiguration> GetDeviceAccountConfigurationAsync(hstring_view accountId) const;
+};
 
 }
 

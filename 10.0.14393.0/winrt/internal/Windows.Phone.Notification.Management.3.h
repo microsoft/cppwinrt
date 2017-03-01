@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -23,10 +23,10 @@ struct AccessoryManager
     static void AcceptPhoneCallWithVideo(uint32_t phoneCallId, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint);
     static void RejectPhoneCall(uint32_t phoneCallId);
     static void RejectPhoneCall(uint32_t phoneCallId, uint32_t textResponseID);
-    static void MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber);
-    static void MakePhoneCall(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint);
-    static void MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber);
-    static void MakePhoneCallWithVideo(GUID phoneLine, hstring_ref phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint);
+    static void MakePhoneCall(GUID phoneLine, hstring_view phoneNumber);
+    static void MakePhoneCall(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint);
+    static void MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber);
+    static void MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint);
     static void SwapPhoneCalls(uint32_t phoneCallIdToHold, uint32_t phoneCallIdOnHold);
     static void HoldPhoneCall(uint32_t phoneCallId, bool holdCall);
     static void EndPhoneCall(uint32_t phoneCallId);
@@ -48,17 +48,17 @@ struct AccessoryManager
     static bool DrivingModeEnabled();
     static bool BatterySaverState();
     static Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo> GetApps();
-    static void EnableNotificationsForApplication(hstring_ref appId);
-    static void DisableNotificationsForApplication(hstring_ref appId);
-    static bool IsNotificationEnabledForApplication(hstring_ref appId);
+    static void EnableNotificationsForApplication(hstring_view appId);
+    static void DisableNotificationsForApplication(hstring_view appId);
+    static bool IsNotificationEnabledForApplication(hstring_view appId);
     static int32_t GetEnabledAccessoryNotificationTypes();
     static void EnableAccessoryNotificationTypes(int32_t accessoryNotificationTypes);
     static void DisableAllAccessoryNotificationTypes();
     static bool GetUserConsent();
-    static Windows::Storage::Streams::IRandomAccessStreamReference GetAppIcon(hstring_ref appId);
+    static Windows::Storage::Streams::IRandomAccessStreamReference GetAppIcon(hstring_view appId);
     static void RingDevice();
     static Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry> SpeedDialList();
-    static void ClearToast(hstring_ref instanceId);
+    static void ClearToast(hstring_view instanceId);
     static bool IsPhonePinLocked();
     static void IncreaseVolume(int32_t step);
     static void DecreaseVolume(int32_t step);
@@ -66,15 +66,15 @@ struct AccessoryManager
     static void SetRingerVibrate(bool ringer, bool vibrate);
     static Windows::Phone::Notification::Management::VolumeInfo VolumeInfo();
     static Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo> GetAllEmailAccounts();
-    static Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> GetFolders(hstring_ref emailAccount);
-    static void EnableEmailNotificationEmailAccount(hstring_ref emailAccount);
-    static void DisableEmailNotificationEmailAccount(hstring_ref emailAccount);
-    static void EnableEmailNotificationFolderFilter(hstring_ref emailAccount, const Windows::Foundation::Collections::IVectorView<hstring> & folders);
+    static Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> GetFolders(hstring_view emailAccount);
+    static void EnableEmailNotificationEmailAccount(hstring_view emailAccount);
+    static void DisableEmailNotificationEmailAccount(hstring_view emailAccount);
+    static void EnableEmailNotificationFolderFilter(hstring_view emailAccount, vector_view<hstring> folders);
     static void UpdateEmailReadStatus(const Windows::Phone::Notification::Management::BinaryId & messageEntryId, bool isRead);
-    static void SnoozeAlarmByInstanceId(hstring_ref instanceId);
-    static void DismissAlarmByInstanceId(hstring_ref instanceId);
-    static void SnoozeReminderByInstanceId(hstring_ref instanceId);
-    static void DismissReminderByInstanceId(hstring_ref instanceId);
+    static void SnoozeAlarmByInstanceId(hstring_view instanceId);
+    static void DismissAlarmByInstanceId(hstring_view instanceId);
+    static void SnoozeReminderByInstanceId(hstring_view instanceId);
+    static void DismissReminderByInstanceId(hstring_view instanceId);
 };
 
 struct WINRT_EBO AlarmNotificationTriggerDetails :

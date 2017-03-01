@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@ WINRT_EXPORT namespace winrt {
 namespace Windows::UI::Xaml::Media {
 
 template <typename D, typename ... Interfaces> struct BrushT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush>
 {
     using composable = Brush;
@@ -23,7 +23,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct CacheModeT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::ICacheMode>
 {
     using composable = CacheMode;
@@ -37,14 +37,14 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct FontFamilyT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Media::IFontFamily>
 {
     using composable = FontFamily;
 
 protected:
 
-    FontFamilyT(hstring_ref familyName)
+    FontFamilyT(hstring_view familyName)
     {
         get_activation_factory<FontFamily, IFontFamilyFactory>().CreateInstanceWithName(familyName, *this, this->m_inner);
     }
@@ -65,7 +65,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct GradientBrushT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::IGradientBrush>
 {
     using composable = GradientBrush;
@@ -79,7 +79,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct ProjectionT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IProjection>
 {
     using composable = Projection;
@@ -93,7 +93,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct TileBrushT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Media::IBrush, Windows::UI::Xaml::Media::ITileBrush>
 {
     using composable = TileBrush;

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Storage.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -22,7 +25,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -35,7 +39,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -48,7 +53,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -61,7 +67,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
     {
         try
         {
-            *value = detach(this->shim().IsActive());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsActive());
             return S_OK;
         }
         catch (...)
@@ -74,6 +81,7 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsActive(value);
             return S_OK;
         }
@@ -83,11 +91,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> : 
         }
     }
 
-    HRESULT __stdcall get_ControlDescription(abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> value) noexcept override
+    HRESULT __stdcall get_ControlDescription(impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ControlDescription());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ControlDescription());
             return S_OK;
         }
         catch (...)
@@ -105,7 +114,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -118,7 +128,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportId());
             return S_OK;
         }
         catch (...)
@@ -131,7 +142,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportType());
             return S_OK;
         }
         catch (...)
@@ -144,7 +156,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -157,7 +170,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -166,11 +180,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
         }
     }
 
-    HRESULT __stdcall get_ParentCollections(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection>> value) noexcept override
+    HRESULT __stdcall get_ParentCollections(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentCollections());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentCollections());
             return S_OK;
         }
         catch (...)
@@ -188,7 +203,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDesc
     {
         try
         {
-            *value = detach(this->shim().IsAbsolute());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsAbsolute());
             return S_OK;
         }
         catch (...)
@@ -205,7 +221,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidCollection> : prod
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -218,7 +235,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidCollection> : prod
     {
         try
         {
-            *value = detach(this->shim().Type());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Type());
             return S_OK;
         }
         catch (...)
@@ -231,7 +249,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidCollection> : prod
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -244,7 +263,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidCollection> : prod
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -261,7 +281,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
-            *value = detach(this->shim().VendorId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VendorId());
             return S_OK;
         }
         catch (...)
@@ -274,7 +295,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
-            *value = detach(this->shim().ProductId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProductId());
             return S_OK;
         }
         catch (...)
@@ -287,7 +309,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
-            *value = detach(this->shim().Version());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Version());
             return S_OK;
         }
         catch (...)
@@ -300,7 +323,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -313,7 +337,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -322,25 +347,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetInputReportAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport>> value) noexcept override
+    HRESULT __stdcall abi_GetInputReportAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetInputReportAsync());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_GetInputReportByIdAsync(uint16_t reportId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().GetInputReportAsync(reportId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetInputReportAsync());
             return S_OK;
         }
         catch (...)
@@ -350,11 +362,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetFeatureReportAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport>> value) noexcept override
+    HRESULT __stdcall abi_GetInputReportByIdAsync(uint16_t reportId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetFeatureReportAsync());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetInputReportAsync(reportId));
             return S_OK;
         }
         catch (...)
@@ -364,11 +377,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetFeatureReportByIdAsync(uint16_t reportId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport>> value) noexcept override
+    HRESULT __stdcall abi_GetFeatureReportAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetFeatureReportAsync(reportId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetFeatureReportAsync());
             return S_OK;
         }
         catch (...)
@@ -378,11 +392,27 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_CreateOutputReport(abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport) noexcept override
+    HRESULT __stdcall abi_GetFeatureReportByIdAsync(uint16_t reportId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport>> value) noexcept override
     {
         try
         {
-            *outputReport = detach(this->shim().CreateOutputReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetFeatureReportAsync(reportId));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_CreateOutputReport(impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *outputReport = detach_abi(this->shim().CreateOutputReport());
             return S_OK;
         }
         catch (...)
@@ -392,11 +422,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_CreateOutputReportById(uint16_t reportId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport) noexcept override
+    HRESULT __stdcall abi_CreateOutputReportById(uint16_t reportId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport) noexcept override
     {
         try
         {
-            *outputReport = detach(this->shim().CreateOutputReport(reportId));
+            typename D::abi_guard guard(this->shim());
+            *outputReport = detach_abi(this->shim().CreateOutputReport(reportId));
             return S_OK;
         }
         catch (...)
@@ -406,11 +437,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_CreateFeatureReport(abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport) noexcept override
+    HRESULT __stdcall abi_CreateFeatureReport(impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport) noexcept override
     {
         try
         {
-            *featureReport = detach(this->shim().CreateFeatureReport());
+            typename D::abi_guard guard(this->shim());
+            *featureReport = detach_abi(this->shim().CreateFeatureReport());
             return S_OK;
         }
         catch (...)
@@ -420,11 +452,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_CreateFeatureReportById(uint16_t reportId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport) noexcept override
+    HRESULT __stdcall abi_CreateFeatureReportById(uint16_t reportId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport) noexcept override
     {
         try
         {
-            *featureReport = detach(this->shim().CreateFeatureReport(reportId));
+            typename D::abi_guard guard(this->shim());
+            *featureReport = detach_abi(this->shim().CreateFeatureReport(reportId));
             return S_OK;
         }
         catch (...)
@@ -434,11 +467,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_SendOutputReportAsync(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport, abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_SendOutputReportAsync(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidOutputReport> outputReport, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SendOutputReportAsync(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidOutputReport *>(&outputReport)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SendOutputReportAsync(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidOutputReport *>(&outputReport)));
             return S_OK;
         }
         catch (...)
@@ -448,11 +482,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_SendFeatureReportAsync(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport, abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall abi_SendFeatureReportAsync(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> featureReport, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().SendFeatureReportAsync(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidFeatureReport *>(&featureReport)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().SendFeatureReportAsync(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidFeatureReport *>(&featureReport)));
             return S_OK;
         }
         catch (...)
@@ -462,11 +497,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription>> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControlDescriptions(reportType, usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControlDescriptions(reportType, usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -476,11 +512,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription>> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControlDescriptions(reportType, usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControlDescriptions(reportType, usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -490,11 +527,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
         }
     }
 
-    HRESULT __stdcall add_InputReportReceived(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::HumanInterfaceDevice::HidDevice, Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs>> reportHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_InputReportReceived(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::HumanInterfaceDevice::HidDevice, Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs>> reportHandler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().InputReportReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::HumanInterfaceDevice::HidDevice, Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs> *>(&reportHandler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().InputReportReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::HumanInterfaceDevice::HidDevice, Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs> *>(&reportHandler)));
             return S_OK;
         }
         catch (...)
@@ -507,6 +545,7 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().InputReportReceived(token);
             return S_OK;
         }
@@ -520,11 +559,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDevice> : produce_
 template <typename D>
 struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics> : produce_base<D, Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(uint16_t usagePage, uint16_t usageId, abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<hstring> selector) noexcept override
     {
         try
         {
-            *selector = detach(this->shim().GetDeviceSelector(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *selector = detach_abi(this->shim().GetDeviceSelector(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -534,11 +574,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics> : p
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelectorVidPid(uint16_t usagePage, uint16_t usageId, uint16_t vendorId, uint16_t productId, abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelectorVidPid(uint16_t usagePage, uint16_t usageId, uint16_t vendorId, uint16_t productId, impl::abi_arg_out<hstring> selector) noexcept override
     {
         try
         {
-            *selector = detach(this->shim().GetDeviceSelector(usagePage, usageId, vendorId, productId));
+            typename D::abi_guard guard(this->shim());
+            *selector = detach_abi(this->shim().GetDeviceSelector(usagePage, usageId, vendorId, productId));
             return S_OK;
         }
         catch (...)
@@ -548,11 +589,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics> : p
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, Windows::Storage::FileAccessMode accessMode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice>> hidDevice) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, Windows::Storage::FileAccessMode accessMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice>> hidDevice) noexcept override
     {
         try
         {
-            *hidDevice = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId), accessMode));
+            typename D::abi_guard guard(this->shim());
+            *hidDevice = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId), accessMode));
             return S_OK;
         }
         catch (...)
@@ -570,7 +612,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -579,11 +622,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall get_Data(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Data());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Data());
             return S_OK;
         }
         catch (...)
@@ -593,10 +637,11 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall put_Data(abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_Data(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Data(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
             return S_OK;
         }
@@ -606,11 +651,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControl(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -620,11 +666,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -634,11 +681,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControl(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -648,11 +696,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidFeatureReport> : p
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -670,7 +719,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -679,25 +729,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall get_Data(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Data());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_ActivatedBooleanControls(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().ActivatedBooleanControls());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Data());
             return S_OK;
         }
         catch (...)
@@ -707,11 +744,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall get_TransitionedBooleanControls(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl>> value) noexcept override
+    HRESULT __stdcall get_ActivatedBooleanControls(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TransitionedBooleanControls());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ActivatedBooleanControls());
             return S_OK;
         }
         catch (...)
@@ -721,11 +759,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall get_TransitionedBooleanControls(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TransitionedBooleanControls());
             return S_OK;
         }
         catch (...)
@@ -735,11 +774,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControl(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -749,11 +789,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -763,11 +804,27 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControl(usagePage, usageId));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_GetNumericControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -781,11 +838,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReport> : pro
 template <typename D>
 struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidInputReportReceivedEventArgs> : produce_base<D, Windows::Devices::HumanInterfaceDevice::IHidInputReportReceivedEventArgs>
 {
-    HRESULT __stdcall get_Report(abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidInputReport> value) noexcept override
+    HRESULT __stdcall get_Report(impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidInputReport> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Report());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Report());
             return S_OK;
         }
         catch (...)
@@ -803,7 +861,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -816,7 +875,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().IsGrouped());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsGrouped());
             return S_OK;
         }
         catch (...)
@@ -829,7 +889,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -842,7 +903,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -855,7 +917,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().Value());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Value());
             return S_OK;
         }
         catch (...)
@@ -868,6 +931,7 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Value(value);
             return S_OK;
         }
@@ -881,7 +945,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
-            *value = detach(this->shim().ScaledValue());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ScaledValue());
             return S_OK;
         }
         catch (...)
@@ -894,6 +959,7 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ScaledValue(value);
             return S_OK;
         }
@@ -903,11 +969,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControl> : 
         }
     }
 
-    HRESULT __stdcall get_ControlDescription(abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> value) noexcept override
+    HRESULT __stdcall get_ControlDescription(impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ControlDescription());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ControlDescription());
             return S_OK;
         }
         catch (...)
@@ -925,7 +992,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -938,7 +1006,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportId());
             return S_OK;
         }
         catch (...)
@@ -951,7 +1020,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportType());
             return S_OK;
         }
         catch (...)
@@ -964,7 +1034,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportSize());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportSize());
             return S_OK;
         }
         catch (...)
@@ -977,7 +1048,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().ReportCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReportCount());
             return S_OK;
         }
         catch (...)
@@ -990,7 +1062,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().UsagePage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsagePage());
             return S_OK;
         }
         catch (...)
@@ -1003,7 +1076,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().UsageId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsageId());
             return S_OK;
         }
         catch (...)
@@ -1016,7 +1090,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().LogicalMinimum());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LogicalMinimum());
             return S_OK;
         }
         catch (...)
@@ -1029,7 +1104,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().LogicalMaximum());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LogicalMaximum());
             return S_OK;
         }
         catch (...)
@@ -1042,7 +1118,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().PhysicalMinimum());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhysicalMinimum());
             return S_OK;
         }
         catch (...)
@@ -1055,7 +1132,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().PhysicalMaximum());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PhysicalMaximum());
             return S_OK;
         }
         catch (...)
@@ -1068,7 +1146,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().UnitExponent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UnitExponent());
             return S_OK;
         }
         catch (...)
@@ -1081,7 +1160,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().Unit());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Unit());
             return S_OK;
         }
         catch (...)
@@ -1094,7 +1174,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().IsAbsolute());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsAbsolute());
             return S_OK;
         }
         catch (...)
@@ -1107,7 +1188,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
     {
         try
         {
-            *value = detach(this->shim().HasNull());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HasNull());
             return S_OK;
         }
         catch (...)
@@ -1116,11 +1198,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidNumericControlDesc
         }
     }
 
-    HRESULT __stdcall get_ParentCollections(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection>> value) noexcept override
+    HRESULT __stdcall get_ParentCollections(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ParentCollections());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ParentCollections());
             return S_OK;
         }
         catch (...)
@@ -1138,7 +1221,8 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -1147,11 +1231,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall get_Data(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Data());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Data());
             return S_OK;
         }
         catch (...)
@@ -1161,10 +1246,11 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall put_Data(abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_Data(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Data(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
             return S_OK;
         }
@@ -1174,11 +1260,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControl(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -1188,11 +1275,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetBooleanControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
+    HRESULT __stdcall abi_GetBooleanControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidBooleanControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetBooleanControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -1202,11 +1290,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControl(uint16_t usagePage, uint16_t usageId, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControl(usagePage, usageId));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControl(usagePage, usageId));
             return S_OK;
         }
         catch (...)
@@ -1216,11 +1305,12 @@ struct produce<D, Windows::Devices::HumanInterfaceDevice::IHidOutputReport> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetNumericControlByDescription(abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
+    HRESULT __stdcall abi_GetNumericControlByDescription(impl::abi_arg_in<Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription> controlDescription, impl::abi_arg_out<Windows::Devices::HumanInterfaceDevice::IHidNumericControl> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetNumericControlByDescription(*reinterpret_cast<const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription *>(&controlDescription)));
             return S_OK;
         }
         catch (...)
@@ -1238,592 +1328,592 @@ namespace Windows::Devices::HumanInterfaceDevice {
 template <typename D> hstring impl_IHidDeviceStatics<D>::GetDeviceSelector(uint16_t usagePage, uint16_t usageId) const
 {
     hstring selector;
-    check_hresult(static_cast<const IHidDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(usagePage, usageId, put(selector)));
+    check_hresult(WINRT_SHIM(IHidDeviceStatics)->abi_GetDeviceSelector(usagePage, usageId, put_abi(selector)));
     return selector;
 }
 
 template <typename D> hstring impl_IHidDeviceStatics<D>::GetDeviceSelector(uint16_t usagePage, uint16_t usageId, uint16_t vendorId, uint16_t productId) const
 {
     hstring selector;
-    check_hresult(static_cast<const IHidDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelectorVidPid(usagePage, usageId, vendorId, productId, put(selector)));
+    check_hresult(WINRT_SHIM(IHidDeviceStatics)->abi_GetDeviceSelectorVidPid(usagePage, usageId, vendorId, productId, put_abi(selector)));
     return selector;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> impl_IHidDeviceStatics<D>::FromIdAsync(hstring_ref deviceId, Windows::Storage::FileAccessMode accessMode) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> impl_IHidDeviceStatics<D>::FromIdAsync(hstring_view deviceId, Windows::Storage::FileAccessMode accessMode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> hidDevice;
-    check_hresult(static_cast<const IHidDeviceStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), accessMode, put(hidDevice)));
+    check_hresult(WINRT_SHIM(IHidDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), accessMode, put_abi(hidDevice)));
     return hidDevice;
 }
 
 template <typename D> uint32_t impl_IHidBooleanControlDescription<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_Id(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidBooleanControlDescription<D>::ReportId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_ReportId(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_ReportId(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidReportType impl_IHidBooleanControlDescription<D>::ReportType() const
 {
     Windows::Devices::HumanInterfaceDevice::HidReportType value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_ReportType(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_ReportType(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidBooleanControlDescription<D>::UsagePage() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidBooleanControlDescription<D>::UsageId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection> impl_IHidBooleanControlDescription<D>::ParentCollections() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection> value;
-    check_hresult(static_cast<const IHidBooleanControlDescription &>(static_cast<const D &>(*this))->get_ParentCollections(put(value)));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription)->get_ParentCollections(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IHidBooleanControlDescription2<D>::IsAbsolute() const
 {
     bool value {};
-    check_hresult(static_cast<const IHidBooleanControlDescription2 &>(static_cast<const D &>(*this))->get_IsAbsolute(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControlDescription2)->get_IsAbsolute(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControlDescription<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_Id(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidNumericControlDescription<D>::ReportId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_ReportId(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_ReportId(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidReportType impl_IHidNumericControlDescription<D>::ReportType() const
 {
     Windows::Devices::HumanInterfaceDevice::HidReportType value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_ReportType(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_ReportType(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControlDescription<D>::ReportSize() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_ReportSize(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_ReportSize(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControlDescription<D>::ReportCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_ReportCount(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_ReportCount(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidNumericControlDescription<D>::UsagePage() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidNumericControlDescription<D>::UsageId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IHidNumericControlDescription<D>::LogicalMinimum() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_LogicalMinimum(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_LogicalMinimum(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IHidNumericControlDescription<D>::LogicalMaximum() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_LogicalMaximum(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_LogicalMaximum(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IHidNumericControlDescription<D>::PhysicalMinimum() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_PhysicalMinimum(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_PhysicalMinimum(&value));
     return value;
 }
 
 template <typename D> int32_t impl_IHidNumericControlDescription<D>::PhysicalMaximum() const
 {
     int32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_PhysicalMaximum(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_PhysicalMaximum(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControlDescription<D>::UnitExponent() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_UnitExponent(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_UnitExponent(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControlDescription<D>::Unit() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_Unit(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_Unit(&value));
     return value;
 }
 
 template <typename D> bool impl_IHidNumericControlDescription<D>::IsAbsolute() const
 {
     bool value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_IsAbsolute(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_IsAbsolute(&value));
     return value;
 }
 
 template <typename D> bool impl_IHidNumericControlDescription<D>::HasNull() const
 {
     bool value {};
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_HasNull(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_HasNull(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection> impl_IHidNumericControlDescription<D>::ParentCollections() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidCollection> value;
-    check_hresult(static_cast<const IHidNumericControlDescription &>(static_cast<const D &>(*this))->get_ParentCollections(put(value)));
+    check_hresult(WINRT_SHIM(IHidNumericControlDescription)->get_ParentCollections(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidCollection<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidCollection &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidCollection)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidCollectionType impl_IHidCollection<D>::Type() const
 {
     Windows::Devices::HumanInterfaceDevice::HidCollectionType value {};
-    check_hresult(static_cast<const IHidCollection &>(static_cast<const D &>(*this))->get_Type(&value));
+    check_hresult(WINRT_SHIM(IHidCollection)->get_Type(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidCollection<D>::UsagePage() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidCollection &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidCollection)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidCollection<D>::UsageId() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidCollection &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidCollection)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidInputReport<D>::Id() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidInputReport)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IHidInputReport<D>::Data() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->get_Data(put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->get_Data(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl> impl_IHidInputReport<D>::ActivatedBooleanControls() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl> value;
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->get_ActivatedBooleanControls(put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->get_ActivatedBooleanControls(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl> impl_IHidInputReport<D>::TransitionedBooleanControls() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControl> value;
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->get_TransitionedBooleanControls(put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->get_TransitionedBooleanControls(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidInputReport<D>::GetBooleanControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->abi_GetBooleanControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->abi_GetBooleanControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidInputReport<D>::GetBooleanControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->abi_GetBooleanControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->abi_GetBooleanControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidInputReport<D>::GetNumericControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->abi_GetNumericControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->abi_GetNumericControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidInputReport<D>::GetNumericControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidInputReport &>(static_cast<const D &>(*this))->abi_GetNumericControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReport)->abi_GetNumericControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidOutputReport<D>::Id() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IHidOutputReport<D>::Data() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->get_Data(put(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->get_Data(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IHidOutputReport<D>::Data(const Windows::Storage::Streams::IBuffer & value) const
 {
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->put_Data(get(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->put_Data(get_abi(value)));
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidOutputReport<D>::GetBooleanControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->abi_GetBooleanControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->abi_GetBooleanControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidOutputReport<D>::GetBooleanControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->abi_GetBooleanControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->abi_GetBooleanControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidOutputReport<D>::GetNumericControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->abi_GetNumericControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->abi_GetNumericControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidOutputReport<D>::GetNumericControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidOutputReport &>(static_cast<const D &>(*this))->abi_GetNumericControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidOutputReport)->abi_GetNumericControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidFeatureReport<D>::Id() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->get_Id(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IHidFeatureReport<D>::Data() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->get_Data(put(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->get_Data(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IHidFeatureReport<D>::Data(const Windows::Storage::Streams::IBuffer & value) const
 {
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->put_Data(get(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->put_Data(get_abi(value)));
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidFeatureReport<D>::GetBooleanControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->abi_GetBooleanControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->abi_GetBooleanControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControl impl_IHidFeatureReport<D>::GetBooleanControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControl value { nullptr };
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->abi_GetBooleanControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->abi_GetBooleanControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidFeatureReport<D>::GetNumericControl(uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->abi_GetNumericControl(usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->abi_GetNumericControl(usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControl impl_IHidFeatureReport<D>::GetNumericControlByDescription(const Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription & controlDescription) const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControl value { nullptr };
-    check_hresult(static_cast<const IHidFeatureReport &>(static_cast<const D &>(*this))->abi_GetNumericControlByDescription(get(controlDescription), put(value)));
+    check_hresult(WINRT_SHIM(IHidFeatureReport)->abi_GetNumericControlByDescription(get_abi(controlDescription), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidInputReport impl_IHidInputReportReceivedEventArgs<D>::Report() const
 {
     Windows::Devices::HumanInterfaceDevice::HidInputReport value { nullptr };
-    check_hresult(static_cast<const IHidInputReportReceivedEventArgs &>(static_cast<const D &>(*this))->get_Report(put(value)));
+    check_hresult(WINRT_SHIM(IHidInputReportReceivedEventArgs)->get_Report(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidBooleanControl<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->get_Id(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidBooleanControl<D>::UsagePage() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidBooleanControl<D>::UsageId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> bool impl_IHidBooleanControl<D>::IsActive() const
 {
     bool value {};
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->get_IsActive(&value));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->get_IsActive(&value));
     return value;
 }
 
 template <typename D> void impl_IHidBooleanControl<D>::IsActive(bool value) const
 {
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->put_IsActive(value));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->put_IsActive(value));
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription impl_IHidBooleanControl<D>::ControlDescription() const
 {
     Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription value { nullptr };
-    check_hresult(static_cast<const IHidBooleanControl &>(static_cast<const D &>(*this))->get_ControlDescription(put(value)));
+    check_hresult(WINRT_SHIM(IHidBooleanControl)->get_ControlDescription(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IHidNumericControl<D>::Id() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_Id(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_Id(&value));
     return value;
 }
 
 template <typename D> bool impl_IHidNumericControl<D>::IsGrouped() const
 {
     bool value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_IsGrouped(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_IsGrouped(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidNumericControl<D>::UsagePage() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidNumericControl<D>::UsageId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IHidNumericControl<D>::Value() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_Value(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_Value(&value));
     return value;
 }
 
 template <typename D> void impl_IHidNumericControl<D>::Value(int64_t value) const
 {
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->put_Value(value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->put_Value(value));
 }
 
 template <typename D> int64_t impl_IHidNumericControl<D>::ScaledValue() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_ScaledValue(&value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_ScaledValue(&value));
     return value;
 }
 
 template <typename D> void impl_IHidNumericControl<D>::ScaledValue(int64_t value) const
 {
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->put_ScaledValue(value));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->put_ScaledValue(value));
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription impl_IHidNumericControl<D>::ControlDescription() const
 {
     Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription value { nullptr };
-    check_hresult(static_cast<const IHidNumericControl &>(static_cast<const D &>(*this))->get_ControlDescription(put(value)));
+    check_hresult(WINRT_SHIM(IHidNumericControl)->get_ControlDescription(put_abi(value)));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidDevice<D>::VendorId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->get_VendorId(&value));
+    check_hresult(WINRT_SHIM(IHidDevice)->get_VendorId(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidDevice<D>::ProductId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->get_ProductId(&value));
+    check_hresult(WINRT_SHIM(IHidDevice)->get_ProductId(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidDevice<D>::Version() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->get_Version(&value));
+    check_hresult(WINRT_SHIM(IHidDevice)->get_Version(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidDevice<D>::UsagePage() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->get_UsagePage(&value));
+    check_hresult(WINRT_SHIM(IHidDevice)->get_UsagePage(&value));
     return value;
 }
 
 template <typename D> uint16_t impl_IHidDevice<D>::UsageId() const
 {
     uint16_t value {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->get_UsageId(&value));
+    check_hresult(WINRT_SHIM(IHidDevice)->get_UsageId(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport> impl_IHidDevice<D>::GetInputReportAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetInputReportAsync(put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetInputReportAsync(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport> impl_IHidDevice<D>::GetInputReportAsync(uint16_t reportId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidInputReport> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetInputReportByIdAsync(reportId, put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetInputReportByIdAsync(reportId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport> impl_IHidDevice<D>::GetFeatureReportAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetFeatureReportAsync(put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetFeatureReportAsync(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport> impl_IHidDevice<D>::GetFeatureReportAsync(uint16_t reportId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidFeatureReport> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetFeatureReportByIdAsync(reportId, put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetFeatureReportByIdAsync(reportId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidOutputReport impl_IHidDevice<D>::CreateOutputReport() const
 {
     Windows::Devices::HumanInterfaceDevice::HidOutputReport outputReport { nullptr };
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_CreateOutputReport(put(outputReport)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_CreateOutputReport(put_abi(outputReport)));
     return outputReport;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidOutputReport impl_IHidDevice<D>::CreateOutputReport(uint16_t reportId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidOutputReport outputReport { nullptr };
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_CreateOutputReportById(reportId, put(outputReport)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_CreateOutputReportById(reportId, put_abi(outputReport)));
     return outputReport;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidFeatureReport impl_IHidDevice<D>::CreateFeatureReport() const
 {
     Windows::Devices::HumanInterfaceDevice::HidFeatureReport featureReport { nullptr };
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_CreateFeatureReport(put(featureReport)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_CreateFeatureReport(put_abi(featureReport)));
     return featureReport;
 }
 
 template <typename D> Windows::Devices::HumanInterfaceDevice::HidFeatureReport impl_IHidDevice<D>::CreateFeatureReport(uint16_t reportId) const
 {
     Windows::Devices::HumanInterfaceDevice::HidFeatureReport featureReport { nullptr };
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_CreateFeatureReportById(reportId, put(featureReport)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_CreateFeatureReportById(reportId, put_abi(featureReport)));
     return featureReport;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IHidDevice<D>::SendOutputReportAsync(const Windows::Devices::HumanInterfaceDevice::HidOutputReport & outputReport) const
 {
     Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_SendOutputReportAsync(get(outputReport), put(operation)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_SendOutputReportAsync(get_abi(outputReport), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_IHidDevice<D>::SendFeatureReportAsync(const Windows::Devices::HumanInterfaceDevice::HidFeatureReport & featureReport) const
 {
     Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_SendFeatureReportAsync(get(featureReport), put(operation)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_SendFeatureReportAsync(get_abi(featureReport), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription> impl_IHidDevice<D>::GetBooleanControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetBooleanControlDescriptions(reportType, usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetBooleanControlDescriptions(reportType, usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription> impl_IHidDevice<D>::GetNumericControlDescriptions(Windows::Devices::HumanInterfaceDevice::HidReportType reportType, uint16_t usagePage, uint16_t usageId) const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription> value;
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->abi_GetNumericControlDescriptions(reportType, usagePage, usageId, put(value)));
+    check_hresult(WINRT_SHIM(IHidDevice)->abi_GetNumericControlDescriptions(reportType, usagePage, usageId, put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_IHidDevice<D>::InputReportReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::HumanInterfaceDevice::HidDevice, Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs> & reportHandler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->add_InputReportReceived(get(reportHandler), &token));
+    check_hresult(WINRT_SHIM(IHidDevice)->add_InputReportReceived(get_abi(reportHandler), &token));
     return token;
 }
 
@@ -1834,7 +1924,7 @@ template <typename D> event_revoker<IHidDevice> impl_IHidDevice<D>::InputReportR
 
 template <typename D> void impl_IHidDevice<D>::InputReportReceived(event_token token) const
 {
-    check_hresult(static_cast<const IHidDevice &>(static_cast<const D &>(*this))->remove_InputReportReceived(token));
+    check_hresult(WINRT_SHIM(IHidDevice)->remove_InputReportReceived(token));
 }
 
 inline hstring HidDevice::GetDeviceSelector(uint16_t usagePage, uint16_t usageId)
@@ -1847,7 +1937,7 @@ inline hstring HidDevice::GetDeviceSelector(uint16_t usagePage, uint16_t usageId
     return get_activation_factory<HidDevice, IHidDeviceStatics>().GetDeviceSelector(usagePage, usageId, vendorId, productId);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> HidDevice::FromIdAsync(hstring_ref deviceId, Windows::Storage::FileAccessMode accessMode)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevice::HidDevice> HidDevice::FromIdAsync(hstring_view deviceId, Windows::Storage::FileAccessMode accessMode)
 {
     return get_activation_factory<HidDevice, IHidDeviceStatics>().FromIdAsync(deviceId, accessMode);
 }
@@ -1855,3 +1945,203 @@ inline Windows::Foundation::IAsyncOperation<Windows::Devices::HumanInterfaceDevi
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControl>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControl & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription2>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidBooleanControlDescription2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidCollection>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidDeviceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidFeatureReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidFeatureReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidInputReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidInputReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidInputReportReceivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidInputReportReceivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidNumericControl>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidNumericControl & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidNumericControlDescription & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::IHidOutputReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::IHidOutputReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidBooleanControl>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidBooleanControl & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidBooleanControlDescription & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidCollection>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidFeatureReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidFeatureReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidInputReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidInputReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidInputReportReceivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidNumericControl>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidNumericControl & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidNumericControlDescription & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::HumanInterfaceDevice::HidOutputReport>
+{
+    size_t operator()(const winrt::Windows::Devices::HumanInterfaceDevice::HidOutputReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

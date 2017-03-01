@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -31,13 +31,18 @@ template <> struct __declspec(uuid("21fb30ef-072f-502c-9898-d0c3b2cd9ac5")) __de
 
 #ifndef WINRT_GENERIC_fc6aa329_b586_5ebb_9e85_3f6b84ebdf18
 #define WINRT_GENERIC_fc6aa329_b586_5ebb_9e85_3f6b84ebdf18
-template <> struct __declspec(uuid("fc6aa329-b586-5ebb-9e85-3f6b84ebdf18")) __declspec(novtable) TypedEventHandler<Windows::Devices::Radios::Radio, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::Radios::Radio, Windows::IInspectable> {};
+template <> struct __declspec(uuid("fc6aa329-b586-5ebb-9e85-3f6b84ebdf18")) __declspec(novtable) TypedEventHandler<Windows::Devices::Radios::Radio, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::Radios::Radio, Windows::Foundation::IInspectable> {};
 #endif
 
 
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_2734b989_796e_59b3_b526_d17232589088
+#define WINRT_GENERIC_2734b989_796e_59b3_b526_d17232589088
+template <> struct __declspec(uuid("2734b989-796e-59b3-b526-d17232589088")) __declspec(novtable) IVector<Windows::Devices::Radios::Radio> : impl_IVector<Windows::Devices::Radios::Radio> {};
+#endif
 
 #ifndef WINRT_GENERIC_cf37ede7_eaec_5b8f_ad31_4d51abd9db05
 #define WINRT_GENERIC_cf37ede7_eaec_5b8f_ad31_4d51abd9db05
@@ -79,42 +84,18 @@ template <> struct __declspec(uuid("d30691e6-60a0-59c9-8965-5bbe282e8208")) __de
 
 namespace Windows::Devices::Radios {
 
-template <typename D>
-struct WINRT_EBO impl_IRadio
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Radios::RadioAccessStatus> SetStateAsync(Windows::Devices::Radios::RadioState value) const;
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Radios::Radio, Windows::IInspectable> & handler) const;
-    using StateChanged_revoker = event_revoker<IRadio>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Radios::Radio, Windows::IInspectable> & handler) const;
-    void StateChanged(event_token eventCookie) const;
-    Windows::Devices::Radios::RadioState State() const;
-    hstring Name() const;
-    Windows::Devices::Radios::RadioKind Kind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRadioStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Radios::Radio>> GetRadiosAsync() const;
-    hstring GetDeviceSelector() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Radios::Radio> FromIdAsync(hstring_ref deviceId) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Radios::RadioAccessStatus> RequestAccessAsync() const;
-};
-
 struct IRadio :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRadio>
 {
     IRadio(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRadio>(m_ptr); }
 };
 
 struct IRadioStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRadioStatics>
 {
     IRadioStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRadioStatics>(m_ptr); }
 };
 
 }

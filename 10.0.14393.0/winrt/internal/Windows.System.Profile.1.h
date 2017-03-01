@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,31 +14,31 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::System::Profile {
 
-struct __declspec(uuid("1d5ee066-188d-5ba9-4387-acaeb0e7e305")) __declspec(novtable) IAnalyticsInfoStatics : Windows::IInspectable
+struct __declspec(uuid("1d5ee066-188d-5ba9-4387-acaeb0e7e305")) __declspec(novtable) IAnalyticsInfoStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_VersionInfo(Windows::System::Profile::IAnalyticsVersionInfo ** value) = 0;
     virtual HRESULT __stdcall get_DeviceForm(hstring * value) = 0;
 };
 
-struct __declspec(uuid("926130b8-9955-4c74-bdc1-7cd0decf9b03")) __declspec(novtable) IAnalyticsVersionInfo : Windows::IInspectable
+struct __declspec(uuid("926130b8-9955-4c74-bdc1-7cd0decf9b03")) __declspec(novtable) IAnalyticsVersionInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DeviceFamily(hstring * value) = 0;
     virtual HRESULT __stdcall get_DeviceFamilyVersion(hstring * value) = 0;
 };
 
-struct __declspec(uuid("971260e0-f170-4a42-bd55-a900b212dae2")) __declspec(novtable) IHardwareIdentificationStatics : Windows::IInspectable
+struct __declspec(uuid("971260e0-f170-4a42-bd55-a900b212dae2")) __declspec(novtable) IHardwareIdentificationStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetPackageSpecificToken(Windows::Storage::Streams::IBuffer * nonce, Windows::System::Profile::IHardwareToken ** packageSpecificHardwareToken) = 0;
 };
 
-struct __declspec(uuid("28f6d4c0-fb12-40a4-8167-7f4e03d2724c")) __declspec(novtable) IHardwareToken : Windows::IInspectable
+struct __declspec(uuid("28f6d4c0-fb12-40a4-8167-7f4e03d2724c")) __declspec(novtable) IHardwareToken : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(Windows::Storage::Streams::IBuffer ** value) = 0;
     virtual HRESULT __stdcall get_Signature(Windows::Storage::Streams::IBuffer ** value) = 0;
     virtual HRESULT __stdcall get_Certificate(Windows::Storage::Streams::IBuffer ** value) = 0;
 };
 
-struct __declspec(uuid("99571178-500f-487e-8e75-29e551728712")) __declspec(novtable) IKnownRetailInfoPropertiesStatics : Windows::IInspectable
+struct __declspec(uuid("99571178-500f-487e-8e75-29e551728712")) __declspec(novtable) IKnownRetailInfoPropertiesStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RetailAccessCode(hstring * value) = 0;
     virtual HRESULT __stdcall get_ManufacturerName(hstring * value) = 0;
@@ -64,32 +64,32 @@ struct __declspec(uuid("99571178-500f-487e-8e75-29e551728712")) __declspec(novta
     virtual HRESULT __stdcall get_WindowsEdition(hstring * value) = 0;
 };
 
-struct __declspec(uuid("b6e24c1b-7b1c-4b32-8c62-a66597ce723a")) __declspec(novtable) IPlatformDiagnosticsAndUsageDataSettingsStatics : Windows::IInspectable
+struct __declspec(uuid("b6e24c1b-7b1c-4b32-8c62-a66597ce723a")) __declspec(novtable) IPlatformDiagnosticsAndUsageDataSettingsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CollectionLevel(winrt::Windows::System::Profile::PlatformDataCollectionLevel * value) = 0;
-    virtual HRESULT __stdcall add_CollectionLevelChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_CollectionLevelChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_CollectionLevelChanged(event_token token) = 0;
     virtual HRESULT __stdcall abi_CanCollectDiagnostics(winrt::Windows::System::Profile::PlatformDataCollectionLevel level, bool * result) = 0;
 };
 
-struct __declspec(uuid("0712c6b8-8b92-4f2a-8499-031f1798d6ef")) __declspec(novtable) IRetailInfoStatics : Windows::IInspectable
+struct __declspec(uuid("0712c6b8-8b92-4f2a-8499-031f1798d6ef")) __declspec(novtable) IRetailInfoStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsDemoModeEnabled(bool * value) = 0;
-    virtual HRESULT __stdcall get_Properties(Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ** value) = 0;
+    virtual HRESULT __stdcall get_Properties(Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> ** value) = 0;
 };
 
-struct __declspec(uuid("893df40e-cad6-4d50-8c49-6fcfc03edb29")) __declspec(novtable) ISharedModeSettingsStatics : Windows::IInspectable
+struct __declspec(uuid("893df40e-cad6-4d50-8c49-6fcfc03edb29")) __declspec(novtable) ISharedModeSettingsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsEnabled(bool * value) = 0;
 };
 
-struct __declspec(uuid("0c659e7d-c3c2-4d33-a2df-21bc41916eb3")) __declspec(novtable) ISystemIdentificationInfo : Windows::IInspectable
+struct __declspec(uuid("0c659e7d-c3c2-4d33-a2df-21bc41916eb3")) __declspec(novtable) ISystemIdentificationInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(Windows::Storage::Streams::IBuffer ** value) = 0;
     virtual HRESULT __stdcall get_Source(winrt::Windows::System::Profile::SystemIdentificationSource * value) = 0;
 };
 
-struct __declspec(uuid("5581f42a-d3df-4d93-a37d-c41a616c6d01")) __declspec(novtable) ISystemIdentificationStatics : Windows::IInspectable
+struct __declspec(uuid("5581f42a-d3df-4d93-a37d-c41a616c6d01")) __declspec(novtable) ISystemIdentificationStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetSystemIdForPublisher(Windows::System::Profile::ISystemIdentificationInfo ** result) = 0;
     virtual HRESULT __stdcall abi_GetSystemIdForUser(Windows::System::IUser * user, Windows::System::Profile::ISystemIdentificationInfo ** result) = 0;
@@ -107,16 +107,98 @@ template <> struct traits<Windows::System::Profile::SystemIdentificationInfo> { 
 
 namespace Windows::System::Profile {
 
-template <typename T> struct impl_IAnalyticsInfoStatics;
-template <typename T> struct impl_IAnalyticsVersionInfo;
-template <typename T> struct impl_IHardwareIdentificationStatics;
-template <typename T> struct impl_IHardwareToken;
-template <typename T> struct impl_IKnownRetailInfoPropertiesStatics;
-template <typename T> struct impl_IPlatformDiagnosticsAndUsageDataSettingsStatics;
-template <typename T> struct impl_IRetailInfoStatics;
-template <typename T> struct impl_ISharedModeSettingsStatics;
-template <typename T> struct impl_ISystemIdentificationInfo;
-template <typename T> struct impl_ISystemIdentificationStatics;
+template <typename D>
+struct WINRT_EBO impl_IAnalyticsInfoStatics
+{
+    Windows::System::Profile::AnalyticsVersionInfo VersionInfo() const;
+    hstring DeviceForm() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAnalyticsVersionInfo
+{
+    hstring DeviceFamily() const;
+    hstring DeviceFamilyVersion() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHardwareIdentificationStatics
+{
+    Windows::System::Profile::HardwareToken GetPackageSpecificToken(const Windows::Storage::Streams::IBuffer & nonce) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHardwareToken
+{
+    Windows::Storage::Streams::IBuffer Id() const;
+    Windows::Storage::Streams::IBuffer Signature() const;
+    Windows::Storage::Streams::IBuffer Certificate() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKnownRetailInfoPropertiesStatics
+{
+    hstring RetailAccessCode() const;
+    hstring ManufacturerName() const;
+    hstring ModelName() const;
+    hstring DisplayModelName() const;
+    hstring Price() const;
+    hstring IsFeatured() const;
+    hstring FormFactor() const;
+    hstring ScreenSize() const;
+    hstring Weight() const;
+    hstring DisplayDescription() const;
+    hstring BatteryLifeDescription() const;
+    hstring ProcessorDescription() const;
+    hstring Memory() const;
+    hstring StorageDescription() const;
+    hstring GraphicsDescription() const;
+    hstring FrontCameraDescription() const;
+    hstring RearCameraDescription() const;
+    hstring HasNfc() const;
+    hstring HasSdSlot() const;
+    hstring HasOpticalDrive() const;
+    hstring IsOfficeInstalled() const;
+    hstring WindowsEdition() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlatformDiagnosticsAndUsageDataSettingsStatics
+{
+    Windows::System::Profile::PlatformDataCollectionLevel CollectionLevel() const;
+    event_token CollectionLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    using CollectionLevelChanged_revoker = event_revoker<IPlatformDiagnosticsAndUsageDataSettingsStatics>;
+    CollectionLevelChanged_revoker CollectionLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    void CollectionLevelChanged(event_token token) const;
+    bool CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRetailInfoStatics
+{
+    bool IsDemoModeEnabled() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> Properties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISharedModeSettingsStatics
+{
+    bool IsEnabled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISystemIdentificationInfo
+{
+    Windows::Storage::Streams::IBuffer Id() const;
+    Windows::System::Profile::SystemIdentificationSource Source() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISystemIdentificationStatics
+{
+    Windows::System::Profile::SystemIdentificationInfo GetSystemIdForPublisher() const;
+    Windows::System::Profile::SystemIdentificationInfo GetSystemIdForUser(const Windows::System::User & user) const;
+};
 
 }
 

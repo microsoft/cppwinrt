@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -17,6 +17,13 @@ namespace Windows::Devices::Pwm::Provider {
 
 struct IPwmControllerProvider;
 struct IPwmProvider;
+
+}
+
+namespace Windows::Devices::Pwm::Provider {
+
+template <typename T> struct impl_IPwmControllerProvider;
+template <typename T> struct impl_IPwmProvider;
 
 }
 

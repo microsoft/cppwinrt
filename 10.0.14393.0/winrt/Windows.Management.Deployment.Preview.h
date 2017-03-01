@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Management.Deployment.Preview.3.h"
 #include "Windows.Management.Deployment.h"
@@ -13,11 +16,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Management::Deployment::Preview::IClassicAppManagerStatics> : produce_base<D, Windows::Management::Deployment::Preview::IClassicAppManagerStatics>
 {
-    HRESULT __stdcall abi_FindInstalledApp(abi_arg_in<hstring> appUninstallKey, abi_arg_out<Windows::Management::Deployment::Preview::IInstalledClassicAppInfo> result) noexcept override
+    HRESULT __stdcall abi_FindInstalledApp(impl::abi_arg_in<hstring> appUninstallKey, impl::abi_arg_out<Windows::Management::Deployment::Preview::IInstalledClassicAppInfo> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().FindInstalledApp(*reinterpret_cast<const hstring *>(&appUninstallKey)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().FindInstalledApp(*reinterpret_cast<const hstring *>(&appUninstallKey)));
             return S_OK;
         }
         catch (...)
@@ -31,11 +35,12 @@ struct produce<D, Windows::Management::Deployment::Preview::IClassicAppManagerSt
 template <typename D>
 struct produce<D, Windows::Management::Deployment::Preview::IInstalledClassicAppInfo> : produce_base<D, Windows::Management::Deployment::Preview::IInstalledClassicAppInfo>
 {
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -45,11 +50,12 @@ struct produce<D, Windows::Management::Deployment::Preview::IInstalledClassicApp
         }
     }
 
-    HRESULT __stdcall get_DisplayVersion(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayVersion(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayVersion());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayVersion());
             return S_OK;
         }
         catch (...)
@@ -67,25 +73,25 @@ namespace Windows::Management::Deployment::Preview {
 template <typename D> hstring impl_IInstalledClassicAppInfo<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IInstalledClassicAppInfo &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IInstalledClassicAppInfo)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IInstalledClassicAppInfo<D>::DisplayVersion() const
 {
     hstring value;
-    check_hresult(static_cast<const IInstalledClassicAppInfo &>(static_cast<const D &>(*this))->get_DisplayVersion(put(value)));
+    check_hresult(WINRT_SHIM(IInstalledClassicAppInfo)->get_DisplayVersion(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Management::Deployment::Preview::InstalledClassicAppInfo impl_IClassicAppManagerStatics<D>::FindInstalledApp(hstring_ref appUninstallKey) const
+template <typename D> Windows::Management::Deployment::Preview::InstalledClassicAppInfo impl_IClassicAppManagerStatics<D>::FindInstalledApp(hstring_view appUninstallKey) const
 {
     Windows::Management::Deployment::Preview::InstalledClassicAppInfo result { nullptr };
-    check_hresult(static_cast<const IClassicAppManagerStatics &>(static_cast<const D &>(*this))->abi_FindInstalledApp(get(appUninstallKey), put(result)));
+    check_hresult(WINRT_SHIM(IClassicAppManagerStatics)->abi_FindInstalledApp(get_abi(appUninstallKey), put_abi(result)));
     return result;
 }
 
-inline Windows::Management::Deployment::Preview::InstalledClassicAppInfo ClassicAppManager::FindInstalledApp(hstring_ref appUninstallKey)
+inline Windows::Management::Deployment::Preview::InstalledClassicAppInfo ClassicAppManager::FindInstalledApp(hstring_view appUninstallKey)
 {
     return get_activation_factory<ClassicAppManager, IClassicAppManagerStatics>().FindInstalledApp(appUninstallKey);
 }
@@ -93,3 +99,32 @@ inline Windows::Management::Deployment::Preview::InstalledClassicAppInfo Classic
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Management::Deployment::Preview::IClassicAppManagerStatics>
+{
+    size_t operator()(const winrt::Windows::Management::Deployment::Preview::IClassicAppManagerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Management::Deployment::Preview::IInstalledClassicAppInfo>
+{
+    size_t operator()(const winrt::Windows::Management::Deployment::Preview::IInstalledClassicAppInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Management::Deployment::Preview::InstalledClassicAppInfo>
+{
+    size_t operator()(const winrt::Windows::Management::Deployment::Preview::InstalledClassicAppInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

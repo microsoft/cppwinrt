@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -82,7 +82,33 @@ struct WebAccountProviderCommand;
 
 namespace Windows::UI::ApplicationSettings {
 
-enum class SettingsEdgeLocation
+template <typename T> struct impl_IAccountsSettingsPane;
+template <typename T> struct impl_IAccountsSettingsPaneCommandsRequestedEventArgs;
+template <typename T> struct impl_IAccountsSettingsPaneEventDeferral;
+template <typename T> struct impl_IAccountsSettingsPaneStatics;
+template <typename T> struct impl_IAccountsSettingsPaneStatics2;
+template <typename T> struct impl_ICredentialCommand;
+template <typename T> struct impl_ICredentialCommandFactory;
+template <typename T> struct impl_ISettingsCommandFactory;
+template <typename T> struct impl_ISettingsCommandStatics;
+template <typename T> struct impl_ISettingsPane;
+template <typename T> struct impl_ISettingsPaneCommandsRequest;
+template <typename T> struct impl_ISettingsPaneCommandsRequestedEventArgs;
+template <typename T> struct impl_ISettingsPaneStatics;
+template <typename T> struct impl_IWebAccountCommand;
+template <typename T> struct impl_IWebAccountCommandFactory;
+template <typename T> struct impl_IWebAccountInvokedArgs;
+template <typename T> struct impl_IWebAccountProviderCommand;
+template <typename T> struct impl_IWebAccountProviderCommandFactory;
+template <typename T> struct impl_CredentialCommandCredentialDeletedHandler;
+template <typename T> struct impl_WebAccountCommandInvokedHandler;
+template <typename T> struct impl_WebAccountProviderCommandInvokedHandler;
+
+}
+
+namespace Windows::UI::ApplicationSettings {
+
+enum class [[deprecated("SettingsEdgeLocation is deprecated and might not work on all platforms. For more info, see MSDN.")]] SettingsEdgeLocation
 {
     Right = 0,
     Left = 1,

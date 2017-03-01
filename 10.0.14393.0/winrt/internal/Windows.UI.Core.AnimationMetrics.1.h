@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::UI::Core::AnimationMetrics {
 
-struct __declspec(uuid("7d11a549-be3d-41de-b081-05c149962f9b")) __declspec(novtable) IAnimationDescription : Windows::IInspectable
+struct __declspec(uuid("7d11a549-be3d-41de-b081-05c149962f9b")) __declspec(novtable) IAnimationDescription : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Animations(Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> ** value) = 0;
     virtual HRESULT __stdcall get_StaggerDelay(Windows::Foundation::TimeSpan * value) = 0;
@@ -22,18 +22,18 @@ struct __declspec(uuid("7d11a549-be3d-41de-b081-05c149962f9b")) __declspec(novta
     virtual HRESULT __stdcall get_ZOrder(int32_t * value) = 0;
 };
 
-struct __declspec(uuid("c6e27abe-c1fb-48b5-9271-ecc70ac86ef0")) __declspec(novtable) IAnimationDescriptionFactory : Windows::IInspectable
+struct __declspec(uuid("c6e27abe-c1fb-48b5-9271-ecc70ac86ef0")) __declspec(novtable) IAnimationDescriptionFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(winrt::Windows::UI::Core::AnimationMetrics::AnimationEffect effect, winrt::Windows::UI::Core::AnimationMetrics::AnimationEffectTarget target, Windows::UI::Core::AnimationMetrics::IAnimationDescription ** animation) = 0;
 };
 
-struct __declspec(uuid("803aabe5-ee7e-455f-84e9-2506afb8d2b4")) __declspec(novtable) IOpacityAnimation : Windows::IInspectable
+struct __declspec(uuid("803aabe5-ee7e-455f-84e9-2506afb8d2b4")) __declspec(novtable) IOpacityAnimation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InitialOpacity(Windows::Foundation::IReference<float> ** value) = 0;
     virtual HRESULT __stdcall get_FinalOpacity(float * value) = 0;
 };
 
-struct __declspec(uuid("3a01b4da-4d8c-411e-b615-1ade683a9903")) __declspec(novtable) IPropertyAnimation : Windows::IInspectable
+struct __declspec(uuid("3a01b4da-4d8c-411e-b615-1ade683a9903")) __declspec(novtable) IPropertyAnimation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Type(winrt::Windows::UI::Core::AnimationMetrics::PropertyAnimationType * value) = 0;
     virtual HRESULT __stdcall get_Delay(Windows::Foundation::TimeSpan * value) = 0;
@@ -42,7 +42,7 @@ struct __declspec(uuid("3a01b4da-4d8c-411e-b615-1ade683a9903")) __declspec(novta
     virtual HRESULT __stdcall get_Control2(Windows::Foundation::Point * value) = 0;
 };
 
-struct __declspec(uuid("023552c7-71ab-428c-9c9f-d31780964995")) __declspec(novtable) IScaleAnimation : Windows::IInspectable
+struct __declspec(uuid("023552c7-71ab-428c-9c9f-d31780964995")) __declspec(novtable) IScaleAnimation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InitialScaleX(Windows::Foundation::IReference<float> ** value) = 0;
     virtual HRESULT __stdcall get_InitialScaleY(Windows::Foundation::IReference<float> ** value) = 0;
@@ -65,11 +65,48 @@ template <> struct traits<Windows::UI::Core::AnimationMetrics::TranslationAnimat
 
 namespace Windows::UI::Core::AnimationMetrics {
 
-template <typename T> struct impl_IAnimationDescription;
-template <typename T> struct impl_IAnimationDescriptionFactory;
-template <typename T> struct impl_IOpacityAnimation;
-template <typename T> struct impl_IPropertyAnimation;
-template <typename T> struct impl_IScaleAnimation;
+template <typename D>
+struct WINRT_EBO impl_IAnimationDescription
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> Animations() const;
+    Windows::Foundation::TimeSpan StaggerDelay() const;
+    float StaggerDelayFactor() const;
+    Windows::Foundation::TimeSpan DelayLimit() const;
+    int32_t ZOrder() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAnimationDescriptionFactory
+{
+    Windows::UI::Core::AnimationMetrics::AnimationDescription CreateInstance(Windows::UI::Core::AnimationMetrics::AnimationEffect effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget target) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOpacityAnimation
+{
+    Windows::Foundation::IReference<float> InitialOpacity() const;
+    float FinalOpacity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPropertyAnimation
+{
+    Windows::UI::Core::AnimationMetrics::PropertyAnimationType Type() const;
+    Windows::Foundation::TimeSpan Delay() const;
+    Windows::Foundation::TimeSpan Duration() const;
+    Windows::Foundation::Point Control1() const;
+    Windows::Foundation::Point Control2() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScaleAnimation
+{
+    Windows::Foundation::IReference<float> InitialScaleX() const;
+    Windows::Foundation::IReference<float> InitialScaleY() const;
+    float FinalScaleX() const;
+    float FinalScaleY() const;
+    Windows::Foundation::Point NormalizedOrigin() const;
+};
 
 }
 

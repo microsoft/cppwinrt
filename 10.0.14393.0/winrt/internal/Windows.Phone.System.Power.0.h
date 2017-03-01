@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,6 +18,13 @@ namespace Windows::Phone::System::Power {
 struct IPowerManagerStatics;
 struct IPowerManagerStatics2;
 struct PowerManager;
+
+}
+
+namespace Windows::Phone::System::Power {
+
+template <typename T> struct impl_IPowerManagerStatics;
+template <typename T> struct impl_IPowerManagerStatics2;
 
 }
 

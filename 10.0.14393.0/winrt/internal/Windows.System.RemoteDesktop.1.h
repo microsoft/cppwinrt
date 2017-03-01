@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::System::RemoteDesktop {
 
-struct __declspec(uuid("60884631-dd3a-4576-9c8d-e8027618bdce")) __declspec(novtable) IInteractiveSessionStatics : Windows::IInspectable
+struct __declspec(uuid("60884631-dd3a-4576-9c8d-e8027618bdce")) __declspec(novtable) IInteractiveSessionStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsRemote(bool * value) = 0;
 };
@@ -24,7 +24,11 @@ namespace ABI {
 
 namespace Windows::System::RemoteDesktop {
 
-template <typename T> struct impl_IInteractiveSessionStatics;
+template <typename D>
+struct WINRT_EBO impl_IInteractiveSessionStatics
+{
+    bool IsRemote() const;
+};
 
 }
 

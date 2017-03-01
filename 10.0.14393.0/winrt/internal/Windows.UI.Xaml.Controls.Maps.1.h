@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -37,18 +37,18 @@ using MapZoomLevelRange = ABI::Windows::UI::Xaml::Controls::Maps::MapZoomLevelRa
 
 namespace ABI::Windows::UI::Xaml::Controls::Maps {
 
-struct __declspec(uuid("65da384a-2db1-4be1-b155-3d0c9ecf4799")) __declspec(novtable) ICustomMapTileDataSource : Windows::IInspectable
+struct __declspec(uuid("65da384a-2db1-4be1-b155-3d0c9ecf4799")) __declspec(novtable) ICustomMapTileDataSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_BitmapRequested(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::CustomMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileBitmapRequestedEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_BitmapRequested(event_token token) = 0;
 };
 
-struct __declspec(uuid("c8477947-c955-4f22-9444-a1d8d744af11")) __declspec(novtable) ICustomMapTileDataSourceFactory : Windows::IInspectable
+struct __declspec(uuid("c8477947-c955-4f22-9444-a1d8d744af11")) __declspec(novtable) ICustomMapTileDataSourceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ICustomMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ICustomMapTileDataSource ** instance) = 0;
 };
 
-struct __declspec(uuid("9d03cb5c-fd79-4795-87be-7e54ca0b37d0")) __declspec(novtable) IHttpMapTileDataSource : Windows::IInspectable
+struct __declspec(uuid("9d03cb5c-fd79-4795-87be-7e54ca0b37d0")) __declspec(novtable) IHttpMapTileDataSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UriFormatString(hstring * value) = 0;
     virtual HRESULT __stdcall put_UriFormatString(hstring value) = 0;
@@ -59,13 +59,13 @@ struct __declspec(uuid("9d03cb5c-fd79-4795-87be-7e54ca0b37d0")) __declspec(novta
     virtual HRESULT __stdcall remove_UriRequested(event_token token) = 0;
 };
 
-struct __declspec(uuid("53b4b107-84dc-4291-89f8-6d0bb612a055")) __declspec(novtable) IHttpMapTileDataSourceFactory : Windows::IInspectable
+struct __declspec(uuid("53b4b107-84dc-4291-89f8-6d0bb612a055")) __declspec(novtable) IHttpMapTileDataSourceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IHttpMapTileDataSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithUriFormatString(hstring uriFormatString, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IHttpMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IHttpMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithUriFormatString(hstring uriFormatString, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IHttpMapTileDataSource ** instance) = 0;
 };
 
-struct __declspec(uuid("616257b5-9108-4f12-8bf4-bb3c8f6274e5")) __declspec(novtable) ILocalMapTileDataSource : Windows::IInspectable
+struct __declspec(uuid("616257b5-9108-4f12-8bf4-bb3c8f6274e5")) __declspec(novtable) ILocalMapTileDataSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_UriFormatString(hstring * value) = 0;
     virtual HRESULT __stdcall put_UriFormatString(hstring value) = 0;
@@ -73,33 +73,33 @@ struct __declspec(uuid("616257b5-9108-4f12-8bf4-bb3c8f6274e5")) __declspec(novta
     virtual HRESULT __stdcall remove_UriRequested(event_token token) = 0;
 };
 
-struct __declspec(uuid("c5cfe9fc-72ac-4839-8a0d-011f24693c79")) __declspec(novtable) ILocalMapTileDataSourceFactory : Windows::IInspectable
+struct __declspec(uuid("c5cfe9fc-72ac-4839-8a0d-011f24693c79")) __declspec(novtable) ILocalMapTileDataSourceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ILocalMapTileDataSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithUriFormatString(hstring uriFormatString, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ILocalMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ILocalMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithUriFormatString(hstring uriFormatString, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::ILocalMapTileDataSource ** instance) = 0;
 };
 
-struct __declspec(uuid("daa080da-b7f4-422c-a618-bbaa7c1d814c")) __declspec(novtable) IMapActualCameraChangedEventArgs : Windows::IInspectable
-{
-    virtual HRESULT __stdcall get_Camera(Windows::UI::Xaml::Controls::Maps::IMapCamera ** value) = 0;
-};
-
-struct __declspec(uuid("7ba4c7e5-10dc-455a-9d04-1d72fb6d9b93")) __declspec(novtable) IMapActualCameraChangedEventArgs2 : Windows::IInspectable
-{
-    virtual HRESULT __stdcall get_ChangeReason(winrt::Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason * value) = 0;
-};
-
-struct __declspec(uuid("6b0dbed6-93f7-4682-8de5-a47a1cc7a945")) __declspec(novtable) IMapActualCameraChangingEventArgs : Windows::IInspectable
+struct __declspec(uuid("daa080da-b7f4-422c-a618-bbaa7c1d814c")) __declspec(novtable) IMapActualCameraChangedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Camera(Windows::UI::Xaml::Controls::Maps::IMapCamera ** value) = 0;
 };
 
-struct __declspec(uuid("f2867897-40ac-4e8a-a927-510f3846a47e")) __declspec(novtable) IMapActualCameraChangingEventArgs2 : Windows::IInspectable
+struct __declspec(uuid("7ba4c7e5-10dc-455a-9d04-1d72fb6d9b93")) __declspec(novtable) IMapActualCameraChangedEventArgs2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ChangeReason(winrt::Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason * value) = 0;
 };
 
-struct __declspec(uuid("53a6b623-c0f8-4d8b-ad1e-a59598ea840b")) __declspec(novtable) IMapCamera : Windows::IInspectable
+struct __declspec(uuid("6b0dbed6-93f7-4682-8de5-a47a1cc7a945")) __declspec(novtable) IMapActualCameraChangingEventArgs : Windows::Foundation::IInspectable
+{
+    virtual HRESULT __stdcall get_Camera(Windows::UI::Xaml::Controls::Maps::IMapCamera ** value) = 0;
+};
+
+struct __declspec(uuid("f2867897-40ac-4e8a-a927-510f3846a47e")) __declspec(novtable) IMapActualCameraChangingEventArgs2 : Windows::Foundation::IInspectable
+{
+    virtual HRESULT __stdcall get_ChangeReason(winrt::Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason * value) = 0;
+};
+
+struct __declspec(uuid("53a6b623-c0f8-4d8b-ad1e-a59598ea840b")) __declspec(novtable) IMapCamera : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall put_Location(Windows::Devices::Geolocation::IGeopoint * value) = 0;
@@ -113,7 +113,7 @@ struct __declspec(uuid("53a6b623-c0f8-4d8b-ad1e-a59598ea840b")) __declspec(novta
     virtual HRESULT __stdcall put_FieldOfView(double value) = 0;
 };
 
-struct __declspec(uuid("ea3b0f16-83af-4ace-8e71-10ad9f1e9e7f")) __declspec(novtable) IMapCameraFactory : Windows::IInspectable
+struct __declspec(uuid("ea3b0f16-83af-4ace-8e71-10ad9f1e9e7f")) __declspec(novtable) IMapCameraFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstanceWithLocation(Windows::Devices::Geolocation::IGeopoint * location, Windows::UI::Xaml::Controls::Maps::IMapCamera ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateInstanceWithLocationAndHeading(Windows::Devices::Geolocation::IGeopoint * location, double headingInDegrees, Windows::UI::Xaml::Controls::Maps::IMapCamera ** instance) = 0;
@@ -121,7 +121,7 @@ struct __declspec(uuid("ea3b0f16-83af-4ace-8e71-10ad9f1e9e7f")) __declspec(novta
     virtual HRESULT __stdcall abi_CreateInstanceWithLocationHeadingPitchRollAndFieldOfView(Windows::Devices::Geolocation::IGeopoint * location, double headingInDegrees, double pitchInDegrees, double rollInDegrees, double fieldOfViewInDegrees, Windows::UI::Xaml::Controls::Maps::IMapCamera ** instance) = 0;
 };
 
-struct __declspec(uuid("42d0b851-5256-4747-9e6c-0d11e966141e")) __declspec(novtable) IMapControl : Windows::IInspectable
+struct __declspec(uuid("42d0b851-5256-4747-9e6c-0d11e966141e")) __declspec(novtable) IMapControl : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Center(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall put_Center(Windows::Devices::Geolocation::IGeopoint * value) = 0;
@@ -155,11 +155,11 @@ struct __declspec(uuid("42d0b851-5256-4747-9e6c-0d11e966141e")) __declspec(novta
     virtual HRESULT __stdcall get_MapElements(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapElement> ** value) = 0;
     virtual HRESULT __stdcall get_Routes(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapRouteView> ** value) = 0;
     virtual HRESULT __stdcall get_TileSources(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapTileSource> ** value) = 0;
-    virtual HRESULT __stdcall add_CenterChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_CenterChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_CenterChanged(event_token token) = 0;
-    virtual HRESULT __stdcall add_HeadingChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_HeadingChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_HeadingChanged(event_token token) = 0;
-    virtual HRESULT __stdcall add_LoadingStatusChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_LoadingStatusChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_LoadingStatusChanged(event_token token) = 0;
     virtual HRESULT __stdcall add_MapDoubleTapped(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_MapDoubleTapped(event_token token) = 0;
@@ -167,11 +167,11 @@ struct __declspec(uuid("42d0b851-5256-4747-9e6c-0d11e966141e")) __declspec(novta
     virtual HRESULT __stdcall remove_MapHolding(event_token token) = 0;
     virtual HRESULT __stdcall add_MapTapped(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_MapTapped(event_token token) = 0;
-    virtual HRESULT __stdcall add_PitchChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_PitchChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_PitchChanged(event_token token) = 0;
-    virtual HRESULT __stdcall add_TransformOriginChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_TransformOriginChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_TransformOriginChanged(event_token token) = 0;
-    virtual HRESULT __stdcall add_ZoomLevelChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_ZoomLevelChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ZoomLevelChanged(event_token token) = 0;
     virtual HRESULT __stdcall abi_FindMapElementsAtOffset(Windows::Foundation::Point offset, Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Maps::MapElement> ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetLocationFromOffset(Windows::Foundation::Point offset, Windows::Devices::Geolocation::IGeopoint ** location) = 0;
@@ -184,7 +184,7 @@ struct __declspec(uuid("42d0b851-5256-4747-9e6c-0d11e966141e")) __declspec(novta
     virtual HRESULT __stdcall abi_TrySetViewWithCenterZoomHeadingPitchAndAnimationAsync(Windows::Devices::Geolocation::IGeopoint * center, Windows::Foundation::IReference<double> * zoomLevel, Windows::Foundation::IReference<double> * heading, Windows::Foundation::IReference<double> * desiredPitch, winrt::Windows::UI::Xaml::Controls::Maps::MapAnimationKind animation, Windows::Foundation::IAsyncOperation<bool> ** returnValue) = 0;
 };
 
-struct __declspec(uuid("e1fd644d-96ec-4065-b0f0-75281da3654d")) __declspec(novtable) IMapControl2 : Windows::IInspectable
+struct __declspec(uuid("e1fd644d-96ec-4065-b0f0-75281da3654d")) __declspec(novtable) IMapControl2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BusinessLandmarksVisible(bool * value) = 0;
     virtual HRESULT __stdcall put_BusinessLandmarksVisible(bool value) = 0;
@@ -237,13 +237,13 @@ struct __declspec(uuid("e1fd644d-96ec-4065-b0f0-75281da3654d")) __declspec(novta
     virtual HRESULT __stdcall abi_TrySetSceneWithAnimationAsync(Windows::UI::Xaml::Controls::Maps::IMapScene * scene, winrt::Windows::UI::Xaml::Controls::Maps::MapAnimationKind animationKind, Windows::Foundation::IAsyncOperation<bool> ** returnValue) = 0;
 };
 
-struct __declspec(uuid("586328f8-8cdd-40ae-9338-af2a7be845e5")) __declspec(novtable) IMapControl3 : Windows::IInspectable
+struct __declspec(uuid("586328f8-8cdd-40ae-9338-af2a7be845e5")) __declspec(novtable) IMapControl3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_MapRightTapped(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapRightTappedEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_MapRightTapped(event_token token) = 0;
 };
 
-struct __declspec(uuid("068f132a-1817-466d-b7ce-419b3f8e248b")) __declspec(novtable) IMapControl4 : Windows::IInspectable
+struct __declspec(uuid("068f132a-1817-466d-b7ce-419b3f8e248b")) __declspec(novtable) IMapControl4 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BusinessLandmarksEnabled(bool * value) = 0;
     virtual HRESULT __stdcall put_BusinessLandmarksEnabled(bool value) = 0;
@@ -252,27 +252,27 @@ struct __declspec(uuid("068f132a-1817-466d-b7ce-419b3f8e248b")) __declspec(novta
     virtual HRESULT __stdcall abi_GetVisibleRegion(winrt::Windows::UI::Xaml::Controls::Maps::MapVisibleRegionKind region, Windows::Devices::Geolocation::IGeopath ** returnValue) = 0;
 };
 
-struct __declspec(uuid("5e464922-4a1a-4797-beb7-5cf7754cb867")) __declspec(novtable) IMapControlBusinessLandmarkClickEventArgs : Windows::IInspectable
+struct __declspec(uuid("5e464922-4a1a-4797-beb7-5cf7754cb867")) __declspec(novtable) IMapControlBusinessLandmarkClickEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalLocations(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> ** value) = 0;
 };
 
-struct __declspec(uuid("5e4081a6-ea98-4f95-8caf-5b42696ff504")) __declspec(novtable) IMapControlBusinessLandmarkPointerEnteredEventArgs : Windows::IInspectable
+struct __declspec(uuid("5e4081a6-ea98-4f95-8caf-5b42696ff504")) __declspec(novtable) IMapControlBusinessLandmarkPointerEnteredEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalLocations(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> ** value) = 0;
 };
 
-struct __declspec(uuid("2bb52caf-f24a-46d0-b463-65f719731057")) __declspec(novtable) IMapControlBusinessLandmarkPointerExitedEventArgs : Windows::IInspectable
+struct __declspec(uuid("2bb52caf-f24a-46d0-b463-65f719731057")) __declspec(novtable) IMapControlBusinessLandmarkPointerExitedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalLocations(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> ** value) = 0;
 };
 
-struct __declspec(uuid("59ab8ae7-f184-4ab1-b0b0-35c8bf0654b2")) __declspec(novtable) IMapControlBusinessLandmarkRightTappedEventArgs : Windows::IInspectable
+struct __declspec(uuid("59ab8ae7-f184-4ab1-b0b0-35c8bf0654b2")) __declspec(novtable) IMapControlBusinessLandmarkRightTappedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocalLocations(Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> ** value) = 0;
 };
 
-struct __declspec(uuid("8bb0f09c-14ab-486c-9de5-5a5def0205a2")) __declspec(novtable) IMapControlDataHelper : Windows::IInspectable
+struct __declspec(uuid("8bb0f09c-14ab-486c-9de5-5a5def0205a2")) __declspec(novtable) IMapControlDataHelper : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_BusinessLandmarkClick(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_BusinessLandmarkClick(event_token token) = 0;
@@ -284,7 +284,7 @@ struct __declspec(uuid("8bb0f09c-14ab-486c-9de5-5a5def0205a2")) __declspec(novta
     virtual HRESULT __stdcall remove_TransitFeatureRightTapped(event_token token) = 0;
 };
 
-struct __declspec(uuid("59ce429e-562f-4c21-a674-0f11decf0fb3")) __declspec(novtable) IMapControlDataHelper2 : Windows::IInspectable
+struct __declspec(uuid("59ce429e-562f-4c21-a674-0f11decf0fb3")) __declspec(novtable) IMapControlDataHelper2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_BusinessLandmarkPointerEntered(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_BusinessLandmarkPointerEntered(event_token token) = 0;
@@ -296,12 +296,12 @@ struct __declspec(uuid("59ce429e-562f-4c21-a674-0f11decf0fb3")) __declspec(novta
     virtual HRESULT __stdcall remove_TransitFeaturePointerExited(event_token token) = 0;
 };
 
-struct __declspec(uuid("3b70aa8e-02ef-469c-bbaf-dc2158d4289b")) __declspec(novtable) IMapControlDataHelperFactory : Windows::IInspectable
+struct __declspec(uuid("3b70aa8e-02ef-469c-bbaf-dc2158d4289b")) __declspec(novtable) IMapControlDataHelperFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(Windows::UI::Xaml::Controls::Maps::IMapControl * map, Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper ** instance) = 0;
 };
 
-struct __declspec(uuid("c2c61795-2147-4f0a-942a-5493a85de807")) __declspec(novtable) IMapControlStatics : Windows::IInspectable
+struct __declspec(uuid("c2c61795-2147-4f0a-942a-5493a85de807")) __declspec(novtable) IMapControlStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CenterProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_ChildrenProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
@@ -329,7 +329,7 @@ struct __declspec(uuid("c2c61795-2147-4f0a-942a-5493a85de807")) __declspec(novta
     virtual HRESULT __stdcall abi_SetNormalizedAnchorPoint(Windows::UI::Xaml::IDependencyObject * element, Windows::Foundation::Point value) = 0;
 };
 
-struct __declspec(uuid("04852b93-b446-4d31-9752-1ec69a5996ae")) __declspec(novtable) IMapControlStatics2 : Windows::IInspectable
+struct __declspec(uuid("04852b93-b446-4d31-9752-1ec69a5996ae")) __declspec(novtable) IMapControlStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BusinessLandmarksVisibleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_TransitFeaturesVisibleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
@@ -342,54 +342,54 @@ struct __declspec(uuid("04852b93-b446-4d31-9752-1ec69a5996ae")) __declspec(novta
     virtual HRESULT __stdcall get_SceneProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("fe785d97-5d13-4fa1-bf1d-84061768c183")) __declspec(novtable) IMapControlStatics4 : Windows::IInspectable
+struct __declspec(uuid("fe785d97-5d13-4fa1-bf1d-84061768c183")) __declspec(novtable) IMapControlStatics4 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BusinessLandmarksEnabledProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_TransitFeaturesEnabledProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("76179969-b765-4622-b08a-3072745a4541")) __declspec(novtable) IMapControlTransitFeatureClickEventArgs : Windows::IInspectable
+struct __declspec(uuid("76179969-b765-4622-b08a-3072745a4541")) __declspec(novtable) IMapControlTransitFeatureClickEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
-    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ** value) = 0;
+    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> ** value) = 0;
 };
 
-struct __declspec(uuid("73911a4e-ec4f-479e-94a1-36e081d0d897")) __declspec(novtable) IMapControlTransitFeaturePointerEnteredEventArgs : Windows::IInspectable
+struct __declspec(uuid("73911a4e-ec4f-479e-94a1-36e081d0d897")) __declspec(novtable) IMapControlTransitFeaturePointerEnteredEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
-    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ** value) = 0;
+    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> ** value) = 0;
 };
 
-struct __declspec(uuid("6a11258d-448d-44e7-bc69-d13d497154e9")) __declspec(novtable) IMapControlTransitFeaturePointerExitedEventArgs : Windows::IInspectable
+struct __declspec(uuid("6a11258d-448d-44e7-bc69-d13d497154e9")) __declspec(novtable) IMapControlTransitFeaturePointerExitedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
-    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ** value) = 0;
+    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> ** value) = 0;
 };
 
-struct __declspec(uuid("aea1cc49-a729-4eae-a59a-3ec9a125a028")) __declspec(novtable) IMapControlTransitFeatureRightTappedEventArgs : Windows::IInspectable
+struct __declspec(uuid("aea1cc49-a729-4eae-a59a-3ec9a125a028")) __declspec(novtable) IMapControlTransitFeatureRightTappedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
-    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ** value) = 0;
+    virtual HRESULT __stdcall get_TransitProperties(Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> ** value) = 0;
 };
 
-struct __declspec(uuid("64592866-14a3-4e5f-8883-8e9c500eeede")) __declspec(novtable) IMapCustomExperience : Windows::IInspectable
+struct __declspec(uuid("64592866-14a3-4e5f-8883-8e9c500eeede")) __declspec(novtable) IMapCustomExperience : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("b9e6fb9b-8fc1-4042-ac34-a61b38bb7514")) __declspec(novtable) IMapCustomExperienceChangedEventArgs : Windows::IInspectable
+struct __declspec(uuid("b9e6fb9b-8fc1-4042-ac34-a61b38bb7514")) __declspec(novtable) IMapCustomExperienceChangedEventArgs : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("7a403fb5-a1b1-4e7f-921e-3e6b8d8ebed6")) __declspec(novtable) IMapCustomExperienceFactory : Windows::IInspectable
+struct __declspec(uuid("7a403fb5-a1b1-4e7f-921e-3e6b8d8ebed6")) __declspec(novtable) IMapCustomExperienceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapCustomExperience ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapCustomExperience ** instance) = 0;
 };
 
-struct __declspec(uuid("d61fc4df-b245-47f2-9ac2-43c058b1c903")) __declspec(novtable) IMapElement : Windows::IInspectable
+struct __declspec(uuid("d61fc4df-b245-47f2-9ac2-43c058b1c903")) __declspec(novtable) IMapElement : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ZIndex(int32_t * value) = 0;
     virtual HRESULT __stdcall put_ZIndex(int32_t value) = 0;
@@ -397,50 +397,50 @@ struct __declspec(uuid("d61fc4df-b245-47f2-9ac2-43c058b1c903")) __declspec(novta
     virtual HRESULT __stdcall put_Visible(bool value) = 0;
 };
 
-struct __declspec(uuid("6619f261-fba6-4964-a7ff-f1af63ab9cb0")) __declspec(novtable) IMapElement2 : Windows::IInspectable
+struct __declspec(uuid("6619f261-fba6-4964-a7ff-f1af63ab9cb0")) __declspec(novtable) IMapElement2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MapTabIndex(int32_t * value) = 0;
     virtual HRESULT __stdcall put_MapTabIndex(int32_t value) = 0;
 };
 
-struct __declspec(uuid("40168a11-d080-4519-99a1-3149fb8999d0")) __declspec(novtable) IMapElementClickEventArgs : Windows::IInspectable
+struct __declspec(uuid("40168a11-d080-4519-99a1-3149fb8999d0")) __declspec(novtable) IMapElementClickEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall get_MapElements(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapElement> ** value) = 0;
 };
 
-struct __declspec(uuid("4a30d007-0bd6-47a5-860b-7e7cf5f0c573")) __declspec(novtable) IMapElementFactory : Windows::IInspectable
+struct __declspec(uuid("4a30d007-0bd6-47a5-860b-7e7cf5f0c573")) __declspec(novtable) IMapElementFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapElement ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapElement ** instance) = 0;
 };
 
-struct __declspec(uuid("ab85dd4e-91d7-4b31-8f0a-d390c7d3a2ef")) __declspec(novtable) IMapElementPointerEnteredEventArgs : Windows::IInspectable
-{
-    virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
-    virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
-    virtual HRESULT __stdcall get_MapElement(Windows::UI::Xaml::Controls::Maps::IMapElement ** value) = 0;
-};
-
-struct __declspec(uuid("c1a45af9-60c9-4679-9119-20abc75d931f")) __declspec(novtable) IMapElementPointerExitedEventArgs : Windows::IInspectable
+struct __declspec(uuid("ab85dd4e-91d7-4b31-8f0a-d390c7d3a2ef")) __declspec(novtable) IMapElementPointerEnteredEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall get_MapElement(Windows::UI::Xaml::Controls::Maps::IMapElement ** value) = 0;
 };
 
-struct __declspec(uuid("e8c71cf2-bfef-4b49-8e99-41b5e3789fd2")) __declspec(novtable) IMapElementStatics : Windows::IInspectable
+struct __declspec(uuid("c1a45af9-60c9-4679-9119-20abc75d931f")) __declspec(novtable) IMapElementPointerExitedEventArgs : Windows::Foundation::IInspectable
+{
+    virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
+    virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
+    virtual HRESULT __stdcall get_MapElement(Windows::UI::Xaml::Controls::Maps::IMapElement ** value) = 0;
+};
+
+struct __declspec(uuid("e8c71cf2-bfef-4b49-8e99-41b5e3789fd2")) __declspec(novtable) IMapElementStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ZIndexProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_VisibleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("9bf72f30-80fe-4f30-bcc1-fa894050f676")) __declspec(novtable) IMapElementStatics2 : Windows::IInspectable
+struct __declspec(uuid("9bf72f30-80fe-4f30-bcc1-fa894050f676")) __declspec(novtable) IMapElementStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MapTabIndexProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("d2096872-23d9-4a2b-8be0-69f3a85482ab")) __declspec(novtable) IMapIcon : Windows::IInspectable
+struct __declspec(uuid("d2096872-23d9-4a2b-8be0-69f3a85482ab")) __declspec(novtable) IMapIcon : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
     virtual HRESULT __stdcall put_Location(Windows::Devices::Geolocation::IGeopoint * value) = 0;
@@ -452,47 +452,47 @@ struct __declspec(uuid("d2096872-23d9-4a2b-8be0-69f3a85482ab")) __declspec(novta
     virtual HRESULT __stdcall put_Image(Windows::Storage::Streams::IRandomAccessStreamReference * value) = 0;
 };
 
-struct __declspec(uuid("611254b9-d8aa-4bbd-a316-badf06911d63")) __declspec(novtable) IMapIcon2 : Windows::IInspectable
+struct __declspec(uuid("611254b9-d8aa-4bbd-a316-badf06911d63")) __declspec(novtable) IMapIcon2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CollisionBehaviorDesired(winrt::Windows::UI::Xaml::Controls::Maps::MapElementCollisionBehavior * value) = 0;
     virtual HRESULT __stdcall put_CollisionBehaviorDesired(winrt::Windows::UI::Xaml::Controls::Maps::MapElementCollisionBehavior value) = 0;
 };
 
-struct __declspec(uuid("dcbc9e56-1190-4b5d-9e56-e5b6724aa328")) __declspec(novtable) IMapIconStatics : Windows::IInspectable
+struct __declspec(uuid("dcbc9e56-1190-4b5d-9e56-e5b6724aa328")) __declspec(novtable) IMapIconStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LocationProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_TitleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_NormalizedAnchorPointProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("ff4c306a-cf76-46ab-a12f-b603b986c696")) __declspec(novtable) IMapIconStatics2 : Windows::IInspectable
+struct __declspec(uuid("ff4c306a-cf76-46ab-a12f-b603b986c696")) __declspec(novtable) IMapIconStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CollisionBehaviorDesiredProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("9fc503a0-a8a2-4394-92e9-2247764f2f49")) __declspec(novtable) IMapInputEventArgs : Windows::IInspectable
+struct __declspec(uuid("9fc503a0-a8a2-4394-92e9-2247764f2f49")) __declspec(novtable) IMapInputEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
 };
 
-struct __declspec(uuid("94c2c4d3-b335-42c5-b660-e6a07ec3bddc")) __declspec(novtable) IMapItemsControl : Windows::IInspectable
+struct __declspec(uuid("94c2c4d3-b335-42c5-b660-e6a07ec3bddc")) __declspec(novtable) IMapItemsControl : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall get_ItemsSource(Windows::IInspectable ** value) = 0;
-    virtual HRESULT __stdcall put_ItemsSource(Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall get_ItemsSource(Windows::Foundation::IInspectable ** value) = 0;
+    virtual HRESULT __stdcall put_ItemsSource(Windows::Foundation::IInspectable * value) = 0;
     virtual HRESULT __stdcall get_Items(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::DependencyObject> ** value) = 0;
     virtual HRESULT __stdcall get_ItemTemplate(Windows::UI::Xaml::IDataTemplate ** value) = 0;
     virtual HRESULT __stdcall put_ItemTemplate(Windows::UI::Xaml::IDataTemplate * value) = 0;
 };
 
-struct __declspec(uuid("33a859c7-789b-425c-8a0a-32385896cb4a")) __declspec(novtable) IMapItemsControlStatics : Windows::IInspectable
+struct __declspec(uuid("33a859c7-789b-425c-8a0a-32385896cb4a")) __declspec(novtable) IMapItemsControlStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ItemsSourceProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_ItemsProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_ItemTemplateProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("abda2285-4926-4c3a-a5f9-19df7f69db3d")) __declspec(novtable) IMapPolygon : Windows::IInspectable
+struct __declspec(uuid("abda2285-4926-4c3a-a5f9-19df7f69db3d")) __declspec(novtable) IMapPolygon : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Path(Windows::Devices::Geolocation::IGeopath ** value) = 0;
     virtual HRESULT __stdcall put_Path(Windows::Devices::Geolocation::IGeopath * value) = 0;
@@ -506,19 +506,19 @@ struct __declspec(uuid("abda2285-4926-4c3a-a5f9-19df7f69db3d")) __declspec(novta
     virtual HRESULT __stdcall put_FillColor(Windows::UI::Color value) = 0;
 };
 
-struct __declspec(uuid("96c8a11e-636b-4018-9c2e-acc9122a01b2")) __declspec(novtable) IMapPolygon2 : Windows::IInspectable
+struct __declspec(uuid("96c8a11e-636b-4018-9c2e-acc9122a01b2")) __declspec(novtable) IMapPolygon2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Paths(Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geopath> ** value) = 0;
 };
 
-struct __declspec(uuid("37f573be-097b-424c-87cc-2ee042fda6d2")) __declspec(novtable) IMapPolygonStatics : Windows::IInspectable
+struct __declspec(uuid("37f573be-097b-424c-87cc-2ee042fda6d2")) __declspec(novtable) IMapPolygonStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PathProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_StrokeThicknessProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_StrokeDashedProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("fbad24a2-24df-4a86-8ffa-0f8f4d9ec17d")) __declspec(novtable) IMapPolyline : Windows::IInspectable
+struct __declspec(uuid("fbad24a2-24df-4a86-8ffa-0f8f4d9ec17d")) __declspec(novtable) IMapPolyline : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Path(Windows::Devices::Geolocation::IGeopath ** value) = 0;
     virtual HRESULT __stdcall put_Path(Windows::Devices::Geolocation::IGeopath * value) = 0;
@@ -530,19 +530,19 @@ struct __declspec(uuid("fbad24a2-24df-4a86-8ffa-0f8f4d9ec17d")) __declspec(novta
     virtual HRESULT __stdcall put_StrokeDashed(bool value) = 0;
 };
 
-struct __declspec(uuid("61fde44b-1ddf-4303-b809-ec87f58ad065")) __declspec(novtable) IMapPolylineStatics : Windows::IInspectable
+struct __declspec(uuid("61fde44b-1ddf-4303-b809-ec87f58ad065")) __declspec(novtable) IMapPolylineStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PathProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_StrokeDashedProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("20943171-6fe8-40a6-ad0e-297379b575a7")) __declspec(novtable) IMapRightTappedEventArgs : Windows::IInspectable
+struct __declspec(uuid("20943171-6fe8-40a6-ad0e-297379b575a7")) __declspec(novtable) IMapRightTappedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
 };
 
-struct __declspec(uuid("740eaec5-bacc-41e1-a67e-dd6513832049")) __declspec(novtable) IMapRouteView : Windows::IInspectable
+struct __declspec(uuid("740eaec5-bacc-41e1-a67e-dd6513832049")) __declspec(novtable) IMapRouteView : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RouteColor(Windows::UI::Color * value) = 0;
     virtual HRESULT __stdcall put_RouteColor(Windows::UI::Color value) = 0;
@@ -551,19 +551,19 @@ struct __declspec(uuid("740eaec5-bacc-41e1-a67e-dd6513832049")) __declspec(novta
     virtual HRESULT __stdcall get_Route(Windows::Services::Maps::IMapRoute ** value) = 0;
 };
 
-struct __declspec(uuid("f083addf-0066-4628-82fe-ea78c23cec1e")) __declspec(novtable) IMapRouteViewFactory : Windows::IInspectable
+struct __declspec(uuid("f083addf-0066-4628-82fe-ea78c23cec1e")) __declspec(novtable) IMapRouteViewFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstanceWithMapRoute(Windows::Services::Maps::IMapRoute * route, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapRouteView ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithMapRoute(Windows::Services::Maps::IMapRoute * route, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapRouteView ** instance) = 0;
 };
 
-struct __declspec(uuid("8bba10a9-50e7-482c-9789-c688b178ac24")) __declspec(novtable) IMapScene : Windows::IInspectable
+struct __declspec(uuid("8bba10a9-50e7-482c-9789-c688b178ac24")) __declspec(novtable) IMapScene : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TargetCamera(Windows::UI::Xaml::Controls::Maps::IMapCamera ** value) = 0;
     virtual HRESULT __stdcall add_TargetCameraChanged(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapScene, Windows::UI::Xaml::Controls::Maps::MapTargetCameraChangedEventArgs> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_TargetCameraChanged(event_token token) = 0;
 };
 
-struct __declspec(uuid("03e4ad6c-86ec-44d9-9597-fb75b7deba0a")) __declspec(novtable) IMapSceneStatics : Windows::IInspectable
+struct __declspec(uuid("03e4ad6c-86ec-44d9-9597-fb75b7deba0a")) __declspec(novtable) IMapSceneStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateFromBoundingBox(Windows::Devices::Geolocation::IGeoboundingBox * bounds, Windows::UI::Xaml::Controls::Maps::IMapScene ** returnValue) = 0;
     virtual HRESULT __stdcall abi_CreateFromBoundingBoxWithHeadingAndPitch(Windows::Devices::Geolocation::IGeoboundingBox * bounds, double headingInDegrees, double pitchInDegrees, Windows::UI::Xaml::Controls::Maps::IMapScene ** returnValue) = 0;
@@ -576,29 +576,29 @@ struct __declspec(uuid("03e4ad6c-86ec-44d9-9597-fb75b7deba0a")) __declspec(novta
     virtual HRESULT __stdcall abi_CreateFromLocationsWithHeadingAndPitch(Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> * locations, double headingInDegrees, double pitchInDegrees, Windows::UI::Xaml::Controls::Maps::IMapScene ** returnValue) = 0;
 };
 
-struct __declspec(uuid("dbf00472-e953-4fa8-97d0-ea86359057cf")) __declspec(novtable) IMapTargetCameraChangedEventArgs : Windows::IInspectable
+struct __declspec(uuid("dbf00472-e953-4fa8-97d0-ea86359057cf")) __declspec(novtable) IMapTargetCameraChangedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Camera(Windows::UI::Xaml::Controls::Maps::IMapCamera ** value) = 0;
 };
 
-struct __declspec(uuid("97c0b332-f2b6-460b-8d91-ac020a2383dd")) __declspec(novtable) IMapTargetCameraChangedEventArgs2 : Windows::IInspectable
+struct __declspec(uuid("97c0b332-f2b6-460b-8d91-ac020a2383dd")) __declspec(novtable) IMapTargetCameraChangedEventArgs2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ChangeReason(winrt::Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason * value) = 0;
 };
 
-struct __declspec(uuid("46733fbc-d89d-472b-b5f6-d7066b0584f4")) __declspec(novtable) IMapTileBitmapRequest : Windows::IInspectable
+struct __declspec(uuid("46733fbc-d89d-472b-b5f6-d7066b0584f4")) __declspec(novtable) IMapTileBitmapRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PixelData(Windows::Storage::Streams::IRandomAccessStreamReference ** value) = 0;
     virtual HRESULT __stdcall put_PixelData(Windows::Storage::Streams::IRandomAccessStreamReference * value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::UI::Xaml::Controls::Maps::IMapTileBitmapRequestDeferral ** returnValue) = 0;
 };
 
-struct __declspec(uuid("fe370542-a4ac-4efa-9665-0490b0cafdd2")) __declspec(novtable) IMapTileBitmapRequestDeferral : Windows::IInspectable
+struct __declspec(uuid("fe370542-a4ac-4efa-9665-0490b0cafdd2")) __declspec(novtable) IMapTileBitmapRequestDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("337f691d-9b02-4aa2-8b1e-cc4d91719bf3")) __declspec(novtable) IMapTileBitmapRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("337f691d-9b02-4aa2-8b1e-cc4d91719bf3")) __declspec(novtable) IMapTileBitmapRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_X(int32_t * value) = 0;
     virtual HRESULT __stdcall get_Y(int32_t * value) = 0;
@@ -606,16 +606,16 @@ struct __declspec(uuid("337f691d-9b02-4aa2-8b1e-cc4d91719bf3")) __declspec(novta
     virtual HRESULT __stdcall get_Request(Windows::UI::Xaml::Controls::Maps::IMapTileBitmapRequest ** value) = 0;
 };
 
-struct __declspec(uuid("c03d9f5e-be1f-4c69-9969-79467a513c38")) __declspec(novtable) IMapTileDataSource : Windows::IInspectable
+struct __declspec(uuid("c03d9f5e-be1f-4c69-9969-79467a513c38")) __declspec(novtable) IMapTileDataSource : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("a3920fbd-e446-4648-a74d-fd2c5d557c06")) __declspec(novtable) IMapTileDataSourceFactory : Windows::IInspectable
+struct __declspec(uuid("a3920fbd-e446-4648-a74d-fd2c5d557c06")) __declspec(novtable) IMapTileDataSourceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileDataSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileDataSource ** instance) = 0;
 };
 
-struct __declspec(uuid("88a76e4e-2fdf-4567-9255-1100519c8d62")) __declspec(novtable) IMapTileSource : Windows::IInspectable
+struct __declspec(uuid("88a76e4e-2fdf-4567-9255-1100519c8d62")) __declspec(novtable) IMapTileSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DataSource(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource ** value) = 0;
     virtual HRESULT __stdcall put_DataSource(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * value) = 0;
@@ -641,16 +641,16 @@ struct __declspec(uuid("88a76e4e-2fdf-4567-9255-1100519c8d62")) __declspec(novta
     virtual HRESULT __stdcall put_Visible(bool value) = 0;
 };
 
-struct __declspec(uuid("cd7f811f-77fa-482b-9d34-71d31d465c48")) __declspec(novtable) IMapTileSourceFactory : Windows::IInspectable
+struct __declspec(uuid("cd7f811f-77fa-482b-9d34-71d31d465c48")) __declspec(novtable) IMapTileSourceFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithDataSource(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceAndZoomRange(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceZoomRangeAndBounds(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::Devices::Geolocation::IGeoboundingBox * bounds, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
-    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceZoomRangeBoundsAndTileSize(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::Devices::Geolocation::IGeoboundingBox * bounds, int32_t tileSizeInPixels, Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithDataSource(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceAndZoomRange(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceZoomRangeAndBounds(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::Devices::Geolocation::IGeoboundingBox * bounds, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstanceWithDataSourceZoomRangeBoundsAndTileSize(Windows::UI::Xaml::Controls::Maps::IMapTileDataSource * dataSource, Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange zoomLevelRange, Windows::Devices::Geolocation::IGeoboundingBox * bounds, int32_t tileSizeInPixels, Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Controls::Maps::IMapTileSource ** instance) = 0;
 };
 
-struct __declspec(uuid("93fcc93c-7035-4603-99b1-e659921b6093")) __declspec(novtable) IMapTileSourceStatics : Windows::IInspectable
+struct __declspec(uuid("93fcc93c-7035-4603-99b1-e659921b6093")) __declspec(novtable) IMapTileSourceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DataSourceProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_LayerProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
@@ -665,19 +665,19 @@ struct __declspec(uuid("93fcc93c-7035-4603-99b1-e659921b6093")) __declspec(novta
     virtual HRESULT __stdcall get_VisibleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("17402335-3127-45b8-87a7-99f87d4e2745")) __declspec(novtable) IMapTileUriRequest : Windows::IInspectable
+struct __declspec(uuid("17402335-3127-45b8-87a7-99f87d4e2745")) __declspec(novtable) IMapTileUriRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Uri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
     virtual HRESULT __stdcall put_Uri(Windows::Foundation::IUriRuntimeClass * value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::UI::Xaml::Controls::Maps::IMapTileUriRequestDeferral ** returnValue) = 0;
 };
 
-struct __declspec(uuid("c117ade0-bf3e-4c51-8faa-4b593cf68eb2")) __declspec(novtable) IMapTileUriRequestDeferral : Windows::IInspectable
+struct __declspec(uuid("c117ade0-bf3e-4c51-8faa-4b593cf68eb2")) __declspec(novtable) IMapTileUriRequestDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("d2147b43-1bbf-4b98-8dd3-b7834e407e0d")) __declspec(novtable) IMapTileUriRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("d2147b43-1bbf-4b98-8dd3-b7834e407e0d")) __declspec(novtable) IMapTileUriRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_X(int32_t * value) = 0;
     virtual HRESULT __stdcall get_Y(int32_t * value) = 0;
@@ -685,7 +685,7 @@ struct __declspec(uuid("d2147b43-1bbf-4b98-8dd3-b7834e407e0d")) __declspec(novta
     virtual HRESULT __stdcall get_Request(Windows::UI::Xaml::Controls::Maps::IMapTileUriRequest ** value) = 0;
 };
 
-struct __declspec(uuid("a558aec9-e30c-46c8-8116-484691675558")) __declspec(novtable) IStreetsideExperience : Windows::IInspectable
+struct __declspec(uuid("a558aec9-e30c-46c8-8116-484691675558")) __declspec(novtable) IStreetsideExperience : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AddressTextVisible(bool * value) = 0;
     virtual HRESULT __stdcall put_AddressTextVisible(bool value) = 0;
@@ -701,18 +701,18 @@ struct __declspec(uuid("a558aec9-e30c-46c8-8116-484691675558")) __declspec(novta
     virtual HRESULT __stdcall put_ZoomButtonsVisible(bool value) = 0;
 };
 
-struct __declspec(uuid("7a5bcf3c-649e-4342-9995-68a6cf5961a7")) __declspec(novtable) IStreetsideExperienceFactory : Windows::IInspectable
+struct __declspec(uuid("7a5bcf3c-649e-4342-9995-68a6cf5961a7")) __declspec(novtable) IStreetsideExperienceFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstanceWithPanorama(Windows::UI::Xaml::Controls::Maps::IStreetsidePanorama * panorama, Windows::UI::Xaml::Controls::Maps::IStreetsideExperience ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateInstanceWithPanoramaHeadingPitchAndFieldOfView(Windows::UI::Xaml::Controls::Maps::IStreetsidePanorama * panorama, double headingInDegrees, double pitchInDegrees, double fieldOfViewInDegrees, Windows::UI::Xaml::Controls::Maps::IStreetsideExperience ** instance) = 0;
 };
 
-struct __declspec(uuid("6fe00fd8-ad60-4664-b539-b1069f16c5af")) __declspec(novtable) IStreetsidePanorama : Windows::IInspectable
+struct __declspec(uuid("6fe00fd8-ad60-4664-b539-b1069f16c5af")) __declspec(novtable) IStreetsidePanorama : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Location(Windows::Devices::Geolocation::IGeopoint ** value) = 0;
 };
 
-struct __declspec(uuid("d3b47f69-54b3-4ec5-b2a0-4f8204576507")) __declspec(novtable) IStreetsidePanoramaStatics : Windows::IInspectable
+struct __declspec(uuid("d3b47f69-54b3-4ec5-b2a0-4f8204576507")) __declspec(novtable) IStreetsidePanoramaStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindNearbyWithLocationAsync(Windows::Devices::Geolocation::IGeopoint * location, Windows::Foundation::IAsyncOperation<Windows::UI::Xaml::Controls::Maps::StreetsidePanorama> ** returnValue) = 0;
     virtual HRESULT __stdcall abi_FindNearbyWithLocationAndRadiusAsync(Windows::Devices::Geolocation::IGeopoint * location, double radiusInMeters, Windows::Foundation::IAsyncOperation<Windows::UI::Xaml::Controls::Maps::StreetsidePanorama> ** returnValue) = 0;
@@ -768,81 +768,819 @@ template <> struct traits<Windows::UI::Xaml::Controls::Maps::StreetsidePanorama>
 
 namespace Windows::UI::Xaml::Controls::Maps {
 
-template <typename T> struct impl_ICustomMapTileDataSource;
-template <typename T> struct impl_ICustomMapTileDataSourceFactory;
-template <typename T> struct impl_IHttpMapTileDataSource;
-template <typename T> struct impl_IHttpMapTileDataSourceFactory;
-template <typename T> struct impl_ILocalMapTileDataSource;
-template <typename T> struct impl_ILocalMapTileDataSourceFactory;
-template <typename T> struct impl_IMapActualCameraChangedEventArgs;
-template <typename T> struct impl_IMapActualCameraChangedEventArgs2;
-template <typename T> struct impl_IMapActualCameraChangingEventArgs;
-template <typename T> struct impl_IMapActualCameraChangingEventArgs2;
-template <typename T> struct impl_IMapCamera;
-template <typename T> struct impl_IMapCameraFactory;
-template <typename T> struct impl_IMapControl;
-template <typename T> struct impl_IMapControl2;
-template <typename T> struct impl_IMapControl3;
-template <typename T> struct impl_IMapControl4;
-template <typename T> struct impl_IMapControlBusinessLandmarkClickEventArgs;
-template <typename T> struct impl_IMapControlBusinessLandmarkPointerEnteredEventArgs;
-template <typename T> struct impl_IMapControlBusinessLandmarkPointerExitedEventArgs;
-template <typename T> struct impl_IMapControlBusinessLandmarkRightTappedEventArgs;
-template <typename T> struct impl_IMapControlDataHelper;
-template <typename T> struct impl_IMapControlDataHelper2;
-template <typename T> struct impl_IMapControlDataHelperFactory;
-template <typename T> struct impl_IMapControlStatics;
-template <typename T> struct impl_IMapControlStatics2;
-template <typename T> struct impl_IMapControlStatics4;
-template <typename T> struct impl_IMapControlTransitFeatureClickEventArgs;
-template <typename T> struct impl_IMapControlTransitFeaturePointerEnteredEventArgs;
-template <typename T> struct impl_IMapControlTransitFeaturePointerExitedEventArgs;
-template <typename T> struct impl_IMapControlTransitFeatureRightTappedEventArgs;
-template <typename T> struct impl_IMapCustomExperience;
-template <typename T> struct impl_IMapCustomExperienceChangedEventArgs;
-template <typename T> struct impl_IMapCustomExperienceFactory;
-template <typename T> struct impl_IMapElement;
-template <typename T> struct impl_IMapElement2;
-template <typename T> struct impl_IMapElementClickEventArgs;
-template <typename T> struct impl_IMapElementFactory;
-template <typename T> struct impl_IMapElementPointerEnteredEventArgs;
-template <typename T> struct impl_IMapElementPointerExitedEventArgs;
-template <typename T> struct impl_IMapElementStatics;
-template <typename T> struct impl_IMapElementStatics2;
-template <typename T> struct impl_IMapIcon;
-template <typename T> struct impl_IMapIcon2;
-template <typename T> struct impl_IMapIconStatics;
-template <typename T> struct impl_IMapIconStatics2;
-template <typename T> struct impl_IMapInputEventArgs;
-template <typename T> struct impl_IMapItemsControl;
-template <typename T> struct impl_IMapItemsControlStatics;
-template <typename T> struct impl_IMapPolygon;
-template <typename T> struct impl_IMapPolygon2;
-template <typename T> struct impl_IMapPolygonStatics;
-template <typename T> struct impl_IMapPolyline;
-template <typename T> struct impl_IMapPolylineStatics;
-template <typename T> struct impl_IMapRightTappedEventArgs;
-template <typename T> struct impl_IMapRouteView;
-template <typename T> struct impl_IMapRouteViewFactory;
-template <typename T> struct impl_IMapScene;
-template <typename T> struct impl_IMapSceneStatics;
-template <typename T> struct impl_IMapTargetCameraChangedEventArgs;
-template <typename T> struct impl_IMapTargetCameraChangedEventArgs2;
-template <typename T> struct impl_IMapTileBitmapRequest;
-template <typename T> struct impl_IMapTileBitmapRequestDeferral;
-template <typename T> struct impl_IMapTileBitmapRequestedEventArgs;
-template <typename T> struct impl_IMapTileDataSource;
-template <typename T> struct impl_IMapTileDataSourceFactory;
-template <typename T> struct impl_IMapTileSource;
-template <typename T> struct impl_IMapTileSourceFactory;
-template <typename T> struct impl_IMapTileSourceStatics;
-template <typename T> struct impl_IMapTileUriRequest;
-template <typename T> struct impl_IMapTileUriRequestDeferral;
-template <typename T> struct impl_IMapTileUriRequestedEventArgs;
-template <typename T> struct impl_IStreetsideExperience;
-template <typename T> struct impl_IStreetsideExperienceFactory;
-template <typename T> struct impl_IStreetsidePanorama;
-template <typename T> struct impl_IStreetsidePanoramaStatics;
+template <typename D>
+struct WINRT_EBO impl_ICustomMapTileDataSource
+{
+    event_token BitmapRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::CustomMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileBitmapRequestedEventArgs> & value) const;
+    using BitmapRequested_revoker = event_revoker<ICustomMapTileDataSource>;
+    BitmapRequested_revoker BitmapRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::CustomMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileBitmapRequestedEventArgs> & value) const;
+    void BitmapRequested(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICustomMapTileDataSourceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::CustomMapTileDataSource CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHttpMapTileDataSource
+{
+    hstring UriFormatString() const;
+    void UriFormatString(hstring_view value) const;
+    Windows::Foundation::Collections::IMap<hstring, hstring> AdditionalRequestHeaders() const;
+    bool AllowCaching() const;
+    void AllowCaching(bool value) const;
+    event_token UriRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::HttpMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileUriRequestedEventArgs> & value) const;
+    using UriRequested_revoker = event_revoker<IHttpMapTileDataSource>;
+    UriRequested_revoker UriRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::HttpMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileUriRequestedEventArgs> & value) const;
+    void UriRequested(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHttpMapTileDataSourceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::HttpMapTileDataSource CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::HttpMapTileDataSource CreateInstanceWithUriFormatString(hstring_view uriFormatString, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalMapTileDataSource
+{
+    hstring UriFormatString() const;
+    void UriFormatString(hstring_view value) const;
+    event_token UriRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::LocalMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileUriRequestedEventArgs> & value) const;
+    using UriRequested_revoker = event_revoker<ILocalMapTileDataSource>;
+    UriRequested_revoker UriRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::LocalMapTileDataSource, Windows::UI::Xaml::Controls::Maps::MapTileUriRequestedEventArgs> & value) const;
+    void UriRequested(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILocalMapTileDataSourceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::LocalMapTileDataSource CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::LocalMapTileDataSource CreateInstanceWithUriFormatString(hstring_view uriFormatString, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapActualCameraChangedEventArgs
+{
+    Windows::UI::Xaml::Controls::Maps::MapCamera Camera() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapActualCameraChangedEventArgs2
+{
+    Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason ChangeReason() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapActualCameraChangingEventArgs
+{
+    Windows::UI::Xaml::Controls::Maps::MapCamera Camera() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapActualCameraChangingEventArgs2
+{
+    Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason ChangeReason() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapCamera
+{
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    void Location(const Windows::Devices::Geolocation::Geopoint & value) const;
+    double Heading() const;
+    void Heading(double value) const;
+    double Pitch() const;
+    void Pitch(double value) const;
+    double Roll() const;
+    void Roll(double value) const;
+    double FieldOfView() const;
+    void FieldOfView(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapCameraFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapCamera CreateInstanceWithLocation(const Windows::Devices::Geolocation::Geopoint & location) const;
+    Windows::UI::Xaml::Controls::Maps::MapCamera CreateInstanceWithLocationAndHeading(const Windows::Devices::Geolocation::Geopoint & location, double headingInDegrees) const;
+    Windows::UI::Xaml::Controls::Maps::MapCamera CreateInstanceWithLocationHeadingAndPitch(const Windows::Devices::Geolocation::Geopoint & location, double headingInDegrees, double pitchInDegrees) const;
+    Windows::UI::Xaml::Controls::Maps::MapCamera CreateInstanceWithLocationHeadingPitchRollAndFieldOfView(const Windows::Devices::Geolocation::Geopoint & location, double headingInDegrees, double pitchInDegrees, double rollInDegrees, double fieldOfViewInDegrees) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControl
+{
+    Windows::Devices::Geolocation::Geopoint Center() const;
+    void Center(const Windows::Devices::Geolocation::Geopoint & value) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::DependencyObject> Children() const;
+    Windows::UI::Xaml::Controls::Maps::MapColorScheme ColorScheme() const;
+    void ColorScheme(Windows::UI::Xaml::Controls::Maps::MapColorScheme value) const;
+    double DesiredPitch() const;
+    void DesiredPitch(double value) const;
+    double Heading() const;
+    void Heading(double value) const;
+    bool LandmarksVisible() const;
+    void LandmarksVisible(bool value) const;
+    Windows::UI::Xaml::Controls::Maps::MapLoadingStatus LoadingStatus() const;
+    hstring MapServiceToken() const;
+    void MapServiceToken(hstring_view value) const;
+    double MaxZoomLevel() const;
+    double MinZoomLevel() const;
+    bool PedestrianFeaturesVisible() const;
+    void PedestrianFeaturesVisible(bool value) const;
+    double Pitch() const;
+    Windows::UI::Xaml::Controls::Maps::MapStyle Style() const;
+    void Style(Windows::UI::Xaml::Controls::Maps::MapStyle value) const;
+    bool TrafficFlowVisible() const;
+    void TrafficFlowVisible(bool value) const;
+    Windows::Foundation::Point TransformOrigin() const;
+    void TransformOrigin(const Windows::Foundation::Point & value) const;
+    Windows::UI::Xaml::Controls::Maps::MapWatermarkMode WatermarkMode() const;
+    void WatermarkMode(Windows::UI::Xaml::Controls::Maps::MapWatermarkMode value) const;
+    double ZoomLevel() const;
+    void ZoomLevel(double value) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapElement> MapElements() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapRouteView> Routes() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapTileSource> TileSources() const;
+    event_token CenterChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using CenterChanged_revoker = event_revoker<IMapControl>;
+    CenterChanged_revoker CenterChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void CenterChanged(event_token token) const;
+    event_token HeadingChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using HeadingChanged_revoker = event_revoker<IMapControl>;
+    HeadingChanged_revoker HeadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void HeadingChanged(event_token token) const;
+    event_token LoadingStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using LoadingStatusChanged_revoker = event_revoker<IMapControl>;
+    LoadingStatusChanged_revoker LoadingStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void LoadingStatusChanged(event_token token) const;
+    event_token MapDoubleTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    using MapDoubleTapped_revoker = event_revoker<IMapControl>;
+    MapDoubleTapped_revoker MapDoubleTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    void MapDoubleTapped(event_token token) const;
+    event_token MapHolding(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    using MapHolding_revoker = event_revoker<IMapControl>;
+    MapHolding_revoker MapHolding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    void MapHolding(event_token token) const;
+    event_token MapTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    using MapTapped_revoker = event_revoker<IMapControl>;
+    MapTapped_revoker MapTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs> & value) const;
+    void MapTapped(event_token token) const;
+    event_token PitchChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using PitchChanged_revoker = event_revoker<IMapControl>;
+    PitchChanged_revoker PitchChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void PitchChanged(event_token token) const;
+    event_token TransformOriginChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using TransformOriginChanged_revoker = event_revoker<IMapControl>;
+    TransformOriginChanged_revoker TransformOriginChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void TransformOriginChanged(event_token token) const;
+    event_token ZoomLevelChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    using ZoomLevelChanged_revoker = event_revoker<IMapControl>;
+    ZoomLevelChanged_revoker ZoomLevelChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::Foundation::IInspectable> & value) const;
+    void ZoomLevelChanged(event_token token) const;
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Xaml::Controls::Maps::MapElement> FindMapElementsAtOffset(const Windows::Foundation::Point & offset) const;
+    void GetLocationFromOffset(const Windows::Foundation::Point & offset, Windows::Devices::Geolocation::Geopoint & location) const;
+    void GetOffsetFromLocation(const Windows::Devices::Geolocation::Geopoint & location, Windows::Foundation::Point & offset) const;
+    void IsLocationInView(const Windows::Devices::Geolocation::Geopoint & location, bool & isInView) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetViewBoundsAsync(const Windows::Devices::Geolocation::GeoboundingBox & bounds, const optional<Windows::UI::Xaml::Thickness> & margin, Windows::UI::Xaml::Controls::Maps::MapAnimationKind animation) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetViewAsync(const Windows::Devices::Geolocation::Geopoint & center) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetViewAsync(const Windows::Devices::Geolocation::Geopoint & center, const optional<double> & zoomLevel) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetViewAsync(const Windows::Devices::Geolocation::Geopoint & center, const optional<double> & zoomLevel, const optional<double> & heading, const optional<double> & desiredPitch) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetViewAsync(const Windows::Devices::Geolocation::Geopoint & center, const optional<double> & zoomLevel, const optional<double> & heading, const optional<double> & desiredPitch, Windows::UI::Xaml::Controls::Maps::MapAnimationKind animation) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControl2
+{
+    bool BusinessLandmarksVisible() const;
+    void BusinessLandmarksVisible(bool value) const;
+    bool TransitFeaturesVisible() const;
+    void TransitFeaturesVisible(bool value) const;
+    Windows::UI::Xaml::Controls::Maps::MapPanInteractionMode PanInteractionMode() const;
+    void PanInteractionMode(Windows::UI::Xaml::Controls::Maps::MapPanInteractionMode value) const;
+    Windows::UI::Xaml::Controls::Maps::MapInteractionMode RotateInteractionMode() const;
+    void RotateInteractionMode(Windows::UI::Xaml::Controls::Maps::MapInteractionMode value) const;
+    Windows::UI::Xaml::Controls::Maps::MapInteractionMode TiltInteractionMode() const;
+    void TiltInteractionMode(Windows::UI::Xaml::Controls::Maps::MapInteractionMode value) const;
+    Windows::UI::Xaml::Controls::Maps::MapInteractionMode ZoomInteractionMode() const;
+    void ZoomInteractionMode(Windows::UI::Xaml::Controls::Maps::MapInteractionMode value) const;
+    bool Is3DSupported() const;
+    bool IsStreetsideSupported() const;
+    Windows::UI::Xaml::Controls::Maps::MapScene Scene() const;
+    void Scene(const Windows::UI::Xaml::Controls::Maps::MapScene & value) const;
+    Windows::UI::Xaml::Controls::Maps::MapCamera ActualCamera() const;
+    Windows::UI::Xaml::Controls::Maps::MapCamera TargetCamera() const;
+    Windows::UI::Xaml::Controls::Maps::MapCustomExperience CustomExperience() const;
+    void CustomExperience(const Windows::UI::Xaml::Controls::Maps::MapCustomExperience & value) const;
+    event_token MapElementClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementClickEventArgs> & value) const;
+    using MapElementClick_revoker = event_revoker<IMapControl2>;
+    MapElementClick_revoker MapElementClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementClickEventArgs> & value) const;
+    void MapElementClick(event_token token) const;
+    event_token MapElementPointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementPointerEnteredEventArgs> & value) const;
+    using MapElementPointerEntered_revoker = event_revoker<IMapControl2>;
+    MapElementPointerEntered_revoker MapElementPointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementPointerEnteredEventArgs> & value) const;
+    void MapElementPointerEntered(event_token token) const;
+    event_token MapElementPointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementPointerExitedEventArgs> & value) const;
+    using MapElementPointerExited_revoker = event_revoker<IMapControl2>;
+    MapElementPointerExited_revoker MapElementPointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapElementPointerExitedEventArgs> & value) const;
+    void MapElementPointerExited(event_token token) const;
+    event_token ActualCameraChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapActualCameraChangedEventArgs> & value) const;
+    using ActualCameraChanged_revoker = event_revoker<IMapControl2>;
+    ActualCameraChanged_revoker ActualCameraChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapActualCameraChangedEventArgs> & value) const;
+    void ActualCameraChanged(event_token token) const;
+    event_token ActualCameraChanging(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapActualCameraChangingEventArgs> & value) const;
+    using ActualCameraChanging_revoker = event_revoker<IMapControl2>;
+    ActualCameraChanging_revoker ActualCameraChanging(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapActualCameraChangingEventArgs> & value) const;
+    void ActualCameraChanging(event_token token) const;
+    event_token TargetCameraChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapTargetCameraChangedEventArgs> & value) const;
+    using TargetCameraChanged_revoker = event_revoker<IMapControl2>;
+    TargetCameraChanged_revoker TargetCameraChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapTargetCameraChangedEventArgs> & value) const;
+    void TargetCameraChanged(event_token token) const;
+    event_token CustomExperienceChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapCustomExperienceChangedEventArgs> & value) const;
+    using CustomExperienceChanged_revoker = event_revoker<IMapControl2>;
+    CustomExperienceChanged_revoker CustomExperienceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapCustomExperienceChangedEventArgs> & value) const;
+    void CustomExperienceChanged(event_token token) const;
+    void StartContinuousRotate(double rateInDegreesPerSecond) const;
+    void StopContinuousRotate() const;
+    void StartContinuousTilt(double rateInDegreesPerSecond) const;
+    void StopContinuousTilt() const;
+    void StartContinuousZoom(double rateOfChangePerSecond) const;
+    void StopContinuousZoom() const;
+    Windows::Foundation::IAsyncOperation<bool> TryRotateAsync(double degrees) const;
+    Windows::Foundation::IAsyncOperation<bool> TryRotateToAsync(double angleInDegrees) const;
+    Windows::Foundation::IAsyncOperation<bool> TryTiltAsync(double degrees) const;
+    Windows::Foundation::IAsyncOperation<bool> TryTiltToAsync(double angleInDegrees) const;
+    Windows::Foundation::IAsyncOperation<bool> TryZoomInAsync() const;
+    Windows::Foundation::IAsyncOperation<bool> TryZoomOutAsync() const;
+    Windows::Foundation::IAsyncOperation<bool> TryZoomToAsync(double zoomLevel) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetSceneAsync(const Windows::UI::Xaml::Controls::Maps::MapScene & scene) const;
+    Windows::Foundation::IAsyncOperation<bool> TrySetSceneAsync(const Windows::UI::Xaml::Controls::Maps::MapScene & scene, Windows::UI::Xaml::Controls::Maps::MapAnimationKind animationKind) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControl3
+{
+    event_token MapRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapRightTappedEventArgs> & value) const;
+    using MapRightTapped_revoker = event_revoker<IMapControl3>;
+    MapRightTapped_revoker MapRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapRightTappedEventArgs> & value) const;
+    void MapRightTapped(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControl4
+{
+    bool BusinessLandmarksEnabled() const;
+    void BusinessLandmarksEnabled(bool value) const;
+    bool TransitFeaturesEnabled() const;
+    void TransitFeaturesEnabled(bool value) const;
+    Windows::Devices::Geolocation::Geopath GetVisibleRegion(Windows::UI::Xaml::Controls::Maps::MapVisibleRegionKind region) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlBusinessLandmarkClickEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlBusinessLandmarkPointerEnteredEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlBusinessLandmarkPointerExitedEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlBusinessLandmarkRightTappedEventArgs
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlDataHelper
+{
+    event_token BusinessLandmarkClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const;
+    using BusinessLandmarkClick_revoker = event_revoker<IMapControlDataHelper>;
+    BusinessLandmarkClick_revoker BusinessLandmarkClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const;
+    void BusinessLandmarkClick(event_token token) const;
+    event_token TransitFeatureClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const;
+    using TransitFeatureClick_revoker = event_revoker<IMapControlDataHelper>;
+    TransitFeatureClick_revoker TransitFeatureClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const;
+    void TransitFeatureClick(event_token token) const;
+    event_token BusinessLandmarkRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const;
+    using BusinessLandmarkRightTapped_revoker = event_revoker<IMapControlDataHelper>;
+    BusinessLandmarkRightTapped_revoker BusinessLandmarkRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const;
+    void BusinessLandmarkRightTapped(event_token token) const;
+    event_token TransitFeatureRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const;
+    using TransitFeatureRightTapped_revoker = event_revoker<IMapControlDataHelper>;
+    TransitFeatureRightTapped_revoker TransitFeatureRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const;
+    void TransitFeatureRightTapped(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlDataHelper2
+{
+    event_token BusinessLandmarkPointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const;
+    using BusinessLandmarkPointerEntered_revoker = event_revoker<IMapControlDataHelper2>;
+    BusinessLandmarkPointerEntered_revoker BusinessLandmarkPointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const;
+    void BusinessLandmarkPointerEntered(event_token token) const;
+    event_token TransitFeaturePointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const;
+    using TransitFeaturePointerEntered_revoker = event_revoker<IMapControlDataHelper2>;
+    TransitFeaturePointerEntered_revoker TransitFeaturePointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const;
+    void TransitFeaturePointerEntered(event_token token) const;
+    event_token BusinessLandmarkPointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const;
+    using BusinessLandmarkPointerExited_revoker = event_revoker<IMapControlDataHelper2>;
+    BusinessLandmarkPointerExited_revoker BusinessLandmarkPointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const;
+    void BusinessLandmarkPointerExited(event_token token) const;
+    event_token TransitFeaturePointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const;
+    using TransitFeaturePointerExited_revoker = event_revoker<IMapControlDataHelper2>;
+    TransitFeaturePointerExited_revoker TransitFeaturePointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const;
+    void TransitFeaturePointerExited(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlDataHelperFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapControlDataHelper CreateInstance(const Windows::UI::Xaml::Controls::Maps::MapControl & map) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlStatics
+{
+    Windows::UI::Xaml::DependencyProperty CenterProperty() const;
+    Windows::UI::Xaml::DependencyProperty ChildrenProperty() const;
+    Windows::UI::Xaml::DependencyProperty ColorSchemeProperty() const;
+    Windows::UI::Xaml::DependencyProperty DesiredPitchProperty() const;
+    Windows::UI::Xaml::DependencyProperty HeadingProperty() const;
+    Windows::UI::Xaml::DependencyProperty LandmarksVisibleProperty() const;
+    Windows::UI::Xaml::DependencyProperty LoadingStatusProperty() const;
+    Windows::UI::Xaml::DependencyProperty MapServiceTokenProperty() const;
+    Windows::UI::Xaml::DependencyProperty PedestrianFeaturesVisibleProperty() const;
+    Windows::UI::Xaml::DependencyProperty PitchProperty() const;
+    Windows::UI::Xaml::DependencyProperty StyleProperty() const;
+    Windows::UI::Xaml::DependencyProperty TrafficFlowVisibleProperty() const;
+    Windows::UI::Xaml::DependencyProperty TransformOriginProperty() const;
+    Windows::UI::Xaml::DependencyProperty WatermarkModeProperty() const;
+    Windows::UI::Xaml::DependencyProperty ZoomLevelProperty() const;
+    Windows::UI::Xaml::DependencyProperty MapElementsProperty() const;
+    Windows::UI::Xaml::DependencyProperty RoutesProperty() const;
+    Windows::UI::Xaml::DependencyProperty TileSourcesProperty() const;
+    Windows::UI::Xaml::DependencyProperty LocationProperty() const;
+    Windows::Devices::Geolocation::Geopoint GetLocation(const Windows::UI::Xaml::DependencyObject & element) const;
+    void SetLocation(const Windows::UI::Xaml::DependencyObject & element, const Windows::Devices::Geolocation::Geopoint & value) const;
+    Windows::UI::Xaml::DependencyProperty NormalizedAnchorPointProperty() const;
+    Windows::Foundation::Point GetNormalizedAnchorPoint(const Windows::UI::Xaml::DependencyObject & element) const;
+    void SetNormalizedAnchorPoint(const Windows::UI::Xaml::DependencyObject & element, const Windows::Foundation::Point & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlStatics2
+{
+    Windows::UI::Xaml::DependencyProperty BusinessLandmarksVisibleProperty() const;
+    Windows::UI::Xaml::DependencyProperty TransitFeaturesVisibleProperty() const;
+    Windows::UI::Xaml::DependencyProperty PanInteractionModeProperty() const;
+    Windows::UI::Xaml::DependencyProperty RotateInteractionModeProperty() const;
+    Windows::UI::Xaml::DependencyProperty TiltInteractionModeProperty() const;
+    Windows::UI::Xaml::DependencyProperty ZoomInteractionModeProperty() const;
+    Windows::UI::Xaml::DependencyProperty Is3DSupportedProperty() const;
+    Windows::UI::Xaml::DependencyProperty IsStreetsideSupportedProperty() const;
+    Windows::UI::Xaml::DependencyProperty SceneProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlStatics4
+{
+    Windows::UI::Xaml::DependencyProperty BusinessLandmarksEnabledProperty() const;
+    Windows::UI::Xaml::DependencyProperty TransitFeaturesEnabledProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlTransitFeatureClickEventArgs
+{
+    hstring DisplayName() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> TransitProperties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlTransitFeaturePointerEnteredEventArgs
+{
+    hstring DisplayName() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> TransitProperties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlTransitFeaturePointerExitedEventArgs
+{
+    hstring DisplayName() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> TransitProperties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapControlTransitFeatureRightTappedEventArgs
+{
+    hstring DisplayName() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> TransitProperties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapCustomExperience
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapCustomExperienceChangedEventArgs
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapCustomExperienceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapCustomExperience CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElement
+{
+    int32_t ZIndex() const;
+    void ZIndex(int32_t value) const;
+    bool Visible() const;
+    void Visible(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElement2
+{
+    int32_t MapTabIndex() const;
+    void MapTabIndex(int32_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementClickEventArgs
+{
+    Windows::Foundation::Point Position() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Controls::Maps::MapElement> MapElements() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapElement CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementPointerEnteredEventArgs
+{
+    Windows::Foundation::Point Position() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::UI::Xaml::Controls::Maps::MapElement MapElement() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementPointerExitedEventArgs
+{
+    Windows::Foundation::Point Position() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    Windows::UI::Xaml::Controls::Maps::MapElement MapElement() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementStatics
+{
+    Windows::UI::Xaml::DependencyProperty ZIndexProperty() const;
+    Windows::UI::Xaml::DependencyProperty VisibleProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapElementStatics2
+{
+    Windows::UI::Xaml::DependencyProperty MapTabIndexProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapIcon
+{
+    Windows::Devices::Geolocation::Geopoint Location() const;
+    void Location(const Windows::Devices::Geolocation::Geopoint & value) const;
+    hstring Title() const;
+    void Title(hstring_view value) const;
+    Windows::Foundation::Point NormalizedAnchorPoint() const;
+    void NormalizedAnchorPoint(const Windows::Foundation::Point & value) const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Image() const;
+    void Image(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapIcon2
+{
+    Windows::UI::Xaml::Controls::Maps::MapElementCollisionBehavior CollisionBehaviorDesired() const;
+    void CollisionBehaviorDesired(Windows::UI::Xaml::Controls::Maps::MapElementCollisionBehavior value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapIconStatics
+{
+    Windows::UI::Xaml::DependencyProperty LocationProperty() const;
+    Windows::UI::Xaml::DependencyProperty TitleProperty() const;
+    Windows::UI::Xaml::DependencyProperty NormalizedAnchorPointProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapIconStatics2
+{
+    Windows::UI::Xaml::DependencyProperty CollisionBehaviorDesiredProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapInputEventArgs
+{
+    Windows::Foundation::Point Position() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapItemsControl
+{
+    Windows::Foundation::IInspectable ItemsSource() const;
+    void ItemsSource(const Windows::Foundation::IInspectable & value) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::DependencyObject> Items() const;
+    Windows::UI::Xaml::DataTemplate ItemTemplate() const;
+    void ItemTemplate(const Windows::UI::Xaml::DataTemplate & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapItemsControlStatics
+{
+    Windows::UI::Xaml::DependencyProperty ItemsSourceProperty() const;
+    Windows::UI::Xaml::DependencyProperty ItemsProperty() const;
+    Windows::UI::Xaml::DependencyProperty ItemTemplateProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapPolygon
+{
+    Windows::Devices::Geolocation::Geopath Path() const;
+    void Path(const Windows::Devices::Geolocation::Geopath & value) const;
+    Windows::UI::Color StrokeColor() const;
+    void StrokeColor(const Windows::UI::Color & value) const;
+    double StrokeThickness() const;
+    void StrokeThickness(double value) const;
+    bool StrokeDashed() const;
+    void StrokeDashed(bool value) const;
+    Windows::UI::Color FillColor() const;
+    void FillColor(const Windows::UI::Color & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapPolygon2
+{
+    Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geopath> Paths() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapPolygonStatics
+{
+    Windows::UI::Xaml::DependencyProperty PathProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeThicknessProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeDashedProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapPolyline
+{
+    Windows::Devices::Geolocation::Geopath Path() const;
+    void Path(const Windows::Devices::Geolocation::Geopath & value) const;
+    Windows::UI::Color StrokeColor() const;
+    void StrokeColor(const Windows::UI::Color & value) const;
+    double StrokeThickness() const;
+    void StrokeThickness(double value) const;
+    bool StrokeDashed() const;
+    void StrokeDashed(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapPolylineStatics
+{
+    Windows::UI::Xaml::DependencyProperty PathProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeDashedProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapRightTappedEventArgs
+{
+    Windows::Foundation::Point Position() const;
+    Windows::Devices::Geolocation::Geopoint Location() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapRouteView
+{
+    Windows::UI::Color RouteColor() const;
+    void RouteColor(const Windows::UI::Color & value) const;
+    Windows::UI::Color OutlineColor() const;
+    void OutlineColor(const Windows::UI::Color & value) const;
+    Windows::Services::Maps::MapRoute Route() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapRouteViewFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapRouteView CreateInstanceWithMapRoute(const Windows::Services::Maps::MapRoute & route, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapScene
+{
+    Windows::UI::Xaml::Controls::Maps::MapCamera TargetCamera() const;
+    event_token TargetCameraChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapScene, Windows::UI::Xaml::Controls::Maps::MapTargetCameraChangedEventArgs> & value) const;
+    using TargetCameraChanged_revoker = event_revoker<IMapScene>;
+    TargetCameraChanged_revoker TargetCameraChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapScene, Windows::UI::Xaml::Controls::Maps::MapTargetCameraChangedEventArgs> & value) const;
+    void TargetCameraChanged(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapSceneStatics
+{
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromBoundingBox(const Windows::Devices::Geolocation::GeoboundingBox & bounds) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromBoundingBox(const Windows::Devices::Geolocation::GeoboundingBox & bounds, double headingInDegrees, double pitchInDegrees) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromCamera(const Windows::UI::Xaml::Controls::Maps::MapCamera & camera) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocation(const Windows::Devices::Geolocation::Geopoint & location) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocation(const Windows::Devices::Geolocation::Geopoint & location, double headingInDegrees, double pitchInDegrees) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocationAndRadius(const Windows::Devices::Geolocation::Geopoint & location, double radiusInMeters) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocationAndRadius(const Windows::Devices::Geolocation::Geopoint & location, double radiusInMeters, double headingInDegrees, double pitchInDegrees) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(iterable<Windows::Devices::Geolocation::Geopoint> locations) const;
+    Windows::UI::Xaml::Controls::Maps::MapScene CreateFromLocations(iterable<Windows::Devices::Geolocation::Geopoint> locations, double headingInDegrees, double pitchInDegrees) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTargetCameraChangedEventArgs
+{
+    Windows::UI::Xaml::Controls::Maps::MapCamera Camera() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTargetCameraChangedEventArgs2
+{
+    Windows::UI::Xaml::Controls::Maps::MapCameraChangeReason ChangeReason() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileBitmapRequest
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference PixelData() const;
+    void PixelData(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileBitmapRequestDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileBitmapRequestDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileBitmapRequestedEventArgs
+{
+    int32_t X() const;
+    int32_t Y() const;
+    int32_t ZoomLevel() const;
+    Windows::UI::Xaml::Controls::Maps::MapTileBitmapRequest Request() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileDataSource
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileDataSourceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapTileDataSource CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileSource
+{
+    Windows::UI::Xaml::Controls::Maps::MapTileDataSource DataSource() const;
+    void DataSource(const Windows::UI::Xaml::Controls::Maps::MapTileDataSource & value) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileLayer Layer() const;
+    void Layer(Windows::UI::Xaml::Controls::Maps::MapTileLayer value) const;
+    Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange ZoomLevelRange() const;
+    void ZoomLevelRange(const Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange & value) const;
+    Windows::Devices::Geolocation::GeoboundingBox Bounds() const;
+    void Bounds(const Windows::Devices::Geolocation::GeoboundingBox & value) const;
+    bool AllowOverstretch() const;
+    void AllowOverstretch(bool value) const;
+    bool IsFadingEnabled() const;
+    void IsFadingEnabled(bool value) const;
+    bool IsTransparencyEnabled() const;
+    void IsTransparencyEnabled(bool value) const;
+    bool IsRetryEnabled() const;
+    void IsRetryEnabled(bool value) const;
+    int32_t ZIndex() const;
+    void ZIndex(int32_t value) const;
+    int32_t TilePixelSize() const;
+    void TilePixelSize(int32_t value) const;
+    bool Visible() const;
+    void Visible(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileSourceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::MapTileSource CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileSource CreateInstanceWithDataSource(const Windows::UI::Xaml::Controls::Maps::MapTileDataSource & dataSource, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileSource CreateInstanceWithDataSourceAndZoomRange(const Windows::UI::Xaml::Controls::Maps::MapTileDataSource & dataSource, const Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange & zoomLevelRange, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileSource CreateInstanceWithDataSourceZoomRangeAndBounds(const Windows::UI::Xaml::Controls::Maps::MapTileDataSource & dataSource, const Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange & zoomLevelRange, const Windows::Devices::Geolocation::GeoboundingBox & bounds, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileSource CreateInstanceWithDataSourceZoomRangeBoundsAndTileSize(const Windows::UI::Xaml::Controls::Maps::MapTileDataSource & dataSource, const Windows::UI::Xaml::Controls::Maps::MapZoomLevelRange & zoomLevelRange, const Windows::Devices::Geolocation::GeoboundingBox & bounds, int32_t tileSizeInPixels, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileSourceStatics
+{
+    Windows::UI::Xaml::DependencyProperty DataSourceProperty() const;
+    Windows::UI::Xaml::DependencyProperty LayerProperty() const;
+    Windows::UI::Xaml::DependencyProperty ZoomLevelRangeProperty() const;
+    Windows::UI::Xaml::DependencyProperty BoundsProperty() const;
+    Windows::UI::Xaml::DependencyProperty AllowOverstretchProperty() const;
+    Windows::UI::Xaml::DependencyProperty IsFadingEnabledProperty() const;
+    Windows::UI::Xaml::DependencyProperty IsTransparencyEnabledProperty() const;
+    Windows::UI::Xaml::DependencyProperty IsRetryEnabledProperty() const;
+    Windows::UI::Xaml::DependencyProperty ZIndexProperty() const;
+    Windows::UI::Xaml::DependencyProperty TilePixelSizeProperty() const;
+    Windows::UI::Xaml::DependencyProperty VisibleProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileUriRequest
+{
+    Windows::Foundation::Uri Uri() const;
+    void Uri(const Windows::Foundation::Uri & value) const;
+    Windows::UI::Xaml::Controls::Maps::MapTileUriRequestDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileUriRequestDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMapTileUriRequestedEventArgs
+{
+    int32_t X() const;
+    int32_t Y() const;
+    int32_t ZoomLevel() const;
+    Windows::UI::Xaml::Controls::Maps::MapTileUriRequest Request() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreetsideExperience
+{
+    bool AddressTextVisible() const;
+    void AddressTextVisible(bool value) const;
+    bool CursorVisible() const;
+    void CursorVisible(bool value) const;
+    bool OverviewMapVisible() const;
+    void OverviewMapVisible(bool value) const;
+    bool StreetLabelsVisible() const;
+    void StreetLabelsVisible(bool value) const;
+    bool ExitButtonVisible() const;
+    void ExitButtonVisible(bool value) const;
+    bool ZoomButtonsVisible() const;
+    void ZoomButtonsVisible(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreetsideExperienceFactory
+{
+    Windows::UI::Xaml::Controls::Maps::StreetsideExperience CreateInstanceWithPanorama(const Windows::UI::Xaml::Controls::Maps::StreetsidePanorama & panorama) const;
+    Windows::UI::Xaml::Controls::Maps::StreetsideExperience CreateInstanceWithPanoramaHeadingPitchAndFieldOfView(const Windows::UI::Xaml::Controls::Maps::StreetsidePanorama & panorama, double headingInDegrees, double pitchInDegrees, double fieldOfViewInDegrees) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreetsidePanorama
+{
+    Windows::Devices::Geolocation::Geopoint Location() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStreetsidePanoramaStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::UI::Xaml::Controls::Maps::StreetsidePanorama> FindNearbyAsync(const Windows::Devices::Geolocation::Geopoint & location) const;
+    Windows::Foundation::IAsyncOperation<Windows::UI::Xaml::Controls::Maps::StreetsidePanorama> FindNearbyAsync(const Windows::Devices::Geolocation::Geopoint & location, double radiusInMeters) const;
+};
 
 }
 

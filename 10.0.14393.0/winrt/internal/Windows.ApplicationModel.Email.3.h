@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,8 +15,8 @@ struct WINRT_EBO EmailAttachment :
 {
     EmailAttachment(std::nullptr_t) noexcept {}
     EmailAttachment();
-    EmailAttachment(hstring_ref fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data);
-    EmailAttachment(hstring_ref fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data, hstring_ref mimeType);
+    EmailAttachment(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data);
+    EmailAttachment(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data, hstring_view mimeType);
 };
 
 struct WINRT_EBO EmailConversation :
@@ -56,7 +56,7 @@ struct WINRT_EBO EmailIrmTemplate :
 {
     EmailIrmTemplate(std::nullptr_t) noexcept {}
     EmailIrmTemplate();
-    EmailIrmTemplate(hstring_ref id, hstring_ref name, hstring_ref description);
+    EmailIrmTemplate(hstring_view id, hstring_view name, hstring_view description);
 };
 
 struct WINRT_EBO EmailItemCounts :
@@ -241,8 +241,8 @@ struct WINRT_EBO EmailQueryOptions :
 {
     EmailQueryOptions(std::nullptr_t) noexcept {}
     EmailQueryOptions();
-    EmailQueryOptions(hstring_ref text);
-    EmailQueryOptions(hstring_ref text, Windows::ApplicationModel::Email::EmailQuerySearchFields fields);
+    EmailQueryOptions(hstring_view text);
+    EmailQueryOptions(hstring_view text, Windows::ApplicationModel::Email::EmailQuerySearchFields fields);
 };
 
 struct WINRT_EBO EmailQueryTextSearch :
@@ -256,8 +256,8 @@ struct WINRT_EBO EmailRecipient :
 {
     EmailRecipient(std::nullptr_t) noexcept {}
     EmailRecipient();
-    EmailRecipient(hstring_ref address);
-    EmailRecipient(hstring_ref address, hstring_ref name);
+    EmailRecipient(hstring_view address);
+    EmailRecipient(hstring_view address, hstring_view name);
 };
 
 struct WINRT_EBO EmailRecipientResolutionResult :

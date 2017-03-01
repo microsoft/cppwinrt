@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.ApplicationModel.3.h"
@@ -16,11 +19,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtension>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -30,11 +34,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -44,11 +49,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall get_Description(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Description());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Description());
             return S_OK;
         }
         catch (...)
@@ -58,11 +64,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -72,11 +79,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall get_AppInfo(abi_arg_out<Windows::ApplicationModel::IAppInfo> value) noexcept override
+    HRESULT __stdcall get_AppInfo(impl::abi_arg_out<Windows::ApplicationModel::IAppInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppInfo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppInfo());
             return S_OK;
         }
         catch (...)
@@ -86,11 +94,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetExtensionPropertiesAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet>> operation) noexcept override
+    HRESULT __stdcall abi_GetExtensionPropertiesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetExtensionPropertiesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetExtensionPropertiesAsync());
             return S_OK;
         }
         catch (...)
@@ -100,11 +109,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetPublicFolderAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_GetPublicFolderAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPublicFolderAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPublicFolderAsync());
             return S_OK;
         }
         catch (...)
@@ -118,11 +128,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtension> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog>
 {
-    HRESULT __stdcall abi_FindAllAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>>> operation) noexcept override
+    HRESULT __stdcall abi_FindAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FindAllAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FindAllAsync());
             return S_OK;
         }
         catch (...)
@@ -132,11 +143,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall abi_RequestRemovePackageAsync(abi_arg_in<hstring> packageFullName, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_RequestRemovePackageAsync(impl::abi_arg_in<hstring> packageFullName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RequestRemovePackageAsync(*reinterpret_cast<const hstring *>(&packageFullName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RequestRemovePackageAsync(*reinterpret_cast<const hstring *>(&packageFullName)));
             return S_OK;
         }
         catch (...)
@@ -146,11 +158,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall add_PackageInstalled(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PackageInstalled(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PackageInstalled(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PackageInstalled(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -163,6 +176,7 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PackageInstalled(token);
             return S_OK;
         }
@@ -172,11 +186,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall add_PackageUpdating(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PackageUpdating(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PackageUpdating(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PackageUpdating(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -189,6 +204,7 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PackageUpdating(token);
             return S_OK;
         }
@@ -198,11 +214,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall add_PackageUpdated(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PackageUpdated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PackageUpdated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PackageUpdated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -215,6 +232,7 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PackageUpdated(token);
             return S_OK;
         }
@@ -224,11 +242,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall add_PackageUninstalling(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PackageUninstalling(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PackageUninstalling(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PackageUninstalling(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -241,6 +260,7 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PackageUninstalling(token);
             return S_OK;
         }
@@ -250,11 +270,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
         }
     }
 
-    HRESULT __stdcall add_PackageStatusChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_PackageStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().PackageStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().PackageStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -267,6 +288,7 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PackageStatusChanged(token);
             return S_OK;
         }
@@ -280,11 +302,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalogStatics> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalogStatics>
 {
-    HRESULT __stdcall abi_Open(abi_arg_in<hstring> appExtensionName, abi_arg_out<Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog> value) noexcept override
+    HRESULT __stdcall abi_Open(impl::abi_arg_in<hstring> appExtensionName, impl::abi_arg_out<Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Open(*reinterpret_cast<const hstring *>(&appExtensionName)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Open(*reinterpret_cast<const hstring *>(&appExtensionName)));
             return S_OK;
         }
         catch (...)
@@ -298,11 +321,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageInstalledEventArgs> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageInstalledEventArgs>
 {
-    HRESULT __stdcall get_AppExtensionName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppExtensionName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppExtensionName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppExtensionName());
             return S_OK;
         }
         catch (...)
@@ -312,11 +336,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -326,11 +351,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Extensions(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> values) noexcept override
+    HRESULT __stdcall get_Extensions(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> values) noexcept override
     {
         try
         {
-            *values = detach(this->shim().Extensions());
+            typename D::abi_guard guard(this->shim());
+            *values = detach_abi(this->shim().Extensions());
             return S_OK;
         }
         catch (...)
@@ -344,11 +370,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageStatusChangedEventArgs> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageStatusChangedEventArgs>
 {
-    HRESULT __stdcall get_AppExtensionName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppExtensionName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppExtensionName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppExtensionName());
             return S_OK;
         }
         catch (...)
@@ -358,11 +385,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -376,11 +404,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUninstallingEventArgs> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUninstallingEventArgs>
 {
-    HRESULT __stdcall get_AppExtensionName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppExtensionName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppExtensionName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppExtensionName());
             return S_OK;
         }
         catch (...)
@@ -390,11 +419,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -408,11 +438,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatedEventArgs> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatedEventArgs>
 {
-    HRESULT __stdcall get_AppExtensionName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppExtensionName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppExtensionName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppExtensionName());
             return S_OK;
         }
         catch (...)
@@ -422,11 +453,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -436,11 +468,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Extensions(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> values) noexcept override
+    HRESULT __stdcall get_Extensions(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> values) noexcept override
     {
         try
         {
-            *values = detach(this->shim().Extensions());
+            typename D::abi_guard guard(this->shim());
+            *values = detach_abi(this->shim().Extensions());
             return S_OK;
         }
         catch (...)
@@ -454,11 +487,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
 template <typename D>
 struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatingEventArgs> : produce_base<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatingEventArgs>
 {
-    HRESULT __stdcall get_AppExtensionName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppExtensionName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppExtensionName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppExtensionName());
             return S_OK;
         }
         catch (...)
@@ -468,11 +502,12 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
         }
     }
 
-    HRESULT __stdcall get_Package(abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
+    HRESULT __stdcall get_Package(impl::abi_arg_out<Windows::ApplicationModel::IPackage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Package());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Package());
             return S_OK;
         }
         catch (...)
@@ -487,31 +522,31 @@ struct produce<D, Windows::ApplicationModel::AppExtensions::IAppExtensionPackage
 
 namespace Windows::ApplicationModel::AppExtensions {
 
-template <typename D> Windows::ApplicationModel::AppExtensions::AppExtensionCatalog impl_IAppExtensionCatalogStatics<D>::Open(hstring_ref appExtensionName) const
+template <typename D> Windows::ApplicationModel::AppExtensions::AppExtensionCatalog impl_IAppExtensionCatalogStatics<D>::Open(hstring_view appExtensionName) const
 {
     Windows::ApplicationModel::AppExtensions::AppExtensionCatalog value { nullptr };
-    check_hresult(static_cast<const IAppExtensionCatalogStatics &>(static_cast<const D &>(*this))->abi_Open(get(appExtensionName), put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalogStatics)->abi_Open(get_abi(appExtensionName), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> impl_IAppExtensionCatalog<D>::FindAllAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> operation;
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->abi_FindAllAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->abi_FindAllAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppExtensionCatalog<D>::RequestRemovePackageAsync(hstring_ref packageFullName) const
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAppExtensionCatalog<D>::RequestRemovePackageAsync(hstring_view packageFullName) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->abi_RequestRemovePackageAsync(get(packageFullName), put(operation)));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->abi_RequestRemovePackageAsync(get_abi(packageFullName), put_abi(operation)));
     return operation;
 }
 
 template <typename D> event_token impl_IAppExtensionCatalog<D>::PackageInstalled(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->add_PackageInstalled(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->add_PackageInstalled(get_abi(handler), &token));
     return token;
 }
 
@@ -522,13 +557,13 @@ template <typename D> event_revoker<IAppExtensionCatalog> impl_IAppExtensionCata
 
 template <typename D> void impl_IAppExtensionCatalog<D>::PackageInstalled(event_token token) const
 {
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->remove_PackageInstalled(token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->remove_PackageInstalled(token));
 }
 
 template <typename D> event_token impl_IAppExtensionCatalog<D>::PackageUpdating(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->add_PackageUpdating(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->add_PackageUpdating(get_abi(handler), &token));
     return token;
 }
 
@@ -539,13 +574,13 @@ template <typename D> event_revoker<IAppExtensionCatalog> impl_IAppExtensionCata
 
 template <typename D> void impl_IAppExtensionCatalog<D>::PackageUpdating(event_token token) const
 {
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->remove_PackageUpdating(token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->remove_PackageUpdating(token));
 }
 
 template <typename D> event_token impl_IAppExtensionCatalog<D>::PackageUpdated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->add_PackageUpdated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->add_PackageUpdated(get_abi(handler), &token));
     return token;
 }
 
@@ -556,13 +591,13 @@ template <typename D> event_revoker<IAppExtensionCatalog> impl_IAppExtensionCata
 
 template <typename D> void impl_IAppExtensionCatalog<D>::PackageUpdated(event_token token) const
 {
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->remove_PackageUpdated(token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->remove_PackageUpdated(token));
 }
 
 template <typename D> event_token impl_IAppExtensionCatalog<D>::PackageUninstalling(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->add_PackageUninstalling(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->add_PackageUninstalling(get_abi(handler), &token));
     return token;
 }
 
@@ -573,13 +608,13 @@ template <typename D> event_revoker<IAppExtensionCatalog> impl_IAppExtensionCata
 
 template <typename D> void impl_IAppExtensionCatalog<D>::PackageUninstalling(event_token token) const
 {
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->remove_PackageUninstalling(token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->remove_PackageUninstalling(token));
 }
 
 template <typename D> event_token impl_IAppExtensionCatalog<D>::PackageStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->add_PackageStatusChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->add_PackageStatusChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -590,143 +625,143 @@ template <typename D> event_revoker<IAppExtensionCatalog> impl_IAppExtensionCata
 
 template <typename D> void impl_IAppExtensionCatalog<D>::PackageStatusChanged(event_token token) const
 {
-    check_hresult(static_cast<const IAppExtensionCatalog &>(static_cast<const D &>(*this))->remove_PackageStatusChanged(token));
+    check_hresult(WINRT_SHIM(IAppExtensionCatalog)->remove_PackageStatusChanged(token));
 }
 
 template <typename D> hstring impl_IAppExtension<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtension)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppExtension<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtension)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppExtension<D>::Description() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->get_Description(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtension)->get_Description(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtension<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtension)->get_Package(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::AppInfo impl_IAppExtension<D>::AppInfo() const
 {
     Windows::ApplicationModel::AppInfo value { nullptr };
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->get_AppInfo(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtension)->get_AppInfo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> impl_IAppExtension<D>::GetExtensionPropertiesAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> operation;
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->abi_GetExtensionPropertiesAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IAppExtension)->abi_GetExtensionPropertiesAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IAppExtension<D>::GetPublicFolderAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IAppExtension &>(static_cast<const D &>(*this))->abi_GetPublicFolderAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IAppExtension)->abi_GetPublicFolderAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_IAppExtensionPackageInstalledEventArgs<D>::AppExtensionName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtensionPackageInstalledEventArgs &>(static_cast<const D &>(*this))->get_AppExtensionName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageInstalledEventArgs)->get_AppExtensionName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtensionPackageInstalledEventArgs<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtensionPackageInstalledEventArgs &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageInstalledEventArgs)->get_Package(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> impl_IAppExtensionPackageInstalledEventArgs<D>::Extensions() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> values;
-    check_hresult(static_cast<const IAppExtensionPackageInstalledEventArgs &>(static_cast<const D &>(*this))->get_Extensions(put(values)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageInstalledEventArgs)->get_Extensions(put_abi(values)));
     return values;
 }
 
 template <typename D> hstring impl_IAppExtensionPackageUpdatingEventArgs<D>::AppExtensionName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtensionPackageUpdatingEventArgs &>(static_cast<const D &>(*this))->get_AppExtensionName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUpdatingEventArgs)->get_AppExtensionName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtensionPackageUpdatingEventArgs<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtensionPackageUpdatingEventArgs &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUpdatingEventArgs)->get_Package(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppExtensionPackageUpdatedEventArgs<D>::AppExtensionName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtensionPackageUpdatedEventArgs &>(static_cast<const D &>(*this))->get_AppExtensionName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUpdatedEventArgs)->get_AppExtensionName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtensionPackageUpdatedEventArgs<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtensionPackageUpdatedEventArgs &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUpdatedEventArgs)->get_Package(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> impl_IAppExtensionPackageUpdatedEventArgs<D>::Extensions() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> values;
-    check_hresult(static_cast<const IAppExtensionPackageUpdatedEventArgs &>(static_cast<const D &>(*this))->get_Extensions(put(values)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUpdatedEventArgs)->get_Extensions(put_abi(values)));
     return values;
 }
 
 template <typename D> hstring impl_IAppExtensionPackageUninstallingEventArgs<D>::AppExtensionName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtensionPackageUninstallingEventArgs &>(static_cast<const D &>(*this))->get_AppExtensionName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUninstallingEventArgs)->get_AppExtensionName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtensionPackageUninstallingEventArgs<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtensionPackageUninstallingEventArgs &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageUninstallingEventArgs)->get_Package(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IAppExtensionPackageStatusChangedEventArgs<D>::AppExtensionName() const
 {
     hstring value;
-    check_hresult(static_cast<const IAppExtensionPackageStatusChangedEventArgs &>(static_cast<const D &>(*this))->get_AppExtensionName(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageStatusChangedEventArgs)->get_AppExtensionName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Package impl_IAppExtensionPackageStatusChangedEventArgs<D>::Package() const
 {
     Windows::ApplicationModel::Package value { nullptr };
-    check_hresult(static_cast<const IAppExtensionPackageStatusChangedEventArgs &>(static_cast<const D &>(*this))->get_Package(put(value)));
+    check_hresult(WINRT_SHIM(IAppExtensionPackageStatusChangedEventArgs)->get_Package(put_abi(value)));
     return value;
 }
 
-inline Windows::ApplicationModel::AppExtensions::AppExtensionCatalog AppExtensionCatalog::Open(hstring_ref appExtensionName)
+inline Windows::ApplicationModel::AppExtensions::AppExtensionCatalog AppExtensionCatalog::Open(hstring_view appExtensionName)
 {
     return get_activation_factory<AppExtensionCatalog, IAppExtensionCatalogStatics>().Open(appExtensionName);
 }
@@ -734,3 +769,140 @@ inline Windows::ApplicationModel::AppExtensions::AppExtensionCatalog AppExtensio
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtension>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtension & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionCatalog & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionCatalogStatics>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionCatalogStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageInstalledEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageInstalledEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageStatusChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageStatusChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUninstallingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUninstallingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::IAppExtensionPackageUpdatingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtension>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtension & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionCatalog>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionCatalog & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

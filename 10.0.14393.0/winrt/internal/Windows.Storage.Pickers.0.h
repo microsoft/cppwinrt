@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,6 +43,20 @@ struct FilePickerFileTypesOrderedMap;
 struct FilePickerSelectedFilesArray;
 struct FileSavePicker;
 struct FolderPicker;
+
+}
+
+namespace Windows::Storage::Pickers {
+
+template <typename T> struct impl_IFileOpenPicker;
+template <typename T> struct impl_IFileOpenPicker2;
+template <typename T> struct impl_IFileOpenPickerStatics;
+template <typename T> struct impl_IFileOpenPickerWithOperationId;
+template <typename T> struct impl_IFileSavePicker;
+template <typename T> struct impl_IFileSavePicker2;
+template <typename T> struct impl_IFileSavePicker3;
+template <typename T> struct impl_IFolderPicker;
+template <typename T> struct impl_IFolderPicker2;
 
 }
 

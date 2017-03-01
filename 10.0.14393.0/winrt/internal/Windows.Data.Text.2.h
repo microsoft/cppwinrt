@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,6 +18,11 @@ template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -84,6 +89,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_66b1a575_7c1a_5dfc_92f3_e8a49e92f109
+#define WINRT_GENERIC_66b1a575_7c1a_5dfc_92f3_e8a49e92f109
+template <> struct __declspec(uuid("66b1a575-7c1a-5dfc-92f3-e8a49e92f109")) __declspec(novtable) IVector<Windows::Data::Text::TextSegment> : impl_IVector<Windows::Data::Text::TextSegment> {};
+#endif
+
 #ifndef WINRT_GENERIC_645a39b4_f001_5272_9015_fb4a327179ae
 #define WINRT_GENERIC_645a39b4_f001_5272_9015_fb4a327179ae
 template <> struct __declspec(uuid("645a39b4-f001-5272-9015-fb4a327179ae")) __declspec(novtable) IIterator<Windows::Data::Text::TextSegment> : impl_IIterator<Windows::Data::Text::TextSegment> {};
@@ -92,6 +102,11 @@ template <> struct __declspec(uuid("645a39b4-f001-5272-9015-fb4a327179ae")) __de
 #ifndef WINRT_GENERIC_5498f4f3_cee4_5b72_9729_815c4ad7b9dc
 #define WINRT_GENERIC_5498f4f3_cee4_5b72_9729_815c4ad7b9dc
 template <> struct __declspec(uuid("5498f4f3-cee4-5b72-9729-815c4ad7b9dc")) __declspec(novtable) IIterable<Windows::Data::Text::TextSegment> : impl_IIterable<Windows::Data::Text::TextSegment> {};
+#endif
+
+#ifndef WINRT_GENERIC_b6104dde_f602_5778_be14_88a202c0ab7e
+#define WINRT_GENERIC_b6104dde_f602_5778_be14_88a202c0ab7e
+template <> struct __declspec(uuid("b6104dde-f602-5778-be14-88a202c0ab7e")) __declspec(novtable) IVector<Windows::Data::Text::AlternateWordForm> : impl_IVector<Windows::Data::Text::AlternateWordForm> {};
 #endif
 
 #ifndef WINRT_GENERIC_7f463f8a_e08f_516e_b4b8_81b5417bfb58
@@ -104,14 +119,29 @@ template <> struct __declspec(uuid("7f463f8a-e08f-516e-b4b8-81b5417bfb58")) __de
 template <> struct __declspec(uuid("ae838c29-60c1-5093-ae61-0ed22857db05")) __declspec(novtable) IIterable<Windows::Data::Text::AlternateWordForm> : impl_IIterable<Windows::Data::Text::AlternateWordForm> {};
 #endif
 
+#ifndef WINRT_GENERIC_3895c4cc_e9e2_56d3_900d_c284458c8cfe
+#define WINRT_GENERIC_3895c4cc_e9e2_56d3_900d_c284458c8cfe
+template <> struct __declspec(uuid("3895c4cc-e9e2-56d3-900d-c284458c8cfe")) __declspec(novtable) IVector<Windows::Data::Text::WordSegment> : impl_IVector<Windows::Data::Text::WordSegment> {};
+#endif
+
 #ifndef WINRT_GENERIC_aeb846b3_664b_545e_ab93_f5fc66d24e32
 #define WINRT_GENERIC_aeb846b3_664b_545e_ab93_f5fc66d24e32
 template <> struct __declspec(uuid("aeb846b3-664b-545e-ab93-f5fc66d24e32")) __declspec(novtable) IIterator<Windows::Data::Text::WordSegment> : impl_IIterator<Windows::Data::Text::WordSegment> {};
 #endif
 
+#ifndef WINRT_GENERIC_67c58aab_ab27_5d3f_a090_81e08d0ce4b4
+#define WINRT_GENERIC_67c58aab_ab27_5d3f_a090_81e08d0ce4b4
+template <> struct __declspec(uuid("67c58aab-ab27-5d3f-a090-81e08d0ce4b4")) __declspec(novtable) IVector<Windows::Data::Text::SelectableWordSegment> : impl_IVector<Windows::Data::Text::SelectableWordSegment> {};
+#endif
+
 #ifndef WINRT_GENERIC_a5842459_147d_5a88_8f23_a3398afd8a85
 #define WINRT_GENERIC_a5842459_147d_5a88_8f23_a3398afd8a85
 template <> struct __declspec(uuid("a5842459-147d-5a88-8f23-a3398afd8a85")) __declspec(novtable) IIterator<Windows::Data::Text::SelectableWordSegment> : impl_IIterator<Windows::Data::Text::SelectableWordSegment> {};
+#endif
+
+#ifndef WINRT_GENERIC_6cb92948_7b12_5d79_99be_4af6ca396b8e
+#define WINRT_GENERIC_6cb92948_7b12_5d79_99be_4af6ca396b8e
+template <> struct __declspec(uuid("6cb92948-7b12-5d79-99be-4af6ca396b8e")) __declspec(novtable) IVector<Windows::Data::Text::TextPhoneme> : impl_IVector<Windows::Data::Text::TextPhoneme> {};
 #endif
 
 #ifndef WINRT_GENERIC_36426c36_b5c4_5d1b_a468_aff3b48b7c3a
@@ -154,314 +184,148 @@ template <> struct __declspec(uuid("83e14307-0be1-5560-8bfc-291095cf6d30")) __de
 
 namespace Windows::Data::Text {
 
-template <typename D>
-struct WINRT_EBO impl_IAlternateWordForm
-{
-    Windows::Data::Text::TextSegment SourceTextSegment() const;
-    hstring AlternateText() const;
-    Windows::Data::Text::AlternateNormalizationFormat NormalizationFormat() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISelectableWordSegment
-{
-    hstring Text() const;
-    Windows::Data::Text::TextSegment SourceTextSegment() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISelectableWordsSegmenter
-{
-    hstring ResolvedLanguage() const;
-    Windows::Data::Text::SelectableWordSegment GetTokenAt(hstring_ref text, uint32_t startIndex) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::SelectableWordSegment> GetTokens(hstring_ref text) const;
-    void Tokenize(hstring_ref text, uint32_t startIndex, const Windows::Data::Text::SelectableWordSegmentsTokenizingHandler & handler) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISelectableWordsSegmenterFactory
-{
-    Windows::Data::Text::SelectableWordsSegmenter CreateWithLanguage(hstring_ref language) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISemanticTextQuery
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> Find(hstring_ref content) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> FindInProperty(hstring_ref propertyContent, hstring_ref propertyName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISemanticTextQueryFactory
-{
-    Windows::Data::Text::SemanticTextQuery Create(hstring_ref aqsFilter) const;
-    Windows::Data::Text::SemanticTextQuery CreateWithLanguage(hstring_ref aqsFilter, hstring_ref filterLanguage) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextConversionGenerator
-{
-    hstring ResolvedLanguage() const;
-    bool LanguageAvailableButNotInstalled() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> GetCandidatesAsync(hstring_ref input) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> GetCandidatesAsync(hstring_ref input, uint32_t maxCandidates) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextConversionGeneratorFactory
-{
-    Windows::Data::Text::TextConversionGenerator Create(hstring_ref languageTag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextPhoneme
-{
-    hstring DisplayText() const;
-    hstring ReadingText() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextPredictionGenerator
-{
-    hstring ResolvedLanguage() const;
-    bool LanguageAvailableButNotInstalled() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> GetCandidatesAsync(hstring_ref input) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> GetCandidatesAsync(hstring_ref input, uint32_t maxCandidates) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextPredictionGeneratorFactory
-{
-    Windows::Data::Text::TextPredictionGenerator Create(hstring_ref languageTag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextReverseConversionGenerator
-{
-    hstring ResolvedLanguage() const;
-    bool LanguageAvailableButNotInstalled() const;
-    Windows::Foundation::IAsyncOperation<hstring> ConvertBackAsync(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextReverseConversionGenerator2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextPhoneme>> GetPhonemesAsync(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITextReverseConversionGeneratorFactory
-{
-    Windows::Data::Text::TextReverseConversionGenerator Create(hstring_ref languageTag) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUnicodeCharactersStatics
-{
-    uint32_t GetCodepointFromSurrogatePair(uint32_t highSurrogate, uint32_t lowSurrogate) const;
-    void GetSurrogatePairFromCodepoint(uint32_t codepoint, wchar_t & highSurrogate, wchar_t & lowSurrogate) const;
-    bool IsHighSurrogate(uint32_t codepoint) const;
-    bool IsLowSurrogate(uint32_t codepoint) const;
-    bool IsSupplementary(uint32_t codepoint) const;
-    bool IsNoncharacter(uint32_t codepoint) const;
-    bool IsWhitespace(uint32_t codepoint) const;
-    bool IsAlphabetic(uint32_t codepoint) const;
-    bool IsCased(uint32_t codepoint) const;
-    bool IsUppercase(uint32_t codepoint) const;
-    bool IsLowercase(uint32_t codepoint) const;
-    bool IsIdStart(uint32_t codepoint) const;
-    bool IsIdContinue(uint32_t codepoint) const;
-    bool IsGraphemeBase(uint32_t codepoint) const;
-    bool IsGraphemeExtend(uint32_t codepoint) const;
-    Windows::Data::Text::UnicodeNumericType GetNumericType(uint32_t codepoint) const;
-    Windows::Data::Text::UnicodeGeneralCategory GetGeneralCategory(uint32_t codepoint) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWordSegment
-{
-    hstring Text() const;
-    Windows::Data::Text::TextSegment SourceTextSegment() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::AlternateWordForm> AlternateForms() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWordsSegmenter
-{
-    hstring ResolvedLanguage() const;
-    Windows::Data::Text::WordSegment GetTokenAt(hstring_ref text, uint32_t startIndex) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::WordSegment> GetTokens(hstring_ref text) const;
-    void Tokenize(hstring_ref text, uint32_t startIndex, const Windows::Data::Text::WordSegmentsTokenizingHandler & handler) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWordsSegmenterFactory
-{
-    Windows::Data::Text::WordsSegmenter CreateWithLanguage(hstring_ref language) const;
-};
-
-struct SelectableWordSegmentsTokenizingHandler : Windows::IUnknown
+struct SelectableWordSegmentsTokenizingHandler : Windows::Foundation::IUnknown
 {
     SelectableWordSegmentsTokenizingHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<SelectableWordSegmentsTokenizingHandler>(m_ptr); }
     template <typename L> SelectableWordSegmentsTokenizingHandler(L lambda);
     template <typename F> SelectableWordSegmentsTokenizingHandler (F * function);
     template <typename O, typename M> SelectableWordSegmentsTokenizingHandler(O * object, M method);
-    void operator()(const Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment> & precedingWords, const Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment> & words) const;
+    void operator()(iterable<Windows::Data::Text::SelectableWordSegment> precedingWords, iterable<Windows::Data::Text::SelectableWordSegment> words) const;
 };
 
-struct WordSegmentsTokenizingHandler : Windows::IUnknown
+struct WordSegmentsTokenizingHandler : Windows::Foundation::IUnknown
 {
     WordSegmentsTokenizingHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<WordSegmentsTokenizingHandler>(m_ptr); }
     template <typename L> WordSegmentsTokenizingHandler(L lambda);
     template <typename F> WordSegmentsTokenizingHandler (F * function);
     template <typename O, typename M> WordSegmentsTokenizingHandler(O * object, M method);
-    void operator()(const Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment> & precedingWords, const Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment> & words) const;
+    void operator()(iterable<Windows::Data::Text::WordSegment> precedingWords, iterable<Windows::Data::Text::WordSegment> words) const;
 };
 
 struct IAlternateWordForm :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAlternateWordForm>
 {
     IAlternateWordForm(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAlternateWordForm>(m_ptr); }
 };
 
 struct ISelectableWordSegment :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISelectableWordSegment>
 {
     ISelectableWordSegment(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISelectableWordSegment>(m_ptr); }
 };
 
 struct ISelectableWordsSegmenter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISelectableWordsSegmenter>
 {
     ISelectableWordsSegmenter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISelectableWordsSegmenter>(m_ptr); }
 };
 
 struct ISelectableWordsSegmenterFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISelectableWordsSegmenterFactory>
 {
     ISelectableWordsSegmenterFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISelectableWordsSegmenterFactory>(m_ptr); }
 };
 
 struct ISemanticTextQuery :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISemanticTextQuery>
 {
     ISemanticTextQuery(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISemanticTextQuery>(m_ptr); }
 };
 
 struct ISemanticTextQueryFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISemanticTextQueryFactory>
 {
     ISemanticTextQueryFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISemanticTextQueryFactory>(m_ptr); }
 };
 
 struct ITextConversionGenerator :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextConversionGenerator>
 {
     ITextConversionGenerator(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextConversionGenerator>(m_ptr); }
 };
 
 struct ITextConversionGeneratorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextConversionGeneratorFactory>
 {
     ITextConversionGeneratorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextConversionGeneratorFactory>(m_ptr); }
 };
 
 struct ITextPhoneme :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextPhoneme>
 {
     ITextPhoneme(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextPhoneme>(m_ptr); }
 };
 
 struct ITextPredictionGenerator :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextPredictionGenerator>
 {
     ITextPredictionGenerator(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextPredictionGenerator>(m_ptr); }
 };
 
 struct ITextPredictionGeneratorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextPredictionGeneratorFactory>
 {
     ITextPredictionGeneratorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextPredictionGeneratorFactory>(m_ptr); }
 };
 
 struct ITextReverseConversionGenerator :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextReverseConversionGenerator>
 {
     ITextReverseConversionGenerator(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextReverseConversionGenerator>(m_ptr); }
 };
 
 struct ITextReverseConversionGenerator2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextReverseConversionGenerator2>
 {
     ITextReverseConversionGenerator2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextReverseConversionGenerator2>(m_ptr); }
 };
 
 struct ITextReverseConversionGeneratorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITextReverseConversionGeneratorFactory>
 {
     ITextReverseConversionGeneratorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITextReverseConversionGeneratorFactory>(m_ptr); }
 };
 
 struct IUnicodeCharactersStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUnicodeCharactersStatics>
 {
     IUnicodeCharactersStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUnicodeCharactersStatics>(m_ptr); }
 };
 
 struct IWordSegment :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWordSegment>
 {
     IWordSegment(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWordSegment>(m_ptr); }
 };
 
 struct IWordsSegmenter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWordsSegmenter>
 {
     IWordsSegmenter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWordsSegmenter>(m_ptr); }
 };
 
 struct IWordsSegmenterFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWordsSegmenterFactory>
 {
     IWordsSegmenterFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWordsSegmenterFactory>(m_ptr); }
 };
 
 }

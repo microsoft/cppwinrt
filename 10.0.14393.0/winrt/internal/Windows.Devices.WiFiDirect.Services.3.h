@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,16 +13,16 @@ struct WINRT_EBO WiFiDirectService :
     Windows::Devices::WiFiDirect::Services::IWiFiDirectService
 {
     WiFiDirectService(std::nullptr_t) noexcept {}
-    static hstring GetSelector(hstring_ref serviceName);
-    static hstring GetSelector(hstring_ref serviceName, const Windows::Storage::Streams::IBuffer & serviceInfoFilter);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::WiFiDirect::Services::WiFiDirectService> FromIdAsync(hstring_ref deviceId);
+    static hstring GetSelector(hstring_view serviceName);
+    static hstring GetSelector(hstring_view serviceName, const Windows::Storage::Streams::IBuffer & serviceInfoFilter);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::WiFiDirect::Services::WiFiDirectService> FromIdAsync(hstring_view deviceId);
 };
 
 struct WINRT_EBO WiFiDirectServiceAdvertiser :
     Windows::Devices::WiFiDirect::Services::IWiFiDirectServiceAdvertiser
 {
     WiFiDirectServiceAdvertiser(std::nullptr_t) noexcept {}
-    WiFiDirectServiceAdvertiser(hstring_ref serviceName);
+    WiFiDirectServiceAdvertiser(hstring_view serviceName);
 };
 
 struct WINRT_EBO WiFiDirectServiceAutoAcceptSessionConnectedEventArgs :

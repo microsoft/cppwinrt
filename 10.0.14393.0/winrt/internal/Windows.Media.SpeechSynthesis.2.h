@@ -1,11 +1,11 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.SpeechSynthesis.1.h"
-#include "Windows.Foundation.2.h"
-#include "Windows.Storage.Streams.2.h"
+#include "Windows.Foundation.1.h"
+#include "Windows.Storage.Streams.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -36,6 +36,11 @@ template <> struct __declspec(uuid("df9d48ad-9cea-560c-9edc-cb8852cb55e3")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_057e6bc9_7bb8_5816_988b_8e9b3fb1bff4
+#define WINRT_GENERIC_057e6bc9_7bb8_5816_988b_8e9b3fb1bff4
+template <> struct __declspec(uuid("057e6bc9-7bb8-5816-988b-8e9b3fb1bff4")) __declspec(novtable) IVector<Windows::Media::IMediaMarker> : impl_IVector<Windows::Media::IMediaMarker> {};
+#endif
+
 #ifndef WINRT_GENERIC_f464661e_88bc_5cea_93cd_0c123f17d258
 #define WINRT_GENERIC_f464661e_88bc_5cea_93cd_0c123f17d258
 template <> struct __declspec(uuid("f464661e-88bc-5cea-93cd-0c123f17d258")) __declspec(novtable) IIterator<Windows::Media::IMediaMarker> : impl_IIterator<Windows::Media::IMediaMarker> {};
@@ -44,6 +49,11 @@ template <> struct __declspec(uuid("f464661e-88bc-5cea-93cd-0c123f17d258")) __de
 #ifndef WINRT_GENERIC_a1c0a397_0364_5e4c_9dca_7cd7011bd114
 #define WINRT_GENERIC_a1c0a397_0364_5e4c_9dca_7cd7011bd114
 template <> struct __declspec(uuid("a1c0a397-0364-5e4c-9dca-7cd7011bd114")) __declspec(novtable) IIterable<Windows::Media::IMediaMarker> : impl_IIterable<Windows::Media::IMediaMarker> {};
+#endif
+
+#ifndef WINRT_GENERIC_00bd028a_e2ad_57af_9829_f8b273d2717b
+#define WINRT_GENERIC_00bd028a_e2ad_57af_9829_f8b273d2717b
+template <> struct __declspec(uuid("00bd028a-e2ad-57af-9829-f8b273d2717b")) __declspec(novtable) IVector<Windows::Media::SpeechSynthesis::VoiceInformation> : impl_IVector<Windows::Media::SpeechSynthesis::VoiceInformation> {};
 #endif
 
 #ifndef WINRT_GENERIC_12d40a27_ae8d_5fb0_8fed_00165d59c6ab
@@ -71,69 +81,33 @@ template <> struct __declspec(uuid("c972b996-6165-50d4-af60-a8c3df51d092")) __de
 
 namespace Windows::Media::SpeechSynthesis {
 
-template <typename D>
-struct WINRT_EBO impl_IInstalledVoicesStatic
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Media::SpeechSynthesis::VoiceInformation> AllVoices() const;
-    Windows::Media::SpeechSynthesis::VoiceInformation DefaultVoice() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechSynthesisStream
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Media::IMediaMarker> Markers() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISpeechSynthesizer
-{
-    Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> SynthesizeTextToStreamAsync(hstring_ref text) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::SpeechSynthesis::SpeechSynthesisStream> SynthesizeSsmlToStreamAsync(hstring_ref Ssml) const;
-    void Voice(const Windows::Media::SpeechSynthesis::VoiceInformation & value) const;
-    Windows::Media::SpeechSynthesis::VoiceInformation Voice() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVoiceInformation
-{
-    hstring DisplayName() const;
-    hstring Id() const;
-    hstring Language() const;
-    hstring Description() const;
-    Windows::Media::SpeechSynthesis::VoiceGender Gender() const;
-};
-
 struct IInstalledVoicesStatic :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IInstalledVoicesStatic>
 {
     IInstalledVoicesStatic(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IInstalledVoicesStatic>(m_ptr); }
 };
 
 struct ISpeechSynthesisStream :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechSynthesisStream>,
     impl::require<ISpeechSynthesisStream, Windows::Foundation::IClosable, Windows::Storage::Streams::IContentTypeProvider, Windows::Storage::Streams::IInputStream, Windows::Storage::Streams::IOutputStream, Windows::Storage::Streams::IRandomAccessStream, Windows::Storage::Streams::IRandomAccessStreamWithContentType>
 {
     ISpeechSynthesisStream(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechSynthesisStream>(m_ptr); }
 };
 
 struct ISpeechSynthesizer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISpeechSynthesizer>
 {
     ISpeechSynthesizer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISpeechSynthesizer>(m_ptr); }
 };
 
 struct IVoiceInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVoiceInformation>
 {
     IVoiceInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVoiceInformation>(m_ptr); }
 };
 
 }

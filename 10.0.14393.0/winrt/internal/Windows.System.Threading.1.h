@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,21 +11,21 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::System::Threading {
 
-struct __declspec(uuid("b6bf67dd-84bd-44f8-ac1c-93ebcb9dba91")) __declspec(novtable) IThreadPoolStatics : Windows::IInspectable
+struct __declspec(uuid("b6bf67dd-84bd-44f8-ac1c-93ebcb9dba91")) __declspec(novtable) IThreadPoolStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RunAsync(Windows::System::Threading::WorkItemHandler * handler, Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_RunWithPriorityAsync(Windows::System::Threading::WorkItemHandler * handler, winrt::Windows::System::Threading::WorkItemPriority priority, Windows::Foundation::IAsyncAction ** operation) = 0;
     virtual HRESULT __stdcall abi_RunWithPriorityAndOptionsAsync(Windows::System::Threading::WorkItemHandler * handler, winrt::Windows::System::Threading::WorkItemPriority priority, winrt::Windows::System::Threading::WorkItemOptions options, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("594ebe78-55ea-4a88-a50d-3402ae1f9cf2")) __declspec(novtable) IThreadPoolTimer : Windows::IInspectable
+struct __declspec(uuid("594ebe78-55ea-4a88-a50d-3402ae1f9cf2")) __declspec(novtable) IThreadPoolTimer : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Period(Windows::Foundation::TimeSpan * value) = 0;
     virtual HRESULT __stdcall get_Delay(Windows::Foundation::TimeSpan * value) = 0;
     virtual HRESULT __stdcall abi_Cancel() = 0;
 };
 
-struct __declspec(uuid("1a8a9d02-e482-461b-b8c7-8efad1cce590")) __declspec(novtable) IThreadPoolTimerStatics : Windows::IInspectable
+struct __declspec(uuid("1a8a9d02-e482-461b-b8c7-8efad1cce590")) __declspec(novtable) IThreadPoolTimerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreatePeriodicTimer(Windows::System::Threading::TimerElapsedHandler * handler, Windows::Foundation::TimeSpan period, Windows::System::Threading::IThreadPoolTimer ** timer) = 0;
     virtual HRESULT __stdcall abi_CreateTimer(Windows::System::Threading::TimerElapsedHandler * handler, Windows::Foundation::TimeSpan delay, Windows::System::Threading::IThreadPoolTimer ** timer) = 0;
@@ -58,12 +58,30 @@ template <> struct traits<Windows::System::Threading::ThreadPoolTimer> { using d
 
 namespace Windows::System::Threading {
 
-template <typename T> struct impl_IThreadPoolStatics;
-template <typename T> struct impl_IThreadPoolTimer;
-template <typename T> struct impl_IThreadPoolTimerStatics;
-template <typename T> struct impl_TimerDestroyedHandler;
-template <typename T> struct impl_TimerElapsedHandler;
-template <typename T> struct impl_WorkItemHandler;
+template <typename D>
+struct WINRT_EBO impl_IThreadPoolStatics
+{
+    Windows::Foundation::IAsyncAction RunAsync(const Windows::System::Threading::WorkItemHandler & handler) const;
+    Windows::Foundation::IAsyncAction RunAsync(const Windows::System::Threading::WorkItemHandler & handler, Windows::System::Threading::WorkItemPriority priority) const;
+    Windows::Foundation::IAsyncAction RunAsync(const Windows::System::Threading::WorkItemHandler & handler, Windows::System::Threading::WorkItemPriority priority, Windows::System::Threading::WorkItemOptions options) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IThreadPoolTimer
+{
+    Windows::Foundation::TimeSpan Period() const;
+    Windows::Foundation::TimeSpan Delay() const;
+    void Cancel() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IThreadPoolTimerStatics
+{
+    Windows::System::Threading::ThreadPoolTimer CreatePeriodicTimer(const Windows::System::Threading::TimerElapsedHandler & handler, const Windows::Foundation::TimeSpan & period) const;
+    Windows::System::Threading::ThreadPoolTimer CreateTimer(const Windows::System::Threading::TimerElapsedHandler & handler, const Windows::Foundation::TimeSpan & delay) const;
+    Windows::System::Threading::ThreadPoolTimer CreatePeriodicTimer(const Windows::System::Threading::TimerElapsedHandler & handler, const Windows::Foundation::TimeSpan & period, const Windows::System::Threading::TimerDestroyedHandler & destroyed) const;
+    Windows::System::Threading::ThreadPoolTimer CreateTimer(const Windows::System::Threading::TimerElapsedHandler & handler, const Windows::Foundation::TimeSpan & delay, const Windows::System::Threading::TimerDestroyedHandler & destroyed) const;
+};
 
 }
 

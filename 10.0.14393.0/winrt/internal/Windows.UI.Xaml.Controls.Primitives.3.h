@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_DragCompletedEventHandler : implements<impl_Dr
 {
     impl_DragCompletedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -31,11 +31,11 @@ template <typename H> struct impl_DragDeltaEventHandler : implements<impl_DragDe
 {
     impl_DragDeltaEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -49,11 +49,11 @@ template <typename H> struct impl_DragStartedEventHandler : implements<impl_Drag
 {
     impl_DragStartedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -67,11 +67,11 @@ template <typename H> struct impl_ItemsChangedEventHandler : implements<impl_Ite
 {
     impl_ItemsChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -85,11 +85,11 @@ template <typename H> struct impl_RangeBaseValueChangedEventHandler : implements
 {
     impl_RangeBaseValueChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -103,11 +103,11 @@ template <typename H> struct impl_ScrollEventHandler : implements<impl_ScrollEve
 {
     impl_ScrollEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -265,9 +265,9 @@ struct WINRT_EBO GridViewItemPresenter :
     static Windows::UI::Xaml::DependencyProperty DisabledOpacityProperty();
     static Windows::UI::Xaml::DependencyProperty DragOpacityProperty();
     static Windows::UI::Xaml::DependencyProperty ReorderHintOffsetProperty();
-    static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterHorizontalContentAlignmentProperty();
-    static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterVerticalContentAlignmentProperty();
-    static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterPaddingProperty();
+    [[deprecated("Use ContentPresenter.HorizontalContentAlignment instead of GridViewItemPresenterHorizontalContentAlignment. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterHorizontalContentAlignmentProperty();
+    [[deprecated("Use ContentPresenter.VerticalContentAlignment instead of GridViewItemPresenterVerticalContentAlignment. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterVerticalContentAlignmentProperty();
+    [[deprecated("Use ContentPresenter.Padding instead of GridViewItemPresenterPadding. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty GridViewItemPresenterPaddingProperty();
     static Windows::UI::Xaml::DependencyProperty PointerOverBackgroundMarginProperty();
     static Windows::UI::Xaml::DependencyProperty ContentMarginProperty();
 };
@@ -312,7 +312,7 @@ struct WINRT_EBO LayoutInformation :
     Windows::UI::Xaml::Controls::Primitives::ILayoutInformation
 {
     LayoutInformation(std::nullptr_t) noexcept {}
-    static Windows::UI::Xaml::UIElement GetLayoutExceptionElement(const Windows::IInspectable & dispatcher);
+    static Windows::UI::Xaml::UIElement GetLayoutExceptionElement(const Windows::Foundation::IInspectable & dispatcher);
     static Windows::Foundation::Rect GetLayoutSlot(const Windows::UI::Xaml::FrameworkElement & element);
 };
 
@@ -340,9 +340,9 @@ struct WINRT_EBO ListViewItemPresenter :
     static Windows::UI::Xaml::DependencyProperty DisabledOpacityProperty();
     static Windows::UI::Xaml::DependencyProperty DragOpacityProperty();
     static Windows::UI::Xaml::DependencyProperty ReorderHintOffsetProperty();
-    static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterHorizontalContentAlignmentProperty();
-    static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterVerticalContentAlignmentProperty();
-    static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterPaddingProperty();
+    [[deprecated("Use ContentPresenter.HorizontalContentAlignment instead of ListViewItemPresenterHorizontalContentAlignment. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterHorizontalContentAlignmentProperty();
+    [[deprecated("Use ContentPresenter.VerticalContentAlignment instead of ListViewItemPresenterVerticalContentAlignment. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterVerticalContentAlignmentProperty();
+    [[deprecated("Use ContentPresenter.Padding instead of GridViewItemPresenterPadding. For more info, see MSDN.")]] static Windows::UI::Xaml::DependencyProperty ListViewItemPresenterPaddingProperty();
     static Windows::UI::Xaml::DependencyProperty PointerOverBackgroundMarginProperty();
     static Windows::UI::Xaml::DependencyProperty ContentMarginProperty();
     static Windows::UI::Xaml::DependencyProperty SelectedPressedBackgroundProperty();
@@ -416,7 +416,7 @@ struct WINRT_EBO PickerFlyoutBase :
     PickerFlyoutBase(std::nullptr_t) noexcept {}
     static Windows::UI::Xaml::DependencyProperty TitleProperty();
     static hstring GetTitle(const Windows::UI::Xaml::DependencyObject & element);
-    static void SetTitle(const Windows::UI::Xaml::DependencyObject & element, hstring_ref value);
+    static void SetTitle(const Windows::UI::Xaml::DependencyObject & element, hstring_view value);
 };
 
 struct WINRT_EBO PivotHeaderItem :

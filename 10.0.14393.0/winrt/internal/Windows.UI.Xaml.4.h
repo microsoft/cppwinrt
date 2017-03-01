@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -62,10 +62,11 @@ public:
         shim().as<IApplicationOverrides>().OnWindowCreated(args);
     }
 
-    HRESULT __stdcall abi_OnActivated(abi_arg_in<Windows::ApplicationModel::Activation::IActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::IActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -75,10 +76,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnLaunched(abi_arg_in<Windows::ApplicationModel::Activation::ILaunchActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnLaunched(impl::abi_arg_in<Windows::ApplicationModel::Activation::ILaunchActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnLaunched(*reinterpret_cast<const Windows::ApplicationModel::Activation::LaunchActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -88,10 +90,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnFileActivated(abi_arg_in<Windows::ApplicationModel::Activation::IFileActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnFileActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IFileActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnFileActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::FileActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -101,10 +104,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnSearchActivated(abi_arg_in<Windows::ApplicationModel::Activation::ISearchActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnSearchActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::ISearchActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnSearchActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::SearchActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -114,10 +118,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnShareTargetActivated(abi_arg_in<Windows::ApplicationModel::Activation::IShareTargetActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnShareTargetActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IShareTargetActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnShareTargetActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::ShareTargetActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -127,10 +132,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnFileOpenPickerActivated(abi_arg_in<Windows::ApplicationModel::Activation::IFileOpenPickerActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnFileOpenPickerActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IFileOpenPickerActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnFileOpenPickerActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::FileOpenPickerActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -140,10 +146,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnFileSavePickerActivated(abi_arg_in<Windows::ApplicationModel::Activation::IFileSavePickerActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnFileSavePickerActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IFileSavePickerActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnFileSavePickerActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::FileSavePickerActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -153,10 +160,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnCachedFileUpdaterActivated(abi_arg_in<Windows::ApplicationModel::Activation::ICachedFileUpdaterActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnCachedFileUpdaterActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::ICachedFileUpdaterActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnCachedFileUpdaterActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::CachedFileUpdaterActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -166,10 +174,11 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_OnWindowCreated(abi_arg_in<Windows::UI::Xaml::IWindowCreatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnWindowCreated(impl::abi_arg_in<Windows::UI::Xaml::IWindowCreatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnWindowCreated(*reinterpret_cast<const Windows::UI::Xaml::WindowCreatedEventArgs *>(&args));
             return S_OK;
         }
@@ -194,10 +203,11 @@ public:
         shim().as<IApplicationOverrides2>().OnBackgroundActivated(args);
     }
 
-    HRESULT __stdcall abi_OnBackgroundActivated(abi_arg_in<Windows::ApplicationModel::Activation::IBackgroundActivatedEventArgs> args) noexcept override
+    HRESULT __stdcall abi_OnBackgroundActivated(impl::abi_arg_in<Windows::ApplicationModel::Activation::IBackgroundActivatedEventArgs> args) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnBackgroundActivated(*reinterpret_cast<const Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs *>(&args));
             return S_OK;
         }
@@ -232,11 +242,12 @@ public:
         shim().as<IFrameworkElementOverrides>().OnApplyTemplate();
     }
 
-    HRESULT __stdcall abi_MeasureOverride(abi_arg_in<Windows::Foundation::Size> availableSize, abi_arg_out<Windows::Foundation::Size> returnValue) noexcept override
+    HRESULT __stdcall abi_MeasureOverride(impl::abi_arg_in<Windows::Foundation::Size> availableSize, impl::abi_arg_out<Windows::Foundation::Size> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().MeasureOverride(*reinterpret_cast<const Windows::Foundation::Size *>(&availableSize)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().MeasureOverride(*reinterpret_cast<const Windows::Foundation::Size *>(&availableSize)));
             return S_OK;
         }
         catch (...)
@@ -245,11 +256,12 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_ArrangeOverride(abi_arg_in<Windows::Foundation::Size> finalSize, abi_arg_out<Windows::Foundation::Size> returnValue) noexcept override
+    HRESULT __stdcall abi_ArrangeOverride(impl::abi_arg_in<Windows::Foundation::Size> finalSize, impl::abi_arg_out<Windows::Foundation::Size> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().ArrangeOverride(*reinterpret_cast<const Windows::Foundation::Size *>(&finalSize)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().ArrangeOverride(*reinterpret_cast<const Windows::Foundation::Size *>(&finalSize)));
             return S_OK;
         }
         catch (...)
@@ -262,6 +274,7 @@ public:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnApplyTemplate();
             return S_OK;
         }
@@ -281,16 +294,17 @@ public:
 
     using IFrameworkElementOverrides2 = winrt::Windows::UI::Xaml::IFrameworkElementOverrides2;
 
-    bool GoToElementStateCore(hstring_ref stateName, bool useTransitions)
+    bool GoToElementStateCore(hstring_view stateName, bool useTransitions)
     {
         return shim().as<IFrameworkElementOverrides2>().GoToElementStateCore(stateName, useTransitions);
     }
 
-    HRESULT __stdcall abi_GoToElementStateCore(abi_arg_in<hstring> stateName, bool useTransitions, bool * returnValue) noexcept override
+    HRESULT __stdcall abi_GoToElementStateCore(impl::abi_arg_in<hstring> stateName, bool useTransitions, bool * returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GoToElementStateCore(*reinterpret_cast<const hstring *>(&stateName), useTransitions));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GoToElementStateCore(*reinterpret_cast<const hstring *>(&stateName), useTransitions));
             return S_OK;
         }
         catch (...)
@@ -324,11 +338,12 @@ public:
         return shim().as<IUIElementOverrides>().FindSubElementsForTouchTargeting(point, boundingRect);
     }
 
-    HRESULT __stdcall abi_OnCreateAutomationPeer(abi_arg_out<Windows::UI::Xaml::Automation::Peers::IAutomationPeer> returnValue) noexcept override
+    HRESULT __stdcall abi_OnCreateAutomationPeer(impl::abi_arg_out<Windows::UI::Xaml::Automation::Peers::IAutomationPeer> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().OnCreateAutomationPeer());
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().OnCreateAutomationPeer());
             return S_OK;
         }
         catch (...)
@@ -342,6 +357,7 @@ public:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnDisconnectVisualChildren();
             return S_OK;
         }
@@ -351,11 +367,12 @@ public:
         }
     }
 
-    HRESULT __stdcall abi_FindSubElementsForTouchTargeting(abi_arg_in<Windows::Foundation::Point> point, abi_arg_in<Windows::Foundation::Rect> boundingRect, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IIterable<Windows::Foundation::Point>>> returnValue) noexcept override
+    HRESULT __stdcall abi_FindSubElementsForTouchTargeting(impl::abi_arg_in<Windows::Foundation::Point> point, impl::abi_arg_in<Windows::Foundation::Rect> boundingRect, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IIterable<Windows::Foundation::Point>>> returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().FindSubElementsForTouchTargeting(*reinterpret_cast<const Windows::Foundation::Point *>(&point), *reinterpret_cast<const Windows::Foundation::Rect *>(&boundingRect)));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().FindSubElementsForTouchTargeting(*reinterpret_cast<const Windows::Foundation::Point *>(&point), *reinterpret_cast<const Windows::Foundation::Rect *>(&boundingRect)));
             return S_OK;
         }
         catch (...)
@@ -375,16 +392,17 @@ public:
 
     using IVisualStateManagerOverrides = winrt::Windows::UI::Xaml::IVisualStateManagerOverrides;
 
-    bool GoToStateCore(const Windows::UI::Xaml::Controls::Control & control, const Windows::UI::Xaml::FrameworkElement & templateRoot, hstring_ref stateName, const Windows::UI::Xaml::VisualStateGroup & group, const Windows::UI::Xaml::VisualState & state, bool useTransitions)
+    bool GoToStateCore(const Windows::UI::Xaml::Controls::Control & control, const Windows::UI::Xaml::FrameworkElement & templateRoot, hstring_view stateName, const Windows::UI::Xaml::VisualStateGroup & group, const Windows::UI::Xaml::VisualState & state, bool useTransitions)
     {
         return shim().as<IVisualStateManagerOverrides>().GoToStateCore(control, templateRoot, stateName, group, state, useTransitions);
     }
 
-    HRESULT __stdcall abi_GoToStateCore(abi_arg_in<Windows::UI::Xaml::Controls::IControl> control, abi_arg_in<Windows::UI::Xaml::IFrameworkElement> templateRoot, abi_arg_in<hstring> stateName, abi_arg_in<Windows::UI::Xaml::IVisualStateGroup> group, abi_arg_in<Windows::UI::Xaml::IVisualState> state, bool useTransitions, bool * returnValue) noexcept override
+    HRESULT __stdcall abi_GoToStateCore(impl::abi_arg_in<Windows::UI::Xaml::Controls::IControl> control, impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> templateRoot, impl::abi_arg_in<hstring> stateName, impl::abi_arg_in<Windows::UI::Xaml::IVisualStateGroup> group, impl::abi_arg_in<Windows::UI::Xaml::IVisualState> state, bool useTransitions, bool * returnValue) noexcept override
     {
         try
         {
-            *returnValue = detach(this->shim().GoToStateCore(*reinterpret_cast<const Windows::UI::Xaml::Controls::Control *>(&control), *reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&templateRoot), *reinterpret_cast<const hstring *>(&stateName), *reinterpret_cast<const Windows::UI::Xaml::VisualStateGroup *>(&group), *reinterpret_cast<const Windows::UI::Xaml::VisualState *>(&state), useTransitions));
+            typename D::abi_guard guard(this->shim());
+            *returnValue = detach_abi(this->shim().GoToStateCore(*reinterpret_cast<const Windows::UI::Xaml::Controls::Control *>(&control), *reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&templateRoot), *reinterpret_cast<const hstring *>(&stateName), *reinterpret_cast<const Windows::UI::Xaml::VisualStateGroup *>(&group), *reinterpret_cast<const Windows::UI::Xaml::VisualState *>(&state), useTransitions));
             return S_OK;
         }
         catch (...)

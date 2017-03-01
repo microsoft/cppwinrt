@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -35,6 +35,16 @@ struct OnlineIdServiceTicketRequest;
 struct SignOutUserOperation;
 struct UserAuthenticationOperation;
 struct UserIdentity;
+
+}
+
+namespace Windows::Security::Authentication::OnlineId {
+
+template <typename T> struct impl_IOnlineIdAuthenticator;
+template <typename T> struct impl_IOnlineIdServiceTicket;
+template <typename T> struct impl_IOnlineIdServiceTicketRequest;
+template <typename T> struct impl_IOnlineIdServiceTicketRequestFactory;
+template <typename T> struct impl_IUserIdentity;
 
 }
 

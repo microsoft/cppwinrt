@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,6 +24,15 @@ struct IUserDataAccountSystemAccessManagerStatics;
 struct IUserDataAccountSystemAccessManagerStatics2;
 struct DeviceAccountConfiguration;
 struct UserDataAccountSystemAccessManager;
+
+}
+
+namespace Windows::ApplicationModel::UserDataAccounts::SystemAccess {
+
+template <typename T> struct impl_IDeviceAccountConfiguration;
+template <typename T> struct impl_IDeviceAccountConfiguration2;
+template <typename T> struct impl_IUserDataAccountSystemAccessManagerStatics;
+template <typename T> struct impl_IUserDataAccountSystemAccessManagerStatics2;
 
 }
 

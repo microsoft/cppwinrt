@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -66,7 +66,7 @@ template <> struct __declspec(uuid("fc0a0b0f-4dcc-5257-bc61-3435e302ce1f")) __de
 
 #ifndef WINRT_GENERIC_3f3808e6_3dee_57a6_a88d_bacfb066c7fb
 #define WINRT_GENERIC_3f3808e6_3dee_57a6_a88d_bacfb066c7fb
-template <> struct __declspec(uuid("3f3808e6-3dee-57a6-a88d-bacfb066c7fb")) __declspec(novtable) TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> {};
+template <> struct __declspec(uuid("3f3808e6-3dee-57a6-a88d-bacfb066c7fb")) __declspec(novtable) TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -214,6 +214,11 @@ template <> struct __declspec(uuid("03ed8267-9c90-5260-8bc0-6c3e3306c964")) __de
 template <> struct __declspec(uuid("f3ed4299-de36-5d82-993f-35fc677d8b72")) __declspec(novtable) IVectorView<Windows::Devices::Sms::SmsFilterRule> : impl_IVectorView<Windows::Devices::Sms::SmsFilterRule> {};
 #endif
 
+#ifndef WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
+#define WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
+template <> struct __declspec(uuid("d14f6ec4-d2e2-5b57-ba0d-cb0bfac3ef13")) __declspec(novtable) IVector<Windows::Devices::Sms::SmsMessageRegistration> : impl_IVector<Windows::Devices::Sms::SmsMessageRegistration> {};
+#endif
+
 #ifndef WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
 #define WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
 template <> struct __declspec(uuid("ee1a0675-f3c9-5c12-93e0-f2b01bdce611")) __declspec(novtable) IIterator<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterator<Windows::Devices::Sms::SmsMessageRegistration> {};
@@ -222,6 +227,11 @@ template <> struct __declspec(uuid("ee1a0675-f3c9-5c12-93e0-f2b01bdce611")) __de
 #ifndef WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
 #define WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
 template <> struct __declspec(uuid("f836fa0a-770d-5e8f-8664-01c43f959eea")) __declspec(novtable) IIterable<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterable<Windows::Devices::Sms::SmsMessageRegistration> {};
+#endif
+
+#ifndef WINRT_GENERIC_d9904edc_5391_51f8_9bd8_db81e5763766
+#define WINRT_GENERIC_d9904edc_5391_51f8_9bd8_db81e5763766
+template <> struct __declspec(uuid("d9904edc-5391-51f8-9bd8-db81e5763766")) __declspec(novtable) IVector<Windows::Devices::Sms::ISmsBinaryMessage> : impl_IVector<Windows::Devices::Sms::ISmsBinaryMessage> {};
 #endif
 
 #ifndef WINRT_GENERIC_13e60d89_ea0a_5b01_9c2f_0e5b435058e0
@@ -248,6 +258,11 @@ template <> struct __declspec(uuid("4e6c4c86-ebe6-55d9-adc0-fecc38c82aa2")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_84c9f362_51fa_5e23_a9b3_43ae289d7100
+#define WINRT_GENERIC_84c9f362_51fa_5e23_a9b3_43ae289d7100
+template <> struct __declspec(uuid("84c9f362-51fa-5e23-a9b3-43ae289d7100")) __declspec(novtable) IVector<Windows::Devices::Sms::ISmsMessage> : impl_IVector<Windows::Devices::Sms::ISmsMessage> {};
+#endif
 
 #ifndef WINRT_GENERIC_eed04f5c_b2b2_5c83_8b13_c78af6ca3a18
 #define WINRT_GENERIC_eed04f5c_b2b2_5c83_8b13_c78af6ca3a18
@@ -319,340 +334,18 @@ template <> struct __declspec(uuid("c0454cfc-2f2f-5e0c-8de9-58b9e82a03ba")) __de
 
 namespace Windows::Devices::Sms {
 
-template <typename D>
-struct WINRT_EBO impl_ISmsAppMessage
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    hstring To() const;
-    void To(hstring_ref value) const;
-    hstring From() const;
-    hstring Body() const;
-    void Body(hstring_ref value) const;
-    hstring CallbackNumber() const;
-    void CallbackNumber(hstring_ref value) const;
-    bool IsDeliveryNotificationEnabled() const;
-    void IsDeliveryNotificationEnabled(bool value) const;
-    int32_t RetryAttemptCount() const;
-    void RetryAttemptCount(int32_t value) const;
-    Windows::Devices::Sms::SmsEncoding Encoding() const;
-    void Encoding(Windows::Devices::Sms::SmsEncoding value) const;
-    int32_t PortNumber() const;
-    void PortNumber(int32_t value) const;
-    int32_t TeleserviceId() const;
-    void TeleserviceId(int32_t value) const;
-    int32_t ProtocolId() const;
-    void ProtocolId(int32_t value) const;
-    Windows::Storage::Streams::IBuffer BinaryBody() const;
-    void BinaryBody(const Windows::Storage::Streams::IBuffer & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsBinaryMessage
-{
-    Windows::Devices::Sms::SmsDataFormat Format() const;
-    void Format(Windows::Devices::Sms::SmsDataFormat value) const;
-    com_array<uint8_t> GetData() const;
-    void SetData(array_ref<const uint8_t> value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsBroadcastMessage
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    hstring To() const;
-    hstring Body() const;
-    int32_t Channel() const;
-    Windows::Devices::Sms::SmsGeographicalScope GeographicalScope() const;
-    int32_t MessageCode() const;
-    int32_t UpdateNumber() const;
-    Windows::Devices::Sms::SmsBroadcastType BroadcastType() const;
-    bool IsEmergencyAlert() const;
-    bool IsUserPopupRequested() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDevice
-{
-    Windows::Devices::Sms::SendSmsMessageOperation SendMessageAsync(const Windows::Devices::Sms::ISmsMessage & message) const;
-    Windows::Devices::Sms::SmsEncodedLength CalculateLength(const Windows::Devices::Sms::SmsTextMessage & message) const;
-    hstring AccountPhoneNumber() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    Windows::Devices::Sms::SmsDeviceMessageStore MessageStore() const;
-    Windows::Devices::Sms::SmsDeviceStatus DeviceStatus() const;
-    event_token SmsMessageReceived(const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const;
-    using SmsMessageReceived_revoker = event_revoker<ISmsDevice>;
-    SmsMessageReceived_revoker SmsMessageReceived(auto_revoke_t, const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const;
-    void SmsMessageReceived(event_token eventCookie) const;
-    event_token SmsDeviceStatusChanged(const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const;
-    using SmsDeviceStatusChanged_revoker = event_revoker<ISmsDevice>;
-    SmsDeviceStatusChanged_revoker SmsDeviceStatusChanged(auto_revoke_t, const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const;
-    void SmsDeviceStatusChanged(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDevice2
-{
-    hstring SmscAddress() const;
-    void SmscAddress(hstring_ref value) const;
-    hstring DeviceId() const;
-    hstring ParentDeviceId() const;
-    hstring AccountPhoneNumber() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    Windows::Devices::Sms::SmsDeviceStatus DeviceStatus() const;
-    Windows::Devices::Sms::SmsEncodedLength CalculateLength(const Windows::Devices::Sms::ISmsMessageBase & message) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsSendMessageResult> SendMessageAndGetResultAsync(const Windows::Devices::Sms::ISmsMessageBase & message) const;
-    event_token DeviceStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> & eventHandler) const;
-    using DeviceStatusChanged_revoker = event_revoker<ISmsDevice2>;
-    DeviceStatusChanged_revoker DeviceStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsDevice2, Windows::IInspectable> & eventHandler) const;
-    void DeviceStatusChanged(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDevice2Statics
-{
-    hstring GetDeviceSelector() const;
-    Windows::Devices::Sms::SmsDevice2 FromId(hstring_ref deviceId) const;
-    Windows::Devices::Sms::SmsDevice2 GetDefault() const;
-    Windows::Devices::Sms::SmsDevice2 FromParentId(hstring_ref parentDeviceId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDeviceMessageStore
-{
-    Windows::Foundation::IAsyncAction DeleteMessageAsync(uint32_t messageId) const;
-    Windows::Foundation::IAsyncAction DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> GetMessageAsync(uint32_t messageId) const;
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const;
-    uint32_t MaxMessages() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDeviceStatics
-{
-    hstring GetDeviceSelector() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> FromIdAsync(hstring_ref deviceId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> GetDefaultAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsDeviceStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> FromNetworkAccountIdAsync(hstring_ref networkAccountId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsFilterRule
-{
-    Windows::Devices::Sms::SmsMessageType MessageType() const;
-    Windows::Foundation::Collections::IVector<hstring> ImsiPrefixes() const;
-    Windows::Foundation::Collections::IVector<hstring> DeviceIds() const;
-    Windows::Foundation::Collections::IVector<hstring> SenderNumbers() const;
-    Windows::Foundation::Collections::IVector<hstring> TextMessagePrefixes() const;
-    Windows::Foundation::Collections::IVector<int32_t> PortNumbers() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    void CellularClass(Windows::Devices::Sms::CellularClass value) const;
-    Windows::Foundation::Collections::IVector<int32_t> ProtocolIds() const;
-    Windows::Foundation::Collections::IVector<int32_t> TeleserviceIds() const;
-    Windows::Foundation::Collections::IVector<hstring> WapApplicationIds() const;
-    Windows::Foundation::Collections::IVector<hstring> WapContentTypes() const;
-    Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sms::SmsBroadcastType> BroadcastTypes() const;
-    Windows::Foundation::Collections::IVector<int32_t> BroadcastChannels() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsFilterRuleFactory
-{
-    Windows::Devices::Sms::SmsFilterRule CreateFilterRule(Windows::Devices::Sms::SmsMessageType messageType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsFilterRules
-{
-    Windows::Devices::Sms::SmsFilterActionType ActionType() const;
-    Windows::Foundation::Collections::IVector<Windows::Devices::Sms::SmsFilterRule> Rules() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsFilterRulesFactory
-{
-    Windows::Devices::Sms::SmsFilterRules CreateFilterRules(Windows::Devices::Sms::SmsFilterActionType actionType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessage
-{
-    uint32_t Id() const;
-    Windows::Devices::Sms::SmsMessageClass MessageClass() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessageBase
-{
-    Windows::Devices::Sms::SmsMessageType MessageType() const;
-    hstring DeviceId() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    Windows::Devices::Sms::SmsMessageClass MessageClass() const;
-    hstring SimIccId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessageReceivedEventArgs
-{
-    Windows::Devices::Sms::SmsTextMessage TextMessage() const;
-    Windows::Devices::Sms::SmsBinaryMessage BinaryMessage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessageReceivedTriggerDetails
-{
-    Windows::Devices::Sms::SmsMessageType MessageType() const;
-    Windows::Devices::Sms::SmsTextMessage2 TextMessage() const;
-    Windows::Devices::Sms::SmsWapMessage WapMessage() const;
-    Windows::Devices::Sms::SmsAppMessage AppMessage() const;
-    Windows::Devices::Sms::SmsBroadcastMessage BroadcastMessage() const;
-    Windows::Devices::Sms::SmsVoicemailMessage VoicemailMessage() const;
-    Windows::Devices::Sms::SmsStatusMessage StatusMessage() const;
-    void Drop() const;
-    void Accept() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessageRegistration
-{
-    hstring Id() const;
-    void Unregister() const;
-    event_token MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails> & eventHandler) const;
-    using MessageReceived_revoker = event_revoker<ISmsMessageRegistration>;
-    MessageReceived_revoker MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sms::SmsMessageRegistration, Windows::Devices::Sms::SmsMessageReceivedTriggerDetails> & eventHandler) const;
-    void MessageReceived(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsMessageRegistrationStatics
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::SmsMessageRegistration> AllRegistrations() const;
-    Windows::Devices::Sms::SmsMessageRegistration Register(hstring_ref id, const Windows::Devices::Sms::SmsFilterRules & filterRules) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsReceivedEventDetails
-{
-    hstring DeviceId() const;
-    uint32_t MessageIndex() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsReceivedEventDetails2
-{
-    Windows::Devices::Sms::SmsMessageClass MessageClass() const;
-    Windows::Devices::Sms::SmsBinaryMessage BinaryMessage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsSendMessageResult
-{
-    bool IsSuccessful() const;
-    Windows::Foundation::Collections::IVectorView<int32_t> MessageReferenceNumbers() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    Windows::Devices::Sms::SmsModemErrorCode ModemErrorCode() const;
-    bool IsErrorTransient() const;
-    int32_t NetworkCauseCode() const;
-    int32_t TransportFailureCause() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsStatusMessage
-{
-    hstring To() const;
-    hstring From() const;
-    hstring Body() const;
-    int32_t Status() const;
-    int32_t MessageReferenceNumber() const;
-    Windows::Foundation::DateTime ServiceCenterTimestamp() const;
-    Windows::Foundation::DateTime DischargeTime() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsTextMessage
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    uint32_t PartReferenceId() const;
-    uint32_t PartNumber() const;
-    uint32_t PartCount() const;
-    hstring To() const;
-    void To(hstring_ref value) const;
-    hstring From() const;
-    void From(hstring_ref value) const;
-    hstring Body() const;
-    void Body(hstring_ref value) const;
-    Windows::Devices::Sms::SmsEncoding Encoding() const;
-    void Encoding(Windows::Devices::Sms::SmsEncoding value) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsTextMessage2
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    hstring To() const;
-    void To(hstring_ref value) const;
-    hstring From() const;
-    hstring Body() const;
-    void Body(hstring_ref value) const;
-    Windows::Devices::Sms::SmsEncoding Encoding() const;
-    void Encoding(Windows::Devices::Sms::SmsEncoding value) const;
-    hstring CallbackNumber() const;
-    void CallbackNumber(hstring_ref value) const;
-    bool IsDeliveryNotificationEnabled() const;
-    void IsDeliveryNotificationEnabled(bool value) const;
-    int32_t RetryAttemptCount() const;
-    void RetryAttemptCount(int32_t value) const;
-    int32_t TeleserviceId() const;
-    int32_t ProtocolId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsTextMessageStatics
-{
-    Windows::Devices::Sms::SmsTextMessage FromBinaryMessage(const Windows::Devices::Sms::SmsBinaryMessage & binaryMessage) const;
-    Windows::Devices::Sms::SmsTextMessage FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_ref<const uint8_t> value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsVoicemailMessage
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    hstring To() const;
-    hstring Body() const;
-    Windows::Foundation::IReference<int32_t> MessageCount() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISmsWapMessage
-{
-    Windows::Foundation::DateTime Timestamp() const;
-    hstring To() const;
-    hstring From() const;
-    hstring ApplicationId() const;
-    hstring ContentType() const;
-    Windows::Storage::Streams::IBuffer BinaryBody() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Headers() const;
-};
-
-struct SmsDeviceStatusChangedEventHandler : Windows::IUnknown
+struct [[deprecated("SmsDeviceStatusChangedEventHandler may be altered or unavailable for releases after Windows 10.")]] SmsDeviceStatusChangedEventHandler : Windows::Foundation::IUnknown
 {
     SmsDeviceStatusChangedEventHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<SmsDeviceStatusChangedEventHandler>(m_ptr); }
     template <typename L> SmsDeviceStatusChangedEventHandler(L lambda);
     template <typename F> SmsDeviceStatusChangedEventHandler (F * function);
     template <typename O, typename M> SmsDeviceStatusChangedEventHandler(O * object, M method);
     void operator()(const Windows::Devices::Sms::SmsDevice & sender) const;
 };
 
-struct SmsMessageReceivedEventHandler : Windows::IUnknown
+struct [[deprecated("SmsMessageReceivedEventHandler may be altered or unavailable for releases after Windows 10.")]] SmsMessageReceivedEventHandler : Windows::Foundation::IUnknown
 {
     SmsMessageReceivedEventHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<SmsMessageReceivedEventHandler>(m_ptr); }
     template <typename L> SmsMessageReceivedEventHandler(L lambda);
     template <typename F> SmsMessageReceivedEventHandler (F * function);
     template <typename O, typename M> SmsMessageReceivedEventHandler(O * object, M method);
@@ -660,235 +353,217 @@ struct SmsMessageReceivedEventHandler : Windows::IUnknown
 };
 
 struct ISmsAppMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsAppMessage>,
     impl::require<ISmsAppMessage, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsAppMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsAppMessage>(m_ptr); }
 };
 
 struct ISmsBinaryMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsBinaryMessage>,
     impl::require<ISmsBinaryMessage, Windows::Devices::Sms::ISmsMessage>
 {
     ISmsBinaryMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsBinaryMessage>(m_ptr); }
 };
+struct [[deprecated("SmsBinaryMessage may be altered or unavailable for releases after Windows 10. Instead, use SmsAppMessage.")]] ISmsBinaryMessage;
 
 struct ISmsBroadcastMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsBroadcastMessage>,
     impl::require<ISmsBroadcastMessage, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsBroadcastMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsBroadcastMessage>(m_ptr); }
 };
 
 struct ISmsDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDevice>
 {
     ISmsDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDevice>(m_ptr); }
 };
+struct [[deprecated("SmsDevice may be altered or unavailable for releases after Windows 10. Instead, use SmsDevice2.")]] ISmsDevice;
 
 struct ISmsDevice2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDevice2>
 {
     ISmsDevice2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDevice2>(m_ptr); }
 };
 
 struct ISmsDevice2Statics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDevice2Statics>
 {
     ISmsDevice2Statics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDevice2Statics>(m_ptr); }
 };
 
 struct ISmsDeviceMessageStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDeviceMessageStore>
 {
     ISmsDeviceMessageStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDeviceMessageStore>(m_ptr); }
 };
+struct [[deprecated("SmsDeviceMessageStore may be altered or unavailable for releases after Windows 10.")]] ISmsDeviceMessageStore;
 
 struct ISmsDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDeviceStatics>
 {
     ISmsDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDeviceStatics>(m_ptr); }
 };
+struct [[deprecated("ISmsDeviceStatics may be altered or unavailable for releases after Windows 10.")]] ISmsDeviceStatics;
 
 struct ISmsDeviceStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsDeviceStatics2>
 {
     ISmsDeviceStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsDeviceStatics2>(m_ptr); }
 };
+struct [[deprecated("ISmsDeviceStatics2 may be altered or unavailable for releases after Windows 10.")]] ISmsDeviceStatics2;
 
 struct ISmsFilterRule :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsFilterRule>
 {
     ISmsFilterRule(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsFilterRule>(m_ptr); }
 };
 
 struct ISmsFilterRuleFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsFilterRuleFactory>
 {
     ISmsFilterRuleFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsFilterRuleFactory>(m_ptr); }
 };
 
 struct ISmsFilterRules :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsFilterRules>
 {
     ISmsFilterRules(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsFilterRules>(m_ptr); }
 };
 
 struct ISmsFilterRulesFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsFilterRulesFactory>
 {
     ISmsFilterRulesFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsFilterRulesFactory>(m_ptr); }
 };
 
 struct ISmsMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessage>
 {
     ISmsMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessage>(m_ptr); }
 };
 
 struct ISmsMessageBase :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessageBase>
 {
     ISmsMessageBase(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessageBase>(m_ptr); }
 };
 
 struct ISmsMessageReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessageReceivedEventArgs>
 {
     ISmsMessageReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessageReceivedEventArgs>(m_ptr); }
 };
+struct [[deprecated("SmsMessageReceivedEventArgs may be altered or unavailable for releases after Windows 10.")]] ISmsMessageReceivedEventArgs;
 
 struct ISmsMessageReceivedTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessageReceivedTriggerDetails>
 {
     ISmsMessageReceivedTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessageReceivedTriggerDetails>(m_ptr); }
 };
 
 struct ISmsMessageRegistration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessageRegistration>
 {
     ISmsMessageRegistration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessageRegistration>(m_ptr); }
 };
 
 struct ISmsMessageRegistrationStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsMessageRegistrationStatics>
 {
     ISmsMessageRegistrationStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsMessageRegistrationStatics>(m_ptr); }
 };
 
 struct ISmsReceivedEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsReceivedEventDetails>
 {
     ISmsReceivedEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsReceivedEventDetails>(m_ptr); }
 };
+struct [[deprecated("SmsReceivedEventDetails may be altered or unavailable for releases after Windows 10. Instead, use SmsMessageReceivedTriggerDetails.")]] ISmsReceivedEventDetails;
 
 struct ISmsReceivedEventDetails2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsReceivedEventDetails2>
 {
     ISmsReceivedEventDetails2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsReceivedEventDetails2>(m_ptr); }
 };
+struct [[deprecated("SmsReceivedEventDetails may be altered or unavailable for releases after Windows 10. Instead, use SmsMessageReceivedTriggerDetails.")]] ISmsReceivedEventDetails2;
 
 struct ISmsSendMessageResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsSendMessageResult>
 {
     ISmsSendMessageResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsSendMessageResult>(m_ptr); }
 };
 
 struct ISmsStatusMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsStatusMessage>,
     impl::require<ISmsStatusMessage, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsStatusMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsStatusMessage>(m_ptr); }
 };
 
 struct ISmsTextMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsTextMessage>,
     impl::require<ISmsTextMessage, Windows::Devices::Sms::ISmsMessage>
 {
     ISmsTextMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsTextMessage>(m_ptr); }
 };
+struct [[deprecated("SmsTextMessage may be altered or unavailable for releases after Windows 10. Instead, use SmsTextMessage2.")]] ISmsTextMessage;
 
 struct ISmsTextMessage2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsTextMessage2>,
     impl::require<ISmsTextMessage2, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsTextMessage2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsTextMessage2>(m_ptr); }
 };
 
 struct ISmsTextMessageStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsTextMessageStatics>
 {
     ISmsTextMessageStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsTextMessageStatics>(m_ptr); }
 };
+struct [[deprecated("ISmsTextMessageStatics may be altered or unavailable for releases after Windows 10.")]] ISmsTextMessageStatics;
 
 struct ISmsVoicemailMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsVoicemailMessage>,
     impl::require<ISmsVoicemailMessage, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsVoicemailMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsVoicemailMessage>(m_ptr); }
 };
 
 struct ISmsWapMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISmsWapMessage>,
     impl::require<ISmsWapMessage, Windows::Devices::Sms::ISmsMessageBase>
 {
     ISmsWapMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISmsWapMessage>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::Notification::Management {
 
-struct __declspec(uuid("0d04a12c-883d-4aa7-bca7-fa4bb8bffee6")) __declspec(novtable) IAccessoryManager : Windows::IInspectable
+struct __declspec(uuid("0d04a12c-883d-4aa7-bca7-fa4bb8bffee6")) __declspec(novtable) IAccessoryManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RegisterAccessoryApp(hstring * triggerId) = 0;
     virtual HRESULT __stdcall abi_GetNextTriggerDetails(Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails ** pDetails) = 0;
@@ -63,7 +63,7 @@ struct __declspec(uuid("0d04a12c-883d-4aa7-bca7-fa4bb8bffee6")) __declspec(novta
     virtual HRESULT __stdcall abi_GetAppIcon(hstring appId, Windows::Storage::Streams::IRandomAccessStreamReference ** returnValue) = 0;
 };
 
-struct __declspec(uuid("bacad44d-d393-46c6-b80c-15fdf44d5386")) __declspec(novtable) IAccessoryManager2 : Windows::IInspectable
+struct __declspec(uuid("bacad44d-d393-46c6-b80c-15fdf44d5386")) __declspec(novtable) IAccessoryManager2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RingDevice() = 0;
     virtual HRESULT __stdcall get_SpeedDialList(Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry> ** ppvalue) = 0;
@@ -82,7 +82,7 @@ struct __declspec(uuid("bacad44d-d393-46c6-b80c-15fdf44d5386")) __declspec(novta
     virtual HRESULT __stdcall abi_UpdateEmailReadStatus(Windows::Phone::Notification::Management::IBinaryId * messageEntryId, bool isRead) = 0;
 };
 
-struct __declspec(uuid("81f75137-edc7-47e0-b2f7-7e577c833f7d")) __declspec(novtable) IAccessoryManager3 : Windows::IInspectable
+struct __declspec(uuid("81f75137-edc7-47e0-b2f7-7e577c833f7d")) __declspec(novtable) IAccessoryManager3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SnoozeAlarmByInstanceId(hstring instanceId) = 0;
     virtual HRESULT __stdcall abi_DismissAlarmByInstanceId(hstring instanceId) = 0;
@@ -90,7 +90,7 @@ struct __declspec(uuid("81f75137-edc7-47e0-b2f7-7e577c833f7d")) __declspec(novta
     virtual HRESULT __stdcall abi_DismissReminderByInstanceId(hstring instanceId) = 0;
 };
 
-struct __declspec(uuid("6968a7d4-e3ca-49cb-8c87-2c11cdff9646")) __declspec(novtable) IAccessoryNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("6968a7d4-e3ca-49cb-8c87-2c11cdff9646")) __declspec(novtable) IAccessoryNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TimeCreated(Windows::Foundation::DateTime * value) = 0;
     virtual HRESULT __stdcall get_AppDisplayName(hstring * value) = 0;
@@ -100,7 +100,7 @@ struct __declspec(uuid("6968a7d4-e3ca-49cb-8c87-2c11cdff9646")) __declspec(novta
     virtual HRESULT __stdcall put_StartedProcessing(bool value) = 0;
 };
 
-struct __declspec(uuid("38f5fa30-c738-4da2-908c-775d83c36abb")) __declspec(novtable) IAlarmNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("38f5fa30-c738-4da2-908c-775d83c36abb")) __declspec(novtable) IAlarmNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AlarmId(GUID * value) = 0;
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
@@ -108,30 +108,30 @@ struct __declspec(uuid("38f5fa30-c738-4da2-908c-775d83c36abb")) __declspec(novta
     virtual HRESULT __stdcall get_ReminderState(winrt::Windows::Phone::Notification::Management::ReminderState * value) = 0;
 };
 
-struct __declspec(uuid("cf16e06a-7155-40fe-a9c2-7bd2127ef853")) __declspec(novtable) IAlarmNotificationTriggerDetails2 : Windows::IInspectable
+struct __declspec(uuid("cf16e06a-7155-40fe-a9c2-7bd2127ef853")) __declspec(novtable) IAlarmNotificationTriggerDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InstanceId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("2157bea5-e286-45d3-9bea-f790fc216e0e")) __declspec(novtable) IAppNotificationInfo : Windows::IInspectable
+struct __declspec(uuid("2157bea5-e286-45d3-9bea-f790fc216e0e")) __declspec(novtable) IAppNotificationInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
 };
 
-struct __declspec(uuid("4f0da531-5595-44b4-9181-ce4efa3fc168")) __declspec(novtable) IBinaryId : Windows::IInspectable
+struct __declspec(uuid("4f0da531-5595-44b4-9181-ce4efa3fc168")) __declspec(novtable) IBinaryId : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(uint8_t * value) = 0;
     virtual HRESULT __stdcall get_Length(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("4b8a3bfc-279d-42ab-9c68-3e87977bf216")) __declspec(novtable) ICalendarChangedNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("4b8a3bfc-279d-42ab-9c68-3e87977bf216")) __declspec(novtable) ICalendarChangedNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EventType(winrt::Windows::Phone::Notification::Management::CalendarChangedEvent * value) = 0;
     virtual HRESULT __stdcall get_ItemId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("dc0f01d5-1489-46bb-b73b-7f90067ecf27")) __declspec(novtable) ICortanaTileNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("dc0f01d5-1489-46bb-b73b-7f90067ecf27")) __declspec(novtable) ICortanaTileNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TileId(hstring * value) = 0;
     virtual HRESULT __stdcall get_Content(hstring * value) = 0;
@@ -145,19 +145,19 @@ struct __declspec(uuid("dc0f01d5-1489-46bb-b73b-7f90067ecf27")) __declspec(novta
     virtual HRESULT __stdcall get_Source(hstring * value) = 0;
 };
 
-struct __declspec(uuid("dfbc02ab-bda0-4568-927e-b2ede35818a1")) __declspec(novtable) IEmailAccountInfo : Windows::IInspectable
+struct __declspec(uuid("dfbc02ab-bda0-4568-927e-b2ede35818a1")) __declspec(novtable) IEmailAccountInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_IsNotificationEnabled(bool * value) = 0;
 };
 
-struct __declspec(uuid("c207150e-e237-46d6-90e6-4f529eeac1e2")) __declspec(novtable) IEmailFolderInfo : Windows::IInspectable
+struct __declspec(uuid("c207150e-e237-46d6-90e6-4f529eeac1e2")) __declspec(novtable) IEmailFolderInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_IsNotificationEnabled(bool * value) = 0;
 };
 
-struct __declspec(uuid("f3b82612-46cf-4e70-8e0d-7b2e04ab492b")) __declspec(novtable) IEmailNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("f3b82612-46cf-4e70-8e0d-7b2e04ab492b")) __declspec(novtable) IEmailNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AccountName(hstring * value) = 0;
     virtual HRESULT __stdcall get_ParentFolderName(hstring * value) = 0;
@@ -167,12 +167,12 @@ struct __declspec(uuid("f3b82612-46cf-4e70-8e0d-7b2e04ab492b")) __declspec(novta
     virtual HRESULT __stdcall get_Timestamp(Windows::Foundation::DateTime * value) = 0;
 };
 
-struct __declspec(uuid("168067e3-c56f-4ec7-bed1-f734e08de5b2")) __declspec(novtable) IEmailNotificationTriggerDetails2 : Windows::IInspectable
+struct __declspec(uuid("168067e3-c56f-4ec7-bed1-f734e08de5b2")) __declspec(novtable) IEmailNotificationTriggerDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MessageEntryId(Windows::Phone::Notification::Management::IBinaryId ** value) = 0;
 };
 
-struct __declspec(uuid("f5b7a087-06f3-4e3e-8c42-325e67010413")) __declspec(novtable) IEmailReadNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("f5b7a087-06f3-4e3e-8c42-325e67010413")) __declspec(novtable) IEmailReadNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AccountName(hstring * value) = 0;
     virtual HRESULT __stdcall get_ParentFolderName(hstring * value) = 0;
@@ -180,13 +180,13 @@ struct __declspec(uuid("f5b7a087-06f3-4e3e-8c42-325e67010413")) __declspec(novta
     virtual HRESULT __stdcall get_IsRead(bool * value) = 0;
 };
 
-struct __declspec(uuid("fab4648b-ae45-4548-91ca-4ab0548e33b5")) __declspec(novtable) IMediaControlsTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("fab4648b-ae45-4548-91ca-4ab0548e33b5")) __declspec(novtable) IMediaControlsTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PlaybackStatus(winrt::Windows::Phone::Notification::Management::PlaybackStatus * value) = 0;
     virtual HRESULT __stdcall get_MediaMetadata(Windows::Phone::Notification::Management::IMediaMetadata ** value) = 0;
 };
 
-struct __declspec(uuid("9b50ddf7-bb6c-4330-b3cd-0704a54cdb80")) __declspec(novtable) IMediaMetadata : Windows::IInspectable
+struct __declspec(uuid("9b50ddf7-bb6c-4330-b3cd-0704a54cdb80")) __declspec(novtable) IMediaMetadata : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
     virtual HRESULT __stdcall get_Subtitle(hstring * value) = 0;
@@ -197,7 +197,7 @@ struct __declspec(uuid("9b50ddf7-bb6c-4330-b3cd-0704a54cdb80")) __declspec(novta
     virtual HRESULT __stdcall get_Thumbnail(Windows::Storage::Streams::IRandomAccessStreamReference ** value) = 0;
 };
 
-struct __declspec(uuid("0c1b6f53-f071-483e-bf33-ebd44b724447")) __declspec(novtable) IPhoneCallDetails : Windows::IInspectable
+struct __declspec(uuid("0c1b6f53-f071-483e-bf33-ebd44b724447")) __declspec(novtable) IPhoneCallDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PhoneLine(GUID * value) = 0;
     virtual HRESULT __stdcall get_CallId(uint32_t * value) = 0;
@@ -213,7 +213,7 @@ struct __declspec(uuid("0c1b6f53-f071-483e-bf33-ebd44b724447")) __declspec(novta
     virtual HRESULT __stdcall get_PresetTextResponses(Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse> ** value) = 0;
 };
 
-struct __declspec(uuid("47eb32dc-33ed-49b9-995c-a296bac82b77")) __declspec(novtable) IPhoneLineDetails : Windows::IInspectable
+struct __declspec(uuid("47eb32dc-33ed-49b9-995c-a296bac82b77")) __declspec(novtable) IPhoneLineDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_LineId(GUID * value) = 0;
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
@@ -223,19 +223,19 @@ struct __declspec(uuid("47eb32dc-33ed-49b9-995c-a296bac82b77")) __declspec(novta
     virtual HRESULT __stdcall get_RegistrationState(winrt::Windows::Phone::Notification::Management::PhoneLineRegistrationState * value) = 0;
 };
 
-struct __declspec(uuid("b30cd77d-0147-498c-8241-bf0cabc60a25")) __declspec(novtable) IPhoneLineDetails2 : Windows::IInspectable
+struct __declspec(uuid("b30cd77d-0147-498c-8241-bf0cabc60a25")) __declspec(novtable) IPhoneLineDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MissedCallCount(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("ccc2fdf7-09c3-4118-91bc-ca6323a8d383")) __declspec(novtable) IPhoneNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("ccc2fdf7-09c3-4118-91bc-ca6323a8d383")) __declspec(novtable) IPhoneNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PhoneNotificationType(winrt::Windows::Phone::Notification::Management::PhoneNotificationType * value) = 0;
     virtual HRESULT __stdcall get_CallDetails(Windows::Phone::Notification::Management::IPhoneCallDetails ** value) = 0;
     virtual HRESULT __stdcall get_PhoneLineChangedId(GUID * value) = 0;
 };
 
-struct __declspec(uuid("5bddaa5d-9f61-4bf0-9feb-10502bc0b0c2")) __declspec(novtable) IReminderNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("5bddaa5d-9f61-4bf0-9feb-10502bc0b0c2")) __declspec(novtable) IReminderNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ReminderId(GUID * value) = 0;
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
@@ -246,25 +246,25 @@ struct __declspec(uuid("5bddaa5d-9f61-4bf0-9feb-10502bc0b0c2")) __declspec(novta
     virtual HRESULT __stdcall get_ReminderState(winrt::Windows::Phone::Notification::Management::ReminderState * value) = 0;
 };
 
-struct __declspec(uuid("e715f9c0-504d-4c0f-a6b3-bcb9722c6cdd")) __declspec(novtable) IReminderNotificationTriggerDetails2 : Windows::IInspectable
+struct __declspec(uuid("e715f9c0-504d-4c0f-a6b3-bcb9722c6cdd")) __declspec(novtable) IReminderNotificationTriggerDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InstanceId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("9240b6db-872c-46dc-b62a-be4541b166f8")) __declspec(novtable) ISpeedDialEntry : Windows::IInspectable
+struct __declspec(uuid("9240b6db-872c-46dc-b62a-be4541b166f8")) __declspec(novtable) ISpeedDialEntry : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PhoneNumber(hstring * value) = 0;
     virtual HRESULT __stdcall get_NumberType(hstring * value) = 0;
     virtual HRESULT __stdcall get_ContactName(hstring * value) = 0;
 };
 
-struct __declspec(uuid("e9cb74c3-2457-4cdb-8110-72f5e8e883e8")) __declspec(novtable) ITextResponse : Windows::IInspectable
+struct __declspec(uuid("e9cb74c3-2457-4cdb-8110-72f5e8e883e8")) __declspec(novtable) ITextResponse : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_Content(hstring * value) = 0;
 };
 
-struct __declspec(uuid("c9314895-4e6d-4e9d-afec-9e921b875ae8")) __declspec(novtable) IToastNotificationTriggerDetails : Windows::IInspectable
+struct __declspec(uuid("c9314895-4e6d-4e9d-afec-9e921b875ae8")) __declspec(novtable) IToastNotificationTriggerDetails : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Text1(hstring * value) = 0;
     virtual HRESULT __stdcall get_Text2(hstring * value) = 0;
@@ -273,12 +273,12 @@ struct __declspec(uuid("c9314895-4e6d-4e9d-afec-9e921b875ae8")) __declspec(novta
     virtual HRESULT __stdcall get_SuppressPopup(bool * value) = 0;
 };
 
-struct __declspec(uuid("3e0479dd-cac4-4f60-afa3-b925d9d83c93")) __declspec(novtable) IToastNotificationTriggerDetails2 : Windows::IInspectable
+struct __declspec(uuid("3e0479dd-cac4-4f60-afa3-b925d9d83c93")) __declspec(novtable) IToastNotificationTriggerDetails2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InstanceId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("944dd118-7704-4481-b92e-d3ed3ece6322")) __declspec(novtable) IVolumeInfo : Windows::IInspectable
+struct __declspec(uuid("944dd118-7704-4481-b92e-d3ed3ece6322")) __declspec(novtable) IVolumeInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SystemVolume(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_CallVolume(uint32_t * value) = 0;
@@ -315,34 +315,305 @@ template <> struct traits<Windows::Phone::Notification::Management::VolumeInfo> 
 
 namespace Windows::Phone::Notification::Management {
 
-template <typename T> struct impl_IAccessoryManager;
-template <typename T> struct impl_IAccessoryManager2;
-template <typename T> struct impl_IAccessoryManager3;
-template <typename T> struct impl_IAccessoryNotificationTriggerDetails;
-template <typename T> struct impl_IAlarmNotificationTriggerDetails;
-template <typename T> struct impl_IAlarmNotificationTriggerDetails2;
-template <typename T> struct impl_IAppNotificationInfo;
-template <typename T> struct impl_IBinaryId;
-template <typename T> struct impl_ICalendarChangedNotificationTriggerDetails;
-template <typename T> struct impl_ICortanaTileNotificationTriggerDetails;
-template <typename T> struct impl_IEmailAccountInfo;
-template <typename T> struct impl_IEmailFolderInfo;
-template <typename T> struct impl_IEmailNotificationTriggerDetails;
-template <typename T> struct impl_IEmailNotificationTriggerDetails2;
-template <typename T> struct impl_IEmailReadNotificationTriggerDetails;
-template <typename T> struct impl_IMediaControlsTriggerDetails;
-template <typename T> struct impl_IMediaMetadata;
-template <typename T> struct impl_IPhoneCallDetails;
-template <typename T> struct impl_IPhoneLineDetails;
-template <typename T> struct impl_IPhoneLineDetails2;
-template <typename T> struct impl_IPhoneNotificationTriggerDetails;
-template <typename T> struct impl_IReminderNotificationTriggerDetails;
-template <typename T> struct impl_IReminderNotificationTriggerDetails2;
-template <typename T> struct impl_ISpeedDialEntry;
-template <typename T> struct impl_ITextResponse;
-template <typename T> struct impl_IToastNotificationTriggerDetails;
-template <typename T> struct impl_IToastNotificationTriggerDetails2;
-template <typename T> struct impl_IVolumeInfo;
+template <typename D>
+struct WINRT_EBO impl_IAccessoryManager
+{
+    hstring RegisterAccessoryApp() const;
+    Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails GetNextTriggerDetails() const;
+    void ProcessTriggerDetails(const Windows::Phone::Notification::Management::IAccessoryNotificationTriggerDetails & pDetails) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::PhoneLineDetails> PhoneLineDetails() const;
+    Windows::Phone::Notification::Management::PhoneLineDetails GetPhoneLineDetails(GUID phoneLine) const;
+    void AcceptPhoneCall(uint32_t phoneCallId) const;
+    void AcceptPhoneCall(uint32_t phoneCallId, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const;
+    void AcceptPhoneCallWithVideo(uint32_t phoneCallId) const;
+    void AcceptPhoneCallWithVideo(uint32_t phoneCallId, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const;
+    void RejectPhoneCall(uint32_t phoneCallId) const;
+    void RejectPhoneCall(uint32_t phoneCallId, uint32_t textResponseID) const;
+    void MakePhoneCall(GUID phoneLine, hstring_view phoneNumber) const;
+    void MakePhoneCall(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const;
+    void MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber) const;
+    void MakePhoneCallWithVideo(GUID phoneLine, hstring_view phoneNumber, Windows::Phone::Notification::Management::PhoneCallAudioEndpoint endPoint) const;
+    void SwapPhoneCalls(uint32_t phoneCallIdToHold, uint32_t phoneCallIdOnHold) const;
+    void HoldPhoneCall(uint32_t phoneCallId, bool holdCall) const;
+    void EndPhoneCall(uint32_t phoneCallId) const;
+    void PhoneMute(bool value) const;
+    bool PhoneMute() const;
+    void PhoneCallAudioEndpoint(Windows::Phone::Notification::Management::PhoneCallAudioEndpoint value) const;
+    Windows::Phone::Notification::Management::PhoneCallAudioEndpoint PhoneCallAudioEndpoint() const;
+    void SnoozeAlarm(GUID alarmId) const;
+    void SnoozeAlarm(GUID alarmId, const Windows::Foundation::TimeSpan & timeSpan) const;
+    void DismissAlarm(GUID alarmId) const;
+    void SnoozeReminder(GUID reminderId) const;
+    void SnoozeReminder(GUID reminderId, const Windows::Foundation::TimeSpan & timeSpan) const;
+    void DismissReminder(GUID reminderId) const;
+    Windows::Phone::Notification::Management::MediaMetadata GetMediaMetadata() const;
+    Windows::Phone::Notification::Management::PlaybackCapability MediaPlaybackCapabilities() const;
+    Windows::Phone::Notification::Management::PlaybackStatus MediaPlaybackStatus() const;
+    void PerformMediaPlaybackCommand(Windows::Phone::Notification::Management::PlaybackCommand command) const;
+    bool DoNotDisturbEnabled() const;
+    bool DrivingModeEnabled() const;
+    bool BatterySaverState() const;
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Phone::Notification::Management::AppNotificationInfo> GetApps() const;
+    void EnableNotificationsForApplication(hstring_view appId) const;
+    void DisableNotificationsForApplication(hstring_view appId) const;
+    bool IsNotificationEnabledForApplication(hstring_view appId) const;
+    int32_t GetEnabledAccessoryNotificationTypes() const;
+    void EnableAccessoryNotificationTypes(int32_t accessoryNotificationTypes) const;
+    void DisableAllAccessoryNotificationTypes() const;
+    bool GetUserConsent() const;
+    Windows::Storage::Streams::IRandomAccessStreamReference GetAppIcon(hstring_view appId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessoryManager2
+{
+    void RingDevice() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::SpeedDialEntry> SpeedDialList() const;
+    void ClearToast(hstring_view instanceId) const;
+    bool IsPhonePinLocked() const;
+    void IncreaseVolume(int32_t step) const;
+    void DecreaseVolume(int32_t step) const;
+    void SetMute(bool mute) const;
+    void SetRingerVibrate(bool ringer, bool vibrate) const;
+    Windows::Phone::Notification::Management::VolumeInfo VolumeInfo() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailAccountInfo> GetAllEmailAccounts() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::EmailFolderInfo> GetFolders(hstring_view emailAccount) const;
+    void EnableEmailNotificationEmailAccount(hstring_view emailAccount) const;
+    void DisableEmailNotificationEmailAccount(hstring_view emailAccount) const;
+    void EnableEmailNotificationFolderFilter(hstring_view emailAccount, vector_view<hstring> folders) const;
+    void UpdateEmailReadStatus(const Windows::Phone::Notification::Management::BinaryId & messageEntryId, bool isRead) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessoryManager3
+{
+    void SnoozeAlarmByInstanceId(hstring_view instanceId) const;
+    void DismissAlarmByInstanceId(hstring_view instanceId) const;
+    void SnoozeReminderByInstanceId(hstring_view instanceId) const;
+    void DismissReminderByInstanceId(hstring_view instanceId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessoryNotificationTriggerDetails
+{
+    Windows::Foundation::DateTime TimeCreated() const;
+    hstring AppDisplayName() const;
+    hstring AppId() const;
+    Windows::Phone::Notification::Management::AccessoryNotificationType AccessoryNotificationType() const;
+    bool StartedProcessing() const;
+    void StartedProcessing(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAlarmNotificationTriggerDetails
+{
+    GUID AlarmId() const;
+    hstring Title() const;
+    Windows::Foundation::DateTime Timestamp() const;
+    Windows::Phone::Notification::Management::ReminderState ReminderState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAlarmNotificationTriggerDetails2
+{
+    hstring InstanceId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAppNotificationInfo
+{
+    hstring Id() const;
+    hstring Name() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IBinaryId
+{
+    uint8_t Id() const;
+    uint32_t Length() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICalendarChangedNotificationTriggerDetails
+{
+    Windows::Phone::Notification::Management::CalendarChangedEvent EventType() const;
+    hstring ItemId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICortanaTileNotificationTriggerDetails
+{
+    hstring TileId() const;
+    hstring Content() const;
+    hstring LargeContent1() const;
+    hstring LargeContent2() const;
+    hstring EmphasizedText() const;
+    hstring NonWrappedSmallContent1() const;
+    hstring NonWrappedSmallContent2() const;
+    hstring NonWrappedSmallContent3() const;
+    hstring NonWrappedSmallContent4() const;
+    hstring Source() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEmailAccountInfo
+{
+    hstring DisplayName() const;
+    bool IsNotificationEnabled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEmailFolderInfo
+{
+    hstring DisplayName() const;
+    bool IsNotificationEnabled() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEmailNotificationTriggerDetails
+{
+    hstring AccountName() const;
+    hstring ParentFolderName() const;
+    hstring SenderName() const;
+    hstring SenderAddress() const;
+    Windows::ApplicationModel::Email::EmailMessage EmailMessage() const;
+    Windows::Foundation::DateTime Timestamp() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEmailNotificationTriggerDetails2
+{
+    Windows::Phone::Notification::Management::BinaryId MessageEntryId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IEmailReadNotificationTriggerDetails
+{
+    hstring AccountName() const;
+    hstring ParentFolderName() const;
+    Windows::Phone::Notification::Management::BinaryId MessageEntryId() const;
+    bool IsRead() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaControlsTriggerDetails
+{
+    Windows::Phone::Notification::Management::PlaybackStatus PlaybackStatus() const;
+    Windows::Phone::Notification::Management::MediaMetadata MediaMetadata() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaMetadata
+{
+    hstring Title() const;
+    hstring Subtitle() const;
+    hstring Artist() const;
+    hstring Album() const;
+    uint32_t Track() const;
+    Windows::Foundation::TimeSpan Duration() const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneCallDetails
+{
+    GUID PhoneLine() const;
+    uint32_t CallId() const;
+    Windows::Phone::Notification::Management::PhoneCallTransport CallTransport() const;
+    Windows::Phone::Notification::Management::PhoneMediaType CallMediaType() const;
+    Windows::Phone::Notification::Management::PhoneCallDirection CallDirection() const;
+    Windows::Phone::Notification::Management::PhoneCallState State() const;
+    uint32_t ConferenceCallId() const;
+    Windows::Foundation::DateTime StartTime() const;
+    Windows::Foundation::DateTime EndTime() const;
+    hstring PhoneNumber() const;
+    hstring ContactName() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Notification::Management::TextResponse> PresetTextResponses() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneLineDetails
+{
+    GUID LineId() const;
+    hstring DisplayName() const;
+    hstring LineNumber() const;
+    bool DefaultOutgoingLine() const;
+    uint32_t VoicemailCount() const;
+    Windows::Phone::Notification::Management::PhoneLineRegistrationState RegistrationState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneLineDetails2
+{
+    uint32_t MissedCallCount() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhoneNotificationTriggerDetails
+{
+    Windows::Phone::Notification::Management::PhoneNotificationType PhoneNotificationType() const;
+    Windows::Phone::Notification::Management::PhoneCallDetails CallDetails() const;
+    GUID PhoneLineChangedId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IReminderNotificationTriggerDetails
+{
+    GUID ReminderId() const;
+    hstring Title() const;
+    hstring Description() const;
+    hstring Details() const;
+    Windows::Foundation::DateTime Timestamp() const;
+    Windows::ApplicationModel::Appointments::Appointment Appointment() const;
+    Windows::Phone::Notification::Management::ReminderState ReminderState() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IReminderNotificationTriggerDetails2
+{
+    hstring InstanceId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISpeedDialEntry
+{
+    hstring PhoneNumber() const;
+    hstring NumberType() const;
+    hstring ContactName() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextResponse
+{
+    uint32_t Id() const;
+    hstring Content() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationTriggerDetails
+{
+    hstring Text1() const;
+    hstring Text2() const;
+    hstring Text3() const;
+    hstring Text4() const;
+    bool SuppressPopup() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationTriggerDetails2
+{
+    hstring InstanceId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IVolumeInfo
+{
+    uint32_t SystemVolume() const;
+    uint32_t CallVolume() const;
+    uint32_t MediaVolume() const;
+    bool IsMuted() const;
+    Windows::Phone::Notification::Management::VibrateState IsVibrateEnabled() const;
+};
 
 }
 

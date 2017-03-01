@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -37,6 +37,18 @@ struct LocalLocationFinder;
 struct LocalLocationFinderResult;
 struct LocalLocationHoursOfOperationItem;
 struct LocalLocationRatingInfo;
+
+}
+
+namespace Windows::Services::Maps::LocalSearch {
+
+template <typename T> struct impl_ILocalCategoriesStatics;
+template <typename T> struct impl_ILocalLocation;
+template <typename T> struct impl_ILocalLocation2;
+template <typename T> struct impl_ILocalLocationFinderResult;
+template <typename T> struct impl_ILocalLocationFinderStatics;
+template <typename T> struct impl_ILocalLocationHoursOfOperationItem;
+template <typename T> struct impl_ILocalLocationRatingInfo;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -46,6 +46,21 @@ struct RetailInfo;
 struct SharedModeSettings;
 struct SystemIdentification;
 struct SystemIdentificationInfo;
+
+}
+
+namespace Windows::System::Profile {
+
+template <typename T> struct impl_IAnalyticsInfoStatics;
+template <typename T> struct impl_IAnalyticsVersionInfo;
+template <typename T> struct impl_IHardwareIdentificationStatics;
+template <typename T> struct impl_IHardwareToken;
+template <typename T> struct impl_IKnownRetailInfoPropertiesStatics;
+template <typename T> struct impl_IPlatformDiagnosticsAndUsageDataSettingsStatics;
+template <typename T> struct impl_IRetailInfoStatics;
+template <typename T> struct impl_ISharedModeSettingsStatics;
+template <typename T> struct impl_ISystemIdentificationInfo;
+template <typename T> struct impl_ISystemIdentificationStatics;
 
 }
 

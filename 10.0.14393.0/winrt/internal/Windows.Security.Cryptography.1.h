@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,7 +11,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Security::Cryptography {
 
-struct __declspec(uuid("320b7e22-3cb0-4cdf-8663-1d28910065eb")) __declspec(novtable) ICryptographicBufferStatics : Windows::IInspectable
+struct __declspec(uuid("320b7e22-3cb0-4cdf-8663-1d28910065eb")) __declspec(novtable) ICryptographicBufferStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Compare(Windows::Storage::Streams::IBuffer * object1, Windows::Storage::Streams::IBuffer * object2, bool * isEqual) = 0;
     virtual HRESULT __stdcall abi_GenerateRandom(uint32_t length, Windows::Storage::Streams::IBuffer ** buffer) = 0;
@@ -35,7 +35,21 @@ namespace ABI {
 
 namespace Windows::Security::Cryptography {
 
-template <typename T> struct impl_ICryptographicBufferStatics;
+template <typename D>
+struct WINRT_EBO impl_ICryptographicBufferStatics
+{
+    bool Compare(const Windows::Storage::Streams::IBuffer & object1, const Windows::Storage::Streams::IBuffer & object2) const;
+    Windows::Storage::Streams::IBuffer GenerateRandom(uint32_t length) const;
+    uint32_t GenerateRandomNumber() const;
+    Windows::Storage::Streams::IBuffer CreateFromByteArray(array_view<const uint8_t> value) const;
+    void CopyToByteArray(const Windows::Storage::Streams::IBuffer & buffer, com_array<uint8_t> & value) const;
+    Windows::Storage::Streams::IBuffer DecodeFromHexString(hstring_view value) const;
+    hstring EncodeToHexString(const Windows::Storage::Streams::IBuffer & buffer) const;
+    Windows::Storage::Streams::IBuffer DecodeFromBase64String(hstring_view value) const;
+    hstring EncodeToBase64String(const Windows::Storage::Streams::IBuffer & buffer) const;
+    Windows::Storage::Streams::IBuffer ConvertStringToBinary(hstring_view value, Windows::Security::Cryptography::BinaryStringEncoding encoding) const;
+    hstring ConvertBinaryToString(Windows::Security::Cryptography::BinaryStringEncoding encoding, const Windows::Storage::Streams::IBuffer & buffer) const;
+};
 
 }
 

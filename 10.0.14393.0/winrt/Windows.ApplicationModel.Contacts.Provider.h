@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.ApplicationModel.Contacts.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
@@ -16,11 +19,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerUI> : produce_base<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerUI>
 {
-    HRESULT __stdcall abi_AddContact(abi_arg_in<hstring> id, abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::Provider::AddContactResult * result) noexcept override
+    HRESULT __stdcall abi_AddContact(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::Provider::AddContactResult * result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().AddContact(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().AddContact(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -29,10 +33,11 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
         }
     }
 
-    HRESULT __stdcall abi_RemoveContact(abi_arg_in<hstring> id) noexcept override
+    HRESULT __stdcall abi_RemoveContact(impl::abi_arg_in<hstring> id) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RemoveContact(*reinterpret_cast<const hstring *>(&id));
             return S_OK;
         }
@@ -42,11 +47,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
         }
     }
 
-    HRESULT __stdcall abi_ContainsContact(abi_arg_in<hstring> id, bool * isContained) noexcept override
+    HRESULT __stdcall abi_ContainsContact(impl::abi_arg_in<hstring> id, bool * isContained) noexcept override
     {
         try
         {
-            *isContained = detach(this->shim().ContainsContact(*reinterpret_cast<const hstring *>(&id)));
+            typename D::abi_guard guard(this->shim());
+            *isContained = detach_abi(this->shim().ContainsContact(*reinterpret_cast<const hstring *>(&id)));
             return S_OK;
         }
         catch (...)
@@ -55,11 +61,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
         }
     }
 
-    HRESULT __stdcall get_DesiredFields(abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_DesiredFields(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DesiredFields());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredFields());
             return S_OK;
         }
         catch (...)
@@ -73,7 +80,8 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
     {
         try
         {
-            *value = detach(this->shim().SelectionMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SelectionMode());
             return S_OK;
         }
         catch (...)
@@ -82,11 +90,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
         }
     }
 
-    HRESULT __stdcall add_ContactRemoved(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::Provider::ContactPickerUI, Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ContactRemoved(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::Provider::ContactPickerUI, Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ContactRemoved(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::Provider::ContactPickerUI, Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ContactRemoved(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::Provider::ContactPickerUI, Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -99,6 +108,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ContactRemoved(token);
             return S_OK;
         }
@@ -112,11 +122,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerUI2> : produce_base<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerUI2>
 {
-    HRESULT __stdcall abi_AddContact(abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::Provider::AddContactResult * result) noexcept override
+    HRESULT __stdcall abi_AddContact(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::Provider::AddContactResult * result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().AddContact(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().AddContact(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -125,11 +136,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
         }
     }
 
-    HRESULT __stdcall get_DesiredFieldsWithContactFieldType(abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType>> value) noexcept override
+    HRESULT __stdcall get_DesiredFieldsWithContactFieldType(impl::abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DesiredFieldsWithContactFieldType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DesiredFieldsWithContactFieldType());
             return S_OK;
         }
         catch (...)
@@ -143,11 +155,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactPickerU
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::Provider::IContactRemovedEventArgs> : produce_base<D, Windows::ApplicationModel::Contacts::Provider::IContactRemovedEventArgs>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -165,47 +178,47 @@ namespace Windows::ApplicationModel::Contacts::Provider {
 template <typename D> hstring impl_IContactRemovedEventArgs<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IContactRemovedEventArgs &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IContactRemovedEventArgs)->get_Id(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::ApplicationModel::Contacts::Provider::AddContactResult impl_IContactPickerUI<D>::AddContact(hstring_ref id, const Windows::ApplicationModel::Contacts::Contact & contact) const
+template <typename D> Windows::ApplicationModel::Contacts::Provider::AddContactResult impl_IContactPickerUI<D>::AddContact(hstring_view id, const Windows::ApplicationModel::Contacts::Contact & contact) const
 {
     Windows::ApplicationModel::Contacts::Provider::AddContactResult result {};
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->abi_AddContact(get(id), get(contact), &result));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->abi_AddContact(get_abi(id), get_abi(contact), &result));
     return result;
 }
 
-template <typename D> void impl_IContactPickerUI<D>::RemoveContact(hstring_ref id) const
+template <typename D> void impl_IContactPickerUI<D>::RemoveContact(hstring_view id) const
 {
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->abi_RemoveContact(get(id)));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->abi_RemoveContact(get_abi(id)));
 }
 
-template <typename D> bool impl_IContactPickerUI<D>::ContainsContact(hstring_ref id) const
+template <typename D> bool impl_IContactPickerUI<D>::ContainsContact(hstring_view id) const
 {
     bool isContained {};
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->abi_ContainsContact(get(id), &isContained));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->abi_ContainsContact(get_abi(id), &isContained));
     return isContained;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IContactPickerUI<D>::DesiredFields() const
 {
     Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->get_DesiredFields(put(value)));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->get_DesiredFields(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Contacts::ContactSelectionMode impl_IContactPickerUI<D>::SelectionMode() const
 {
     Windows::ApplicationModel::Contacts::ContactSelectionMode value {};
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->get_SelectionMode(&value));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->get_SelectionMode(&value));
     return value;
 }
 
 template <typename D> event_token impl_IContactPickerUI<D>::ContactRemoved(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::Provider::ContactPickerUI, Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->add_ContactRemoved(get(handler), &token));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->add_ContactRemoved(get_abi(handler), &token));
     return token;
 }
 
@@ -216,23 +229,70 @@ template <typename D> event_revoker<IContactPickerUI> impl_IContactPickerUI<D>::
 
 template <typename D> void impl_IContactPickerUI<D>::ContactRemoved(event_token token) const
 {
-    check_hresult(static_cast<const IContactPickerUI &>(static_cast<const D &>(*this))->remove_ContactRemoved(token));
+    check_hresult(WINRT_SHIM(IContactPickerUI)->remove_ContactRemoved(token));
 }
 
 template <typename D> Windows::ApplicationModel::Contacts::Provider::AddContactResult impl_IContactPickerUI2<D>::AddContact(const Windows::ApplicationModel::Contacts::Contact & contact) const
 {
     Windows::ApplicationModel::Contacts::Provider::AddContactResult result {};
-    check_hresult(static_cast<const IContactPickerUI2 &>(static_cast<const D &>(*this))->abi_AddContact(get(contact), &result));
+    check_hresult(WINRT_SHIM(IContactPickerUI2)->abi_AddContact(get_abi(contact), &result));
     return result;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType> impl_IContactPickerUI2<D>::DesiredFieldsWithContactFieldType() const
 {
     Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType> value;
-    check_hresult(static_cast<const IContactPickerUI2 &>(static_cast<const D &>(*this))->get_DesiredFieldsWithContactFieldType(put(value)));
+    check_hresult(WINRT_SHIM(IContactPickerUI2)->get_DesiredFieldsWithContactFieldType(put_abi(value)));
     return value;
 }
 
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Contacts::Provider::IContactPickerUI>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Provider::IContactPickerUI & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Contacts::Provider::IContactPickerUI2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Provider::IContactPickerUI2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Contacts::Provider::IContactRemovedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Provider::IContactRemovedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Contacts::Provider::ContactPickerUI>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Provider::ContactPickerUI & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Provider::ContactRemovedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,16 +1,17 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "../base.h"
 #include "Windows.Foundation.Collections.0.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
 
-struct __declspec(uuid("8a43ed9f-f4e6-4421-acf9-1dab2986820c")) __declspec(novtable) IPropertySet : Windows::IInspectable
+struct __declspec(uuid("8a43ed9f-f4e6-4421-acf9-1dab2986820c")) __declspec(novtable) IPropertySet : Windows::Foundation::IInspectable
 {
 };
 
@@ -26,7 +27,10 @@ template <> struct traits<Windows::Foundation::Collections::ValueSet> { using de
 
 namespace Windows::Foundation::Collections {
 
-template <typename T> struct impl_IPropertySet;
+template <typename D>
+struct WINRT_EBO impl_IPropertySet
+{
+};
 
 }
 

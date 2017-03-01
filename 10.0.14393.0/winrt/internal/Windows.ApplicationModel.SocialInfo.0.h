@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -37,6 +37,17 @@ struct SocialFeedItem;
 struct SocialFeedSharedItem;
 struct SocialItemThumbnail;
 struct SocialUserInfo;
+
+}
+
+namespace Windows::ApplicationModel::SocialInfo {
+
+template <typename T> struct impl_ISocialFeedChildItem;
+template <typename T> struct impl_ISocialFeedContent;
+template <typename T> struct impl_ISocialFeedItem;
+template <typename T> struct impl_ISocialFeedSharedItem;
+template <typename T> struct impl_ISocialItemThumbnail;
+template <typename T> struct impl_ISocialUserInfo;
 
 }
 

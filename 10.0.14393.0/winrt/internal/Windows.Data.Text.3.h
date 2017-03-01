@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_SelectableWordSegmentsTokenizingHandler : impl
 {
     impl_SelectableWordSegmentsTokenizingHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment>> precedingWords, abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment>> words) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment>> precedingWords, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::SelectableWordSegment>> words) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_WordSegmentsTokenizingHandler : implements<imp
 {
     impl_WordSegmentsTokenizingHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment>> precedingWords, abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment>> words) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment>> precedingWords, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Data::Text::WordSegment>> words) noexcept override
     {
         try
         {
@@ -65,22 +65,22 @@ struct WINRT_EBO SelectableWordsSegmenter :
     Windows::Data::Text::ISelectableWordsSegmenter
 {
     SelectableWordsSegmenter(std::nullptr_t) noexcept {}
-    SelectableWordsSegmenter(hstring_ref language);
+    SelectableWordsSegmenter(hstring_view language);
 };
 
 struct WINRT_EBO SemanticTextQuery :
     Windows::Data::Text::ISemanticTextQuery
 {
     SemanticTextQuery(std::nullptr_t) noexcept {}
-    SemanticTextQuery(hstring_ref aqsFilter);
-    SemanticTextQuery(hstring_ref aqsFilter, hstring_ref filterLanguage);
+    SemanticTextQuery(hstring_view aqsFilter);
+    SemanticTextQuery(hstring_view aqsFilter, hstring_view filterLanguage);
 };
 
 struct WINRT_EBO TextConversionGenerator :
     Windows::Data::Text::ITextConversionGenerator
 {
     TextConversionGenerator(std::nullptr_t) noexcept {}
-    TextConversionGenerator(hstring_ref languageTag);
+    TextConversionGenerator(hstring_view languageTag);
 };
 
 struct WINRT_EBO TextPhoneme :
@@ -93,7 +93,7 @@ struct WINRT_EBO TextPredictionGenerator :
     Windows::Data::Text::ITextPredictionGenerator
 {
     TextPredictionGenerator(std::nullptr_t) noexcept {}
-    TextPredictionGenerator(hstring_ref languageTag);
+    TextPredictionGenerator(hstring_view languageTag);
 };
 
 struct WINRT_EBO TextReverseConversionGenerator :
@@ -101,7 +101,7 @@ struct WINRT_EBO TextReverseConversionGenerator :
     impl::require<TextReverseConversionGenerator, Windows::Data::Text::ITextReverseConversionGenerator2>
 {
     TextReverseConversionGenerator(std::nullptr_t) noexcept {}
-    TextReverseConversionGenerator(hstring_ref languageTag);
+    TextReverseConversionGenerator(hstring_view languageTag);
 };
 
 struct UnicodeCharacters
@@ -136,7 +136,7 @@ struct WINRT_EBO WordsSegmenter :
     Windows::Data::Text::IWordsSegmenter
 {
     WordsSegmenter(std::nullptr_t) noexcept {}
-    WordsSegmenter(hstring_ref language);
+    WordsSegmenter(hstring_view language);
 };
 
 }

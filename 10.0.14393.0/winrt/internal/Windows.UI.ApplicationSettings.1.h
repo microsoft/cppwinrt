@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -20,13 +20,13 @@ struct __declspec(uuid("61c0e185-0977-4678-b4e2-98727afbeed9")) __declspec(novta
     virtual HRESULT __stdcall abi_Invoke(Windows::UI::ApplicationSettings::ICredentialCommand * command) = 0;
 };
 
-struct __declspec(uuid("81ea942c-4f09-4406-a538-838d9b14b7e6")) __declspec(novtable) IAccountsSettingsPane : Windows::IInspectable
+struct __declspec(uuid("81ea942c-4f09-4406-a538-838d9b14b7e6")) __declspec(novtable) IAccountsSettingsPane : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_AccountCommandsRequested(Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_AccountCommandsRequested(event_token cookie) = 0;
 };
 
-struct __declspec(uuid("3b68c099-db19-45d0-9abf-95d3773c9330")) __declspec(novtable) IAccountsSettingsPaneCommandsRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("3b68c099-db19-45d0-9abf-95d3773c9330")) __declspec(novtable) IAccountsSettingsPaneCommandsRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccountProviderCommands(Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountProviderCommand> ** value) = 0;
     virtual HRESULT __stdcall get_WebAccountCommands(Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountCommand> ** value) = 0;
@@ -37,92 +37,92 @@ struct __declspec(uuid("3b68c099-db19-45d0-9abf-95d3773c9330")) __declspec(novta
     virtual HRESULT __stdcall abi_GetDeferral(Windows::UI::ApplicationSettings::IAccountsSettingsPaneEventDeferral ** deferral) = 0;
 };
 
-struct __declspec(uuid("cbf25d3f-e5ba-40ef-93da-65e096e5fb04")) __declspec(novtable) IAccountsSettingsPaneEventDeferral : Windows::IInspectable
+struct __declspec(uuid("cbf25d3f-e5ba-40ef-93da-65e096e5fb04")) __declspec(novtable) IAccountsSettingsPaneEventDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("561f8b60-b0ec-4150-a8dc-208ee44b068a")) __declspec(novtable) IAccountsSettingsPaneStatics : Windows::IInspectable
+struct __declspec(uuid("561f8b60-b0ec-4150-a8dc-208ee44b068a")) __declspec(novtable) IAccountsSettingsPaneStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::ApplicationSettings::IAccountsSettingsPane ** current) = 0;
     virtual HRESULT __stdcall abi_Show() = 0;
 };
 
-struct __declspec(uuid("d21df7c2-ce0d-484f-b8e8-e823c215765e")) __declspec(novtable) IAccountsSettingsPaneStatics2 : Windows::IInspectable
+struct __declspec(uuid("d21df7c2-ce0d-484f-b8e8-e823c215765e")) __declspec(novtable) IAccountsSettingsPaneStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ShowManageAccountsAsync(Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_ShowAddAccountAsync(Windows::Foundation::IAsyncAction ** asyncInfo) = 0;
 };
 
-struct __declspec(uuid("a5f665e6-6143-4a7a-a971-b017ba978ce2")) __declspec(novtable) ICredentialCommand : Windows::IInspectable
+struct __declspec(uuid("a5f665e6-6143-4a7a-a971-b017ba978ce2")) __declspec(novtable) ICredentialCommand : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PasswordCredential(Windows::Security::Credentials::IPasswordCredential ** value) = 0;
     virtual HRESULT __stdcall get_CredentialDeleted(Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler ** value) = 0;
 };
 
-struct __declspec(uuid("27e88c17-bc3e-4b80-9495-4ed720e48a91")) __declspec(novtable) ICredentialCommandFactory : Windows::IInspectable
+struct __declspec(uuid("27e88c17-bc3e-4b80-9495-4ed720e48a91")) __declspec(novtable) ICredentialCommandFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateCredentialCommand(Windows::Security::Credentials::IPasswordCredential * passwordCredential, Windows::UI::ApplicationSettings::ICredentialCommand ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateCredentialCommandWithHandler(Windows::Security::Credentials::IPasswordCredential * passwordCredential, Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler * deleted, Windows::UI::ApplicationSettings::ICredentialCommand ** instance) = 0;
 };
 
-struct __declspec(uuid("68e15b33-1c83-433a-aa5a-ceeea5bd4764")) __declspec(novtable) ISettingsCommandFactory : Windows::IInspectable
+struct __declspec(uuid("68e15b33-1c83-433a-aa5a-ceeea5bd4764")) __declspec(novtable) ISettingsCommandFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateSettingsCommand(Windows::IInspectable * settingsCommandId, hstring label, Windows::UI::Popups::UICommandInvokedHandler * handler, Windows::UI::Popups::IUICommand ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateSettingsCommand(Windows::Foundation::IInspectable * settingsCommandId, hstring label, Windows::UI::Popups::UICommandInvokedHandler * handler, Windows::UI::Popups::IUICommand ** instance) = 0;
 };
 
-struct __declspec(uuid("749ae954-2f69-4b17-8aba-d05ce5778e46")) __declspec(novtable) ISettingsCommandStatics : Windows::IInspectable
+struct __declspec(uuid("749ae954-2f69-4b17-8aba-d05ce5778e46")) __declspec(novtable) ISettingsCommandStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AccountsCommand(Windows::UI::Popups::IUICommand ** value) = 0;
 };
 
-struct __declspec(uuid("b1cd0932-4570-4c69-8d38-89446561ace0")) __declspec(novtable) ISettingsPane : Windows::IInspectable
+struct __declspec(uuid("b1cd0932-4570-4c69-8d38-89446561ace0")) __declspec(novtable) ISettingsPane : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_CommandsRequested(Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_CommandsRequested(event_token cookie) = 0;
 };
 
-struct __declspec(uuid("44df23ae-5d6e-4068-a168-f47643182114")) __declspec(novtable) ISettingsPaneCommandsRequest : Windows::IInspectable
+struct __declspec(uuid("44df23ae-5d6e-4068-a168-f47643182114")) __declspec(novtable) ISettingsPaneCommandsRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ApplicationCommands(Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> ** value) = 0;
 };
 
-struct __declspec(uuid("205f5d24-1b48-4629-a6ca-2fdfedafb75d")) __declspec(novtable) ISettingsPaneCommandsRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("205f5d24-1b48-4629-a6ca-2fdfedafb75d")) __declspec(novtable) ISettingsPaneCommandsRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Request(Windows::UI::ApplicationSettings::ISettingsPaneCommandsRequest ** request) = 0;
 };
 
-struct __declspec(uuid("1c6a52c5-ff19-471b-ba6b-f8f35694ad9a")) __declspec(novtable) ISettingsPaneStatics : Windows::IInspectable
+struct __declspec(uuid("1c6a52c5-ff19-471b-ba6b-f8f35694ad9a")) __declspec(novtable) ISettingsPaneStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::UI::ApplicationSettings::ISettingsPane ** current) = 0;
     virtual HRESULT __stdcall abi_Show() = 0;
     virtual HRESULT __stdcall get_Edge(winrt::Windows::UI::ApplicationSettings::SettingsEdgeLocation * value) = 0;
 };
 
-struct __declspec(uuid("caa39398-9cfa-4246-b0c4-a913a3896541")) __declspec(novtable) IWebAccountCommand : Windows::IInspectable
+struct __declspec(uuid("caa39398-9cfa-4246-b0c4-a913a3896541")) __declspec(novtable) IWebAccountCommand : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccount(Windows::Security::Credentials::IWebAccount ** value) = 0;
     virtual HRESULT __stdcall get_Invoked(Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler ** value) = 0;
     virtual HRESULT __stdcall get_Actions(winrt::Windows::UI::ApplicationSettings::SupportedWebAccountActions * value) = 0;
 };
 
-struct __declspec(uuid("bfa6cdff-2f2d-42f5-81de-1d56bafc496d")) __declspec(novtable) IWebAccountCommandFactory : Windows::IInspectable
+struct __declspec(uuid("bfa6cdff-2f2d-42f5-81de-1d56bafc496d")) __declspec(novtable) IWebAccountCommandFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateWebAccountCommand(Windows::Security::Credentials::IWebAccount * webAccount, Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler * invoked, winrt::Windows::UI::ApplicationSettings::SupportedWebAccountActions actions, Windows::UI::ApplicationSettings::IWebAccountCommand ** instance) = 0;
 };
 
-struct __declspec(uuid("e7abcc40-a1d8-4c5d-9a7f-1d34b2f90ad2")) __declspec(novtable) IWebAccountInvokedArgs : Windows::IInspectable
+struct __declspec(uuid("e7abcc40-a1d8-4c5d-9a7f-1d34b2f90ad2")) __declspec(novtable) IWebAccountInvokedArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Action(winrt::Windows::UI::ApplicationSettings::WebAccountAction * action) = 0;
 };
 
-struct __declspec(uuid("d69bdd9a-a0a6-4e9b-88dc-c71e757a3501")) __declspec(novtable) IWebAccountProviderCommand : Windows::IInspectable
+struct __declspec(uuid("d69bdd9a-a0a6-4e9b-88dc-c71e757a3501")) __declspec(novtable) IWebAccountProviderCommand : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebAccountProvider(Windows::Security::Credentials::IWebAccountProvider ** value) = 0;
     virtual HRESULT __stdcall get_Invoked(Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler ** value) = 0;
 };
 
-struct __declspec(uuid("d5658a1b-b176-4776-8469-a9d3ff0b3f59")) __declspec(novtable) IWebAccountProviderCommandFactory : Windows::IInspectable
+struct __declspec(uuid("d5658a1b-b176-4776-8469-a9d3ff0b3f59")) __declspec(novtable) IWebAccountProviderCommandFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateWebAccountProviderCommand(Windows::Security::Credentials::IWebAccountProvider * webAccountProvider, Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler * invoked, Windows::UI::ApplicationSettings::IWebAccountProviderCommand ** instance) = 0;
 };
@@ -157,27 +157,134 @@ template <> struct traits<Windows::UI::ApplicationSettings::WebAccountProviderCo
 
 namespace Windows::UI::ApplicationSettings {
 
-template <typename T> struct impl_IAccountsSettingsPane;
-template <typename T> struct impl_IAccountsSettingsPaneCommandsRequestedEventArgs;
-template <typename T> struct impl_IAccountsSettingsPaneEventDeferral;
-template <typename T> struct impl_IAccountsSettingsPaneStatics;
-template <typename T> struct impl_IAccountsSettingsPaneStatics2;
-template <typename T> struct impl_ICredentialCommand;
-template <typename T> struct impl_ICredentialCommandFactory;
-template <typename T> struct impl_ISettingsCommandFactory;
-template <typename T> struct impl_ISettingsCommandStatics;
-template <typename T> struct impl_ISettingsPane;
-template <typename T> struct impl_ISettingsPaneCommandsRequest;
-template <typename T> struct impl_ISettingsPaneCommandsRequestedEventArgs;
-template <typename T> struct impl_ISettingsPaneStatics;
-template <typename T> struct impl_IWebAccountCommand;
-template <typename T> struct impl_IWebAccountCommandFactory;
-template <typename T> struct impl_IWebAccountInvokedArgs;
-template <typename T> struct impl_IWebAccountProviderCommand;
-template <typename T> struct impl_IWebAccountProviderCommandFactory;
-template <typename T> struct impl_CredentialCommandCredentialDeletedHandler;
-template <typename T> struct impl_WebAccountCommandInvokedHandler;
-template <typename T> struct impl_WebAccountProviderCommandInvokedHandler;
+template <typename D>
+struct WINRT_EBO impl_IAccountsSettingsPane
+{
+    event_token AccountCommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> & handler) const;
+    using AccountCommandsRequested_revoker = event_revoker<IAccountsSettingsPane>;
+    AccountCommandsRequested_revoker AccountCommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> & handler) const;
+    void AccountCommandsRequested(event_token cookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccountsSettingsPaneCommandsRequestedEventArgs
+{
+    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountProviderCommand> WebAccountProviderCommands() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::WebAccountCommand> WebAccountCommands() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::CredentialCommand> CredentialCommands() const;
+    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> Commands() const;
+    hstring HeaderText() const;
+    void HeaderText(hstring_view value) const;
+    Windows::UI::ApplicationSettings::AccountsSettingsPaneEventDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccountsSettingsPaneEventDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccountsSettingsPaneStatics
+{
+    Windows::UI::ApplicationSettings::AccountsSettingsPane GetForCurrentView() const;
+    void Show() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccountsSettingsPaneStatics2
+{
+    Windows::Foundation::IAsyncAction ShowManageAccountsAsync() const;
+    Windows::Foundation::IAsyncAction ShowAddAccountAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICredentialCommand
+{
+    Windows::Security::Credentials::PasswordCredential PasswordCredential() const;
+    Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler CredentialDeleted() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICredentialCommandFactory
+{
+    Windows::UI::ApplicationSettings::CredentialCommand CreateCredentialCommand(const Windows::Security::Credentials::PasswordCredential & passwordCredential) const;
+    Windows::UI::ApplicationSettings::CredentialCommand CreateCredentialCommandWithHandler(const Windows::Security::Credentials::PasswordCredential & passwordCredential, const Windows::UI::ApplicationSettings::CredentialCommandCredentialDeletedHandler & deleted) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsCommandFactory
+{
+    Windows::UI::ApplicationSettings::SettingsCommand CreateSettingsCommand(const Windows::Foundation::IInspectable & settingsCommandId, hstring_view label, const Windows::UI::Popups::UICommandInvokedHandler & handler) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsCommandStatics
+{
+    Windows::UI::ApplicationSettings::SettingsCommand AccountsCommand() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsPane
+{
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] event_token CommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const;
+    using CommandsRequested_revoker = event_revoker<ISettingsPane>;
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] CommandsRequested_revoker CommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const;
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] void CommandsRequested(event_token cookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsPaneCommandsRequest
+{
+    [[deprecated("SettingsPaneCommandsRequest is deprecated and might not work on all platforms. For more info, see MSDN.")]] Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> ApplicationCommands() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsPaneCommandsRequestedEventArgs
+{
+    [[deprecated("SettingsPaneCommandsRequestedEventArgs is deprecated and might not work on all platforms. For more info, see MSDN.")]] Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest Request() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISettingsPaneStatics
+{
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] Windows::UI::ApplicationSettings::SettingsPane GetForCurrentView() const;
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] void Show() const;
+    [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] Windows::UI::ApplicationSettings::SettingsEdgeLocation Edge() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountCommand
+{
+    Windows::Security::Credentials::WebAccount WebAccount() const;
+    Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler Invoked() const;
+    Windows::UI::ApplicationSettings::SupportedWebAccountActions Actions() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountCommandFactory
+{
+    Windows::UI::ApplicationSettings::WebAccountCommand CreateWebAccountCommand(const Windows::Security::Credentials::WebAccount & webAccount, const Windows::UI::ApplicationSettings::WebAccountCommandInvokedHandler & invoked, Windows::UI::ApplicationSettings::SupportedWebAccountActions actions) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountInvokedArgs
+{
+    Windows::UI::ApplicationSettings::WebAccountAction Action() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderCommand
+{
+    Windows::Security::Credentials::WebAccountProvider WebAccountProvider() const;
+    Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler Invoked() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWebAccountProviderCommandFactory
+{
+    Windows::UI::ApplicationSettings::WebAccountProviderCommand CreateWebAccountProviderCommand(const Windows::Security::Credentials::WebAccountProvider & webAccountProvider, const Windows::UI::ApplicationSettings::WebAccountProviderCommandInvokedHandler & invoked) const;
+};
 
 }
 

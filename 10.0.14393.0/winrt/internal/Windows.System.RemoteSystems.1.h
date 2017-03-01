@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::System::RemoteSystems {
 
-struct __declspec(uuid("ed5838cd-1e10-4a8c-b4a6-4e5fd6f97721")) __declspec(novtable) IRemoteSystem : Windows::IInspectable
+struct __declspec(uuid("ed5838cd-1e10-4a8c-b4a6-4e5fd6f97721")) __declspec(novtable) IRemoteSystem : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
@@ -22,46 +22,46 @@ struct __declspec(uuid("ed5838cd-1e10-4a8c-b4a6-4e5fd6f97721")) __declspec(novta
     virtual HRESULT __stdcall get_IsAvailableByProximity(bool * value) = 0;
 };
 
-struct __declspec(uuid("8f39560f-e534-4697-8836-7abea151516e")) __declspec(novtable) IRemoteSystemAddedEventArgs : Windows::IInspectable
+struct __declspec(uuid("8f39560f-e534-4697-8836-7abea151516e")) __declspec(novtable) IRemoteSystemAddedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystem(Windows::System::RemoteSystems::IRemoteSystem ** value) = 0;
 };
 
-struct __declspec(uuid("84ed4104-8d5e-4d72-8238-7621576c7a67")) __declspec(novtable) IRemoteSystemConnectionRequest : Windows::IInspectable
+struct __declspec(uuid("84ed4104-8d5e-4d72-8238-7621576c7a67")) __declspec(novtable) IRemoteSystemConnectionRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystem(Windows::System::RemoteSystems::IRemoteSystem ** value) = 0;
 };
 
-struct __declspec(uuid("aa0a0a20-baeb-4575-b530-810bb9786334")) __declspec(novtable) IRemoteSystemConnectionRequestFactory : Windows::IInspectable
+struct __declspec(uuid("aa0a0a20-baeb-4575-b530-810bb9786334")) __declspec(novtable) IRemoteSystemConnectionRequestFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::System::RemoteSystems::IRemoteSystem * remoteSystem, Windows::System::RemoteSystems::IRemoteSystemConnectionRequest ** result) = 0;
 };
 
-struct __declspec(uuid("42d9041f-ee5a-43da-ac6a-6fee25460741")) __declspec(novtable) IRemoteSystemDiscoveryTypeFilter : Windows::IInspectable
+struct __declspec(uuid("42d9041f-ee5a-43da-ac6a-6fee25460741")) __declspec(novtable) IRemoteSystemDiscoveryTypeFilter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystemDiscoveryType(winrt::Windows::System::RemoteSystems::RemoteSystemDiscoveryType * value) = 0;
 };
 
-struct __declspec(uuid("9f9eb993-c260-4161-92f2-9c021f23fe5d")) __declspec(novtable) IRemoteSystemDiscoveryTypeFilterFactory : Windows::IInspectable
+struct __declspec(uuid("9f9eb993-c260-4161-92f2-9c021f23fe5d")) __declspec(novtable) IRemoteSystemDiscoveryTypeFilterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(winrt::Windows::System::RemoteSystems::RemoteSystemDiscoveryType discoveryType, Windows::System::RemoteSystems::IRemoteSystemDiscoveryTypeFilter ** result) = 0;
 };
 
-struct __declspec(uuid("4a3ba9e4-99eb-45eb-ba16-0367728ff374")) __declspec(novtable) IRemoteSystemFilter : Windows::IInspectable
+struct __declspec(uuid("4a3ba9e4-99eb-45eb-ba16-0367728ff374")) __declspec(novtable) IRemoteSystemFilter : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("38e1c9ec-22c3-4ef6-901a-bbb1c7aad4ed")) __declspec(novtable) IRemoteSystemKindFilter : Windows::IInspectable
+struct __declspec(uuid("38e1c9ec-22c3-4ef6-901a-bbb1c7aad4ed")) __declspec(novtable) IRemoteSystemKindFilter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystemKinds(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("a1fb18ee-99ea-40bc-9a39-c670aa804a28")) __declspec(novtable) IRemoteSystemKindFilterFactory : Windows::IInspectable
+struct __declspec(uuid("a1fb18ee-99ea-40bc-9a39-c670aa804a28")) __declspec(novtable) IRemoteSystemKindFilterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(Windows::Foundation::Collections::IIterable<hstring> * remoteSystemKinds, Windows::System::RemoteSystems::IRemoteSystemKindFilter ** result) = 0;
 };
 
-struct __declspec(uuid("f6317633-ab14-41d0-9553-796aadb882db")) __declspec(novtable) IRemoteSystemKindStatics : Windows::IInspectable
+struct __declspec(uuid("f6317633-ab14-41d0-9553-796aadb882db")) __declspec(novtable) IRemoteSystemKindStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Phone(hstring * value) = 0;
     virtual HRESULT __stdcall get_Hub(hstring * value) = 0;
@@ -70,12 +70,12 @@ struct __declspec(uuid("f6317633-ab14-41d0-9553-796aadb882db")) __declspec(novta
     virtual HRESULT __stdcall get_Xbox(hstring * value) = 0;
 };
 
-struct __declspec(uuid("8b3d16bb-7306-49ea-b7df-67d5714cb013")) __declspec(novtable) IRemoteSystemRemovedEventArgs : Windows::IInspectable
+struct __declspec(uuid("8b3d16bb-7306-49ea-b7df-67d5714cb013")) __declspec(novtable) IRemoteSystemRemovedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystemId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("a485b392-ff2b-4b47-be62-743f2f140f30")) __declspec(novtable) IRemoteSystemStatics : Windows::IInspectable
+struct __declspec(uuid("a485b392-ff2b-4b47-be62-743f2f140f30")) __declspec(novtable) IRemoteSystemStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindByHostNameAsync(Windows::Networking::IHostName * hostName, Windows::Foundation::IAsyncOperation<Windows::System::RemoteSystems::RemoteSystem> ** operation) = 0;
     virtual HRESULT __stdcall abi_CreateWatcher(Windows::System::RemoteSystems::IRemoteSystemWatcher ** result) = 0;
@@ -83,22 +83,22 @@ struct __declspec(uuid("a485b392-ff2b-4b47-be62-743f2f140f30")) __declspec(novta
     virtual HRESULT __stdcall abi_RequestAccessAsync(Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteSystems::RemoteSystemAccessStatus> ** operation) = 0;
 };
 
-struct __declspec(uuid("0c39514e-cbb6-4777-8534-2e0c521affa2")) __declspec(novtable) IRemoteSystemStatusTypeFilter : Windows::IInspectable
+struct __declspec(uuid("0c39514e-cbb6-4777-8534-2e0c521affa2")) __declspec(novtable) IRemoteSystemStatusTypeFilter : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystemStatusType(winrt::Windows::System::RemoteSystems::RemoteSystemStatusType * value) = 0;
 };
 
-struct __declspec(uuid("33cf78fa-d724-4125-ac7a-8d281e44c949")) __declspec(novtable) IRemoteSystemStatusTypeFilterFactory : Windows::IInspectable
+struct __declspec(uuid("33cf78fa-d724-4125-ac7a-8d281e44c949")) __declspec(novtable) IRemoteSystemStatusTypeFilterFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(winrt::Windows::System::RemoteSystems::RemoteSystemStatusType remoteSystemStatusType, Windows::System::RemoteSystems::IRemoteSystemStatusTypeFilter ** result) = 0;
 };
 
-struct __declspec(uuid("7502ff0e-dbcb-4155-b4ca-b30a04f27627")) __declspec(novtable) IRemoteSystemUpdatedEventArgs : Windows::IInspectable
+struct __declspec(uuid("7502ff0e-dbcb-4155-b4ca-b30a04f27627")) __declspec(novtable) IRemoteSystemUpdatedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemoteSystem(Windows::System::RemoteSystems::IRemoteSystem ** value) = 0;
 };
 
-struct __declspec(uuid("5d600c7e-2c07-48c5-889c-455d2b099771")) __declspec(novtable) IRemoteSystemWatcher : Windows::IInspectable
+struct __declspec(uuid("5d600c7e-2c07-48c5-889c-455d2b099771")) __declspec(novtable) IRemoteSystemWatcher : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Start() = 0;
     virtual HRESULT __stdcall abi_Stop() = 0;
@@ -128,22 +128,124 @@ template <> struct traits<Windows::System::RemoteSystems::RemoteSystemWatcher> {
 
 namespace Windows::System::RemoteSystems {
 
-template <typename T> struct impl_IRemoteSystem;
-template <typename T> struct impl_IRemoteSystemAddedEventArgs;
-template <typename T> struct impl_IRemoteSystemConnectionRequest;
-template <typename T> struct impl_IRemoteSystemConnectionRequestFactory;
-template <typename T> struct impl_IRemoteSystemDiscoveryTypeFilter;
-template <typename T> struct impl_IRemoteSystemDiscoveryTypeFilterFactory;
-template <typename T> struct impl_IRemoteSystemFilter;
-template <typename T> struct impl_IRemoteSystemKindFilter;
-template <typename T> struct impl_IRemoteSystemKindFilterFactory;
-template <typename T> struct impl_IRemoteSystemKindStatics;
-template <typename T> struct impl_IRemoteSystemRemovedEventArgs;
-template <typename T> struct impl_IRemoteSystemStatics;
-template <typename T> struct impl_IRemoteSystemStatusTypeFilter;
-template <typename T> struct impl_IRemoteSystemStatusTypeFilterFactory;
-template <typename T> struct impl_IRemoteSystemUpdatedEventArgs;
-template <typename T> struct impl_IRemoteSystemWatcher;
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystem
+{
+    hstring DisplayName() const;
+    hstring Id() const;
+    hstring Kind() const;
+    Windows::System::RemoteSystems::RemoteSystemStatus Status() const;
+    bool IsAvailableByProximity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemAddedEventArgs
+{
+    Windows::System::RemoteSystems::RemoteSystem RemoteSystem() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemConnectionRequest
+{
+    Windows::System::RemoteSystems::RemoteSystem RemoteSystem() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemConnectionRequestFactory
+{
+    Windows::System::RemoteSystems::RemoteSystemConnectionRequest Create(const Windows::System::RemoteSystems::RemoteSystem & remoteSystem) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemDiscoveryTypeFilter
+{
+    Windows::System::RemoteSystems::RemoteSystemDiscoveryType RemoteSystemDiscoveryType() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemDiscoveryTypeFilterFactory
+{
+    Windows::System::RemoteSystems::RemoteSystemDiscoveryTypeFilter Create(Windows::System::RemoteSystems::RemoteSystemDiscoveryType discoveryType) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemFilter
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemKindFilter
+{
+    Windows::Foundation::Collections::IVectorView<hstring> RemoteSystemKinds() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemKindFilterFactory
+{
+    Windows::System::RemoteSystems::RemoteSystemKindFilter Create(iterable<hstring> remoteSystemKinds) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemKindStatics
+{
+    hstring Phone() const;
+    hstring Hub() const;
+    hstring Holographic() const;
+    hstring Desktop() const;
+    hstring Xbox() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemRemovedEventArgs
+{
+    hstring RemoteSystemId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::RemoteSystems::RemoteSystem> FindByHostNameAsync(const Windows::Networking::HostName & hostName) const;
+    Windows::System::RemoteSystems::RemoteSystemWatcher CreateWatcher() const;
+    Windows::System::RemoteSystems::RemoteSystemWatcher CreateWatcher(iterable<Windows::System::RemoteSystems::IRemoteSystemFilter> filters) const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteSystems::RemoteSystemAccessStatus> RequestAccessAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemStatusTypeFilter
+{
+    Windows::System::RemoteSystems::RemoteSystemStatusType RemoteSystemStatusType() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemStatusTypeFilterFactory
+{
+    Windows::System::RemoteSystems::RemoteSystemStatusTypeFilter Create(Windows::System::RemoteSystems::RemoteSystemStatusType remoteSystemStatusType) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemUpdatedEventArgs
+{
+    Windows::System::RemoteSystems::RemoteSystem RemoteSystem() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRemoteSystemWatcher
+{
+    void Start() const;
+    void Stop() const;
+    event_token RemoteSystemAdded(const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemAddedEventArgs> & handler) const;
+    using RemoteSystemAdded_revoker = event_revoker<IRemoteSystemWatcher>;
+    RemoteSystemAdded_revoker RemoteSystemAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemAddedEventArgs> & handler) const;
+    void RemoteSystemAdded(event_token token) const;
+    event_token RemoteSystemUpdated(const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemUpdatedEventArgs> & handler) const;
+    using RemoteSystemUpdated_revoker = event_revoker<IRemoteSystemWatcher>;
+    RemoteSystemUpdated_revoker RemoteSystemUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemUpdatedEventArgs> & handler) const;
+    void RemoteSystemUpdated(event_token token) const;
+    event_token RemoteSystemRemoved(const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemRemovedEventArgs> & handler) const;
+    using RemoteSystemRemoved_revoker = event_revoker<IRemoteSystemWatcher>;
+    RemoteSystemRemoved_revoker RemoteSystemRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::RemoteSystems::RemoteSystemWatcher, Windows::System::RemoteSystems::RemoteSystemRemovedEventArgs> & handler) const;
+    void RemoteSystemRemoved(event_token token) const;
+};
 
 }
 

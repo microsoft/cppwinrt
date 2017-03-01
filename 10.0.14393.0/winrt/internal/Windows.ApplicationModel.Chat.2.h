@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,9 +19,14 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -61,7 +66,7 @@ template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __de
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_447a59fc_e729_5846_91da_b650fdeca785
@@ -269,6 +274,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_34ffe277_ba58_53bc_87dd_3293d094681b
+#define WINRT_GENERIC_34ffe277_ba58_53bc_87dd_3293d094681b
+template <> struct __declspec(uuid("34ffe277-ba58-53bc-87dd-3293d094681b")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::ChatMessageChange> : impl_IVector<Windows::ApplicationModel::Chat::ChatMessageChange> {};
+#endif
+
 #ifndef WINRT_GENERIC_df6e6b4f_3e45_52cd_aade_3316896abad0
 #define WINRT_GENERIC_df6e6b4f_3e45_52cd_aade_3316896abad0
 template <> struct __declspec(uuid("df6e6b4f-3e45-52cd-aade-3316896abad0")) __declspec(novtable) IIterator<Windows::ApplicationModel::Chat::ChatMessageChange> : impl_IIterator<Windows::ApplicationModel::Chat::ChatMessageChange> {};
@@ -297,6 +307,11 @@ template <> struct __declspec(uuid("50f5c38b-749f-5bf6-9560-11a9876f20d1")) __de
 #ifndef WINRT_GENERIC_4f426a27_6d23_58b6_9f29_4f88ed274bcd
 #define WINRT_GENERIC_4f426a27_6d23_58b6_9f29_4f88ed274bcd
 template <> struct __declspec(uuid("4f426a27-6d23-58b6-9f29-4f88ed274bcd")) __declspec(novtable) IKeyValuePair<hstring, winrt::Windows::ApplicationModel::Chat::ChatMessageStatus> : impl_IKeyValuePair<hstring, winrt::Windows::ApplicationModel::Chat::ChatMessageStatus> {};
+#endif
+
+#ifndef WINRT_GENERIC_a6c9690b_cd11_53f3_b695_8ef8a66ca785
+#define WINRT_GENERIC_a6c9690b_cd11_53f3_b695_8ef8a66ca785
+template <> struct __declspec(uuid("a6c9690b-cd11-53f3-b695-8ef8a66ca785")) __declspec(novtable) IMap<hstring, winrt::Windows::ApplicationModel::Chat::ChatMessageStatus> : impl_IMap<hstring, winrt::Windows::ApplicationModel::Chat::ChatMessageStatus> {};
 #endif
 
 #ifndef WINRT_GENERIC_3a7b0f38_ecd7_55f8_a5c5_e03d43a3978e
@@ -339,6 +354,11 @@ template <> struct __declspec(uuid("d60cae9d-88cb-59f1-8576-3fba44796be8")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_284974b3_63b4_5771_91ea_e8234dbabe51
+#define WINRT_GENERIC_284974b3_63b4_5771_91ea_e8234dbabe51
+template <> struct __declspec(uuid("284974b3-63b4-5771-91ea-e8234dbabe51")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::ChatMessageTransport> : impl_IVector<Windows::ApplicationModel::Chat::ChatMessageTransport> {};
+#endif
+
 #ifndef WINRT_GENERIC_98ebffc3_ef5f_58ac_9695_047a96c3f0b0
 #define WINRT_GENERIC_98ebffc3_ef5f_58ac_9695_047a96c3f0b0
 template <> struct __declspec(uuid("98ebffc3-ef5f-58ac-9695-047a96c3f0b0")) __declspec(novtable) IIterator<Windows::ApplicationModel::Chat::ChatMessageTransport> : impl_IIterator<Windows::ApplicationModel::Chat::ChatMessageTransport> {};
@@ -374,6 +394,11 @@ template <> struct __declspec(uuid("5b3512cc-8528-5e87-b061-1b982a647fc4")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_4d511443_4aff_529d_9f96_2897e170586f
+#define WINRT_GENERIC_4d511443_4aff_529d_9f96_2897e170586f
+template <> struct __declspec(uuid("4d511443-4aff-529d-9f96-2897e170586f")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::ChatMessage> : impl_IVector<Windows::ApplicationModel::Chat::ChatMessage> {};
+#endif
+
 #ifndef WINRT_GENERIC_cd3c8682_2366_5646_9af5_bcb9c3be9ebe
 #define WINRT_GENERIC_cd3c8682_2366_5646_9af5_bcb9c3be9ebe
 template <> struct __declspec(uuid("cd3c8682-2366-5646-9af5-bcb9c3be9ebe")) __declspec(novtable) IIterator<Windows::ApplicationModel::Chat::ChatMessage> : impl_IIterator<Windows::ApplicationModel::Chat::ChatMessage> {};
@@ -382,6 +407,11 @@ template <> struct __declspec(uuid("cd3c8682-2366-5646-9af5-bcb9c3be9ebe")) __de
 #ifndef WINRT_GENERIC_647bf12c_f621_5fd8_af39_c72b16baf07e
 #define WINRT_GENERIC_647bf12c_f621_5fd8_af39_c72b16baf07e
 template <> struct __declspec(uuid("647bf12c-f621-5fd8-af39-c72b16baf07e")) __declspec(novtable) IIterable<Windows::ApplicationModel::Chat::ChatMessage> : impl_IIterable<Windows::ApplicationModel::Chat::ChatMessage> {};
+#endif
+
+#ifndef WINRT_GENERIC_132dec30_d1a8_590e_9bfd_85ca955ff5a2
+#define WINRT_GENERIC_132dec30_d1a8_590e_9bfd_85ca955ff5a2
+template <> struct __declspec(uuid("132dec30-d1a8-590e-9bfd-85ca955ff5a2")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::IChatItem> : impl_IVector<Windows::ApplicationModel::Chat::IChatItem> {};
 #endif
 
 #ifndef WINRT_GENERIC_5d2c1b3f_9bc7_5126_93cd_f52326494de1
@@ -409,6 +439,11 @@ template <> struct __declspec(uuid("ce2d035c-7686-56bd-a2ca-194735fd8617")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_f8407822_27a0_5aa9_8ad3_a4c642f62ca0
+#define WINRT_GENERIC_f8407822_27a0_5aa9_8ad3_a4c642f62ca0
+template <> struct __declspec(uuid("f8407822-27a0-5aa9-8ad3-a4c642f62ca0")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::ChatConversation> : impl_IVector<Windows::ApplicationModel::Chat::ChatConversation> {};
+#endif
+
 #ifndef WINRT_GENERIC_7007a155_47ca_59c8_bf1e_960b82159907
 #define WINRT_GENERIC_7007a155_47ca_59c8_bf1e_960b82159907
 template <> struct __declspec(uuid("7007a155-47ca-59c8-bf1e-960b82159907")) __declspec(novtable) IIterator<Windows::ApplicationModel::Chat::ChatConversation> : impl_IIterator<Windows::ApplicationModel::Chat::ChatConversation> {};
@@ -417,6 +452,11 @@ template <> struct __declspec(uuid("7007a155-47ca-59c8-bf1e-960b82159907")) __de
 #ifndef WINRT_GENERIC_af43c676_a512_5388_9f69_0308953d719b
 #define WINRT_GENERIC_af43c676_a512_5388_9f69_0308953d719b
 template <> struct __declspec(uuid("af43c676-a512-5388-9f69-0308953d719b")) __declspec(novtable) IIterable<Windows::ApplicationModel::Chat::ChatConversation> : impl_IIterable<Windows::ApplicationModel::Chat::ChatConversation> {};
+#endif
+
+#ifndef WINRT_GENERIC_d375041c_94af_53b1_8b80_4816f971cb9c
+#define WINRT_GENERIC_d375041c_94af_53b1_8b80_4816f971cb9c
+template <> struct __declspec(uuid("d375041c-94af-53b1-8b80-4816f971cb9c")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::RcsTransport> : impl_IVector<Windows::ApplicationModel::Chat::RcsTransport> {};
 #endif
 
 #ifndef WINRT_GENERIC_a4eda5fb_fb99_56a7_8948_95c668a3ed3c
@@ -444,6 +484,11 @@ template <> struct __declspec(uuid("7851a9c5-1467-5c7d-af74-57ec6bd33417")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_2ea81630_1432_57be_ad56_6af85716d771
+#define WINRT_GENERIC_2ea81630_1432_57be_ad56_6af85716d771
+template <> struct __declspec(uuid("2ea81630-1432-57be-ad56-6af85716d771")) __declspec(novtable) IVector<Windows::ApplicationModel::Chat::RcsEndUserMessageAction> : impl_IVector<Windows::ApplicationModel::Chat::RcsEndUserMessageAction> {};
+#endif
+
 #ifndef WINRT_GENERIC_75a37f34_d87d_555c_8e64_a1ea48a3dd20
 #define WINRT_GENERIC_75a37f34_d87d_555c_8e64_a1ea48a3dd20
 template <> struct __declspec(uuid("75a37f34-d87d-555c-8e64-a1ea48a3dd20")) __declspec(novtable) IIterator<Windows::ApplicationModel::Chat::RcsEndUserMessageAction> : impl_IIterator<Windows::ApplicationModel::Chat::RcsEndUserMessageAction> {};
@@ -456,7 +501,7 @@ template <> struct __declspec(uuid("b6d21a55-471e-5a25-acdd-7784f7b4d7ba")) __de
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -501,7 +546,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -564,574 +609,68 @@ template <> struct __declspec(uuid("f6555a8d-a624-5eb4-a2f3-f5b1c5c1a0d2")) __de
 
 namespace Windows::ApplicationModel::Chat {
 
-template <typename D>
-struct WINRT_EBO impl_IChatCapabilities
-{
-    bool IsOnline() const;
-    bool IsChatCapable() const;
-    bool IsFileTransferCapable() const;
-    bool IsGeoLocationPushCapable() const;
-    bool IsIntegratedMessagingCapable() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatCapabilitiesManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCachedCapabilitiesAsync(hstring_ref address) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatCapabilities> GetCapabilitiesFromNetworkAsync(hstring_ref address) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatConversation
-{
-    bool HasUnreadMessages() const;
-    hstring Id() const;
-    hstring Subject() const;
-    void Subject(hstring_ref value) const;
-    bool IsConversationMuted() const;
-    void IsConversationMuted(bool value) const;
-    hstring MostRecentMessageId() const;
-    Windows::Foundation::Collections::IVector<hstring> Participants() const;
-    Windows::ApplicationModel::Chat::ChatConversationThreadingInfo ThreadingInfo() const;
-    Windows::Foundation::IAsyncAction DeleteAsync() const;
-    Windows::ApplicationModel::Chat::ChatMessageReader GetMessageReader() const;
-    Windows::Foundation::IAsyncAction MarkMessagesAsReadAsync() const;
-    Windows::Foundation::IAsyncAction MarkMessagesAsReadAsync(const Windows::Foundation::DateTime & value) const;
-    Windows::Foundation::IAsyncAction SaveAsync() const;
-    void NotifyLocalParticipantComposing(hstring_ref transportId, hstring_ref participantAddress, bool isComposing) const;
-    void NotifyRemoteParticipantComposing(hstring_ref transportId, hstring_ref participantAddress, bool isComposing) const;
-    event_token RemoteParticipantComposingChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatConversation, Windows::ApplicationModel::Chat::RemoteParticipantComposingChangedEventArgs> & handler) const;
-    using RemoteParticipantComposingChanged_revoker = event_revoker<IChatConversation>;
-    RemoteParticipantComposingChanged_revoker RemoteParticipantComposingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatConversation, Windows::ApplicationModel::Chat::RemoteParticipantComposingChangedEventArgs> & handler) const;
-    void RemoteParticipantComposingChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatConversation2
-{
-    bool CanModifyParticipants() const;
-    void CanModifyParticipants(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatConversationReader
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatConversation>> ReadBatchAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatConversation>> ReadBatchAsync(int32_t count) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatConversationThreadingInfo
-{
-    hstring ContactId() const;
-    void ContactId(hstring_ref value) const;
-    hstring Custom() const;
-    void Custom(hstring_ref value) const;
-    hstring ConversationId() const;
-    void ConversationId(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<hstring> Participants() const;
-    Windows::ApplicationModel::Chat::ChatConversationThreadingKind Kind() const;
-    void Kind(Windows::ApplicationModel::Chat::ChatConversationThreadingKind value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatItem
-{
-    Windows::ApplicationModel::Chat::ChatItemKind ItemKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessage
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Chat::ChatMessageAttachment> Attachments() const;
-    hstring Body() const;
-    void Body(hstring_ref value) const;
-    hstring From() const;
-    hstring Id() const;
-    bool IsForwardingDisabled() const;
-    bool IsIncoming() const;
-    bool IsRead() const;
-    Windows::Foundation::DateTime LocalTimestamp() const;
-    Windows::Foundation::DateTime NetworkTimestamp() const;
-    Windows::Foundation::Collections::IVector<hstring> Recipients() const;
-    Windows::Foundation::Collections::IMapView<hstring, winrt::Windows::ApplicationModel::Chat::ChatMessageStatus> RecipientSendStatuses() const;
-    Windows::ApplicationModel::Chat::ChatMessageStatus Status() const;
-    hstring Subject() const;
-    hstring TransportFriendlyName() const;
-    hstring TransportId() const;
-    void TransportId(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessage2
-{
-    uint64_t EstimatedDownloadSize() const;
-    void EstimatedDownloadSize(uint64_t value) const;
-    void From(hstring_ref value) const;
-    bool IsAutoReply() const;
-    void IsAutoReply(bool value) const;
-    void IsForwardingDisabled(bool value) const;
-    bool IsReplyDisabled() const;
-    void IsIncoming(bool value) const;
-    void IsRead(bool value) const;
-    bool IsSeen() const;
-    void IsSeen(bool value) const;
-    bool IsSimMessage() const;
-    void LocalTimestamp(const Windows::Foundation::DateTime & value) const;
-    Windows::ApplicationModel::Chat::ChatMessageKind MessageKind() const;
-    void MessageKind(Windows::ApplicationModel::Chat::ChatMessageKind value) const;
-    Windows::ApplicationModel::Chat::ChatMessageOperatorKind MessageOperatorKind() const;
-    void MessageOperatorKind(Windows::ApplicationModel::Chat::ChatMessageOperatorKind value) const;
-    void NetworkTimestamp(const Windows::Foundation::DateTime & value) const;
-    bool IsReceivedDuringQuietHours() const;
-    void IsReceivedDuringQuietHours(bool value) const;
-    void RemoteId(hstring_ref value) const;
-    void Status(Windows::ApplicationModel::Chat::ChatMessageStatus value) const;
-    void Subject(hstring_ref value) const;
-    bool ShouldSuppressNotification() const;
-    void ShouldSuppressNotification(bool value) const;
-    Windows::ApplicationModel::Chat::ChatConversationThreadingInfo ThreadingInfo() const;
-    void ThreadingInfo(const Windows::ApplicationModel::Chat::ChatConversationThreadingInfo & value) const;
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Chat::ChatRecipientDeliveryInfo> RecipientsDeliveryInfos() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessage3
-{
-    hstring RemoteId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessage4
-{
-    hstring SyncId() const;
-    void SyncId(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageAttachment
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference DataStreamReference() const;
-    void DataStreamReference(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
-    uint32_t GroupId() const;
-    void GroupId(uint32_t value) const;
-    hstring MimeType() const;
-    void MimeType(hstring_ref value) const;
-    hstring Text() const;
-    void Text(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageAttachment2
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
-    void Thumbnail(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
-    double TransferProgress() const;
-    void TransferProgress(double value) const;
-    hstring OriginalFileName() const;
-    void OriginalFileName(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageAttachmentFactory
-{
-    Windows::ApplicationModel::Chat::ChatMessageAttachment CreateChatMessageAttachment(hstring_ref mimeType, const Windows::Storage::Streams::IRandomAccessStreamReference & dataStreamReference) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageBlockingStatic
-{
-    Windows::Foundation::IAsyncAction MarkMessageAsBlockedAsync(hstring_ref localChatMessageId, bool blocked) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageChange
-{
-    Windows::ApplicationModel::Chat::ChatMessageChangeType ChangeType() const;
-    Windows::ApplicationModel::Chat::ChatMessage Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageChangeReader
-{
-    void AcceptChanges() const;
-    void AcceptChangesThrough(const Windows::ApplicationModel::Chat::ChatMessageChange & lastChangeToAcknowledge) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatMessageChange>> ReadBatchAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageChangeTracker
-{
-    void Enable() const;
-    Windows::ApplicationModel::Chat::ChatMessageChangeReader GetChangeReader() const;
-    void Reset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageChangedDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageChangedEventArgs
-{
-    Windows::ApplicationModel::Chat::ChatMessageChangedDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageManager2Statics
-{
-    Windows::Foundation::IAsyncOperation<hstring> RegisterTransportAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessageTransport> GetTransportAsync(hstring_ref transportId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageManagerStatic
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatMessageTransport>> GetTransportsAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessageStore> RequestStoreAsync() const;
-    Windows::Foundation::IAsyncAction ShowComposeSmsMessageAsync(const Windows::ApplicationModel::Chat::ChatMessage & message) const;
-    void ShowSmsSettings() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageManagerStatics3
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatSyncManager> RequestSyncManagerAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageNotificationTriggerDetails
-{
-    Windows::ApplicationModel::Chat::ChatMessage ChatMessage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageNotificationTriggerDetails2
-{
-    bool ShouldDisplayToast() const;
-    bool ShouldUpdateDetailText() const;
-    bool ShouldUpdateBadge() const;
-    bool ShouldUpdateActionCenter() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageReader
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatMessage>> ReadBatchAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageReader2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::ChatMessage>> ReadBatchAsync(int32_t count) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageStore
-{
-    Windows::ApplicationModel::Chat::ChatMessageChangeTracker ChangeTracker() const;
-    Windows::Foundation::IAsyncAction DeleteMessageAsync(hstring_ref localMessageId) const;
-    Windows::Foundation::IAsyncAction DownloadMessageAsync(hstring_ref localChatMessageId) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessage> GetMessageAsync(hstring_ref localChatMessageId) const;
-    Windows::ApplicationModel::Chat::ChatMessageReader GetMessageReader() const;
-    Windows::ApplicationModel::Chat::ChatMessageReader GetMessageReader(const Windows::Foundation::TimeSpan & recentTimeLimit) const;
-    Windows::Foundation::IAsyncAction MarkMessageReadAsync(hstring_ref localChatMessageId) const;
-    Windows::Foundation::IAsyncAction RetrySendMessageAsync(hstring_ref localChatMessageId) const;
-    Windows::Foundation::IAsyncAction SendMessageAsync(const Windows::ApplicationModel::Chat::ChatMessage & chatMessage) const;
-    Windows::ApplicationModel::Chat::ChatMessageValidationResult ValidateMessage(const Windows::ApplicationModel::Chat::ChatMessage & chatMessage) const;
-    event_token MessageChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatMessageStore, Windows::ApplicationModel::Chat::ChatMessageChangedEventArgs> & value) const;
-    using MessageChanged_revoker = event_revoker<IChatMessageStore>;
-    MessageChanged_revoker MessageChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatMessageStore, Windows::ApplicationModel::Chat::ChatMessageChangedEventArgs> & value) const;
-    void MessageChanged(event_token value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageStore2
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessage> ForwardMessageAsync(hstring_ref localChatMessageId, const Windows::Foundation::Collections::IIterable<hstring> & addresses) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatConversation> GetConversationAsync(hstring_ref conversationId) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatConversation> GetConversationAsync(hstring_ref conversationId, const Windows::Foundation::Collections::IIterable<hstring> & transportIds) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatConversation> GetConversationFromThreadingInfoAsync(const Windows::ApplicationModel::Chat::ChatConversationThreadingInfo & threadingInfo) const;
-    Windows::ApplicationModel::Chat::ChatConversationReader GetConversationReader() const;
-    Windows::ApplicationModel::Chat::ChatConversationReader GetConversationReader(const Windows::Foundation::Collections::IIterable<hstring> & transportIds) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessage> GetMessageByRemoteIdAsync(hstring_ref transportId, hstring_ref remoteId) const;
-    Windows::Foundation::IAsyncOperation<int32_t> GetUnseenCountAsync() const;
-    Windows::Foundation::IAsyncOperation<int32_t> GetUnseenCountAsync(const Windows::Foundation::Collections::IIterable<hstring> & transportIds) const;
-    Windows::Foundation::IAsyncAction MarkAsSeenAsync() const;
-    Windows::Foundation::IAsyncAction MarkAsSeenAsync(const Windows::Foundation::Collections::IIterable<hstring> & transportIds) const;
-    Windows::ApplicationModel::Chat::ChatSearchReader GetSearchReader(const Windows::ApplicationModel::Chat::ChatQueryOptions & value) const;
-    Windows::Foundation::IAsyncAction SaveMessageAsync(const Windows::ApplicationModel::Chat::ChatMessage & chatMessage) const;
-    Windows::Foundation::IAsyncOperation<bool> TryCancelDownloadMessageAsync(hstring_ref localChatMessageId) const;
-    Windows::Foundation::IAsyncOperation<bool> TryCancelSendMessageAsync(hstring_ref localChatMessageId) const;
-    event_token StoreChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatMessageStore, Windows::ApplicationModel::Chat::ChatMessageStoreChangedEventArgs> & handler) const;
-    using StoreChanged_revoker = event_revoker<IChatMessageStore2>;
-    StoreChanged_revoker StoreChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::ChatMessageStore, Windows::ApplicationModel::Chat::ChatMessageStoreChangedEventArgs> & handler) const;
-    void StoreChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageStore3
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::ChatMessage> GetMessageBySyncIdAsync(hstring_ref syncId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageStoreChangedEventArgs
-{
-    hstring Id() const;
-    Windows::ApplicationModel::Chat::ChatStoreChangedEventKind Kind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageTransport
-{
-    bool IsAppSetAsNotificationProvider() const;
-    bool IsActive() const;
-    hstring TransportFriendlyName() const;
-    hstring TransportId() const;
-    Windows::Foundation::IAsyncAction RequestSetAsNotificationProviderAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageTransport2
-{
-    Windows::ApplicationModel::Chat::ChatMessageTransportConfiguration Configuration() const;
-    Windows::ApplicationModel::Chat::ChatMessageTransportKind TransportKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageTransportConfiguration
-{
-    int32_t MaxAttachmentCount() const;
-    int32_t MaxMessageSizeInKilobytes() const;
-    int32_t MaxRecipientCount() const;
-    Windows::Media::MediaProperties::MediaEncodingProfile SupportedVideoFormat() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ExtendedProperties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatMessageValidationResult
-{
-    Windows::Foundation::IReference<uint32_t> MaxPartCount() const;
-    Windows::Foundation::IReference<uint32_t> PartCount() const;
-    Windows::Foundation::IReference<uint32_t> RemainingCharacterCountInPart() const;
-    Windows::ApplicationModel::Chat::ChatMessageValidationStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatQueryOptions
-{
-    hstring SearchString() const;
-    void SearchString(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatRecipientDeliveryInfo
-{
-    hstring TransportAddress() const;
-    void TransportAddress(hstring_ref value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> DeliveryTime() const;
-    void DeliveryTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> ReadTime() const;
-    void ReadTime(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::ApplicationModel::Chat::ChatTransportErrorCodeCategory TransportErrorCodeCategory() const;
-    Windows::ApplicationModel::Chat::ChatTransportInterpretedErrorCode TransportInterpretedErrorCode() const;
-    int32_t TransportErrorCode() const;
-    bool IsErrorPermanent() const;
-    Windows::ApplicationModel::Chat::ChatMessageStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatSearchReader
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::IChatItem>> ReadBatchAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::IChatItem>> ReadBatchAsync(int32_t count) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatSyncConfiguration
-{
-    bool IsSyncEnabled() const;
-    void IsSyncEnabled(bool value) const;
-    Windows::ApplicationModel::Chat::ChatRestoreHistorySpan RestoreHistorySpan() const;
-    void RestoreHistorySpan(Windows::ApplicationModel::Chat::ChatRestoreHistorySpan value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChatSyncManager
-{
-    Windows::ApplicationModel::Chat::ChatSyncConfiguration Configuration() const;
-    Windows::Foundation::IAsyncAction AssociateAccountAsync(const Windows::Security::Credentials::WebAccount & webAccount) const;
-    Windows::Foundation::IAsyncAction UnassociateAccountAsync() const;
-    bool IsAccountAssociated(const Windows::Security::Credentials::WebAccount & webAccount) const;
-    void StartSync() const;
-    Windows::Foundation::IAsyncAction SetConfigurationAsync(const Windows::ApplicationModel::Chat::ChatSyncConfiguration & configuration) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsEndUserMessage
-{
-    hstring TransportId() const;
-    hstring Title() const;
-    hstring Text() const;
-    bool IsPinRequired() const;
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::RcsEndUserMessageAction> Actions() const;
-    Windows::Foundation::IAsyncAction SendResponseAsync(const Windows::ApplicationModel::Chat::RcsEndUserMessageAction & action) const;
-    Windows::Foundation::IAsyncAction SendResponseWithPinAsync(const Windows::ApplicationModel::Chat::RcsEndUserMessageAction & action, hstring_ref pin) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsEndUserMessageAction
-{
-    hstring Label() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsEndUserMessageAvailableEventArgs
-{
-    bool IsMessageAvailable() const;
-    Windows::ApplicationModel::Chat::RcsEndUserMessage Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsEndUserMessageAvailableTriggerDetails
-{
-    hstring Title() const;
-    hstring Text() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsEndUserMessageManager
-{
-    event_token MessageAvailableChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::RcsEndUserMessageManager, Windows::ApplicationModel::Chat::RcsEndUserMessageAvailableEventArgs> & handler) const;
-    using MessageAvailableChanged_revoker = event_revoker<IRcsEndUserMessageManager>;
-    MessageAvailableChanged_revoker MessageAvailableChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::RcsEndUserMessageManager, Windows::ApplicationModel::Chat::RcsEndUserMessageAvailableEventArgs> & handler) const;
-    void MessageAvailableChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsManagerStatics
-{
-    Windows::ApplicationModel::Chat::RcsEndUserMessageManager GetEndUserMessageManager() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Chat::RcsTransport>> GetTransportsAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Chat::RcsTransport> GetTransportAsync(hstring_ref transportId) const;
-    Windows::Foundation::IAsyncAction LeaveConversationAsync(const Windows::ApplicationModel::Chat::ChatConversation & conversation) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsServiceKindSupportedChangedEventArgs
-{
-    Windows::ApplicationModel::Chat::RcsServiceKind ServiceKind() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsTransport
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> ExtendedProperties() const;
-    bool IsActive() const;
-    hstring TransportFriendlyName() const;
-    hstring TransportId() const;
-    Windows::ApplicationModel::Chat::RcsTransportConfiguration Configuration() const;
-    bool IsStoreAndForwardEnabled(Windows::ApplicationModel::Chat::RcsServiceKind serviceKind) const;
-    bool IsServiceKindSupported(Windows::ApplicationModel::Chat::RcsServiceKind serviceKind) const;
-    event_token ServiceKindSupportedChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::RcsTransport, Windows::ApplicationModel::Chat::RcsServiceKindSupportedChangedEventArgs> & handler) const;
-    using ServiceKindSupportedChanged_revoker = event_revoker<IRcsTransport>;
-    ServiceKindSupportedChanged_revoker ServiceKindSupportedChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Chat::RcsTransport, Windows::ApplicationModel::Chat::RcsServiceKindSupportedChangedEventArgs> & handler) const;
-    void ServiceKindSupportedChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRcsTransportConfiguration
-{
-    int32_t MaxAttachmentCount() const;
-    int32_t MaxMessageSizeInKilobytes() const;
-    int32_t MaxGroupMessageSizeInKilobytes() const;
-    int32_t MaxRecipientCount() const;
-    int32_t MaxFileSizeInKilobytes() const;
-    int32_t WarningFileSizeInKilobytes() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRemoteParticipantComposingChangedEventArgs
-{
-    hstring TransportId() const;
-    hstring ParticipantAddress() const;
-    bool IsComposing() const;
-};
-
 struct IChatCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatCapabilities>
 {
     IChatCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatCapabilities>(m_ptr); }
 };
 
 struct IChatCapabilitiesManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatCapabilitiesManagerStatics>
 {
     IChatCapabilitiesManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatCapabilitiesManagerStatics>(m_ptr); }
 };
 
 struct IChatConversation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatConversation>
 {
     IChatConversation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatConversation>(m_ptr); }
 };
 
 struct IChatConversation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatConversation2>
 {
     IChatConversation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatConversation2>(m_ptr); }
 };
 
 struct IChatConversationReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatConversationReader>
 {
     IChatConversationReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatConversationReader>(m_ptr); }
 };
 
 struct IChatConversationThreadingInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatConversationThreadingInfo>
 {
     IChatConversationThreadingInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatConversationThreadingInfo>(m_ptr); }
 };
 
 struct IChatItem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatItem>
 {
     IChatItem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatItem>(m_ptr); }
 };
 
 struct IChatMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessage>
 {
     IChatMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessage>(m_ptr); }
 };
 
 struct IChatMessage2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessage2>,
     impl::require<IChatMessage2, Windows::ApplicationModel::Chat::IChatMessage, Windows::ApplicationModel::Chat::IChatMessage3>
 {
     IChatMessage2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessage2>(m_ptr); }
     using impl_IChatMessage::From;
     using impl_IChatMessage::IsForwardingDisabled;
     using impl_IChatMessage::IsIncoming;
@@ -1153,340 +692,299 @@ struct IChatMessage2 :
 };
 
 struct IChatMessage3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessage3>,
     impl::require<IChatMessage3, Windows::ApplicationModel::Chat::IChatMessage>
 {
     IChatMessage3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessage3>(m_ptr); }
 };
 
 struct IChatMessage4 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessage4>,
     impl::require<IChatMessage4, Windows::ApplicationModel::Chat::IChatMessage>
 {
     IChatMessage4(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessage4>(m_ptr); }
 };
 
 struct IChatMessageAttachment :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageAttachment>
 {
     IChatMessageAttachment(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageAttachment>(m_ptr); }
 };
 
 struct IChatMessageAttachment2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageAttachment2>,
     impl::require<IChatMessageAttachment2, Windows::ApplicationModel::Chat::IChatMessageAttachment>
 {
     IChatMessageAttachment2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageAttachment2>(m_ptr); }
 };
 
 struct IChatMessageAttachmentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageAttachmentFactory>
 {
     IChatMessageAttachmentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageAttachmentFactory>(m_ptr); }
 };
 
 struct IChatMessageBlockingStatic :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageBlockingStatic>
 {
     IChatMessageBlockingStatic(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageBlockingStatic>(m_ptr); }
 };
 
 struct IChatMessageChange :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageChange>
 {
     IChatMessageChange(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageChange>(m_ptr); }
 };
 
 struct IChatMessageChangeReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageChangeReader>
 {
     IChatMessageChangeReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageChangeReader>(m_ptr); }
 };
 
 struct IChatMessageChangeTracker :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageChangeTracker>
 {
     IChatMessageChangeTracker(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageChangeTracker>(m_ptr); }
 };
 
 struct IChatMessageChangedDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageChangedDeferral>
 {
     IChatMessageChangedDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageChangedDeferral>(m_ptr); }
 };
 
 struct IChatMessageChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageChangedEventArgs>
 {
     IChatMessageChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageChangedEventArgs>(m_ptr); }
 };
 
 struct IChatMessageManager2Statics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageManager2Statics>,
     impl::require<IChatMessageManager2Statics, Windows::ApplicationModel::Chat::IChatMessageManagerStatic>
 {
     IChatMessageManager2Statics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageManager2Statics>(m_ptr); }
 };
 
 struct IChatMessageManagerStatic :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageManagerStatic>
 {
     IChatMessageManagerStatic(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageManagerStatic>(m_ptr); }
 };
 
 struct IChatMessageManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageManagerStatics3>,
     impl::require<IChatMessageManagerStatics3, Windows::ApplicationModel::Chat::IChatMessageManagerStatic>
 {
     IChatMessageManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageManagerStatics3>(m_ptr); }
 };
 
 struct IChatMessageNotificationTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageNotificationTriggerDetails>
 {
     IChatMessageNotificationTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageNotificationTriggerDetails>(m_ptr); }
 };
 
 struct IChatMessageNotificationTriggerDetails2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageNotificationTriggerDetails2>,
     impl::require<IChatMessageNotificationTriggerDetails2, Windows::ApplicationModel::Chat::IChatMessageNotificationTriggerDetails>
 {
     IChatMessageNotificationTriggerDetails2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageNotificationTriggerDetails2>(m_ptr); }
 };
 
 struct IChatMessageReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageReader>
 {
     IChatMessageReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageReader>(m_ptr); }
 };
 
 struct IChatMessageReader2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageReader2>
 {
     IChatMessageReader2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageReader2>(m_ptr); }
 };
 
 struct IChatMessageStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageStore>
 {
     IChatMessageStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageStore>(m_ptr); }
 };
 
 struct IChatMessageStore2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageStore2>,
     impl::require<IChatMessageStore2, Windows::ApplicationModel::Chat::IChatMessageStore>
 {
     IChatMessageStore2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageStore2>(m_ptr); }
 };
 
 struct IChatMessageStore3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageStore3>,
     impl::require<IChatMessageStore3, Windows::ApplicationModel::Chat::IChatMessageStore>
 {
     IChatMessageStore3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageStore3>(m_ptr); }
 };
 
 struct IChatMessageStoreChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageStoreChangedEventArgs>
 {
     IChatMessageStoreChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageStoreChangedEventArgs>(m_ptr); }
 };
 
 struct IChatMessageTransport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageTransport>
 {
     IChatMessageTransport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageTransport>(m_ptr); }
 };
 
 struct IChatMessageTransport2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageTransport2>,
     impl::require<IChatMessageTransport2, Windows::ApplicationModel::Chat::IChatMessageTransport>
 {
     IChatMessageTransport2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageTransport2>(m_ptr); }
 };
 
 struct IChatMessageTransportConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageTransportConfiguration>
 {
     IChatMessageTransportConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageTransportConfiguration>(m_ptr); }
 };
 
 struct IChatMessageValidationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatMessageValidationResult>
 {
     IChatMessageValidationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatMessageValidationResult>(m_ptr); }
 };
 
 struct IChatQueryOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatQueryOptions>
 {
     IChatQueryOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatQueryOptions>(m_ptr); }
 };
 
 struct IChatRecipientDeliveryInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatRecipientDeliveryInfo>
 {
     IChatRecipientDeliveryInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatRecipientDeliveryInfo>(m_ptr); }
 };
 
 struct IChatSearchReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatSearchReader>
 {
     IChatSearchReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatSearchReader>(m_ptr); }
 };
 
 struct IChatSyncConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatSyncConfiguration>
 {
     IChatSyncConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatSyncConfiguration>(m_ptr); }
 };
 
 struct IChatSyncManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChatSyncManager>
 {
     IChatSyncManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChatSyncManager>(m_ptr); }
 };
 
 struct IRcsEndUserMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsEndUserMessage>
 {
     IRcsEndUserMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsEndUserMessage>(m_ptr); }
 };
 
 struct IRcsEndUserMessageAction :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsEndUserMessageAction>
 {
     IRcsEndUserMessageAction(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsEndUserMessageAction>(m_ptr); }
 };
 
 struct IRcsEndUserMessageAvailableEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsEndUserMessageAvailableEventArgs>
 {
     IRcsEndUserMessageAvailableEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsEndUserMessageAvailableEventArgs>(m_ptr); }
 };
 
 struct IRcsEndUserMessageAvailableTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsEndUserMessageAvailableTriggerDetails>
 {
     IRcsEndUserMessageAvailableTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsEndUserMessageAvailableTriggerDetails>(m_ptr); }
 };
 
 struct IRcsEndUserMessageManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsEndUserMessageManager>
 {
     IRcsEndUserMessageManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsEndUserMessageManager>(m_ptr); }
 };
 
 struct IRcsManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsManagerStatics>
 {
     IRcsManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsManagerStatics>(m_ptr); }
 };
 
 struct IRcsServiceKindSupportedChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsServiceKindSupportedChangedEventArgs>
 {
     IRcsServiceKindSupportedChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsServiceKindSupportedChangedEventArgs>(m_ptr); }
 };
 
 struct IRcsTransport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsTransport>
 {
     IRcsTransport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsTransport>(m_ptr); }
 };
 
 struct IRcsTransportConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRcsTransportConfiguration>
 {
     IRcsTransportConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRcsTransportConfiguration>(m_ptr); }
 };
 
 struct IRemoteParticipantComposingChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRemoteParticipantComposingChangedEventArgs>
 {
     IRemoteParticipantComposingChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRemoteParticipantComposingChangedEventArgs>(m_ptr); }
 };
 
 }

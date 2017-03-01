@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ struct WINRT_EBO RemoteSystem :
     RemoteSystem(std::nullptr_t) noexcept {}
     static Windows::Foundation::IAsyncOperation<Windows::System::RemoteSystems::RemoteSystem> FindByHostNameAsync(const Windows::Networking::HostName & hostName);
     static Windows::System::RemoteSystems::RemoteSystemWatcher CreateWatcher();
-    static Windows::System::RemoteSystems::RemoteSystemWatcher CreateWatcher(const Windows::Foundation::Collections::IIterable<Windows::System::RemoteSystems::IRemoteSystemFilter> & filters);
+    static Windows::System::RemoteSystems::RemoteSystemWatcher CreateWatcher(iterable<Windows::System::RemoteSystems::IRemoteSystemFilter> filters);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteSystems::RemoteSystemAccessStatus> RequestAccessAsync();
 };
 
@@ -45,7 +45,7 @@ struct WINRT_EBO RemoteSystemKindFilter :
     impl::require<RemoteSystemKindFilter, Windows::System::RemoteSystems::IRemoteSystemFilter>
 {
     RemoteSystemKindFilter(std::nullptr_t) noexcept {}
-    RemoteSystemKindFilter(const Windows::Foundation::Collections::IIterable<hstring> & remoteSystemKinds);
+    RemoteSystemKindFilter(iterable<hstring> remoteSystemKinds);
 };
 
 struct RemoteSystemKinds

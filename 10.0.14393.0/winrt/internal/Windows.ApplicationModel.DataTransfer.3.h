@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_DataProviderHandler : implements<impl_DataProv
 {
     impl_DataProviderHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::ApplicationModel::DataTransfer::IDataProviderRequest> request) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::ApplicationModel::DataTransfer::IDataProviderRequest> request) noexcept override
     {
         try
         {
@@ -38,9 +38,9 @@ struct Clipboard
     static void SetContent(const Windows::ApplicationModel::DataTransfer::DataPackage & content);
     static void Flush();
     static void Clear();
-    static event_token ContentChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & changeHandler);
+    static event_token ContentChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler);
     using ContentChanged_revoker = factory_event_revoker<IClipboardStatics>;
-    static ContentChanged_revoker ContentChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & changeHandler);
+    static ContentChanged_revoker ContentChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler);
     static void ContentChanged(event_token token);
 };
 
@@ -115,8 +115,8 @@ struct WINRT_EBO DataTransferManager :
 struct HtmlFormatHelper
 {
     HtmlFormatHelper() = delete;
-    static hstring GetStaticFragment(hstring_ref htmlFormat);
-    static hstring CreateHtmlFormat(hstring_ref htmlFragment);
+    static hstring GetStaticFragment(hstring_view htmlFormat);
+    static hstring CreateHtmlFormat(hstring_view htmlFragment);
 };
 
 struct WINRT_EBO OperationCompletedEventArgs :
@@ -130,15 +130,15 @@ struct SharedStorageAccessManager
 {
     SharedStorageAccessManager() = delete;
     static hstring AddFile(const Windows::Storage::IStorageFile & file);
-    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> RedeemTokenForFileAsync(hstring_ref token);
-    static void RemoveFile(hstring_ref token);
+    static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> RedeemTokenForFileAsync(hstring_view token);
+    static void RemoveFile(hstring_view token);
 };
 
 struct StandardDataFormats
 {
     StandardDataFormats() = delete;
     static hstring Text();
-    static hstring Uri();
+    [[deprecated("Uri may be altered or unavailable for releases after Windows Phone 'OSVersion' (TBD). Instead, use WebLink or ApplicationLink.")]] static hstring Uri();
     static hstring Html();
     static hstring Rtf();
     static hstring Bitmap();

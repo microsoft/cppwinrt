@@ -1,10 +1,11 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "../base.h"
 #include "Windows.UI.Xaml.Shapes.0.h"
+#include "Windows.Foundation.0.h"
 #include "Windows.UI.Composition.0.h"
 #include "Windows.UI.Xaml.0.h"
 #include "Windows.UI.Xaml.Media.0.h"
@@ -13,11 +14,11 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::UI::Xaml::Shapes {
 
-struct __declspec(uuid("70e05ac4-d38d-4bab-831f-4a22ef52ac86")) __declspec(novtable) IEllipse : Windows::IInspectable
+struct __declspec(uuid("70e05ac4-d38d-4bab-831f-4a22ef52ac86")) __declspec(novtable) IEllipse : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("46a5433d-4ffb-48df-8732-4e15c834816b")) __declspec(novtable) ILine : Windows::IInspectable
+struct __declspec(uuid("46a5433d-4ffb-48df-8732-4e15c834816b")) __declspec(novtable) ILine : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_X1(double * value) = 0;
     virtual HRESULT __stdcall put_X1(double value) = 0;
@@ -29,7 +30,7 @@ struct __declspec(uuid("46a5433d-4ffb-48df-8732-4e15c834816b")) __declspec(novta
     virtual HRESULT __stdcall put_Y2(double value) = 0;
 };
 
-struct __declspec(uuid("267c123d-6ea4-4c50-8b1d-50207aff1e8a")) __declspec(novtable) ILineStatics : Windows::IInspectable
+struct __declspec(uuid("267c123d-6ea4-4c50-8b1d-50207aff1e8a")) __declspec(novtable) ILineStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_X1Property(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_Y1Property(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
@@ -37,23 +38,23 @@ struct __declspec(uuid("267c123d-6ea4-4c50-8b1d-50207aff1e8a")) __declspec(novta
     virtual HRESULT __stdcall get_Y2Property(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("78883609-3d57-4f3c-b8a5-6cabcac9711f")) __declspec(novtable) IPath : Windows::IInspectable
+struct __declspec(uuid("78883609-3d57-4f3c-b8a5-6cabcac9711f")) __declspec(novtable) IPath : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Data(Windows::UI::Xaml::Media::IGeometry ** value) = 0;
     virtual HRESULT __stdcall put_Data(Windows::UI::Xaml::Media::IGeometry * value) = 0;
 };
 
-struct __declspec(uuid("2340a4e3-5a86-4fc6-9a50-cbb93b828766")) __declspec(novtable) IPathFactory : Windows::IInspectable
+struct __declspec(uuid("2340a4e3-5a86-4fc6-9a50-cbb93b828766")) __declspec(novtable) IPathFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Shapes::IPath ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Shapes::IPath ** instance) = 0;
 };
 
-struct __declspec(uuid("f627e59d-87dc-4142-81f1-97fc7ff8641c")) __declspec(novtable) IPathStatics : Windows::IInspectable
+struct __declspec(uuid("f627e59d-87dc-4142-81f1-97fc7ff8641c")) __declspec(novtable) IPathStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DataProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("e3755c19-2e4d-4bcc-8d34-86871957fa01")) __declspec(novtable) IPolygon : Windows::IInspectable
+struct __declspec(uuid("e3755c19-2e4d-4bcc-8d34-86871957fa01")) __declspec(novtable) IPolygon : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FillRule(winrt::Windows::UI::Xaml::Media::FillRule * value) = 0;
     virtual HRESULT __stdcall put_FillRule(winrt::Windows::UI::Xaml::Media::FillRule value) = 0;
@@ -61,13 +62,13 @@ struct __declspec(uuid("e3755c19-2e4d-4bcc-8d34-86871957fa01")) __declspec(novta
     virtual HRESULT __stdcall put_Points(Windows::Foundation::Collections::IVector<Windows::Foundation::Point> * value) = 0;
 };
 
-struct __declspec(uuid("362a8aab-d463-4366-9e1a-beba72810fb7")) __declspec(novtable) IPolygonStatics : Windows::IInspectable
+struct __declspec(uuid("362a8aab-d463-4366-9e1a-beba72810fb7")) __declspec(novtable) IPolygonStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FillRuleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_PointsProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("91dc62f8-42b3-47f3-8476-c55124a7c4c6")) __declspec(novtable) IPolyline : Windows::IInspectable
+struct __declspec(uuid("91dc62f8-42b3-47f3-8476-c55124a7c4c6")) __declspec(novtable) IPolyline : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FillRule(winrt::Windows::UI::Xaml::Media::FillRule * value) = 0;
     virtual HRESULT __stdcall put_FillRule(winrt::Windows::UI::Xaml::Media::FillRule value) = 0;
@@ -75,13 +76,13 @@ struct __declspec(uuid("91dc62f8-42b3-47f3-8476-c55124a7c4c6")) __declspec(novta
     virtual HRESULT __stdcall put_Points(Windows::Foundation::Collections::IVector<Windows::Foundation::Point> * value) = 0;
 };
 
-struct __declspec(uuid("c7aa2cd1-a26c-43b0-aaa5-822fa64a11b9")) __declspec(novtable) IPolylineStatics : Windows::IInspectable
+struct __declspec(uuid("c7aa2cd1-a26c-43b0-aaa5-822fa64a11b9")) __declspec(novtable) IPolylineStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FillRuleProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_PointsProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("855bc230-8a11-4e18-a136-4bc21c7827b0")) __declspec(novtable) IRectangle : Windows::IInspectable
+struct __declspec(uuid("855bc230-8a11-4e18-a136-4bc21c7827b0")) __declspec(novtable) IRectangle : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RadiusX(double * value) = 0;
     virtual HRESULT __stdcall put_RadiusX(double value) = 0;
@@ -89,13 +90,13 @@ struct __declspec(uuid("855bc230-8a11-4e18-a136-4bc21c7827b0")) __declspec(novta
     virtual HRESULT __stdcall put_RadiusY(double value) = 0;
 };
 
-struct __declspec(uuid("9f25aa53-bb3a-4c3c-89db-6fbc0d1fa0cc")) __declspec(novtable) IRectangleStatics : Windows::IInspectable
+struct __declspec(uuid("9f25aa53-bb3a-4c3c-89db-6fbc0d1fa0cc")) __declspec(novtable) IRectangleStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RadiusXProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_RadiusYProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
 };
 
-struct __declspec(uuid("786f2b75-9aa0-454d-ae06-a2466e37c832")) __declspec(novtable) IShape : Windows::IInspectable
+struct __declspec(uuid("786f2b75-9aa0-454d-ae06-a2466e37c832")) __declspec(novtable) IShape : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Fill(Windows::UI::Xaml::Media::IBrush ** value) = 0;
     virtual HRESULT __stdcall put_Fill(Windows::UI::Xaml::Media::IBrush * value) = 0;
@@ -122,17 +123,17 @@ struct __declspec(uuid("786f2b75-9aa0-454d-ae06-a2466e37c832")) __declspec(novta
     virtual HRESULT __stdcall get_GeometryTransform(Windows::UI::Xaml::Media::ITransform ** value) = 0;
 };
 
-struct __declspec(uuid("97248dba-49f2-49a4-a5dd-164df824db14")) __declspec(novtable) IShape2 : Windows::IInspectable
+struct __declspec(uuid("97248dba-49f2-49a4-a5dd-164df824db14")) __declspec(novtable) IShape2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetAlphaMask(Windows::UI::Composition::ICompositionBrush ** returnValue) = 0;
 };
 
-struct __declspec(uuid("4b717613-f6aa-48d5-9588-e1d188eacbc9")) __declspec(novtable) IShapeFactory : Windows::IInspectable
+struct __declspec(uuid("4b717613-f6aa-48d5-9588-e1d188eacbc9")) __declspec(novtable) IShapeFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Shapes::IShape ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Shapes::IShape ** instance) = 0;
 };
 
-struct __declspec(uuid("1d7b4c55-9df3-48dc-9194-9d306faa6089")) __declspec(novtable) IShapeStatics : Windows::IInspectable
+struct __declspec(uuid("1d7b4c55-9df3-48dc-9194-9d306faa6089")) __declspec(novtable) IShapeStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FillProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
     virtual HRESULT __stdcall get_StrokeProperty(Windows::UI::Xaml::IDependencyProperty ** value) = 0;
@@ -163,22 +164,155 @@ template <> struct traits<Windows::UI::Xaml::Shapes::Shape> { using default_inte
 
 namespace Windows::UI::Xaml::Shapes {
 
-template <typename T> struct impl_IEllipse;
-template <typename T> struct impl_ILine;
-template <typename T> struct impl_ILineStatics;
-template <typename T> struct impl_IPath;
-template <typename T> struct impl_IPathFactory;
-template <typename T> struct impl_IPathStatics;
-template <typename T> struct impl_IPolygon;
-template <typename T> struct impl_IPolygonStatics;
-template <typename T> struct impl_IPolyline;
-template <typename T> struct impl_IPolylineStatics;
-template <typename T> struct impl_IRectangle;
-template <typename T> struct impl_IRectangleStatics;
-template <typename T> struct impl_IShape;
-template <typename T> struct impl_IShape2;
-template <typename T> struct impl_IShapeFactory;
-template <typename T> struct impl_IShapeStatics;
+template <typename D>
+struct WINRT_EBO impl_IEllipse
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILine
+{
+    double X1() const;
+    void X1(double value) const;
+    double Y1() const;
+    void Y1(double value) const;
+    double X2() const;
+    void X2(double value) const;
+    double Y2() const;
+    void Y2(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ILineStatics
+{
+    Windows::UI::Xaml::DependencyProperty X1Property() const;
+    Windows::UI::Xaml::DependencyProperty Y1Property() const;
+    Windows::UI::Xaml::DependencyProperty X2Property() const;
+    Windows::UI::Xaml::DependencyProperty Y2Property() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPath
+{
+    Windows::UI::Xaml::Media::Geometry Data() const;
+    void Data(const Windows::UI::Xaml::Media::Geometry & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPathFactory
+{
+    Windows::UI::Xaml::Shapes::Path CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPathStatics
+{
+    Windows::UI::Xaml::DependencyProperty DataProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPolygon
+{
+    Windows::UI::Xaml::Media::FillRule FillRule() const;
+    void FillRule(Windows::UI::Xaml::Media::FillRule value) const;
+    Windows::UI::Xaml::Media::PointCollection Points() const;
+    void Points(const Windows::UI::Xaml::Media::PointCollection & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPolygonStatics
+{
+    Windows::UI::Xaml::DependencyProperty FillRuleProperty() const;
+    Windows::UI::Xaml::DependencyProperty PointsProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPolyline
+{
+    Windows::UI::Xaml::Media::FillRule FillRule() const;
+    void FillRule(Windows::UI::Xaml::Media::FillRule value) const;
+    Windows::UI::Xaml::Media::PointCollection Points() const;
+    void Points(const Windows::UI::Xaml::Media::PointCollection & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPolylineStatics
+{
+    Windows::UI::Xaml::DependencyProperty FillRuleProperty() const;
+    Windows::UI::Xaml::DependencyProperty PointsProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRectangle
+{
+    double RadiusX() const;
+    void RadiusX(double value) const;
+    double RadiusY() const;
+    void RadiusY(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRectangleStatics
+{
+    Windows::UI::Xaml::DependencyProperty RadiusXProperty() const;
+    Windows::UI::Xaml::DependencyProperty RadiusYProperty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IShape
+{
+    Windows::UI::Xaml::Media::Brush Fill() const;
+    void Fill(const Windows::UI::Xaml::Media::Brush & value) const;
+    Windows::UI::Xaml::Media::Brush Stroke() const;
+    void Stroke(const Windows::UI::Xaml::Media::Brush & value) const;
+    double StrokeMiterLimit() const;
+    void StrokeMiterLimit(double value) const;
+    double StrokeThickness() const;
+    void StrokeThickness(double value) const;
+    Windows::UI::Xaml::Media::PenLineCap StrokeStartLineCap() const;
+    void StrokeStartLineCap(Windows::UI::Xaml::Media::PenLineCap value) const;
+    Windows::UI::Xaml::Media::PenLineCap StrokeEndLineCap() const;
+    void StrokeEndLineCap(Windows::UI::Xaml::Media::PenLineCap value) const;
+    Windows::UI::Xaml::Media::PenLineJoin StrokeLineJoin() const;
+    void StrokeLineJoin(Windows::UI::Xaml::Media::PenLineJoin value) const;
+    double StrokeDashOffset() const;
+    void StrokeDashOffset(double value) const;
+    Windows::UI::Xaml::Media::PenLineCap StrokeDashCap() const;
+    void StrokeDashCap(Windows::UI::Xaml::Media::PenLineCap value) const;
+    Windows::UI::Xaml::Media::DoubleCollection StrokeDashArray() const;
+    void StrokeDashArray(const Windows::UI::Xaml::Media::DoubleCollection & value) const;
+    Windows::UI::Xaml::Media::Stretch Stretch() const;
+    void Stretch(Windows::UI::Xaml::Media::Stretch value) const;
+    Windows::UI::Xaml::Media::Transform GeometryTransform() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IShape2
+{
+    Windows::UI::Composition::CompositionBrush GetAlphaMask() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IShapeFactory
+{
+    Windows::UI::Xaml::Shapes::Shape CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IShapeStatics
+{
+    Windows::UI::Xaml::DependencyProperty FillProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeMiterLimitProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeThicknessProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeStartLineCapProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeEndLineCapProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeLineJoinProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeDashOffsetProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeDashCapProperty() const;
+    Windows::UI::Xaml::DependencyProperty StrokeDashArrayProperty() const;
+    Windows::UI::Xaml::DependencyProperty StretchProperty() const;
+};
 
 }
 

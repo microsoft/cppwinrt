@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -20,6 +23,7 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Enabled(value);
             return S_OK;
         }
@@ -33,7 +37,8 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
     {
         try
         {
-            *value = detach(this->shim().Enabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Enabled());
             return S_OK;
         }
         catch (...)
@@ -42,11 +47,12 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
         }
     }
 
-    HRESULT __stdcall get_Locations(abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Storage::StorageFolder>> value) noexcept override
+    HRESULT __stdcall get_Locations(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Storage::StorageFolder>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Locations());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Locations());
             return S_OK;
         }
         catch (...)
@@ -56,10 +62,11 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
         }
     }
 
-    HRESULT __stdcall put_AqsFilter(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_AqsFilter(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AqsFilter(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -69,11 +76,12 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
         }
     }
 
-    HRESULT __stdcall get_AqsFilter(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AqsFilter(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AqsFilter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AqsFilter());
             return S_OK;
         }
         catch (...)
@@ -83,11 +91,12 @@ struct produce<D, Windows::ApplicationModel::Search::ILocalContentSuggestionSett
         }
     }
 
-    HRESULT __stdcall get_PropertiesToMatch(abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_PropertiesToMatch(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PropertiesToMatch());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PropertiesToMatch());
             return S_OK;
         }
         catch (...)
@@ -105,6 +114,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SearchHistoryEnabled(value);
             return S_OK;
         }
@@ -118,7 +128,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
-            *value = detach(this->shim().SearchHistoryEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SearchHistoryEnabled());
             return S_OK;
         }
         catch (...)
@@ -127,10 +138,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall put_SearchHistoryContext(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SearchHistoryContext(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SearchHistoryContext(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -140,11 +152,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall get_SearchHistoryContext(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SearchHistoryContext(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SearchHistoryContext());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SearchHistoryContext());
             return S_OK;
         }
         catch (...)
@@ -154,10 +167,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall put_PlaceholderText(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PlaceholderText(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PlaceholderText(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -167,11 +181,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall get_PlaceholderText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PlaceholderText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PlaceholderText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PlaceholderText());
             return S_OK;
         }
         catch (...)
@@ -181,11 +196,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall get_QueryText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QueryText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryText());
             return S_OK;
         }
         catch (...)
@@ -195,11 +211,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -213,7 +230,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
-            *value = detach(this->shim().Visible());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Visible());
             return S_OK;
         }
         catch (...)
@@ -222,11 +240,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall add_VisibilityChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_VisibilityChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().VisibilityChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().VisibilityChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -239,6 +258,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().VisibilityChanged(token);
             return S_OK;
         }
@@ -248,11 +268,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall add_QueryChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_QueryChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().QueryChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().QueryChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -265,6 +286,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().QueryChanged(token);
             return S_OK;
         }
@@ -274,11 +296,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall add_SuggestionsRequested(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_SuggestionsRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().SuggestionsRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().SuggestionsRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -291,6 +314,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SuggestionsRequested(token);
             return S_OK;
         }
@@ -300,11 +324,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall add_QuerySubmitted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_QuerySubmitted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().QuerySubmitted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().QuerySubmitted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -317,6 +342,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().QuerySubmitted(token);
             return S_OK;
         }
@@ -326,11 +352,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall add_ResultSuggestionChosen(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ResultSuggestionChosen(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ResultSuggestionChosen(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ResultSuggestionChosen(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -343,6 +370,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ResultSuggestionChosen(token);
             return S_OK;
         }
@@ -352,10 +380,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_SetLocalContentSuggestionSettings(abi_arg_in<Windows::ApplicationModel::Search::ILocalContentSuggestionSettings> settings) noexcept override
+    HRESULT __stdcall abi_SetLocalContentSuggestionSettings(impl::abi_arg_in<Windows::ApplicationModel::Search::ILocalContentSuggestionSettings> settings) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetLocalContentSuggestionSettings(*reinterpret_cast<const Windows::ApplicationModel::Search::LocalContentSuggestionSettings *>(&settings));
             return S_OK;
         }
@@ -369,6 +398,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Show();
             return S_OK;
         }
@@ -378,10 +408,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_ShowOverloadWithQuery(abi_arg_in<hstring> query) noexcept override
+    HRESULT __stdcall abi_ShowOverloadWithQuery(impl::abi_arg_in<hstring> query) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Show(*reinterpret_cast<const hstring *>(&query));
             return S_OK;
         }
@@ -395,6 +426,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ShowOnKeyboardInput(value);
             return S_OK;
         }
@@ -408,7 +440,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
     {
         try
         {
-            *value = detach(this->shim().ShowOnKeyboardInput());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ShowOnKeyboardInput());
             return S_OK;
         }
         catch (...)
@@ -417,11 +450,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TrySetQueryText(abi_arg_in<hstring> query, bool * succeeded) noexcept override
+    HRESULT __stdcall abi_TrySetQueryText(impl::abi_arg_in<hstring> query, bool * succeeded) noexcept override
     {
         try
         {
-            *succeeded = detach(this->shim().TrySetQueryText(*reinterpret_cast<const hstring *>(&query)));
+            typename D::abi_guard guard(this->shim());
+            *succeeded = detach_abi(this->shim().TrySetQueryText(*reinterpret_cast<const hstring *>(&query)));
             return S_OK;
         }
         catch (...)
@@ -434,11 +468,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPane> : produce_base
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryChangedEventArgs> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneQueryChangedEventArgs>
 {
-    HRESULT __stdcall get_QueryText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QueryText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryText());
             return S_OK;
         }
         catch (...)
@@ -448,11 +483,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryChangedEven
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -462,11 +498,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryChangedEven
         }
     }
 
-    HRESULT __stdcall get_LinguisticDetails(abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails> value) noexcept override
+    HRESULT __stdcall get_LinguisticDetails(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LinguisticDetails());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LinguisticDetails());
             return S_OK;
         }
         catch (...)
@@ -480,11 +517,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryChangedEven
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails>
 {
-    HRESULT __stdcall get_QueryTextAlternatives(abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_QueryTextAlternatives(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryTextAlternatives());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextAlternatives());
             return S_OK;
         }
         catch (...)
@@ -498,7 +536,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticD
     {
         try
         {
-            *value = detach(this->shim().QueryTextCompositionStart());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextCompositionStart());
             return S_OK;
         }
         catch (...)
@@ -511,7 +550,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticD
     {
         try
         {
-            *value = detach(this->shim().QueryTextCompositionLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextCompositionLength());
             return S_OK;
         }
         catch (...)
@@ -524,11 +564,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticD
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgs> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgs>
 {
-    HRESULT __stdcall get_QueryText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QueryText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryText());
             return S_OK;
         }
         catch (...)
@@ -538,11 +579,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEv
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -556,11 +598,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEv
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails>
 {
-    HRESULT __stdcall get_LinguisticDetails(abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails> value) noexcept override
+    HRESULT __stdcall get_LinguisticDetails(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LinguisticDetails());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LinguisticDetails());
             return S_OK;
         }
         catch (...)
@@ -574,11 +617,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEv
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneResultSuggestionChosenEventArgs> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneResultSuggestionChosenEventArgs>
 {
-    HRESULT __stdcall get_Tag(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Tag());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Tag());
             return S_OK;
         }
         catch (...)
@@ -592,11 +636,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneResultSuggestion
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneStatics> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(abi_arg_out<Windows::ApplicationModel::Search::ISearchPane> searchPane) noexcept override
+    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchPane> searchPane) noexcept override
     {
         try
         {
-            *searchPane = detach(this->shim().GetForCurrentView());
+            typename D::abi_guard guard(this->shim());
+            *searchPane = detach_abi(this->shim().GetForCurrentView());
             return S_OK;
         }
         catch (...)
@@ -614,6 +659,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneStaticsWithHideT
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().HideThisApplication();
             return S_OK;
         }
@@ -631,7 +677,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsReque
     {
         try
         {
-            *value = detach(this->shim().IsCanceled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCanceled());
             return S_OK;
         }
         catch (...)
@@ -640,11 +687,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsReque
         }
     }
 
-    HRESULT __stdcall get_SearchSuggestionCollection(abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionCollection> collection) noexcept override
+    HRESULT __stdcall get_SearchSuggestionCollection(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionCollection> collection) noexcept override
     {
         try
         {
-            *collection = detach(this->shim().SearchSuggestionCollection());
+            typename D::abi_guard guard(this->shim());
+            *collection = detach_abi(this->shim().SearchSuggestionCollection());
             return S_OK;
         }
         catch (...)
@@ -654,11 +702,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsReque
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestDeferral> deferral) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestDeferral> deferral) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -676,6 +725,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsReque
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -689,11 +739,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsReque
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestedEventArgs> : produce_base<D, Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestedEventArgs>
 {
-    HRESULT __stdcall get_Request(abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequest> value) noexcept override
+    HRESULT __stdcall get_Request(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequest> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Request());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Request());
             return S_OK;
         }
         catch (...)
@@ -711,7 +762,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneVisibilityChange
     {
         try
         {
-            *value = detach(this->shim().Visible());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Visible());
             return S_OK;
         }
         catch (...)
@@ -724,11 +776,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchPaneVisibilityChange
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> : produce_base<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails>
 {
-    HRESULT __stdcall get_QueryTextAlternatives(abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_QueryTextAlternatives(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryTextAlternatives());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextAlternatives());
             return S_OK;
         }
         catch (...)
@@ -742,7 +795,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetai
     {
         try
         {
-            *value = detach(this->shim().QueryTextCompositionStart());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextCompositionStart());
             return S_OK;
         }
         catch (...)
@@ -755,7 +809,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetai
     {
         try
         {
-            *value = detach(this->shim().QueryTextCompositionLength());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryTextCompositionLength());
             return S_OK;
         }
         catch (...)
@@ -768,11 +823,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetai
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetailsFactory> : produce_base<D, Windows::ApplicationModel::Search::ISearchQueryLinguisticDetailsFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength, abi_arg_out<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> value) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength, impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&queryTextAlternatives), queryTextCompositionStart, queryTextCompositionLength));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&queryTextAlternatives), queryTextCompositionStart, queryTextCompositionLength));
             return S_OK;
         }
         catch (...)
@@ -790,7 +846,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionCollection
     {
         try
         {
-            *value = detach(this->shim().Size());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Size());
             return S_OK;
         }
         catch (...)
@@ -799,10 +856,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionCollection
         }
     }
 
-    HRESULT __stdcall abi_AppendQuerySuggestion(abi_arg_in<hstring> text) noexcept override
+    HRESULT __stdcall abi_AppendQuerySuggestion(impl::abi_arg_in<hstring> text) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AppendQuerySuggestion(*reinterpret_cast<const hstring *>(&text));
             return S_OK;
         }
@@ -812,10 +870,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionCollection
         }
     }
 
-    HRESULT __stdcall abi_AppendQuerySuggestions(abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> suggestions) noexcept override
+    HRESULT __stdcall abi_AppendQuerySuggestions(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> suggestions) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AppendQuerySuggestions(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&suggestions));
             return S_OK;
         }
@@ -825,10 +884,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionCollection
         }
     }
 
-    HRESULT __stdcall abi_AppendResultSuggestion(abi_arg_in<hstring> text, abi_arg_in<hstring> detailText, abi_arg_in<hstring> tag, abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> image, abi_arg_in<hstring> imageAlternateText) noexcept override
+    HRESULT __stdcall abi_AppendResultSuggestion(impl::abi_arg_in<hstring> text, impl::abi_arg_in<hstring> detailText, impl::abi_arg_in<hstring> tag, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> image, impl::abi_arg_in<hstring> imageAlternateText) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AppendResultSuggestion(*reinterpret_cast<const hstring *>(&text), *reinterpret_cast<const hstring *>(&detailText), *reinterpret_cast<const hstring *>(&tag), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&image), *reinterpret_cast<const hstring *>(&imageAlternateText));
             return S_OK;
         }
@@ -838,10 +898,11 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionCollection
         }
     }
 
-    HRESULT __stdcall abi_AppendSearchSeparator(abi_arg_in<hstring> label) noexcept override
+    HRESULT __stdcall abi_AppendSearchSeparator(impl::abi_arg_in<hstring> label) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AppendSearchSeparator(*reinterpret_cast<const hstring *>(&label));
             return S_OK;
         }
@@ -859,7 +920,8 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionsRequest> 
     {
         try
         {
-            *value = detach(this->shim().IsCanceled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCanceled());
             return S_OK;
         }
         catch (...)
@@ -868,11 +930,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionsRequest> 
         }
     }
 
-    HRESULT __stdcall get_SearchSuggestionCollection(abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionCollection> collection) noexcept override
+    HRESULT __stdcall get_SearchSuggestionCollection(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionCollection> collection) noexcept override
     {
         try
         {
-            *collection = detach(this->shim().SearchSuggestionCollection());
+            typename D::abi_guard guard(this->shim());
+            *collection = detach_abi(this->shim().SearchSuggestionCollection());
             return S_OK;
         }
         catch (...)
@@ -882,11 +945,12 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionsRequest> 
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionsRequestDeferral> deferral) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionsRequestDeferral> deferral) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -904,6 +968,7 @@ struct produce<D, Windows::ApplicationModel::Search::ISearchSuggestionsRequestDe
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -921,305 +986,305 @@ namespace Windows::ApplicationModel::Search {
 template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ISearchPaneQueryLinguisticDetails<D>::QueryTextAlternatives() const
 {
     Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(static_cast<const ISearchPaneQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextAlternatives(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryLinguisticDetails)->get_QueryTextAlternatives(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ISearchPaneQueryLinguisticDetails<D>::QueryTextCompositionStart() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISearchPaneQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextCompositionStart(&value));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryLinguisticDetails)->get_QueryTextCompositionStart(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISearchPaneQueryLinguisticDetails<D>::QueryTextCompositionLength() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISearchPaneQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextCompositionLength(&value));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryLinguisticDetails)->get_QueryTextCompositionLength(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISearchSuggestionCollection<D>::Size() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISearchSuggestionCollection &>(static_cast<const D &>(*this))->get_Size(&value));
+    check_hresult(WINRT_SHIM(ISearchSuggestionCollection)->get_Size(&value));
     return value;
 }
 
-template <typename D> void impl_ISearchSuggestionCollection<D>::AppendQuerySuggestion(hstring_ref text) const
+template <typename D> void impl_ISearchSuggestionCollection<D>::AppendQuerySuggestion(hstring_view text) const
 {
-    check_hresult(static_cast<const ISearchSuggestionCollection &>(static_cast<const D &>(*this))->abi_AppendQuerySuggestion(get(text)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionCollection)->abi_AppendQuerySuggestion(get_abi(text)));
 }
 
-template <typename D> void impl_ISearchSuggestionCollection<D>::AppendQuerySuggestions(const Windows::Foundation::Collections::IIterable<hstring> & suggestions) const
+template <typename D> void impl_ISearchSuggestionCollection<D>::AppendQuerySuggestions(iterable<hstring> suggestions) const
 {
-    check_hresult(static_cast<const ISearchSuggestionCollection &>(static_cast<const D &>(*this))->abi_AppendQuerySuggestions(get(suggestions)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionCollection)->abi_AppendQuerySuggestions(get_abi(suggestions)));
 }
 
-template <typename D> void impl_ISearchSuggestionCollection<D>::AppendResultSuggestion(hstring_ref text, hstring_ref detailText, hstring_ref tag, const Windows::Storage::Streams::IRandomAccessStreamReference & image, hstring_ref imageAlternateText) const
+template <typename D> void impl_ISearchSuggestionCollection<D>::AppendResultSuggestion(hstring_view text, hstring_view detailText, hstring_view tag, const Windows::Storage::Streams::IRandomAccessStreamReference & image, hstring_view imageAlternateText) const
 {
-    check_hresult(static_cast<const ISearchSuggestionCollection &>(static_cast<const D &>(*this))->abi_AppendResultSuggestion(get(text), get(detailText), get(tag), get(image), get(imageAlternateText)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionCollection)->abi_AppendResultSuggestion(get_abi(text), get_abi(detailText), get_abi(tag), get_abi(image), get_abi(imageAlternateText)));
 }
 
-template <typename D> void impl_ISearchSuggestionCollection<D>::AppendSearchSeparator(hstring_ref label) const
+template <typename D> void impl_ISearchSuggestionCollection<D>::AppendSearchSeparator(hstring_view label) const
 {
-    check_hresult(static_cast<const ISearchSuggestionCollection &>(static_cast<const D &>(*this))->abi_AppendSearchSeparator(get(label)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionCollection)->abi_AppendSearchSeparator(get_abi(label)));
 }
 
 template <typename D> void impl_ILocalContentSuggestionSettings<D>::Enabled(bool value) const
 {
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->put_Enabled(value));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->put_Enabled(value));
 }
 
 template <typename D> bool impl_ILocalContentSuggestionSettings<D>::Enabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->get_Enabled(&value));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->get_Enabled(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<Windows::Storage::StorageFolder> impl_ILocalContentSuggestionSettings<D>::Locations() const
 {
     Windows::Foundation::Collections::IVector<Windows::Storage::StorageFolder> value;
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->get_Locations(put(value)));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->get_Locations(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ILocalContentSuggestionSettings<D>::AqsFilter(hstring_ref value) const
+template <typename D> void impl_ILocalContentSuggestionSettings<D>::AqsFilter(hstring_view value) const
 {
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->put_AqsFilter(get(value)));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->put_AqsFilter(get_abi(value)));
 }
 
 template <typename D> hstring impl_ILocalContentSuggestionSettings<D>::AqsFilter() const
 {
     hstring value;
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->get_AqsFilter(put(value)));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->get_AqsFilter(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_ILocalContentSuggestionSettings<D>::PropertiesToMatch() const
 {
     Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(static_cast<const ILocalContentSuggestionSettings &>(static_cast<const D &>(*this))->get_PropertiesToMatch(put(value)));
+    check_hresult(WINRT_SHIM(ILocalContentSuggestionSettings)->get_PropertiesToMatch(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::ApplicationModel::Search::SearchQueryLinguisticDetails impl_ISearchQueryLinguisticDetailsFactory<D>::CreateInstance(const Windows::Foundation::Collections::IIterable<hstring> & queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength) const
+template <typename D> Windows::ApplicationModel::Search::SearchQueryLinguisticDetails impl_ISearchQueryLinguisticDetailsFactory<D>::CreateInstance(iterable<hstring> queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength) const
 {
     Windows::ApplicationModel::Search::SearchQueryLinguisticDetails value { nullptr };
-    check_hresult(static_cast<const ISearchQueryLinguisticDetailsFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(queryTextAlternatives), queryTextCompositionStart, queryTextCompositionLength, put(value)));
+    check_hresult(WINRT_SHIM(ISearchQueryLinguisticDetailsFactory)->abi_CreateInstance(get_abi(queryTextAlternatives), queryTextCompositionStart, queryTextCompositionLength, put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ISearchQueryLinguisticDetails<D>::QueryTextAlternatives() const
 {
     Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(static_cast<const ISearchQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextAlternatives(put(value)));
+    check_hresult(WINRT_SHIM(ISearchQueryLinguisticDetails)->get_QueryTextAlternatives(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ISearchQueryLinguisticDetails<D>::QueryTextCompositionStart() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISearchQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextCompositionStart(&value));
+    check_hresult(WINRT_SHIM(ISearchQueryLinguisticDetails)->get_QueryTextCompositionStart(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_ISearchQueryLinguisticDetails<D>::QueryTextCompositionLength() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const ISearchQueryLinguisticDetails &>(static_cast<const D &>(*this))->get_QueryTextCompositionLength(&value));
+    check_hresult(WINRT_SHIM(ISearchQueryLinguisticDetails)->get_QueryTextCompositionLength(&value));
     return value;
 }
 
 template <typename D> void impl_ISearchSuggestionsRequestDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const ISearchSuggestionsRequestDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequestDeferral)->abi_Complete());
 }
 
 template <typename D> bool impl_ISearchSuggestionsRequest<D>::IsCanceled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchSuggestionsRequest &>(static_cast<const D &>(*this))->get_IsCanceled(&value));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequest)->get_IsCanceled(&value));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchSuggestionCollection impl_ISearchSuggestionsRequest<D>::SearchSuggestionCollection() const
 {
     Windows::ApplicationModel::Search::SearchSuggestionCollection collection { nullptr };
-    check_hresult(static_cast<const ISearchSuggestionsRequest &>(static_cast<const D &>(*this))->get_SearchSuggestionCollection(put(collection)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequest)->get_SearchSuggestionCollection(put_abi(collection)));
     return collection;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchSuggestionsRequestDeferral impl_ISearchSuggestionsRequest<D>::GetDeferral() const
 {
     Windows::ApplicationModel::Search::SearchSuggestionsRequestDeferral deferral { nullptr };
-    check_hresult(static_cast<const ISearchSuggestionsRequest &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequest)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> bool impl_ISearchPaneVisibilityChangedEventArgs<D>::Visible() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchPaneVisibilityChangedEventArgs &>(static_cast<const D &>(*this))->get_Visible(&value));
+    check_hresult(WINRT_SHIM(ISearchPaneVisibilityChangedEventArgs)->get_Visible(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPaneQueryChangedEventArgs<D>::QueryText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPaneQueryChangedEventArgs &>(static_cast<const D &>(*this))->get_QueryText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryChangedEventArgs)->get_QueryText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPaneQueryChangedEventArgs<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPaneQueryChangedEventArgs &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryChangedEventArgs)->get_Language(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails impl_ISearchPaneQueryChangedEventArgs<D>::LinguisticDetails() const
 {
     Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails value { nullptr };
-    check_hresult(static_cast<const ISearchPaneQueryChangedEventArgs &>(static_cast<const D &>(*this))->get_LinguisticDetails(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQueryChangedEventArgs)->get_LinguisticDetails(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPaneQuerySubmittedEventArgs<D>::QueryText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPaneQuerySubmittedEventArgs &>(static_cast<const D &>(*this))->get_QueryText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQuerySubmittedEventArgs)->get_QueryText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPaneQuerySubmittedEventArgs<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPaneQuerySubmittedEventArgs &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQuerySubmittedEventArgs)->get_Language(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails impl_ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails<D>::LinguisticDetails() const
 {
     Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails value { nullptr };
-    check_hresult(static_cast<const ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails &>(static_cast<const D &>(*this))->get_LinguisticDetails(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails)->get_LinguisticDetails(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPaneResultSuggestionChosenEventArgs<D>::Tag() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPaneResultSuggestionChosenEventArgs &>(static_cast<const D &>(*this))->get_Tag(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneResultSuggestionChosenEventArgs)->get_Tag(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ISearchPaneSuggestionsRequestDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const ISearchPaneSuggestionsRequestDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(ISearchPaneSuggestionsRequestDeferral)->abi_Complete());
 }
 
 template <typename D> bool impl_ISearchPaneSuggestionsRequest<D>::IsCanceled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchPaneSuggestionsRequest &>(static_cast<const D &>(*this))->get_IsCanceled(&value));
+    check_hresult(WINRT_SHIM(ISearchPaneSuggestionsRequest)->get_IsCanceled(&value));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchSuggestionCollection impl_ISearchPaneSuggestionsRequest<D>::SearchSuggestionCollection() const
 {
     Windows::ApplicationModel::Search::SearchSuggestionCollection collection { nullptr };
-    check_hresult(static_cast<const ISearchPaneSuggestionsRequest &>(static_cast<const D &>(*this))->get_SearchSuggestionCollection(put(collection)));
+    check_hresult(WINRT_SHIM(ISearchPaneSuggestionsRequest)->get_SearchSuggestionCollection(put_abi(collection)));
     return collection;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestDeferral impl_ISearchPaneSuggestionsRequest<D>::GetDeferral() const
 {
     Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestDeferral deferral { nullptr };
-    check_hresult(static_cast<const ISearchPaneSuggestionsRequest &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(ISearchPaneSuggestionsRequest)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchPaneSuggestionsRequest impl_ISearchPaneSuggestionsRequestedEventArgs<D>::Request() const
 {
     Windows::ApplicationModel::Search::SearchPaneSuggestionsRequest value { nullptr };
-    check_hresult(static_cast<const ISearchPaneSuggestionsRequestedEventArgs &>(static_cast<const D &>(*this))->get_Request(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPaneSuggestionsRequestedEventArgs)->get_Request(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchPane impl_ISearchPaneStatics<D>::GetForCurrentView() const
 {
     Windows::ApplicationModel::Search::SearchPane searchPane { nullptr };
-    check_hresult(static_cast<const ISearchPaneStatics &>(static_cast<const D &>(*this))->abi_GetForCurrentView(put(searchPane)));
+    check_hresult(WINRT_SHIM(ISearchPaneStatics)->abi_GetForCurrentView(put_abi(searchPane)));
     return searchPane;
 }
 
 template <typename D> void impl_ISearchPaneStaticsWithHideThisApplication<D>::HideThisApplication() const
 {
-    check_hresult(static_cast<const ISearchPaneStaticsWithHideThisApplication &>(static_cast<const D &>(*this))->abi_HideThisApplication());
+    check_hresult(WINRT_SHIM(ISearchPaneStaticsWithHideThisApplication)->abi_HideThisApplication());
 }
 
 template <typename D> void impl_ISearchPane<D>::SearchHistoryEnabled(bool value) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->put_SearchHistoryEnabled(value));
+    check_hresult(WINRT_SHIM(ISearchPane)->put_SearchHistoryEnabled(value));
 }
 
 template <typename D> bool impl_ISearchPane<D>::SearchHistoryEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_SearchHistoryEnabled(&value));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_SearchHistoryEnabled(&value));
     return value;
 }
 
-template <typename D> void impl_ISearchPane<D>::SearchHistoryContext(hstring_ref value) const
+template <typename D> void impl_ISearchPane<D>::SearchHistoryContext(hstring_view value) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->put_SearchHistoryContext(get(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->put_SearchHistoryContext(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISearchPane<D>::SearchHistoryContext() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_SearchHistoryContext(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_SearchHistoryContext(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISearchPane<D>::PlaceholderText(hstring_ref value) const
+template <typename D> void impl_ISearchPane<D>::PlaceholderText(hstring_view value) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->put_PlaceholderText(get(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->put_PlaceholderText(get_abi(value)));
 }
 
 template <typename D> hstring impl_ISearchPane<D>::PlaceholderText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_PlaceholderText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_PlaceholderText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPane<D>::QueryText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_QueryText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_QueryText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchPane<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_Language(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_ISearchPane<D>::Visible() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_Visible(&value));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_Visible(&value));
     return value;
 }
 
 template <typename D> event_token impl_ISearchPane<D>::VisibilityChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->add_VisibilityChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchPane)->add_VisibilityChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -1230,13 +1295,13 @@ template <typename D> event_revoker<ISearchPane> impl_ISearchPane<D>::Visibility
 
 template <typename D> void impl_ISearchPane<D>::VisibilityChanged(event_token token) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->remove_VisibilityChanged(token));
+    check_hresult(WINRT_SHIM(ISearchPane)->remove_VisibilityChanged(token));
 }
 
 template <typename D> event_token impl_ISearchPane<D>::QueryChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->add_QueryChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchPane)->add_QueryChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -1247,13 +1312,13 @@ template <typename D> event_revoker<ISearchPane> impl_ISearchPane<D>::QueryChang
 
 template <typename D> void impl_ISearchPane<D>::QueryChanged(event_token token) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->remove_QueryChanged(token));
+    check_hresult(WINRT_SHIM(ISearchPane)->remove_QueryChanged(token));
 }
 
 template <typename D> event_token impl_ISearchPane<D>::SuggestionsRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->add_SuggestionsRequested(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchPane)->add_SuggestionsRequested(get_abi(handler), &token));
     return token;
 }
 
@@ -1264,13 +1329,13 @@ template <typename D> event_revoker<ISearchPane> impl_ISearchPane<D>::Suggestion
 
 template <typename D> void impl_ISearchPane<D>::SuggestionsRequested(event_token token) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->remove_SuggestionsRequested(token));
+    check_hresult(WINRT_SHIM(ISearchPane)->remove_SuggestionsRequested(token));
 }
 
 template <typename D> event_token impl_ISearchPane<D>::QuerySubmitted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->add_QuerySubmitted(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchPane)->add_QuerySubmitted(get_abi(handler), &token));
     return token;
 }
 
@@ -1281,13 +1346,13 @@ template <typename D> event_revoker<ISearchPane> impl_ISearchPane<D>::QuerySubmi
 
 template <typename D> void impl_ISearchPane<D>::QuerySubmitted(event_token token) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->remove_QuerySubmitted(token));
+    check_hresult(WINRT_SHIM(ISearchPane)->remove_QuerySubmitted(token));
 }
 
 template <typename D> event_token impl_ISearchPane<D>::ResultSuggestionChosen(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::SearchPane, Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->add_ResultSuggestionChosen(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchPane)->add_ResultSuggestionChosen(get_abi(handler), &token));
     return token;
 }
 
@@ -1298,40 +1363,40 @@ template <typename D> event_revoker<ISearchPane> impl_ISearchPane<D>::ResultSugg
 
 template <typename D> void impl_ISearchPane<D>::ResultSuggestionChosen(event_token token) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->remove_ResultSuggestionChosen(token));
+    check_hresult(WINRT_SHIM(ISearchPane)->remove_ResultSuggestionChosen(token));
 }
 
 template <typename D> void impl_ISearchPane<D>::SetLocalContentSuggestionSettings(const Windows::ApplicationModel::Search::LocalContentSuggestionSettings & settings) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->abi_SetLocalContentSuggestionSettings(get(settings)));
+    check_hresult(WINRT_SHIM(ISearchPane)->abi_SetLocalContentSuggestionSettings(get_abi(settings)));
 }
 
 template <typename D> void impl_ISearchPane<D>::Show() const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->abi_ShowOverloadDefault());
+    check_hresult(WINRT_SHIM(ISearchPane)->abi_ShowOverloadDefault());
 }
 
-template <typename D> void impl_ISearchPane<D>::Show(hstring_ref query) const
+template <typename D> void impl_ISearchPane<D>::Show(hstring_view query) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->abi_ShowOverloadWithQuery(get(query)));
+    check_hresult(WINRT_SHIM(ISearchPane)->abi_ShowOverloadWithQuery(get_abi(query)));
 }
 
 template <typename D> void impl_ISearchPane<D>::ShowOnKeyboardInput(bool value) const
 {
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->put_ShowOnKeyboardInput(value));
+    check_hresult(WINRT_SHIM(ISearchPane)->put_ShowOnKeyboardInput(value));
 }
 
 template <typename D> bool impl_ISearchPane<D>::ShowOnKeyboardInput() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->get_ShowOnKeyboardInput(&value));
+    check_hresult(WINRT_SHIM(ISearchPane)->get_ShowOnKeyboardInput(&value));
     return value;
 }
 
-template <typename D> bool impl_ISearchPane<D>::TrySetQueryText(hstring_ref query) const
+template <typename D> bool impl_ISearchPane<D>::TrySetQueryText(hstring_view query) const
 {
     bool succeeded {};
-    check_hresult(static_cast<const ISearchPane &>(static_cast<const D &>(*this))->abi_TrySetQueryText(get(query), &succeeded));
+    check_hresult(WINRT_SHIM(ISearchPane)->abi_TrySetQueryText(get_abi(query), &succeeded));
     return succeeded;
 }
 
@@ -1349,10 +1414,300 @@ inline void SearchPane::HideThisApplication()
     get_activation_factory<SearchPane, ISearchPaneStaticsWithHideThisApplication>().HideThisApplication();
 }
 
-inline SearchQueryLinguisticDetails::SearchQueryLinguisticDetails(const Windows::Foundation::Collections::IIterable<hstring> & queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength) :
+inline SearchQueryLinguisticDetails::SearchQueryLinguisticDetails(iterable<hstring> queryTextAlternatives, uint32_t queryTextCompositionStart, uint32_t queryTextCompositionLength) :
     SearchQueryLinguisticDetails(get_activation_factory<SearchQueryLinguisticDetails, ISearchQueryLinguisticDetailsFactory>().CreateInstance(queryTextAlternatives, queryTextCompositionStart, queryTextCompositionLength))
 {}
 
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ILocalContentSuggestionSettings>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ILocalContentSuggestionSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPane>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPane & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneQueryChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneQueryChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneResultSuggestionChosenEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneResultSuggestionChosenEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneStatics>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneStaticsWithHideThisApplication>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneStaticsWithHideThisApplication & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequest>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestDeferral>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchPaneVisibilityChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchPaneVisibilityChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchQueryLinguisticDetailsFactory>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchQueryLinguisticDetailsFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchSuggestionCollection>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchSuggestionCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchSuggestionsRequest>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchSuggestionsRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::ISearchSuggestionsRequestDeferral>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::ISearchSuggestionsRequestDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::LocalContentSuggestionSettings>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::LocalContentSuggestionSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPane>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPane & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneQueryChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneQueryLinguisticDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneQuerySubmittedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneResultSuggestionChosenEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequest>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestDeferral>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneSuggestionsRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchPaneVisibilityChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchQueryLinguisticDetails>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchQueryLinguisticDetails & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchSuggestionCollection>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchSuggestionCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchSuggestionsRequest>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchSuggestionsRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::SearchSuggestionsRequestDeferral>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::SearchSuggestionsRequestDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

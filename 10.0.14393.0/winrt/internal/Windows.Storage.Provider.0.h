@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -36,6 +36,18 @@ struct CachedFileUpdaterUI;
 struct FileUpdateRequest;
 struct FileUpdateRequestDeferral;
 struct FileUpdateRequestedEventArgs;
+
+}
+
+namespace Windows::Storage::Provider {
+
+template <typename T> struct impl_ICachedFileUpdaterStatics;
+template <typename T> struct impl_ICachedFileUpdaterUI;
+template <typename T> struct impl_ICachedFileUpdaterUI2;
+template <typename T> struct impl_IFileUpdateRequest;
+template <typename T> struct impl_IFileUpdateRequest2;
+template <typename T> struct impl_IFileUpdateRequestDeferral;
+template <typename T> struct impl_IFileUpdateRequestedEventArgs;
 
 }
 

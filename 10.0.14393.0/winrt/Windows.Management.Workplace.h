@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Management.Workplace.3.h"
 
@@ -16,7 +19,8 @@ struct produce<D, Windows::Management::Workplace::IMdmAllowPolicyStatics> : prod
     {
         try
         {
-            *value = detach(this->shim().IsBrowserAllowed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsBrowserAllowed());
             return S_OK;
         }
         catch (...)
@@ -29,7 +33,8 @@ struct produce<D, Windows::Management::Workplace::IMdmAllowPolicyStatics> : prod
     {
         try
         {
-            *value = detach(this->shim().IsCameraAllowed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCameraAllowed());
             return S_OK;
         }
         catch (...)
@@ -42,7 +47,8 @@ struct produce<D, Windows::Management::Workplace::IMdmAllowPolicyStatics> : prod
     {
         try
         {
-            *value = detach(this->shim().IsMicrosoftAccountAllowed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsMicrosoftAccountAllowed());
             return S_OK;
         }
         catch (...)
@@ -55,7 +61,8 @@ struct produce<D, Windows::Management::Workplace::IMdmAllowPolicyStatics> : prod
     {
         try
         {
-            *value = detach(this->shim().IsStoreAllowed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsStoreAllowed());
             return S_OK;
         }
         catch (...)
@@ -72,7 +79,8 @@ struct produce<D, Windows::Management::Workplace::IMdmPolicyStatics2> : produce_
     {
         try
         {
-            *value = detach(this->shim().GetMessagingSyncPolicy());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetMessagingSyncPolicy());
             return S_OK;
         }
         catch (...)
@@ -89,7 +97,8 @@ struct produce<D, Windows::Management::Workplace::IWorkplaceSettingsStatics> : p
     {
         try
         {
-            *value = detach(this->shim().IsMicrosoftAccountOptional());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsMicrosoftAccountOptional());
             return S_OK;
         }
         catch (...)
@@ -106,42 +115,42 @@ namespace Windows::Management::Workplace {
 template <typename D> bool impl_IMdmAllowPolicyStatics<D>::IsBrowserAllowed() const
 {
     bool value {};
-    check_hresult(static_cast<const IMdmAllowPolicyStatics &>(static_cast<const D &>(*this))->abi_IsBrowserAllowed(&value));
+    check_hresult(WINRT_SHIM(IMdmAllowPolicyStatics)->abi_IsBrowserAllowed(&value));
     return value;
 }
 
 template <typename D> bool impl_IMdmAllowPolicyStatics<D>::IsCameraAllowed() const
 {
     bool value {};
-    check_hresult(static_cast<const IMdmAllowPolicyStatics &>(static_cast<const D &>(*this))->abi_IsCameraAllowed(&value));
+    check_hresult(WINRT_SHIM(IMdmAllowPolicyStatics)->abi_IsCameraAllowed(&value));
     return value;
 }
 
 template <typename D> bool impl_IMdmAllowPolicyStatics<D>::IsMicrosoftAccountAllowed() const
 {
     bool value {};
-    check_hresult(static_cast<const IMdmAllowPolicyStatics &>(static_cast<const D &>(*this))->abi_IsMicrosoftAccountAllowed(&value));
+    check_hresult(WINRT_SHIM(IMdmAllowPolicyStatics)->abi_IsMicrosoftAccountAllowed(&value));
     return value;
 }
 
 template <typename D> bool impl_IMdmAllowPolicyStatics<D>::IsStoreAllowed() const
 {
     bool value {};
-    check_hresult(static_cast<const IMdmAllowPolicyStatics &>(static_cast<const D &>(*this))->abi_IsStoreAllowed(&value));
+    check_hresult(WINRT_SHIM(IMdmAllowPolicyStatics)->abi_IsStoreAllowed(&value));
     return value;
 }
 
 template <typename D> Windows::Management::Workplace::MessagingSyncPolicy impl_IMdmPolicyStatics2<D>::GetMessagingSyncPolicy() const
 {
     Windows::Management::Workplace::MessagingSyncPolicy value {};
-    check_hresult(static_cast<const IMdmPolicyStatics2 &>(static_cast<const D &>(*this))->abi_GetMessagingSyncPolicy(&value));
+    check_hresult(WINRT_SHIM(IMdmPolicyStatics2)->abi_GetMessagingSyncPolicy(&value));
     return value;
 }
 
 template <typename D> bool impl_IWorkplaceSettingsStatics<D>::IsMicrosoftAccountOptional() const
 {
     bool value {};
-    check_hresult(static_cast<const IWorkplaceSettingsStatics &>(static_cast<const D &>(*this))->get_IsMicrosoftAccountOptional(&value));
+    check_hresult(WINRT_SHIM(IWorkplaceSettingsStatics)->get_IsMicrosoftAccountOptional(&value));
     return value;
 }
 
@@ -178,3 +187,32 @@ inline bool WorkplaceSettings::IsMicrosoftAccountOptional()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Management::Workplace::IMdmAllowPolicyStatics>
+{
+    size_t operator()(const winrt::Windows::Management::Workplace::IMdmAllowPolicyStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Management::Workplace::IMdmPolicyStatics2>
+{
+    size_t operator()(const winrt::Windows::Management::Workplace::IMdmPolicyStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Management::Workplace::IWorkplaceSettingsStatics>
+{
+    size_t operator()(const winrt::Windows::Management::Workplace::IWorkplaceSettingsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

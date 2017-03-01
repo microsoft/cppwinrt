@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Storage.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -15,11 +18,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> : produce_base<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin>
 {
-    HRESULT __stdcall get_Category(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Category(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Category());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Category());
             return S_OK;
         }
         catch (...)
@@ -29,10 +33,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
         }
     }
 
-    HRESULT __stdcall put_Category(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Category(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Category(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -42,11 +47,12 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
         }
     }
 
-    HRESULT __stdcall get_CategoryDescription(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CategoryDescription(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CategoryDescription());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CategoryDescription());
             return S_OK;
         }
         catch (...)
@@ -56,10 +62,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
         }
     }
 
-    HRESULT __stdcall put_CategoryDescription(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CategoryDescription(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().CategoryDescription(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -69,11 +76,12 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
         }
     }
 
-    HRESULT __stdcall get_Location(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Location(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Location());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Location());
             return S_OK;
         }
         catch (...)
@@ -83,10 +91,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
         }
     }
 
-    HRESULT __stdcall put_Location(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Location(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Location(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -100,11 +109,12 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2> : produce_base<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2>
 {
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -114,10 +124,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2>
         }
     }
 
-    HRESULT __stdcall put_DisplayName(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -131,11 +142,12 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin3> : produce_base<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin3>
 {
-    HRESULT __stdcall get_DisplayPicture(abi_arg_out<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall get_DisplayPicture(impl::abi_arg_out<Windows::Storage::IStorageFile> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayPicture());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayPicture());
             return S_OK;
         }
         catch (...)
@@ -145,10 +157,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin3>
         }
     }
 
-    HRESULT __stdcall put_DisplayPicture(abi_arg_in<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall put_DisplayPicture(impl::abi_arg_in<Windows::Storage::IStorageFile> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DisplayPicture(*reinterpret_cast<const Windows::Storage::StorageFile *>(&value));
             return S_OK;
         }
@@ -166,7 +179,8 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginMa
     {
         try
         {
-            *value = detach(this->shim().IsCurrentAppActiveCallOriginApp());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsCurrentAppActiveCallOriginApp());
             return S_OK;
         }
         catch (...)
@@ -179,6 +193,7 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginMa
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ShowPhoneCallOriginSettingsUI();
             return S_OK;
         }
@@ -188,10 +203,11 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginMa
         }
     }
 
-    HRESULT __stdcall abi_SetCallOrigin(GUID requestId, abi_arg_in<Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> callOrigin) noexcept override
+    HRESULT __stdcall abi_SetCallOrigin(GUID requestId, impl::abi_arg_in<Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin> callOrigin) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetCallOrigin(requestId, *reinterpret_cast<const Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin *>(&callOrigin));
             return S_OK;
         }
@@ -205,11 +221,12 @@ struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginMa
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics2> : produce_base<D, Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics2>
 {
-    HRESULT __stdcall abi_RequestSetAsActiveCallOriginAppAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall abi_RequestSetAsActiveCallOriginAppAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().RequestSetAsActiveCallOriginAppAsync());
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().RequestSetAsActiveCallOriginAppAsync());
             return S_OK;
         }
         catch (...)
@@ -227,84 +244,84 @@ namespace Windows::ApplicationModel::Calls::Provider {
 template <typename D> hstring impl_IPhoneCallOrigin<D>::Category() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->get_Category(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->get_Category(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPhoneCallOrigin<D>::Category(hstring_ref value) const
+template <typename D> void impl_IPhoneCallOrigin<D>::Category(hstring_view value) const
 {
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->put_Category(get(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->put_Category(get_abi(value)));
 }
 
 template <typename D> hstring impl_IPhoneCallOrigin<D>::CategoryDescription() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->get_CategoryDescription(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->get_CategoryDescription(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPhoneCallOrigin<D>::CategoryDescription(hstring_ref value) const
+template <typename D> void impl_IPhoneCallOrigin<D>::CategoryDescription(hstring_view value) const
 {
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->put_CategoryDescription(get(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->put_CategoryDescription(get_abi(value)));
 }
 
 template <typename D> hstring impl_IPhoneCallOrigin<D>::Location() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->get_Location(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->get_Location(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPhoneCallOrigin<D>::Location(hstring_ref value) const
+template <typename D> void impl_IPhoneCallOrigin<D>::Location(hstring_view value) const
 {
-    check_hresult(static_cast<const IPhoneCallOrigin &>(static_cast<const D &>(*this))->put_Location(get(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin)->put_Location(get_abi(value)));
 }
 
 template <typename D> hstring impl_IPhoneCallOrigin2<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IPhoneCallOrigin2 &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin2)->get_DisplayName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPhoneCallOrigin2<D>::DisplayName(hstring_ref value) const
+template <typename D> void impl_IPhoneCallOrigin2<D>::DisplayName(hstring_view value) const
 {
-    check_hresult(static_cast<const IPhoneCallOrigin2 &>(static_cast<const D &>(*this))->put_DisplayName(get(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin2)->put_DisplayName(get_abi(value)));
 }
 
 template <typename D> Windows::Storage::StorageFile impl_IPhoneCallOrigin3<D>::DisplayPicture() const
 {
     Windows::Storage::StorageFile value { nullptr };
-    check_hresult(static_cast<const IPhoneCallOrigin3 &>(static_cast<const D &>(*this))->get_DisplayPicture(put(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin3)->get_DisplayPicture(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPhoneCallOrigin3<D>::DisplayPicture(const Windows::Storage::StorageFile & value) const
 {
-    check_hresult(static_cast<const IPhoneCallOrigin3 &>(static_cast<const D &>(*this))->put_DisplayPicture(get(value)));
+    check_hresult(WINRT_SHIM(IPhoneCallOrigin3)->put_DisplayPicture(get_abi(value)));
 }
 
 template <typename D> bool impl_IPhoneCallOriginManagerStatics<D>::IsCurrentAppActiveCallOriginApp() const
 {
     bool value {};
-    check_hresult(static_cast<const IPhoneCallOriginManagerStatics &>(static_cast<const D &>(*this))->get_IsCurrentAppActiveCallOriginApp(&value));
+    check_hresult(WINRT_SHIM(IPhoneCallOriginManagerStatics)->get_IsCurrentAppActiveCallOriginApp(&value));
     return value;
 }
 
 template <typename D> void impl_IPhoneCallOriginManagerStatics<D>::ShowPhoneCallOriginSettingsUI() const
 {
-    check_hresult(static_cast<const IPhoneCallOriginManagerStatics &>(static_cast<const D &>(*this))->abi_ShowPhoneCallOriginSettingsUI());
+    check_hresult(WINRT_SHIM(IPhoneCallOriginManagerStatics)->abi_ShowPhoneCallOriginSettingsUI());
 }
 
 template <typename D> void impl_IPhoneCallOriginManagerStatics<D>::SetCallOrigin(GUID requestId, const Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin & callOrigin) const
 {
-    check_hresult(static_cast<const IPhoneCallOriginManagerStatics &>(static_cast<const D &>(*this))->abi_SetCallOrigin(requestId, get(callOrigin)));
+    check_hresult(WINRT_SHIM(IPhoneCallOriginManagerStatics)->abi_SetCallOrigin(requestId, get_abi(callOrigin)));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneCallOriginManagerStatics2<D>::RequestSetAsActiveCallOriginAppAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(static_cast<const IPhoneCallOriginManagerStatics2 &>(static_cast<const D &>(*this))->abi_RequestSetAsActiveCallOriginAppAsync(put(result)));
+    check_hresult(WINRT_SHIM(IPhoneCallOriginManagerStatics2)->abi_RequestSetAsActiveCallOriginAppAsync(put_abi(result)));
     return result;
 }
 
@@ -335,3 +352,59 @@ inline Windows::Foundation::IAsyncOperation<bool> PhoneCallOriginManager::Reques
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin3>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOrigin3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics2>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::IPhoneCallOriginManagerStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Calls::Provider::PhoneCallOrigin & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

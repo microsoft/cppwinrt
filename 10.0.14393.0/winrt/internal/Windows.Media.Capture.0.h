@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -197,6 +197,67 @@ struct PhotoConfirmationCapturedEventArgs;
 struct ScreenCapture;
 struct SourceSuspensionChangedEventArgs;
 struct VideoStreamConfiguration;
+
+}
+
+namespace Windows::Media::Capture {
+
+template <typename T> struct impl_IAdvancedCapturedPhoto;
+template <typename T> struct impl_IAdvancedCapturedPhoto2;
+template <typename T> struct impl_IAdvancedPhotoCapture;
+template <typename T> struct impl_IAppCapture;
+template <typename T> struct impl_IAppCaptureAlternateShortcutKeys;
+template <typename T> struct impl_IAppCaptureAlternateShortcutKeys2;
+template <typename T> struct impl_IAppCaptureAlternateShortcutKeys3;
+template <typename T> struct impl_IAppCaptureManagerStatics;
+template <typename T> struct impl_IAppCaptureSettings;
+template <typename T> struct impl_IAppCaptureSettings2;
+template <typename T> struct impl_IAppCaptureSettings3;
+template <typename T> struct impl_IAppCaptureSettings4;
+template <typename T> struct impl_IAppCaptureStatics;
+template <typename T> struct impl_ICameraCaptureUI;
+template <typename T> struct impl_ICameraCaptureUIPhotoCaptureSettings;
+template <typename T> struct impl_ICameraCaptureUIVideoCaptureSettings;
+template <typename T> struct impl_ICameraOptionsUIStatics;
+template <typename T> struct impl_ICapturedFrame;
+template <typename T> struct impl_ICapturedFrameControlValues;
+template <typename T> struct impl_ICapturedFrameControlValues2;
+template <typename T> struct impl_ICapturedFrameWithSoftwareBitmap;
+template <typename T> struct impl_ICapturedPhoto;
+template <typename T> struct impl_ILowLagMediaRecording;
+template <typename T> struct impl_ILowLagMediaRecording2;
+template <typename T> struct impl_ILowLagMediaRecording3;
+template <typename T> struct impl_ILowLagPhotoCapture;
+template <typename T> struct impl_ILowLagPhotoSequenceCapture;
+template <typename T> struct impl_IMediaCapture;
+template <typename T> struct impl_IMediaCapture2;
+template <typename T> struct impl_IMediaCapture3;
+template <typename T> struct impl_IMediaCapture4;
+template <typename T> struct impl_IMediaCapture5;
+template <typename T> struct impl_IMediaCaptureFailedEventArgs;
+template <typename T> struct impl_IMediaCaptureFocusChangedEventArgs;
+template <typename T> struct impl_IMediaCaptureInitializationSettings;
+template <typename T> struct impl_IMediaCaptureInitializationSettings2;
+template <typename T> struct impl_IMediaCaptureInitializationSettings3;
+template <typename T> struct impl_IMediaCaptureInitializationSettings4;
+template <typename T> struct impl_IMediaCaptureInitializationSettings5;
+template <typename T> struct impl_IMediaCapturePauseResult;
+template <typename T> struct impl_IMediaCaptureSettings;
+template <typename T> struct impl_IMediaCaptureSettings2;
+template <typename T> struct impl_IMediaCaptureStatics;
+template <typename T> struct impl_IMediaCaptureStopResult;
+template <typename T> struct impl_IMediaCaptureVideoPreview;
+template <typename T> struct impl_IMediaCaptureVideoProfile;
+template <typename T> struct impl_IMediaCaptureVideoProfileMediaDescription;
+template <typename T> struct impl_IOptionalReferencePhotoCapturedEventArgs;
+template <typename T> struct impl_IPhotoCapturedEventArgs;
+template <typename T> struct impl_IPhotoConfirmationCapturedEventArgs;
+template <typename T> struct impl_IScreenCapture;
+template <typename T> struct impl_IScreenCaptureStatics;
+template <typename T> struct impl_ISourceSuspensionChangedEventArgs;
+template <typename T> struct impl_IVideoStreamConfiguration;
+template <typename T> struct impl_MediaCaptureFailedEventHandler;
+template <typename T> struct impl_RecordLimitationExceededEventHandler;
 
 }
 

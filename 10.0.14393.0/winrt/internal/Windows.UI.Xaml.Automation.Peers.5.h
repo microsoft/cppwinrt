@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -156,7 +156,7 @@ template <typename D, typename ... Interfaces> struct ComboBoxItemDataAutomation
 
 protected:
 
-    ComboBoxItemDataAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ComboBoxAutomationPeer & parent)
+    ComboBoxItemDataAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ComboBoxAutomationPeer & parent)
     {
         get_activation_factory<ComboBoxItemDataAutomationPeer, IComboBoxItemDataAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -212,7 +212,7 @@ template <typename D, typename ... Interfaces> struct FlipViewItemDataAutomation
 
 protected:
 
-    FlipViewItemDataAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::FlipViewAutomationPeer & parent)
+    FlipViewItemDataAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::FlipViewAutomationPeer & parent)
     {
         get_activation_factory<FlipViewItemDataAutomationPeer, IFlipViewItemDataAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -296,7 +296,7 @@ template <typename D, typename ... Interfaces> struct GridViewItemDataAutomation
 
 protected:
 
-    GridViewItemDataAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::GridViewAutomationPeer & parent)
+    GridViewItemDataAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::GridViewAutomationPeer & parent)
     {
         get_activation_factory<GridViewItemDataAutomationPeer, IGridViewItemDataAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -380,7 +380,7 @@ template <typename D, typename ... Interfaces> struct ItemAutomationPeerT :
 
 protected:
 
-    ItemAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ItemsControlAutomationPeer & parent)
+    ItemAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ItemsControlAutomationPeer & parent)
     {
         get_activation_factory<ItemAutomationPeer, IItemAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -436,7 +436,7 @@ template <typename D, typename ... Interfaces> struct ListBoxItemDataAutomationP
 
 protected:
 
-    ListBoxItemDataAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ListBoxAutomationPeer & parent)
+    ListBoxItemDataAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ListBoxAutomationPeer & parent)
     {
         get_activation_factory<ListBoxItemDataAutomationPeer, IListBoxItemDataAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -520,7 +520,7 @@ template <typename D, typename ... Interfaces> struct ListViewItemDataAutomation
 
 protected:
 
-    ListViewItemDataAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ListViewBaseAutomationPeer & parent)
+    ListViewItemDataAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::ListViewBaseAutomationPeer & parent)
     {
         get_activation_factory<ListViewItemDataAutomationPeer, IListViewItemDataAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }
@@ -786,7 +786,7 @@ template <typename D, typename ... Interfaces> struct SelectorItemAutomationPeer
 
 protected:
 
-    SelectorItemAutomationPeerT(const Windows::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::SelectorAutomationPeer & parent)
+    SelectorItemAutomationPeerT(const Windows::Foundation::IInspectable & item, const Windows::UI::Xaml::Automation::Peers::SelectorAutomationPeer & parent)
     {
         get_activation_factory<SelectorItemAutomationPeer, ISelectorItemAutomationPeerFactory>().CreateInstanceWithParentAndItem(item, parent, *this, this->m_inner);
     }

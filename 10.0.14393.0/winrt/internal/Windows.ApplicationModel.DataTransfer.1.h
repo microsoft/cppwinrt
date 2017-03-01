@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -25,17 +25,17 @@ struct __declspec(uuid("e7ecd720-f2f4-4a2d-920e-170a2f482a27")) __declspec(novta
     virtual HRESULT __stdcall abi_Invoke(Windows::ApplicationModel::DataTransfer::IDataProviderRequest * request) = 0;
 };
 
-struct __declspec(uuid("c627e291-34e2-4963-8eed-93cbb0ea3d70")) __declspec(novtable) IClipboardStatics : Windows::IInspectable
+struct __declspec(uuid("c627e291-34e2-4963-8eed-93cbb0ea3d70")) __declspec(novtable) IClipboardStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetContent(Windows::ApplicationModel::DataTransfer::IDataPackageView ** content) = 0;
     virtual HRESULT __stdcall abi_SetContent(Windows::ApplicationModel::DataTransfer::IDataPackage * content) = 0;
     virtual HRESULT __stdcall abi_Flush() = 0;
     virtual HRESULT __stdcall abi_Clear() = 0;
-    virtual HRESULT __stdcall add_ContentChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * changeHandler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_ContentChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * changeHandler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ContentChanged(event_token token) = 0;
 };
 
-struct __declspec(uuid("61ebf5c7-efea-4346-9554-981d7e198ffe")) __declspec(novtable) IDataPackage : Windows::IInspectable
+struct __declspec(uuid("61ebf5c7-efea-4346-9554-981d7e198ffe")) __declspec(novtable) IDataPackage : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetView(Windows::ApplicationModel::DataTransfer::IDataPackageView ** value) = 0;
     virtual HRESULT __stdcall get_Properties(Windows::ApplicationModel::DataTransfer::IDataPackagePropertySet ** value) = 0;
@@ -43,9 +43,9 @@ struct __declspec(uuid("61ebf5c7-efea-4346-9554-981d7e198ffe")) __declspec(novta
     virtual HRESULT __stdcall put_RequestedOperation(winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation value) = 0;
     virtual HRESULT __stdcall add_OperationCompleted(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::ApplicationModel::DataTransfer::OperationCompletedEventArgs> * handler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_OperationCompleted(event_token eventCookie) = 0;
-    virtual HRESULT __stdcall add_Destroyed(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::IInspectable> * handler, event_token * eventCookie) = 0;
+    virtual HRESULT __stdcall add_Destroyed(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::Foundation::IInspectable> * handler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_Destroyed(event_token eventCookie) = 0;
-    virtual HRESULT __stdcall abi_SetData(hstring formatId, Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_SetData(hstring formatId, Windows::Foundation::IInspectable * value) = 0;
     virtual HRESULT __stdcall abi_SetDataProvider(hstring formatId, Windows::ApplicationModel::DataTransfer::DataProviderHandler * delayRenderer) = 0;
     virtual HRESULT __stdcall abi_SetText(hstring value) = 0;
     virtual HRESULT __stdcall abi_SetUri(Windows::Foundation::IUriRuntimeClass * value) = 0;
@@ -57,13 +57,13 @@ struct __declspec(uuid("61ebf5c7-efea-4346-9554-981d7e198ffe")) __declspec(novta
     virtual HRESULT __stdcall abi_SetStorageItems(Windows::Foundation::Collections::IIterable<Windows::Storage::IStorageItem> * value, bool readOnly) = 0;
 };
 
-struct __declspec(uuid("041c1fe9-2409-45e1-a538-4c53eeee04a7")) __declspec(novtable) IDataPackage2 : Windows::IInspectable
+struct __declspec(uuid("041c1fe9-2409-45e1-a538-4c53eeee04a7")) __declspec(novtable) IDataPackage2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SetApplicationLink(Windows::Foundation::IUriRuntimeClass * value) = 0;
     virtual HRESULT __stdcall abi_SetWebLink(Windows::Foundation::IUriRuntimeClass * value) = 0;
 };
 
-struct __declspec(uuid("cd1c93eb-4c4c-443a-a8d3-f5c241e91689")) __declspec(novtable) IDataPackagePropertySet : Windows::IInspectable
+struct __declspec(uuid("cd1c93eb-4c4c-443a-a8d3-f5c241e91689")) __declspec(novtable) IDataPackagePropertySet : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
     virtual HRESULT __stdcall put_Title(hstring value) = 0;
@@ -78,7 +78,7 @@ struct __declspec(uuid("cd1c93eb-4c4c-443a-a8d3-f5c241e91689")) __declspec(novta
     virtual HRESULT __stdcall put_ApplicationListingUri(Windows::Foundation::IUriRuntimeClass * value) = 0;
 };
 
-struct __declspec(uuid("eb505d4a-9800-46aa-b181-7b6f0f2b919a")) __declspec(novtable) IDataPackagePropertySet2 : Windows::IInspectable
+struct __declspec(uuid("eb505d4a-9800-46aa-b181-7b6f0f2b919a")) __declspec(novtable) IDataPackagePropertySet2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContentSourceWebLink(Windows::Foundation::IUriRuntimeClass ** value) = 0;
     virtual HRESULT __stdcall put_ContentSourceWebLink(Windows::Foundation::IUriRuntimeClass * value) = 0;
@@ -92,13 +92,13 @@ struct __declspec(uuid("eb505d4a-9800-46aa-b181-7b6f0f2b919a")) __declspec(novta
     virtual HRESULT __stdcall put_LogoBackgroundColor(Windows::UI::Color value) = 0;
 };
 
-struct __declspec(uuid("9e87fd9b-5205-401b-874a-455653bd39e8")) __declspec(novtable) IDataPackagePropertySet3 : Windows::IInspectable
+struct __declspec(uuid("9e87fd9b-5205-401b-874a-455653bd39e8")) __declspec(novtable) IDataPackagePropertySet3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EnterpriseId(hstring * value) = 0;
     virtual HRESULT __stdcall put_EnterpriseId(hstring value) = 0;
 };
 
-struct __declspec(uuid("b94cec01-0c1a-4c57-be55-75d01289735d")) __declspec(novtable) IDataPackagePropertySetView : Windows::IInspectable
+struct __declspec(uuid("b94cec01-0c1a-4c57-be55-75d01289735d")) __declspec(novtable) IDataPackagePropertySetView : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Title(hstring * value) = 0;
     virtual HRESULT __stdcall get_Description(hstring * value) = 0;
@@ -108,7 +108,7 @@ struct __declspec(uuid("b94cec01-0c1a-4c57-be55-75d01289735d")) __declspec(novta
     virtual HRESULT __stdcall get_ApplicationListingUri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
 };
 
-struct __declspec(uuid("6054509b-8ebe-4feb-9c1e-75e69de54b84")) __declspec(novtable) IDataPackagePropertySetView2 : Windows::IInspectable
+struct __declspec(uuid("6054509b-8ebe-4feb-9c1e-75e69de54b84")) __declspec(novtable) IDataPackagePropertySetView2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PackageFamilyName(hstring * value) = 0;
     virtual HRESULT __stdcall get_ContentSourceWebLink(Windows::Foundation::IUriRuntimeClass ** value) = 0;
@@ -117,19 +117,19 @@ struct __declspec(uuid("6054509b-8ebe-4feb-9c1e-75e69de54b84")) __declspec(novta
     virtual HRESULT __stdcall get_LogoBackgroundColor(Windows::UI::Color * value) = 0;
 };
 
-struct __declspec(uuid("db764ce5-d174-495c-84fc-1a51f6ab45d7")) __declspec(novtable) IDataPackagePropertySetView3 : Windows::IInspectable
+struct __declspec(uuid("db764ce5-d174-495c-84fc-1a51f6ab45d7")) __declspec(novtable) IDataPackagePropertySetView3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EnterpriseId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("7b840471-5900-4d85-a90b-10cb85fe3552")) __declspec(novtable) IDataPackageView : Windows::IInspectable
+struct __declspec(uuid("7b840471-5900-4d85-a90b-10cb85fe3552")) __declspec(novtable) IDataPackageView : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Properties(Windows::ApplicationModel::DataTransfer::IDataPackagePropertySetView ** value) = 0;
     virtual HRESULT __stdcall get_RequestedOperation(winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation * value) = 0;
     virtual HRESULT __stdcall abi_ReportOperationCompleted(winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation value) = 0;
     virtual HRESULT __stdcall get_AvailableFormats(Windows::Foundation::Collections::IVectorView<hstring> ** formatIds) = 0;
     virtual HRESULT __stdcall abi_Contains(hstring formatId, bool * value) = 0;
-    virtual HRESULT __stdcall abi_GetDataAsync(hstring formatId, Windows::Foundation::IAsyncOperation<Windows::IInspectable> ** operation) = 0;
+    virtual HRESULT __stdcall abi_GetDataAsync(hstring formatId, Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetTextAsync(Windows::Foundation::IAsyncOperation<hstring> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetCustomTextAsync(hstring formatId, Windows::Foundation::IAsyncOperation<hstring> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetUriAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> ** operation) = 0;
@@ -140,38 +140,38 @@ struct __declspec(uuid("7b840471-5900-4d85-a90b-10cb85fe3552")) __declspec(novta
     virtual HRESULT __stdcall abi_GetStorageItemsAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> ** operation) = 0;
 };
 
-struct __declspec(uuid("40ecba95-2450-4c1d-b6b4-ed45463dee9c")) __declspec(novtable) IDataPackageView2 : Windows::IInspectable
+struct __declspec(uuid("40ecba95-2450-4c1d-b6b4-ed45463dee9c")) __declspec(novtable) IDataPackageView2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetApplicationLinkAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetWebLinkAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> ** operation) = 0;
 };
 
-struct __declspec(uuid("d37771a8-ddad-4288-8428-d1cae394128b")) __declspec(novtable) IDataPackageView3 : Windows::IInspectable
+struct __declspec(uuid("d37771a8-ddad-4288-8428-d1cae394128b")) __declspec(novtable) IDataPackageView3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RequestAccessAsync(Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> ** operation) = 0;
     virtual HRESULT __stdcall abi_RequestAccessWithEnterpriseIdAsync(hstring enterpriseId, Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> ** operation) = 0;
     virtual HRESULT __stdcall abi_UnlockAndAssumeEnterpriseIdentity(winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult * result) = 0;
 };
 
-struct __declspec(uuid("dfe96f1f-e042-4433-a09f-26d6ffda8b85")) __declspec(novtable) IDataPackageView4 : Windows::IInspectable
+struct __declspec(uuid("dfe96f1f-e042-4433-a09f-26d6ffda8b85")) __declspec(novtable) IDataPackageView4 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SetAcceptedFormatId(hstring formatId) = 0;
 };
 
-struct __declspec(uuid("c2cf2373-2d26-43d9-b69d-dcb86d03f6da")) __declspec(novtable) IDataProviderDeferral : Windows::IInspectable
+struct __declspec(uuid("c2cf2373-2d26-43d9-b69d-dcb86d03f6da")) __declspec(novtable) IDataProviderDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("ebbc7157-d3c8-47da-acde-f82388d5f716")) __declspec(novtable) IDataProviderRequest : Windows::IInspectable
+struct __declspec(uuid("ebbc7157-d3c8-47da-acde-f82388d5f716")) __declspec(novtable) IDataProviderRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FormatId(hstring * value) = 0;
     virtual HRESULT __stdcall get_Deadline(Windows::Foundation::DateTime * value) = 0;
     virtual HRESULT __stdcall abi_GetDeferral(Windows::ApplicationModel::DataTransfer::IDataProviderDeferral ** value) = 0;
-    virtual HRESULT __stdcall abi_SetData(Windows::IInspectable * value) = 0;
+    virtual HRESULT __stdcall abi_SetData(Windows::Foundation::IInspectable * value) = 0;
 };
 
-struct __declspec(uuid("4341ae3b-fc12-4e53-8c02-ac714c415a27")) __declspec(novtable) IDataRequest : Windows::IInspectable
+struct __declspec(uuid("4341ae3b-fc12-4e53-8c02-ac714c415a27")) __declspec(novtable) IDataRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Data(Windows::ApplicationModel::DataTransfer::IDataPackage ** value) = 0;
     virtual HRESULT __stdcall put_Data(Windows::ApplicationModel::DataTransfer::IDataPackage * value) = 0;
@@ -180,17 +180,17 @@ struct __declspec(uuid("4341ae3b-fc12-4e53-8c02-ac714c415a27")) __declspec(novta
     virtual HRESULT __stdcall abi_GetDeferral(Windows::ApplicationModel::DataTransfer::IDataRequestDeferral ** value) = 0;
 };
 
-struct __declspec(uuid("6dc4b89f-0386-4263-87c1-ed7dce30890e")) __declspec(novtable) IDataRequestDeferral : Windows::IInspectable
+struct __declspec(uuid("6dc4b89f-0386-4263-87c1-ed7dce30890e")) __declspec(novtable) IDataRequestDeferral : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("cb8ba807-6ac5-43c9-8ac5-9ba232163182")) __declspec(novtable) IDataRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("cb8ba807-6ac5-43c9-8ac5-9ba232163182")) __declspec(novtable) IDataRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Request(Windows::ApplicationModel::DataTransfer::IDataRequest ** value) = 0;
 };
 
-struct __declspec(uuid("a5caee9b-8708-49d1-8d36-67d25a8da00c")) __declspec(novtable) IDataTransferManager : Windows::IInspectable
+struct __declspec(uuid("a5caee9b-8708-49d1-8d36-67d25a8da00c")) __declspec(novtable) IDataTransferManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_DataRequested(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataTransferManager, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs> * eventHandler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_DataRequested(event_token eventCookie) = 0;
@@ -198,41 +198,41 @@ struct __declspec(uuid("a5caee9b-8708-49d1-8d36-67d25a8da00c")) __declspec(novta
     virtual HRESULT __stdcall remove_TargetApplicationChosen(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("a9da01aa-e00e-4cfe-aa44-2dd932dca3d8")) __declspec(novtable) IDataTransferManagerStatics : Windows::IInspectable
+struct __declspec(uuid("a9da01aa-e00e-4cfe-aa44-2dd932dca3d8")) __declspec(novtable) IDataTransferManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ShowShareUI() = 0;
     virtual HRESULT __stdcall abi_GetForCurrentView(Windows::ApplicationModel::DataTransfer::IDataTransferManager ** value) = 0;
 };
 
-struct __declspec(uuid("c54ec2ec-9f97-4d63-9868-395e271ad8f5")) __declspec(novtable) IDataTransferManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("c54ec2ec-9f97-4d63-9868-395e271ad8f5")) __declspec(novtable) IDataTransferManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsSupported(bool * value) = 0;
 };
 
-struct __declspec(uuid("e22e7749-dd70-446f-aefc-61cee59f655e")) __declspec(novtable) IHtmlFormatHelperStatics : Windows::IInspectable
+struct __declspec(uuid("e22e7749-dd70-446f-aefc-61cee59f655e")) __declspec(novtable) IHtmlFormatHelperStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetStaticFragment(hstring htmlFormat, hstring * htmlFragment) = 0;
     virtual HRESULT __stdcall abi_CreateHtmlFormat(hstring htmlFragment, hstring * htmlFormat) = 0;
 };
 
-struct __declspec(uuid("e7af329d-051d-4fab-b1a9-47fd77f70a41")) __declspec(novtable) IOperationCompletedEventArgs : Windows::IInspectable
+struct __declspec(uuid("e7af329d-051d-4fab-b1a9-47fd77f70a41")) __declspec(novtable) IOperationCompletedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Operation(winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation * value) = 0;
 };
 
-struct __declspec(uuid("858fa073-1e19-4105-b2f7-c8478808d562")) __declspec(novtable) IOperationCompletedEventArgs2 : Windows::IInspectable
+struct __declspec(uuid("858fa073-1e19-4105-b2f7-c8478808d562")) __declspec(novtable) IOperationCompletedEventArgs2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AcceptedFormatId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("c6132ada-34b1-4849-bd5f-d09fee3158c5")) __declspec(novtable) ISharedStorageAccessManagerStatics : Windows::IInspectable
+struct __declspec(uuid("c6132ada-34b1-4849-bd5f-d09fee3158c5")) __declspec(novtable) ISharedStorageAccessManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddFile(Windows::Storage::IStorageFile * file, hstring * outToken) = 0;
     virtual HRESULT __stdcall abi_RedeemTokenForFileAsync(hstring token, Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ** operation) = 0;
     virtual HRESULT __stdcall abi_RemoveFile(hstring token) = 0;
 };
 
-struct __declspec(uuid("7ed681a1-a880-40c9-b4ed-0bee1e15f549")) __declspec(novtable) IStandardDataFormatsStatics : Windows::IInspectable
+struct __declspec(uuid("7ed681a1-a880-40c9-b4ed-0bee1e15f549")) __declspec(novtable) IStandardDataFormatsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
     virtual HRESULT __stdcall get_Uri(hstring * value) = 0;
@@ -242,13 +242,13 @@ struct __declspec(uuid("7ed681a1-a880-40c9-b4ed-0bee1e15f549")) __declspec(novta
     virtual HRESULT __stdcall get_StorageItems(hstring * value) = 0;
 };
 
-struct __declspec(uuid("42a254f4-9d76-42e8-861b-47c25dd0cf71")) __declspec(novtable) IStandardDataFormatsStatics2 : Windows::IInspectable
+struct __declspec(uuid("42a254f4-9d76-42e8-861b-47c25dd0cf71")) __declspec(novtable) IStandardDataFormatsStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_WebLink(hstring * value) = 0;
     virtual HRESULT __stdcall get_ApplicationLink(hstring * value) = 0;
 };
 
-struct __declspec(uuid("ca6fb8ac-2987-4ee3-9c54-d8afbcb86c1d")) __declspec(novtable) ITargetApplicationChosenEventArgs : Windows::IInspectable
+struct __declspec(uuid("ca6fb8ac-2987-4ee3-9c54-d8afbcb86c1d")) __declspec(novtable) ITargetApplicationChosenEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ApplicationName(hstring * value) = 0;
 };
@@ -274,35 +274,271 @@ template <> struct traits<Windows::ApplicationModel::DataTransfer::TargetApplica
 
 namespace Windows::ApplicationModel::DataTransfer {
 
-template <typename T> struct impl_IClipboardStatics;
-template <typename T> struct impl_IDataPackage;
-template <typename T> struct impl_IDataPackage2;
-template <typename T> struct impl_IDataPackagePropertySet;
-template <typename T> struct impl_IDataPackagePropertySet2;
-template <typename T> struct impl_IDataPackagePropertySet3;
-template <typename T> struct impl_IDataPackagePropertySetView;
-template <typename T> struct impl_IDataPackagePropertySetView2;
-template <typename T> struct impl_IDataPackagePropertySetView3;
-template <typename T> struct impl_IDataPackageView;
-template <typename T> struct impl_IDataPackageView2;
-template <typename T> struct impl_IDataPackageView3;
-template <typename T> struct impl_IDataPackageView4;
-template <typename T> struct impl_IDataProviderDeferral;
-template <typename T> struct impl_IDataProviderRequest;
-template <typename T> struct impl_IDataRequest;
-template <typename T> struct impl_IDataRequestDeferral;
-template <typename T> struct impl_IDataRequestedEventArgs;
-template <typename T> struct impl_IDataTransferManager;
-template <typename T> struct impl_IDataTransferManagerStatics;
-template <typename T> struct impl_IDataTransferManagerStatics2;
-template <typename T> struct impl_IHtmlFormatHelperStatics;
-template <typename T> struct impl_IOperationCompletedEventArgs;
-template <typename T> struct impl_IOperationCompletedEventArgs2;
-template <typename T> struct impl_ISharedStorageAccessManagerStatics;
-template <typename T> struct impl_IStandardDataFormatsStatics;
-template <typename T> struct impl_IStandardDataFormatsStatics2;
-template <typename T> struct impl_ITargetApplicationChosenEventArgs;
-template <typename T> struct impl_DataProviderHandler;
+template <typename D>
+struct WINRT_EBO impl_IClipboardStatics
+{
+    Windows::ApplicationModel::DataTransfer::DataPackageView GetContent() const;
+    void SetContent(const Windows::ApplicationModel::DataTransfer::DataPackage & content) const;
+    void Flush() const;
+    void Clear() const;
+    event_token ContentChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler) const;
+    using ContentChanged_revoker = event_revoker<IClipboardStatics>;
+    ContentChanged_revoker ContentChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler) const;
+    void ContentChanged(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackage
+{
+    Windows::ApplicationModel::DataTransfer::DataPackageView GetView() const;
+    Windows::ApplicationModel::DataTransfer::DataPackagePropertySet Properties() const;
+    Windows::ApplicationModel::DataTransfer::DataPackageOperation RequestedOperation() const;
+    void RequestedOperation(Windows::ApplicationModel::DataTransfer::DataPackageOperation value) const;
+    event_token OperationCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::ApplicationModel::DataTransfer::OperationCompletedEventArgs> & handler) const;
+    using OperationCompleted_revoker = event_revoker<IDataPackage>;
+    OperationCompleted_revoker OperationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::ApplicationModel::DataTransfer::OperationCompletedEventArgs> & handler) const;
+    void OperationCompleted(event_token eventCookie) const;
+    event_token Destroyed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::Foundation::IInspectable> & handler) const;
+    using Destroyed_revoker = event_revoker<IDataPackage>;
+    Destroyed_revoker Destroyed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataPackage, Windows::Foundation::IInspectable> & handler) const;
+    void Destroyed(event_token eventCookie) const;
+    void SetData(hstring_view formatId, const Windows::Foundation::IInspectable & value) const;
+    void SetDataProvider(hstring_view formatId, const Windows::ApplicationModel::DataTransfer::DataProviderHandler & delayRenderer) const;
+    void SetText(hstring_view value) const;
+    [[deprecated("SetUri may be altered or unavailable for releases after Windows Phone 'OSVersion' (TBD). Instead, use SetWebLink or SetApplicationLink.")]] void SetUri(const Windows::Foundation::Uri & value) const;
+    void SetHtmlFormat(hstring_view value) const;
+    Windows::Foundation::Collections::IMap<hstring, Windows::Storage::Streams::RandomAccessStreamReference> ResourceMap() const;
+    void SetRtf(hstring_view value) const;
+    void SetBitmap(const Windows::Storage::Streams::RandomAccessStreamReference & value) const;
+    void SetStorageItems(iterable<Windows::Storage::IStorageItem> value) const;
+    void SetStorageItems(iterable<Windows::Storage::IStorageItem> value, bool readOnly) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackage2
+{
+    void SetApplicationLink(const Windows::Foundation::Uri & value) const;
+    void SetWebLink(const Windows::Foundation::Uri & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySet
+{
+    hstring Title() const;
+    void Title(hstring_view value) const;
+    hstring Description() const;
+    void Description(hstring_view value) const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
+    void Thumbnail(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
+    Windows::Foundation::Collections::IVector<hstring> FileTypes() const;
+    hstring ApplicationName() const;
+    void ApplicationName(hstring_view value) const;
+    Windows::Foundation::Uri ApplicationListingUri() const;
+    void ApplicationListingUri(const Windows::Foundation::Uri & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySet2
+{
+    Windows::Foundation::Uri ContentSourceWebLink() const;
+    void ContentSourceWebLink(const Windows::Foundation::Uri & value) const;
+    Windows::Foundation::Uri ContentSourceApplicationLink() const;
+    void ContentSourceApplicationLink(const Windows::Foundation::Uri & value) const;
+    hstring PackageFamilyName() const;
+    void PackageFamilyName(hstring_view value) const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Square30x30Logo() const;
+    void Square30x30Logo(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
+    Windows::UI::Color LogoBackgroundColor() const;
+    void LogoBackgroundColor(const Windows::UI::Color & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySet3
+{
+    hstring EnterpriseId() const;
+    void EnterpriseId(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySetView
+{
+    hstring Title() const;
+    hstring Description() const;
+    Windows::Storage::Streams::RandomAccessStreamReference Thumbnail() const;
+    Windows::Foundation::Collections::IVectorView<hstring> FileTypes() const;
+    hstring ApplicationName() const;
+    Windows::Foundation::Uri ApplicationListingUri() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySetView2
+{
+    hstring PackageFamilyName() const;
+    Windows::Foundation::Uri ContentSourceWebLink() const;
+    Windows::Foundation::Uri ContentSourceApplicationLink() const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Square30x30Logo() const;
+    Windows::UI::Color LogoBackgroundColor() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackagePropertySetView3
+{
+    hstring EnterpriseId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackageView
+{
+    Windows::ApplicationModel::DataTransfer::DataPackagePropertySetView Properties() const;
+    Windows::ApplicationModel::DataTransfer::DataPackageOperation RequestedOperation() const;
+    void ReportOperationCompleted(Windows::ApplicationModel::DataTransfer::DataPackageOperation value) const;
+    Windows::Foundation::Collections::IVectorView<hstring> AvailableFormats() const;
+    bool Contains(hstring_view formatId) const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> GetDataAsync(hstring_view formatId) const;
+    Windows::Foundation::IAsyncOperation<hstring> GetTextAsync() const;
+    Windows::Foundation::IAsyncOperation<hstring> GetTextAsync(hstring_view formatId) const;
+    [[deprecated("GetUriAsync may be altered or unavailable for releases after Windows 8.1. Instead, use GetWebLinkAsync or GetApplicationLinkAsync.")]] Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> GetUriAsync() const;
+    Windows::Foundation::IAsyncOperation<hstring> GetHtmlFormatAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::Streams::RandomAccessStreamReference>> GetResourceMapAsync() const;
+    Windows::Foundation::IAsyncOperation<hstring> GetRtfAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> GetBitmapAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> GetStorageItemsAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackageView2
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> GetApplicationLinkAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Uri> GetWebLinkAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackageView3
+{
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync() const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult> RequestAccessAsync(hstring_view enterpriseId) const;
+    Windows::Security::EnterpriseData::ProtectionPolicyEvaluationResult UnlockAndAssumeEnterpriseIdentity() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataPackageView4
+{
+    void SetAcceptedFormatId(hstring_view formatId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataProviderDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataProviderRequest
+{
+    hstring FormatId() const;
+    Windows::Foundation::DateTime Deadline() const;
+    Windows::ApplicationModel::DataTransfer::DataProviderDeferral GetDeferral() const;
+    void SetData(const Windows::Foundation::IInspectable & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataRequest
+{
+    Windows::ApplicationModel::DataTransfer::DataPackage Data() const;
+    void Data(const Windows::ApplicationModel::DataTransfer::DataPackage & value) const;
+    Windows::Foundation::DateTime Deadline() const;
+    [[deprecated("FailWithDisplayText is deprecated and might not work on all platforms. For more info, see MSDN.")]] void FailWithDisplayText(hstring_view value) const;
+    Windows::ApplicationModel::DataTransfer::DataRequestDeferral GetDeferral() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataRequestDeferral
+{
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataRequestedEventArgs
+{
+    Windows::ApplicationModel::DataTransfer::DataRequest Request() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataTransferManager
+{
+    event_token DataRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataTransferManager, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs> & eventHandler) const;
+    using DataRequested_revoker = event_revoker<IDataTransferManager>;
+    DataRequested_revoker DataRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataTransferManager, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs> & eventHandler) const;
+    void DataRequested(event_token eventCookie) const;
+    event_token TargetApplicationChosen(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataTransferManager, Windows::ApplicationModel::DataTransfer::TargetApplicationChosenEventArgs> & eventHandler) const;
+    using TargetApplicationChosen_revoker = event_revoker<IDataTransferManager>;
+    TargetApplicationChosen_revoker TargetApplicationChosen(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::DataTransfer::DataTransferManager, Windows::ApplicationModel::DataTransfer::TargetApplicationChosenEventArgs> & eventHandler) const;
+    void TargetApplicationChosen(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataTransferManagerStatics
+{
+    void ShowShareUI() const;
+    Windows::ApplicationModel::DataTransfer::DataTransferManager GetForCurrentView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDataTransferManagerStatics2
+{
+    bool IsSupported() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHtmlFormatHelperStatics
+{
+    hstring GetStaticFragment(hstring_view htmlFormat) const;
+    hstring CreateHtmlFormat(hstring_view htmlFragment) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOperationCompletedEventArgs
+{
+    Windows::ApplicationModel::DataTransfer::DataPackageOperation Operation() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOperationCompletedEventArgs2
+{
+    hstring AcceptedFormatId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISharedStorageAccessManagerStatics
+{
+    hstring AddFile(const Windows::Storage::IStorageFile & file) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> RedeemTokenForFileAsync(hstring_view token) const;
+    void RemoveFile(hstring_view token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStandardDataFormatsStatics
+{
+    hstring Text() const;
+    [[deprecated("Uri may be altered or unavailable for releases after Windows Phone 'OSVersion' (TBD). Instead, use WebLink or ApplicationLink.")]] hstring Uri() const;
+    hstring Html() const;
+    hstring Rtf() const;
+    hstring Bitmap() const;
+    hstring StorageItems() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStandardDataFormatsStatics2
+{
+    hstring WebLink() const;
+    hstring ApplicationLink() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITargetApplicationChosenEventArgs
+{
+    hstring ApplicationName() const;
+};
 
 }
 

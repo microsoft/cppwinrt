@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -73,6 +73,31 @@ struct GattReadResult;
 struct GattReliableWriteTransaction;
 struct GattServiceUuids;
 struct GattValueChangedEventArgs;
+
+}
+
+namespace Windows::Devices::Bluetooth::GenericAttributeProfile {
+
+template <typename T> struct impl_IGattCharacteristic;
+template <typename T> struct impl_IGattCharacteristic2;
+template <typename T> struct impl_IGattCharacteristicStatics;
+template <typename T> struct impl_IGattCharacteristicUuidsStatics;
+template <typename T> struct impl_IGattCharacteristicUuidsStatics2;
+template <typename T> struct impl_IGattDescriptor;
+template <typename T> struct impl_IGattDescriptorStatics;
+template <typename T> struct impl_IGattDescriptorUuidsStatics;
+template <typename T> struct impl_IGattDeviceService;
+template <typename T> struct impl_IGattDeviceService2;
+template <typename T> struct impl_IGattDeviceServiceStatics;
+template <typename T> struct impl_IGattPresentationFormat;
+template <typename T> struct impl_IGattPresentationFormatStatics;
+template <typename T> struct impl_IGattPresentationFormatTypesStatics;
+template <typename T> struct impl_IGattReadClientCharacteristicConfigurationDescriptorResult;
+template <typename T> struct impl_IGattReadResult;
+template <typename T> struct impl_IGattReliableWriteTransaction;
+template <typename T> struct impl_IGattServiceUuidsStatics;
+template <typename T> struct impl_IGattServiceUuidsStatics2;
+template <typename T> struct impl_IGattValueChangedEventArgs;
 
 }
 

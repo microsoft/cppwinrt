@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -16,13 +16,13 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Media::Ocr {
 
-struct __declspec(uuid("5a14bc41-5b76-3140-b680-8825562683ac")) __declspec(novtable) IOcrEngine : Windows::IInspectable
+struct __declspec(uuid("5a14bc41-5b76-3140-b680-8825562683ac")) __declspec(novtable) IOcrEngine : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RecognizeAsync(Windows::Graphics::Imaging::ISoftwareBitmap * bitmap, Windows::Foundation::IAsyncOperation<Windows::Media::Ocr::OcrResult> ** result) = 0;
     virtual HRESULT __stdcall get_RecognizerLanguage(Windows::Globalization::ILanguage ** value) = 0;
 };
 
-struct __declspec(uuid("5bffa85a-3384-3540-9940-699120d428a8")) __declspec(novtable) IOcrEngineStatics : Windows::IInspectable
+struct __declspec(uuid("5bffa85a-3384-3540-9940-699120d428a8")) __declspec(novtable) IOcrEngineStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MaxImageDimension(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_AvailableRecognizerLanguages(Windows::Foundation::Collections::IVectorView<Windows::Globalization::Language> ** value) = 0;
@@ -31,20 +31,20 @@ struct __declspec(uuid("5bffa85a-3384-3540-9940-699120d428a8")) __declspec(novta
     virtual HRESULT __stdcall abi_TryCreateFromUserProfileLanguages(Windows::Media::Ocr::IOcrEngine ** result) = 0;
 };
 
-struct __declspec(uuid("0043a16f-e31f-3a24-899c-d444bd088124")) __declspec(novtable) IOcrLine : Windows::IInspectable
+struct __declspec(uuid("0043a16f-e31f-3a24-899c-d444bd088124")) __declspec(novtable) IOcrLine : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Words(Windows::Foundation::Collections::IVectorView<Windows::Media::Ocr::OcrWord> ** value) = 0;
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
 };
 
-struct __declspec(uuid("9bd235b2-175b-3d6a-92e2-388c206e2f63")) __declspec(novtable) IOcrResult : Windows::IInspectable
+struct __declspec(uuid("9bd235b2-175b-3d6a-92e2-388c206e2f63")) __declspec(novtable) IOcrResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Lines(Windows::Foundation::Collections::IVectorView<Windows::Media::Ocr::OcrLine> ** value) = 0;
     virtual HRESULT __stdcall get_TextAngle(Windows::Foundation::IReference<double> ** value) = 0;
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
 };
 
-struct __declspec(uuid("3c2a477a-5cd9-3525-ba2a-23d1e0a68a1d")) __declspec(novtable) IOcrWord : Windows::IInspectable
+struct __declspec(uuid("3c2a477a-5cd9-3525-ba2a-23d1e0a68a1d")) __declspec(novtable) IOcrWord : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_BoundingRect(Windows::Foundation::Rect * value) = 0;
     virtual HRESULT __stdcall get_Text(hstring * value) = 0;
@@ -63,11 +63,44 @@ template <> struct traits<Windows::Media::Ocr::OcrWord> { using default_interfac
 
 namespace Windows::Media::Ocr {
 
-template <typename T> struct impl_IOcrEngine;
-template <typename T> struct impl_IOcrEngineStatics;
-template <typename T> struct impl_IOcrLine;
-template <typename T> struct impl_IOcrResult;
-template <typename T> struct impl_IOcrWord;
+template <typename D>
+struct WINRT_EBO impl_IOcrEngine
+{
+    Windows::Foundation::IAsyncOperation<Windows::Media::Ocr::OcrResult> RecognizeAsync(const Windows::Graphics::Imaging::SoftwareBitmap & bitmap) const;
+    Windows::Globalization::Language RecognizerLanguage() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOcrEngineStatics
+{
+    uint32_t MaxImageDimension() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Globalization::Language> AvailableRecognizerLanguages() const;
+    bool IsLanguageSupported(const Windows::Globalization::Language & language) const;
+    Windows::Media::Ocr::OcrEngine TryCreateFromLanguage(const Windows::Globalization::Language & language) const;
+    Windows::Media::Ocr::OcrEngine TryCreateFromUserProfileLanguages() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOcrLine
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Ocr::OcrWord> Words() const;
+    hstring Text() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOcrResult
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Ocr::OcrLine> Lines() const;
+    Windows::Foundation::IReference<double> TextAngle() const;
+    hstring Text() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IOcrWord
+{
+    Windows::Foundation::Rect BoundingRect() const;
+    hstring Text() const;
+};
 
 }
 

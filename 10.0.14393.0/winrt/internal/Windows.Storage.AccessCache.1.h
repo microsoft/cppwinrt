@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,18 +43,18 @@ template <> struct traits<Windows::Storage::AccessCache::AccessListEntry>
 
 namespace ABI::Windows::Storage::AccessCache {
 
-struct __declspec(uuid("59677e5c-55be-4c66-ba66-5eaea79d2631")) __declspec(novtable) IItemRemovedEventArgs : Windows::IInspectable
+struct __declspec(uuid("59677e5c-55be-4c66-ba66-5eaea79d2631")) __declspec(novtable) IItemRemovedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RemovedEntry(Windows::Storage::AccessCache::AccessListEntry * value) = 0;
 };
 
-struct __declspec(uuid("4391dfaa-d033-48f9-8060-3ec847d2e3f1")) __declspec(novtable) IStorageApplicationPermissionsStatics : Windows::IInspectable
+struct __declspec(uuid("4391dfaa-d033-48f9-8060-3ec847d2e3f1")) __declspec(novtable) IStorageApplicationPermissionsStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FutureAccessList(Windows::Storage::AccessCache::IStorageItemAccessList ** value) = 0;
     virtual HRESULT __stdcall get_MostRecentlyUsedList(Windows::Storage::AccessCache::IStorageItemMostRecentlyUsedList ** value) = 0;
 };
 
-struct __declspec(uuid("2caff6ad-de90-47f5-b2c3-dd36c9fdd453")) __declspec(novtable) IStorageItemAccessList : Windows::IInspectable
+struct __declspec(uuid("2caff6ad-de90-47f5-b2c3-dd36c9fdd453")) __declspec(novtable) IStorageItemAccessList : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddOverloadDefaultMetadata(Windows::Storage::IStorageItem * file, hstring * token) = 0;
     virtual HRESULT __stdcall abi_Add(Windows::Storage::IStorageItem * file, hstring metadata, hstring * token) = 0;
@@ -74,13 +74,13 @@ struct __declspec(uuid("2caff6ad-de90-47f5-b2c3-dd36c9fdd453")) __declspec(novta
     virtual HRESULT __stdcall get_MaximumItemsAllowed(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("016239d5-510d-411e-8cf1-c3d1effa4c33")) __declspec(novtable) IStorageItemMostRecentlyUsedList : Windows::IInspectable
+struct __declspec(uuid("016239d5-510d-411e-8cf1-c3d1effa4c33")) __declspec(novtable) IStorageItemMostRecentlyUsedList : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_ItemRemoved(Windows::Foundation::TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> * handler, event_token * eventCookie) = 0;
     virtual HRESULT __stdcall remove_ItemRemoved(event_token eventCookie) = 0;
 };
 
-struct __declspec(uuid("da481ea0-ed8d-4731-a1db-e44ee2204093")) __declspec(novtable) IStorageItemMostRecentlyUsedList2 : Windows::IInspectable
+struct __declspec(uuid("da481ea0-ed8d-4731-a1db-e44ee2204093")) __declspec(novtable) IStorageItemMostRecentlyUsedList2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddWithMetadataAndVisibility(Windows::Storage::IStorageItem * file, hstring metadata, winrt::Windows::Storage::AccessCache::RecentStorageItemVisibility visibility, hstring * token) = 0;
     virtual HRESULT __stdcall abi_AddOrReplaceWithMetadataAndVisibility(hstring token, Windows::Storage::IStorageItem * file, hstring metadata, winrt::Windows::Storage::AccessCache::RecentStorageItemVisibility visibility) = 0;
@@ -99,11 +99,55 @@ template <> struct traits<Windows::Storage::AccessCache::StorageItemMostRecently
 
 namespace Windows::Storage::AccessCache {
 
-template <typename T> struct impl_IItemRemovedEventArgs;
-template <typename T> struct impl_IStorageApplicationPermissionsStatics;
-template <typename T> struct impl_IStorageItemAccessList;
-template <typename T> struct impl_IStorageItemMostRecentlyUsedList;
-template <typename T> struct impl_IStorageItemMostRecentlyUsedList2;
+template <typename D>
+struct WINRT_EBO impl_IItemRemovedEventArgs
+{
+    Windows::Storage::AccessCache::AccessListEntry RemovedEntry() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStorageApplicationPermissionsStatics
+{
+    Windows::Storage::AccessCache::StorageItemAccessList FutureAccessList() const;
+    Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList MostRecentlyUsedList() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStorageItemAccessList
+{
+    hstring Add(const Windows::Storage::IStorageItem & file) const;
+    hstring Add(const Windows::Storage::IStorageItem & file, hstring_view metadata) const;
+    void AddOrReplace(hstring_view token, const Windows::Storage::IStorageItem & file) const;
+    void AddOrReplace(hstring_view token, const Windows::Storage::IStorageItem & file, hstring_view metadata) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetItemAsync(hstring_view token) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileAsync(hstring_view token) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderAsync(hstring_view token) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> GetItemAsync(hstring_view token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetFileAsync(hstring_view token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetFolderAsync(hstring_view token, Windows::Storage::AccessCache::AccessCacheOptions options) const;
+    void Remove(hstring_view token) const;
+    bool ContainsItem(hstring_view token) const;
+    void Clear() const;
+    bool CheckAccess(const Windows::Storage::IStorageItem & file) const;
+    Windows::Storage::AccessCache::AccessListEntryView Entries() const;
+    uint32_t MaximumItemsAllowed() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStorageItemMostRecentlyUsedList
+{
+    event_token ItemRemoved(const Windows::Foundation::TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> & handler) const;
+    using ItemRemoved_revoker = event_revoker<IStorageItemMostRecentlyUsedList>;
+    ItemRemoved_revoker ItemRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> & handler) const;
+    void ItemRemoved(event_token eventCookie) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStorageItemMostRecentlyUsedList2
+{
+    hstring Add(const Windows::Storage::IStorageItem & file, hstring_view metadata, Windows::Storage::AccessCache::RecentStorageItemVisibility visibility) const;
+    void AddOrReplace(hstring_view token, const Windows::Storage::IStorageItem & file, hstring_view metadata, Windows::Storage::AccessCache::RecentStorageItemVisibility visibility) const;
+};
 
 }
 

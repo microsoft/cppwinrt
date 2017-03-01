@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_TimerDestroyedHandler : implements<impl_TimerD
 {
     impl_TimerDestroyedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::System::Threading::IThreadPoolTimer> timer) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::System::Threading::IThreadPoolTimer> timer) noexcept override
     {
         try
         {
@@ -31,7 +31,7 @@ template <typename H> struct impl_TimerElapsedHandler : implements<impl_TimerEla
 {
     impl_TimerElapsedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::System::Threading::IThreadPoolTimer> timer) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::System::Threading::IThreadPoolTimer> timer) noexcept override
     {
         try
         {
@@ -49,7 +49,7 @@ template <typename H> struct impl_WorkItemHandler : implements<impl_WorkItemHand
 {
     impl_WorkItemHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {

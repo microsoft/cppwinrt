@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -33,6 +33,16 @@ struct OpacityAnimation;
 struct PropertyAnimation;
 struct ScaleAnimation;
 struct TranslationAnimation;
+
+}
+
+namespace Windows::UI::Core::AnimationMetrics {
+
+template <typename T> struct impl_IAnimationDescription;
+template <typename T> struct impl_IAnimationDescriptionFactory;
+template <typename T> struct impl_IOpacityAnimation;
+template <typename T> struct impl_IPropertyAnimation;
+template <typename T> struct impl_IScaleAnimation;
 
 }
 

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "Windows.Foundation.h"
@@ -33,3 +36,41 @@ inline ValueSet::ValueSet() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Foundation::Collections::IPropertySet>
+{
+    size_t operator()(const winrt::Windows::Foundation::Collections::IPropertySet & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Foundation::Collections::PropertySet>
+{
+    size_t operator()(const winrt::Windows::Foundation::Collections::PropertySet & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Foundation::Collections::StringMap>
+{
+    size_t operator()(const winrt::Windows::Foundation::Collections::StringMap & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Foundation::Collections::ValueSet>
+{
+    size_t operator()(const winrt::Windows::Foundation::Collections::ValueSet & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.UI.3.h"
@@ -17,11 +20,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Data::Pdf::IPdfDocument> : produce_base<D, Windows::Data::Pdf::IPdfDocument>
 {
-    HRESULT __stdcall abi_GetPage(uint32_t pageIndex, abi_arg_out<Windows::Data::Pdf::IPdfPage> pdfPage) noexcept override
+    HRESULT __stdcall abi_GetPage(uint32_t pageIndex, impl::abi_arg_out<Windows::Data::Pdf::IPdfPage> pdfPage) noexcept override
     {
         try
         {
-            *pdfPage = detach(this->shim().GetPage(pageIndex));
+            typename D::abi_guard guard(this->shim());
+            *pdfPage = detach_abi(this->shim().GetPage(pageIndex));
             return S_OK;
         }
         catch (...)
@@ -35,7 +39,8 @@ struct produce<D, Windows::Data::Pdf::IPdfDocument> : produce_base<D, Windows::D
     {
         try
         {
-            *value = detach(this->shim().PageCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PageCount());
             return S_OK;
         }
         catch (...)
@@ -48,7 +53,8 @@ struct produce<D, Windows::Data::Pdf::IPdfDocument> : produce_base<D, Windows::D
     {
         try
         {
-            *value = detach(this->shim().IsPasswordProtected());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsPasswordProtected());
             return S_OK;
         }
         catch (...)
@@ -61,11 +67,12 @@ struct produce<D, Windows::Data::Pdf::IPdfDocument> : produce_base<D, Windows::D
 template <typename D>
 struct produce<D, Windows::Data::Pdf::IPdfDocumentStatics> : produce_base<D, Windows::Data::Pdf::IPdfDocumentStatics>
 {
-    HRESULT __stdcall abi_LoadFromFileAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_LoadFromFileAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().LoadFromFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().LoadFromFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -75,11 +82,12 @@ struct produce<D, Windows::Data::Pdf::IPdfDocumentStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LoadFromFileWithPasswordAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<hstring> password, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_LoadFromFileWithPasswordAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> password, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().LoadFromFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&password)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().LoadFromFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&password)));
             return S_OK;
         }
         catch (...)
@@ -89,11 +97,12 @@ struct produce<D, Windows::Data::Pdf::IPdfDocumentStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LoadFromStreamAsync(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> inputStream, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_LoadFromStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> inputStream, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().LoadFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&inputStream)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().LoadFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&inputStream)));
             return S_OK;
         }
         catch (...)
@@ -103,11 +112,12 @@ struct produce<D, Windows::Data::Pdf::IPdfDocumentStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LoadFromStreamWithPasswordAsync(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> inputStream, abi_arg_in<hstring> password, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
+    HRESULT __stdcall abi_LoadFromStreamWithPasswordAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> inputStream, impl::abi_arg_in<hstring> password, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument>> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().LoadFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&inputStream), *reinterpret_cast<const hstring *>(&password)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().LoadFromStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&inputStream), *reinterpret_cast<const hstring *>(&password)));
             return S_OK;
         }
         catch (...)
@@ -121,11 +131,12 @@ struct produce<D, Windows::Data::Pdf::IPdfDocumentStatics> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data::Pdf::IPdfPage>
 {
-    HRESULT __stdcall abi_RenderToStreamAsync(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> outputStream, abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_RenderToStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> outputStream, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().RenderToStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&outputStream)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().RenderToStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&outputStream)));
             return S_OK;
         }
         catch (...)
@@ -135,11 +146,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
         }
     }
 
-    HRESULT __stdcall abi_RenderWithOptionsToStreamAsync(abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> outputStream, abi_arg_in<Windows::Data::Pdf::IPdfPageRenderOptions> options, abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_RenderWithOptionsToStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> outputStream, impl::abi_arg_in<Windows::Data::Pdf::IPdfPageRenderOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().RenderToStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&outputStream), *reinterpret_cast<const Windows::Data::Pdf::PdfPageRenderOptions *>(&options)));
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().RenderToStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&outputStream), *reinterpret_cast<const Windows::Data::Pdf::PdfPageRenderOptions *>(&options)));
             return S_OK;
         }
         catch (...)
@@ -149,11 +161,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
         }
     }
 
-    HRESULT __stdcall abi_PreparePageAsync(abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
+    HRESULT __stdcall abi_PreparePageAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncInfo) noexcept override
     {
         try
         {
-            *asyncInfo = detach(this->shim().PreparePageAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncInfo = detach_abi(this->shim().PreparePageAsync());
             return S_OK;
         }
         catch (...)
@@ -167,7 +180,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
     {
         try
         {
-            *value = detach(this->shim().Index());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Index());
             return S_OK;
         }
         catch (...)
@@ -176,11 +190,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
         }
     }
 
-    HRESULT __stdcall get_Size(abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_Size(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Size());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Size());
             return S_OK;
         }
         catch (...)
@@ -189,11 +204,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
         }
     }
 
-    HRESULT __stdcall get_Dimensions(abi_arg_out<Windows::Data::Pdf::IPdfPageDimensions> value) noexcept override
+    HRESULT __stdcall get_Dimensions(impl::abi_arg_out<Windows::Data::Pdf::IPdfPageDimensions> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Dimensions());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Dimensions());
             return S_OK;
         }
         catch (...)
@@ -207,7 +223,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
     {
         try
         {
-            *value = detach(this->shim().Rotation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Rotation());
             return S_OK;
         }
         catch (...)
@@ -220,7 +237,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
     {
         try
         {
-            *value = detach(this->shim().PreferredZoom());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PreferredZoom());
             return S_OK;
         }
         catch (...)
@@ -233,11 +251,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPage> : produce_base<D, Windows::Data:
 template <typename D>
 struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Windows::Data::Pdf::IPdfPageDimensions>
 {
-    HRESULT __stdcall get_MediaBox(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_MediaBox(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediaBox());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaBox());
             return S_OK;
         }
         catch (...)
@@ -246,11 +265,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_CropBox(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_CropBox(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CropBox());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CropBox());
             return S_OK;
         }
         catch (...)
@@ -259,11 +279,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_BleedBox(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_BleedBox(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BleedBox());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BleedBox());
             return S_OK;
         }
         catch (...)
@@ -272,11 +293,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_TrimBox(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_TrimBox(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TrimBox());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TrimBox());
             return S_OK;
         }
         catch (...)
@@ -285,11 +307,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_ArtBox(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_ArtBox(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ArtBox());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ArtBox());
             return S_OK;
         }
         catch (...)
@@ -302,11 +325,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageDimensions> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, Windows::Data::Pdf::IPdfPageRenderOptions>
 {
-    HRESULT __stdcall get_SourceRect(abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_SourceRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourceRect());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourceRect());
             return S_OK;
         }
         catch (...)
@@ -315,10 +339,11 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_SourceRect(abi_arg_in<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall put_SourceRect(impl::abi_arg_in<Windows::Foundation::Rect> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SourceRect(*reinterpret_cast<const Windows::Foundation::Rect *>(&value));
             return S_OK;
         }
@@ -332,7 +357,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().DestinationWidth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DestinationWidth());
             return S_OK;
         }
         catch (...)
@@ -345,6 +371,7 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DestinationWidth(value);
             return S_OK;
         }
@@ -358,7 +385,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().DestinationHeight());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DestinationHeight());
             return S_OK;
         }
         catch (...)
@@ -371,6 +399,7 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DestinationHeight(value);
             return S_OK;
         }
@@ -380,11 +409,12 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_BackgroundColor(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_BackgroundColor(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BackgroundColor());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BackgroundColor());
             return S_OK;
         }
         catch (...)
@@ -393,10 +423,11 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_BackgroundColor(abi_arg_in<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall put_BackgroundColor(impl::abi_arg_in<Windows::UI::Color> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BackgroundColor(*reinterpret_cast<const Windows::UI::Color *>(&value));
             return S_OK;
         }
@@ -410,7 +441,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().IsIgnoringHighContrast());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsIgnoringHighContrast());
             return S_OK;
         }
         catch (...)
@@ -423,6 +455,7 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsIgnoringHighContrast(value);
             return S_OK;
         }
@@ -436,7 +469,8 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
-            *value = detach(this->shim().BitmapEncoderId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BitmapEncoderId());
             return S_OK;
         }
         catch (...)
@@ -449,6 +483,7 @@ struct produce<D, Windows::Data::Pdf::IPdfPageRenderOptions> : produce_base<D, W
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BitmapEncoderId(value);
             return S_OK;
         }
@@ -466,212 +501,212 @@ namespace Windows::Data::Pdf {
 template <typename D> Windows::Foundation::Rect impl_IPdfPageDimensions<D>::MediaBox() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageDimensions &>(static_cast<const D &>(*this))->get_MediaBox(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageDimensions)->get_MediaBox(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IPdfPageDimensions<D>::CropBox() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageDimensions &>(static_cast<const D &>(*this))->get_CropBox(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageDimensions)->get_CropBox(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IPdfPageDimensions<D>::BleedBox() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageDimensions &>(static_cast<const D &>(*this))->get_BleedBox(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageDimensions)->get_BleedBox(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IPdfPageDimensions<D>::TrimBox() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageDimensions &>(static_cast<const D &>(*this))->get_TrimBox(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageDimensions)->get_TrimBox(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IPdfPageDimensions<D>::ArtBox() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageDimensions &>(static_cast<const D &>(*this))->get_ArtBox(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageDimensions)->get_ArtBox(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Rect impl_IPdfPageRenderOptions<D>::SourceRect() const
 {
     Windows::Foundation::Rect value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_SourceRect(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_SourceRect(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::SourceRect(const Windows::Foundation::Rect & value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_SourceRect(get(value)));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_SourceRect(get_abi(value)));
 }
 
 template <typename D> uint32_t impl_IPdfPageRenderOptions<D>::DestinationWidth() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_DestinationWidth(&value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_DestinationWidth(&value));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::DestinationWidth(uint32_t value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_DestinationWidth(value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_DestinationWidth(value));
 }
 
 template <typename D> uint32_t impl_IPdfPageRenderOptions<D>::DestinationHeight() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_DestinationHeight(&value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_DestinationHeight(&value));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::DestinationHeight(uint32_t value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_DestinationHeight(value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_DestinationHeight(value));
 }
 
 template <typename D> Windows::UI::Color impl_IPdfPageRenderOptions<D>::BackgroundColor() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_BackgroundColor(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_BackgroundColor(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::BackgroundColor(const Windows::UI::Color & value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_BackgroundColor(get(value)));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_BackgroundColor(get_abi(value)));
 }
 
 template <typename D> bool impl_IPdfPageRenderOptions<D>::IsIgnoringHighContrast() const
 {
     bool value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_IsIgnoringHighContrast(&value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_IsIgnoringHighContrast(&value));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::IsIgnoringHighContrast(bool value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_IsIgnoringHighContrast(value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_IsIgnoringHighContrast(value));
 }
 
 template <typename D> GUID impl_IPdfPageRenderOptions<D>::BitmapEncoderId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->get_BitmapEncoderId(&value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->get_BitmapEncoderId(&value));
     return value;
 }
 
 template <typename D> void impl_IPdfPageRenderOptions<D>::BitmapEncoderId(GUID value) const
 {
-    check_hresult(static_cast<const IPdfPageRenderOptions &>(static_cast<const D &>(*this))->put_BitmapEncoderId(value));
+    check_hresult(WINRT_SHIM(IPdfPageRenderOptions)->put_BitmapEncoderId(value));
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IPdfPage<D>::RenderToStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & outputStream) const
 {
     Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->abi_RenderToStreamAsync(get(outputStream), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfPage)->abi_RenderToStreamAsync(get_abi(outputStream), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IPdfPage<D>::RenderToStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & outputStream, const Windows::Data::Pdf::PdfPageRenderOptions & options) const
 {
     Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->abi_RenderWithOptionsToStreamAsync(get(outputStream), get(options), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfPage)->abi_RenderWithOptionsToStreamAsync(get_abi(outputStream), get_abi(options), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IPdfPage<D>::PreparePageAsync() const
 {
     Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->abi_PreparePageAsync(put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfPage)->abi_PreparePageAsync(put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> uint32_t impl_IPdfPage<D>::Index() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->get_Index(&value));
+    check_hresult(WINRT_SHIM(IPdfPage)->get_Index(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Size impl_IPdfPage<D>::Size() const
 {
     Windows::Foundation::Size value {};
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->get_Size(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPage)->get_Size(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Data::Pdf::PdfPageDimensions impl_IPdfPage<D>::Dimensions() const
 {
     Windows::Data::Pdf::PdfPageDimensions value { nullptr };
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->get_Dimensions(put(value)));
+    check_hresult(WINRT_SHIM(IPdfPage)->get_Dimensions(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Data::Pdf::PdfPageRotation impl_IPdfPage<D>::Rotation() const
 {
     Windows::Data::Pdf::PdfPageRotation value {};
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->get_Rotation(&value));
+    check_hresult(WINRT_SHIM(IPdfPage)->get_Rotation(&value));
     return value;
 }
 
 template <typename D> float impl_IPdfPage<D>::PreferredZoom() const
 {
     float value {};
-    check_hresult(static_cast<const IPdfPage &>(static_cast<const D &>(*this))->get_PreferredZoom(&value));
+    check_hresult(WINRT_SHIM(IPdfPage)->get_PreferredZoom(&value));
     return value;
 }
 
 template <typename D> Windows::Data::Pdf::PdfPage impl_IPdfDocument<D>::GetPage(uint32_t pageIndex) const
 {
     Windows::Data::Pdf::PdfPage pdfPage { nullptr };
-    check_hresult(static_cast<const IPdfDocument &>(static_cast<const D &>(*this))->abi_GetPage(pageIndex, put(pdfPage)));
+    check_hresult(WINRT_SHIM(IPdfDocument)->abi_GetPage(pageIndex, put_abi(pdfPage)));
     return pdfPage;
 }
 
 template <typename D> uint32_t impl_IPdfDocument<D>::PageCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPdfDocument &>(static_cast<const D &>(*this))->get_PageCount(&value));
+    check_hresult(WINRT_SHIM(IPdfDocument)->get_PageCount(&value));
     return value;
 }
 
 template <typename D> bool impl_IPdfDocument<D>::IsPasswordProtected() const
 {
     bool value {};
-    check_hresult(static_cast<const IPdfDocument &>(static_cast<const D &>(*this))->get_IsPasswordProtected(&value));
+    check_hresult(WINRT_SHIM(IPdfDocument)->get_IsPasswordProtected(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromFileAsync(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> asyncInfo;
-    check_hresult(static_cast<const IPdfDocumentStatics &>(static_cast<const D &>(*this))->abi_LoadFromFileAsync(get(file), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfDocumentStatics)->abi_LoadFromFileAsync(get_abi(file), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromFileAsync(const Windows::Storage::IStorageFile & file, hstring_ref password) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromFileAsync(const Windows::Storage::IStorageFile & file, hstring_view password) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> asyncInfo;
-    check_hresult(static_cast<const IPdfDocumentStatics &>(static_cast<const D &>(*this))->abi_LoadFromFileWithPasswordAsync(get(file), get(password), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfDocumentStatics)->abi_LoadFromFileWithPasswordAsync(get_abi(file), get_abi(password), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & inputStream) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> asyncInfo;
-    check_hresult(static_cast<const IPdfDocumentStatics &>(static_cast<const D &>(*this))->abi_LoadFromStreamAsync(get(inputStream), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfDocumentStatics)->abi_LoadFromStreamAsync(get_abi(inputStream), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & inputStream, hstring_ref password) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> impl_IPdfDocumentStatics<D>::LoadFromStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & inputStream, hstring_view password) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> asyncInfo;
-    check_hresult(static_cast<const IPdfDocumentStatics &>(static_cast<const D &>(*this))->abi_LoadFromStreamWithPasswordAsync(get(inputStream), get(password), put(asyncInfo)));
+    check_hresult(WINRT_SHIM(IPdfDocumentStatics)->abi_LoadFromStreamWithPasswordAsync(get_abi(inputStream), get_abi(password), put_abi(asyncInfo)));
     return asyncInfo;
 }
 
@@ -680,7 +715,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> Pdf
     return get_activation_factory<PdfDocument, IPdfDocumentStatics>().LoadFromFileAsync(file);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> PdfDocument::LoadFromFileAsync(const Windows::Storage::IStorageFile & file, hstring_ref password)
+inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> PdfDocument::LoadFromFileAsync(const Windows::Storage::IStorageFile & file, hstring_view password)
 {
     return get_activation_factory<PdfDocument, IPdfDocumentStatics>().LoadFromFileAsync(file, password);
 }
@@ -690,7 +725,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> Pdf
     return get_activation_factory<PdfDocument, IPdfDocumentStatics>().LoadFromStreamAsync(inputStream);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> PdfDocument::LoadFromStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & inputStream, hstring_ref password)
+inline Windows::Foundation::IAsyncOperation<Windows::Data::Pdf::PdfDocument> PdfDocument::LoadFromStreamAsync(const Windows::Storage::Streams::IRandomAccessStream & inputStream, hstring_view password)
 {
     return get_activation_factory<PdfDocument, IPdfDocumentStatics>().LoadFromStreamAsync(inputStream, password);
 }
@@ -702,3 +737,86 @@ inline PdfPageRenderOptions::PdfPageRenderOptions() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::IPdfDocument>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::IPdfDocument & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::IPdfDocumentStatics>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::IPdfDocumentStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::IPdfPage>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::IPdfPage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::IPdfPageDimensions>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::IPdfPageDimensions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::IPdfPageRenderOptions>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::IPdfPageRenderOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::PdfDocument>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::PdfDocument & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::PdfPage>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::PdfPage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::PdfPageDimensions>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::PdfPageDimensions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Data::Pdf::PdfPageRenderOptions>
+{
+    size_t operator()(const winrt::Windows::Data::Pdf::PdfPageRenderOptions & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

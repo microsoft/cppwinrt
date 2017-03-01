@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@ WINRT_EXPORT namespace winrt {
 namespace Windows::UI::Xaml {
 
 template <typename D, typename ... Interfaces> struct AdaptiveTriggerT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IStateTriggerBase, Windows::UI::Xaml::IStateTriggerBaseProtected, Windows::UI::Xaml::IAdaptiveTrigger>
 {
     using composable = AdaptiveTrigger;
@@ -37,7 +37,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DataTemplateT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDataTemplate, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkTemplate>
 {
     using composable = DataTemplate;
@@ -51,7 +51,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DataTemplateKeyT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDataTemplateKey>
 {
     using composable = DataTemplateKey;
@@ -63,14 +63,14 @@ protected:
         get_activation_factory<DataTemplateKey, IDataTemplateKeyFactory>().CreateInstance(*this, this->m_inner);
     }
 
-    DataTemplateKeyT(const Windows::IInspectable & dataType)
+    DataTemplateKeyT(const Windows::Foundation::IInspectable & dataType)
     {
         get_activation_factory<DataTemplateKey, IDataTemplateKeyFactory>().CreateInstanceWithType(dataType, *this, this->m_inner);
     }
 };
 
 template <typename D, typename ... Interfaces> struct DependencyObjectT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2>
 {
     using composable = DependencyObject;
@@ -84,7 +84,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DependencyObjectCollectionT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::DependencyObject>>
 {
     using composable = DependencyObjectCollection;
@@ -98,7 +98,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct DispatcherTimerT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDispatcherTimer>
 {
     using composable = DispatcherTimer;
@@ -126,7 +126,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct FrameworkTemplateT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkTemplate>
 {
     using composable = FrameworkTemplate;
@@ -140,27 +140,27 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct PropertyMetadataT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IPropertyMetadata>
 {
     using composable = PropertyMetadata;
 
 protected:
 
-    PropertyMetadataT(const Windows::IInspectable & defaultValue)
+    PropertyMetadataT(const Windows::Foundation::IInspectable & defaultValue)
     {
         get_activation_factory<PropertyMetadata, IPropertyMetadataFactory>().CreateInstanceWithDefaultValue(defaultValue, *this, this->m_inner);
     }
 
-    PropertyMetadataT(const Windows::IInspectable & defaultValue, const Windows::UI::Xaml::PropertyChangedCallback & propertyChangedCallback)
+    PropertyMetadataT(const Windows::Foundation::IInspectable & defaultValue, const Windows::UI::Xaml::PropertyChangedCallback & propertyChangedCallback)
     {
         get_activation_factory<PropertyMetadata, IPropertyMetadataFactory>().CreateInstanceWithDefaultValueAndCallback(defaultValue, propertyChangedCallback, *this, this->m_inner);
     }
 };
 
 template <typename D, typename ... Interfaces> struct ResourceDictionaryT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
-    impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IResourceDictionary, Windows::Foundation::Collections::IMap<Windows::IInspectable, Windows::IInspectable>, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<Windows::IInspectable, Windows::IInspectable>>>
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IResourceDictionary, Windows::Foundation::Collections::IMap<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable>, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable>>>
 {
     using composable = ResourceDictionary;
 
@@ -173,7 +173,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct RoutedEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IRoutedEventArgs>
 {
     using composable = RoutedEventArgs;
@@ -187,7 +187,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct StateTriggerBaseT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IStateTriggerBase, Windows::UI::Xaml::IStateTriggerBaseProtected>
 {
     using composable = StateTriggerBase;
@@ -215,7 +215,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct VisualTransitionT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IVisualTransition>
 {
     using composable = VisualTransition;

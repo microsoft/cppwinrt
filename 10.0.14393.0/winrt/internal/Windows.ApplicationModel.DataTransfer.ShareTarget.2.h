@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,61 +34,25 @@ template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __de
 
 namespace Windows::ApplicationModel::DataTransfer::ShareTarget {
 
-template <typename D>
-struct WINRT_EBO impl_IQuickLink
-{
-    hstring Title() const;
-    void Title(hstring_ref value) const;
-    Windows::Storage::Streams::RandomAccessStreamReference Thumbnail() const;
-    void Thumbnail(const Windows::Storage::Streams::RandomAccessStreamReference & value) const;
-    hstring Id() const;
-    void Id(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<hstring> SupportedDataFormats() const;
-    Windows::Foundation::Collections::IVector<hstring> SupportedFileTypes() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IShareOperation
-{
-    Windows::ApplicationModel::DataTransfer::DataPackageView Data() const;
-    hstring QuickLinkId() const;
-    void RemoveThisQuickLink() const;
-    void ReportStarted() const;
-    void ReportDataRetrieved() const;
-    void ReportSubmittedBackgroundTask() const;
-    void ReportCompleted(const Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink & quicklink) const;
-    void ReportCompleted() const;
-    void ReportError(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IShareOperation2
-{
-    void DismissUI() const;
-};
-
 struct IQuickLink :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IQuickLink>
 {
     IQuickLink(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IQuickLink>(m_ptr); }
 };
 
 struct IShareOperation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IShareOperation>
 {
     IShareOperation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IShareOperation>(m_ptr); }
 };
 
 struct IShareOperation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IShareOperation2>
 {
     IShareOperation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IShareOperation2>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -64,86 +64,32 @@ template <> struct __declspec(uuid("1cc36c46-19be-5d6b-a56d-047413252c69")) __de
 
 namespace Windows::ApplicationModel::Search::Core {
 
-template <typename D>
-struct WINRT_EBO impl_IRequestingFocusOnKeyboardInputEventArgs
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISearchSuggestion
-{
-    Windows::ApplicationModel::Search::Core::SearchSuggestionKind Kind() const;
-    hstring Text() const;
-    hstring Tag() const;
-    hstring DetailText() const;
-    Windows::Storage::Streams::IRandomAccessStreamReference Image() const;
-    hstring ImageAlternateText() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISearchSuggestionManager
-{
-    bool SearchHistoryEnabled() const;
-    void SearchHistoryEnabled(bool value) const;
-    hstring SearchHistoryContext() const;
-    void SearchHistoryContext(hstring_ref value) const;
-    void SetLocalContentSuggestionSettings(const Windows::ApplicationModel::Search::LocalContentSuggestionSettings & settings) const;
-    void SetQuery(hstring_ref queryText) const;
-    void SetQuery(hstring_ref queryText, hstring_ref language) const;
-    void SetQuery(hstring_ref queryText, hstring_ref language, const Windows::ApplicationModel::Search::SearchQueryLinguisticDetails & linguisticDetails) const;
-    Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion> Suggestions() const;
-    void AddToHistory(hstring_ref queryText) const;
-    void AddToHistory(hstring_ref queryText, hstring_ref language) const;
-    void ClearHistory() const;
-    event_token SuggestionsRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> & handler) const;
-    using SuggestionsRequested_revoker = event_revoker<ISearchSuggestionManager>;
-    SuggestionsRequested_revoker SuggestionsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> & handler) const;
-    void SuggestionsRequested(event_token token) const;
-    event_token RequestingFocusOnKeyboardInput(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> & handler) const;
-    using RequestingFocusOnKeyboardInput_revoker = event_revoker<ISearchSuggestionManager>;
-    RequestingFocusOnKeyboardInput_revoker RequestingFocusOnKeyboardInput(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> & handler) const;
-    void RequestingFocusOnKeyboardInput(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISearchSuggestionsRequestedEventArgs
-{
-    hstring QueryText() const;
-    hstring Language() const;
-    Windows::ApplicationModel::Search::SearchQueryLinguisticDetails LinguisticDetails() const;
-    Windows::ApplicationModel::Search::SearchSuggestionsRequest Request() const;
-};
-
 struct IRequestingFocusOnKeyboardInputEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRequestingFocusOnKeyboardInputEventArgs>
 {
     IRequestingFocusOnKeyboardInputEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRequestingFocusOnKeyboardInputEventArgs>(m_ptr); }
 };
 
 struct ISearchSuggestion :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISearchSuggestion>
 {
     ISearchSuggestion(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISearchSuggestion>(m_ptr); }
 };
 
 struct ISearchSuggestionManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISearchSuggestionManager>
 {
     ISearchSuggestionManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISearchSuggestionManager>(m_ptr); }
 };
 
 struct ISearchSuggestionsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISearchSuggestionsRequestedEventArgs>
 {
     ISearchSuggestionsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISearchSuggestionsRequestedEventArgs>(m_ptr); }
 };
 
 }

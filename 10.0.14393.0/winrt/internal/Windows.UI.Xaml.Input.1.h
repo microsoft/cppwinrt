@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -21,57 +21,57 @@ namespace ABI::Windows::UI::Xaml::Input {
 
 struct __declspec(uuid("3124d025-04a7-4d45-825e-8204a624dbf4")) __declspec(novtable) DoubleTappedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IDoubleTappedRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IDoubleTappedRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("ecae8ccd-8e5e-4fbe-9846-30a6370afcdf")) __declspec(novtable) HoldingEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IHoldingRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IHoldingRoutedEventArgs * e) = 0;
 };
 
-struct __declspec(uuid("8a610dc6-d72d-4ca8-9f66-556f35b513da")) __declspec(novtable) IAccessKeyDisplayDismissedEventArgs : Windows::IInspectable
+struct __declspec(uuid("8a610dc6-d72d-4ca8-9f66-556f35b513da")) __declspec(novtable) IAccessKeyDisplayDismissedEventArgs : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("0c079e55-13fe-4d03-a61d-e12f06567286")) __declspec(novtable) IAccessKeyDisplayRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("0c079e55-13fe-4d03-a61d-e12f06567286")) __declspec(novtable) IAccessKeyDisplayRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PressedKeys(hstring * value) = 0;
 };
 
-struct __declspec(uuid("cfe9cd97-c718-4091-b7dd-adf1c072b1e1")) __declspec(novtable) IAccessKeyInvokedEventArgs : Windows::IInspectable
+struct __declspec(uuid("cfe9cd97-c718-4091-b7dd-adf1c072b1e1")) __declspec(novtable) IAccessKeyInvokedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Handled(bool * value) = 0;
     virtual HRESULT __stdcall put_Handled(bool value) = 0;
 };
 
-struct __declspec(uuid("ecc973b0-2ee9-4b1c-98d7-6e0e816d334b")) __declspec(novtable) IAccessKeyManager : Windows::IInspectable
+struct __declspec(uuid("ecc973b0-2ee9-4b1c-98d7-6e0e816d334b")) __declspec(novtable) IAccessKeyManager : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("4ca0efe6-d9c8-4ebc-b4c7-30d1838a81f1")) __declspec(novtable) IAccessKeyManagerStatics : Windows::IInspectable
+struct __declspec(uuid("4ca0efe6-d9c8-4ebc-b4c7-30d1838a81f1")) __declspec(novtable) IAccessKeyManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsDisplayModeEnabled(bool * value) = 0;
-    virtual HRESULT __stdcall add_IsDisplayModeEnabledChanged(Windows::Foundation::TypedEventHandler<Windows::IInspectable, Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_IsDisplayModeEnabledChanged(Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_IsDisplayModeEnabledChanged(event_token token) = 0;
     virtual HRESULT __stdcall abi_ExitDisplayMode() = 0;
 };
 
-struct __declspec(uuid("e5af3542-ca67-4081-995b-709dd13792df")) __declspec(novtable) ICommand : Windows::IInspectable
+struct __declspec(uuid("e5af3542-ca67-4081-995b-709dd13792df")) __declspec(novtable) ICommand : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall add_CanExecuteChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * value, event_token * token) = 0;
+    virtual HRESULT __stdcall add_CanExecuteChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_CanExecuteChanged(event_token token) = 0;
-    virtual HRESULT __stdcall abi_CanExecute(Windows::IInspectable * parameter, bool * returnValue) = 0;
-    virtual HRESULT __stdcall abi_Execute(Windows::IInspectable * parameter) = 0;
+    virtual HRESULT __stdcall abi_CanExecute(Windows::Foundation::IInspectable * parameter, bool * returnValue) = 0;
+    virtual HRESULT __stdcall abi_Execute(Windows::Foundation::IInspectable * parameter) = 0;
 };
 
-struct __declspec(uuid("42618e0a-1cb6-46fb-8374-0aec68aa5e51")) __declspec(novtable) IContextRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("42618e0a-1cb6-46fb-8374-0aec68aa5e51")) __declspec(novtable) IContextRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Handled(bool * value) = 0;
     virtual HRESULT __stdcall put_Handled(bool value) = 0;
     virtual HRESULT __stdcall abi_TryGetPosition(Windows::UI::Xaml::IUIElement * relativeTo, Windows::Foundation::Point * point, bool * returnValue) = 0;
 };
 
-struct __declspec(uuid("af404424-26df-44f4-8714-9359249b62d3")) __declspec(novtable) IDoubleTappedRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("af404424-26df-44f4-8714-9359249b62d3")) __declspec(novtable) IDoubleTappedRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Handled(bool * value) = 0;
@@ -79,27 +79,27 @@ struct __declspec(uuid("af404424-26df-44f4-8714-9359249b62d3")) __declspec(novta
     virtual HRESULT __stdcall abi_GetPosition(Windows::UI::Xaml::IUIElement * relativeTo, Windows::Foundation::Point * returnValue) = 0;
 };
 
-struct __declspec(uuid("c843f50b-3b83-4da1-9d6f-557c1169f341")) __declspec(novtable) IFocusManager : Windows::IInspectable
+struct __declspec(uuid("c843f50b-3b83-4da1-9d6f-557c1169f341")) __declspec(novtable) IFocusManager : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("1eccd326-8182-4482-826a-0918e9ed9af7")) __declspec(novtable) IFocusManagerStatics : Windows::IInspectable
+struct __declspec(uuid("1eccd326-8182-4482-826a-0918e9ed9af7")) __declspec(novtable) IFocusManagerStatics : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_GetFocusedElement(Windows::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_GetFocusedElement(Windows::Foundation::IInspectable ** returnValue) = 0;
 };
 
-struct __declspec(uuid("a920d761-dd87-4f31-beda-ef417fe7c04a")) __declspec(novtable) IFocusManagerStatics2 : Windows::IInspectable
+struct __declspec(uuid("a920d761-dd87-4f31-beda-ef417fe7c04a")) __declspec(novtable) IFocusManagerStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_TryMoveFocus(winrt::Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection, bool * returnValue) = 0;
 };
 
-struct __declspec(uuid("60805ebf-b149-417d-83f1-baeb560e2a47")) __declspec(novtable) IFocusManagerStatics3 : Windows::IInspectable
+struct __declspec(uuid("60805ebf-b149-417d-83f1-baeb560e2a47")) __declspec(novtable) IFocusManagerStatics3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindNextFocusableElement(winrt::Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection, Windows::UI::Xaml::IUIElement ** result) = 0;
     virtual HRESULT __stdcall abi_FindNextFocusableElementWithHint(winrt::Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection, Windows::Foundation::Rect hintRect, Windows::UI::Xaml::IUIElement ** result) = 0;
 };
 
-struct __declspec(uuid("c246ff23-d80d-44de-8db9-0d815e269ac0")) __declspec(novtable) IHoldingRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("c246ff23-d80d-44de-8db9-0d815e269ac0")) __declspec(novtable) IHoldingRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_HoldingState(winrt::Windows::UI::Input::HoldingState * value) = 0;
@@ -108,7 +108,7 @@ struct __declspec(uuid("c246ff23-d80d-44de-8db9-0d815e269ac0")) __declspec(novta
     virtual HRESULT __stdcall abi_GetPosition(Windows::UI::Xaml::IUIElement * relativeTo, Windows::Foundation::Point * returnValue) = 0;
 };
 
-struct __declspec(uuid("751d87e5-8d42-44c5-965e-3cd30cc9d6f7")) __declspec(novtable) IInertiaExpansionBehavior : Windows::IInspectable
+struct __declspec(uuid("751d87e5-8d42-44c5-965e-3cd30cc9d6f7")) __declspec(novtable) IInertiaExpansionBehavior : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DesiredDeceleration(double * value) = 0;
     virtual HRESULT __stdcall put_DesiredDeceleration(double value) = 0;
@@ -116,7 +116,7 @@ struct __declspec(uuid("751d87e5-8d42-44c5-965e-3cd30cc9d6f7")) __declspec(novta
     virtual HRESULT __stdcall put_DesiredExpansion(double value) = 0;
 };
 
-struct __declspec(uuid("424cfb2e-bbfd-4625-ae78-20c65bf1efaf")) __declspec(novtable) IInertiaRotationBehavior : Windows::IInspectable
+struct __declspec(uuid("424cfb2e-bbfd-4625-ae78-20c65bf1efaf")) __declspec(novtable) IInertiaRotationBehavior : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DesiredDeceleration(double * value) = 0;
     virtual HRESULT __stdcall put_DesiredDeceleration(double value) = 0;
@@ -124,7 +124,7 @@ struct __declspec(uuid("424cfb2e-bbfd-4625-ae78-20c65bf1efaf")) __declspec(novta
     virtual HRESULT __stdcall put_DesiredRotation(double value) = 0;
 };
 
-struct __declspec(uuid("45d3a512-3b32-4882-a4c2-ecfa2d4b6df0")) __declspec(novtable) IInertiaTranslationBehavior : Windows::IInspectable
+struct __declspec(uuid("45d3a512-3b32-4882-a4c2-ecfa2d4b6df0")) __declspec(novtable) IInertiaTranslationBehavior : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DesiredDeceleration(double * value) = 0;
     virtual HRESULT __stdcall put_DesiredDeceleration(double value) = 0;
@@ -132,23 +132,23 @@ struct __declspec(uuid("45d3a512-3b32-4882-a4c2-ecfa2d4b6df0")) __declspec(novta
     virtual HRESULT __stdcall put_DesiredDisplacement(double value) = 0;
 };
 
-struct __declspec(uuid("5c0f85f3-f9d8-4220-b666-045d074d9bfa")) __declspec(novtable) IInputScope : Windows::IInspectable
+struct __declspec(uuid("5c0f85f3-f9d8-4220-b666-045d074d9bfa")) __declspec(novtable) IInputScope : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Names(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Input::InputScopeName> ** value) = 0;
 };
 
-struct __declspec(uuid("fd3e6997-08fb-4cba-a021-792d7589fd5a")) __declspec(novtable) IInputScopeName : Windows::IInspectable
+struct __declspec(uuid("fd3e6997-08fb-4cba-a021-792d7589fd5a")) __declspec(novtable) IInputScopeName : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_NameValue(winrt::Windows::UI::Xaml::Input::InputScopeNameValue * value) = 0;
     virtual HRESULT __stdcall put_NameValue(winrt::Windows::UI::Xaml::Input::InputScopeNameValue value) = 0;
 };
 
-struct __declspec(uuid("4a40bb52-4bd7-4e54-8617-1cda8a1eda7f")) __declspec(novtable) IInputScopeNameFactory : Windows::IInspectable
+struct __declspec(uuid("4a40bb52-4bd7-4e54-8617-1cda8a1eda7f")) __declspec(novtable) IInputScopeNameFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(winrt::Windows::UI::Xaml::Input::InputScopeNameValue nameValue, Windows::UI::Xaml::Input::IInputScopeName ** instance) = 0;
 };
 
-struct __declspec(uuid("d4cd3dfe-4079-42e9-a39a-3095d3f049c6")) __declspec(novtable) IKeyRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("d4cd3dfe-4079-42e9-a39a-3095d3f049c6")) __declspec(novtable) IKeyRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Key(winrt::Windows::System::VirtualKey * value) = 0;
     virtual HRESULT __stdcall get_KeyStatus(Windows::UI::Core::CorePhysicalKeyStatus * value) = 0;
@@ -156,17 +156,17 @@ struct __declspec(uuid("d4cd3dfe-4079-42e9-a39a-3095d3f049c6")) __declspec(novta
     virtual HRESULT __stdcall put_Handled(bool value) = 0;
 };
 
-struct __declspec(uuid("1b02d57a-9634-4f14-91b2-133e42fdb3cd")) __declspec(novtable) IKeyRoutedEventArgs2 : Windows::IInspectable
+struct __declspec(uuid("1b02d57a-9634-4f14-91b2-133e42fdb3cd")) __declspec(novtable) IKeyRoutedEventArgs2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_OriginalKey(winrt::Windows::System::VirtualKey * value) = 0;
 };
 
-struct __declspec(uuid("2779f5b4-ca41-411b-a8ef-f4fc78e78057")) __declspec(novtable) IKeyRoutedEventArgs3 : Windows::IInspectable
+struct __declspec(uuid("2779f5b4-ca41-411b-a8ef-f4fc78e78057")) __declspec(novtable) IKeyRoutedEventArgs3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DeviceId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("b5ad9b23-2f41-498e-8319-015ee8a75346")) __declspec(novtable) IManipulationCompletedRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("b5ad9b23-2f41-498e-8319-015ee8a75346")) __declspec(novtable) IManipulationCompletedRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Container(Windows::UI::Xaml::IUIElement ** value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -178,7 +178,7 @@ struct __declspec(uuid("b5ad9b23-2f41-498e-8319-015ee8a75346")) __declspec(novta
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
 };
 
-struct __declspec(uuid("400d5794-4c6f-491d-82d6-3517109399c6")) __declspec(novtable) IManipulationDeltaRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("400d5794-4c6f-491d-82d6-3517109399c6")) __declspec(novtable) IManipulationDeltaRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Container(Windows::UI::Xaml::IUIElement ** value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -192,7 +192,7 @@ struct __declspec(uuid("400d5794-4c6f-491d-82d6-3517109399c6")) __declspec(novta
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("246a91a9-ca43-4c0b-acef-81e8b8147520")) __declspec(novtable) IManipulationInertiaStartingRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("246a91a9-ca43-4c0b-acef-81e8b8147520")) __declspec(novtable) IManipulationInertiaStartingRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Container(Windows::UI::Xaml::IUIElement ** value) = 0;
     virtual HRESULT __stdcall get_ExpansionBehavior(Windows::UI::Xaml::Input::IInertiaExpansionBehavior ** value) = 0;
@@ -209,7 +209,7 @@ struct __declspec(uuid("246a91a9-ca43-4c0b-acef-81e8b8147520")) __declspec(novta
     virtual HRESULT __stdcall get_Velocities(Windows::UI::Input::ManipulationVelocities * value) = 0;
 };
 
-struct __declspec(uuid("2e3838a5-e6c2-4998-82ac-18748b141666")) __declspec(novtable) IManipulationPivot : Windows::IInspectable
+struct __declspec(uuid("2e3838a5-e6c2-4998-82ac-18748b141666")) __declspec(novtable) IManipulationPivot : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Center(Windows::Foundation::Point * value) = 0;
     virtual HRESULT __stdcall put_Center(Windows::Foundation::Point value) = 0;
@@ -217,12 +217,12 @@ struct __declspec(uuid("2e3838a5-e6c2-4998-82ac-18748b141666")) __declspec(novta
     virtual HRESULT __stdcall put_Radius(double value) = 0;
 };
 
-struct __declspec(uuid("6d05b039-3702-4396-ad9b-a825efa63a3b")) __declspec(novtable) IManipulationPivotFactory : Windows::IInspectable
+struct __declspec(uuid("6d05b039-3702-4396-ad9b-a825efa63a3b")) __declspec(novtable) IManipulationPivotFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstanceWithCenterAndRadius(Windows::Foundation::Point center, double radius, Windows::UI::Xaml::Input::IManipulationPivot ** instance) = 0;
 };
 
-struct __declspec(uuid("5db1aa05-9f80-48b6-ae6c-4f119de8ff13")) __declspec(novtable) IManipulationStartedRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("5db1aa05-9f80-48b6-ae6c-4f119de8ff13")) __declspec(novtable) IManipulationStartedRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Container(Windows::UI::Xaml::IUIElement ** value) = 0;
     virtual HRESULT __stdcall get_Position(Windows::Foundation::Point * value) = 0;
@@ -233,12 +233,12 @@ struct __declspec(uuid("5db1aa05-9f80-48b6-ae6c-4f119de8ff13")) __declspec(novta
     virtual HRESULT __stdcall abi_Complete() = 0;
 };
 
-struct __declspec(uuid("84c1daa7-7272-4463-b6c3-a40b9ba151fc")) __declspec(novtable) IManipulationStartedRoutedEventArgsFactory : Windows::IInspectable
+struct __declspec(uuid("84c1daa7-7272-4463-b6c3-a40b9ba151fc")) __declspec(novtable) IManipulationStartedRoutedEventArgsFactory : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_CreateInstance(Windows::IInspectable * outer, Windows::IInspectable ** inner, Windows::UI::Xaml::Input::IManipulationStartedRoutedEventArgs ** instance) = 0;
+    virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::IInspectable * outer, Windows::Foundation::IInspectable ** inner, Windows::UI::Xaml::Input::IManipulationStartedRoutedEventArgs ** instance) = 0;
 };
 
-struct __declspec(uuid("18d636b7-53a4-4c15-a498-f3a9ca212a42")) __declspec(novtable) IManipulationStartingRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("18d636b7-53a4-4c15-a498-f3a9ca212a42")) __declspec(novtable) IManipulationStartingRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Mode(winrt::Windows::UI::Xaml::Input::ManipulationModes * value) = 0;
     virtual HRESULT __stdcall put_Mode(winrt::Windows::UI::Xaml::Input::ManipulationModes value) = 0;
@@ -250,7 +250,7 @@ struct __declspec(uuid("18d636b7-53a4-4c15-a498-f3a9ca212a42")) __declspec(novta
     virtual HRESULT __stdcall put_Handled(bool value) = 0;
 };
 
-struct __declspec(uuid("5ee8f39f-747d-4171-90e6-cd37a9dffb11")) __declspec(novtable) IPointer : Windows::IInspectable
+struct __declspec(uuid("5ee8f39f-747d-4171-90e6-cd37a9dffb11")) __declspec(novtable) IPointer : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerId(uint32_t * value) = 0;
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
@@ -258,7 +258,7 @@ struct __declspec(uuid("5ee8f39f-747d-4171-90e6-cd37a9dffb11")) __declspec(novta
     virtual HRESULT __stdcall get_IsInRange(bool * value) = 0;
 };
 
-struct __declspec(uuid("da628f0a-9752-49e2-bde2-49eccab9194d")) __declspec(novtable) IPointerRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("da628f0a-9752-49e2-bde2-49eccab9194d")) __declspec(novtable) IPointerRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Pointer(Windows::UI::Xaml::Input::IPointer ** value) = 0;
     virtual HRESULT __stdcall get_KeyModifiers(winrt::Windows::System::VirtualKeyModifiers * value) = 0;
@@ -268,7 +268,7 @@ struct __declspec(uuid("da628f0a-9752-49e2-bde2-49eccab9194d")) __declspec(novta
     virtual HRESULT __stdcall abi_GetIntermediatePoints(Windows::UI::Xaml::IUIElement * relativeTo, Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> ** returnValue) = 0;
 };
 
-struct __declspec(uuid("6834869d-7bd5-4033-b237-172f79abe393")) __declspec(novtable) IRightTappedRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("6834869d-7bd5-4033-b237-172f79abe393")) __declspec(novtable) IRightTappedRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Handled(bool * value) = 0;
@@ -276,7 +276,7 @@ struct __declspec(uuid("6834869d-7bd5-4033-b237-172f79abe393")) __declspec(novta
     virtual HRESULT __stdcall abi_GetPosition(Windows::UI::Xaml::IUIElement * relativeTo, Windows::Foundation::Point * returnValue) = 0;
 };
 
-struct __declspec(uuid("a099e6be-e624-459a-bb1d-e05c73e2cc66")) __declspec(novtable) ITappedRoutedEventArgs : Windows::IInspectable
+struct __declspec(uuid("a099e6be-e624-459a-bb1d-e05c73e2cc66")) __declspec(novtable) ITappedRoutedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PointerDeviceType(winrt::Windows::Devices::Input::PointerDeviceType * value) = 0;
     virtual HRESULT __stdcall get_Handled(bool * value) = 0;
@@ -286,47 +286,47 @@ struct __declspec(uuid("a099e6be-e624-459a-bb1d-e05c73e2cc66")) __declspec(novta
 
 struct __declspec(uuid("7c63d2e5-7a0e-4e12-b96a-7715aa6ff1c8")) __declspec(novtable) KeyEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IKeyRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IKeyRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("38ef4b0f-14f8-42df-9a1e-a4bcc4af77f4")) __declspec(novtable) ManipulationCompletedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationCompletedRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationCompletedRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("aa1160cb-dfb9-4c56-abdc-711b63c8eb94")) __declspec(novtable) ManipulationDeltaEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationDeltaRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationDeltaRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("d39d6322-7c9c-481b-827b-c8b2d9bb6fc7")) __declspec(novtable) ManipulationInertiaStartingEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationInertiaStartingRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationInertiaStartingRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("f88345f8-e0a3-4be2-b90c-dc20e6d8beb0")) __declspec(novtable) ManipulationStartedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationStartedRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationStartedRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("10d0b04e-bfe4-42cb-823c-3fecd8770ef8")) __declspec(novtable) ManipulationStartingEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationStartingRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IManipulationStartingRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("e4385929-c004-4bcf-8970-359486e39f88")) __declspec(novtable) PointerEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IPointerRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IPointerRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("2532a062-f447-4950-9c46-f1e34a2c2238")) __declspec(novtable) RightTappedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::IRightTappedRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::IRightTappedRoutedEventArgs * e) = 0;
 };
 
 struct __declspec(uuid("68d940cc-9ff0-49ce-b141-3f07ec477b97")) __declspec(novtable) TappedEventHandler : IUnknown
 {
-    virtual HRESULT __stdcall abi_Invoke(Windows::IInspectable * sender, Windows::UI::Xaml::Input::ITappedRoutedEventArgs * e) = 0;
+    virtual HRESULT __stdcall abi_Invoke(Windows::Foundation::IInspectable * sender, Windows::UI::Xaml::Input::ITappedRoutedEventArgs * e) = 0;
 };
 
 }
@@ -362,51 +362,298 @@ template <> struct traits<Windows::UI::Xaml::Input::TappedRoutedEventArgs> { usi
 
 namespace Windows::UI::Xaml::Input {
 
-template <typename T> struct impl_IAccessKeyDisplayDismissedEventArgs;
-template <typename T> struct impl_IAccessKeyDisplayRequestedEventArgs;
-template <typename T> struct impl_IAccessKeyInvokedEventArgs;
-template <typename T> struct impl_IAccessKeyManager;
-template <typename T> struct impl_IAccessKeyManagerStatics;
-template <typename T> struct impl_ICommand;
-template <typename T> struct impl_IContextRequestedEventArgs;
-template <typename T> struct impl_IDoubleTappedRoutedEventArgs;
-template <typename T> struct impl_IFocusManager;
-template <typename T> struct impl_IFocusManagerStatics;
-template <typename T> struct impl_IFocusManagerStatics2;
-template <typename T> struct impl_IFocusManagerStatics3;
-template <typename T> struct impl_IHoldingRoutedEventArgs;
-template <typename T> struct impl_IInertiaExpansionBehavior;
-template <typename T> struct impl_IInertiaRotationBehavior;
-template <typename T> struct impl_IInertiaTranslationBehavior;
-template <typename T> struct impl_IInputScope;
-template <typename T> struct impl_IInputScopeName;
-template <typename T> struct impl_IInputScopeNameFactory;
-template <typename T> struct impl_IKeyRoutedEventArgs;
-template <typename T> struct impl_IKeyRoutedEventArgs2;
-template <typename T> struct impl_IKeyRoutedEventArgs3;
-template <typename T> struct impl_IManipulationCompletedRoutedEventArgs;
-template <typename T> struct impl_IManipulationDeltaRoutedEventArgs;
-template <typename T> struct impl_IManipulationInertiaStartingRoutedEventArgs;
-template <typename T> struct impl_IManipulationPivot;
-template <typename T> struct impl_IManipulationPivotFactory;
-template <typename T> struct impl_IManipulationStartedRoutedEventArgs;
-template <typename T> struct impl_IManipulationStartedRoutedEventArgsFactory;
-template <typename T> struct impl_IManipulationStartingRoutedEventArgs;
-template <typename T> struct impl_IPointer;
-template <typename T> struct impl_IPointerRoutedEventArgs;
-template <typename T> struct impl_IRightTappedRoutedEventArgs;
-template <typename T> struct impl_ITappedRoutedEventArgs;
-template <typename T> struct impl_DoubleTappedEventHandler;
-template <typename T> struct impl_HoldingEventHandler;
-template <typename T> struct impl_KeyEventHandler;
-template <typename T> struct impl_ManipulationCompletedEventHandler;
-template <typename T> struct impl_ManipulationDeltaEventHandler;
-template <typename T> struct impl_ManipulationInertiaStartingEventHandler;
-template <typename T> struct impl_ManipulationStartedEventHandler;
-template <typename T> struct impl_ManipulationStartingEventHandler;
-template <typename T> struct impl_PointerEventHandler;
-template <typename T> struct impl_RightTappedEventHandler;
-template <typename T> struct impl_TappedEventHandler;
+template <typename D>
+struct WINRT_EBO impl_IAccessKeyDisplayDismissedEventArgs
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessKeyDisplayRequestedEventArgs
+{
+    hstring PressedKeys() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessKeyInvokedEventArgs
+{
+    bool Handled() const;
+    void Handled(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessKeyManager
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IAccessKeyManagerStatics
+{
+    bool IsDisplayModeEnabled() const;
+    event_token IsDisplayModeEnabledChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> & value) const;
+    using IsDisplayModeEnabledChanged_revoker = event_revoker<IAccessKeyManagerStatics>;
+    IsDisplayModeEnabledChanged_revoker IsDisplayModeEnabledChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> & value) const;
+    void IsDisplayModeEnabledChanged(event_token token) const;
+    void ExitDisplayMode() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICommand
+{
+    event_token CanExecuteChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const;
+    using CanExecuteChanged_revoker = event_revoker<ICommand>;
+    CanExecuteChanged_revoker CanExecuteChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const;
+    void CanExecuteChanged(event_token token) const;
+    bool CanExecute(const Windows::Foundation::IInspectable & parameter) const;
+    void Execute(const Windows::Foundation::IInspectable & parameter) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IContextRequestedEventArgs
+{
+    bool Handled() const;
+    void Handled(bool value) const;
+    bool TryGetPosition(const Windows::UI::Xaml::UIElement & relativeTo, Windows::Foundation::Point & point) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDoubleTappedRoutedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Foundation::Point GetPosition(const Windows::UI::Xaml::UIElement & relativeTo) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFocusManager
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFocusManagerStatics
+{
+    Windows::Foundation::IInspectable GetFocusedElement() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFocusManagerStatics2
+{
+    bool TryMoveFocus(Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFocusManagerStatics3
+{
+    Windows::UI::Xaml::UIElement FindNextFocusableElement(Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection) const;
+    Windows::UI::Xaml::UIElement FindNextFocusableElement(Windows::UI::Xaml::Input::FocusNavigationDirection focusNavigationDirection, const Windows::Foundation::Rect & hintRect) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHoldingRoutedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::UI::Input::HoldingState HoldingState() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Foundation::Point GetPosition(const Windows::UI::Xaml::UIElement & relativeTo) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInertiaExpansionBehavior
+{
+    double DesiredDeceleration() const;
+    void DesiredDeceleration(double value) const;
+    double DesiredExpansion() const;
+    void DesiredExpansion(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInertiaRotationBehavior
+{
+    double DesiredDeceleration() const;
+    void DesiredDeceleration(double value) const;
+    double DesiredRotation() const;
+    void DesiredRotation(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInertiaTranslationBehavior
+{
+    double DesiredDeceleration() const;
+    void DesiredDeceleration(double value) const;
+    double DesiredDisplacement() const;
+    void DesiredDisplacement(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInputScope
+{
+    Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Input::InputScopeName> Names() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInputScopeName
+{
+    Windows::UI::Xaml::Input::InputScopeNameValue NameValue() const;
+    void NameValue(Windows::UI::Xaml::Input::InputScopeNameValue value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInputScopeNameFactory
+{
+    Windows::UI::Xaml::Input::InputScopeName CreateInstance(Windows::UI::Xaml::Input::InputScopeNameValue nameValue) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKeyRoutedEventArgs
+{
+    Windows::System::VirtualKey Key() const;
+    Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKeyRoutedEventArgs2
+{
+    Windows::System::VirtualKey OriginalKey() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IKeyRoutedEventArgs3
+{
+    hstring DeviceId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationCompletedRoutedEventArgs
+{
+    Windows::UI::Xaml::UIElement Container() const;
+    Windows::Foundation::Point Position() const;
+    bool IsInertial() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationDeltaRoutedEventArgs
+{
+    Windows::UI::Xaml::UIElement Container() const;
+    Windows::Foundation::Point Position() const;
+    bool IsInertial() const;
+    Windows::UI::Input::ManipulationDelta Delta() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationInertiaStartingRoutedEventArgs
+{
+    Windows::UI::Xaml::UIElement Container() const;
+    Windows::UI::Xaml::Input::InertiaExpansionBehavior ExpansionBehavior() const;
+    void ExpansionBehavior(const Windows::UI::Xaml::Input::InertiaExpansionBehavior & value) const;
+    Windows::UI::Xaml::Input::InertiaRotationBehavior RotationBehavior() const;
+    void RotationBehavior(const Windows::UI::Xaml::Input::InertiaRotationBehavior & value) const;
+    Windows::UI::Xaml::Input::InertiaTranslationBehavior TranslationBehavior() const;
+    void TranslationBehavior(const Windows::UI::Xaml::Input::InertiaTranslationBehavior & value) const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::UI::Input::ManipulationDelta Delta() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    Windows::UI::Input::ManipulationVelocities Velocities() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationPivot
+{
+    Windows::Foundation::Point Center() const;
+    void Center(const Windows::Foundation::Point & value) const;
+    double Radius() const;
+    void Radius(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationPivotFactory
+{
+    Windows::UI::Xaml::Input::ManipulationPivot CreateInstanceWithCenterAndRadius(const Windows::Foundation::Point & center, double radius) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationStartedRoutedEventArgs
+{
+    Windows::UI::Xaml::UIElement Container() const;
+    Windows::Foundation::Point Position() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    Windows::UI::Input::ManipulationDelta Cumulative() const;
+    void Complete() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationStartedRoutedEventArgsFactory
+{
+    Windows::UI::Xaml::Input::ManipulationStartedRoutedEventArgs CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IManipulationStartingRoutedEventArgs
+{
+    Windows::UI::Xaml::Input::ManipulationModes Mode() const;
+    void Mode(Windows::UI::Xaml::Input::ManipulationModes value) const;
+    Windows::UI::Xaml::UIElement Container() const;
+    void Container(const Windows::UI::Xaml::UIElement & value) const;
+    Windows::UI::Xaml::Input::ManipulationPivot Pivot() const;
+    void Pivot(const Windows::UI::Xaml::Input::ManipulationPivot & value) const;
+    bool Handled() const;
+    void Handled(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointer
+{
+    uint32_t PointerId() const;
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    bool IsInContact() const;
+    bool IsInRange() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPointerRoutedEventArgs
+{
+    Windows::UI::Xaml::Input::Pointer Pointer() const;
+    Windows::System::VirtualKeyModifiers KeyModifiers() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::UI::Input::PointerPoint GetCurrentPoint(const Windows::UI::Xaml::UIElement & relativeTo) const;
+    Windows::Foundation::Collections::IVector<Windows::UI::Input::PointerPoint> GetIntermediatePoints(const Windows::UI::Xaml::UIElement & relativeTo) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRightTappedRoutedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Foundation::Point GetPosition(const Windows::UI::Xaml::UIElement & relativeTo) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITappedRoutedEventArgs
+{
+    Windows::Devices::Input::PointerDeviceType PointerDeviceType() const;
+    bool Handled() const;
+    void Handled(bool value) const;
+    Windows::Foundation::Point GetPosition(const Windows::UI::Xaml::UIElement & relativeTo) const;
+};
 
 }
 

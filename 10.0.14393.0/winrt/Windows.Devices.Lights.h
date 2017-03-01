@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.UI.3.h"
@@ -16,11 +19,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::Devices::Lights::ILamp>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -34,7 +38,8 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
-            *value = detach(this->shim().IsEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsEnabled());
             return S_OK;
         }
         catch (...)
@@ -47,6 +52,7 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().IsEnabled(value);
             return S_OK;
         }
@@ -60,7 +66,8 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
-            *value = detach(this->shim().BrightnessLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BrightnessLevel());
             return S_OK;
         }
         catch (...)
@@ -73,6 +80,7 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BrightnessLevel(value);
             return S_OK;
         }
@@ -86,7 +94,8 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
-            *value = detach(this->shim().IsColorSettable());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsColorSettable());
             return S_OK;
         }
         catch (...)
@@ -95,11 +104,12 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
         }
     }
 
-    HRESULT __stdcall get_Color(abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Color(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Color());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Color());
             return S_OK;
         }
         catch (...)
@@ -108,10 +118,11 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
         }
     }
 
-    HRESULT __stdcall put_Color(abi_arg_in<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall put_Color(impl::abi_arg_in<Windows::UI::Color> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Color(*reinterpret_cast<const Windows::UI::Color *>(&value));
             return S_OK;
         }
@@ -121,11 +132,12 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
         }
     }
 
-    HRESULT __stdcall add_AvailabilityChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Lights::Lamp, Windows::Devices::Lights::LampAvailabilityChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AvailabilityChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Lights::Lamp, Windows::Devices::Lights::LampAvailabilityChangedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().AvailabilityChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Lights::Lamp, Windows::Devices::Lights::LampAvailabilityChangedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().AvailabilityChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Lights::Lamp, Windows::Devices::Lights::LampAvailabilityChangedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -138,6 +150,7 @@ struct produce<D, Windows::Devices::Lights::ILamp> : produce_base<D, Windows::De
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AvailabilityChanged(token);
             return S_OK;
         }
@@ -155,7 +168,8 @@ struct produce<D, Windows::Devices::Lights::ILampAvailabilityChangedEventArgs> :
     {
         try
         {
-            *value = detach(this->shim().IsAvailable());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsAvailable());
             return S_OK;
         }
         catch (...)
@@ -168,11 +182,12 @@ struct produce<D, Windows::Devices::Lights::ILampAvailabilityChangedEventArgs> :
 template <typename D>
 struct produce<D, Windows::Devices::Lights::ILampStatics> : produce_base<D, Windows::Devices::Lights::ILampStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -182,11 +197,12 @@ struct produce<D, Windows::Devices::Lights::ILampStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp>> operation) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -196,11 +212,12 @@ struct produce<D, Windows::Devices::Lights::ILampStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp>> operation) noexcept override
+    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetDefaultAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetDefaultAsync());
             return S_OK;
         }
         catch (...)
@@ -218,85 +235,85 @@ namespace Windows::Devices::Lights {
 template <typename D> hstring impl_ILampStatics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const ILampStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(ILampStatics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> impl_ILampStatics<D>::FromIdAsync(hstring_ref deviceId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> impl_ILampStatics<D>::FromIdAsync(hstring_view deviceId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> operation;
-    check_hresult(static_cast<const ILampStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), put(operation)));
+    check_hresult(WINRT_SHIM(ILampStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> impl_ILampStatics<D>::GetDefaultAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> operation;
-    check_hresult(static_cast<const ILampStatics &>(static_cast<const D &>(*this))->abi_GetDefaultAsync(put(operation)));
+    check_hresult(WINRT_SHIM(ILampStatics)->abi_GetDefaultAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_ILampAvailabilityChangedEventArgs<D>::IsAvailable() const
 {
     bool value {};
-    check_hresult(static_cast<const ILampAvailabilityChangedEventArgs &>(static_cast<const D &>(*this))->get_IsAvailable(&value));
+    check_hresult(WINRT_SHIM(ILampAvailabilityChangedEventArgs)->get_IsAvailable(&value));
     return value;
 }
 
 template <typename D> hstring impl_ILamp<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(ILamp)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_ILamp<D>::IsEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->get_IsEnabled(&value));
+    check_hresult(WINRT_SHIM(ILamp)->get_IsEnabled(&value));
     return value;
 }
 
 template <typename D> void impl_ILamp<D>::IsEnabled(bool value) const
 {
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->put_IsEnabled(value));
+    check_hresult(WINRT_SHIM(ILamp)->put_IsEnabled(value));
 }
 
 template <typename D> float impl_ILamp<D>::BrightnessLevel() const
 {
     float value {};
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->get_BrightnessLevel(&value));
+    check_hresult(WINRT_SHIM(ILamp)->get_BrightnessLevel(&value));
     return value;
 }
 
 template <typename D> void impl_ILamp<D>::BrightnessLevel(float value) const
 {
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->put_BrightnessLevel(value));
+    check_hresult(WINRT_SHIM(ILamp)->put_BrightnessLevel(value));
 }
 
 template <typename D> bool impl_ILamp<D>::IsColorSettable() const
 {
     bool value {};
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->get_IsColorSettable(&value));
+    check_hresult(WINRT_SHIM(ILamp)->get_IsColorSettable(&value));
     return value;
 }
 
 template <typename D> Windows::UI::Color impl_ILamp<D>::Color() const
 {
     Windows::UI::Color value {};
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->get_Color(put(value)));
+    check_hresult(WINRT_SHIM(ILamp)->get_Color(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_ILamp<D>::Color(const Windows::UI::Color & value) const
 {
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->put_Color(get(value)));
+    check_hresult(WINRT_SHIM(ILamp)->put_Color(get_abi(value)));
 }
 
 template <typename D> event_token impl_ILamp<D>::AvailabilityChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Lights::Lamp, Windows::Devices::Lights::LampAvailabilityChangedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->add_AvailabilityChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(ILamp)->add_AvailabilityChanged(get_abi(handler), &token));
     return token;
 }
 
@@ -307,7 +324,7 @@ template <typename D> event_revoker<ILamp> impl_ILamp<D>::AvailabilityChanged(au
 
 template <typename D> void impl_ILamp<D>::AvailabilityChanged(event_token token) const
 {
-    check_hresult(static_cast<const ILamp &>(static_cast<const D &>(*this))->remove_AvailabilityChanged(token));
+    check_hresult(WINRT_SHIM(ILamp)->remove_AvailabilityChanged(token));
 }
 
 inline hstring Lamp::GetDeviceSelector()
@@ -315,7 +332,7 @@ inline hstring Lamp::GetDeviceSelector()
     return get_activation_factory<Lamp, ILampStatics>().GetDeviceSelector();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> Lamp::FromIdAsync(hstring_ref deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> Lamp::FromIdAsync(hstring_view deviceId)
 {
     return get_activation_factory<Lamp, ILampStatics>().FromIdAsync(deviceId);
 }
@@ -328,3 +345,50 @@ inline Windows::Foundation::IAsyncOperation<Windows::Devices::Lights::Lamp> Lamp
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::Lights::ILamp>
+{
+    size_t operator()(const winrt::Windows::Devices::Lights::ILamp & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Lights::ILampAvailabilityChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Lights::ILampAvailabilityChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Lights::ILampStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::Lights::ILampStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Lights::Lamp>
+{
+    size_t operator()(const winrt::Windows::Devices::Lights::Lamp & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::Lights::LampAvailabilityChangedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Devices::Lights::LampAvailabilityChangedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

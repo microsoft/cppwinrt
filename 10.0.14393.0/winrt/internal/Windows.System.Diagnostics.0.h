@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,6 +43,19 @@ struct ProcessDiskUsage;
 struct ProcessDiskUsageReport;
 struct ProcessMemoryUsage;
 struct ProcessMemoryUsageReport;
+
+}
+
+namespace Windows::System::Diagnostics {
+
+template <typename T> struct impl_IProcessCpuUsage;
+template <typename T> struct impl_IProcessCpuUsageReport;
+template <typename T> struct impl_IProcessDiagnosticInfo;
+template <typename T> struct impl_IProcessDiagnosticInfoStatics;
+template <typename T> struct impl_IProcessDiskUsage;
+template <typename T> struct impl_IProcessDiskUsageReport;
+template <typename T> struct impl_IProcessMemoryUsage;
+template <typename T> struct impl_IProcessMemoryUsageReport;
 
 }
 

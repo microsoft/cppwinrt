@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Data.Json.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -60,136 +60,49 @@ template <> struct __declspec(uuid("f948eac5-33eb-50f5-b5af-e7cecf0e4501")) __de
 
 namespace Windows::Data::Json {
 
-template <typename D>
-struct WINRT_EBO impl_IJsonArray
-{
-    Windows::Data::Json::JsonObject GetObjectAt(uint32_t index) const;
-    Windows::Data::Json::JsonArray GetArrayAt(uint32_t index) const;
-    hstring GetStringAt(uint32_t index) const;
-    double GetNumberAt(uint32_t index) const;
-    bool GetBooleanAt(uint32_t index) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonArrayStatics
-{
-    Windows::Data::Json::JsonArray Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Data::Json::JsonArray & result) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonErrorStatics2
-{
-    Windows::Data::Json::JsonErrorStatus GetJsonStatus(int32_t hresult) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonObject
-{
-    Windows::Data::Json::JsonValue GetNamedValue(hstring_ref name) const;
-    void SetNamedValue(hstring_ref name, const Windows::Data::Json::IJsonValue & value) const;
-    Windows::Data::Json::JsonObject GetNamedObject(hstring_ref name) const;
-    Windows::Data::Json::JsonArray GetNamedArray(hstring_ref name) const;
-    hstring GetNamedString(hstring_ref name) const;
-    double GetNamedNumber(hstring_ref name) const;
-    bool GetNamedBoolean(hstring_ref name) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonObjectStatics
-{
-    Windows::Data::Json::JsonObject Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Data::Json::JsonObject & result) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonObjectWithDefaultValues
-{
-    Windows::Data::Json::JsonValue GetNamedValue(hstring_ref name, const Windows::Data::Json::JsonValue & defaultValue) const;
-    Windows::Data::Json::JsonObject GetNamedObject(hstring_ref name, const Windows::Data::Json::JsonObject & defaultValue) const;
-    hstring GetNamedString(hstring_ref name, hstring_ref defaultValue) const;
-    Windows::Data::Json::JsonArray GetNamedArray(hstring_ref name, const Windows::Data::Json::JsonArray & defaultValue) const;
-    double GetNamedNumber(hstring_ref name, double defaultValue) const;
-    bool GetNamedBoolean(hstring_ref name, bool defaultValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonValue
-{
-    Windows::Data::Json::JsonValueType ValueType() const;
-    hstring Stringify() const;
-    hstring GetString() const;
-    double GetNumber() const;
-    bool GetBoolean() const;
-    Windows::Data::Json::JsonArray GetArray() const;
-    Windows::Data::Json::JsonObject GetObject() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonValueStatics
-{
-    Windows::Data::Json::JsonValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Data::Json::JsonValue & result) const;
-    Windows::Data::Json::JsonValue CreateBooleanValue(bool input) const;
-    Windows::Data::Json::JsonValue CreateNumberValue(double input) const;
-    Windows::Data::Json::JsonValue CreateStringValue(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJsonValueStatics2
-{
-    Windows::Data::Json::JsonValue CreateNullValue() const;
-};
-
 struct IJsonArray :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonArray>,
     impl::require<IJsonArray, Windows::Data::Json::IJsonValue>
 {
     IJsonArray(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonArray>(m_ptr); }
 };
 
 struct IJsonArrayStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonArrayStatics>
 {
     IJsonArrayStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonArrayStatics>(m_ptr); }
 };
 
 struct IJsonErrorStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonErrorStatics2>
 {
     IJsonErrorStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonErrorStatics2>(m_ptr); }
 };
 
 struct IJsonObject :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonObject>,
     impl::require<IJsonObject, Windows::Data::Json::IJsonValue>
 {
     IJsonObject(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonObject>(m_ptr); }
 };
 
 struct IJsonObjectStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonObjectStatics>
 {
     IJsonObjectStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonObjectStatics>(m_ptr); }
 };
 
 struct IJsonObjectWithDefaultValues :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonObjectWithDefaultValues>,
     impl::require<IJsonObjectWithDefaultValues, Windows::Data::Json::IJsonObject, Windows::Data::Json::IJsonValue>
 {
     IJsonObjectWithDefaultValues(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonObjectWithDefaultValues>(m_ptr); }
     using impl_IJsonObject::GetNamedArray;
     using impl_IJsonObject::GetNamedBoolean;
     using impl_IJsonObject::GetNamedNumber;
@@ -205,27 +118,24 @@ struct IJsonObjectWithDefaultValues :
 };
 
 struct IJsonValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonValue>
 {
     IJsonValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonValue>(m_ptr); }
 };
 
 struct IJsonValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonValueStatics>
 {
     IJsonValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonValueStatics>(m_ptr); }
 };
 
 struct IJsonValueStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJsonValueStatics2>
 {
     IJsonValueStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJsonValueStatics2>(m_ptr); }
 };
 
 }

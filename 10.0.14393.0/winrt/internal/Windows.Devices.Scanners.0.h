@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -51,6 +51,18 @@ struct ImageScannerFeederConfiguration;
 struct ImageScannerFlatbedConfiguration;
 struct ImageScannerPreviewResult;
 struct ImageScannerScanResult;
+
+}
+
+namespace Windows::Devices::Scanners {
+
+template <typename T> struct impl_IImageScanner;
+template <typename T> struct impl_IImageScannerFeederConfiguration;
+template <typename T> struct impl_IImageScannerFormatConfiguration;
+template <typename T> struct impl_IImageScannerPreviewResult;
+template <typename T> struct impl_IImageScannerScanResult;
+template <typename T> struct impl_IImageScannerSourceConfiguration;
+template <typename T> struct impl_IImageScannerStatics;
 
 }
 

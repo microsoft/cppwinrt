@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,9 +13,9 @@ struct CommunicationBlockingAccessManager
 {
     CommunicationBlockingAccessManager() = delete;
     static bool IsBlockingActive();
-    static Windows::Foundation::IAsyncOperation<bool> IsBlockedNumberAsync(hstring_ref number);
-    static bool ShowBlockNumbersUI(const Windows::Foundation::Collections::IIterable<hstring> & phoneNumbers);
-    static bool ShowUnblockNumbersUI(const Windows::Foundation::Collections::IIterable<hstring> & phoneNumbers);
+    static Windows::Foundation::IAsyncOperation<bool> IsBlockedNumberAsync(hstring_view number);
+    static bool ShowBlockNumbersUI(iterable<hstring> phoneNumbers);
+    static bool ShowUnblockNumbersUI(iterable<hstring> phoneNumbers);
     static void ShowBlockedCallsUI();
     static void ShowBlockedMessagesUI();
 };

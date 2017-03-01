@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Web.Http.Headers.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -345,1097 +345,482 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Web::Http::Headers {
 
-template <typename D>
-struct WINRT_EBO impl_IHttpCacheDirectiveHeaderValueCollection
-{
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> MaxAge() const;
-    void MaxAge(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> MaxStale() const;
-    void MaxStale(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> MinFresh() const;
-    void MinFresh(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> SharedMaxAge() const;
-    void SharedMaxAge(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpChallengeHeaderValue
-{
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-    hstring Scheme() const;
-    hstring Token() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpChallengeHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpChallengeHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpChallengeHeaderValue CreateFromScheme(hstring_ref scheme) const;
-    Windows::Web::Http::Headers::HttpChallengeHeaderValue CreateFromSchemeWithToken(hstring_ref scheme, hstring_ref token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpChallengeHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpChallengeHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpChallengeHeaderValue & challengeHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpConnectionOptionHeaderValue
-{
-    hstring Token() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpConnectionOptionHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpConnectionOptionHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue Create(hstring_ref token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpConnectionOptionHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue & connectionOptionHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingHeaderValue
-{
-    hstring ContentCoding() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpContentCodingHeaderValue Create(hstring_ref contentCoding) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpContentCodingHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentCodingHeaderValue & contentCodingHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingWithQualityHeaderValue
-{
-    hstring ContentCoding() const;
-    Windows::Foundation::IReference<double> Quality() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingWithQualityHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingWithQualityHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue CreateFromValue(hstring_ref contentCoding) const;
-    Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue CreateFromValueWithQuality(hstring_ref contentCoding, double quality) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentCodingWithQualityHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue & contentCodingWithQualityHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentDispositionHeaderValue
-{
-    hstring DispositionType() const;
-    void DispositionType(hstring_ref value) const;
-    hstring FileName() const;
-    void FileName(hstring_ref value) const;
-    hstring FileNameStar() const;
-    void FileNameStar(hstring_ref value) const;
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-    Windows::Foundation::IReference<uint64_t> Size() const;
-    void Size(const Windows::Foundation::IReference<uint64_t> & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentDispositionHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpContentDispositionHeaderValue Create(hstring_ref dispositionType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentDispositionHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpContentDispositionHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentDispositionHeaderValue & contentDispositionHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentHeaderCollection
-{
-    Windows::Web::Http::Headers::HttpContentDispositionHeaderValue ContentDisposition() const;
-    void ContentDisposition(const Windows::Web::Http::Headers::HttpContentDispositionHeaderValue & value) const;
-    Windows::Web::Http::Headers::HttpContentCodingHeaderValueCollection ContentEncoding() const;
-    Windows::Web::Http::Headers::HttpLanguageHeaderValueCollection ContentLanguage() const;
-    Windows::Foundation::IReference<uint64_t> ContentLength() const;
-    void ContentLength(const Windows::Foundation::IReference<uint64_t> & value) const;
-    Windows::Foundation::Uri ContentLocation() const;
-    void ContentLocation(const Windows::Foundation::Uri & value) const;
-    Windows::Storage::Streams::IBuffer ContentMD5() const;
-    void ContentMD5(const Windows::Storage::Streams::IBuffer & value) const;
-    Windows::Web::Http::Headers::HttpContentRangeHeaderValue ContentRange() const;
-    void ContentRange(const Windows::Web::Http::Headers::HttpContentRangeHeaderValue & value) const;
-    Windows::Web::Http::Headers::HttpMediaTypeHeaderValue ContentType() const;
-    void ContentType(const Windows::Web::Http::Headers::HttpMediaTypeHeaderValue & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Expires() const;
-    void Expires(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> LastModified() const;
-    void LastModified(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    void Append(hstring_ref name, hstring_ref value) const;
-    bool TryAppendWithoutValidation(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentRangeHeaderValue
-{
-    Windows::Foundation::IReference<uint64_t> FirstBytePosition() const;
-    Windows::Foundation::IReference<uint64_t> LastBytePosition() const;
-    Windows::Foundation::IReference<uint64_t> Length() const;
-    hstring Unit() const;
-    void Unit(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentRangeHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpContentRangeHeaderValue CreateFromLength(uint64_t length) const;
-    Windows::Web::Http::Headers::HttpContentRangeHeaderValue CreateFromRange(uint64_t from, uint64_t to) const;
-    Windows::Web::Http::Headers::HttpContentRangeHeaderValue CreateFromRangeWithLength(uint64_t from, uint64_t to, uint64_t length) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpContentRangeHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpContentRangeHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentRangeHeaderValue & contentRangeHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookiePairHeaderValue
-{
-    hstring Name() const;
-    hstring Value() const;
-    void Value(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookiePairHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookiePairHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpCookiePairHeaderValue CreateFromName(hstring_ref name) const;
-    Windows::Web::Http::Headers::HttpCookiePairHeaderValue CreateFromNameWithValue(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCookiePairHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpCookiePairHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpCookiePairHeaderValue & cookiePairHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCredentialsHeaderValue
-{
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-    hstring Scheme() const;
-    hstring Token() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCredentialsHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpCredentialsHeaderValue CreateFromScheme(hstring_ref scheme) const;
-    Windows::Web::Http::Headers::HttpCredentialsHeaderValue CreateFromSchemeWithToken(hstring_ref scheme, hstring_ref token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpCredentialsHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpCredentialsHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpCredentialsHeaderValue & credentialsHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpDateOrDeltaHeaderValue
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Date() const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> Delta() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpDateOrDeltaHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue & dateOrDeltaHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpExpectationHeaderValue
-{
-    hstring Name() const;
-    hstring Value() const;
-    void Value(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpExpectationHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpExpectationHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpExpectationHeaderValue CreateFromName(hstring_ref name) const;
-    Windows::Web::Http::Headers::HttpExpectationHeaderValue CreateFromNameWithValue(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpExpectationHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpExpectationHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpExpectationHeaderValue & expectationHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpLanguageHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpLanguageRangeWithQualityHeaderValue
-{
-    hstring LanguageRange() const;
-    Windows::Foundation::IReference<double> Quality() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpLanguageRangeWithQualityHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpLanguageRangeWithQualityHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue CreateFromLanguageRange(hstring_ref languageRange) const;
-    Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue CreateFromLanguageRangeWithQuality(hstring_ref languageRange, double quality) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpLanguageRangeWithQualityHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue & languageRangeWithQualityHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeHeaderValue
-{
-    hstring CharSet() const;
-    void CharSet(hstring_ref value) const;
-    hstring MediaType() const;
-    void MediaType(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpMediaTypeHeaderValue Create(hstring_ref mediaType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpMediaTypeHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpMediaTypeHeaderValue & mediaTypeHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeWithQualityHeaderValue
-{
-    hstring CharSet() const;
-    void CharSet(hstring_ref value) const;
-    hstring MediaType() const;
-    void MediaType(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-    Windows::Foundation::IReference<double> Quality() const;
-    void Quality(const Windows::Foundation::IReference<double> & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeWithQualityHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeWithQualityHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue CreateFromMediaType(hstring_ref mediaType) const;
-    Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue CreateFromMediaTypeWithQuality(hstring_ref mediaType, double quality) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMediaTypeWithQualityHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue & mediaTypeWithQualityHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpMethodHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpNameValueHeaderValue
-{
-    hstring Name() const;
-    hstring Value() const;
-    void Value(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpNameValueHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpNameValueHeaderValue CreateFromName(hstring_ref name) const;
-    Windows::Web::Http::Headers::HttpNameValueHeaderValue CreateFromNameWithValue(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpNameValueHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpNameValueHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpNameValueHeaderValue & nameValueHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductHeaderValue
-{
-    hstring Name() const;
-    hstring Version() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpProductHeaderValue CreateFromName(hstring_ref productName) const;
-    Windows::Web::Http::Headers::HttpProductHeaderValue CreateFromNameWithVersion(hstring_ref productName, hstring_ref productVersion) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpProductHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpProductHeaderValue & productHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductInfoHeaderValue
-{
-    Windows::Web::Http::Headers::HttpProductHeaderValue Product() const;
-    hstring Comment() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductInfoHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductInfoHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpProductInfoHeaderValue CreateFromComment(hstring_ref productComment) const;
-    Windows::Web::Http::Headers::HttpProductInfoHeaderValue CreateFromNameWithVersion(hstring_ref productName, hstring_ref productVersion) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpProductInfoHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpProductInfoHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpProductInfoHeaderValue & productInfoHeaderValue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpRequestHeaderCollection
-{
-    Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValueCollection Accept() const;
-    Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValueCollection AcceptEncoding() const;
-    Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValueCollection AcceptLanguage() const;
-    Windows::Web::Http::Headers::HttpCredentialsHeaderValue Authorization() const;
-    void Authorization(const Windows::Web::Http::Headers::HttpCredentialsHeaderValue & value) const;
-    Windows::Web::Http::Headers::HttpCacheDirectiveHeaderValueCollection CacheControl() const;
-    Windows::Web::Http::Headers::HttpConnectionOptionHeaderValueCollection Connection() const;
-    Windows::Web::Http::Headers::HttpCookiePairHeaderValueCollection Cookie() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Date() const;
-    void Date(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Web::Http::Headers::HttpExpectationHeaderValueCollection Expect() const;
-    hstring From() const;
-    void From(hstring_ref value) const;
-    Windows::Networking::HostName Host() const;
-    void Host(const Windows::Networking::HostName & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> IfModifiedSince() const;
-    void IfModifiedSince(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> IfUnmodifiedSince() const;
-    void IfUnmodifiedSince(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::IReference<uint32_t> MaxForwards() const;
-    void MaxForwards(const Windows::Foundation::IReference<uint32_t> & value) const;
-    Windows::Web::Http::Headers::HttpCredentialsHeaderValue ProxyAuthorization() const;
-    void ProxyAuthorization(const Windows::Web::Http::Headers::HttpCredentialsHeaderValue & value) const;
-    Windows::Foundation::Uri Referer() const;
-    void Referer(const Windows::Foundation::Uri & value) const;
-    Windows::Web::Http::Headers::HttpTransferCodingHeaderValueCollection TransferEncoding() const;
-    Windows::Web::Http::Headers::HttpProductInfoHeaderValueCollection UserAgent() const;
-    void Append(hstring_ref name, hstring_ref value) const;
-    bool TryAppendWithoutValidation(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpResponseHeaderCollection
-{
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> Age() const;
-    void Age(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    Windows::Web::Http::Headers::HttpMethodHeaderValueCollection Allow() const;
-    Windows::Web::Http::Headers::HttpCacheDirectiveHeaderValueCollection CacheControl() const;
-    Windows::Web::Http::Headers::HttpConnectionOptionHeaderValueCollection Connection() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Date() const;
-    void Date(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    Windows::Foundation::Uri Location() const;
-    void Location(const Windows::Foundation::Uri & value) const;
-    Windows::Web::Http::Headers::HttpChallengeHeaderValueCollection ProxyAuthenticate() const;
-    Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue RetryAfter() const;
-    void RetryAfter(const Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue & value) const;
-    Windows::Web::Http::Headers::HttpTransferCodingHeaderValueCollection TransferEncoding() const;
-    Windows::Web::Http::Headers::HttpChallengeHeaderValueCollection WwwAuthenticate() const;
-    void Append(hstring_ref name, hstring_ref value) const;
-    bool TryAppendWithoutValidation(hstring_ref name, hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpTransferCodingHeaderValue
-{
-    Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue> Parameters() const;
-    hstring Value() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpTransferCodingHeaderValueCollection
-{
-    void ParseAdd(hstring_ref input) const;
-    bool TryParseAdd(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpTransferCodingHeaderValueFactory
-{
-    Windows::Web::Http::Headers::HttpTransferCodingHeaderValue Create(hstring_ref input) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHttpTransferCodingHeaderValueStatics
-{
-    Windows::Web::Http::Headers::HttpTransferCodingHeaderValue Parse(hstring_ref input) const;
-    bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpTransferCodingHeaderValue & transferCodingHeaderValue) const;
-};
-
 struct IHttpCacheDirectiveHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCacheDirectiveHeaderValueCollection>,
     impl::require<IHttpCacheDirectiveHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpNameValueHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpNameValueHeaderValue>>
 {
     IHttpCacheDirectiveHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCacheDirectiveHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpChallengeHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpChallengeHeaderValue>
 {
     IHttpChallengeHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpChallengeHeaderValue>(m_ptr); }
 };
 
 struct IHttpChallengeHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpChallengeHeaderValueCollection>,
     impl::require<IHttpChallengeHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpChallengeHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpChallengeHeaderValue>>
 {
     IHttpChallengeHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpChallengeHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpChallengeHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpChallengeHeaderValueFactory>
 {
     IHttpChallengeHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpChallengeHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpChallengeHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpChallengeHeaderValueStatics>
 {
     IHttpChallengeHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpChallengeHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpConnectionOptionHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpConnectionOptionHeaderValue>
 {
     IHttpConnectionOptionHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpConnectionOptionHeaderValue>(m_ptr); }
 };
 
 struct IHttpConnectionOptionHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpConnectionOptionHeaderValueCollection>,
     impl::require<IHttpConnectionOptionHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue>>
 {
     IHttpConnectionOptionHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpConnectionOptionHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpConnectionOptionHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpConnectionOptionHeaderValueFactory>
 {
     IHttpConnectionOptionHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpConnectionOptionHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpConnectionOptionHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpConnectionOptionHeaderValueStatics>
 {
     IHttpConnectionOptionHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpConnectionOptionHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpContentCodingHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingHeaderValue>
 {
     IHttpContentCodingHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingHeaderValue>(m_ptr); }
 };
 
 struct IHttpContentCodingHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingHeaderValueCollection>,
     impl::require<IHttpContentCodingHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpContentCodingHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpContentCodingHeaderValue>>
 {
     IHttpContentCodingHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpContentCodingHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingHeaderValueFactory>
 {
     IHttpContentCodingHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpContentCodingHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingHeaderValueStatics>
 {
     IHttpContentCodingHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpContentCodingWithQualityHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingWithQualityHeaderValue>
 {
     IHttpContentCodingWithQualityHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingWithQualityHeaderValue>(m_ptr); }
 };
 
 struct IHttpContentCodingWithQualityHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingWithQualityHeaderValueCollection>,
     impl::require<IHttpContentCodingWithQualityHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue>>
 {
     IHttpContentCodingWithQualityHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingWithQualityHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpContentCodingWithQualityHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingWithQualityHeaderValueFactory>
 {
     IHttpContentCodingWithQualityHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingWithQualityHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpContentCodingWithQualityHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentCodingWithQualityHeaderValueStatics>
 {
     IHttpContentCodingWithQualityHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentCodingWithQualityHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpContentDispositionHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentDispositionHeaderValue>
 {
     IHttpContentDispositionHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentDispositionHeaderValue>(m_ptr); }
 };
 
 struct IHttpContentDispositionHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentDispositionHeaderValueFactory>
 {
     IHttpContentDispositionHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentDispositionHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpContentDispositionHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentDispositionHeaderValueStatics>
 {
     IHttpContentDispositionHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentDispositionHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpContentHeaderCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentHeaderCollection>,
     impl::require<IHttpContentHeaderCollection, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>>, Windows::Foundation::Collections::IMap<hstring, hstring>>
 {
     IHttpContentHeaderCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentHeaderCollection>(m_ptr); }
 };
 
 struct IHttpContentRangeHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentRangeHeaderValue>
 {
     IHttpContentRangeHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentRangeHeaderValue>(m_ptr); }
 };
 
 struct IHttpContentRangeHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentRangeHeaderValueFactory>
 {
     IHttpContentRangeHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentRangeHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpContentRangeHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpContentRangeHeaderValueStatics>
 {
     IHttpContentRangeHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpContentRangeHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpCookiePairHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookiePairHeaderValue>
 {
     IHttpCookiePairHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookiePairHeaderValue>(m_ptr); }
 };
 
 struct IHttpCookiePairHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookiePairHeaderValueCollection>,
     impl::require<IHttpCookiePairHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpCookiePairHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpCookiePairHeaderValue>>
 {
     IHttpCookiePairHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookiePairHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpCookiePairHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookiePairHeaderValueFactory>
 {
     IHttpCookiePairHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookiePairHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpCookiePairHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCookiePairHeaderValueStatics>
 {
     IHttpCookiePairHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCookiePairHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpCredentialsHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCredentialsHeaderValue>
 {
     IHttpCredentialsHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCredentialsHeaderValue>(m_ptr); }
 };
 
 struct IHttpCredentialsHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCredentialsHeaderValueFactory>
 {
     IHttpCredentialsHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCredentialsHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpCredentialsHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpCredentialsHeaderValueStatics>
 {
     IHttpCredentialsHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpCredentialsHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpDateOrDeltaHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpDateOrDeltaHeaderValue>
 {
     IHttpDateOrDeltaHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpDateOrDeltaHeaderValue>(m_ptr); }
 };
 
 struct IHttpDateOrDeltaHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpDateOrDeltaHeaderValueStatics>
 {
     IHttpDateOrDeltaHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpDateOrDeltaHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpExpectationHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpExpectationHeaderValue>
 {
     IHttpExpectationHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpExpectationHeaderValue>(m_ptr); }
 };
 
 struct IHttpExpectationHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpExpectationHeaderValueCollection>,
     impl::require<IHttpExpectationHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpExpectationHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpExpectationHeaderValue>>
 {
     IHttpExpectationHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpExpectationHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpExpectationHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpExpectationHeaderValueFactory>
 {
     IHttpExpectationHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpExpectationHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpExpectationHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpExpectationHeaderValueStatics>
 {
     IHttpExpectationHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpExpectationHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpLanguageHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpLanguageHeaderValueCollection>,
     impl::require<IHttpLanguageHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Globalization::Language>, Windows::Foundation::Collections::IVector<Windows::Globalization::Language>>
 {
     IHttpLanguageHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpLanguageHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpLanguageRangeWithQualityHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpLanguageRangeWithQualityHeaderValue>
 {
     IHttpLanguageRangeWithQualityHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpLanguageRangeWithQualityHeaderValue>(m_ptr); }
 };
 
 struct IHttpLanguageRangeWithQualityHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpLanguageRangeWithQualityHeaderValueCollection>,
     impl::require<IHttpLanguageRangeWithQualityHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue>>
 {
     IHttpLanguageRangeWithQualityHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpLanguageRangeWithQualityHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpLanguageRangeWithQualityHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpLanguageRangeWithQualityHeaderValueFactory>
 {
     IHttpLanguageRangeWithQualityHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpLanguageRangeWithQualityHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpLanguageRangeWithQualityHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpLanguageRangeWithQualityHeaderValueStatics>
 {
     IHttpLanguageRangeWithQualityHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpLanguageRangeWithQualityHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpMediaTypeHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeHeaderValue>
 {
     IHttpMediaTypeHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeHeaderValue>(m_ptr); }
 };
 
 struct IHttpMediaTypeHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeHeaderValueFactory>
 {
     IHttpMediaTypeHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpMediaTypeHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeHeaderValueStatics>
 {
     IHttpMediaTypeHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpMediaTypeWithQualityHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeWithQualityHeaderValue>
 {
     IHttpMediaTypeWithQualityHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeWithQualityHeaderValue>(m_ptr); }
 };
 
 struct IHttpMediaTypeWithQualityHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeWithQualityHeaderValueCollection>,
     impl::require<IHttpMediaTypeWithQualityHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue>>
 {
     IHttpMediaTypeWithQualityHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeWithQualityHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpMediaTypeWithQualityHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeWithQualityHeaderValueFactory>
 {
     IHttpMediaTypeWithQualityHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeWithQualityHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpMediaTypeWithQualityHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMediaTypeWithQualityHeaderValueStatics>
 {
     IHttpMediaTypeWithQualityHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMediaTypeWithQualityHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpMethodHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpMethodHeaderValueCollection>,
     impl::require<IHttpMethodHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::HttpMethod>, Windows::Foundation::Collections::IVector<Windows::Web::Http::HttpMethod>>
 {
     IHttpMethodHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpMethodHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpNameValueHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpNameValueHeaderValue>
 {
     IHttpNameValueHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpNameValueHeaderValue>(m_ptr); }
 };
 
 struct IHttpNameValueHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpNameValueHeaderValueFactory>
 {
     IHttpNameValueHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpNameValueHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpNameValueHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpNameValueHeaderValueStatics>
 {
     IHttpNameValueHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpNameValueHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpProductHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductHeaderValue>
 {
     IHttpProductHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductHeaderValue>(m_ptr); }
 };
 
 struct IHttpProductHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductHeaderValueFactory>
 {
     IHttpProductHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpProductHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductHeaderValueStatics>
 {
     IHttpProductHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpProductInfoHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductInfoHeaderValue>
 {
     IHttpProductInfoHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductInfoHeaderValue>(m_ptr); }
 };
 
 struct IHttpProductInfoHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductInfoHeaderValueCollection>,
     impl::require<IHttpProductInfoHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpProductInfoHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpProductInfoHeaderValue>>
 {
     IHttpProductInfoHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductInfoHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpProductInfoHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductInfoHeaderValueFactory>
 {
     IHttpProductInfoHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductInfoHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpProductInfoHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpProductInfoHeaderValueStatics>
 {
     IHttpProductInfoHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpProductInfoHeaderValueStatics>(m_ptr); }
 };
 
 struct IHttpRequestHeaderCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpRequestHeaderCollection>,
     impl::require<IHttpRequestHeaderCollection, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>>, Windows::Foundation::Collections::IMap<hstring, hstring>>
 {
     IHttpRequestHeaderCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpRequestHeaderCollection>(m_ptr); }
 };
 
 struct IHttpResponseHeaderCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpResponseHeaderCollection>,
     impl::require<IHttpResponseHeaderCollection, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>>, Windows::Foundation::Collections::IMap<hstring, hstring>>
 {
     IHttpResponseHeaderCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpResponseHeaderCollection>(m_ptr); }
 };
 
 struct IHttpTransferCodingHeaderValue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpTransferCodingHeaderValue>
 {
     IHttpTransferCodingHeaderValue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpTransferCodingHeaderValue>(m_ptr); }
 };
 
 struct IHttpTransferCodingHeaderValueCollection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpTransferCodingHeaderValueCollection>,
     impl::require<IHttpTransferCodingHeaderValueCollection, Windows::Foundation::Collections::IIterable<Windows::Web::Http::Headers::HttpTransferCodingHeaderValue>, Windows::Foundation::Collections::IVector<Windows::Web::Http::Headers::HttpTransferCodingHeaderValue>>
 {
     IHttpTransferCodingHeaderValueCollection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpTransferCodingHeaderValueCollection>(m_ptr); }
 };
 
 struct IHttpTransferCodingHeaderValueFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpTransferCodingHeaderValueFactory>
 {
     IHttpTransferCodingHeaderValueFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpTransferCodingHeaderValueFactory>(m_ptr); }
 };
 
 struct IHttpTransferCodingHeaderValueStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHttpTransferCodingHeaderValueStatics>
 {
     IHttpTransferCodingHeaderValueStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHttpTransferCodingHeaderValueStatics>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -61,6 +61,20 @@ struct HolographicFramePrediction;
 struct HolographicSpace;
 struct HolographicSpaceCameraAddedEventArgs;
 struct HolographicSpaceCameraRemovedEventArgs;
+
+}
+
+namespace Windows::Graphics::Holographic {
+
+template <typename T> struct impl_IHolographicCamera;
+template <typename T> struct impl_IHolographicCameraPose;
+template <typename T> struct impl_IHolographicCameraRenderingParameters;
+template <typename T> struct impl_IHolographicFrame;
+template <typename T> struct impl_IHolographicFramePrediction;
+template <typename T> struct impl_IHolographicSpace;
+template <typename T> struct impl_IHolographicSpaceCameraAddedEventArgs;
+template <typename T> struct impl_IHolographicSpaceCameraRemovedEventArgs;
+template <typename T> struct impl_IHolographicSpaceStatics;
 
 }
 

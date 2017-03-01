@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -27,6 +27,16 @@ struct IHostNameFactory;
 struct IHostNameStatics;
 struct EndpointPair;
 struct HostName;
+
+}
+
+namespace Windows::Networking {
+
+template <typename T> struct impl_IEndpointPair;
+template <typename T> struct impl_IEndpointPairFactory;
+template <typename T> struct impl_IHostName;
+template <typename T> struct impl_IHostNameFactory;
+template <typename T> struct impl_IHostNameStatics;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -26,8 +26,8 @@ struct WINRT_EBO OnlineIdServiceTicketRequest :
     Windows::Security::Authentication::OnlineId::IOnlineIdServiceTicketRequest
 {
     OnlineIdServiceTicketRequest(std::nullptr_t) noexcept {}
-    OnlineIdServiceTicketRequest(hstring_ref service, hstring_ref policy);
-    OnlineIdServiceTicketRequest(hstring_ref service);
+    OnlineIdServiceTicketRequest(hstring_view service, hstring_view policy);
+    OnlineIdServiceTicketRequest(hstring_view service);
 };
 
 struct WINRT_EBO SignOutUserOperation :

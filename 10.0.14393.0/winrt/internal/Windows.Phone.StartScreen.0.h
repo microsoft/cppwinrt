@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -21,6 +21,14 @@ struct IDualSimTile;
 struct IDualSimTileStatics;
 struct IToastNotificationManagerStatics3;
 struct DualSimTile;
+
+}
+
+namespace Windows::Phone::StartScreen {
+
+template <typename T> struct impl_IDualSimTile;
+template <typename T> struct impl_IDualSimTileStatics;
+template <typename T> struct impl_IToastNotificationManagerStatics3;
 
 }
 

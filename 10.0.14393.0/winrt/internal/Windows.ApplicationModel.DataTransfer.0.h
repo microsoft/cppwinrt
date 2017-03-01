@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -99,6 +99,40 @@ struct OperationCompletedEventArgs;
 struct SharedStorageAccessManager;
 struct StandardDataFormats;
 struct TargetApplicationChosenEventArgs;
+
+}
+
+namespace Windows::ApplicationModel::DataTransfer {
+
+template <typename T> struct impl_IClipboardStatics;
+template <typename T> struct impl_IDataPackage;
+template <typename T> struct impl_IDataPackage2;
+template <typename T> struct impl_IDataPackagePropertySet;
+template <typename T> struct impl_IDataPackagePropertySet2;
+template <typename T> struct impl_IDataPackagePropertySet3;
+template <typename T> struct impl_IDataPackagePropertySetView;
+template <typename T> struct impl_IDataPackagePropertySetView2;
+template <typename T> struct impl_IDataPackagePropertySetView3;
+template <typename T> struct impl_IDataPackageView;
+template <typename T> struct impl_IDataPackageView2;
+template <typename T> struct impl_IDataPackageView3;
+template <typename T> struct impl_IDataPackageView4;
+template <typename T> struct impl_IDataProviderDeferral;
+template <typename T> struct impl_IDataProviderRequest;
+template <typename T> struct impl_IDataRequest;
+template <typename T> struct impl_IDataRequestDeferral;
+template <typename T> struct impl_IDataRequestedEventArgs;
+template <typename T> struct impl_IDataTransferManager;
+template <typename T> struct impl_IDataTransferManagerStatics;
+template <typename T> struct impl_IDataTransferManagerStatics2;
+template <typename T> struct impl_IHtmlFormatHelperStatics;
+template <typename T> struct impl_IOperationCompletedEventArgs;
+template <typename T> struct impl_IOperationCompletedEventArgs2;
+template <typename T> struct impl_ISharedStorageAccessManagerStatics;
+template <typename T> struct impl_IStandardDataFormatsStatics;
+template <typename T> struct impl_IStandardDataFormatsStatics2;
+template <typename T> struct impl_ITargetApplicationChosenEventArgs;
+template <typename T> struct impl_DataProviderHandler;
 
 }
 

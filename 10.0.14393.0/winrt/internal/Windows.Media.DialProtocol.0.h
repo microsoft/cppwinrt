@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -45,6 +45,20 @@ struct DialDevicePicker;
 struct DialDevicePickerFilter;
 struct DialDeviceSelectedEventArgs;
 struct DialDisconnectButtonClickedEventArgs;
+
+}
+
+namespace Windows::Media::DialProtocol {
+
+template <typename T> struct impl_IDialApp;
+template <typename T> struct impl_IDialAppStateDetails;
+template <typename T> struct impl_IDialDevice;
+template <typename T> struct impl_IDialDevice2;
+template <typename T> struct impl_IDialDevicePicker;
+template <typename T> struct impl_IDialDevicePickerFilter;
+template <typename T> struct impl_IDialDeviceSelectedEventArgs;
+template <typename T> struct impl_IDialDeviceStatics;
+template <typename T> struct impl_IDialDisconnectButtonClickedEventArgs;
 
 }
 

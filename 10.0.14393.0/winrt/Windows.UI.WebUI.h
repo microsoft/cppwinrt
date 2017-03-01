@@ -1,8 +1,12 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
+#include "base.h"
+WINRT_WARNING_PUSH
+
+#include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.ApplicationModel.Activation.3.h"
 #include "internal/Windows.ApplicationModel.3.h"
 #include "internal/Windows.UI.WebUI.3.h"
@@ -29,9 +33,9 @@ template <typename O, typename M> ActivatedEventHandler::ActivatedEventHandler(O
     ActivatedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void ActivatedEventHandler::operator()(const Windows::IInspectable & sender, const Windows::ApplicationModel::Activation::IActivatedEventArgs & eventArgs) const
+inline void ActivatedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::ApplicationModel::Activation::IActivatedEventArgs & eventArgs) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(eventArgs)));
+    check_hresult((*(abi<ActivatedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(eventArgs)));
 }
 
 template <typename L> EnteredBackgroundEventHandler::EnteredBackgroundEventHandler(L lambda) :
@@ -46,9 +50,9 @@ template <typename O, typename M> EnteredBackgroundEventHandler::EnteredBackgrou
     EnteredBackgroundEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void EnteredBackgroundEventHandler::operator()(const Windows::IInspectable & sender, const Windows::ApplicationModel::IEnteredBackgroundEventArgs & e) const
+inline void EnteredBackgroundEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::ApplicationModel::IEnteredBackgroundEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<EnteredBackgroundEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 template <typename L> LeavingBackgroundEventHandler::LeavingBackgroundEventHandler(L lambda) :
@@ -63,9 +67,9 @@ template <typename O, typename M> LeavingBackgroundEventHandler::LeavingBackgrou
     LeavingBackgroundEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void LeavingBackgroundEventHandler::operator()(const Windows::IInspectable & sender, const Windows::ApplicationModel::ILeavingBackgroundEventArgs & e) const
+inline void LeavingBackgroundEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::ApplicationModel::ILeavingBackgroundEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<LeavingBackgroundEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 template <typename L> NavigatedEventHandler::NavigatedEventHandler(L lambda) :
@@ -80,9 +84,9 @@ template <typename O, typename M> NavigatedEventHandler::NavigatedEventHandler(O
     NavigatedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void NavigatedEventHandler::operator()(const Windows::IInspectable & sender, const Windows::UI::WebUI::IWebUINavigatedEventArgs & e) const
+inline void NavigatedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::WebUI::IWebUINavigatedEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<NavigatedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 template <typename L> ResumingEventHandler::ResumingEventHandler(L lambda) :
@@ -97,9 +101,9 @@ template <typename O, typename M> ResumingEventHandler::ResumingEventHandler(O *
     ResumingEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void ResumingEventHandler::operator()(const Windows::IInspectable & sender) const
+inline void ResumingEventHandler::operator()(const Windows::Foundation::IInspectable & sender) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender)));
+    check_hresult((*(abi<ResumingEventHandler> **)this)->abi_Invoke(get_abi(sender)));
 }
 
 template <typename L> SuspendingEventHandler::SuspendingEventHandler(L lambda) :
@@ -114,9 +118,9 @@ template <typename O, typename M> SuspendingEventHandler::SuspendingEventHandler
     SuspendingEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void SuspendingEventHandler::operator()(const Windows::IInspectable & sender, const Windows::ApplicationModel::ISuspendingEventArgs & e) const
+inline void SuspendingEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::ApplicationModel::ISuspendingEventArgs & e) const
 {
-    check_hresult((*this)->abi_Invoke(get(sender), get(e)));
+    check_hresult((*(abi<SuspendingEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
 }
 
 }
@@ -130,6 +134,7 @@ struct produce<D, Windows::UI::WebUI::IActivatedDeferral> : produce_base<D, Wind
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -143,11 +148,12 @@ struct produce<D, Windows::UI::WebUI::IActivatedDeferral> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IActivatedEventArgsDeferral> : produce_base<D, Windows::UI::WebUI::IActivatedEventArgsDeferral>
 {
-    HRESULT __stdcall get_ActivatedOperation(abi_arg_out<Windows::UI::WebUI::IActivatedOperation> value) noexcept override
+    HRESULT __stdcall get_ActivatedOperation(impl::abi_arg_out<Windows::UI::WebUI::IActivatedOperation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ActivatedOperation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ActivatedOperation());
             return S_OK;
         }
         catch (...)
@@ -161,11 +167,12 @@ struct produce<D, Windows::UI::WebUI::IActivatedEventArgsDeferral> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IActivatedOperation> : produce_base<D, Windows::UI::WebUI::IActivatedOperation>
 {
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::UI::WebUI::IActivatedDeferral> deferral) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::UI::WebUI::IActivatedDeferral> deferral) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -183,7 +190,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().Content());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Content());
             return S_OK;
         }
         catch (...)
@@ -196,6 +204,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Content(value);
             return S_OK;
         }
@@ -209,7 +218,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().LeftMargin());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LeftMargin());
             return S_OK;
         }
         catch (...)
@@ -222,6 +232,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LeftMargin(value);
             return S_OK;
         }
@@ -235,7 +246,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().TopMargin());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TopMargin());
             return S_OK;
         }
         catch (...)
@@ -248,6 +260,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TopMargin(value);
             return S_OK;
         }
@@ -261,7 +274,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().RightMargin());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RightMargin());
             return S_OK;
         }
         catch (...)
@@ -274,6 +288,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RightMargin(value);
             return S_OK;
         }
@@ -287,7 +302,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().BottomMargin());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BottomMargin());
             return S_OK;
         }
         catch (...)
@@ -300,6 +316,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BottomMargin(value);
             return S_OK;
         }
@@ -313,7 +330,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().EnableHeaderFooter());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EnableHeaderFooter());
             return S_OK;
         }
         catch (...)
@@ -326,6 +344,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnableHeaderFooter(value);
             return S_OK;
         }
@@ -339,7 +358,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *value = detach(this->shim().ShrinkToFit());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ShrinkToFit());
             return S_OK;
         }
         catch (...)
@@ -352,6 +372,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ShrinkToFit(value);
             return S_OK;
         }
@@ -365,7 +386,8 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
-            *pScalePercent = detach(this->shim().PercentScale());
+            typename D::abi_guard guard(this->shim());
+            *pScalePercent = detach_abi(this->shim().PercentScale());
             return S_OK;
         }
         catch (...)
@@ -378,6 +400,7 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PercentScale(scalePercent);
             return S_OK;
         }
@@ -387,11 +410,12 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_PageRange(abi_arg_out<hstring> pstrPageRange) noexcept override
+    HRESULT __stdcall get_PageRange(impl::abi_arg_out<hstring> pstrPageRange) noexcept override
     {
         try
         {
-            *pstrPageRange = detach(this->shim().PageRange());
+            typename D::abi_guard guard(this->shim());
+            *pstrPageRange = detach_abi(this->shim().PageRange());
             return S_OK;
         }
         catch (...)
@@ -401,11 +425,12 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_TrySetPageRange(abi_arg_in<hstring> strPageRange, bool * pfSuccess) noexcept override
+    HRESULT __stdcall abi_TrySetPageRange(impl::abi_arg_in<hstring> strPageRange, bool * pfSuccess) noexcept override
     {
         try
         {
-            *pfSuccess = detach(this->shim().TrySetPageRange(*reinterpret_cast<const hstring *>(&strPageRange)));
+            typename D::abi_guard guard(this->shim());
+            *pfSuccess = detach_abi(this->shim().TrySetPageRange(*reinterpret_cast<const hstring *>(&strPageRange)));
             return S_OK;
         }
         catch (...)
@@ -418,11 +443,12 @@ struct produce<D, Windows::UI::WebUI::IHtmlPrintDocumentSource> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D, Windows::UI::WebUI::IWebUIActivationStatics>
 {
-    HRESULT __stdcall add_Activated(abi_arg_in<Windows::UI::WebUI::ActivatedEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Activated(impl::abi_arg_in<Windows::UI::WebUI::ActivatedEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Activated(*reinterpret_cast<const Windows::UI::WebUI::ActivatedEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Activated(*reinterpret_cast<const Windows::UI::WebUI::ActivatedEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -435,6 +461,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Activated(token);
             return S_OK;
         }
@@ -444,11 +471,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_Suspending(abi_arg_in<Windows::UI::WebUI::SuspendingEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Suspending(impl::abi_arg_in<Windows::UI::WebUI::SuspendingEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Suspending(*reinterpret_cast<const Windows::UI::WebUI::SuspendingEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Suspending(*reinterpret_cast<const Windows::UI::WebUI::SuspendingEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -461,6 +489,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Suspending(token);
             return S_OK;
         }
@@ -470,11 +499,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_Resuming(abi_arg_in<Windows::UI::WebUI::ResumingEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Resuming(impl::abi_arg_in<Windows::UI::WebUI::ResumingEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Resuming(*reinterpret_cast<const Windows::UI::WebUI::ResumingEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Resuming(*reinterpret_cast<const Windows::UI::WebUI::ResumingEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -487,6 +517,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Resuming(token);
             return S_OK;
         }
@@ -496,11 +527,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_Navigated(abi_arg_in<Windows::UI::WebUI::NavigatedEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Navigated(impl::abi_arg_in<Windows::UI::WebUI::NavigatedEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().Navigated(*reinterpret_cast<const Windows::UI::WebUI::NavigatedEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().Navigated(*reinterpret_cast<const Windows::UI::WebUI::NavigatedEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -513,6 +545,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Navigated(token);
             return S_OK;
         }
@@ -526,11 +559,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics2> : produce_base<D, Windows::UI::WebUI::IWebUIActivationStatics2>
 {
-    HRESULT __stdcall add_LeavingBackground(abi_arg_in<Windows::UI::WebUI::LeavingBackgroundEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LeavingBackground(impl::abi_arg_in<Windows::UI::WebUI::LeavingBackgroundEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().LeavingBackground(*reinterpret_cast<const Windows::UI::WebUI::LeavingBackgroundEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().LeavingBackground(*reinterpret_cast<const Windows::UI::WebUI::LeavingBackgroundEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -543,6 +577,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics2> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LeavingBackground(token);
             return S_OK;
         }
@@ -552,11 +587,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics2> : produce_base<D
         }
     }
 
-    HRESULT __stdcall add_EnteredBackground(abi_arg_in<Windows::UI::WebUI::EnteredBackgroundEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_EnteredBackground(impl::abi_arg_in<Windows::UI::WebUI::EnteredBackgroundEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().EnteredBackground(*reinterpret_cast<const Windows::UI::WebUI::EnteredBackgroundEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().EnteredBackground(*reinterpret_cast<const Windows::UI::WebUI::EnteredBackgroundEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -569,6 +605,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics2> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnteredBackground(token);
             return S_OK;
         }
@@ -582,6 +619,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIActivationStatics2> : produce_base<D
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EnablePrelaunch(value);
             return S_OK;
         }
@@ -599,7 +637,8 @@ struct produce<D, Windows::UI::WebUI::IWebUIBackgroundTaskInstance> : produce_ba
     {
         try
         {
-            *succeeded = detach(this->shim().Succeeded());
+            typename D::abi_guard guard(this->shim());
+            *succeeded = detach_abi(this->shim().Succeeded());
             return S_OK;
         }
         catch (...)
@@ -612,6 +651,7 @@ struct produce<D, Windows::UI::WebUI::IWebUIBackgroundTaskInstance> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Succeeded(succeeded);
             return S_OK;
         }
@@ -625,11 +665,12 @@ struct produce<D, Windows::UI::WebUI::IWebUIBackgroundTaskInstance> : produce_ba
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IWebUIBackgroundTaskInstanceStatics> : produce_base<D, Windows::UI::WebUI::IWebUIBackgroundTaskInstanceStatics>
 {
-    HRESULT __stdcall get_Current(abi_arg_out<Windows::UI::WebUI::IWebUIBackgroundTaskInstance> backgroundTaskInstance) noexcept override
+    HRESULT __stdcall get_Current(impl::abi_arg_out<Windows::UI::WebUI::IWebUIBackgroundTaskInstance> backgroundTaskInstance) noexcept override
     {
         try
         {
-            *backgroundTaskInstance = detach(this->shim().Current());
+            typename D::abi_guard guard(this->shim());
+            *backgroundTaskInstance = detach_abi(this->shim().Current());
             return S_OK;
         }
         catch (...)
@@ -647,6 +688,7 @@ struct produce<D, Windows::UI::WebUI::IWebUINavigatedDeferral> : produce_base<D,
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -660,11 +702,12 @@ struct produce<D, Windows::UI::WebUI::IWebUINavigatedDeferral> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IWebUINavigatedEventArgs> : produce_base<D, Windows::UI::WebUI::IWebUINavigatedEventArgs>
 {
-    HRESULT __stdcall get_NavigatedOperation(abi_arg_out<Windows::UI::WebUI::IWebUINavigatedOperation> value) noexcept override
+    HRESULT __stdcall get_NavigatedOperation(impl::abi_arg_out<Windows::UI::WebUI::IWebUINavigatedOperation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().NavigatedOperation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NavigatedOperation());
             return S_OK;
         }
         catch (...)
@@ -678,11 +721,12 @@ struct produce<D, Windows::UI::WebUI::IWebUINavigatedEventArgs> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::WebUI::IWebUINavigatedOperation> : produce_base<D, Windows::UI::WebUI::IWebUINavigatedOperation>
 {
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::UI::WebUI::IWebUINavigatedDeferral> deferral) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::UI::WebUI::IWebUINavigatedDeferral> deferral) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -699,65 +743,65 @@ namespace Windows::UI::WebUI {
 
 template <typename D> void impl_IActivatedDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const IActivatedDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(IActivatedDeferral)->abi_Complete());
 }
 
 template <typename D> Windows::UI::WebUI::ActivatedDeferral impl_IActivatedOperation<D>::GetDeferral() const
 {
     Windows::UI::WebUI::ActivatedDeferral deferral { nullptr };
-    check_hresult(static_cast<const IActivatedOperation &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(IActivatedOperation)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> Windows::UI::WebUI::ActivatedOperation impl_IActivatedEventArgsDeferral<D>::ActivatedOperation() const
 {
     Windows::UI::WebUI::ActivatedOperation value { nullptr };
-    check_hresult(static_cast<const IActivatedEventArgsDeferral &>(static_cast<const D &>(*this))->get_ActivatedOperation(put(value)));
+    check_hresult(WINRT_SHIM(IActivatedEventArgsDeferral)->get_ActivatedOperation(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::UI::WebUI::WebUINavigatedOperation impl_IWebUINavigatedEventArgs<D>::NavigatedOperation() const
 {
     Windows::UI::WebUI::WebUINavigatedOperation value { nullptr };
-    check_hresult(static_cast<const IWebUINavigatedEventArgs &>(static_cast<const D &>(*this))->get_NavigatedOperation(put(value)));
+    check_hresult(WINRT_SHIM(IWebUINavigatedEventArgs)->get_NavigatedOperation(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IWebUIBackgroundTaskInstance<D>::Succeeded() const
 {
     bool succeeded {};
-    check_hresult(static_cast<const IWebUIBackgroundTaskInstance &>(static_cast<const D &>(*this))->get_Succeeded(&succeeded));
+    check_hresult(WINRT_SHIM(IWebUIBackgroundTaskInstance)->get_Succeeded(&succeeded));
     return succeeded;
 }
 
 template <typename D> void impl_IWebUIBackgroundTaskInstance<D>::Succeeded(bool succeeded) const
 {
-    check_hresult(static_cast<const IWebUIBackgroundTaskInstance &>(static_cast<const D &>(*this))->put_Succeeded(succeeded));
+    check_hresult(WINRT_SHIM(IWebUIBackgroundTaskInstance)->put_Succeeded(succeeded));
 }
 
 template <typename D> Windows::UI::WebUI::IWebUIBackgroundTaskInstance impl_IWebUIBackgroundTaskInstanceStatics<D>::Current() const
 {
     Windows::UI::WebUI::IWebUIBackgroundTaskInstance backgroundTaskInstance;
-    check_hresult(static_cast<const IWebUIBackgroundTaskInstanceStatics &>(static_cast<const D &>(*this))->get_Current(put(backgroundTaskInstance)));
+    check_hresult(WINRT_SHIM(IWebUIBackgroundTaskInstanceStatics)->get_Current(put_abi(backgroundTaskInstance)));
     return backgroundTaskInstance;
 }
 
 template <typename D> void impl_IWebUINavigatedDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const IWebUINavigatedDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(IWebUINavigatedDeferral)->abi_Complete());
 }
 
 template <typename D> Windows::UI::WebUI::WebUINavigatedDeferral impl_IWebUINavigatedOperation<D>::GetDeferral() const
 {
     Windows::UI::WebUI::WebUINavigatedDeferral deferral { nullptr };
-    check_hresult(static_cast<const IWebUINavigatedOperation &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(IWebUINavigatedOperation)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics<D>::Activated(const Windows::UI::WebUI::ActivatedEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->add_Activated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->add_Activated(get_abi(handler), &token));
     return token;
 }
 
@@ -768,13 +812,13 @@ template <typename D> event_revoker<IWebUIActivationStatics> impl_IWebUIActivati
 
 template <typename D> void impl_IWebUIActivationStatics<D>::Activated(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->remove_Activated(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->remove_Activated(token));
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics<D>::Suspending(const Windows::UI::WebUI::SuspendingEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->add_Suspending(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->add_Suspending(get_abi(handler), &token));
     return token;
 }
 
@@ -785,13 +829,13 @@ template <typename D> event_revoker<IWebUIActivationStatics> impl_IWebUIActivati
 
 template <typename D> void impl_IWebUIActivationStatics<D>::Suspending(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->remove_Suspending(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->remove_Suspending(token));
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics<D>::Resuming(const Windows::UI::WebUI::ResumingEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->add_Resuming(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->add_Resuming(get_abi(handler), &token));
     return token;
 }
 
@@ -802,13 +846,13 @@ template <typename D> event_revoker<IWebUIActivationStatics> impl_IWebUIActivati
 
 template <typename D> void impl_IWebUIActivationStatics<D>::Resuming(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->remove_Resuming(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->remove_Resuming(token));
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics<D>::Navigated(const Windows::UI::WebUI::NavigatedEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->add_Navigated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->add_Navigated(get_abi(handler), &token));
     return token;
 }
 
@@ -819,13 +863,13 @@ template <typename D> event_revoker<IWebUIActivationStatics> impl_IWebUIActivati
 
 template <typename D> void impl_IWebUIActivationStatics<D>::Navigated(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics &>(static_cast<const D &>(*this))->remove_Navigated(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics)->remove_Navigated(token));
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics2<D>::LeavingBackground(const Windows::UI::WebUI::LeavingBackgroundEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics2 &>(static_cast<const D &>(*this))->add_LeavingBackground(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics2)->add_LeavingBackground(get_abi(handler), &token));
     return token;
 }
 
@@ -836,13 +880,13 @@ template <typename D> event_revoker<IWebUIActivationStatics2> impl_IWebUIActivat
 
 template <typename D> void impl_IWebUIActivationStatics2<D>::LeavingBackground(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics2 &>(static_cast<const D &>(*this))->remove_LeavingBackground(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics2)->remove_LeavingBackground(token));
 }
 
 template <typename D> event_token impl_IWebUIActivationStatics2<D>::EnteredBackground(const Windows::UI::WebUI::EnteredBackgroundEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IWebUIActivationStatics2 &>(static_cast<const D &>(*this))->add_EnteredBackground(get(handler), &token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics2)->add_EnteredBackground(get_abi(handler), &token));
     return token;
 }
 
@@ -853,121 +897,121 @@ template <typename D> event_revoker<IWebUIActivationStatics2> impl_IWebUIActivat
 
 template <typename D> void impl_IWebUIActivationStatics2<D>::EnteredBackground(event_token token) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics2 &>(static_cast<const D &>(*this))->remove_EnteredBackground(token));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics2)->remove_EnteredBackground(token));
 }
 
 template <typename D> void impl_IWebUIActivationStatics2<D>::EnablePrelaunch(bool value) const
 {
-    check_hresult(static_cast<const IWebUIActivationStatics2 &>(static_cast<const D &>(*this))->abi_EnablePrelaunch(value));
+    check_hresult(WINRT_SHIM(IWebUIActivationStatics2)->abi_EnablePrelaunch(value));
 }
 
 template <typename D> Windows::UI::WebUI::PrintContent impl_IHtmlPrintDocumentSource<D>::Content() const
 {
     Windows::UI::WebUI::PrintContent value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_Content(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_Content(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::Content(Windows::UI::WebUI::PrintContent value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_Content(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_Content(value));
 }
 
 template <typename D> float impl_IHtmlPrintDocumentSource<D>::LeftMargin() const
 {
     float value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_LeftMargin(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_LeftMargin(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::LeftMargin(float value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_LeftMargin(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_LeftMargin(value));
 }
 
 template <typename D> float impl_IHtmlPrintDocumentSource<D>::TopMargin() const
 {
     float value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_TopMargin(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_TopMargin(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::TopMargin(float value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_TopMargin(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_TopMargin(value));
 }
 
 template <typename D> float impl_IHtmlPrintDocumentSource<D>::RightMargin() const
 {
     float value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_RightMargin(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_RightMargin(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::RightMargin(float value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_RightMargin(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_RightMargin(value));
 }
 
 template <typename D> float impl_IHtmlPrintDocumentSource<D>::BottomMargin() const
 {
     float value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_BottomMargin(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_BottomMargin(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::BottomMargin(float value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_BottomMargin(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_BottomMargin(value));
 }
 
 template <typename D> bool impl_IHtmlPrintDocumentSource<D>::EnableHeaderFooter() const
 {
     bool value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_EnableHeaderFooter(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_EnableHeaderFooter(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::EnableHeaderFooter(bool value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_EnableHeaderFooter(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_EnableHeaderFooter(value));
 }
 
 template <typename D> bool impl_IHtmlPrintDocumentSource<D>::ShrinkToFit() const
 {
     bool value {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_ShrinkToFit(&value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_ShrinkToFit(&value));
     return value;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::ShrinkToFit(bool value) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_ShrinkToFit(value));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_ShrinkToFit(value));
 }
 
 template <typename D> float impl_IHtmlPrintDocumentSource<D>::PercentScale() const
 {
     float pScalePercent {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_PercentScale(&pScalePercent));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_PercentScale(&pScalePercent));
     return pScalePercent;
 }
 
 template <typename D> void impl_IHtmlPrintDocumentSource<D>::PercentScale(float scalePercent) const
 {
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->put_PercentScale(scalePercent));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->put_PercentScale(scalePercent));
 }
 
 template <typename D> hstring impl_IHtmlPrintDocumentSource<D>::PageRange() const
 {
     hstring pstrPageRange;
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->get_PageRange(put(pstrPageRange)));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->get_PageRange(put_abi(pstrPageRange)));
     return pstrPageRange;
 }
 
-template <typename D> bool impl_IHtmlPrintDocumentSource<D>::TrySetPageRange(hstring_ref strPageRange) const
+template <typename D> bool impl_IHtmlPrintDocumentSource<D>::TrySetPageRange(hstring_view strPageRange) const
 {
     bool pfSuccess {};
-    check_hresult(static_cast<const IHtmlPrintDocumentSource &>(static_cast<const D &>(*this))->abi_TrySetPageRange(get(strPageRange), &pfSuccess));
+    check_hresult(WINRT_SHIM(IHtmlPrintDocumentSource)->abi_TrySetPageRange(get_abi(strPageRange), &pfSuccess));
     return pfSuccess;
 }
 
@@ -1080,3 +1124,554 @@ inline Windows::UI::WebUI::IWebUIBackgroundTaskInstance WebUIBackgroundTaskInsta
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IActivatedDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IActivatedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IActivatedEventArgsDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IActivatedEventArgsDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IActivatedOperation>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IActivatedOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IHtmlPrintDocumentSource>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IHtmlPrintDocumentSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUIActivationStatics>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUIActivationStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUIActivationStatics2>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUIActivationStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUIBackgroundTaskInstance>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUIBackgroundTaskInstance & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUIBackgroundTaskInstanceStatics>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUIBackgroundTaskInstanceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUINavigatedDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUINavigatedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUINavigatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUINavigatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::IWebUINavigatedOperation>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::IWebUINavigatedOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::ActivatedDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::ActivatedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::ActivatedOperation>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::ActivatedOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::EnteredBackgroundEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::EnteredBackgroundEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::HtmlPrintDocumentSource>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::HtmlPrintDocumentSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::LeavingBackgroundEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::LeavingBackgroundEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::SuspendingDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::SuspendingDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::SuspendingEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::SuspendingEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::SuspendingOperation>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::SuspendingOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIAppointmentsProviderAddAppointmentActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIAppointmentsProviderAddAppointmentActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIBackgroundTaskInstanceRuntimeClass>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIBackgroundTaskInstanceRuntimeClass & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUICachedFileUpdaterActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUICachedFileUpdaterActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUICameraSettingsActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUICameraSettingsActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactCallActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactCallActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactMapActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactMapActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactMessageActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactMessageActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactPickerActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactPickerActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactPostActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactPostActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIContactVideoCallActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIContactVideoCallActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIDeviceActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIDeviceActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIDevicePairingActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIDevicePairingActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIDialReceiverActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIDialReceiverActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFileActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFileActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFileOpenPickerActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFileOpenPickerActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFileOpenPickerContinuationEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFileOpenPickerContinuationEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFileSavePickerActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFileSavePickerActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFileSavePickerContinuationEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFileSavePickerContinuationEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIFolderPickerContinuationEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIFolderPickerContinuationEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUILaunchActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUILaunchActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUILockScreenActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUILockScreenActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUILockScreenCallActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUILockScreenCallActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUINavigatedDeferral>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUINavigatedDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUINavigatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUINavigatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUINavigatedOperation>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUINavigatedOperation & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIPrint3DWorkflowActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIPrint3DWorkflowActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIPrintTaskSettingsActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIPrintTaskSettingsActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIProtocolActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIProtocolActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIProtocolForResultsActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIProtocolForResultsActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIRestrictedLaunchActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIRestrictedLaunchActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUISearchActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUISearchActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIShareTargetActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIShareTargetActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIToastNotificationActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIToastNotificationActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIUserDataAccountProviderActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIUserDataAccountProviderActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIVoiceCommandActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIVoiceCommandActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIWalletActionActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIWalletActionActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIWebAccountProviderActivatedEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIWebAccountProviderActivatedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::UI::WebUI::WebUIWebAuthenticationBrokerContinuationEventArgs>
+{
+    size_t operator()(const winrt::Windows::UI::WebUI::WebUIWebAuthenticationBrokerContinuationEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

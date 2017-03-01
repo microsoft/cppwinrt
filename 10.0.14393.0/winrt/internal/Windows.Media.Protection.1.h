@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -20,27 +20,27 @@ struct __declspec(uuid("95da643c-6db9-424b-86ca-091af432081c")) __declspec(novta
     virtual HRESULT __stdcall abi_Invoke(Windows::Media::Protection::IMediaProtectionManager * sender, Windows::Media::Protection::IComponentLoadFailedEventArgs * e) = 0;
 };
 
-struct __declspec(uuid("95972e93-7746-417e-8495-f031bbc5862c")) __declspec(novtable) IComponentLoadFailedEventArgs : Windows::IInspectable
+struct __declspec(uuid("95972e93-7746-417e-8495-f031bbc5862c")) __declspec(novtable) IComponentLoadFailedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Information(Windows::Media::Protection::IRevocationAndRenewalInformation ** value) = 0;
     virtual HRESULT __stdcall get_Completion(Windows::Media::Protection::IMediaProtectionServiceCompletion ** value) = 0;
 };
 
-struct __declspec(uuid("6ffbcd67-b795-48c5-8b7b-a7c4efe202e3")) __declspec(novtable) IComponentRenewalStatics : Windows::IInspectable
+struct __declspec(uuid("6ffbcd67-b795-48c5-8b7b-a7c4efe202e3")) __declspec(novtable) IComponentRenewalStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RenewSystemComponentsAsync(Windows::Media::Protection::IRevocationAndRenewalInformation * information, Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> ** operation) = 0;
 };
 
-struct __declspec(uuid("718845e9-64d7-426d-809b-1be461941a2a")) __declspec(novtable) IHdcpSession : Windows::IInspectable
+struct __declspec(uuid("718845e9-64d7-426d-809b-1be461941a2a")) __declspec(novtable) IHdcpSession : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsEffectiveProtectionAtLeast(winrt::Windows::Media::Protection::HdcpProtection protection, bool * value) = 0;
     virtual HRESULT __stdcall abi_GetEffectiveProtection(Windows::Foundation::IReference<winrt::Windows::Media::Protection::HdcpProtection> ** value) = 0;
     virtual HRESULT __stdcall abi_SetDesiredMinProtectionAsync(winrt::Windows::Media::Protection::HdcpProtection protection, Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Protection::HdcpSetProtectionResult> ** value) = 0;
-    virtual HRESULT __stdcall add_ProtectionChanged(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_ProtectionChanged(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ProtectionChanged(event_token token) = 0;
 };
 
-struct __declspec(uuid("45694947-c741-434b-a79e-474c12d93d2f")) __declspec(novtable) IMediaProtectionManager : Windows::IInspectable
+struct __declspec(uuid("45694947-c741-434b-a79e-474c12d93d2f")) __declspec(novtable) IMediaProtectionManager : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_ServiceRequested(Windows::Media::Protection::ServiceRequestedEventHandler * handler, event_token * cookie) = 0;
     virtual HRESULT __stdcall remove_ServiceRequested(event_token cookie) = 0;
@@ -51,38 +51,38 @@ struct __declspec(uuid("45694947-c741-434b-a79e-474c12d93d2f")) __declspec(novta
     virtual HRESULT __stdcall get_Properties(Windows::Foundation::Collections::IPropertySet ** value) = 0;
 };
 
-struct __declspec(uuid("0c111226-7b26-4d31-95bb-9c1b08ef7fc0")) __declspec(novtable) IMediaProtectionPMPServer : Windows::IInspectable
+struct __declspec(uuid("0c111226-7b26-4d31-95bb-9c1b08ef7fc0")) __declspec(novtable) IMediaProtectionPMPServer : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Properties(Windows::Foundation::Collections::IPropertySet ** ppProperties) = 0;
 };
 
-struct __declspec(uuid("602c8e5e-f7d2-487e-af91-dbc4252b2182")) __declspec(novtable) IMediaProtectionPMPServerFactory : Windows::IInspectable
+struct __declspec(uuid("602c8e5e-f7d2-487e-af91-dbc4252b2182")) __declspec(novtable) IMediaProtectionPMPServerFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreatePMPServer(Windows::Foundation::Collections::IPropertySet * pProperties, Windows::Media::Protection::IMediaProtectionPMPServer ** ppObject) = 0;
 };
 
-struct __declspec(uuid("8b5cca18-cfd5-44ee-a2ed-df76010c14b5")) __declspec(novtable) IMediaProtectionServiceCompletion : Windows::IInspectable
+struct __declspec(uuid("8b5cca18-cfd5-44ee-a2ed-df76010c14b5")) __declspec(novtable) IMediaProtectionServiceCompletion : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Complete(bool success) = 0;
 };
 
-struct __declspec(uuid("b1de0ea6-2094-478d-87a4-8b95200f85c6")) __declspec(novtable) IMediaProtectionServiceRequest : Windows::IInspectable
+struct __declspec(uuid("b1de0ea6-2094-478d-87a4-8b95200f85c6")) __declspec(novtable) IMediaProtectionServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ProtectionSystem(GUID * system) = 0;
     virtual HRESULT __stdcall get_Type(GUID * type) = 0;
 };
 
-struct __declspec(uuid("c7ac5d7e-7480-4d29-a464-7bcd913dd8e4")) __declspec(novtable) IProtectionCapabilities : Windows::IInspectable
+struct __declspec(uuid("c7ac5d7e-7480-4d29-a464-7bcd913dd8e4")) __declspec(novtable) IProtectionCapabilities : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsTypeSupported(hstring type, hstring keySystem, winrt::Windows::Media::Protection::ProtectionCapabilityResult * value) = 0;
 };
 
-struct __declspec(uuid("f3a1937b-2501-439e-a6e7-6fc95e175fcf")) __declspec(novtable) IRevocationAndRenewalInformation : Windows::IInspectable
+struct __declspec(uuid("f3a1937b-2501-439e-a6e7-6fc95e175fcf")) __declspec(novtable) IRevocationAndRenewalInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Items(Windows::Foundation::Collections::IVector<Windows::Media::Protection::RevocationAndRenewalItem> ** items) = 0;
 };
 
-struct __declspec(uuid("3099c20c-3cf0-49ea-902d-caf32d2dde2c")) __declspec(novtable) IRevocationAndRenewalItem : Windows::IInspectable
+struct __declspec(uuid("3099c20c-3cf0-49ea-902d-caf32d2dde2c")) __declspec(novtable) IRevocationAndRenewalItem : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Reasons(winrt::Windows::Media::Protection::RevocationAndRenewalReasons * reasons) = 0;
     virtual HRESULT __stdcall get_HeaderHash(hstring * value) = 0;
@@ -91,13 +91,13 @@ struct __declspec(uuid("3099c20c-3cf0-49ea-902d-caf32d2dde2c")) __declspec(novta
     virtual HRESULT __stdcall get_RenewalId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("34283baf-abb4-4fc1-bd89-93f106573a49")) __declspec(novtable) IServiceRequestedEventArgs : Windows::IInspectable
+struct __declspec(uuid("34283baf-abb4-4fc1-bd89-93f106573a49")) __declspec(novtable) IServiceRequestedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Request(Windows::Media::Protection::IMediaProtectionServiceRequest ** value) = 0;
     virtual HRESULT __stdcall get_Completion(Windows::Media::Protection::IMediaProtectionServiceCompletion ** value) = 0;
 };
 
-struct __declspec(uuid("553c69d6-fafe-4128-8dfa-130e398a13a7")) __declspec(novtable) IServiceRequestedEventArgs2 : Windows::IInspectable
+struct __declspec(uuid("553c69d6-fafe-4128-8dfa-130e398a13a7")) __declspec(novtable) IServiceRequestedEventArgs2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MediaPlaybackItem(Windows::Media::Playback::IMediaPlaybackItem ** value) = 0;
 };
@@ -130,22 +130,108 @@ template <> struct traits<Windows::Media::Protection::ServiceRequestedEventArgs>
 
 namespace Windows::Media::Protection {
 
-template <typename T> struct impl_IComponentLoadFailedEventArgs;
-template <typename T> struct impl_IComponentRenewalStatics;
-template <typename T> struct impl_IHdcpSession;
-template <typename T> struct impl_IMediaProtectionManager;
-template <typename T> struct impl_IMediaProtectionPMPServer;
-template <typename T> struct impl_IMediaProtectionPMPServerFactory;
-template <typename T> struct impl_IMediaProtectionServiceCompletion;
-template <typename T> struct impl_IMediaProtectionServiceRequest;
-template <typename T> struct impl_IProtectionCapabilities;
-template <typename T> struct impl_IRevocationAndRenewalInformation;
-template <typename T> struct impl_IRevocationAndRenewalItem;
-template <typename T> struct impl_IServiceRequestedEventArgs;
-template <typename T> struct impl_IServiceRequestedEventArgs2;
-template <typename T> struct impl_ComponentLoadFailedEventHandler;
-template <typename T> struct impl_RebootNeededEventHandler;
-template <typename T> struct impl_ServiceRequestedEventHandler;
+template <typename D>
+struct WINRT_EBO impl_IComponentLoadFailedEventArgs
+{
+    Windows::Media::Protection::RevocationAndRenewalInformation Information() const;
+    Windows::Media::Protection::MediaProtectionServiceCompletion Completion() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IComponentRenewalStatics
+{
+    Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> RenewSystemComponentsAsync(const Windows::Media::Protection::RevocationAndRenewalInformation & information) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHdcpSession
+{
+    bool IsEffectiveProtectionAtLeast(Windows::Media::Protection::HdcpProtection protection) const;
+    Windows::Foundation::IReference<winrt::Windows::Media::Protection::HdcpProtection> GetEffectiveProtection() const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Protection::HdcpSetProtectionResult> SetDesiredMinProtectionAsync(Windows::Media::Protection::HdcpProtection protection) const;
+    event_token ProtectionChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> & handler) const;
+    using ProtectionChanged_revoker = event_revoker<IHdcpSession>;
+    ProtectionChanged_revoker ProtectionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> & handler) const;
+    void ProtectionChanged(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaProtectionManager
+{
+    event_token ServiceRequested(const Windows::Media::Protection::ServiceRequestedEventHandler & handler) const;
+    using ServiceRequested_revoker = event_revoker<IMediaProtectionManager>;
+    ServiceRequested_revoker ServiceRequested(auto_revoke_t, const Windows::Media::Protection::ServiceRequestedEventHandler & handler) const;
+    void ServiceRequested(event_token cookie) const;
+    event_token RebootNeeded(const Windows::Media::Protection::RebootNeededEventHandler & handler) const;
+    using RebootNeeded_revoker = event_revoker<IMediaProtectionManager>;
+    RebootNeeded_revoker RebootNeeded(auto_revoke_t, const Windows::Media::Protection::RebootNeededEventHandler & handler) const;
+    void RebootNeeded(event_token cookie) const;
+    event_token ComponentLoadFailed(const Windows::Media::Protection::ComponentLoadFailedEventHandler & handler) const;
+    using ComponentLoadFailed_revoker = event_revoker<IMediaProtectionManager>;
+    ComponentLoadFailed_revoker ComponentLoadFailed(auto_revoke_t, const Windows::Media::Protection::ComponentLoadFailedEventHandler & handler) const;
+    void ComponentLoadFailed(event_token cookie) const;
+    Windows::Foundation::Collections::IPropertySet Properties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaProtectionPMPServer
+{
+    Windows::Foundation::Collections::IPropertySet Properties() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaProtectionPMPServerFactory
+{
+    Windows::Media::Protection::MediaProtectionPMPServer CreatePMPServer(const Windows::Foundation::Collections::IPropertySet & pProperties) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaProtectionServiceCompletion
+{
+    void Complete(bool success) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMediaProtectionServiceRequest
+{
+    GUID ProtectionSystem() const;
+    GUID Type() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IProtectionCapabilities
+{
+    Windows::Media::Protection::ProtectionCapabilityResult IsTypeSupported(hstring_view type, hstring_view keySystem) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRevocationAndRenewalInformation
+{
+    Windows::Foundation::Collections::IVector<Windows::Media::Protection::RevocationAndRenewalItem> Items() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRevocationAndRenewalItem
+{
+    Windows::Media::Protection::RevocationAndRenewalReasons Reasons() const;
+    hstring HeaderHash() const;
+    hstring PublicKeyHash() const;
+    hstring Name() const;
+    hstring RenewalId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IServiceRequestedEventArgs
+{
+    Windows::Media::Protection::IMediaProtectionServiceRequest Request() const;
+    Windows::Media::Protection::MediaProtectionServiceCompletion Completion() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IServiceRequestedEventArgs2
+{
+    Windows::Media::Playback::MediaPlaybackItem MediaPlaybackItem() const;
+};
 
 }
 

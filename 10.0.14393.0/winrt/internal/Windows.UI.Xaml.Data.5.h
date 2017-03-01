@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,7 @@ WINRT_EXPORT namespace winrt {
 namespace Windows::UI::Xaml::Data {
 
 template <typename D, typename ... Interfaces> struct BindingT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Data::IBindingBase, Windows::UI::Xaml::Data::IBinding, Windows::UI::Xaml::Data::IBinding2>
 {
     using composable = Binding;
@@ -23,7 +23,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct BindingBaseT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Data::IBindingBase>
 {
     using composable = BindingBase;
@@ -37,7 +37,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct CurrentChangingEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Data::ICurrentChangingEventArgs>
 {
     using composable = CurrentChangingEventArgs;
@@ -56,7 +56,7 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct ItemIndexRangeT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Data::IItemIndexRange>
 {
     using composable = ItemIndexRange;
@@ -70,21 +70,21 @@ protected:
 };
 
 template <typename D, typename ... Interfaces> struct PropertyChangedEventArgsT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::Data::IPropertyChangedEventArgs>
 {
     using composable = PropertyChangedEventArgs;
 
 protected:
 
-    PropertyChangedEventArgsT(hstring_ref name)
+    PropertyChangedEventArgsT(hstring_view name)
     {
         get_activation_factory<PropertyChangedEventArgs, IPropertyChangedEventArgsFactory>().CreateInstance(name, *this, this->m_inner);
     }
 };
 
 template <typename D, typename ... Interfaces> struct RelativeSourceT :
-    overrides<D, Windows::IInspectable, Interfaces ...>,
+    overrides<D, Windows::Foundation::IInspectable, Interfaces ...>,
     impl::require<D, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Data::IRelativeSource>
 {
     using composable = RelativeSource;

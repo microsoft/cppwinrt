@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
@@ -15,11 +18,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::IProcessCpuUsage> : produce_base<D, Windows::System::Diagnostics::IProcessCpuUsage>
 {
-    HRESULT __stdcall abi_GetReport(abi_arg_out<Windows::System::Diagnostics::IProcessCpuUsageReport> value) noexcept override
+    HRESULT __stdcall abi_GetReport(impl::abi_arg_out<Windows::System::Diagnostics::IProcessCpuUsageReport> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetReport());
             return S_OK;
         }
         catch (...)
@@ -33,11 +37,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessCpuUsage> : produce_base
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::IProcessCpuUsageReport> : produce_base<D, Windows::System::Diagnostics::IProcessCpuUsageReport>
 {
-    HRESULT __stdcall get_KernelTime(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_KernelTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().KernelTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().KernelTime());
             return S_OK;
         }
         catch (...)
@@ -46,11 +51,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessCpuUsageReport> : produc
         }
     }
 
-    HRESULT __stdcall get_UserTime(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_UserTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UserTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UserTime());
             return S_OK;
         }
         catch (...)
@@ -67,7 +73,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
     {
         try
         {
-            *value = detach(this->shim().ProcessId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProcessId());
             return S_OK;
         }
         catch (...)
@@ -76,25 +83,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_ExecutableFileName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ExecutableFileName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ExecutableFileName());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Parent(abi_arg_out<Windows::System::Diagnostics::IProcessDiagnosticInfo> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Parent());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExecutableFileName());
             return S_OK;
         }
         catch (...)
@@ -104,24 +98,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_ProcessStartTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Parent(impl::abi_arg_out<Windows::System::Diagnostics::IProcessDiagnosticInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ProcessStartTime());
-            return S_OK;
-        }
-        catch (...)
-        {
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_DiskUsage(abi_arg_out<Windows::System::Diagnostics::IProcessDiskUsage> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().DiskUsage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Parent());
             return S_OK;
         }
         catch (...)
@@ -131,11 +113,26 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_MemoryUsage(abi_arg_out<Windows::System::Diagnostics::IProcessMemoryUsage> value) noexcept override
+    HRESULT __stdcall get_ProcessStartTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MemoryUsage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProcessStartTime());
+            return S_OK;
+        }
+        catch (...)
+        {
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_DiskUsage(impl::abi_arg_out<Windows::System::Diagnostics::IProcessDiskUsage> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DiskUsage());
             return S_OK;
         }
         catch (...)
@@ -145,11 +142,27 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_CpuUsage(abi_arg_out<Windows::System::Diagnostics::IProcessCpuUsage> value) noexcept override
+    HRESULT __stdcall get_MemoryUsage(impl::abi_arg_out<Windows::System::Diagnostics::IProcessMemoryUsage> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CpuUsage());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MemoryUsage());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_CpuUsage(impl::abi_arg_out<Windows::System::Diagnostics::IProcessCpuUsage> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CpuUsage());
             return S_OK;
         }
         catch (...)
@@ -163,11 +176,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfo> : produc
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfoStatics> : produce_base<D, Windows::System::Diagnostics::IProcessDiagnosticInfoStatics>
 {
-    HRESULT __stdcall abi_GetForProcesses(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::ProcessDiagnosticInfo>> processes) noexcept override
+    HRESULT __stdcall abi_GetForProcesses(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::ProcessDiagnosticInfo>> processes) noexcept override
     {
         try
         {
-            *processes = detach(this->shim().GetForProcesses());
+            typename D::abi_guard guard(this->shim());
+            *processes = detach_abi(this->shim().GetForProcesses());
             return S_OK;
         }
         catch (...)
@@ -177,11 +191,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfoStatics> :
         }
     }
 
-    HRESULT __stdcall abi_GetForCurrentProcess(abi_arg_out<Windows::System::Diagnostics::IProcessDiagnosticInfo> processes) noexcept override
+    HRESULT __stdcall abi_GetForCurrentProcess(impl::abi_arg_out<Windows::System::Diagnostics::IProcessDiagnosticInfo> processes) noexcept override
     {
         try
         {
-            *processes = detach(this->shim().GetForCurrentProcess());
+            typename D::abi_guard guard(this->shim());
+            *processes = detach_abi(this->shim().GetForCurrentProcess());
             return S_OK;
         }
         catch (...)
@@ -195,11 +210,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiagnosticInfoStatics> :
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::IProcessDiskUsage> : produce_base<D, Windows::System::Diagnostics::IProcessDiskUsage>
 {
-    HRESULT __stdcall abi_GetReport(abi_arg_out<Windows::System::Diagnostics::IProcessDiskUsageReport> value) noexcept override
+    HRESULT __stdcall abi_GetReport(impl::abi_arg_out<Windows::System::Diagnostics::IProcessDiskUsageReport> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetReport());
             return S_OK;
         }
         catch (...)
@@ -217,7 +233,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().ReadOperationCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ReadOperationCount());
             return S_OK;
         }
         catch (...)
@@ -230,7 +247,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().WriteOperationCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WriteOperationCount());
             return S_OK;
         }
         catch (...)
@@ -243,7 +261,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().OtherOperationCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OtherOperationCount());
             return S_OK;
         }
         catch (...)
@@ -256,7 +275,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().BytesReadCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BytesReadCount());
             return S_OK;
         }
         catch (...)
@@ -269,7 +289,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().BytesWrittenCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BytesWrittenCount());
             return S_OK;
         }
         catch (...)
@@ -282,7 +303,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
     {
         try
         {
-            *value = detach(this->shim().OtherBytesCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().OtherBytesCount());
             return S_OK;
         }
         catch (...)
@@ -295,11 +317,12 @@ struct produce<D, Windows::System::Diagnostics::IProcessDiskUsageReport> : produ
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsage> : produce_base<D, Windows::System::Diagnostics::IProcessMemoryUsage>
 {
-    HRESULT __stdcall abi_GetReport(abi_arg_out<Windows::System::Diagnostics::IProcessMemoryUsageReport> value) noexcept override
+    HRESULT __stdcall abi_GetReport(impl::abi_arg_out<Windows::System::Diagnostics::IProcessMemoryUsageReport> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetReport());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetReport());
             return S_OK;
         }
         catch (...)
@@ -317,7 +340,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().NonPagedPoolSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().NonPagedPoolSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -330,7 +354,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PageFaultCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PageFaultCount());
             return S_OK;
         }
         catch (...)
@@ -343,7 +368,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PageFileSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PageFileSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -356,7 +382,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PagedPoolSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PagedPoolSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -369,7 +396,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PeakNonPagedPoolSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeakNonPagedPoolSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -382,7 +410,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PeakPageFileSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeakPageFileSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -395,7 +424,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PeakPagedPoolSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeakPagedPoolSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -408,7 +438,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PeakVirtualMemorySizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeakVirtualMemorySizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -421,7 +452,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PeakWorkingSetSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeakWorkingSetSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -434,7 +466,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().PrivatePageCount());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PrivatePageCount());
             return S_OK;
         }
         catch (...)
@@ -447,7 +480,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().VirtualMemorySizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VirtualMemorySizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -460,7 +494,8 @@ struct produce<D, Windows::System::Diagnostics::IProcessMemoryUsageReport> : pro
     {
         try
         {
-            *value = detach(this->shim().WorkingSetSizeInBytes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().WorkingSetSizeInBytes());
             return S_OK;
         }
         catch (...)
@@ -477,224 +512,224 @@ namespace Windows::System::Diagnostics {
 template <typename D> uint32_t impl_IProcessDiagnosticInfo<D>::ProcessId() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_ProcessId(&value));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_ProcessId(&value));
     return value;
 }
 
 template <typename D> hstring impl_IProcessDiagnosticInfo<D>::ExecutableFileName() const
 {
     hstring value;
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_ExecutableFileName(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_ExecutableFileName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessDiagnosticInfo impl_IProcessDiagnosticInfo<D>::Parent() const
 {
     Windows::System::Diagnostics::ProcessDiagnosticInfo value { nullptr };
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_Parent(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_Parent(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IProcessDiagnosticInfo<D>::ProcessStartTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_ProcessStartTime(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_ProcessStartTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessDiskUsage impl_IProcessDiagnosticInfo<D>::DiskUsage() const
 {
     Windows::System::Diagnostics::ProcessDiskUsage value { nullptr };
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_DiskUsage(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_DiskUsage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessMemoryUsage impl_IProcessDiagnosticInfo<D>::MemoryUsage() const
 {
     Windows::System::Diagnostics::ProcessMemoryUsage value { nullptr };
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_MemoryUsage(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_MemoryUsage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessCpuUsage impl_IProcessDiagnosticInfo<D>::CpuUsage() const
 {
     Windows::System::Diagnostics::ProcessCpuUsage value { nullptr };
-    check_hresult(static_cast<const IProcessDiagnosticInfo &>(static_cast<const D &>(*this))->get_CpuUsage(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfo)->get_CpuUsage(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::ProcessDiagnosticInfo> impl_IProcessDiagnosticInfoStatics<D>::GetForProcesses() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::ProcessDiagnosticInfo> processes;
-    check_hresult(static_cast<const IProcessDiagnosticInfoStatics &>(static_cast<const D &>(*this))->abi_GetForProcesses(put(processes)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfoStatics)->abi_GetForProcesses(put_abi(processes)));
     return processes;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessDiagnosticInfo impl_IProcessDiagnosticInfoStatics<D>::GetForCurrentProcess() const
 {
     Windows::System::Diagnostics::ProcessDiagnosticInfo processes { nullptr };
-    check_hresult(static_cast<const IProcessDiagnosticInfoStatics &>(static_cast<const D &>(*this))->abi_GetForCurrentProcess(put(processes)));
+    check_hresult(WINRT_SHIM(IProcessDiagnosticInfoStatics)->abi_GetForCurrentProcess(put_abi(processes)));
     return processes;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessMemoryUsageReport impl_IProcessMemoryUsage<D>::GetReport() const
 {
     Windows::System::Diagnostics::ProcessMemoryUsageReport value { nullptr };
-    check_hresult(static_cast<const IProcessMemoryUsage &>(static_cast<const D &>(*this))->abi_GetReport(put(value)));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsage)->abi_GetReport(put_abi(value)));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::NonPagedPoolSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_NonPagedPoolSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_NonPagedPoolSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IProcessMemoryUsageReport<D>::PageFaultCount() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PageFaultCount(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PageFaultCount(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PageFileSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PageFileSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PageFileSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PagedPoolSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PagedPoolSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PagedPoolSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PeakNonPagedPoolSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PeakNonPagedPoolSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PeakNonPagedPoolSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PeakPageFileSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PeakPageFileSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PeakPageFileSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PeakPagedPoolSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PeakPagedPoolSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PeakPagedPoolSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PeakVirtualMemorySizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PeakVirtualMemorySizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PeakVirtualMemorySizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PeakWorkingSetSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PeakWorkingSetSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PeakWorkingSetSizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::PrivatePageCount() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_PrivatePageCount(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_PrivatePageCount(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::VirtualMemorySizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_VirtualMemorySizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_VirtualMemorySizeInBytes(&value));
     return value;
 }
 
 template <typename D> uint64_t impl_IProcessMemoryUsageReport<D>::WorkingSetSizeInBytes() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IProcessMemoryUsageReport &>(static_cast<const D &>(*this))->get_WorkingSetSizeInBytes(&value));
+    check_hresult(WINRT_SHIM(IProcessMemoryUsageReport)->get_WorkingSetSizeInBytes(&value));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessDiskUsageReport impl_IProcessDiskUsage<D>::GetReport() const
 {
     Windows::System::Diagnostics::ProcessDiskUsageReport value { nullptr };
-    check_hresult(static_cast<const IProcessDiskUsage &>(static_cast<const D &>(*this))->abi_GetReport(put(value)));
+    check_hresult(WINRT_SHIM(IProcessDiskUsage)->abi_GetReport(put_abi(value)));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::ReadOperationCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_ReadOperationCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_ReadOperationCount(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::WriteOperationCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_WriteOperationCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_WriteOperationCount(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::OtherOperationCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_OtherOperationCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_OtherOperationCount(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::BytesReadCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_BytesReadCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_BytesReadCount(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::BytesWrittenCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_BytesWrittenCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_BytesWrittenCount(&value));
     return value;
 }
 
 template <typename D> int64_t impl_IProcessDiskUsageReport<D>::OtherBytesCount() const
 {
     int64_t value {};
-    check_hresult(static_cast<const IProcessDiskUsageReport &>(static_cast<const D &>(*this))->get_OtherBytesCount(&value));
+    check_hresult(WINRT_SHIM(IProcessDiskUsageReport)->get_OtherBytesCount(&value));
     return value;
 }
 
 template <typename D> Windows::System::Diagnostics::ProcessCpuUsageReport impl_IProcessCpuUsage<D>::GetReport() const
 {
     Windows::System::Diagnostics::ProcessCpuUsageReport value { nullptr };
-    check_hresult(static_cast<const IProcessCpuUsage &>(static_cast<const D &>(*this))->abi_GetReport(put(value)));
+    check_hresult(WINRT_SHIM(IProcessCpuUsage)->abi_GetReport(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IProcessCpuUsageReport<D>::KernelTime() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IProcessCpuUsageReport &>(static_cast<const D &>(*this))->get_KernelTime(put(value)));
+    check_hresult(WINRT_SHIM(IProcessCpuUsageReport)->get_KernelTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IProcessCpuUsageReport<D>::UserTime() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IProcessCpuUsageReport &>(static_cast<const D &>(*this))->get_UserTime(put(value)));
+    check_hresult(WINRT_SHIM(IProcessCpuUsageReport)->get_UserTime(put_abi(value)));
     return value;
 }
 
@@ -711,3 +746,140 @@ inline Windows::System::Diagnostics::ProcessDiagnosticInfo ProcessDiagnosticInfo
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessCpuUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessCpuUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessCpuUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessCpuUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessDiagnosticInfo>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessDiagnosticInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessDiagnosticInfoStatics>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessDiagnosticInfoStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessDiskUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessDiskUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessDiskUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessDiskUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessMemoryUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessMemoryUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::IProcessMemoryUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::IProcessMemoryUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessCpuUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessCpuUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessCpuUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessCpuUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessDiagnosticInfo>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessDiagnosticInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessDiskUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessDiskUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessDiskUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessDiskUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessMemoryUsage>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessMemoryUsage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::System::Diagnostics::ProcessMemoryUsageReport>
+{
+    size_t operator()(const winrt::Windows::System::Diagnostics::ProcessMemoryUsageReport & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

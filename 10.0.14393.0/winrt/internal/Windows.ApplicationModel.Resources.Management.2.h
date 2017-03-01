@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
 #define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
@@ -29,6 +34,11 @@ template <> struct __declspec(uuid("1da243f1-bb95-543e-95c6-5fd196b34b6f")) __de
 template <> struct __declspec(uuid("239ded48-ce04-51f2-b2c9-a5e5ab671b8d")) __declspec(novtable) IVectorView<Windows::ApplicationModel::Resources::Management::IndexedResourceQualifier> : impl_IVectorView<Windows::ApplicationModel::Resources::Management::IndexedResourceQualifier> {};
 #endif
 
+#ifndef WINRT_GENERIC_d41dfebf_f1c2_5025_b189_8309b9b0a220
+#define WINRT_GENERIC_d41dfebf_f1c2_5025_b189_8309b9b0a220
+template <> struct __declspec(uuid("d41dfebf-f1c2-5025-b189-8309b9b0a220")) __declspec(novtable) IVector<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> : impl_IVector<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> {};
+#endif
+
 #ifndef WINRT_GENERIC_6b6f3ab9_1593_5852_b6bb_17a217e12f9f
 #define WINRT_GENERIC_6b6f3ab9_1593_5852_b6bb_17a217e12f9f
 template <> struct __declspec(uuid("6b6f3ab9-1593-5852-b6bb-17a217e12f9f")) __declspec(novtable) IIterator<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> : impl_IIterator<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> {};
@@ -37,6 +47,11 @@ template <> struct __declspec(uuid("6b6f3ab9-1593-5852-b6bb-17a217e12f9f")) __de
 #ifndef WINRT_GENERIC_0fcb4184_1489_5774_9910_bab326bb50f6
 #define WINRT_GENERIC_0fcb4184_1489_5774_9910_bab326bb50f6
 template <> struct __declspec(uuid("0fcb4184-1489-5774-9910-bab326bb50f6")) __declspec(novtable) IIterable<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> : impl_IIterable<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate> {};
+#endif
+
+#ifndef WINRT_GENERIC_e7bbd5df_923e_515c_8208_dd318283e5e1
+#define WINRT_GENERIC_e7bbd5df_923e_515c_8208_dd318283e5e1
+template <> struct __declspec(uuid("e7bbd5df-923e-515c-8208-dd318283e5e1")) __declspec(novtable) IVector<Windows::ApplicationModel::Resources::Management::IndexedResourceQualifier> : impl_IVector<Windows::ApplicationModel::Resources::Management::IndexedResourceQualifier> {};
 #endif
 
 #ifndef WINRT_GENERIC_1a22ebee_7992_5198_972b_054580945741
@@ -89,81 +104,39 @@ template <> struct __declspec(uuid("4f2b3869-d059-5739-906c-9eb2729c2fde")) __de
 
 namespace Windows::ApplicationModel::Resources::Management {
 
-template <typename D>
-struct WINRT_EBO impl_IIndexedResourceCandidate
-{
-    Windows::ApplicationModel::Resources::Management::IndexedResourceType Type() const;
-    Windows::Foundation::Uri Uri() const;
-    Windows::Foundation::Collections::IMapView<hstring, hstring> Metadata() const;
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Resources::Management::IndexedResourceQualifier> Qualifiers() const;
-    hstring ValueAsString() const;
-    hstring GetQualifierValue(hstring_ref qualifierName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IIndexedResourceQualifier
-{
-    hstring QualifierName() const;
-    hstring QualifierValue() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IResourceIndexer
-{
-    Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate IndexFilePath(const Windows::Foundation::Uri & filePath) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Resources::Management::IndexedResourceCandidate>> IndexFileContentsAsync(const Windows::Foundation::Uri & file) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IResourceIndexerFactory
-{
-    Windows::ApplicationModel::Resources::Management::ResourceIndexer CreateResourceIndexer(const Windows::Foundation::Uri & projectRoot) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IResourceIndexerFactory2
-{
-    Windows::ApplicationModel::Resources::Management::ResourceIndexer CreateResourceIndexerWithExtension(const Windows::Foundation::Uri & projectRoot, const Windows::Foundation::Uri & extensionDllPath) const;
-};
-
 struct IIndexedResourceCandidate :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IIndexedResourceCandidate>
 {
     IIndexedResourceCandidate(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IIndexedResourceCandidate>(m_ptr); }
 };
 
 struct IIndexedResourceQualifier :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IIndexedResourceQualifier>
 {
     IIndexedResourceQualifier(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IIndexedResourceQualifier>(m_ptr); }
 };
 
 struct IResourceIndexer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IResourceIndexer>
 {
     IResourceIndexer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IResourceIndexer>(m_ptr); }
 };
 
 struct IResourceIndexerFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IResourceIndexerFactory>
 {
     IResourceIndexerFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IResourceIndexerFactory>(m_ptr); }
 };
 
 struct IResourceIndexerFactory2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IResourceIndexerFactory2>
 {
     IResourceIndexerFactory2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IResourceIndexerFactory2>(m_ptr); }
 };
 
 }

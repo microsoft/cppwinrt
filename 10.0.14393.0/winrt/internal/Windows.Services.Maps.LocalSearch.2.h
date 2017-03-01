@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -49,6 +49,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("65535172-cd91-5b4c-aa60-dab146301284")) __declspec(novtable) IVectorView<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> : impl_IVectorView<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> {};
 #endif
 
+#ifndef WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
+#define WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
+template <> struct __declspec(uuid("81dd786b-c7ba-5aa7-82d4-f7c0377302e0")) __declspec(novtable) IVector<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IVector<Windows::Services::Maps::LocalSearch::LocalLocation> {};
+#endif
+
 #ifndef WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
 #define WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
 template <> struct __declspec(uuid("a23c2e87-a8e7-568f-96a1-69e98f86b9d3")) __declspec(novtable) IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> {};
@@ -74,6 +79,11 @@ template <> struct __declspec(uuid("7b4a1b93-2943-5e50-a010-ee9aec1bbfe7")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_e3657eaf_80a1_5979_b58a_95bf315ec4d4
+#define WINRT_GENERIC_e3657eaf_80a1_5979_b58a_95bf315ec4d4
+template <> struct __declspec(uuid("e3657eaf-80a1-5979-b58a-95bf315ec4d4")) __declspec(novtable) IVector<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> : impl_IVector<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> {};
+#endif
+
 #ifndef WINRT_GENERIC_3f9ba5c0_b2dc_5777_a81e_b0a2839b152b
 #define WINRT_GENERIC_3f9ba5c0_b2dc_5777_a81e_b0a2839b152b
 template <> struct __declspec(uuid("3f9ba5c0-b2dc-5777-a81e-b0a2839b152b")) __declspec(novtable) IIterator<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> : impl_IIterator<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> {};
@@ -89,122 +99,53 @@ template <> struct __declspec(uuid("f298f515-b9bd-5297-b8bd-1c0040daac76")) __de
 
 namespace Windows::Services::Maps::LocalSearch {
 
-template <typename D>
-struct WINRT_EBO impl_ILocalCategoriesStatics
-{
-    hstring BankAndCreditUnions() const;
-    hstring EatDrink() const;
-    hstring Hospitals() const;
-    hstring HotelsAndMotels() const;
-    hstring All() const;
-    hstring Parking() const;
-    hstring SeeDo() const;
-    hstring Shop() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocation
-{
-    Windows::Services::Maps::MapAddress Address() const;
-    hstring Identifier() const;
-    hstring Description() const;
-    hstring DisplayName() const;
-    Windows::Devices::Geolocation::Geopoint Point() const;
-    hstring PhoneNumber() const;
-    hstring DataAttribution() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocation2
-{
-    hstring Category() const;
-    Windows::Services::Maps::LocalSearch::LocalLocationRatingInfo RatingInfo() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocationHoursOfOperationItem> HoursOfOperation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocationFinderResult
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> LocalLocations() const;
-    Windows::Services::Maps::LocalSearch::LocalLocationFinderStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocationFinderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> FindLocalLocationsAsync(hstring_ref searchTerm, const Windows::Devices::Geolocation::Geocircle & searchArea, hstring_ref localCategory, uint32_t maxResults) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocationHoursOfOperationItem
-{
-    Windows::Globalization::DayOfWeek Day() const;
-    Windows::Foundation::TimeSpan Start() const;
-    Windows::Foundation::TimeSpan Span() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILocalLocationRatingInfo
-{
-    Windows::Foundation::IReference<double> AggregateRating() const;
-    Windows::Foundation::IReference<int32_t> RatingCount() const;
-    hstring ProviderIdentifier() const;
-};
-
 struct ILocalCategoriesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalCategoriesStatics>
 {
     ILocalCategoriesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalCategoriesStatics>(m_ptr); }
 };
 
 struct ILocalLocation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocation>
 {
     ILocalLocation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocation>(m_ptr); }
 };
 
 struct ILocalLocation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocation2>
 {
     ILocalLocation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocation2>(m_ptr); }
 };
 
 struct ILocalLocationFinderResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocationFinderResult>
 {
     ILocalLocationFinderResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocationFinderResult>(m_ptr); }
 };
 
 struct ILocalLocationFinderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocationFinderStatics>
 {
     ILocalLocationFinderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocationFinderStatics>(m_ptr); }
 };
 
 struct ILocalLocationHoursOfOperationItem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocationHoursOfOperationItem>
 {
     ILocalLocationHoursOfOperationItem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocationHoursOfOperationItem>(m_ptr); }
 };
 
 struct ILocalLocationRatingInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILocalLocationRatingInfo>
 {
     ILocalLocationRatingInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILocalLocationRatingInfo>(m_ptr); }
 };
 
 }

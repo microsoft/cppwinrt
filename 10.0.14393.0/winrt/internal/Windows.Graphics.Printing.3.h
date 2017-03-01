@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,7 +13,7 @@ template <typename H> struct impl_PrintTaskSourceRequestedHandler : implements<i
 {
     impl_PrintTaskSourceRequestedHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Graphics::Printing::IPrintTaskSourceRequestedArgs> args) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Graphics::Printing::IPrintTaskSourceRequestedArgs> args) noexcept override
     {
         try
         {

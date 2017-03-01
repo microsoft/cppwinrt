@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -159,6 +159,54 @@ struct EqualizerEffectDefinition;
 struct FrameInputNodeQuantumStartedEventArgs;
 struct LimiterEffectDefinition;
 struct ReverbEffectDefinition;
+
+}
+
+namespace Windows::Media::Audio {
+
+template <typename T> struct impl_IAudioDeviceInputNode;
+template <typename T> struct impl_IAudioDeviceOutputNode;
+template <typename T> struct impl_IAudioFileInputNode;
+template <typename T> struct impl_IAudioFileOutputNode;
+template <typename T> struct impl_IAudioFrameCompletedEventArgs;
+template <typename T> struct impl_IAudioFrameInputNode;
+template <typename T> struct impl_IAudioFrameOutputNode;
+template <typename T> struct impl_IAudioGraph;
+template <typename T> struct impl_IAudioGraph2;
+template <typename T> struct impl_IAudioGraphConnection;
+template <typename T> struct impl_IAudioGraphSettings;
+template <typename T> struct impl_IAudioGraphSettingsFactory;
+template <typename T> struct impl_IAudioGraphStatics;
+template <typename T> struct impl_IAudioGraphUnrecoverableErrorOccurredEventArgs;
+template <typename T> struct impl_IAudioInputNode;
+template <typename T> struct impl_IAudioInputNode2;
+template <typename T> struct impl_IAudioNode;
+template <typename T> struct impl_IAudioNodeEmitter;
+template <typename T> struct impl_IAudioNodeEmitter2;
+template <typename T> struct impl_IAudioNodeEmitterConeProperties;
+template <typename T> struct impl_IAudioNodeEmitterDecayModel;
+template <typename T> struct impl_IAudioNodeEmitterDecayModelStatics;
+template <typename T> struct impl_IAudioNodeEmitterFactory;
+template <typename T> struct impl_IAudioNodeEmitterNaturalDecayModelProperties;
+template <typename T> struct impl_IAudioNodeEmitterShape;
+template <typename T> struct impl_IAudioNodeEmitterShapeStatics;
+template <typename T> struct impl_IAudioNodeListener;
+template <typename T> struct impl_IAudioNodeWithListener;
+template <typename T> struct impl_ICreateAudioDeviceInputNodeResult;
+template <typename T> struct impl_ICreateAudioDeviceOutputNodeResult;
+template <typename T> struct impl_ICreateAudioFileInputNodeResult;
+template <typename T> struct impl_ICreateAudioFileOutputNodeResult;
+template <typename T> struct impl_ICreateAudioGraphResult;
+template <typename T> struct impl_IEchoEffectDefinition;
+template <typename T> struct impl_IEchoEffectDefinitionFactory;
+template <typename T> struct impl_IEqualizerBand;
+template <typename T> struct impl_IEqualizerEffectDefinition;
+template <typename T> struct impl_IEqualizerEffectDefinitionFactory;
+template <typename T> struct impl_IFrameInputNodeQuantumStartedEventArgs;
+template <typename T> struct impl_ILimiterEffectDefinition;
+template <typename T> struct impl_ILimiterEffectDefinitionFactory;
+template <typename T> struct impl_IReverbEffectDefinition;
+template <typename T> struct impl_IReverbEffectDefinitionFactory;
 
 }
 

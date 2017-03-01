@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -45,6 +45,20 @@ struct SecondaryAuthenticationFactorAuthenticationStageInfo;
 struct SecondaryAuthenticationFactorInfo;
 struct SecondaryAuthenticationFactorRegistration;
 struct SecondaryAuthenticationFactorRegistrationResult;
+
+}
+
+namespace Windows::Security::Authentication::Identity::Provider {
+
+template <typename T> struct impl_ISecondaryAuthenticationFactorAuthentication;
+template <typename T> struct impl_ISecondaryAuthenticationFactorAuthenticationResult;
+template <typename T> struct impl_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs;
+template <typename T> struct impl_ISecondaryAuthenticationFactorAuthenticationStageInfo;
+template <typename T> struct impl_ISecondaryAuthenticationFactorAuthenticationStatics;
+template <typename T> struct impl_ISecondaryAuthenticationFactorInfo;
+template <typename T> struct impl_ISecondaryAuthenticationFactorRegistration;
+template <typename T> struct impl_ISecondaryAuthenticationFactorRegistrationResult;
+template <typename T> struct impl_ISecondaryAuthenticationFactorRegistrationStatics;
 
 }
 

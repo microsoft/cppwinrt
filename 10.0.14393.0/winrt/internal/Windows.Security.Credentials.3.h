@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -26,9 +26,9 @@ struct KeyCredentialManager
     KeyCredentialManager() = delete;
     static Windows::Foundation::IAsyncOperation<bool> IsSupportedAsync();
     static Windows::Foundation::IAsyncAction RenewAttestationAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> RequestCreateAsync(hstring_ref name, Windows::Security::Credentials::KeyCredentialCreationOption option);
-    static Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> OpenAsync(hstring_ref name);
-    static Windows::Foundation::IAsyncAction DeleteAsync(hstring_ref name);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> RequestCreateAsync(hstring_view name, Windows::Security::Credentials::KeyCredentialCreationOption option);
+    static Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::KeyCredentialRetrievalResult> OpenAsync(hstring_view name);
+    static Windows::Foundation::IAsyncAction DeleteAsync(hstring_view name);
 };
 
 struct WINRT_EBO KeyCredentialOperationResult :
@@ -48,7 +48,7 @@ struct WINRT_EBO PasswordCredential :
 {
     PasswordCredential(std::nullptr_t) noexcept {}
     PasswordCredential();
-    PasswordCredential(hstring_ref resource, hstring_ref userName, hstring_ref password);
+    PasswordCredential(hstring_view resource, hstring_view userName, hstring_view password);
 };
 
 struct WINRT_EBO PasswordCredentialPropertyStore :
@@ -70,7 +70,7 @@ struct WINRT_EBO WebAccount :
     impl::require<WebAccount, Windows::Security::Credentials::IWebAccount2>
 {
     WebAccount(std::nullptr_t) noexcept {}
-    WebAccount(const Windows::Security::Credentials::WebAccountProvider & webAccountProvider, hstring_ref userName, Windows::Security::Credentials::WebAccountState state);
+    WebAccount(const Windows::Security::Credentials::WebAccountProvider & webAccountProvider, hstring_view userName, Windows::Security::Credentials::WebAccountState state);
 };
 
 struct WINRT_EBO WebAccountProvider :
@@ -78,7 +78,7 @@ struct WINRT_EBO WebAccountProvider :
     impl::require<WebAccountProvider, Windows::Security::Credentials::IWebAccountProvider2, Windows::Security::Credentials::IWebAccountProvider3>
 {
     WebAccountProvider(std::nullptr_t) noexcept {}
-    WebAccountProvider(hstring_ref id, hstring_ref displayName, const Windows::Foundation::Uri & iconUri);
+    WebAccountProvider(hstring_view id, hstring_view displayName, const Windows::Foundation::Uri & iconUri);
 };
 
 }

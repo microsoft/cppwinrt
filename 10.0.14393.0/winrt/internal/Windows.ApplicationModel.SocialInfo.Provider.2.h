@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -79,62 +79,25 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 
 namespace Windows::ApplicationModel::SocialInfo::Provider {
 
-template <typename D>
-struct WINRT_EBO impl_ISocialDashboardItemUpdater
-{
-    hstring OwnerRemoteId() const;
-    Windows::ApplicationModel::SocialInfo::SocialFeedContent Content() const;
-    Windows::Foundation::DateTime Timestamp() const;
-    void Timestamp(const Windows::Foundation::DateTime & value) const;
-    void Thumbnail(const Windows::ApplicationModel::SocialInfo::SocialItemThumbnail & value) const;
-    Windows::ApplicationModel::SocialInfo::SocialItemThumbnail Thumbnail() const;
-    Windows::Foundation::IAsyncAction CommitAsync() const;
-    Windows::Foundation::Uri TargetUri() const;
-    void TargetUri(const Windows::Foundation::Uri & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocialFeedUpdater
-{
-    hstring OwnerRemoteId() const;
-    Windows::ApplicationModel::SocialInfo::SocialFeedKind Kind() const;
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> Items() const;
-    Windows::Foundation::IAsyncAction CommitAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISocialInfoProviderManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, hstring_ref ownerRemoteId) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> CreateDashboardItemUpdaterAsync(hstring_ref ownerRemoteId) const;
-    void UpdateBadgeCountValue(hstring_ref itemRemoteId, int32_t newCount) const;
-    void ReportNewContentAvailable(hstring_ref contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind kind) const;
-    Windows::Foundation::IAsyncOperation<bool> ProvisionAsync() const;
-    Windows::Foundation::IAsyncAction DeprovisionAsync() const;
-};
-
 struct ISocialDashboardItemUpdater :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocialDashboardItemUpdater>
 {
     ISocialDashboardItemUpdater(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocialDashboardItemUpdater>(m_ptr); }
 };
 
 struct ISocialFeedUpdater :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocialFeedUpdater>
 {
     ISocialFeedUpdater(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocialFeedUpdater>(m_ptr); }
 };
 
 struct ISocialInfoProviderManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISocialInfoProviderManagerStatics>
 {
     ISocialInfoProviderManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISocialInfoProviderManagerStatics>(m_ptr); }
 };
 
 }

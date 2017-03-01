@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -35,6 +35,18 @@ struct SpiBusInfo;
 struct SpiConnectionSettings;
 struct SpiController;
 struct SpiDevice;
+
+}
+
+namespace Windows::Devices::Spi {
+
+template <typename T> struct impl_ISpiBusInfo;
+template <typename T> struct impl_ISpiConnectionSettings;
+template <typename T> struct impl_ISpiConnectionSettingsFactory;
+template <typename T> struct impl_ISpiController;
+template <typename T> struct impl_ISpiControllerStatics;
+template <typename T> struct impl_ISpiDevice;
+template <typename T> struct impl_ISpiDeviceStatics;
 
 }
 

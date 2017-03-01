@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -21,10 +21,10 @@ struct WINRT_EBO HttpChallengeHeaderValue :
     impl::require<HttpChallengeHeaderValue, Windows::Foundation::IStringable>
 {
     HttpChallengeHeaderValue(std::nullptr_t) noexcept {}
-    HttpChallengeHeaderValue(hstring_ref scheme);
-    HttpChallengeHeaderValue(hstring_ref scheme, hstring_ref token);
-    static Windows::Web::Http::Headers::HttpChallengeHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpChallengeHeaderValue & challengeHeaderValue);
+    HttpChallengeHeaderValue(hstring_view scheme);
+    HttpChallengeHeaderValue(hstring_view scheme, hstring_view token);
+    static Windows::Web::Http::Headers::HttpChallengeHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpChallengeHeaderValue & challengeHeaderValue);
 };
 
 struct WINRT_EBO HttpChallengeHeaderValueCollection :
@@ -39,9 +39,9 @@ struct WINRT_EBO HttpConnectionOptionHeaderValue :
     impl::require<HttpConnectionOptionHeaderValue, Windows::Foundation::IStringable>
 {
     HttpConnectionOptionHeaderValue(std::nullptr_t) noexcept {}
-    HttpConnectionOptionHeaderValue(hstring_ref token);
-    static Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue & connectionOptionHeaderValue);
+    HttpConnectionOptionHeaderValue(hstring_view token);
+    static Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpConnectionOptionHeaderValue & connectionOptionHeaderValue);
 };
 
 struct WINRT_EBO HttpConnectionOptionHeaderValueCollection :
@@ -56,9 +56,9 @@ struct WINRT_EBO HttpContentCodingHeaderValue :
     impl::require<HttpContentCodingHeaderValue, Windows::Foundation::IStringable>
 {
     HttpContentCodingHeaderValue(std::nullptr_t) noexcept {}
-    HttpContentCodingHeaderValue(hstring_ref contentCoding);
-    static Windows::Web::Http::Headers::HttpContentCodingHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentCodingHeaderValue & contentCodingHeaderValue);
+    HttpContentCodingHeaderValue(hstring_view contentCoding);
+    static Windows::Web::Http::Headers::HttpContentCodingHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpContentCodingHeaderValue & contentCodingHeaderValue);
 };
 
 struct WINRT_EBO HttpContentCodingHeaderValueCollection :
@@ -73,10 +73,10 @@ struct WINRT_EBO HttpContentCodingWithQualityHeaderValue :
     impl::require<HttpContentCodingWithQualityHeaderValue, Windows::Foundation::IStringable>
 {
     HttpContentCodingWithQualityHeaderValue(std::nullptr_t) noexcept {}
-    HttpContentCodingWithQualityHeaderValue(hstring_ref contentCoding);
-    HttpContentCodingWithQualityHeaderValue(hstring_ref contentCoding, double quality);
-    static Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue & contentCodingWithQualityHeaderValue);
+    HttpContentCodingWithQualityHeaderValue(hstring_view contentCoding);
+    HttpContentCodingWithQualityHeaderValue(hstring_view contentCoding, double quality);
+    static Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpContentCodingWithQualityHeaderValue & contentCodingWithQualityHeaderValue);
 };
 
 struct WINRT_EBO HttpContentCodingWithQualityHeaderValueCollection :
@@ -91,9 +91,9 @@ struct WINRT_EBO HttpContentDispositionHeaderValue :
     impl::require<HttpContentDispositionHeaderValue, Windows::Foundation::IStringable>
 {
     HttpContentDispositionHeaderValue(std::nullptr_t) noexcept {}
-    HttpContentDispositionHeaderValue(hstring_ref dispositionType);
-    static Windows::Web::Http::Headers::HttpContentDispositionHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentDispositionHeaderValue & contentDispositionHeaderValue);
+    HttpContentDispositionHeaderValue(hstring_view dispositionType);
+    static Windows::Web::Http::Headers::HttpContentDispositionHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpContentDispositionHeaderValue & contentDispositionHeaderValue);
 };
 
 struct WINRT_EBO HttpContentHeaderCollection :
@@ -112,8 +112,8 @@ struct WINRT_EBO HttpContentRangeHeaderValue :
     HttpContentRangeHeaderValue(uint64_t length);
     HttpContentRangeHeaderValue(uint64_t from, uint64_t to);
     HttpContentRangeHeaderValue(uint64_t from, uint64_t to, uint64_t length);
-    static Windows::Web::Http::Headers::HttpContentRangeHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpContentRangeHeaderValue & contentRangeHeaderValue);
+    static Windows::Web::Http::Headers::HttpContentRangeHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpContentRangeHeaderValue & contentRangeHeaderValue);
 };
 
 struct WINRT_EBO HttpCookiePairHeaderValue :
@@ -121,10 +121,10 @@ struct WINRT_EBO HttpCookiePairHeaderValue :
     impl::require<HttpCookiePairHeaderValue, Windows::Foundation::IStringable>
 {
     HttpCookiePairHeaderValue(std::nullptr_t) noexcept {}
-    HttpCookiePairHeaderValue(hstring_ref name);
-    HttpCookiePairHeaderValue(hstring_ref name, hstring_ref value);
-    static Windows::Web::Http::Headers::HttpCookiePairHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpCookiePairHeaderValue & cookiePairHeaderValue);
+    HttpCookiePairHeaderValue(hstring_view name);
+    HttpCookiePairHeaderValue(hstring_view name, hstring_view value);
+    static Windows::Web::Http::Headers::HttpCookiePairHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpCookiePairHeaderValue & cookiePairHeaderValue);
 };
 
 struct WINRT_EBO HttpCookiePairHeaderValueCollection :
@@ -139,10 +139,10 @@ struct WINRT_EBO HttpCredentialsHeaderValue :
     impl::require<HttpCredentialsHeaderValue, Windows::Foundation::IStringable>
 {
     HttpCredentialsHeaderValue(std::nullptr_t) noexcept {}
-    HttpCredentialsHeaderValue(hstring_ref scheme);
-    HttpCredentialsHeaderValue(hstring_ref scheme, hstring_ref token);
-    static Windows::Web::Http::Headers::HttpCredentialsHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpCredentialsHeaderValue & credentialsHeaderValue);
+    HttpCredentialsHeaderValue(hstring_view scheme);
+    HttpCredentialsHeaderValue(hstring_view scheme, hstring_view token);
+    static Windows::Web::Http::Headers::HttpCredentialsHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpCredentialsHeaderValue & credentialsHeaderValue);
 };
 
 struct WINRT_EBO HttpDateOrDeltaHeaderValue :
@@ -150,8 +150,8 @@ struct WINRT_EBO HttpDateOrDeltaHeaderValue :
     impl::require<HttpDateOrDeltaHeaderValue, Windows::Foundation::IStringable>
 {
     HttpDateOrDeltaHeaderValue(std::nullptr_t) noexcept {}
-    static Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue & dateOrDeltaHeaderValue);
+    static Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpDateOrDeltaHeaderValue & dateOrDeltaHeaderValue);
 };
 
 struct WINRT_EBO HttpExpectationHeaderValue :
@@ -159,10 +159,10 @@ struct WINRT_EBO HttpExpectationHeaderValue :
     impl::require<HttpExpectationHeaderValue, Windows::Foundation::IStringable>
 {
     HttpExpectationHeaderValue(std::nullptr_t) noexcept {}
-    HttpExpectationHeaderValue(hstring_ref name);
-    HttpExpectationHeaderValue(hstring_ref name, hstring_ref value);
-    static Windows::Web::Http::Headers::HttpExpectationHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpExpectationHeaderValue & expectationHeaderValue);
+    HttpExpectationHeaderValue(hstring_view name);
+    HttpExpectationHeaderValue(hstring_view name, hstring_view value);
+    static Windows::Web::Http::Headers::HttpExpectationHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpExpectationHeaderValue & expectationHeaderValue);
 };
 
 struct WINRT_EBO HttpExpectationHeaderValueCollection :
@@ -184,10 +184,10 @@ struct WINRT_EBO HttpLanguageRangeWithQualityHeaderValue :
     impl::require<HttpLanguageRangeWithQualityHeaderValue, Windows::Foundation::IStringable>
 {
     HttpLanguageRangeWithQualityHeaderValue(std::nullptr_t) noexcept {}
-    HttpLanguageRangeWithQualityHeaderValue(hstring_ref languageRange);
-    HttpLanguageRangeWithQualityHeaderValue(hstring_ref languageRange, double quality);
-    static Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue & languageRangeWithQualityHeaderValue);
+    HttpLanguageRangeWithQualityHeaderValue(hstring_view languageRange);
+    HttpLanguageRangeWithQualityHeaderValue(hstring_view languageRange, double quality);
+    static Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpLanguageRangeWithQualityHeaderValue & languageRangeWithQualityHeaderValue);
 };
 
 struct WINRT_EBO HttpLanguageRangeWithQualityHeaderValueCollection :
@@ -202,9 +202,9 @@ struct WINRT_EBO HttpMediaTypeHeaderValue :
     impl::require<HttpMediaTypeHeaderValue, Windows::Foundation::IStringable>
 {
     HttpMediaTypeHeaderValue(std::nullptr_t) noexcept {}
-    HttpMediaTypeHeaderValue(hstring_ref mediaType);
-    static Windows::Web::Http::Headers::HttpMediaTypeHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpMediaTypeHeaderValue & mediaTypeHeaderValue);
+    HttpMediaTypeHeaderValue(hstring_view mediaType);
+    static Windows::Web::Http::Headers::HttpMediaTypeHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpMediaTypeHeaderValue & mediaTypeHeaderValue);
 };
 
 struct WINRT_EBO HttpMediaTypeWithQualityHeaderValue :
@@ -212,10 +212,10 @@ struct WINRT_EBO HttpMediaTypeWithQualityHeaderValue :
     impl::require<HttpMediaTypeWithQualityHeaderValue, Windows::Foundation::IStringable>
 {
     HttpMediaTypeWithQualityHeaderValue(std::nullptr_t) noexcept {}
-    HttpMediaTypeWithQualityHeaderValue(hstring_ref mediaType);
-    HttpMediaTypeWithQualityHeaderValue(hstring_ref mediaType, double quality);
-    static Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue & mediaTypeWithQualityHeaderValue);
+    HttpMediaTypeWithQualityHeaderValue(hstring_view mediaType);
+    HttpMediaTypeWithQualityHeaderValue(hstring_view mediaType, double quality);
+    static Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpMediaTypeWithQualityHeaderValue & mediaTypeWithQualityHeaderValue);
 };
 
 struct WINRT_EBO HttpMediaTypeWithQualityHeaderValueCollection :
@@ -237,10 +237,10 @@ struct WINRT_EBO HttpNameValueHeaderValue :
     impl::require<HttpNameValueHeaderValue, Windows::Foundation::IStringable>
 {
     HttpNameValueHeaderValue(std::nullptr_t) noexcept {}
-    HttpNameValueHeaderValue(hstring_ref name);
-    HttpNameValueHeaderValue(hstring_ref name, hstring_ref value);
-    static Windows::Web::Http::Headers::HttpNameValueHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpNameValueHeaderValue & nameValueHeaderValue);
+    HttpNameValueHeaderValue(hstring_view name);
+    HttpNameValueHeaderValue(hstring_view name, hstring_view value);
+    static Windows::Web::Http::Headers::HttpNameValueHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpNameValueHeaderValue & nameValueHeaderValue);
 };
 
 struct WINRT_EBO HttpProductHeaderValue :
@@ -248,10 +248,10 @@ struct WINRT_EBO HttpProductHeaderValue :
     impl::require<HttpProductHeaderValue, Windows::Foundation::IStringable>
 {
     HttpProductHeaderValue(std::nullptr_t) noexcept {}
-    HttpProductHeaderValue(hstring_ref productName);
-    HttpProductHeaderValue(hstring_ref productName, hstring_ref productVersion);
-    static Windows::Web::Http::Headers::HttpProductHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpProductHeaderValue & productHeaderValue);
+    HttpProductHeaderValue(hstring_view productName);
+    HttpProductHeaderValue(hstring_view productName, hstring_view productVersion);
+    static Windows::Web::Http::Headers::HttpProductHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpProductHeaderValue & productHeaderValue);
 };
 
 struct WINRT_EBO HttpProductInfoHeaderValue :
@@ -259,10 +259,10 @@ struct WINRT_EBO HttpProductInfoHeaderValue :
     impl::require<HttpProductInfoHeaderValue, Windows::Foundation::IStringable>
 {
     HttpProductInfoHeaderValue(std::nullptr_t) noexcept {}
-    HttpProductInfoHeaderValue(hstring_ref productComment);
-    HttpProductInfoHeaderValue(hstring_ref productName, hstring_ref productVersion);
-    static Windows::Web::Http::Headers::HttpProductInfoHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpProductInfoHeaderValue & productInfoHeaderValue);
+    HttpProductInfoHeaderValue(hstring_view productComment);
+    HttpProductInfoHeaderValue(hstring_view productName, hstring_view productVersion);
+    static Windows::Web::Http::Headers::HttpProductInfoHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpProductInfoHeaderValue & productInfoHeaderValue);
 };
 
 struct WINRT_EBO HttpProductInfoHeaderValueCollection :
@@ -291,9 +291,9 @@ struct WINRT_EBO HttpTransferCodingHeaderValue :
     impl::require<HttpTransferCodingHeaderValue, Windows::Foundation::IStringable>
 {
     HttpTransferCodingHeaderValue(std::nullptr_t) noexcept {}
-    HttpTransferCodingHeaderValue(hstring_ref input);
-    static Windows::Web::Http::Headers::HttpTransferCodingHeaderValue Parse(hstring_ref input);
-    static bool TryParse(hstring_ref input, Windows::Web::Http::Headers::HttpTransferCodingHeaderValue & transferCodingHeaderValue);
+    HttpTransferCodingHeaderValue(hstring_view input);
+    static Windows::Web::Http::Headers::HttpTransferCodingHeaderValue Parse(hstring_view input);
+    static bool TryParse(hstring_view input, Windows::Web::Http::Headers::HttpTransferCodingHeaderValue & transferCodingHeaderValue);
 };
 
 struct WINRT_EBO HttpTransferCodingHeaderValueCollection :

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -149,6 +149,11 @@ template <> struct __declspec(uuid("4c3f50e9-90e3-5a30-9015-4aa0376904f3")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_87975fee_1e75_5b1b_b60b_01ba232e1051
+#define WINRT_GENERIC_87975fee_1e75_5b1b_b60b_01ba232e1051
+template <> struct __declspec(uuid("87975fee-1e75-5b1b-b60b-01ba232e1051")) __declspec(novtable) IVector<Windows::Security::Cryptography::Certificates::CmsSignerInfo> : impl_IVector<Windows::Security::Cryptography::Certificates::CmsSignerInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_ba691628_d419_5e0a_b924_03ebc236b11e
 #define WINRT_GENERIC_ba691628_d419_5e0a_b924_03ebc236b11e
 template <> struct __declspec(uuid("ba691628-d419-5e0a-b924-03ebc236b11e")) __declspec(novtable) IIterator<Windows::Security::Cryptography::Certificates::CmsSignerInfo> : impl_IIterator<Windows::Security::Cryptography::Certificates::CmsSignerInfo> {};
@@ -179,715 +184,284 @@ template <> struct __declspec(uuid("1896faee-23e2-59ca-9802-0f48eed98ef4")) __de
 
 namespace Windows::Security::Cryptography::Certificates {
 
-template <typename D>
-struct WINRT_EBO impl_ICertificate
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Certificates::CertificateChain> BuildChainAsync(const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> & certificates) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Certificates::CertificateChain> BuildChainAsync(const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> & certificates, const Windows::Security::Cryptography::Certificates::ChainBuildingParameters & parameters) const;
-    com_array<uint8_t> SerialNumber() const;
-    com_array<uint8_t> GetHashValue() const;
-    com_array<uint8_t> GetHashValue(hstring_ref hashAlgorithmName) const;
-    Windows::Storage::Streams::IBuffer GetCertificateBlob() const;
-    hstring Subject() const;
-    hstring Issuer() const;
-    bool HasPrivateKey() const;
-    bool IsStronglyProtected() const;
-    Windows::Foundation::DateTime ValidFrom() const;
-    Windows::Foundation::DateTime ValidTo() const;
-    Windows::Foundation::Collections::IVectorView<hstring> EnhancedKeyUsages() const;
-    void FriendlyName(hstring_ref value) const;
-    hstring FriendlyName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificate2
-{
-    bool IsSecurityDeviceBound() const;
-    Windows::Security::Cryptography::Certificates::CertificateKeyUsages KeyUsages() const;
-    hstring KeyAlgorithmName() const;
-    hstring SignatureAlgorithmName() const;
-    hstring SignatureHashAlgorithmName() const;
-    Windows::Security::Cryptography::Certificates::SubjectAlternativeNameInfo SubjectAlternativeName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificate3
-{
-    bool IsPerUser() const;
-    hstring StoreName() const;
-    hstring KeyStorageProviderName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateChain
-{
-    Windows::Security::Cryptography::Certificates::ChainValidationResult Validate() const;
-    Windows::Security::Cryptography::Certificates::ChainValidationResult Validate(const Windows::Security::Cryptography::Certificates::ChainValidationParameters & parameter) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> GetCertificates(bool includeRoot) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateEnrollmentManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<hstring> CreateRequestAsync(const Windows::Security::Cryptography::Certificates::CertificateRequestProperties & request) const;
-    Windows::Foundation::IAsyncAction InstallCertificateAsync(hstring_ref certificate, Windows::Security::Cryptography::Certificates::InstallOptions installOption) const;
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, Windows::Security::Cryptography::Certificates::ExportOption exportable, Windows::Security::Cryptography::Certificates::KeyProtectionLevel keyProtectionLevel, Windows::Security::Cryptography::Certificates::InstallOptions installOption, hstring_ref friendlyName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateEnrollmentManagerStatics2
-{
-    Windows::Security::Cryptography::Certificates::UserCertificateEnrollmentManager UserCertificateEnrollmentManager() const;
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, Windows::Security::Cryptography::Certificates::ExportOption exportable, Windows::Security::Cryptography::Certificates::KeyProtectionLevel keyProtectionLevel, Windows::Security::Cryptography::Certificates::InstallOptions installOption, hstring_ref friendlyName, hstring_ref keyStorageProvider) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateEnrollmentManagerStatics3
-{
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, const Windows::Security::Cryptography::Certificates::PfxImportParameters & pfxImportParameters) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateFactory
-{
-    Windows::Security::Cryptography::Certificates::Certificate CreateCertificate(const Windows::Storage::Streams::IBuffer & certBlob) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateKeyUsages
-{
-    bool EncipherOnly() const;
-    void EncipherOnly(bool value) const;
-    bool CrlSign() const;
-    void CrlSign(bool value) const;
-    bool KeyCertificateSign() const;
-    void KeyCertificateSign(bool value) const;
-    bool KeyAgreement() const;
-    void KeyAgreement(bool value) const;
-    bool DataEncipherment() const;
-    void DataEncipherment(bool value) const;
-    bool KeyEncipherment() const;
-    void KeyEncipherment(bool value) const;
-    bool NonRepudiation() const;
-    void NonRepudiation(bool value) const;
-    bool DigitalSignature() const;
-    void DigitalSignature(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateQuery
-{
-    Windows::Foundation::Collections::IVector<hstring> EnhancedKeyUsages() const;
-    hstring IssuerName() const;
-    void IssuerName(hstring_ref value) const;
-    hstring FriendlyName() const;
-    void FriendlyName(hstring_ref value) const;
-    com_array<uint8_t> Thumbprint() const;
-    void Thumbprint(array_ref<const uint8_t> value) const;
-    bool HardwareOnly() const;
-    void HardwareOnly(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateQuery2
-{
-    bool IncludeDuplicates() const;
-    void IncludeDuplicates(bool value) const;
-    bool IncludeExpiredCertificates() const;
-    void IncludeExpiredCertificates(bool value) const;
-    hstring StoreName() const;
-    void StoreName(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateRequestProperties
-{
-    hstring Subject() const;
-    void Subject(hstring_ref value) const;
-    hstring KeyAlgorithmName() const;
-    void KeyAlgorithmName(hstring_ref value) const;
-    uint32_t KeySize() const;
-    void KeySize(uint32_t value) const;
-    hstring FriendlyName() const;
-    void FriendlyName(hstring_ref value) const;
-    hstring HashAlgorithmName() const;
-    void HashAlgorithmName(hstring_ref value) const;
-    Windows::Security::Cryptography::Certificates::ExportOption Exportable() const;
-    void Exportable(Windows::Security::Cryptography::Certificates::ExportOption value) const;
-    Windows::Security::Cryptography::Certificates::EnrollKeyUsages KeyUsages() const;
-    void KeyUsages(Windows::Security::Cryptography::Certificates::EnrollKeyUsages value) const;
-    Windows::Security::Cryptography::Certificates::KeyProtectionLevel KeyProtectionLevel() const;
-    void KeyProtectionLevel(Windows::Security::Cryptography::Certificates::KeyProtectionLevel value) const;
-    hstring KeyStorageProviderName() const;
-    void KeyStorageProviderName(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateRequestProperties2
-{
-    hstring SmartcardReaderName() const;
-    void SmartcardReaderName(hstring_ref value) const;
-    Windows::Security::Cryptography::Certificates::Certificate SigningCertificate() const;
-    void SigningCertificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-    Windows::Security::Cryptography::Certificates::Certificate AttestationCredentialCertificate() const;
-    void AttestationCredentialCertificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateRequestProperties3
-{
-    hstring CurveName() const;
-    void CurveName(hstring_ref value) const;
-    com_array<uint8_t> CurveParameters() const;
-    void CurveParameters(array_ref<const uint8_t> value) const;
-    hstring ContainerNamePrefix() const;
-    void ContainerNamePrefix(hstring_ref value) const;
-    hstring ContainerName() const;
-    void ContainerName(hstring_ref value) const;
-    bool UseExistingKey() const;
-    void UseExistingKey(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateStore
-{
-    void Add(const Windows::Security::Cryptography::Certificates::Certificate & certificate) const;
-    void Delete(const Windows::Security::Cryptography::Certificates::Certificate & certificate) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateStore2
-{
-    hstring Name() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateStoresStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate>> FindAllAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate>> FindAllAsync(const Windows::Security::Cryptography::Certificates::CertificateQuery & query) const;
-    Windows::Security::Cryptography::Certificates::CertificateStore TrustedRootCertificationAuthorities() const;
-    Windows::Security::Cryptography::Certificates::CertificateStore IntermediateCertificationAuthorities() const;
-    Windows::Security::Cryptography::Certificates::CertificateStore GetStoreByName(hstring_ref storeName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICertificateStoresStatics2
-{
-    Windows::Security::Cryptography::Certificates::UserCertificateStore GetUserStoreByName(hstring_ref storeName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChainBuildingParameters
-{
-    Windows::Foundation::Collections::IVector<hstring> EnhancedKeyUsages() const;
-    Windows::Foundation::DateTime ValidationTimestamp() const;
-    void ValidationTimestamp(const Windows::Foundation::DateTime & value) const;
-    bool RevocationCheckEnabled() const;
-    void RevocationCheckEnabled(bool value) const;
-    bool NetworkRetrievalEnabled() const;
-    void NetworkRetrievalEnabled(bool value) const;
-    bool AuthorityInformationAccessEnabled() const;
-    void AuthorityInformationAccessEnabled(bool value) const;
-    bool CurrentTimeValidationEnabled() const;
-    void CurrentTimeValidationEnabled(bool value) const;
-    Windows::Foundation::Collections::IVector<Windows::Security::Cryptography::Certificates::Certificate> ExclusiveTrustRoots() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IChainValidationParameters
-{
-    Windows::Security::Cryptography::Certificates::CertificateChainPolicy CertificateChainPolicy() const;
-    void CertificateChainPolicy(Windows::Security::Cryptography::Certificates::CertificateChainPolicy value) const;
-    Windows::Networking::HostName ServerDnsName() const;
-    void ServerDnsName(const Windows::Networking::HostName & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsAttachedSignature
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> Certificates() const;
-    com_array<uint8_t> Content() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::CmsSignerInfo> Signers() const;
-    Windows::Security::Cryptography::Certificates::SignatureValidationResult VerifySignature() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsAttachedSignatureFactory
-{
-    Windows::Security::Cryptography::Certificates::CmsAttachedSignature CreateCmsAttachedSignature(const Windows::Storage::Streams::IBuffer & inputBlob) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsAttachedSignatureStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> GenerateSignatureAsync(const Windows::Storage::Streams::IBuffer & data, const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::CmsSignerInfo> & signers, const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> & certificates) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsDetachedSignature
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> Certificates() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::CmsSignerInfo> Signers() const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Cryptography::Certificates::SignatureValidationResult> VerifySignatureAsync(const Windows::Storage::Streams::IInputStream & data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsDetachedSignatureFactory
-{
-    Windows::Security::Cryptography::Certificates::CmsDetachedSignature CreateCmsDetachedSignature(const Windows::Storage::Streams::IBuffer & inputBlob) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsDetachedSignatureStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> GenerateSignatureAsync(const Windows::Storage::Streams::IInputStream & data, const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::CmsSignerInfo> & signers, const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> & certificates) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsSignerInfo
-{
-    Windows::Security::Cryptography::Certificates::Certificate Certificate() const;
-    void Certificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-    hstring HashAlgorithmName() const;
-    void HashAlgorithmName(hstring_ref value) const;
-    Windows::Security::Cryptography::Certificates::CmsTimestampInfo TimestampInfo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICmsTimestampInfo
-{
-    Windows::Security::Cryptography::Certificates::Certificate SigningCertificate() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> Certificates() const;
-    Windows::Foundation::DateTime Timestamp() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyAlgorithmNamesStatics
-{
-    hstring Rsa() const;
-    hstring Dsa() const;
-    hstring Ecdh256() const;
-    hstring Ecdh384() const;
-    hstring Ecdh521() const;
-    hstring Ecdsa256() const;
-    hstring Ecdsa384() const;
-    hstring Ecdsa521() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyAlgorithmNamesStatics2
-{
-    hstring Ecdsa() const;
-    hstring Ecdh() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyAttestationHelperStatics
-{
-    Windows::Foundation::IAsyncOperation<hstring> DecryptTpmAttestationCredentialAsync(hstring_ref credential) const;
-    hstring GetTpmAttestationCredentialId(hstring_ref credential) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyAttestationHelperStatics2
-{
-    Windows::Foundation::IAsyncOperation<hstring> DecryptTpmAttestationCredentialAsync(hstring_ref credential, hstring_ref containerName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyStorageProviderNamesStatics
-{
-    hstring SoftwareKeyStorageProvider() const;
-    hstring SmartcardKeyStorageProvider() const;
-    hstring PlatformKeyStorageProvider() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKeyStorageProviderNamesStatics2
-{
-    hstring PassportKeyStorageProvider() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPfxImportParameters
-{
-    Windows::Security::Cryptography::Certificates::ExportOption Exportable() const;
-    void Exportable(Windows::Security::Cryptography::Certificates::ExportOption value) const;
-    Windows::Security::Cryptography::Certificates::KeyProtectionLevel KeyProtectionLevel() const;
-    void KeyProtectionLevel(Windows::Security::Cryptography::Certificates::KeyProtectionLevel value) const;
-    Windows::Security::Cryptography::Certificates::InstallOptions InstallOptions() const;
-    void InstallOptions(Windows::Security::Cryptography::Certificates::InstallOptions value) const;
-    hstring FriendlyName() const;
-    void FriendlyName(hstring_ref value) const;
-    hstring KeyStorageProviderName() const;
-    void KeyStorageProviderName(hstring_ref value) const;
-    hstring ContainerNamePrefix() const;
-    void ContainerNamePrefix(hstring_ref value) const;
-    hstring ReaderName() const;
-    void ReaderName(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStandardCertificateStoreNamesStatics
-{
-    hstring Personal() const;
-    hstring TrustedRootCertificationAuthorities() const;
-    hstring IntermediateCertificationAuthorities() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISubjectAlternativeNameInfo
-{
-    Windows::Foundation::Collections::IVectorView<hstring> EmailName() const;
-    Windows::Foundation::Collections::IVectorView<hstring> IPAddress() const;
-    Windows::Foundation::Collections::IVectorView<hstring> Url() const;
-    Windows::Foundation::Collections::IVectorView<hstring> DnsName() const;
-    Windows::Foundation::Collections::IVectorView<hstring> DistinguishedName() const;
-    Windows::Foundation::Collections::IVectorView<hstring> PrincipalName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserCertificateEnrollmentManager
-{
-    Windows::Foundation::IAsyncOperation<hstring> CreateRequestAsync(const Windows::Security::Cryptography::Certificates::CertificateRequestProperties & request) const;
-    Windows::Foundation::IAsyncAction InstallCertificateAsync(hstring_ref certificate, Windows::Security::Cryptography::Certificates::InstallOptions installOption) const;
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, Windows::Security::Cryptography::Certificates::ExportOption exportable, Windows::Security::Cryptography::Certificates::KeyProtectionLevel keyProtectionLevel, Windows::Security::Cryptography::Certificates::InstallOptions installOption, hstring_ref friendlyName) const;
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, Windows::Security::Cryptography::Certificates::ExportOption exportable, Windows::Security::Cryptography::Certificates::KeyProtectionLevel keyProtectionLevel, Windows::Security::Cryptography::Certificates::InstallOptions installOption, hstring_ref friendlyName, hstring_ref keyStorageProvider) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserCertificateEnrollmentManager2
-{
-    Windows::Foundation::IAsyncAction ImportPfxDataAsync(hstring_ref pfxData, hstring_ref password, const Windows::Security::Cryptography::Certificates::PfxImportParameters & pfxImportParameters) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserCertificateStore
-{
-    Windows::Foundation::IAsyncOperation<bool> RequestAddAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate) const;
-    Windows::Foundation::IAsyncOperation<bool> RequestDeleteAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate) const;
-    hstring Name() const;
-};
-
 struct ICertificate :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificate>
 {
     ICertificate(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificate>(m_ptr); }
 };
 
 struct ICertificate2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificate2>
 {
     ICertificate2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificate2>(m_ptr); }
 };
 
 struct ICertificate3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificate3>
 {
     ICertificate3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificate3>(m_ptr); }
 };
 
 struct ICertificateChain :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateChain>
 {
     ICertificateChain(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateChain>(m_ptr); }
 };
 
 struct ICertificateEnrollmentManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateEnrollmentManagerStatics>
 {
     ICertificateEnrollmentManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateEnrollmentManagerStatics>(m_ptr); }
 };
 
 struct ICertificateEnrollmentManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateEnrollmentManagerStatics2>
 {
     ICertificateEnrollmentManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateEnrollmentManagerStatics2>(m_ptr); }
 };
 
 struct ICertificateEnrollmentManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateEnrollmentManagerStatics3>
 {
     ICertificateEnrollmentManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateEnrollmentManagerStatics3>(m_ptr); }
 };
 
 struct ICertificateFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateFactory>
 {
     ICertificateFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateFactory>(m_ptr); }
 };
 
 struct ICertificateKeyUsages :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateKeyUsages>
 {
     ICertificateKeyUsages(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateKeyUsages>(m_ptr); }
 };
 
 struct ICertificateQuery :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateQuery>
 {
     ICertificateQuery(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateQuery>(m_ptr); }
 };
 
 struct ICertificateQuery2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateQuery2>
 {
     ICertificateQuery2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateQuery2>(m_ptr); }
 };
 
 struct ICertificateRequestProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateRequestProperties>
 {
     ICertificateRequestProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateRequestProperties>(m_ptr); }
 };
 
 struct ICertificateRequestProperties2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateRequestProperties2>
 {
     ICertificateRequestProperties2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateRequestProperties2>(m_ptr); }
 };
 
 struct ICertificateRequestProperties3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateRequestProperties3>
 {
     ICertificateRequestProperties3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateRequestProperties3>(m_ptr); }
 };
 
 struct ICertificateStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateStore>
 {
     ICertificateStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateStore>(m_ptr); }
 };
 
 struct ICertificateStore2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateStore2>
 {
     ICertificateStore2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateStore2>(m_ptr); }
 };
 
 struct ICertificateStoresStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateStoresStatics>
 {
     ICertificateStoresStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateStoresStatics>(m_ptr); }
 };
 
 struct ICertificateStoresStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICertificateStoresStatics2>
 {
     ICertificateStoresStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICertificateStoresStatics2>(m_ptr); }
 };
 
 struct IChainBuildingParameters :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChainBuildingParameters>
 {
     IChainBuildingParameters(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChainBuildingParameters>(m_ptr); }
 };
 
 struct IChainValidationParameters :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IChainValidationParameters>
 {
     IChainValidationParameters(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IChainValidationParameters>(m_ptr); }
 };
 
 struct ICmsAttachedSignature :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsAttachedSignature>
 {
     ICmsAttachedSignature(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsAttachedSignature>(m_ptr); }
 };
 
 struct ICmsAttachedSignatureFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsAttachedSignatureFactory>
 {
     ICmsAttachedSignatureFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsAttachedSignatureFactory>(m_ptr); }
 };
 
 struct ICmsAttachedSignatureStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsAttachedSignatureStatics>
 {
     ICmsAttachedSignatureStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsAttachedSignatureStatics>(m_ptr); }
 };
 
 struct ICmsDetachedSignature :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsDetachedSignature>
 {
     ICmsDetachedSignature(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsDetachedSignature>(m_ptr); }
 };
 
 struct ICmsDetachedSignatureFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsDetachedSignatureFactory>
 {
     ICmsDetachedSignatureFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsDetachedSignatureFactory>(m_ptr); }
 };
 
 struct ICmsDetachedSignatureStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsDetachedSignatureStatics>
 {
     ICmsDetachedSignatureStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsDetachedSignatureStatics>(m_ptr); }
 };
 
 struct ICmsSignerInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsSignerInfo>
 {
     ICmsSignerInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsSignerInfo>(m_ptr); }
 };
 
 struct ICmsTimestampInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICmsTimestampInfo>
 {
     ICmsTimestampInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICmsTimestampInfo>(m_ptr); }
 };
 
 struct IKeyAlgorithmNamesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyAlgorithmNamesStatics>
 {
     IKeyAlgorithmNamesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyAlgorithmNamesStatics>(m_ptr); }
 };
 
 struct IKeyAlgorithmNamesStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyAlgorithmNamesStatics2>
 {
     IKeyAlgorithmNamesStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyAlgorithmNamesStatics2>(m_ptr); }
 };
 
 struct IKeyAttestationHelperStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyAttestationHelperStatics>
 {
     IKeyAttestationHelperStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyAttestationHelperStatics>(m_ptr); }
 };
 
 struct IKeyAttestationHelperStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyAttestationHelperStatics2>
 {
     IKeyAttestationHelperStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyAttestationHelperStatics2>(m_ptr); }
 };
 
 struct IKeyStorageProviderNamesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyStorageProviderNamesStatics>
 {
     IKeyStorageProviderNamesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyStorageProviderNamesStatics>(m_ptr); }
 };
 
 struct IKeyStorageProviderNamesStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKeyStorageProviderNamesStatics2>
 {
     IKeyStorageProviderNamesStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKeyStorageProviderNamesStatics2>(m_ptr); }
 };
 
 struct IPfxImportParameters :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPfxImportParameters>
 {
     IPfxImportParameters(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPfxImportParameters>(m_ptr); }
 };
 
 struct IStandardCertificateStoreNamesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStandardCertificateStoreNamesStatics>
 {
     IStandardCertificateStoreNamesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStandardCertificateStoreNamesStatics>(m_ptr); }
 };
 
 struct ISubjectAlternativeNameInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISubjectAlternativeNameInfo>
 {
     ISubjectAlternativeNameInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISubjectAlternativeNameInfo>(m_ptr); }
 };
 
 struct IUserCertificateEnrollmentManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserCertificateEnrollmentManager>
 {
     IUserCertificateEnrollmentManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserCertificateEnrollmentManager>(m_ptr); }
 };
 
 struct IUserCertificateEnrollmentManager2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserCertificateEnrollmentManager2>
 {
     IUserCertificateEnrollmentManager2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserCertificateEnrollmentManager2>(m_ptr); }
 };
 
 struct IUserCertificateStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserCertificateStore>
 {
     IUserCertificateStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserCertificateStore>(m_ptr); }
 };
 
 }

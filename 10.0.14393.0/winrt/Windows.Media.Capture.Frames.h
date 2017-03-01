@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -26,11 +29,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IBufferMediaFrame> : produce_base<D, Windows::Media::Capture::Frames::IBufferMediaFrame>
 {
-    HRESULT __stdcall get_FrameReference(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
+    HRESULT __stdcall get_FrameReference(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameReference());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameReference());
             return S_OK;
         }
         catch (...)
@@ -40,11 +44,12 @@ struct produce<D, Windows::Media::Capture::Frames::IBufferMediaFrame> : produce_
         }
     }
 
-    HRESULT __stdcall get_Buffer(abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Buffer(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Buffer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Buffer());
             return S_OK;
         }
         catch (...)
@@ -58,11 +63,12 @@ struct produce<D, Windows::Media::Capture::Frames::IBufferMediaFrame> : produce_
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrame> : produce_base<D, Windows::Media::Capture::Frames::IDepthMediaFrame>
 {
-    HRESULT __stdcall get_FrameReference(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
+    HRESULT __stdcall get_FrameReference(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameReference());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameReference());
             return S_OK;
         }
         catch (...)
@@ -72,11 +78,12 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_VideoMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
+    HRESULT __stdcall get_VideoMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoMediaFrame());
             return S_OK;
         }
         catch (...)
@@ -86,11 +93,12 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DepthFormat(abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_DepthFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DepthFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DepthFormat());
             return S_OK;
         }
         catch (...)
@@ -100,11 +108,12 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_TryCreateCoordinateMapper(abi_arg_in<Windows::Media::Devices::Core::ICameraIntrinsics> cameraIntrinsics, abi_arg_in<Windows::Perception::Spatial::ISpatialCoordinateSystem> coordinateSystem, abi_arg_out<Windows::Media::Devices::Core::IDepthCorrelatedCoordinateMapper> value) noexcept override
+    HRESULT __stdcall abi_TryCreateCoordinateMapper(impl::abi_arg_in<Windows::Media::Devices::Core::ICameraIntrinsics> cameraIntrinsics, impl::abi_arg_in<Windows::Perception::Spatial::ISpatialCoordinateSystem> coordinateSystem, impl::abi_arg_out<Windows::Media::Devices::Core::IDepthCorrelatedCoordinateMapper> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TryCreateCoordinateMapper(*reinterpret_cast<const Windows::Media::Devices::Core::CameraIntrinsics *>(&cameraIntrinsics), *reinterpret_cast<const Windows::Perception::Spatial::SpatialCoordinateSystem *>(&coordinateSystem)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryCreateCoordinateMapper(*reinterpret_cast<const Windows::Media::Devices::Core::CameraIntrinsics *>(&cameraIntrinsics), *reinterpret_cast<const Windows::Perception::Spatial::SpatialCoordinateSystem *>(&coordinateSystem)));
             return S_OK;
         }
         catch (...)
@@ -118,11 +127,12 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrame> : produce_b
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrameFormat> : produce_base<D, Windows::Media::Capture::Frames::IDepthMediaFrameFormat>
 {
-    HRESULT __stdcall get_VideoFormat(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_VideoFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoFormat());
             return S_OK;
         }
         catch (...)
@@ -136,7 +146,8 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrameFormat> : pro
     {
         try
         {
-            *value = detach(this->shim().DepthScaleInMeters());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DepthScaleInMeters());
             return S_OK;
         }
         catch (...)
@@ -149,11 +160,12 @@ struct produce<D, Windows::Media::Capture::Frames::IDepthMediaFrameFormat> : pro
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IInfraredMediaFrame> : produce_base<D, Windows::Media::Capture::Frames::IInfraredMediaFrame>
 {
-    HRESULT __stdcall get_FrameReference(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
+    HRESULT __stdcall get_FrameReference(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameReference());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameReference());
             return S_OK;
         }
         catch (...)
@@ -163,11 +175,12 @@ struct produce<D, Windows::Media::Capture::Frames::IInfraredMediaFrame> : produc
         }
     }
 
-    HRESULT __stdcall get_VideoMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
+    HRESULT __stdcall get_VideoMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoMediaFrame());
             return S_OK;
         }
         catch (...)
@@ -181,7 +194,8 @@ struct produce<D, Windows::Media::Capture::Frames::IInfraredMediaFrame> : produc
     {
         try
         {
-            *value = detach(this->shim().IsIlluminated());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsIlluminated());
             return S_OK;
         }
         catch (...)
@@ -198,11 +212,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameArrivedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameFormat>
 {
-    HRESULT __stdcall get_MajorType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MajorType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MajorType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MajorType());
             return S_OK;
         }
         catch (...)
@@ -212,11 +227,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_
         }
     }
 
-    HRESULT __stdcall get_Subtype(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subtype(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Subtype());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Subtype());
             return S_OK;
         }
         catch (...)
@@ -226,11 +242,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_
         }
     }
 
-    HRESULT __stdcall get_FrameRate(abi_arg_out<Windows::Media::MediaProperties::IMediaRatio> value) noexcept override
+    HRESULT __stdcall get_FrameRate(impl::abi_arg_out<Windows::Media::MediaProperties::IMediaRatio> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameRate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameRate());
             return S_OK;
         }
         catch (...)
@@ -240,11 +257,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -254,11 +272,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_
         }
     }
 
-    HRESULT __stdcall get_VideoFormat(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_VideoFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoFormat());
             return S_OK;
         }
         catch (...)
@@ -272,11 +291,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameFormat> : produce_
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReader> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameReader>
 {
-    HRESULT __stdcall add_FrameArrived(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_FrameArrived(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().FrameArrived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().FrameArrived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -289,6 +309,7 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReader> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FrameArrived(token);
             return S_OK;
         }
@@ -298,11 +319,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReader> : produce_
         }
     }
 
-    HRESULT __stdcall abi_TryAcquireLatestFrame(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
+    HRESULT __stdcall abi_TryAcquireLatestFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TryAcquireLatestFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryAcquireLatestFrame());
             return S_OK;
         }
         catch (...)
@@ -312,11 +334,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReader> : produce_
         }
     }
 
-    HRESULT __stdcall abi_StartAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameReaderStartStatus>> operation) noexcept override
+    HRESULT __stdcall abi_StartAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameReaderStartStatus>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().StartAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().StartAsync());
             return S_OK;
         }
         catch (...)
@@ -326,11 +349,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReader> : produce_
         }
     }
 
-    HRESULT __stdcall abi_StopAsync(abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall abi_StopAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
     {
         try
         {
-            *action = detach(this->shim().StopAsync());
+            typename D::abi_guard guard(this->shim());
+            *action = detach_abi(this->shim().StopAsync());
             return S_OK;
         }
         catch (...)
@@ -348,7 +372,8 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
     {
         try
         {
-            *value = detach(this->shim().SourceKind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourceKind());
             return S_OK;
         }
         catch (...)
@@ -357,25 +382,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
         }
     }
 
-    HRESULT __stdcall get_Format(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_Format(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Format());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_SystemRelativeTime(abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::TimeSpan>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().SystemRelativeTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Format());
             return S_OK;
         }
         catch (...)
@@ -385,24 +397,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
         }
     }
 
-    HRESULT __stdcall get_Duration(abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_SystemRelativeTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::TimeSpan>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Duration());
-            return S_OK;
-        }
-        catch (...)
-        {
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SystemRelativeTime());
             return S_OK;
         }
         catch (...)
@@ -412,11 +412,26 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
         }
     }
 
-    HRESULT __stdcall get_BufferMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IBufferMediaFrame> value) noexcept override
+    HRESULT __stdcall get_Duration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().BufferMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Duration());
+            return S_OK;
+        }
+        catch (...)
+        {
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable>> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -426,11 +441,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
         }
     }
 
-    HRESULT __stdcall get_VideoMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
+    HRESULT __stdcall get_BufferMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IBufferMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BufferMediaFrame());
             return S_OK;
         }
         catch (...)
@@ -440,11 +456,27 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
         }
     }
 
-    HRESULT __stdcall get_CoordinateSystem(abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
+    HRESULT __stdcall get_VideoMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CoordinateSystem());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoMediaFrame());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_CoordinateSystem(impl::abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CoordinateSystem());
             return S_OK;
         }
         catch (...)
@@ -458,11 +490,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameReference> : produ
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameSource>
 {
-    HRESULT __stdcall get_Info(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceInfo> value) noexcept override
+    HRESULT __stdcall get_Info(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Info());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Info());
             return S_OK;
         }
         catch (...)
@@ -472,11 +505,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall get_Controller(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceController> value) noexcept override
+    HRESULT __stdcall get_Controller(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceController> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Controller());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Controller());
             return S_OK;
         }
         catch (...)
@@ -486,11 +520,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall get_SupportedFormats(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameFormat>> value) noexcept override
+    HRESULT __stdcall get_SupportedFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameFormat>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SupportedFormats());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedFormats());
             return S_OK;
         }
         catch (...)
@@ -500,11 +535,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall get_CurrentFormat(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_CurrentFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CurrentFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CurrentFormat());
             return S_OK;
         }
         catch (...)
@@ -514,11 +550,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall abi_SetFormatAsync(abi_arg_in<Windows::Media::Capture::Frames::IMediaFrameFormat> format, abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall abi_SetFormatAsync(impl::abi_arg_in<Windows::Media::Capture::Frames::IMediaFrameFormat> format, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SetFormatAsync(*reinterpret_cast<const Windows::Media::Capture::Frames::MediaFrameFormat *>(&format)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SetFormatAsync(*reinterpret_cast<const Windows::Media::Capture::Frames::MediaFrameFormat *>(&format)));
             return S_OK;
         }
         catch (...)
@@ -528,11 +565,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall add_FormatChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_FormatChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().FormatChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().FormatChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -545,6 +583,7 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FormatChanged(token);
             return S_OK;
         }
@@ -554,11 +593,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
         }
     }
 
-    HRESULT __stdcall abi_TryGetCameraIntrinsics(abi_arg_in<Windows::Media::Capture::Frames::IMediaFrameFormat> format, abi_arg_out<Windows::Media::Devices::Core::ICameraIntrinsics> value) noexcept override
+    HRESULT __stdcall abi_TryGetCameraIntrinsics(impl::abi_arg_in<Windows::Media::Capture::Frames::IMediaFrameFormat> format, impl::abi_arg_out<Windows::Media::Devices::Core::ICameraIntrinsics> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TryGetCameraIntrinsics(*reinterpret_cast<const Windows::Media::Capture::Frames::MediaFrameFormat *>(&format)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TryGetCameraIntrinsics(*reinterpret_cast<const Windows::Media::Capture::Frames::MediaFrameFormat *>(&format)));
             return S_OK;
         }
         catch (...)
@@ -572,11 +612,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSource> : produce_
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceController> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameSourceController>
 {
-    HRESULT __stdcall abi_GetPropertyAsync(abi_arg_in<hstring> propertyId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult>> value) noexcept override
+    HRESULT __stdcall abi_GetPropertyAsync(impl::abi_arg_in<hstring> propertyId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyId)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyId)));
             return S_OK;
         }
         catch (...)
@@ -586,11 +627,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceController> 
         }
     }
 
-    HRESULT __stdcall abi_SetPropertyAsync(abi_arg_in<hstring> propertyId, abi_arg_in<Windows::IInspectable> propertyValue, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus>> value) noexcept override
+    HRESULT __stdcall abi_SetPropertyAsync(impl::abi_arg_in<hstring> propertyId, impl::abi_arg_in<Windows::Foundation::IInspectable> propertyValue, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyId), *reinterpret_cast<const Windows::IInspectable *>(&propertyValue)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyId), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&propertyValue)));
             return S_OK;
         }
         catch (...)
@@ -600,11 +642,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceController> 
         }
     }
 
-    HRESULT __stdcall get_VideoDeviceController(abi_arg_out<Windows::Media::Devices::IVideoDeviceController> value) noexcept override
+    HRESULT __stdcall get_VideoDeviceController(impl::abi_arg_out<Windows::Media::Devices::IVideoDeviceController> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoDeviceController());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoDeviceController());
             return S_OK;
         }
         catch (...)
@@ -622,7 +665,8 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGetPropertyR
     {
         try
         {
-            *value = detach(this->shim().Status());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Status());
             return S_OK;
         }
         catch (...)
@@ -631,11 +675,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGetPropertyR
         }
     }
 
-    HRESULT __stdcall get_Value(abi_arg_out<Windows::IInspectable> value) noexcept override
+    HRESULT __stdcall get_Value(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Value());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Value());
             return S_OK;
         }
         catch (...)
@@ -649,11 +694,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGetPropertyR
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroup> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroup>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -663,11 +709,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroup> : pro
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -677,11 +724,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroup> : pro
         }
     }
 
-    HRESULT __stdcall get_SourceInfos(abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceInfo>> value) noexcept override
+    HRESULT __stdcall get_SourceInfos(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceInfo>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourceInfos());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourceInfos());
             return S_OK;
         }
         catch (...)
@@ -695,11 +743,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroup> : pro
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics>
 {
-    HRESULT __stdcall abi_FindAllAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceGroup>>> value) noexcept override
+    HRESULT __stdcall abi_FindAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceGroup>>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FindAllAsync());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FindAllAsync());
             return S_OK;
         }
         catch (...)
@@ -709,11 +758,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> id, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup>> value) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&id)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&id)));
             return S_OK;
         }
         catch (...)
@@ -723,11 +773,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -741,11 +792,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : produce_base<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -759,7 +811,8 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
     {
         try
         {
-            *value = detach(this->shim().MediaStreamType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaStreamType());
             return S_OK;
         }
         catch (...)
@@ -772,7 +825,8 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
     {
         try
         {
-            *value = detach(this->shim().SourceKind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourceKind());
             return S_OK;
         }
         catch (...)
@@ -781,25 +835,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
         }
     }
 
-    HRESULT __stdcall get_SourceGroup(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceGroup> value) noexcept override
+    HRESULT __stdcall get_SourceGroup(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameSourceGroup> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SourceGroup());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_DeviceInformation(abi_arg_out<Windows::Devices::Enumeration::IDeviceInformation> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().DeviceInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SourceGroup());
             return S_OK;
         }
         catch (...)
@@ -809,11 +850,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_DeviceInformation(impl::abi_arg_out<Windows::Devices::Enumeration::IDeviceInformation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceInformation());
             return S_OK;
         }
         catch (...)
@@ -823,11 +865,27 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
         }
     }
 
-    HRESULT __stdcall get_CoordinateSystem(abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CoordinateSystem());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_CoordinateSystem(impl::abi_arg_out<Windows::Perception::Spatial::ISpatialCoordinateSystem> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CoordinateSystem());
             return S_OK;
         }
         catch (...)
@@ -841,11 +899,12 @@ struct produce<D, Windows::Media::Capture::Frames::IMediaFrameSourceInfo> : prod
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_base<D, Windows::Media::Capture::Frames::IVideoMediaFrame>
 {
-    HRESULT __stdcall get_FrameReference(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
+    HRESULT __stdcall get_FrameReference(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameReference());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameReference());
             return S_OK;
         }
         catch (...)
@@ -855,11 +914,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_VideoFormat(abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_VideoFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IVideoMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideoFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideoFormat());
             return S_OK;
         }
         catch (...)
@@ -869,11 +929,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_SoftwareBitmap(abi_arg_out<Windows::Graphics::Imaging::ISoftwareBitmap> value) noexcept override
+    HRESULT __stdcall get_SoftwareBitmap(impl::abi_arg_out<Windows::Graphics::Imaging::ISoftwareBitmap> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SoftwareBitmap());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SoftwareBitmap());
             return S_OK;
         }
         catch (...)
@@ -883,11 +944,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Direct3DSurface(abi_arg_out<Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface> value) noexcept override
+    HRESULT __stdcall get_Direct3DSurface(impl::abi_arg_out<Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Direct3DSurface());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Direct3DSurface());
             return S_OK;
         }
         catch (...)
@@ -897,11 +959,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CameraIntrinsics(abi_arg_out<Windows::Media::Devices::Core::ICameraIntrinsics> value) noexcept override
+    HRESULT __stdcall get_CameraIntrinsics(impl::abi_arg_out<Windows::Media::Devices::Core::ICameraIntrinsics> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CameraIntrinsics());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CameraIntrinsics());
             return S_OK;
         }
         catch (...)
@@ -911,11 +974,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_InfraredMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IInfraredMediaFrame> value) noexcept override
+    HRESULT __stdcall get_InfraredMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IInfraredMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InfraredMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InfraredMediaFrame());
             return S_OK;
         }
         catch (...)
@@ -925,11 +989,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DepthMediaFrame(abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrame> value) noexcept override
+    HRESULT __stdcall get_DepthMediaFrame(impl::abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DepthMediaFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DepthMediaFrame());
             return S_OK;
         }
         catch (...)
@@ -939,11 +1004,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetVideoFrame(abi_arg_out<Windows::Media::IVideoFrame> value) noexcept override
+    HRESULT __stdcall abi_GetVideoFrame(impl::abi_arg_out<Windows::Media::IVideoFrame> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetVideoFrame());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetVideoFrame());
             return S_OK;
         }
         catch (...)
@@ -957,11 +1023,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrame> : produce_b
 template <typename D>
 struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrameFormat> : produce_base<D, Windows::Media::Capture::Frames::IVideoMediaFrameFormat>
 {
-    HRESULT __stdcall get_MediaFrameFormat(abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_MediaFrameFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediaFrameFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaFrameFormat());
             return S_OK;
         }
         catch (...)
@@ -971,11 +1038,12 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrameFormat> : pro
         }
     }
 
-    HRESULT __stdcall get_DepthFormat(abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrameFormat> value) noexcept override
+    HRESULT __stdcall get_DepthFormat(impl::abi_arg_out<Windows::Media::Capture::Frames::IDepthMediaFrameFormat> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DepthFormat());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DepthFormat());
             return S_OK;
         }
         catch (...)
@@ -989,7 +1057,8 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrameFormat> : pro
     {
         try
         {
-            *value = detach(this->shim().Width());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Width());
             return S_OK;
         }
         catch (...)
@@ -1002,7 +1071,8 @@ struct produce<D, Windows::Media::Capture::Frames::IVideoMediaFrameFormat> : pro
     {
         try
         {
-            *value = detach(this->shim().Height());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Height());
             return S_OK;
         }
         catch (...)
@@ -1019,157 +1089,157 @@ namespace Windows::Media::Capture::Frames {
 template <typename D> hstring impl_IMediaFrameSourceGroup<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameSourceGroup &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroup)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaFrameSourceGroup<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameSourceGroup &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroup)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceInfo> impl_IMediaFrameSourceGroup<D>::SourceInfos() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceInfo> value;
-    check_hresult(static_cast<const IMediaFrameSourceGroup &>(static_cast<const D &>(*this))->get_SourceInfos(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroup)->get_SourceInfos(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceGroup>> impl_IMediaFrameSourceGroupStatics<D>::FindAllAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameSourceGroup>> value;
-    check_hresult(static_cast<const IMediaFrameSourceGroupStatics &>(static_cast<const D &>(*this))->abi_FindAllAsync(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroupStatics)->abi_FindAllAsync(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> impl_IMediaFrameSourceGroupStatics<D>::FromIdAsync(hstring_ref id) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> impl_IMediaFrameSourceGroupStatics<D>::FromIdAsync(hstring_view id) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> value;
-    check_hresult(static_cast<const IMediaFrameSourceGroupStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(id), put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroupStatics)->abi_FromIdAsync(get_abi(id), put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaFrameSourceGroupStatics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameSourceGroupStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGroupStatics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaFrameSourceInfo<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::MediaStreamType impl_IMediaFrameSourceInfo<D>::MediaStreamType() const
 {
     Windows::Media::Capture::MediaStreamType value {};
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_MediaStreamType(&value));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_MediaStreamType(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceKind impl_IMediaFrameSourceInfo<D>::SourceKind() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceKind value {};
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_SourceKind(&value));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_SourceKind(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceGroup impl_IMediaFrameSourceInfo<D>::SourceGroup() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceGroup value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_SourceGroup(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_SourceGroup(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::Enumeration::DeviceInformation impl_IMediaFrameSourceInfo<D>::DeviceInformation() const
 {
     Windows::Devices::Enumeration::DeviceInformation value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_DeviceInformation(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_DeviceInformation(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> impl_IMediaFrameSourceInfo<D>::Properties() const
+template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> impl_IMediaFrameSourceInfo<D>::Properties() const
 {
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> value;
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::SpatialCoordinateSystem impl_IMediaFrameSourceInfo<D>::CoordinateSystem() const
 {
     Windows::Perception::Spatial::SpatialCoordinateSystem value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSourceInfo &>(static_cast<const D &>(*this))->get_CoordinateSystem(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceInfo)->get_CoordinateSystem(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceInfo impl_IMediaFrameSource<D>::Info() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceInfo value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->get_Info(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->get_Info(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceController impl_IMediaFrameSource<D>::Controller() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceController value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->get_Controller(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->get_Controller(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameFormat> impl_IMediaFrameSource<D>::SupportedFormats() const
 {
     Windows::Foundation::Collections::IVectorView<Windows::Media::Capture::Frames::MediaFrameFormat> value;
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->get_SupportedFormats(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->get_SupportedFormats(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameFormat impl_IMediaFrameSource<D>::CurrentFormat() const
 {
     Windows::Media::Capture::Frames::MediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->get_CurrentFormat(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->get_CurrentFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IMediaFrameSource<D>::SetFormatAsync(const Windows::Media::Capture::Frames::MediaFrameFormat & format) const
 {
     Windows::Foundation::IAsyncAction value;
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->abi_SetFormatAsync(get(format), put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->abi_SetFormatAsync(get_abi(format), put_abi(value)));
     return value;
 }
 
-template <typename D> event_token impl_IMediaFrameSource<D>::FormatChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IMediaFrameSource<D>::FormatChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->add_FormatChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->add_FormatChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IMediaFrameSource> impl_IMediaFrameSource<D>::FormatChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IMediaFrameSource> impl_IMediaFrameSource<D>::FormatChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameSource, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IMediaFrameSource>(this, &ABI::Windows::Media::Capture::Frames::IMediaFrameSource::remove_FormatChanged, FormatChanged(handler));
 }
 
 template <typename D> void impl_IMediaFrameSource<D>::FormatChanged(event_token token) const
 {
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->remove_FormatChanged(token));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->remove_FormatChanged(token));
 }
 
 template <typename D> Windows::Media::Devices::Core::CameraIntrinsics impl_IMediaFrameSource<D>::TryGetCameraIntrinsics(const Windows::Media::Capture::Frames::MediaFrameFormat & format) const
 {
     Windows::Media::Devices::Core::CameraIntrinsics value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSource &>(static_cast<const D &>(*this))->abi_TryGetCameraIntrinsics(get(format), put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSource)->abi_TryGetCameraIntrinsics(get_abi(format), put_abi(value)));
     return value;
 }
 
 template <typename D> event_token impl_IMediaFrameReader<D>::FrameArrived(const Windows::Foundation::TypedEventHandler<Windows::Media::Capture::Frames::MediaFrameReader, Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IMediaFrameReader &>(static_cast<const D &>(*this))->add_FrameArrived(get(handler), &token));
+    check_hresult(WINRT_SHIM(IMediaFrameReader)->add_FrameArrived(get_abi(handler), &token));
     return token;
 }
 
@@ -1180,314 +1250,314 @@ template <typename D> event_revoker<IMediaFrameReader> impl_IMediaFrameReader<D>
 
 template <typename D> void impl_IMediaFrameReader<D>::FrameArrived(event_token token) const
 {
-    check_hresult(static_cast<const IMediaFrameReader &>(static_cast<const D &>(*this))->remove_FrameArrived(token));
+    check_hresult(WINRT_SHIM(IMediaFrameReader)->remove_FrameArrived(token));
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameReference impl_IMediaFrameReader<D>::TryAcquireLatestFrame() const
 {
     Windows::Media::Capture::Frames::MediaFrameReference value { nullptr };
-    check_hresult(static_cast<const IMediaFrameReader &>(static_cast<const D &>(*this))->abi_TryAcquireLatestFrame(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReader)->abi_TryAcquireLatestFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameReaderStartStatus> impl_IMediaFrameReader<D>::StartAsync() const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameReaderStartStatus> operation;
-    check_hresult(static_cast<const IMediaFrameReader &>(static_cast<const D &>(*this))->abi_StartAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IMediaFrameReader)->abi_StartAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IMediaFrameReader<D>::StopAsync() const
 {
     Windows::Foundation::IAsyncAction action;
-    check_hresult(static_cast<const IMediaFrameReader &>(static_cast<const D &>(*this))->abi_StopAsync(put(action)));
+    check_hresult(WINRT_SHIM(IMediaFrameReader)->abi_StopAsync(put_abi(action)));
     return action;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult> impl_IMediaFrameSourceController<D>::GetPropertyAsync(hstring_ref propertyId) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult> impl_IMediaFrameSourceController<D>::GetPropertyAsync(hstring_view propertyId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult> value;
-    check_hresult(static_cast<const IMediaFrameSourceController &>(static_cast<const D &>(*this))->abi_GetPropertyAsync(get(propertyId), put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceController)->abi_GetPropertyAsync(get_abi(propertyId), put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus> impl_IMediaFrameSourceController<D>::SetPropertyAsync(hstring_ref propertyId, const Windows::IInspectable & propertyValue) const
+template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus> impl_IMediaFrameSourceController<D>::SetPropertyAsync(hstring_view propertyId, const Windows::Foundation::IInspectable & propertyValue) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Media::Capture::Frames::MediaFrameSourceSetPropertyStatus> value;
-    check_hresult(static_cast<const IMediaFrameSourceController &>(static_cast<const D &>(*this))->abi_SetPropertyAsync(get(propertyId), get(propertyValue), put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceController)->abi_SetPropertyAsync(get_abi(propertyId), get_abi(propertyValue), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Devices::VideoDeviceController impl_IMediaFrameSourceController<D>::VideoDeviceController() const
 {
     Windows::Media::Devices::VideoDeviceController value { nullptr };
-    check_hresult(static_cast<const IMediaFrameSourceController &>(static_cast<const D &>(*this))->get_VideoDeviceController(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceController)->get_VideoDeviceController(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyStatus impl_IMediaFrameSourceGetPropertyResult<D>::Status() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyStatus value {};
-    check_hresult(static_cast<const IMediaFrameSourceGetPropertyResult &>(static_cast<const D &>(*this))->get_Status(&value));
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGetPropertyResult)->get_Status(&value));
     return value;
 }
 
-template <typename D> Windows::IInspectable impl_IMediaFrameSourceGetPropertyResult<D>::Value() const
+template <typename D> Windows::Foundation::IInspectable impl_IMediaFrameSourceGetPropertyResult<D>::Value() const
 {
-    Windows::IInspectable value;
-    check_hresult(static_cast<const IMediaFrameSourceGetPropertyResult &>(static_cast<const D &>(*this))->get_Value(put(value)));
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(IMediaFrameSourceGetPropertyResult)->get_Value(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaFrameFormat<D>::MajorType() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameFormat &>(static_cast<const D &>(*this))->get_MajorType(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameFormat)->get_MajorType(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IMediaFrameFormat<D>::Subtype() const
 {
     hstring value;
-    check_hresult(static_cast<const IMediaFrameFormat &>(static_cast<const D &>(*this))->get_Subtype(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameFormat)->get_Subtype(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::MediaProperties::MediaRatio impl_IMediaFrameFormat<D>::FrameRate() const
 {
     Windows::Media::MediaProperties::MediaRatio value { nullptr };
-    check_hresult(static_cast<const IMediaFrameFormat &>(static_cast<const D &>(*this))->get_FrameRate(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameFormat)->get_FrameRate(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> impl_IMediaFrameFormat<D>::Properties() const
+template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> impl_IMediaFrameFormat<D>::Properties() const
 {
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> value;
-    check_hresult(static_cast<const IMediaFrameFormat &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMediaFrameFormat)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrameFormat impl_IMediaFrameFormat<D>::VideoFormat() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IMediaFrameFormat &>(static_cast<const D &>(*this))->get_VideoFormat(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameFormat)->get_VideoFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameFormat impl_IVideoMediaFrameFormat<D>::MediaFrameFormat() const
 {
     Windows::Media::Capture::Frames::MediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrameFormat &>(static_cast<const D &>(*this))->get_MediaFrameFormat(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrameFormat)->get_MediaFrameFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::DepthMediaFrameFormat impl_IVideoMediaFrameFormat<D>::DepthFormat() const
 {
     Windows::Media::Capture::Frames::DepthMediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrameFormat &>(static_cast<const D &>(*this))->get_DepthFormat(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrameFormat)->get_DepthFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IVideoMediaFrameFormat<D>::Width() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IVideoMediaFrameFormat &>(static_cast<const D &>(*this))->get_Width(&value));
+    check_hresult(WINRT_SHIM(IVideoMediaFrameFormat)->get_Width(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IVideoMediaFrameFormat<D>::Height() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IVideoMediaFrameFormat &>(static_cast<const D &>(*this))->get_Height(&value));
+    check_hresult(WINRT_SHIM(IVideoMediaFrameFormat)->get_Height(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameSourceKind impl_IMediaFrameReference<D>::SourceKind() const
 {
     Windows::Media::Capture::Frames::MediaFrameSourceKind value {};
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_SourceKind(&value));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_SourceKind(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameFormat impl_IMediaFrameReference<D>::Format() const
 {
     Windows::Media::Capture::Frames::MediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_Format(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_Format(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<Windows::Foundation::TimeSpan> impl_IMediaFrameReference<D>::SystemRelativeTime() const
 {
     Windows::Foundation::IReference<Windows::Foundation::TimeSpan> value;
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_SystemRelativeTime(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_SystemRelativeTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::TimeSpan impl_IMediaFrameReference<D>::Duration() const
 {
     Windows::Foundation::TimeSpan value {};
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_Duration(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_Duration(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> impl_IMediaFrameReference<D>::Properties() const
+template <typename D> Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> impl_IMediaFrameReference<D>::Properties() const
 {
-    Windows::Foundation::Collections::IMapView<GUID, Windows::IInspectable> value;
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    Windows::Foundation::Collections::IMapView<GUID, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::BufferMediaFrame impl_IMediaFrameReference<D>::BufferMediaFrame() const
 {
     Windows::Media::Capture::Frames::BufferMediaFrame value { nullptr };
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_BufferMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_BufferMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrame impl_IMediaFrameReference<D>::VideoMediaFrame() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrame value { nullptr };
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_VideoMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_VideoMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Perception::Spatial::SpatialCoordinateSystem impl_IMediaFrameReference<D>::CoordinateSystem() const
 {
     Windows::Perception::Spatial::SpatialCoordinateSystem value { nullptr };
-    check_hresult(static_cast<const IMediaFrameReference &>(static_cast<const D &>(*this))->get_CoordinateSystem(put(value)));
+    check_hresult(WINRT_SHIM(IMediaFrameReference)->get_CoordinateSystem(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameReference impl_IBufferMediaFrame<D>::FrameReference() const
 {
     Windows::Media::Capture::Frames::MediaFrameReference value { nullptr };
-    check_hresult(static_cast<const IBufferMediaFrame &>(static_cast<const D &>(*this))->get_FrameReference(put(value)));
+    check_hresult(WINRT_SHIM(IBufferMediaFrame)->get_FrameReference(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IBuffer impl_IBufferMediaFrame<D>::Buffer() const
 {
     Windows::Storage::Streams::IBuffer value;
-    check_hresult(static_cast<const IBufferMediaFrame &>(static_cast<const D &>(*this))->get_Buffer(put(value)));
+    check_hresult(WINRT_SHIM(IBufferMediaFrame)->get_Buffer(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameReference impl_IVideoMediaFrame<D>::FrameReference() const
 {
     Windows::Media::Capture::Frames::MediaFrameReference value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_FrameReference(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_FrameReference(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrameFormat impl_IVideoMediaFrame<D>::VideoFormat() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_VideoFormat(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_VideoFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Graphics::Imaging::SoftwareBitmap impl_IVideoMediaFrame<D>::SoftwareBitmap() const
 {
     Windows::Graphics::Imaging::SoftwareBitmap value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_SoftwareBitmap(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_SoftwareBitmap(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface impl_IVideoMediaFrame<D>::Direct3DSurface() const
 {
     Windows::Graphics::DirectX::Direct3D11::IDirect3DSurface value;
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_Direct3DSurface(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_Direct3DSurface(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Devices::Core::CameraIntrinsics impl_IVideoMediaFrame<D>::CameraIntrinsics() const
 {
     Windows::Media::Devices::Core::CameraIntrinsics value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_CameraIntrinsics(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_CameraIntrinsics(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::InfraredMediaFrame impl_IVideoMediaFrame<D>::InfraredMediaFrame() const
 {
     Windows::Media::Capture::Frames::InfraredMediaFrame value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_InfraredMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_InfraredMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::DepthMediaFrame impl_IVideoMediaFrame<D>::DepthMediaFrame() const
 {
     Windows::Media::Capture::Frames::DepthMediaFrame value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->get_DepthMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->get_DepthMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::VideoFrame impl_IVideoMediaFrame<D>::GetVideoFrame() const
 {
     Windows::Media::VideoFrame value { nullptr };
-    check_hresult(static_cast<const IVideoMediaFrame &>(static_cast<const D &>(*this))->abi_GetVideoFrame(put(value)));
+    check_hresult(WINRT_SHIM(IVideoMediaFrame)->abi_GetVideoFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameReference impl_IInfraredMediaFrame<D>::FrameReference() const
 {
     Windows::Media::Capture::Frames::MediaFrameReference value { nullptr };
-    check_hresult(static_cast<const IInfraredMediaFrame &>(static_cast<const D &>(*this))->get_FrameReference(put(value)));
+    check_hresult(WINRT_SHIM(IInfraredMediaFrame)->get_FrameReference(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrame impl_IInfraredMediaFrame<D>::VideoMediaFrame() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrame value { nullptr };
-    check_hresult(static_cast<const IInfraredMediaFrame &>(static_cast<const D &>(*this))->get_VideoMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IInfraredMediaFrame)->get_VideoMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IInfraredMediaFrame<D>::IsIlluminated() const
 {
     bool value {};
-    check_hresult(static_cast<const IInfraredMediaFrame &>(static_cast<const D &>(*this))->get_IsIlluminated(&value));
+    check_hresult(WINRT_SHIM(IInfraredMediaFrame)->get_IsIlluminated(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::MediaFrameReference impl_IDepthMediaFrame<D>::FrameReference() const
 {
     Windows::Media::Capture::Frames::MediaFrameReference value { nullptr };
-    check_hresult(static_cast<const IDepthMediaFrame &>(static_cast<const D &>(*this))->get_FrameReference(put(value)));
+    check_hresult(WINRT_SHIM(IDepthMediaFrame)->get_FrameReference(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrame impl_IDepthMediaFrame<D>::VideoMediaFrame() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrame value { nullptr };
-    check_hresult(static_cast<const IDepthMediaFrame &>(static_cast<const D &>(*this))->get_VideoMediaFrame(put(value)));
+    check_hresult(WINRT_SHIM(IDepthMediaFrame)->get_VideoMediaFrame(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::DepthMediaFrameFormat impl_IDepthMediaFrame<D>::DepthFormat() const
 {
     Windows::Media::Capture::Frames::DepthMediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IDepthMediaFrame &>(static_cast<const D &>(*this))->get_DepthFormat(put(value)));
+    check_hresult(WINRT_SHIM(IDepthMediaFrame)->get_DepthFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Devices::Core::DepthCorrelatedCoordinateMapper impl_IDepthMediaFrame<D>::TryCreateCoordinateMapper(const Windows::Media::Devices::Core::CameraIntrinsics & cameraIntrinsics, const Windows::Perception::Spatial::SpatialCoordinateSystem & coordinateSystem) const
 {
     Windows::Media::Devices::Core::DepthCorrelatedCoordinateMapper value { nullptr };
-    check_hresult(static_cast<const IDepthMediaFrame &>(static_cast<const D &>(*this))->abi_TryCreateCoordinateMapper(get(cameraIntrinsics), get(coordinateSystem), put(value)));
+    check_hresult(WINRT_SHIM(IDepthMediaFrame)->abi_TryCreateCoordinateMapper(get_abi(cameraIntrinsics), get_abi(coordinateSystem), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Capture::Frames::VideoMediaFrameFormat impl_IDepthMediaFrameFormat<D>::VideoFormat() const
 {
     Windows::Media::Capture::Frames::VideoMediaFrameFormat value { nullptr };
-    check_hresult(static_cast<const IDepthMediaFrameFormat &>(static_cast<const D &>(*this))->get_VideoFormat(put(value)));
+    check_hresult(WINRT_SHIM(IDepthMediaFrameFormat)->get_VideoFormat(put_abi(value)));
     return value;
 }
 
 template <typename D> double impl_IDepthMediaFrameFormat<D>::DepthScaleInMeters() const
 {
     double value {};
-    check_hresult(static_cast<const IDepthMediaFrameFormat &>(static_cast<const D &>(*this))->get_DepthScaleInMeters(&value));
+    check_hresult(WINRT_SHIM(IDepthMediaFrameFormat)->get_DepthScaleInMeters(&value));
     return value;
 }
 
@@ -1496,7 +1566,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IV
     return get_activation_factory<MediaFrameSourceGroup, IMediaFrameSourceGroupStatics>().FindAllAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> MediaFrameSourceGroup::FromIdAsync(hstring_ref id)
+inline Windows::Foundation::IAsyncOperation<Windows::Media::Capture::Frames::MediaFrameSourceGroup> MediaFrameSourceGroup::FromIdAsync(hstring_view id)
 {
     return get_activation_factory<MediaFrameSourceGroup, IMediaFrameSourceGroupStatics>().FromIdAsync(id);
 }
@@ -1509,3 +1579,284 @@ inline hstring MediaFrameSourceGroup::GetDeviceSelector()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IBufferMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IBufferMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IDepthMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IDepthMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IDepthMediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IDepthMediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IInfraredMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IInfraredMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameArrivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameArrivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameReader>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameReference>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameReference & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSource>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSourceController>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSourceController & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGetPropertyResult>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGetPropertyResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGroup>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSourceGroupStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IMediaFrameSourceInfo>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IMediaFrameSourceInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IVideoMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IVideoMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::IVideoMediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::IVideoMediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::BufferMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::BufferMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::DepthMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::DepthMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::DepthMediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::DepthMediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::InfraredMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::InfraredMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameArrivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameReader>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameReference>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameReference & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameSource>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameSource & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameSourceController>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameSourceController & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameSourceGetPropertyResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameSourceGroup>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameSourceGroup & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::MediaFrameSourceInfo>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::MediaFrameSourceInfo & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::VideoMediaFrame>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::VideoMediaFrame & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Capture::Frames::VideoMediaFrameFormat>
+{
+    size_t operator()(const winrt::Windows::Media::Capture::Frames::VideoMediaFrameFormat & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

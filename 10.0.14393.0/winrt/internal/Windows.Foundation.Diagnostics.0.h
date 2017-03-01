@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -82,6 +82,34 @@ struct LoggingOptions;
 struct LoggingSession;
 struct RuntimeBrokerErrorSettings;
 struct TracingStatusChangedEventArgs;
+
+}
+
+namespace Windows::Foundation::Diagnostics {
+
+template <typename T> struct impl_IAsyncCausalityTracerStatics;
+template <typename T> struct impl_IErrorDetails;
+template <typename T> struct impl_IErrorDetailsStatics;
+template <typename T> struct impl_IErrorReportingSettings;
+template <typename T> struct impl_IFileLoggingSession;
+template <typename T> struct impl_IFileLoggingSessionFactory;
+template <typename T> struct impl_ILogFileGeneratedEventArgs;
+template <typename T> struct impl_ILoggingActivity;
+template <typename T> struct impl_ILoggingActivity2;
+template <typename T> struct impl_ILoggingActivityFactory;
+template <typename T> struct impl_ILoggingChannel;
+template <typename T> struct impl_ILoggingChannel2;
+template <typename T> struct impl_ILoggingChannelFactory;
+template <typename T> struct impl_ILoggingChannelFactory2;
+template <typename T> struct impl_ILoggingChannelOptions;
+template <typename T> struct impl_ILoggingChannelOptionsFactory;
+template <typename T> struct impl_ILoggingFields;
+template <typename T> struct impl_ILoggingOptions;
+template <typename T> struct impl_ILoggingOptionsFactory;
+template <typename T> struct impl_ILoggingSession;
+template <typename T> struct impl_ILoggingSessionFactory;
+template <typename T> struct impl_ILoggingTarget;
+template <typename T> struct impl_ITracingStatusChangedEventArgs;
 
 }
 

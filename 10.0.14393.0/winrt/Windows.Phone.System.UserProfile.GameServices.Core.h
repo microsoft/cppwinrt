@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -15,11 +18,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameService> : produce_base<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameService>
 {
-    HRESULT __stdcall get_ServiceUri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_ServiceUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ServiceUri());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ServiceUri());
             return S_OK;
         }
         catch (...)
@@ -29,11 +33,12 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
         }
     }
 
-    HRESULT __stdcall abi_GetGamerProfileAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection>> operation) noexcept override
+    HRESULT __stdcall abi_GetGamerProfileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetGamerProfileAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetGamerProfileAsync());
             return S_OK;
         }
         catch (...)
@@ -43,11 +48,12 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
         }
     }
 
-    HRESULT __stdcall abi_GetInstalledGameItemsAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection>> operation) noexcept override
+    HRESULT __stdcall abi_GetInstalledGameItemsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetInstalledGameItemsAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetInstalledGameItemsAsync());
             return S_OK;
         }
         catch (...)
@@ -57,11 +63,12 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
         }
     }
 
-    HRESULT __stdcall abi_GetPartnerTokenAsync(abi_arg_in<Windows::Foundation::IUriRuntimeClass> audienceUri, abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> operation) noexcept override
+    HRESULT __stdcall abi_GetPartnerTokenAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> audienceUri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPartnerTokenAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&audienceUri)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPartnerTokenAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&audienceUri)));
             return S_OK;
         }
         catch (...)
@@ -71,11 +78,12 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
         }
     }
 
-    HRESULT __stdcall abi_GetPrivilegesAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> operation) noexcept override
+    HRESULT __stdcall abi_GetPrivilegesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPrivilegesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPrivilegesAsync());
             return S_OK;
         }
         catch (...)
@@ -89,6 +97,7 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GrantAchievement(achievementId);
             return S_OK;
         }
@@ -102,6 +111,7 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GrantAvatarAward(avatarAwardId);
             return S_OK;
         }
@@ -111,10 +121,11 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
         }
     }
 
-    HRESULT __stdcall abi_PostResult(uint32_t gameVariant, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceScoreKind scoreKind, int64_t scoreValue, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceGameOutcome gameOutcome, abi_arg_in<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall abi_PostResult(uint32_t gameVariant, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceScoreKind scoreKind, int64_t scoreValue, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceGameOutcome gameOutcome, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PostResult(gameVariant, scoreKind, scoreValue, gameOutcome, *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer));
             return S_OK;
         }
@@ -128,10 +139,11 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
 template <typename D>
 struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameService2> : produce_base<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameService2>
 {
-    HRESULT __stdcall abi_NotifyPartnerTokenExpired(abi_arg_in<Windows::Foundation::IUriRuntimeClass> audienceUri) noexcept override
+    HRESULT __stdcall abi_NotifyPartnerTokenExpired(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> audienceUri) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().NotifyPartnerTokenExpired(*reinterpret_cast<const Windows::Foundation::Uri *>(&audienceUri));
             return S_OK;
         }
@@ -145,7 +157,8 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
     {
         try
         {
-            *status = detach(this->shim().GetAuthenticationStatus());
+            typename D::abi_guard guard(this->shim());
+            *status = detach_abi(this->shim().GetAuthenticationStatus());
             return S_OK;
         }
         catch (...)
@@ -158,11 +171,12 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
 template <typename D>
 struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameServicePropertyCollection> : produce_base<D, Windows::Phone::System::UserProfile::GameServices::Core::IGameServicePropertyCollection>
 {
-    HRESULT __stdcall abi_GetPropertyAsync(abi_arg_in<hstring> propertyName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::IInspectable>> operation) noexcept override
+    HRESULT __stdcall abi_GetPropertyAsync(impl::abi_arg_in<hstring> propertyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetPropertyAsync(*reinterpret_cast<const hstring *>(&propertyName)));
             return S_OK;
         }
         catch (...)
@@ -177,72 +191,72 @@ struct produce<D, Windows::Phone::System::UserProfile::GameServices::Core::IGame
 
 namespace Windows::Phone::System::UserProfile::GameServices::Core {
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::IInspectable> impl_IGameServicePropertyCollection<D>::GetPropertyAsync(hstring_ref propertyName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> impl_IGameServicePropertyCollection<D>::GetPropertyAsync(hstring_view propertyName) const
 {
-    Windows::Foundation::IAsyncOperation<Windows::IInspectable> operation;
-    check_hresult(static_cast<const IGameServicePropertyCollection &>(static_cast<const D &>(*this))->abi_GetPropertyAsync(get(propertyName), put(operation)));
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> operation;
+    check_hresult(WINRT_SHIM(IGameServicePropertyCollection)->abi_GetPropertyAsync(get_abi(propertyName), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IGameService<D>::ServiceUri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->get_ServiceUri(put(value)));
+    check_hresult(WINRT_SHIM(IGameService)->get_ServiceUri(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection> impl_IGameService<D>::GetGamerProfileAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection> operation;
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GetGamerProfileAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GetGamerProfileAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection> impl_IGameService<D>::GetInstalledGameItemsAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection> operation;
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GetInstalledGameItemsAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GetInstalledGameItemsAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IGameService<D>::GetPartnerTokenAsync(const Windows::Foundation::Uri & audienceUri) const
 {
     Windows::Foundation::IAsyncOperation<hstring> operation;
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GetPartnerTokenAsync(get(audienceUri), put(operation)));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GetPartnerTokenAsync(get_abi(audienceUri), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IGameService<D>::GetPrivilegesAsync() const
 {
     Windows::Foundation::IAsyncOperation<hstring> operation;
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GetPrivilegesAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GetPrivilegesAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> void impl_IGameService<D>::GrantAchievement(uint32_t achievementId) const
 {
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GrantAchievement(achievementId));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GrantAchievement(achievementId));
 }
 
 template <typename D> void impl_IGameService<D>::GrantAvatarAward(uint32_t avatarAwardId) const
 {
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_GrantAvatarAward(avatarAwardId));
+    check_hresult(WINRT_SHIM(IGameService)->abi_GrantAvatarAward(avatarAwardId));
 }
 
 template <typename D> void impl_IGameService<D>::PostResult(uint32_t gameVariant, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceScoreKind scoreKind, int64_t scoreValue, Windows::Phone::System::UserProfile::GameServices::Core::GameServiceGameOutcome gameOutcome, const Windows::Storage::Streams::IBuffer & buffer) const
 {
-    check_hresult(static_cast<const IGameService &>(static_cast<const D &>(*this))->abi_PostResult(gameVariant, scoreKind, scoreValue, gameOutcome, get(buffer)));
+    check_hresult(WINRT_SHIM(IGameService)->abi_PostResult(gameVariant, scoreKind, scoreValue, gameOutcome, get_abi(buffer)));
 }
 
 template <typename D> void impl_IGameService2<D>::NotifyPartnerTokenExpired(const Windows::Foundation::Uri & audienceUri) const
 {
-    check_hresult(static_cast<const IGameService2 &>(static_cast<const D &>(*this))->abi_NotifyPartnerTokenExpired(get(audienceUri)));
+    check_hresult(WINRT_SHIM(IGameService2)->abi_NotifyPartnerTokenExpired(get_abi(audienceUri)));
 }
 
 template <typename D> uint32_t impl_IGameService2<D>::GetAuthenticationStatus() const
 {
     uint32_t status {};
-    check_hresult(static_cast<const IGameService2 &>(static_cast<const D &>(*this))->abi_GetAuthenticationStatus(&status));
+    check_hresult(WINRT_SHIM(IGameService2)->abi_GetAuthenticationStatus(&status));
     return status;
 }
 
@@ -299,3 +313,41 @@ inline uint32_t GameService::GetAuthenticationStatus()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameService>
+{
+    size_t operator()(const winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameService & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameService2>
+{
+    size_t operator()(const winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameService2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameServicePropertyCollection>
+{
+    size_t operator()(const winrt::Windows::Phone::System::UserProfile::GameServices::Core::IGameServicePropertyCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection>
+{
+    size_t operator()(const winrt::Windows::Phone::System::UserProfile::GameServices::Core::GameServicePropertyCollection & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

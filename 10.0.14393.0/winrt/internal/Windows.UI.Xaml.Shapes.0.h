@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -59,6 +59,27 @@ struct Polygon;
 struct Polyline;
 struct Rectangle;
 struct Shape;
+
+}
+
+namespace Windows::UI::Xaml::Shapes {
+
+template <typename T> struct impl_IEllipse;
+template <typename T> struct impl_ILine;
+template <typename T> struct impl_ILineStatics;
+template <typename T> struct impl_IPath;
+template <typename T> struct impl_IPathFactory;
+template <typename T> struct impl_IPathStatics;
+template <typename T> struct impl_IPolygon;
+template <typename T> struct impl_IPolygonStatics;
+template <typename T> struct impl_IPolyline;
+template <typename T> struct impl_IPolylineStatics;
+template <typename T> struct impl_IRectangle;
+template <typename T> struct impl_IRectangleStatics;
+template <typename T> struct impl_IShape;
+template <typename T> struct impl_IShape2;
+template <typename T> struct impl_IShapeFactory;
+template <typename T> struct impl_IShapeStatics;
 
 }
 

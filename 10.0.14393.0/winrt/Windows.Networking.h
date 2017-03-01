@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Networking.Connectivity.3.h"
 #include "internal/Windows.Networking.3.h"
@@ -14,11 +17,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows::Networking::IEndpointPair>
 {
-    HRESULT __stdcall get_LocalHostName(abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall get_LocalHostName(impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalHostName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalHostName());
             return S_OK;
         }
         catch (...)
@@ -28,10 +32,11 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_LocalHostName(abi_arg_in<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall put_LocalHostName(impl::abi_arg_in<Windows::Networking::IHostName> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LocalHostName(*reinterpret_cast<const Windows::Networking::HostName *>(&value));
             return S_OK;
         }
@@ -41,11 +46,12 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_LocalServiceName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LocalServiceName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalServiceName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalServiceName());
             return S_OK;
         }
         catch (...)
@@ -55,10 +61,11 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_LocalServiceName(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_LocalServiceName(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LocalServiceName(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -68,11 +75,12 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_RemoteHostName(abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall get_RemoteHostName(impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RemoteHostName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RemoteHostName());
             return S_OK;
         }
         catch (...)
@@ -82,10 +90,11 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_RemoteHostName(abi_arg_in<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall put_RemoteHostName(impl::abi_arg_in<Windows::Networking::IHostName> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RemoteHostName(*reinterpret_cast<const Windows::Networking::HostName *>(&value));
             return S_OK;
         }
@@ -95,11 +104,12 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_RemoteServiceName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteServiceName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RemoteServiceName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RemoteServiceName());
             return S_OK;
         }
         catch (...)
@@ -109,10 +119,11 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_RemoteServiceName(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteServiceName(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RemoteServiceName(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -126,11 +137,12 @@ struct produce<D, Windows::Networking::IEndpointPair> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Networking::IEndpointPairFactory> : produce_base<D, Windows::Networking::IEndpointPairFactory>
 {
-    HRESULT __stdcall abi_CreateEndpointPair(abi_arg_in<Windows::Networking::IHostName> localHostName, abi_arg_in<hstring> localServiceName, abi_arg_in<Windows::Networking::IHostName> remoteHostName, abi_arg_in<hstring> remoteServiceName, abi_arg_out<Windows::Networking::IEndpointPair> value) noexcept override
+    HRESULT __stdcall abi_CreateEndpointPair(impl::abi_arg_in<Windows::Networking::IHostName> localHostName, impl::abi_arg_in<hstring> localServiceName, impl::abi_arg_in<Windows::Networking::IHostName> remoteHostName, impl::abi_arg_in<hstring> remoteServiceName, impl::abi_arg_out<Windows::Networking::IEndpointPair> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateEndpointPair(*reinterpret_cast<const Windows::Networking::HostName *>(&localHostName), *reinterpret_cast<const hstring *>(&localServiceName), *reinterpret_cast<const Windows::Networking::HostName *>(&remoteHostName), *reinterpret_cast<const hstring *>(&remoteServiceName)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateEndpointPair(*reinterpret_cast<const Windows::Networking::HostName *>(&localHostName), *reinterpret_cast<const hstring *>(&localServiceName), *reinterpret_cast<const Windows::Networking::HostName *>(&remoteHostName), *reinterpret_cast<const hstring *>(&remoteServiceName)));
             return S_OK;
         }
         catch (...)
@@ -144,11 +156,12 @@ struct produce<D, Windows::Networking::IEndpointPairFactory> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Networking::IHostName>
 {
-    HRESULT __stdcall get_IPInformation(abi_arg_out<Windows::Networking::Connectivity::IIPInformation> value) noexcept override
+    HRESULT __stdcall get_IPInformation(impl::abi_arg_out<Windows::Networking::Connectivity::IIPInformation> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IPInformation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IPInformation());
             return S_OK;
         }
         catch (...)
@@ -158,11 +171,12 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
         }
     }
 
-    HRESULT __stdcall get_RawName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RawName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RawName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RawName());
             return S_OK;
         }
         catch (...)
@@ -172,11 +186,12 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -186,11 +201,12 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
         }
     }
 
-    HRESULT __stdcall get_CanonicalName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CanonicalName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CanonicalName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CanonicalName());
             return S_OK;
         }
         catch (...)
@@ -204,7 +220,8 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
     {
         try
         {
-            *value = detach(this->shim().Type());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Type());
             return S_OK;
         }
         catch (...)
@@ -213,11 +230,12 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
         }
     }
 
-    HRESULT __stdcall abi_IsEqual(abi_arg_in<Windows::Networking::IHostName> hostName, bool * isEqual) noexcept override
+    HRESULT __stdcall abi_IsEqual(impl::abi_arg_in<Windows::Networking::IHostName> hostName, bool * isEqual) noexcept override
     {
         try
         {
-            *isEqual = detach(this->shim().IsEqual(*reinterpret_cast<const Windows::Networking::HostName *>(&hostName)));
+            typename D::abi_guard guard(this->shim());
+            *isEqual = detach_abi(this->shim().IsEqual(*reinterpret_cast<const Windows::Networking::HostName *>(&hostName)));
             return S_OK;
         }
         catch (...)
@@ -230,11 +248,12 @@ struct produce<D, Windows::Networking::IHostName> : produce_base<D, Windows::Net
 template <typename D>
 struct produce<D, Windows::Networking::IHostNameFactory> : produce_base<D, Windows::Networking::IHostNameFactory>
 {
-    HRESULT __stdcall abi_CreateHostName(abi_arg_in<hstring> hostName, abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall abi_CreateHostName(impl::abi_arg_in<hstring> hostName, impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateHostName(*reinterpret_cast<const hstring *>(&hostName)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateHostName(*reinterpret_cast<const hstring *>(&hostName)));
             return S_OK;
         }
         catch (...)
@@ -248,11 +267,12 @@ struct produce<D, Windows::Networking::IHostNameFactory> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Networking::IHostNameStatics> : produce_base<D, Windows::Networking::IHostNameStatics>
 {
-    HRESULT __stdcall abi_Compare(abi_arg_in<hstring> value1, abi_arg_in<hstring> value2, int32_t * result) noexcept override
+    HRESULT __stdcall abi_Compare(impl::abi_arg_in<hstring> value1, impl::abi_arg_in<hstring> value2, int32_t * result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().Compare(*reinterpret_cast<const hstring *>(&value1), *reinterpret_cast<const hstring *>(&value2)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().Compare(*reinterpret_cast<const hstring *>(&value1), *reinterpret_cast<const hstring *>(&value2)));
             return S_OK;
         }
         catch (...)
@@ -266,126 +286,126 @@ struct produce<D, Windows::Networking::IHostNameStatics> : produce_base<D, Windo
 
 namespace Windows::Networking {
 
-template <typename D> int32_t impl_IHostNameStatics<D>::Compare(hstring_ref value1, hstring_ref value2) const
+template <typename D> int32_t impl_IHostNameStatics<D>::Compare(hstring_view value1, hstring_view value2) const
 {
     int32_t result {};
-    check_hresult(static_cast<const IHostNameStatics &>(static_cast<const D &>(*this))->abi_Compare(get(value1), get(value2), &result));
+    check_hresult(WINRT_SHIM(IHostNameStatics)->abi_Compare(get_abi(value1), get_abi(value2), &result));
     return result;
 }
 
 template <typename D> Windows::Networking::Connectivity::IPInformation impl_IHostName<D>::IPInformation() const
 {
     Windows::Networking::Connectivity::IPInformation value { nullptr };
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->get_IPInformation(put(value)));
+    check_hresult(WINRT_SHIM(IHostName)->get_IPInformation(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IHostName<D>::RawName() const
 {
     hstring value;
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->get_RawName(put(value)));
+    check_hresult(WINRT_SHIM(IHostName)->get_RawName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IHostName<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IHostName)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IHostName<D>::CanonicalName() const
 {
     hstring value;
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->get_CanonicalName(put(value)));
+    check_hresult(WINRT_SHIM(IHostName)->get_CanonicalName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Networking::HostNameType impl_IHostName<D>::Type() const
 {
     Windows::Networking::HostNameType value {};
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->get_Type(&value));
+    check_hresult(WINRT_SHIM(IHostName)->get_Type(&value));
     return value;
 }
 
 template <typename D> bool impl_IHostName<D>::IsEqual(const Windows::Networking::HostName & hostName) const
 {
     bool isEqual {};
-    check_hresult(static_cast<const IHostName &>(static_cast<const D &>(*this))->abi_IsEqual(get(hostName), &isEqual));
+    check_hresult(WINRT_SHIM(IHostName)->abi_IsEqual(get_abi(hostName), &isEqual));
     return isEqual;
 }
 
-template <typename D> Windows::Networking::HostName impl_IHostNameFactory<D>::CreateHostName(hstring_ref hostName) const
+template <typename D> Windows::Networking::HostName impl_IHostNameFactory<D>::CreateHostName(hstring_view hostName) const
 {
     Windows::Networking::HostName value { nullptr };
-    check_hresult(static_cast<const IHostNameFactory &>(static_cast<const D &>(*this))->abi_CreateHostName(get(hostName), put(value)));
+    check_hresult(WINRT_SHIM(IHostNameFactory)->abi_CreateHostName(get_abi(hostName), put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Networking::HostName impl_IEndpointPair<D>::LocalHostName() const
 {
     Windows::Networking::HostName value { nullptr };
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->get_LocalHostName(put(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->get_LocalHostName(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IEndpointPair<D>::LocalHostName(const Windows::Networking::HostName & value) const
 {
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->put_LocalHostName(get(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->put_LocalHostName(get_abi(value)));
 }
 
 template <typename D> hstring impl_IEndpointPair<D>::LocalServiceName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->get_LocalServiceName(put(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->get_LocalServiceName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IEndpointPair<D>::LocalServiceName(hstring_ref value) const
+template <typename D> void impl_IEndpointPair<D>::LocalServiceName(hstring_view value) const
 {
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->put_LocalServiceName(get(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->put_LocalServiceName(get_abi(value)));
 }
 
 template <typename D> Windows::Networking::HostName impl_IEndpointPair<D>::RemoteHostName() const
 {
     Windows::Networking::HostName value { nullptr };
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->get_RemoteHostName(put(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->get_RemoteHostName(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IEndpointPair<D>::RemoteHostName(const Windows::Networking::HostName & value) const
 {
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->put_RemoteHostName(get(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->put_RemoteHostName(get_abi(value)));
 }
 
 template <typename D> hstring impl_IEndpointPair<D>::RemoteServiceName() const
 {
     hstring value;
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->get_RemoteServiceName(put(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->get_RemoteServiceName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IEndpointPair<D>::RemoteServiceName(hstring_ref value) const
+template <typename D> void impl_IEndpointPair<D>::RemoteServiceName(hstring_view value) const
 {
-    check_hresult(static_cast<const IEndpointPair &>(static_cast<const D &>(*this))->put_RemoteServiceName(get(value)));
+    check_hresult(WINRT_SHIM(IEndpointPair)->put_RemoteServiceName(get_abi(value)));
 }
 
-template <typename D> Windows::Networking::EndpointPair impl_IEndpointPairFactory<D>::CreateEndpointPair(const Windows::Networking::HostName & localHostName, hstring_ref localServiceName, const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) const
+template <typename D> Windows::Networking::EndpointPair impl_IEndpointPairFactory<D>::CreateEndpointPair(const Windows::Networking::HostName & localHostName, hstring_view localServiceName, const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) const
 {
     Windows::Networking::EndpointPair value { nullptr };
-    check_hresult(static_cast<const IEndpointPairFactory &>(static_cast<const D &>(*this))->abi_CreateEndpointPair(get(localHostName), get(localServiceName), get(remoteHostName), get(remoteServiceName), put(value)));
+    check_hresult(WINRT_SHIM(IEndpointPairFactory)->abi_CreateEndpointPair(get_abi(localHostName), get_abi(localServiceName), get_abi(remoteHostName), get_abi(remoteServiceName), put_abi(value)));
     return value;
 }
 
-inline EndpointPair::EndpointPair(const Windows::Networking::HostName & localHostName, hstring_ref localServiceName, const Windows::Networking::HostName & remoteHostName, hstring_ref remoteServiceName) :
+inline EndpointPair::EndpointPair(const Windows::Networking::HostName & localHostName, hstring_view localServiceName, const Windows::Networking::HostName & remoteHostName, hstring_view remoteServiceName) :
     EndpointPair(get_activation_factory<EndpointPair, IEndpointPairFactory>().CreateEndpointPair(localHostName, localServiceName, remoteHostName, remoteServiceName))
 {}
 
-inline HostName::HostName(hstring_ref hostName) :
+inline HostName::HostName(hstring_view hostName) :
     HostName(get_activation_factory<HostName, IHostNameFactory>().CreateHostName(hostName))
 {}
 
-inline int32_t HostName::Compare(hstring_ref value1, hstring_ref value2)
+inline int32_t HostName::Compare(hstring_view value1, hstring_view value2)
 {
     return get_activation_factory<HostName, IHostNameStatics>().Compare(value1, value2);
 }
@@ -393,3 +413,68 @@ inline int32_t HostName::Compare(hstring_ref value1, hstring_ref value2)
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Networking::IEndpointPair>
+{
+    size_t operator()(const winrt::Windows::Networking::IEndpointPair & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::IEndpointPairFactory>
+{
+    size_t operator()(const winrt::Windows::Networking::IEndpointPairFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::IHostName>
+{
+    size_t operator()(const winrt::Windows::Networking::IHostName & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::IHostNameFactory>
+{
+    size_t operator()(const winrt::Windows::Networking::IHostNameFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::IHostNameStatics>
+{
+    size_t operator()(const winrt::Windows::Networking::IHostNameStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::EndpointPair>
+{
+    size_t operator()(const winrt::Windows::Networking::EndpointPair & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Networking::HostName>
+{
+    size_t operator()(const winrt::Windows::Networking::HostName & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

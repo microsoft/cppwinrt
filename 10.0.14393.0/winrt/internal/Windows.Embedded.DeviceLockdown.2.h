@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_482e676d_b913_5ec1_afa8_5f96922e94ae
+#define WINRT_GENERIC_482e676d_b913_5ec1_afa8_5f96922e94ae
+template <> struct __declspec(uuid("482e676d-b913-5ec1-afa8-5f96922e94ae")) __declspec(novtable) IVector<GUID> : impl_IVector<GUID> {};
+#endif
 
 #ifndef WINRT_GENERIC_9520e64b_15b2_52a6_98ed_3191fa6cf68a
 #define WINRT_GENERIC_9520e64b_15b2_52a6_98ed_3191fa6cf68a
@@ -29,35 +34,18 @@ template <> struct __declspec(uuid("f4ca3045-5dd7-54be-982e-d88d8ca0876e")) __de
 
 namespace Windows::Embedded::DeviceLockdown {
 
-template <typename D>
-struct WINRT_EBO impl_IDeviceLockdownProfileInformation
-{
-    hstring Name() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDeviceLockdownProfileStatics
-{
-    Windows::Foundation::Collections::IVectorView<GUID> GetSupportedLockdownProfiles() const;
-    GUID GetCurrentLockdownProfile() const;
-    Windows::Foundation::IAsyncAction ApplyLockdownProfileAsync(GUID profileID) const;
-    Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation GetLockdownProfileInformation(GUID profileID) const;
-};
-
 struct IDeviceLockdownProfileInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDeviceLockdownProfileInformation>
 {
     IDeviceLockdownProfileInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDeviceLockdownProfileInformation>(m_ptr); }
 };
 
 struct IDeviceLockdownProfileStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDeviceLockdownProfileStatics>
 {
     IDeviceLockdownProfileStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDeviceLockdownProfileStatics>(m_ptr); }
 };
 
 }

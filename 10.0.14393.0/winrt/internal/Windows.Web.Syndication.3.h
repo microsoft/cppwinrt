@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -14,7 +14,7 @@ struct WINRT_EBO SyndicationAttribute :
 {
     SyndicationAttribute(std::nullptr_t) noexcept {}
     SyndicationAttribute();
-    SyndicationAttribute(hstring_ref attributeName, hstring_ref attributeNamespace, hstring_ref attributeValue);
+    SyndicationAttribute(hstring_view attributeName, hstring_view attributeNamespace, hstring_view attributeValue);
 };
 
 struct WINRT_EBO SyndicationCategory :
@@ -22,8 +22,8 @@ struct WINRT_EBO SyndicationCategory :
 {
     SyndicationCategory(std::nullptr_t) noexcept {}
     SyndicationCategory();
-    SyndicationCategory(hstring_ref term);
-    SyndicationCategory(hstring_ref term, hstring_ref scheme, hstring_ref label);
+    SyndicationCategory(hstring_view term);
+    SyndicationCategory(hstring_view term, hstring_view scheme, hstring_view label);
 };
 
 struct WINRT_EBO SyndicationClient :
@@ -39,7 +39,7 @@ struct WINRT_EBO SyndicationContent :
 {
     SyndicationContent(std::nullptr_t) noexcept {}
     SyndicationContent();
-    SyndicationContent(hstring_ref text, Windows::Web::Syndication::SyndicationTextType type);
+    SyndicationContent(hstring_view text, Windows::Web::Syndication::SyndicationTextType type);
     SyndicationContent(const Windows::Foundation::Uri & sourceUri);
 };
 
@@ -54,7 +54,7 @@ struct WINRT_EBO SyndicationFeed :
 {
     SyndicationFeed(std::nullptr_t) noexcept {}
     SyndicationFeed();
-    SyndicationFeed(hstring_ref title, hstring_ref subtitle, const Windows::Foundation::Uri & uri);
+    SyndicationFeed(hstring_view title, hstring_view subtitle, const Windows::Foundation::Uri & uri);
 };
 
 struct WINRT_EBO SyndicationGenerator :
@@ -63,7 +63,7 @@ struct WINRT_EBO SyndicationGenerator :
 {
     SyndicationGenerator(std::nullptr_t) noexcept {}
     SyndicationGenerator();
-    SyndicationGenerator(hstring_ref text);
+    SyndicationGenerator(hstring_view text);
 };
 
 struct WINRT_EBO SyndicationItem :
@@ -71,7 +71,7 @@ struct WINRT_EBO SyndicationItem :
 {
     SyndicationItem(std::nullptr_t) noexcept {}
     SyndicationItem();
-    SyndicationItem(hstring_ref title, const Windows::Web::Syndication::SyndicationContent & content, const Windows::Foundation::Uri & uri);
+    SyndicationItem(hstring_view title, const Windows::Web::Syndication::SyndicationContent & content, const Windows::Foundation::Uri & uri);
 };
 
 struct WINRT_EBO SyndicationLink :
@@ -80,7 +80,7 @@ struct WINRT_EBO SyndicationLink :
     SyndicationLink(std::nullptr_t) noexcept {}
     SyndicationLink();
     SyndicationLink(const Windows::Foundation::Uri & uri);
-    SyndicationLink(const Windows::Foundation::Uri & uri, hstring_ref relationship, hstring_ref title, hstring_ref mediaType, uint32_t length);
+    SyndicationLink(const Windows::Foundation::Uri & uri, hstring_view relationship, hstring_view title, hstring_view mediaType, uint32_t length);
 };
 
 struct WINRT_EBO SyndicationNode :
@@ -88,7 +88,7 @@ struct WINRT_EBO SyndicationNode :
 {
     SyndicationNode(std::nullptr_t) noexcept {}
     SyndicationNode();
-    SyndicationNode(hstring_ref nodeName, hstring_ref nodeNamespace, hstring_ref nodeValue);
+    SyndicationNode(hstring_view nodeName, hstring_view nodeNamespace, hstring_view nodeValue);
 };
 
 struct WINRT_EBO SyndicationPerson :
@@ -96,8 +96,8 @@ struct WINRT_EBO SyndicationPerson :
 {
     SyndicationPerson(std::nullptr_t) noexcept {}
     SyndicationPerson();
-    SyndicationPerson(hstring_ref name);
-    SyndicationPerson(hstring_ref name, hstring_ref email, const Windows::Foundation::Uri & uri);
+    SyndicationPerson(hstring_view name);
+    SyndicationPerson(hstring_view name, hstring_view email, const Windows::Foundation::Uri & uri);
 };
 
 struct WINRT_EBO SyndicationText :
@@ -105,8 +105,8 @@ struct WINRT_EBO SyndicationText :
 {
     SyndicationText(std::nullptr_t) noexcept {}
     SyndicationText();
-    SyndicationText(hstring_ref text);
-    SyndicationText(hstring_ref text, Windows::Web::Syndication::SyndicationTextType type);
+    SyndicationText(hstring_view text);
+    SyndicationText(hstring_view text, Windows::Web::Syndication::SyndicationTextType type);
 };
 
 }

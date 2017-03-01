@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -66,13 +66,18 @@ template <> struct __declspec(uuid("fa704f04-87b6-516b-9596-cd7cc092169b")) __de
 
 #ifndef WINRT_GENERIC_c8cb498d_e0da_52a1_abf9_7198c7f5cb42
 #define WINRT_GENERIC_c8cb498d_e0da_52a1_abf9_7198c7f5cb42
-template <> struct __declspec(uuid("c8cb498d-e0da-52a1-abf9-7198c7f5cb42")) __declspec(novtable) TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::IInspectable> : impl_TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::IInspectable> {};
+template <> struct __declspec(uuid("c8cb498d-e0da-52a1-abf9-7198c7f5cb42")) __declspec(novtable) TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Foundation::IInspectable> {};
 #endif
 
 
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_e0798d3d_2b4a_589a_ab12_02dccc158afc
+#define WINRT_GENERIC_e0798d3d_2b4a_589a_ab12_02dccc158afc
+template <> struct __declspec(uuid("e0798d3d-2b4a-589a-ab12-02dccc158afc")) __declspec(novtable) IVectorView<Windows::Security::Credentials::WebAccount> : impl_IVectorView<Windows::Security::Credentials::WebAccount> {};
+#endif
 
 #ifndef WINRT_GENERIC_199e065c_8195_55da_9c10_8aeaf9ac1062
 #define WINRT_GENERIC_199e065c_8195_55da_9c10_8aeaf9ac1062
@@ -104,9 +109,19 @@ template <> struct __declspec(uuid("9477622b-1340-5574-81fc-5013581f57c9")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_fe11c488_371a_5330_b7fa_282326fdfbda
+#define WINRT_GENERIC_fe11c488_371a_5330_b7fa_282326fdfbda
+template <> struct __declspec(uuid("fe11c488-371a-5330-b7fa-282326fdfbda")) __declspec(novtable) IVector<Windows::Security::Credentials::WebAccount> : impl_IVector<Windows::Security::Credentials::WebAccount> {};
+#endif
+
 #ifndef WINRT_GENERIC_bfb82cca_aebc_567c_95d9_eba25c365faa
 #define WINRT_GENERIC_bfb82cca_aebc_567c_95d9_eba25c365faa
 template <> struct __declspec(uuid("bfb82cca-aebc-567c-95d9-eba25c365faa")) __declspec(novtable) IIterator<Windows::Security::Credentials::WebAccount> : impl_IIterator<Windows::Security::Credentials::WebAccount> {};
+#endif
+
+#ifndef WINRT_GENERIC_58dc4e4c_a84d_5ad6_a6d9_6ee477329c9f
+#define WINRT_GENERIC_58dc4e4c_a84d_5ad6_a6d9_6ee477329c9f
+template <> struct __declspec(uuid("58dc4e4c-a84d-5ad6-a6d9-6ee477329c9f")) __declspec(novtable) IVector<Windows::Security::Authentication::Web::Core::WebTokenResponse> : impl_IVector<Windows::Security::Authentication::Web::Core::WebTokenResponse> {};
 #endif
 
 #ifndef WINRT_GENERIC_f080b0c9_a095_5b3a_a1dc_d17e7d2982c7
@@ -134,224 +149,99 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Security::Authentication::Web::Core {
 
-template <typename D>
-struct WINRT_EBO impl_IWebAccountEventArgs
-{
-    Windows::Security::Credentials::WebAccount Account() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAccountMonitor
-{
-    event_token Updated(const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Security::Authentication::Web::Core::WebAccountEventArgs> & handler) const;
-    using Updated_revoker = event_revoker<IWebAccountMonitor>;
-    Updated_revoker Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Security::Authentication::Web::Core::WebAccountEventArgs> & handler) const;
-    void Updated(event_token token) const;
-    event_token Removed(const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Security::Authentication::Web::Core::WebAccountEventArgs> & handler) const;
-    using Removed_revoker = event_revoker<IWebAccountMonitor>;
-    Removed_revoker Removed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::Security::Authentication::Web::Core::WebAccountEventArgs> & handler) const;
-    void Removed(event_token token) const;
-    event_token DefaultSignInAccountChanged(const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::IInspectable> & handler) const;
-    using DefaultSignInAccountChanged_revoker = event_revoker<IWebAccountMonitor>;
-    DefaultSignInAccountChanged_revoker DefaultSignInAccountChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Security::Authentication::Web::Core::WebAccountMonitor, Windows::IInspectable> & handler) const;
-    void DefaultSignInAccountChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAuthenticationCoreManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Web::Core::WebTokenRequestResult> GetTokenSilentlyAsync(const Windows::Security::Authentication::Web::Core::WebTokenRequest & request) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Web::Core::WebTokenRequestResult> GetTokenSilentlyAsync(const Windows::Security::Authentication::Web::Core::WebTokenRequest & request, const Windows::Security::Credentials::WebAccount & webAccount) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Web::Core::WebTokenRequestResult> RequestTokenAsync(const Windows::Security::Authentication::Web::Core::WebTokenRequest & request) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Web::Core::WebTokenRequestResult> RequestTokenAsync(const Windows::Security::Authentication::Web::Core::WebTokenRequest & request, const Windows::Security::Credentials::WebAccount & webAccount) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccount> FindAccountAsync(const Windows::Security::Credentials::WebAccountProvider & provider, hstring_ref webAccountId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccountProvider> FindAccountProviderAsync(hstring_ref webAccountProviderId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccountProvider> FindAccountProviderAsync(hstring_ref webAccountProviderId, hstring_ref authority) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAuthenticationCoreManagerStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Credentials::WebAccountProvider> FindAccountProviderAsync(hstring_ref webAccountProviderId, hstring_ref authority, const Windows::System::User & user) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebAuthenticationCoreManagerStatics3
-{
-    Windows::Security::Authentication::Web::Core::WebAccountMonitor CreateWebAccountMonitor(const Windows::Foundation::Collections::IIterable<Windows::Security::Credentials::WebAccount> & webAccounts) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebProviderError
-{
-    uint32_t ErrorCode() const;
-    hstring ErrorMessage() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebProviderErrorFactory
-{
-    Windows::Security::Authentication::Web::Core::WebProviderError Create(uint32_t errorCode, hstring_ref errorMessage) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenRequest
-{
-    Windows::Security::Credentials::WebAccountProvider WebAccountProvider() const;
-    hstring Scope() const;
-    hstring ClientId() const;
-    Windows::Security::Authentication::Web::Core::WebTokenRequestPromptType PromptType() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenRequest2
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> AppProperties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenRequestFactory
-{
-    Windows::Security::Authentication::Web::Core::WebTokenRequest Create(const Windows::Security::Credentials::WebAccountProvider & provider, hstring_ref scope, hstring_ref clientId) const;
-    Windows::Security::Authentication::Web::Core::WebTokenRequest CreateWithPromptType(const Windows::Security::Credentials::WebAccountProvider & provider, hstring_ref scope, hstring_ref clientId, Windows::Security::Authentication::Web::Core::WebTokenRequestPromptType promptType) const;
-    Windows::Security::Authentication::Web::Core::WebTokenRequest CreateWithProvider(const Windows::Security::Credentials::WebAccountProvider & provider) const;
-    Windows::Security::Authentication::Web::Core::WebTokenRequest CreateWithScope(const Windows::Security::Credentials::WebAccountProvider & provider, hstring_ref scope) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenRequestResult
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Web::Core::WebTokenResponse> ResponseData() const;
-    Windows::Security::Authentication::Web::Core::WebTokenRequestStatus ResponseStatus() const;
-    Windows::Security::Authentication::Web::Core::WebProviderError ResponseError() const;
-    Windows::Foundation::IAsyncAction InvalidateCacheAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenResponse
-{
-    hstring Token() const;
-    Windows::Security::Authentication::Web::Core::WebProviderError ProviderError() const;
-    Windows::Security::Credentials::WebAccount WebAccount() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWebTokenResponseFactory
-{
-    Windows::Security::Authentication::Web::Core::WebTokenResponse CreateWithToken(hstring_ref token) const;
-    Windows::Security::Authentication::Web::Core::WebTokenResponse CreateWithTokenAndAccount(hstring_ref token, const Windows::Security::Credentials::WebAccount & webAccount) const;
-    Windows::Security::Authentication::Web::Core::WebTokenResponse CreateWithTokenAccountAndError(hstring_ref token, const Windows::Security::Credentials::WebAccount & webAccount, const Windows::Security::Authentication::Web::Core::WebProviderError & error) const;
-};
-
 struct IWebAccountEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountEventArgs>
 {
     IWebAccountEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountEventArgs>(m_ptr); }
 };
 
 struct IWebAccountMonitor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAccountMonitor>
 {
     IWebAccountMonitor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAccountMonitor>(m_ptr); }
 };
 
 struct IWebAuthenticationCoreManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAuthenticationCoreManagerStatics>
 {
     IWebAuthenticationCoreManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAuthenticationCoreManagerStatics>(m_ptr); }
 };
 
 struct IWebAuthenticationCoreManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAuthenticationCoreManagerStatics2>,
     impl::require<IWebAuthenticationCoreManagerStatics2, Windows::Security::Authentication::Web::Core::IWebAuthenticationCoreManagerStatics>
 {
     IWebAuthenticationCoreManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAuthenticationCoreManagerStatics2>(m_ptr); }
     using impl_IWebAuthenticationCoreManagerStatics::FindAccountProviderAsync;
     using impl_IWebAuthenticationCoreManagerStatics2::FindAccountProviderAsync;
 };
 
 struct IWebAuthenticationCoreManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebAuthenticationCoreManagerStatics3>,
     impl::require<IWebAuthenticationCoreManagerStatics3, Windows::Security::Authentication::Web::Core::IWebAuthenticationCoreManagerStatics>
 {
     IWebAuthenticationCoreManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebAuthenticationCoreManagerStatics3>(m_ptr); }
 };
 
 struct IWebProviderError :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebProviderError>
 {
     IWebProviderError(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebProviderError>(m_ptr); }
 };
 
 struct IWebProviderErrorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebProviderErrorFactory>
 {
     IWebProviderErrorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebProviderErrorFactory>(m_ptr); }
 };
 
 struct IWebTokenRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenRequest>
 {
     IWebTokenRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenRequest>(m_ptr); }
 };
 
 struct IWebTokenRequest2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenRequest2>
 {
     IWebTokenRequest2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenRequest2>(m_ptr); }
 };
 
 struct IWebTokenRequestFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenRequestFactory>
 {
     IWebTokenRequestFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenRequestFactory>(m_ptr); }
 };
 
 struct IWebTokenRequestResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenRequestResult>
 {
     IWebTokenRequestResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenRequestResult>(m_ptr); }
 };
 
 struct IWebTokenResponse :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenResponse>
 {
     IWebTokenResponse(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenResponse>(m_ptr); }
 };
 
 struct IWebTokenResponseFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWebTokenResponseFactory>
 {
     IWebTokenResponseFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWebTokenResponseFactory>(m_ptr); }
 };
 
 }

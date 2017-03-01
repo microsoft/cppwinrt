@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.System.RemoteDesktop.3.h"
 #include "Windows.System.h"
@@ -17,7 +20,8 @@ struct produce<D, Windows::System::RemoteDesktop::IInteractiveSessionStatics> : 
     {
         try
         {
-            *value = detach(this->shim().IsRemote());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsRemote());
             return S_OK;
         }
         catch (...)
@@ -34,7 +38,7 @@ namespace Windows::System::RemoteDesktop {
 template <typename D> bool impl_IInteractiveSessionStatics<D>::IsRemote() const
 {
     bool value {};
-    check_hresult(static_cast<const IInteractiveSessionStatics &>(static_cast<const D &>(*this))->get_IsRemote(&value));
+    check_hresult(WINRT_SHIM(IInteractiveSessionStatics)->get_IsRemote(&value));
     return value;
 }
 
@@ -46,3 +50,14 @@ inline bool InteractiveSession::IsRemote()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::System::RemoteDesktop::IInteractiveSessionStatics>
+{
+    size_t operator()(const winrt::Windows::System::RemoteDesktop::IInteractiveSessionStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

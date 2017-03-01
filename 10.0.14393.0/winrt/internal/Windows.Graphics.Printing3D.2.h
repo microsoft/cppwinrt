@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -91,7 +91,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c0081611_7485_58a8_88be_82e712d8c1ba
 #define WINRT_GENERIC_c0081611_7485_58a8_88be_82e712d8c1ba
-template <> struct __declspec(uuid("c0081611-7485-58a8-88be-82e712d8c1ba")) __declspec(novtable) TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::IInspectable> : impl_TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::IInspectable> {};
+template <> struct __declspec(uuid("c0081611-7485-58a8-88be-82e712d8c1ba")) __declspec(novtable) TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_bccf7095_bc8e_5ff5_83c0_d5691e0aa24d
@@ -569,363 +569,9 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Graphics::Printing3D {
 
-template <typename D>
-struct WINRT_EBO impl_IPrint3DManager
-{
-    event_token TaskRequested(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> & eventHandler) const;
-    using TaskRequested_revoker = event_revoker<IPrint3DManager>;
-    TaskRequested_revoker TaskRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> & eventHandler) const;
-    void TaskRequested(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DManagerStatics
-{
-    Windows::Graphics::Printing3D::Print3DManager GetForCurrentView() const;
-    Windows::Foundation::IAsyncOperation<bool> ShowPrintUIAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTask
-{
-    Windows::Graphics::Printing3D::Printing3D3MFPackage Source() const;
-    event_token Submitting(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::IInspectable> & eventHandler) const;
-    using Submitting_revoker = event_revoker<IPrint3DTask>;
-    Submitting_revoker Submitting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::IInspectable> & eventHandler) const;
-    void Submitting(event_token eventCookie) const;
-    event_token Completed(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> & eventHandler) const;
-    using Completed_revoker = event_revoker<IPrint3DTask>;
-    Completed_revoker Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> & eventHandler) const;
-    void Completed(event_token eventCookie) const;
-    event_token SourceChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> & eventHandler) const;
-    using SourceChanged_revoker = event_revoker<IPrint3DTask>;
-    SourceChanged_revoker SourceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> & eventHandler) const;
-    void SourceChanged(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTaskCompletedEventArgs
-{
-    Windows::Graphics::Printing3D::Print3DTaskCompletion Completion() const;
-    Windows::Graphics::Printing3D::Print3DTaskDetail ExtendedStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTaskRequest
-{
-    Windows::Graphics::Printing3D::Print3DTask CreateTask(hstring_ref title, hstring_ref printerId, const Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler & handler) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTaskRequestedEventArgs
-{
-    Windows::Graphics::Printing3D::Print3DTaskRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTaskSourceChangedEventArgs
-{
-    Windows::Graphics::Printing3D::Printing3D3MFPackage Source() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DTaskSourceRequestedArgs
-{
-    void SetSource(const Windows::Graphics::Printing3D::Printing3D3MFPackage & source) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3D3MFPackage
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> SaveAsync() const;
-    Windows::Storage::Streams::IRandomAccessStream PrintTicket() const;
-    void PrintTicket(const Windows::Storage::Streams::IRandomAccessStream & value) const;
-    Windows::Storage::Streams::IRandomAccessStream ModelPart() const;
-    void ModelPart(const Windows::Storage::Streams::IRandomAccessStream & value) const;
-    Windows::Graphics::Printing3D::Printing3DTextureResource Thumbnail() const;
-    void Thumbnail(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource> Textures() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel> LoadModelFromPackageAsync(const Windows::Storage::Streams::IRandomAccessStream & value) const;
-    Windows::Foundation::IAsyncAction SaveModelToPackageAsync(const Windows::Graphics::Printing3D::Printing3DModel & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3D3MFPackageStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> LoadAsync(const Windows::Storage::Streams::IRandomAccessStream & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DBaseMaterial
-{
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-    Windows::Graphics::Printing3D::Printing3DColorMaterial Color() const;
-    void Color(const Windows::Graphics::Printing3D::Printing3DColorMaterial & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DBaseMaterialGroup
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial> Bases() const;
-    uint32_t MaterialGroupId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DBaseMaterialGroupFactory
-{
-    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup Create(uint32_t MaterialGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DBaseMaterialStatics
-{
-    hstring Abs() const;
-    hstring Pla() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DColorMaterial
-{
-    uint32_t Value() const;
-    void Value(uint32_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DColorMaterial2
-{
-    Windows::UI::Color Color() const;
-    void Color(const Windows::UI::Color & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DColorMaterialGroup
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial> Colors() const;
-    uint32_t MaterialGroupId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DColorMaterialGroupFactory
-{
-    Windows::Graphics::Printing3D::Printing3DColorMaterialGroup Create(uint32_t MaterialGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DComponent
-{
-    Windows::Graphics::Printing3D::Printing3DMesh Mesh() const;
-    void Mesh(const Windows::Graphics::Printing3D::Printing3DMesh & value) const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> Components() const;
-    Windows::Graphics::Printing3D::Printing3DTextureResource Thumbnail() const;
-    void Thumbnail(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const;
-    Windows::Graphics::Printing3D::Printing3DObjectType Type() const;
-    void Type(Windows::Graphics::Printing3D::Printing3DObjectType value) const;
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-    hstring PartNumber() const;
-    void PartNumber(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DComponentWithMatrix
-{
-    Windows::Graphics::Printing3D::Printing3DComponent Component() const;
-    void Component(const Windows::Graphics::Printing3D::Printing3DComponent & value) const;
-    Windows::Foundation::Numerics::float4x4 Matrix() const;
-    void Matrix(const Windows::Foundation::Numerics::float4x4 & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DCompositeMaterial
-{
-    Windows::Foundation::Collections::IVector<double> Values() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DCompositeMaterialGroup
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial> Composites() const;
-    uint32_t MaterialGroupId() const;
-    Windows::Foundation::Collections::IVector<uint32_t> MaterialIndices() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DCompositeMaterialGroup2
-{
-    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup BaseMaterialGroup() const;
-    void BaseMaterialGroup(const Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DCompositeMaterialGroupFactory
-{
-    Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup Create(uint32_t MaterialGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DFaceReductionOptions
-{
-    double MaxReductionArea() const;
-    void MaxReductionArea(double value) const;
-    uint32_t TargetTriangleCount() const;
-    void TargetTriangleCount(uint32_t value) const;
-    double MaxEdgeLength() const;
-    void MaxEdgeLength(double value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMaterial
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> BaseGroups() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> ColorGroups() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> Texture2CoordGroups() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> CompositeGroups() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> MultiplePropertyGroups() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMesh
-{
-    uint32_t VertexCount() const;
-    void VertexCount(uint32_t value) const;
-    uint32_t IndexCount() const;
-    void IndexCount(uint32_t value) const;
-    Windows::Graphics::Printing3D::Printing3DBufferDescription VertexPositionsDescription() const;
-    void VertexPositionsDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const;
-    Windows::Graphics::Printing3D::Printing3DBufferDescription VertexNormalsDescription() const;
-    void VertexNormalsDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const;
-    Windows::Graphics::Printing3D::Printing3DBufferDescription TriangleIndicesDescription() const;
-    void TriangleIndicesDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const;
-    Windows::Graphics::Printing3D::Printing3DBufferDescription TriangleMaterialIndicesDescription() const;
-    void TriangleMaterialIndicesDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const;
-    Windows::Storage::Streams::IBuffer GetVertexPositions() const;
-    void CreateVertexPositions(uint32_t value) const;
-    Windows::Storage::Streams::IBuffer GetVertexNormals() const;
-    void CreateVertexNormals(uint32_t value) const;
-    Windows::Storage::Streams::IBuffer GetTriangleIndices() const;
-    void CreateTriangleIndices(uint32_t value) const;
-    Windows::Storage::Streams::IBuffer GetTriangleMaterialIndices() const;
-    void CreateTriangleMaterialIndices(uint32_t value) const;
-    Windows::Foundation::Collections::IPropertySet BufferDescriptionSet() const;
-    Windows::Foundation::Collections::IPropertySet BufferSet() const;
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> VerifyAsync(Windows::Graphics::Printing3D::Printing3DMeshVerificationMode value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMeshVerificationResult
-{
-    bool IsValid() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> NonmanifoldTriangles() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> ReversedNormalTriangles() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DModel
-{
-    Windows::Graphics::Printing3D::Printing3DModelUnit Unit() const;
-    void Unit(Windows::Graphics::Printing3D::Printing3DModelUnit value) const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture> Textures() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh> Meshes() const;
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent> Components() const;
-    Windows::Graphics::Printing3D::Printing3DMaterial Material() const;
-    void Material(const Windows::Graphics::Printing3D::Printing3DMaterial & value) const;
-    Windows::Graphics::Printing3D::Printing3DComponent Build() const;
-    void Build(const Windows::Graphics::Printing3D::Printing3DComponent & value) const;
-    hstring Version() const;
-    void Version(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<hstring> RequiredExtensions() const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Metadata() const;
-    Windows::Foundation::IAsyncAction RepairAsync() const;
-    Windows::Graphics::Printing3D::Printing3DModel Clone() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DModel2
-{
-    Windows::Foundation::IAsyncOperation<bool> TryPartialRepairAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> TryPartialRepairAsync(const Windows::Foundation::TimeSpan & maxWaitTime) const;
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> TryReduceFacesAsync() const;
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> TryReduceFacesAsync(const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions & printing3DFaceReductionOptions) const;
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> TryReduceFacesAsync(const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions & printing3DFaceReductionOptions, const Windows::Foundation::TimeSpan & maxWait) const;
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> RepairWithProgressAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DModelTexture
-{
-    Windows::Graphics::Printing3D::Printing3DTextureResource TextureResource() const;
-    void TextureResource(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const;
-    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior TileStyleU() const;
-    void TileStyleU(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) const;
-    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior TileStyleV() const;
-    void TileStyleV(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMultiplePropertyMaterial
-{
-    Windows::Foundation::Collections::IVector<uint32_t> MaterialIndices() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMultiplePropertyMaterialGroup
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> MultipleProperties() const;
-    Windows::Foundation::Collections::IVector<uint32_t> MaterialGroupIndices() const;
-    uint32_t MaterialGroupId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DMultiplePropertyMaterialGroupFactory
-{
-    Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup Create(uint32_t MaterialGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DTexture2CoordMaterial
-{
-    Windows::Graphics::Printing3D::Printing3DModelTexture Texture() const;
-    void Texture(const Windows::Graphics::Printing3D::Printing3DModelTexture & value) const;
-    double U() const;
-    void U(double value) const;
-    double V() const;
-    void V(double value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DTexture2CoordMaterialGroup
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> Texture2Coords() const;
-    uint32_t MaterialGroupId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DTexture2CoordMaterialGroup2
-{
-    Windows::Graphics::Printing3D::Printing3DModelTexture Texture() const;
-    void Texture(const Windows::Graphics::Printing3D::Printing3DModelTexture & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DTexture2CoordMaterialGroupFactory
-{
-    Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup Create(uint32_t MaterialGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrinting3DTextureResource
-{
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType TextureData() const;
-    void TextureData(const Windows::Storage::Streams::IRandomAccessStreamWithContentType & value) const;
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-};
-
-struct Print3DTaskSourceRequestedHandler : Windows::IUnknown
+struct Print3DTaskSourceRequestedHandler : Windows::Foundation::IUnknown
 {
     Print3DTaskSourceRequestedHandler(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<Print3DTaskSourceRequestedHandler>(m_ptr); }
     template <typename L> Print3DTaskSourceRequestedHandler(L lambda);
     template <typename F> Print3DTaskSourceRequestedHandler (F * function);
     template <typename O, typename M> Print3DTaskSourceRequestedHandler(O * object, M method);
@@ -933,315 +579,276 @@ struct Print3DTaskSourceRequestedHandler : Windows::IUnknown
 };
 
 struct IPrint3DManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DManager>
 {
     IPrint3DManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DManager>(m_ptr); }
 };
 
 struct IPrint3DManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DManagerStatics>
 {
     IPrint3DManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DManagerStatics>(m_ptr); }
 };
 
 struct IPrint3DTask :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTask>
 {
     IPrint3DTask(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTask>(m_ptr); }
 };
 
 struct IPrint3DTaskCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTaskCompletedEventArgs>
 {
     IPrint3DTaskCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTaskCompletedEventArgs>(m_ptr); }
 };
 
 struct IPrint3DTaskRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTaskRequest>
 {
     IPrint3DTaskRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTaskRequest>(m_ptr); }
 };
 
 struct IPrint3DTaskRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTaskRequestedEventArgs>
 {
     IPrint3DTaskRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTaskRequestedEventArgs>(m_ptr); }
 };
 
 struct IPrint3DTaskSourceChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTaskSourceChangedEventArgs>
 {
     IPrint3DTaskSourceChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTaskSourceChangedEventArgs>(m_ptr); }
 };
 
 struct IPrint3DTaskSourceRequestedArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DTaskSourceRequestedArgs>
 {
     IPrint3DTaskSourceRequestedArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DTaskSourceRequestedArgs>(m_ptr); }
 };
 
 struct IPrinting3D3MFPackage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3D3MFPackage>
 {
     IPrinting3D3MFPackage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3D3MFPackage>(m_ptr); }
 };
 
 struct IPrinting3D3MFPackageStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3D3MFPackageStatics>
 {
     IPrinting3D3MFPackageStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3D3MFPackageStatics>(m_ptr); }
 };
 
 struct IPrinting3DBaseMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DBaseMaterial>
 {
     IPrinting3DBaseMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DBaseMaterial>(m_ptr); }
 };
 
 struct IPrinting3DBaseMaterialGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DBaseMaterialGroup>
 {
     IPrinting3DBaseMaterialGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DBaseMaterialGroup>(m_ptr); }
 };
 
 struct IPrinting3DBaseMaterialGroupFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DBaseMaterialGroupFactory>
 {
     IPrinting3DBaseMaterialGroupFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DBaseMaterialGroupFactory>(m_ptr); }
 };
 
 struct IPrinting3DBaseMaterialStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DBaseMaterialStatics>
 {
     IPrinting3DBaseMaterialStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DBaseMaterialStatics>(m_ptr); }
 };
 
 struct IPrinting3DColorMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DColorMaterial>
 {
     IPrinting3DColorMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DColorMaterial>(m_ptr); }
 };
 
 struct IPrinting3DColorMaterial2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DColorMaterial2>
 {
     IPrinting3DColorMaterial2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DColorMaterial2>(m_ptr); }
 };
 
 struct IPrinting3DColorMaterialGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DColorMaterialGroup>
 {
     IPrinting3DColorMaterialGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DColorMaterialGroup>(m_ptr); }
 };
 
 struct IPrinting3DColorMaterialGroupFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DColorMaterialGroupFactory>
 {
     IPrinting3DColorMaterialGroupFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DColorMaterialGroupFactory>(m_ptr); }
 };
 
 struct IPrinting3DComponent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DComponent>
 {
     IPrinting3DComponent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DComponent>(m_ptr); }
 };
 
 struct IPrinting3DComponentWithMatrix :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DComponentWithMatrix>
 {
     IPrinting3DComponentWithMatrix(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DComponentWithMatrix>(m_ptr); }
 };
 
 struct IPrinting3DCompositeMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DCompositeMaterial>
 {
     IPrinting3DCompositeMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DCompositeMaterial>(m_ptr); }
 };
 
 struct IPrinting3DCompositeMaterialGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DCompositeMaterialGroup>
 {
     IPrinting3DCompositeMaterialGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DCompositeMaterialGroup>(m_ptr); }
 };
 
 struct IPrinting3DCompositeMaterialGroup2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DCompositeMaterialGroup2>
 {
     IPrinting3DCompositeMaterialGroup2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DCompositeMaterialGroup2>(m_ptr); }
 };
 
 struct IPrinting3DCompositeMaterialGroupFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DCompositeMaterialGroupFactory>
 {
     IPrinting3DCompositeMaterialGroupFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DCompositeMaterialGroupFactory>(m_ptr); }
 };
 
 struct IPrinting3DFaceReductionOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DFaceReductionOptions>
 {
     IPrinting3DFaceReductionOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DFaceReductionOptions>(m_ptr); }
 };
 
 struct IPrinting3DMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMaterial>
 {
     IPrinting3DMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMaterial>(m_ptr); }
 };
 
 struct IPrinting3DMesh :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMesh>
 {
     IPrinting3DMesh(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMesh>(m_ptr); }
 };
 
 struct IPrinting3DMeshVerificationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMeshVerificationResult>
 {
     IPrinting3DMeshVerificationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMeshVerificationResult>(m_ptr); }
 };
 
 struct IPrinting3DModel :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DModel>
 {
     IPrinting3DModel(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DModel>(m_ptr); }
 };
 
 struct IPrinting3DModel2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DModel2>
 {
     IPrinting3DModel2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DModel2>(m_ptr); }
 };
 
 struct IPrinting3DModelTexture :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DModelTexture>
 {
     IPrinting3DModelTexture(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DModelTexture>(m_ptr); }
 };
 
 struct IPrinting3DMultiplePropertyMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMultiplePropertyMaterial>
 {
     IPrinting3DMultiplePropertyMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMultiplePropertyMaterial>(m_ptr); }
 };
 
 struct IPrinting3DMultiplePropertyMaterialGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMultiplePropertyMaterialGroup>
 {
     IPrinting3DMultiplePropertyMaterialGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMultiplePropertyMaterialGroup>(m_ptr); }
 };
 
 struct IPrinting3DMultiplePropertyMaterialGroupFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DMultiplePropertyMaterialGroupFactory>
 {
     IPrinting3DMultiplePropertyMaterialGroupFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DMultiplePropertyMaterialGroupFactory>(m_ptr); }
 };
 
 struct IPrinting3DTexture2CoordMaterial :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DTexture2CoordMaterial>
 {
     IPrinting3DTexture2CoordMaterial(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DTexture2CoordMaterial>(m_ptr); }
 };
 
 struct IPrinting3DTexture2CoordMaterialGroup :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DTexture2CoordMaterialGroup>
 {
     IPrinting3DTexture2CoordMaterialGroup(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DTexture2CoordMaterialGroup>(m_ptr); }
 };
 
 struct IPrinting3DTexture2CoordMaterialGroup2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DTexture2CoordMaterialGroup2>
 {
     IPrinting3DTexture2CoordMaterialGroup2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DTexture2CoordMaterialGroup2>(m_ptr); }
 };
 
 struct IPrinting3DTexture2CoordMaterialGroupFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DTexture2CoordMaterialGroupFactory>
 {
     IPrinting3DTexture2CoordMaterialGroupFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DTexture2CoordMaterialGroupFactory>(m_ptr); }
 };
 
 struct IPrinting3DTextureResource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrinting3DTextureResource>
 {
     IPrinting3DTextureResource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrinting3DTextureResource>(m_ptr); }
 };
 
 }

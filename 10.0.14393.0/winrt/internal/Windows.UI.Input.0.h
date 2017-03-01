@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -155,6 +155,47 @@ struct RadialControllerScreenContactContinuedEventArgs;
 struct RadialControllerScreenContactStartedEventArgs;
 struct RightTappedEventArgs;
 struct TappedEventArgs;
+
+}
+
+namespace Windows::UI::Input {
+
+template <typename T> struct impl_ICrossSlidingEventArgs;
+template <typename T> struct impl_IDraggingEventArgs;
+template <typename T> struct impl_IEdgeGesture;
+template <typename T> struct impl_IEdgeGestureEventArgs;
+template <typename T> struct impl_IEdgeGestureStatics;
+template <typename T> struct impl_IGestureRecognizer;
+template <typename T> struct impl_IHoldingEventArgs;
+template <typename T> struct impl_IKeyboardDeliveryInterceptor;
+template <typename T> struct impl_IKeyboardDeliveryInterceptorStatics;
+template <typename T> struct impl_IManipulationCompletedEventArgs;
+template <typename T> struct impl_IManipulationInertiaStartingEventArgs;
+template <typename T> struct impl_IManipulationStartedEventArgs;
+template <typename T> struct impl_IManipulationUpdatedEventArgs;
+template <typename T> struct impl_IMouseWheelParameters;
+template <typename T> struct impl_IPointerPoint;
+template <typename T> struct impl_IPointerPointProperties;
+template <typename T> struct impl_IPointerPointProperties2;
+template <typename T> struct impl_IPointerPointStatics;
+template <typename T> struct impl_IPointerPointTransform;
+template <typename T> struct impl_IPointerVisualizationSettings;
+template <typename T> struct impl_IPointerVisualizationSettingsStatics;
+template <typename T> struct impl_IRadialController;
+template <typename T> struct impl_IRadialControllerButtonClickedEventArgs;
+template <typename T> struct impl_IRadialControllerConfiguration;
+template <typename T> struct impl_IRadialControllerConfigurationStatics;
+template <typename T> struct impl_IRadialControllerControlAcquiredEventArgs;
+template <typename T> struct impl_IRadialControllerMenu;
+template <typename T> struct impl_IRadialControllerMenuItem;
+template <typename T> struct impl_IRadialControllerMenuItemStatics;
+template <typename T> struct impl_IRadialControllerRotationChangedEventArgs;
+template <typename T> struct impl_IRadialControllerScreenContact;
+template <typename T> struct impl_IRadialControllerScreenContactContinuedEventArgs;
+template <typename T> struct impl_IRadialControllerScreenContactStartedEventArgs;
+template <typename T> struct impl_IRadialControllerStatics;
+template <typename T> struct impl_IRightTappedEventArgs;
+template <typename T> struct impl_ITappedEventArgs;
 
 }
 

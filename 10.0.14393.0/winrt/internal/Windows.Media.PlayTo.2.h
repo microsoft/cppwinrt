@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,9 +9,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -36,7 +41,7 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -46,7 +51,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_7a89b9c2_78d4_5866_88f1_4cdc0a0e75b8
 #define WINRT_GENERIC_7a89b9c2_78d4_5866_88f1_4cdc0a0e75b8
-template <> struct __declspec(uuid("7a89b9c2-78d4-5866-88f1-4cdc0a0e75b8")) __declspec(novtable) TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> {};
+template <> struct __declspec(uuid("7a89b9c2-78d4-5866-88f1-4cdc0a0e75b8")) __declspec(novtable) TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_1466d074_b7b4_5814_b2d7_847c5ae7d87d
@@ -106,12 +111,12 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -119,359 +124,142 @@ template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __de
 
 namespace Windows::Media::PlayTo {
 
-template <typename D>
-struct WINRT_EBO impl_ICurrentTimeChangeRequestedEventArgs
-{
-    Windows::Foundation::TimeSpan Time() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMuteChangeRequestedEventArgs
-{
-    bool Mute() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToConnection
-{
-    Windows::Media::PlayTo::PlayToConnectionState State() const;
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionStateChangedEventArgs> & handler) const;
-    using StateChanged_revoker = event_revoker<IPlayToConnection>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionStateChangedEventArgs> & handler) const;
-    void StateChanged(event_token token) const;
-    event_token Transferred(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionTransferredEventArgs> & handler) const;
-    using Transferred_revoker = event_revoker<IPlayToConnection>;
-    Transferred_revoker Transferred(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionTransferredEventArgs> & handler) const;
-    void Transferred(event_token token) const;
-    event_token Error(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionErrorEventArgs> & handler) const;
-    using Error_revoker = event_revoker<IPlayToConnection>;
-    Error_revoker Error(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToConnection, Windows::Media::PlayTo::PlayToConnectionErrorEventArgs> & handler) const;
-    void Error(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToConnectionErrorEventArgs
-{
-    Windows::Media::PlayTo::PlayToConnectionError Code() const;
-    hstring Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToConnectionStateChangedEventArgs
-{
-    Windows::Media::PlayTo::PlayToConnectionState PreviousState() const;
-    Windows::Media::PlayTo::PlayToConnectionState CurrentState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToConnectionTransferredEventArgs
-{
-    Windows::Media::PlayTo::PlayToSource PreviousSource() const;
-    Windows::Media::PlayTo::PlayToSource CurrentSource() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToManager
-{
-    event_token SourceRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToManager, Windows::Media::PlayTo::PlayToSourceRequestedEventArgs> & handler) const;
-    using SourceRequested_revoker = event_revoker<IPlayToManager>;
-    SourceRequested_revoker SourceRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToManager, Windows::Media::PlayTo::PlayToSourceRequestedEventArgs> & handler) const;
-    void SourceRequested(event_token token) const;
-    event_token SourceSelected(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToManager, Windows::Media::PlayTo::PlayToSourceSelectedEventArgs> & handler) const;
-    using SourceSelected_revoker = event_revoker<IPlayToManager>;
-    SourceSelected_revoker SourceSelected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToManager, Windows::Media::PlayTo::PlayToSourceSelectedEventArgs> & handler) const;
-    void SourceSelected(event_token token) const;
-    void DefaultSourceSelection(bool value) const;
-    bool DefaultSourceSelection() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToManagerStatics
-{
-    Windows::Media::PlayTo::PlayToManager GetForCurrentView() const;
-    void ShowPlayToUI() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToReceiver
-{
-    event_token PlayRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    using PlayRequested_revoker = event_revoker<IPlayToReceiver>;
-    PlayRequested_revoker PlayRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    void PlayRequested(event_token token) const;
-    event_token PauseRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    using PauseRequested_revoker = event_revoker<IPlayToReceiver>;
-    PauseRequested_revoker PauseRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    void PauseRequested(event_token token) const;
-    event_token SourceChangeRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::SourceChangeRequestedEventArgs> & handler) const;
-    using SourceChangeRequested_revoker = event_revoker<IPlayToReceiver>;
-    SourceChangeRequested_revoker SourceChangeRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::SourceChangeRequestedEventArgs> & handler) const;
-    void SourceChangeRequested(event_token token) const;
-    event_token PlaybackRateChangeRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::PlaybackRateChangeRequestedEventArgs> & handler) const;
-    using PlaybackRateChangeRequested_revoker = event_revoker<IPlayToReceiver>;
-    PlaybackRateChangeRequested_revoker PlaybackRateChangeRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::PlaybackRateChangeRequestedEventArgs> & handler) const;
-    void PlaybackRateChangeRequested(event_token token) const;
-    event_token CurrentTimeChangeRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::CurrentTimeChangeRequestedEventArgs> & handler) const;
-    using CurrentTimeChangeRequested_revoker = event_revoker<IPlayToReceiver>;
-    CurrentTimeChangeRequested_revoker CurrentTimeChangeRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::CurrentTimeChangeRequestedEventArgs> & handler) const;
-    void CurrentTimeChangeRequested(event_token token) const;
-    event_token MuteChangeRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::MuteChangeRequestedEventArgs> & handler) const;
-    using MuteChangeRequested_revoker = event_revoker<IPlayToReceiver>;
-    MuteChangeRequested_revoker MuteChangeRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::MuteChangeRequestedEventArgs> & handler) const;
-    void MuteChangeRequested(event_token token) const;
-    event_token VolumeChangeRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::VolumeChangeRequestedEventArgs> & handler) const;
-    using VolumeChangeRequested_revoker = event_revoker<IPlayToReceiver>;
-    VolumeChangeRequested_revoker VolumeChangeRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::Media::PlayTo::VolumeChangeRequestedEventArgs> & handler) const;
-    void VolumeChangeRequested(event_token token) const;
-    event_token TimeUpdateRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    using TimeUpdateRequested_revoker = event_revoker<IPlayToReceiver>;
-    TimeUpdateRequested_revoker TimeUpdateRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    void TimeUpdateRequested(event_token token) const;
-    event_token StopRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    using StopRequested_revoker = event_revoker<IPlayToReceiver>;
-    StopRequested_revoker StopRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::PlayTo::PlayToReceiver, Windows::IInspectable> & handler) const;
-    void StopRequested(event_token token) const;
-    void NotifyVolumeChange(double volume, bool mute) const;
-    void NotifyRateChange(double rate) const;
-    void NotifyLoadedMetadata() const;
-    void NotifyTimeUpdate(const Windows::Foundation::TimeSpan & currentTime) const;
-    void NotifyDurationChange(const Windows::Foundation::TimeSpan & duration) const;
-    void NotifySeeking() const;
-    void NotifySeeked() const;
-    void NotifyPaused() const;
-    void NotifyPlaying() const;
-    void NotifyEnded() const;
-    void NotifyError() const;
-    void NotifyStopped() const;
-    hstring FriendlyName() const;
-    void FriendlyName(hstring_ref value) const;
-    void SupportsImage(bool value) const;
-    bool SupportsImage() const;
-    void SupportsAudio(bool value) const;
-    bool SupportsAudio() const;
-    void SupportsVideo(bool value) const;
-    bool SupportsVideo() const;
-    Windows::Foundation::Collections::IPropertySet Properties() const;
-    Windows::Foundation::IAsyncAction StartAsync() const;
-    Windows::Foundation::IAsyncAction StopAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSource
-{
-    Windows::Media::PlayTo::PlayToConnection Connection() const;
-    Windows::Media::PlayTo::PlayToSource Next() const;
-    void Next(const Windows::Media::PlayTo::PlayToSource & value) const;
-    void PlayNext() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSourceDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSourceRequest
-{
-    Windows::Foundation::DateTime Deadline() const;
-    void DisplayErrorString(hstring_ref errorString) const;
-    Windows::Media::PlayTo::PlayToSourceDeferral GetDeferral() const;
-    void SetSource(const Windows::Media::PlayTo::PlayToSource & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSourceRequestedEventArgs
-{
-    Windows::Media::PlayTo::PlayToSourceRequest SourceRequest() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSourceSelectedEventArgs
-{
-    hstring FriendlyName() const;
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType Icon() const;
-    bool SupportsImage() const;
-    bool SupportsAudio() const;
-    bool SupportsVideo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlayToSourceWithPreferredSourceUri
-{
-    Windows::Foundation::Uri PreferredSourceUri() const;
-    void PreferredSourceUri(const Windows::Foundation::Uri & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPlaybackRateChangeRequestedEventArgs
-{
-    double Rate() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISourceChangeRequestedEventArgs
-{
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType Stream() const;
-    hstring Title() const;
-    hstring Author() const;
-    hstring Album() const;
-    hstring Genre() const;
-    hstring Description() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> Date() const;
-    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
-    Windows::Foundation::IReference<uint32_t> Rating() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVolumeChangeRequestedEventArgs
-{
-    double Volume() const;
-};
-
 struct ICurrentTimeChangeRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICurrentTimeChangeRequestedEventArgs>
 {
     ICurrentTimeChangeRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICurrentTimeChangeRequestedEventArgs>(m_ptr); }
 };
 
 struct IMuteChangeRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMuteChangeRequestedEventArgs>
 {
     IMuteChangeRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMuteChangeRequestedEventArgs>(m_ptr); }
 };
 
 struct IPlayToConnection :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToConnection>
 {
     IPlayToConnection(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToConnection>(m_ptr); }
 };
+struct [[deprecated("PlayToConnection may be altered or unavailable for releases after Windows 10. Instead, use CastingConnection.")]] IPlayToConnection;
 
 struct IPlayToConnectionErrorEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToConnectionErrorEventArgs>
 {
     IPlayToConnectionErrorEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToConnectionErrorEventArgs>(m_ptr); }
 };
+struct [[deprecated("PlayToConnectionErrorEventArgs may be altered or unavailable for releases after Windows 10. Instead, use CastingConnectionErrorOccurredEventArgs.")]] IPlayToConnectionErrorEventArgs;
 
 struct IPlayToConnectionStateChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToConnectionStateChangedEventArgs>
 {
     IPlayToConnectionStateChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToConnectionStateChangedEventArgs>(m_ptr); }
 };
+struct [[deprecated("PlayToConnectionStateChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] IPlayToConnectionStateChangedEventArgs;
 
 struct IPlayToConnectionTransferredEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToConnectionTransferredEventArgs>
 {
     IPlayToConnectionTransferredEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToConnectionTransferredEventArgs>(m_ptr); }
 };
+struct [[deprecated("PlayToConnectionTransferredEventArgs may be altered or unavailable for releases after Windows 10.")]] IPlayToConnectionTransferredEventArgs;
 
 struct IPlayToManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToManager>
 {
     IPlayToManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToManager>(m_ptr); }
 };
+struct [[deprecated("PlayToManager may be altered or unavailable for releases after Windows 10.")]] IPlayToManager;
 
 struct IPlayToManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToManagerStatics>
 {
     IPlayToManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToManagerStatics>(m_ptr); }
 };
+struct [[deprecated("PlayToManager may be altered or unavailable for releases after Windows 10.")]] IPlayToManagerStatics;
 
 struct IPlayToReceiver :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToReceiver>
 {
     IPlayToReceiver(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToReceiver>(m_ptr); }
 };
 
 struct IPlayToSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSource>
 {
     IPlayToSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSource>(m_ptr); }
 };
+struct [[deprecated("PlayToSource may be altered or unavailable for releases after Windows 10. Instead, use CastingSource.")]] IPlayToSource;
 
 struct IPlayToSourceDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSourceDeferral>
 {
     IPlayToSourceDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSourceDeferral>(m_ptr); }
 };
+struct [[deprecated("PlayToSourceDeferral may be altered or unavailable for releases after Windows 10.")]] IPlayToSourceDeferral;
 
 struct IPlayToSourceRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSourceRequest>
 {
     IPlayToSourceRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSourceRequest>(m_ptr); }
 };
+struct [[deprecated("PlayToSourceRequest may be altered or unavailable for releases after Windows 10.")]] IPlayToSourceRequest;
 
 struct IPlayToSourceRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSourceRequestedEventArgs>
 {
     IPlayToSourceRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSourceRequestedEventArgs>(m_ptr); }
 };
+struct [[deprecated("PlayToSourceRequestedEventArgs may be altered or unavailable for releases after Windows 10.")]] IPlayToSourceRequestedEventArgs;
 
 struct IPlayToSourceSelectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSourceSelectedEventArgs>
 {
     IPlayToSourceSelectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSourceSelectedEventArgs>(m_ptr); }
 };
+struct [[deprecated("PlayToSourceSelectedEventArgs may be altered or unavailable for releases after Windows 10.")]] IPlayToSourceSelectedEventArgs;
 
 struct IPlayToSourceWithPreferredSourceUri :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlayToSourceWithPreferredSourceUri>
 {
     IPlayToSourceWithPreferredSourceUri(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlayToSourceWithPreferredSourceUri>(m_ptr); }
 };
+struct [[deprecated("PlayToSourceWithPreferredSourceUri may be altered or unavailable for releases after Windows 10. Instead, use CastingSource.")]] IPlayToSourceWithPreferredSourceUri;
 
 struct IPlaybackRateChangeRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPlaybackRateChangeRequestedEventArgs>
 {
     IPlaybackRateChangeRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPlaybackRateChangeRequestedEventArgs>(m_ptr); }
 };
 
 struct ISourceChangeRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISourceChangeRequestedEventArgs>
 {
     ISourceChangeRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISourceChangeRequestedEventArgs>(m_ptr); }
 };
 
 struct IVolumeChangeRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVolumeChangeRequestedEventArgs>
 {
     IVolumeChangeRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVolumeChangeRequestedEventArgs>(m_ptr); }
 };
 
 }

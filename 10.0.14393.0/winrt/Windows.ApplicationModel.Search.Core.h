@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.ApplicationModel.Search.3.h"
@@ -25,7 +28,8 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestion> : 
     {
         try
         {
-            *value = detach(this->shim().Kind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Kind());
             return S_OK;
         }
         catch (...)
@@ -34,25 +38,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestion> : 
         }
     }
 
-    HRESULT __stdcall get_Text(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Text());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Tag(abi_arg_out<hstring> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Tag());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Text());
             return S_OK;
         }
         catch (...)
@@ -62,11 +53,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestion> : 
         }
     }
 
-    HRESULT __stdcall get_DetailText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DetailText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Tag());
             return S_OK;
         }
         catch (...)
@@ -76,11 +68,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestion> : 
         }
     }
 
-    HRESULT __stdcall get_Image(abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_DetailText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Image());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DetailText());
             return S_OK;
         }
         catch (...)
@@ -90,11 +83,27 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestion> : 
         }
     }
 
-    HRESULT __stdcall get_ImageAlternateText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Image(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ImageAlternateText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Image());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_ImageAlternateText(impl::abi_arg_out<hstring> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ImageAlternateText());
             return S_OK;
         }
         catch (...)
@@ -112,7 +121,8 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
     {
         try
         {
-            *value = detach(this->shim().SearchHistoryEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SearchHistoryEnabled());
             return S_OK;
         }
         catch (...)
@@ -125,6 +135,7 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SearchHistoryEnabled(value);
             return S_OK;
         }
@@ -134,11 +145,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall get_SearchHistoryContext(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SearchHistoryContext(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SearchHistoryContext());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SearchHistoryContext());
             return S_OK;
         }
         catch (...)
@@ -148,10 +160,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall put_SearchHistoryContext(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SearchHistoryContext(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SearchHistoryContext(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -161,10 +174,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_SetLocalContentSuggestionSettings(abi_arg_in<Windows::ApplicationModel::Search::ILocalContentSuggestionSettings> settings) noexcept override
+    HRESULT __stdcall abi_SetLocalContentSuggestionSettings(impl::abi_arg_in<Windows::ApplicationModel::Search::ILocalContentSuggestionSettings> settings) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetLocalContentSuggestionSettings(*reinterpret_cast<const Windows::ApplicationModel::Search::LocalContentSuggestionSettings *>(&settings));
             return S_OK;
         }
@@ -174,10 +188,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_SetQuery(abi_arg_in<hstring> queryText) noexcept override
+    HRESULT __stdcall abi_SetQuery(impl::abi_arg_in<hstring> queryText) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetQuery(*reinterpret_cast<const hstring *>(&queryText));
             return S_OK;
         }
@@ -187,10 +202,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_SetQueryWithLanguage(abi_arg_in<hstring> queryText, abi_arg_in<hstring> language) noexcept override
+    HRESULT __stdcall abi_SetQueryWithLanguage(impl::abi_arg_in<hstring> queryText, impl::abi_arg_in<hstring> language) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetQuery(*reinterpret_cast<const hstring *>(&queryText), *reinterpret_cast<const hstring *>(&language));
             return S_OK;
         }
@@ -200,10 +216,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_SetQueryWithSearchQueryLinguisticDetails(abi_arg_in<hstring> queryText, abi_arg_in<hstring> language, abi_arg_in<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> linguisticDetails) noexcept override
+    HRESULT __stdcall abi_SetQueryWithSearchQueryLinguisticDetails(impl::abi_arg_in<hstring> queryText, impl::abi_arg_in<hstring> language, impl::abi_arg_in<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> linguisticDetails) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetQuery(*reinterpret_cast<const hstring *>(&queryText), *reinterpret_cast<const hstring *>(&language), *reinterpret_cast<const Windows::ApplicationModel::Search::SearchQueryLinguisticDetails *>(&linguisticDetails));
             return S_OK;
         }
@@ -213,11 +230,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall get_Suggestions(abi_arg_out<Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion>> value) noexcept override
+    HRESULT __stdcall get_Suggestions(impl::abi_arg_out<Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Suggestions());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Suggestions());
             return S_OK;
         }
         catch (...)
@@ -227,10 +245,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_AddToHistory(abi_arg_in<hstring> queryText) noexcept override
+    HRESULT __stdcall abi_AddToHistory(impl::abi_arg_in<hstring> queryText) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddToHistory(*reinterpret_cast<const hstring *>(&queryText));
             return S_OK;
         }
@@ -240,10 +259,11 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall abi_AddToHistoryWithLanguage(abi_arg_in<hstring> queryText, abi_arg_in<hstring> language) noexcept override
+    HRESULT __stdcall abi_AddToHistoryWithLanguage(impl::abi_arg_in<hstring> queryText, impl::abi_arg_in<hstring> language) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().AddToHistory(*reinterpret_cast<const hstring *>(&queryText), *reinterpret_cast<const hstring *>(&language));
             return S_OK;
         }
@@ -257,6 +277,7 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ClearHistory();
             return S_OK;
         }
@@ -266,11 +287,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall add_SuggestionsRequested(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_SuggestionsRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().SuggestionsRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().SuggestionsRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -283,6 +305,7 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SuggestionsRequested(token);
             return S_OK;
         }
@@ -292,11 +315,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
         }
     }
 
-    HRESULT __stdcall add_RequestingFocusOnKeyboardInput(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_RequestingFocusOnKeyboardInput(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().RequestingFocusOnKeyboardInput(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().RequestingFocusOnKeyboardInput(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -309,6 +333,7 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RequestingFocusOnKeyboardInput(token);
             return S_OK;
         }
@@ -322,11 +347,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionMana
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionsRequestedEventArgs> : produce_base<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionsRequestedEventArgs>
 {
-    HRESULT __stdcall get_QueryText(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QueryText(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().QueryText());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().QueryText());
             return S_OK;
         }
         catch (...)
@@ -336,11 +362,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionsReq
         }
     }
 
-    HRESULT __stdcall get_Language(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Language());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Language());
             return S_OK;
         }
         catch (...)
@@ -350,11 +377,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionsReq
         }
     }
 
-    HRESULT __stdcall get_LinguisticDetails(abi_arg_out<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> value) noexcept override
+    HRESULT __stdcall get_LinguisticDetails(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LinguisticDetails());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LinguisticDetails());
             return S_OK;
         }
         catch (...)
@@ -364,11 +392,12 @@ struct produce<D, Windows::ApplicationModel::Search::Core::ISearchSuggestionsReq
         }
     }
 
-    HRESULT __stdcall get_Request(abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionsRequest> value) noexcept override
+    HRESULT __stdcall get_Request(impl::abi_arg_out<Windows::ApplicationModel::Search::ISearchSuggestionsRequest> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Request());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Request());
             return S_OK;
         }
         catch (...)
@@ -386,143 +415,143 @@ namespace Windows::ApplicationModel::Search::Core {
 template <typename D> Windows::ApplicationModel::Search::Core::SearchSuggestionKind impl_ISearchSuggestion<D>::Kind() const
 {
     Windows::ApplicationModel::Search::Core::SearchSuggestionKind value {};
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_Kind(&value));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_Kind(&value));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestion<D>::Text() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_Text(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_Text(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestion<D>::Tag() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_Tag(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_Tag(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestion<D>::DetailText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_DetailText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_DetailText(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_ISearchSuggestion<D>::Image() const
 {
     Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_Image(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_Image(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestion<D>::ImageAlternateText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestion &>(static_cast<const D &>(*this))->get_ImageAlternateText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestion)->get_ImageAlternateText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestionsRequestedEventArgs<D>::QueryText() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestionsRequestedEventArgs &>(static_cast<const D &>(*this))->get_QueryText(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequestedEventArgs)->get_QueryText(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISearchSuggestionsRequestedEventArgs<D>::Language() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestionsRequestedEventArgs &>(static_cast<const D &>(*this))->get_Language(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequestedEventArgs)->get_Language(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchQueryLinguisticDetails impl_ISearchSuggestionsRequestedEventArgs<D>::LinguisticDetails() const
 {
     Windows::ApplicationModel::Search::SearchQueryLinguisticDetails value { nullptr };
-    check_hresult(static_cast<const ISearchSuggestionsRequestedEventArgs &>(static_cast<const D &>(*this))->get_LinguisticDetails(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequestedEventArgs)->get_LinguisticDetails(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::ApplicationModel::Search::SearchSuggestionsRequest impl_ISearchSuggestionsRequestedEventArgs<D>::Request() const
 {
     Windows::ApplicationModel::Search::SearchSuggestionsRequest value { nullptr };
-    check_hresult(static_cast<const ISearchSuggestionsRequestedEventArgs &>(static_cast<const D &>(*this))->get_Request(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionsRequestedEventArgs)->get_Request(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_ISearchSuggestionManager<D>::SearchHistoryEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->get_SearchHistoryEnabled(&value));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->get_SearchHistoryEnabled(&value));
     return value;
 }
 
 template <typename D> void impl_ISearchSuggestionManager<D>::SearchHistoryEnabled(bool value) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->put_SearchHistoryEnabled(value));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->put_SearchHistoryEnabled(value));
 }
 
 template <typename D> hstring impl_ISearchSuggestionManager<D>::SearchHistoryContext() const
 {
     hstring value;
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->get_SearchHistoryContext(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->get_SearchHistoryContext(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::SearchHistoryContext(hstring_ref value) const
+template <typename D> void impl_ISearchSuggestionManager<D>::SearchHistoryContext(hstring_view value) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->put_SearchHistoryContext(get(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->put_SearchHistoryContext(get_abi(value)));
 }
 
 template <typename D> void impl_ISearchSuggestionManager<D>::SetLocalContentSuggestionSettings(const Windows::ApplicationModel::Search::LocalContentSuggestionSettings & settings) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_SetLocalContentSuggestionSettings(get(settings)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_SetLocalContentSuggestionSettings(get_abi(settings)));
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_ref queryText) const
+template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_view queryText) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_SetQuery(get(queryText)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_SetQuery(get_abi(queryText)));
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_ref queryText, hstring_ref language) const
+template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_view queryText, hstring_view language) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_SetQueryWithLanguage(get(queryText), get(language)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_SetQueryWithLanguage(get_abi(queryText), get_abi(language)));
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_ref queryText, hstring_ref language, const Windows::ApplicationModel::Search::SearchQueryLinguisticDetails & linguisticDetails) const
+template <typename D> void impl_ISearchSuggestionManager<D>::SetQuery(hstring_view queryText, hstring_view language, const Windows::ApplicationModel::Search::SearchQueryLinguisticDetails & linguisticDetails) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_SetQueryWithSearchQueryLinguisticDetails(get(queryText), get(language), get(linguisticDetails)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_SetQueryWithSearchQueryLinguisticDetails(get_abi(queryText), get_abi(language), get_abi(linguisticDetails)));
 }
 
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion> impl_ISearchSuggestionManager<D>::Suggestions() const
 {
     Windows::Foundation::Collections::IObservableVector<Windows::ApplicationModel::Search::Core::SearchSuggestion> value;
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->get_Suggestions(put(value)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->get_Suggestions(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::AddToHistory(hstring_ref queryText) const
+template <typename D> void impl_ISearchSuggestionManager<D>::AddToHistory(hstring_view queryText) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_AddToHistory(get(queryText)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_AddToHistory(get_abi(queryText)));
 }
 
-template <typename D> void impl_ISearchSuggestionManager<D>::AddToHistory(hstring_ref queryText, hstring_ref language) const
+template <typename D> void impl_ISearchSuggestionManager<D>::AddToHistory(hstring_view queryText, hstring_view language) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_AddToHistoryWithLanguage(get(queryText), get(language)));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_AddToHistoryWithLanguage(get_abi(queryText), get_abi(language)));
 }
 
 template <typename D> void impl_ISearchSuggestionManager<D>::ClearHistory() const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->abi_ClearHistory());
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->abi_ClearHistory());
 }
 
 template <typename D> event_token impl_ISearchSuggestionManager<D>::SuggestionsRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->add_SuggestionsRequested(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->add_SuggestionsRequested(get_abi(handler), &token));
     return token;
 }
 
@@ -533,13 +562,13 @@ template <typename D> event_revoker<ISearchSuggestionManager> impl_ISearchSugges
 
 template <typename D> void impl_ISearchSuggestionManager<D>::SuggestionsRequested(event_token token) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->remove_SuggestionsRequested(token));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->remove_SuggestionsRequested(token));
 }
 
 template <typename D> event_token impl_ISearchSuggestionManager<D>::RequestingFocusOnKeyboardInput(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Search::Core::SearchSuggestionManager, Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->add_RequestingFocusOnKeyboardInput(get(handler), &token));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->add_RequestingFocusOnKeyboardInput(get_abi(handler), &token));
     return token;
 }
 
@@ -550,7 +579,7 @@ template <typename D> event_revoker<ISearchSuggestionManager> impl_ISearchSugges
 
 template <typename D> void impl_ISearchSuggestionManager<D>::RequestingFocusOnKeyboardInput(event_token token) const
 {
-    check_hresult(static_cast<const ISearchSuggestionManager &>(static_cast<const D &>(*this))->remove_RequestingFocusOnKeyboardInput(token));
+    check_hresult(WINRT_SHIM(ISearchSuggestionManager)->remove_RequestingFocusOnKeyboardInput(token));
 }
 
 inline SearchSuggestionManager::SearchSuggestionManager() :
@@ -560,3 +589,77 @@ inline SearchSuggestionManager::SearchSuggestionManager() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::IRequestingFocusOnKeyboardInputEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::IRequestingFocusOnKeyboardInputEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestion>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestion & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestionManager>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestionManager & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestionsRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::ISearchSuggestionsRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::RequestingFocusOnKeyboardInputEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::SearchSuggestion>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::SearchSuggestion & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::SearchSuggestionManager>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::SearchSuggestionManager & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs>
+{
+    size_t operator()(const winrt::Windows::ApplicationModel::Search::Core::SearchSuggestionsRequestedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

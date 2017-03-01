@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -22,6 +22,11 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_69ad6aa7_0c49_5f27_a5eb_ef4d59467b6d
 #define WINRT_GENERIC_69ad6aa7_0c49_5f27_a5eb_ef4d59467b6d
 template <> struct __declspec(uuid("69ad6aa7-0c49-5f27-a5eb-ef4d59467b6d")) __declspec(novtable) IIterable<Windows::ApplicationModel::Package> : impl_IIterable<Windows::ApplicationModel::Package> {};
+#endif
+
+#ifndef WINRT_GENERIC_d1bb509e_6989_5c69_b1ff_d1702fe8aca3
+#define WINRT_GENERIC_d1bb509e_6989_5c69_b1ff_d1702fe8aca3
+template <> struct __declspec(uuid("d1bb509e-6989-5c69-b1ff-d1702fe8aca3")) __declspec(novtable) IVector<Windows::ApplicationModel::Package> : impl_IVector<Windows::ApplicationModel::Package> {};
 #endif
 
 #ifndef WINRT_GENERIC_0263c4d4_195c_5dc5_a7ca_6806ceca420b
@@ -104,6 +109,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("0217f069-025c-5ee6-a87f-e782e3b623ae")) __declspec(novtable) IIterator<Windows::ApplicationModel::Package> : impl_IIterator<Windows::ApplicationModel::Package> {};
 #endif
 
+#ifndef WINRT_GENERIC_b063023c_b4e2_50f8_92e2_db9f0e882366
+#define WINRT_GENERIC_b063023c_b4e2_50f8_92e2_db9f0e882366
+template <> struct __declspec(uuid("b063023c-b4e2-50f8-92e2-db9f0e882366")) __declspec(novtable) IVector<Windows::ApplicationModel::Core::AppListEntry> : impl_IVector<Windows::ApplicationModel::Core::AppListEntry> {};
+#endif
+
 #ifndef WINRT_GENERIC_b93e2028_50bc_599e_b3d9_427b61d26c01
 #define WINRT_GENERIC_b93e2028_50bc_599e_b3d9_427b61d26c01
 template <> struct __declspec(uuid("b93e2028-50bc-599e-b3d9-427b61d26c01")) __declspec(novtable) IIterator<Windows::ApplicationModel::Core::AppListEntry> : impl_IIterator<Windows::ApplicationModel::Core::AppListEntry> {};
@@ -128,6 +138,11 @@ template <> struct __declspec(uuid("70a0bf67-19e8-5a86-a32e-3c9863825a04")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_c41649ef_ad77_5cb9_aef1_37c47c8877b5
+#define WINRT_GENERIC_c41649ef_ad77_5cb9_aef1_37c47c8877b5
+template <> struct __declspec(uuid("c41649ef-ad77-5cb9-aef1-37c47c8877b5")) __declspec(novtable) IVector<Windows::ApplicationModel::StartupTask> : impl_IVector<Windows::ApplicationModel::StartupTask> {};
+#endif
 
 #ifndef WINRT_GENERIC_14653598_9065_508e_b37b_44eb28d51cb7
 #define WINRT_GENERIC_14653598_9065_508e_b37b_44eb28d51cb7
@@ -174,480 +189,200 @@ template <> struct __declspec(uuid("15d40795-41f9-50d7-a39e-5390981af651")) __de
 
 namespace Windows::ApplicationModel {
 
-template <typename D>
-struct WINRT_EBO impl_IAppDisplayInfo
-{
-    hstring DisplayName() const;
-    hstring Description() const;
-    Windows::Storage::Streams::RandomAccessStreamReference GetLogo(const Windows::Foundation::Size & size) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppInfo
-{
-    hstring Id() const;
-    hstring AppUserModelId() const;
-    Windows::ApplicationModel::AppDisplayInfo DisplayInfo() const;
-    hstring PackageFamilyName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICameraApplicationManagerStatics
-{
-    void ShowInstalledApplicationsUI() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDesignModeStatics
-{
-    bool DesignModeEnabled() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IEnteredBackgroundEventArgs
-{
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFullTrustProcessLauncherStatics
-{
-    Windows::Foundation::IAsyncAction LaunchFullTrustProcessForCurrentAppAsync() const;
-    Windows::Foundation::IAsyncAction LaunchFullTrustProcessForCurrentAppAsync(hstring_ref parameterGroupId) const;
-    Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_ref fullTrustPackageRelativeAppId) const;
-    Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_ref fullTrustPackageRelativeAppId, hstring_ref parameterGroupId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILeavingBackgroundEventArgs
-{
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackage
-{
-    Windows::ApplicationModel::PackageId Id() const;
-    Windows::Storage::StorageFolder InstalledLocation() const;
-    bool IsFramework() const;
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Package> Dependencies() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackage2
-{
-    hstring DisplayName() const;
-    hstring PublisherDisplayName() const;
-    hstring Description() const;
-    Windows::Foundation::Uri Logo() const;
-    bool IsResourcePackage() const;
-    bool IsBundle() const;
-    bool IsDevelopmentMode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackage3
-{
-    Windows::ApplicationModel::PackageStatus Status() const;
-    Windows::Foundation::DateTime InstalledDate() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Core::AppListEntry>> GetAppListEntriesAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackage4
-{
-    Windows::ApplicationModel::PackageSignatureKind SignatureKind() const;
-    bool IsOptional() const;
-    Windows::Foundation::IAsyncOperation<bool> VerifyContentIntegrityAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageCatalog
-{
-    event_token PackageStaging(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageStagingEventArgs> & handler) const;
-    using PackageStaging_revoker = event_revoker<IPackageCatalog>;
-    PackageStaging_revoker PackageStaging(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageStagingEventArgs> & handler) const;
-    void PackageStaging(event_token token) const;
-    event_token PackageInstalling(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageInstallingEventArgs> & handler) const;
-    using PackageInstalling_revoker = event_revoker<IPackageCatalog>;
-    PackageInstalling_revoker PackageInstalling(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageInstallingEventArgs> & handler) const;
-    void PackageInstalling(event_token token) const;
-    event_token PackageUpdating(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageUpdatingEventArgs> & handler) const;
-    using PackageUpdating_revoker = event_revoker<IPackageCatalog>;
-    PackageUpdating_revoker PackageUpdating(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageUpdatingEventArgs> & handler) const;
-    void PackageUpdating(event_token token) const;
-    event_token PackageUninstalling(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageUninstallingEventArgs> & handler) const;
-    using PackageUninstalling_revoker = event_revoker<IPackageCatalog>;
-    PackageUninstalling_revoker PackageUninstalling(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageUninstallingEventArgs> & handler) const;
-    void PackageUninstalling(event_token token) const;
-    event_token PackageStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageStatusChangedEventArgs> & handler) const;
-    using PackageStatusChanged_revoker = event_revoker<IPackageCatalog>;
-    PackageStatusChanged_revoker PackageStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::PackageCatalog, Windows::ApplicationModel::PackageStatusChangedEventArgs> & handler) const;
-    void PackageStatusChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageCatalogStatics
-{
-    Windows::ApplicationModel::PackageCatalog OpenForCurrentPackage() const;
-    Windows::ApplicationModel::PackageCatalog OpenForCurrentUser() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageId
-{
-    hstring Name() const;
-    Windows::ApplicationModel::PackageVersion Version() const;
-    Windows::System::ProcessorArchitecture Architecture() const;
-    hstring ResourceId() const;
-    hstring Publisher() const;
-    hstring PublisherId() const;
-    hstring FullName() const;
-    hstring FamilyName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageIdWithMetadata
-{
-    hstring ProductId() const;
-    hstring Author() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageInstallingEventArgs
-{
-    GUID ActivityId() const;
-    Windows::ApplicationModel::Package Package() const;
-    double Progress() const;
-    bool IsComplete() const;
-    HRESULT ErrorCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageStagingEventArgs
-{
-    GUID ActivityId() const;
-    Windows::ApplicationModel::Package Package() const;
-    double Progress() const;
-    bool IsComplete() const;
-    HRESULT ErrorCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageStatics
-{
-    Windows::ApplicationModel::Package Current() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageStatus
-{
-    bool VerifyIsOK() const;
-    bool NotAvailable() const;
-    bool PackageOffline() const;
-    bool DataOffline() const;
-    bool Disabled() const;
-    bool NeedsRemediation() const;
-    bool LicenseIssue() const;
-    bool Modified() const;
-    bool Tampered() const;
-    bool DependencyIssue() const;
-    bool Servicing() const;
-    bool DeploymentInProgress() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageStatusChangedEventArgs
-{
-    Windows::ApplicationModel::Package Package() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageUninstallingEventArgs
-{
-    GUID ActivityId() const;
-    Windows::ApplicationModel::Package Package() const;
-    double Progress() const;
-    bool IsComplete() const;
-    HRESULT ErrorCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageUpdatingEventArgs
-{
-    GUID ActivityId() const;
-    Windows::ApplicationModel::Package SourcePackage() const;
-    Windows::ApplicationModel::Package TargetPackage() const;
-    double Progress() const;
-    bool IsComplete() const;
-    HRESULT ErrorCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPackageWithMetadata
-{
-    Windows::Foundation::DateTime InstallDate() const;
-    hstring GetThumbnailToken() const;
-    void Launch(hstring_ref parameters) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStartupTask
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::StartupTaskState> RequestEnableAsync() const;
-    void Disable() const;
-    Windows::ApplicationModel::StartupTaskState State() const;
-    hstring TaskId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IStartupTaskStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> GetForCurrentPackageAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> GetAsync(hstring_ref taskId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISuspendingDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISuspendingEventArgs
-{
-    Windows::ApplicationModel::SuspendingOperation SuspendingOperation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISuspendingOperation
-{
-    Windows::ApplicationModel::SuspendingDeferral GetDeferral() const;
-    Windows::Foundation::DateTime Deadline() const;
-};
-
 struct IAppDisplayInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppDisplayInfo>
 {
     IAppDisplayInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppDisplayInfo>(m_ptr); }
 };
 
 struct IAppInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppInfo>
 {
     IAppInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppInfo>(m_ptr); }
 };
 
 struct ICameraApplicationManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICameraApplicationManagerStatics>
 {
     ICameraApplicationManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICameraApplicationManagerStatics>(m_ptr); }
 };
 
 struct IDesignModeStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDesignModeStatics>
 {
     IDesignModeStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDesignModeStatics>(m_ptr); }
 };
 
 struct IEnteredBackgroundEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IEnteredBackgroundEventArgs>
 {
     IEnteredBackgroundEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IEnteredBackgroundEventArgs>(m_ptr); }
 };
 
 struct IFullTrustProcessLauncherStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFullTrustProcessLauncherStatics>
 {
     IFullTrustProcessLauncherStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFullTrustProcessLauncherStatics>(m_ptr); }
 };
 
 struct ILeavingBackgroundEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILeavingBackgroundEventArgs>
 {
     ILeavingBackgroundEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILeavingBackgroundEventArgs>(m_ptr); }
 };
 
 struct IPackage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackage>
 {
     IPackage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackage>(m_ptr); }
 };
 
 struct IPackage2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackage2>
 {
     IPackage2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackage2>(m_ptr); }
 };
 
 struct IPackage3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackage3>
 {
     IPackage3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackage3>(m_ptr); }
 };
 
 struct IPackage4 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackage4>
 {
     IPackage4(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackage4>(m_ptr); }
 };
 
 struct IPackageCatalog :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageCatalog>
 {
     IPackageCatalog(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageCatalog>(m_ptr); }
 };
 
 struct IPackageCatalogStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageCatalogStatics>
 {
     IPackageCatalogStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageCatalogStatics>(m_ptr); }
 };
 
 struct IPackageId :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageId>
 {
     IPackageId(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageId>(m_ptr); }
 };
 
 struct IPackageIdWithMetadata :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageIdWithMetadata>
 {
     IPackageIdWithMetadata(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageIdWithMetadata>(m_ptr); }
 };
 
 struct IPackageInstallingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageInstallingEventArgs>
 {
     IPackageInstallingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageInstallingEventArgs>(m_ptr); }
 };
 
 struct IPackageStagingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageStagingEventArgs>
 {
     IPackageStagingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageStagingEventArgs>(m_ptr); }
 };
 
 struct IPackageStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageStatics>
 {
     IPackageStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageStatics>(m_ptr); }
 };
 
 struct IPackageStatus :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageStatus>
 {
     IPackageStatus(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageStatus>(m_ptr); }
 };
 
 struct IPackageStatusChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageStatusChangedEventArgs>
 {
     IPackageStatusChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageStatusChangedEventArgs>(m_ptr); }
 };
 
 struct IPackageUninstallingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageUninstallingEventArgs>
 {
     IPackageUninstallingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageUninstallingEventArgs>(m_ptr); }
 };
 
 struct IPackageUpdatingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageUpdatingEventArgs>
 {
     IPackageUpdatingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageUpdatingEventArgs>(m_ptr); }
 };
 
 struct IPackageWithMetadata :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPackageWithMetadata>
 {
     IPackageWithMetadata(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPackageWithMetadata>(m_ptr); }
 };
 
 struct IStartupTask :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStartupTask>
 {
     IStartupTask(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStartupTask>(m_ptr); }
 };
 
 struct IStartupTaskStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IStartupTaskStatics>
 {
     IStartupTaskStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IStartupTaskStatics>(m_ptr); }
 };
 
 struct ISuspendingDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISuspendingDeferral>
 {
     ISuspendingDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISuspendingDeferral>(m_ptr); }
 };
 
 struct ISuspendingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISuspendingEventArgs>
 {
     ISuspendingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISuspendingEventArgs>(m_ptr); }
 };
 
 struct ISuspendingOperation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISuspendingOperation>
 {
     ISuspendingOperation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISuspendingOperation>(m_ptr); }
 };
 
 }

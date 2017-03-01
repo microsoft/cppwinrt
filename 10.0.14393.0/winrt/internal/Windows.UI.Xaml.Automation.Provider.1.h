@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::UI::Xaml::Automation::Provider {
 
-struct __declspec(uuid("95ba1417-4437-451b-9461-050a49b59d06")) __declspec(novtable) IAnnotationProvider : Windows::IInspectable
+struct __declspec(uuid("95ba1417-4437-451b-9461-050a49b59d06")) __declspec(novtable) IAnnotationProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AnnotationTypeId(int32_t * value) = 0;
     virtual HRESULT __stdcall get_AnnotationTypeName(hstring * value) = 0;
@@ -24,18 +24,18 @@ struct __declspec(uuid("95ba1417-4437-451b-9461-050a49b59d06")) __declspec(novta
     virtual HRESULT __stdcall get_Target(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** value) = 0;
 };
 
-struct __declspec(uuid("2bd8a6d0-2fa3-4717-b28c-4917ce54928d")) __declspec(novtable) ICustomNavigationProvider : Windows::IInspectable
+struct __declspec(uuid("2bd8a6d0-2fa3-4717-b28c-4917ce54928d")) __declspec(novtable) ICustomNavigationProvider : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_NavigateCustom(winrt::Windows::UI::Xaml::Automation::Peers::AutomationNavigationDirection direction, Windows::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_NavigateCustom(winrt::Windows::UI::Xaml::Automation::Peers::AutomationNavigationDirection direction, Windows::Foundation::IInspectable ** returnValue) = 0;
 };
 
-struct __declspec(uuid("48c243f8-78b1-44a0-ac5f-750757bcde3c")) __declspec(novtable) IDockProvider : Windows::IInspectable
+struct __declspec(uuid("48c243f8-78b1-44a0-ac5f-750757bcde3c")) __declspec(novtable) IDockProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DockPosition(winrt::Windows::UI::Xaml::Automation::DockPosition * value) = 0;
     virtual HRESULT __stdcall abi_SetDockPosition(winrt::Windows::UI::Xaml::Automation::DockPosition dockPosition) = 0;
 };
 
-struct __declspec(uuid("2e7786a9-7ffc-4f57-b965-1ef1f373f546")) __declspec(novtable) IDragProvider : Windows::IInspectable
+struct __declspec(uuid("2e7786a9-7ffc-4f57-b965-1ef1f373f546")) __declspec(novtable) IDragProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsGrabbed(bool * value) = 0;
     virtual HRESULT __stdcall get_DropEffect(hstring * value) = 0;
@@ -43,20 +43,20 @@ struct __declspec(uuid("2e7786a9-7ffc-4f57-b965-1ef1f373f546")) __declspec(novta
     virtual HRESULT __stdcall abi_GetGrabbedItems(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
 };
 
-struct __declspec(uuid("7a245bdd-b458-4fe0-98c8-aac89df56d61")) __declspec(novtable) IDropTargetProvider : Windows::IInspectable
+struct __declspec(uuid("7a245bdd-b458-4fe0-98c8-aac89df56d61")) __declspec(novtable) IDropTargetProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DropEffect(hstring * value) = 0;
     virtual HRESULT __stdcall get_DropEffects(uint32_t * __valueSize, hstring ** value) = 0;
 };
 
-struct __declspec(uuid("49ac8399-d626-4543-94b9-a6d9a9593af6")) __declspec(novtable) IExpandCollapseProvider : Windows::IInspectable
+struct __declspec(uuid("49ac8399-d626-4543-94b9-a6d9a9593af6")) __declspec(novtable) IExpandCollapseProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ExpandCollapseState(winrt::Windows::UI::Xaml::Automation::ExpandCollapseState * value) = 0;
     virtual HRESULT __stdcall abi_Collapse() = 0;
     virtual HRESULT __stdcall abi_Expand() = 0;
 };
 
-struct __declspec(uuid("fff3683c-7407-45bb-a936-df3ed6d3837d")) __declspec(novtable) IGridItemProvider : Windows::IInspectable
+struct __declspec(uuid("fff3683c-7407-45bb-a936-df3ed6d3837d")) __declspec(novtable) IGridItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Column(int32_t * value) = 0;
     virtual HRESULT __stdcall get_ColumnSpan(int32_t * value) = 0;
@@ -65,28 +65,28 @@ struct __declspec(uuid("fff3683c-7407-45bb-a936-df3ed6d3837d")) __declspec(novta
     virtual HRESULT __stdcall get_RowSpan(int32_t * value) = 0;
 };
 
-struct __declspec(uuid("8b62b7a0-932c-4490-9a13-02fdb39a8f5b")) __declspec(novtable) IGridProvider : Windows::IInspectable
+struct __declspec(uuid("8b62b7a0-932c-4490-9a13-02fdb39a8f5b")) __declspec(novtable) IGridProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ColumnCount(int32_t * value) = 0;
     virtual HRESULT __stdcall get_RowCount(int32_t * value) = 0;
     virtual HRESULT __stdcall abi_GetItem(int32_t row, int32_t column, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** returnValue) = 0;
 };
 
-struct __declspec(uuid("ec752224-9b77-4720-bb21-4ac89fdb1afd")) __declspec(novtable) IIRawElementProviderSimple : Windows::IInspectable
+struct __declspec(uuid("ec752224-9b77-4720-bb21-4ac89fdb1afd")) __declspec(novtable) IIRawElementProviderSimple : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("f7d1a187-b13c-4540-b09e-6778e2dc9ba5")) __declspec(novtable) IInvokeProvider : Windows::IInspectable
+struct __declspec(uuid("f7d1a187-b13c-4540-b09e-6778e2dc9ba5")) __declspec(novtable) IInvokeProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Invoke() = 0;
 };
 
-struct __declspec(uuid("ef5cd845-e1d4-40f4-bad5-c7fad44a703e")) __declspec(novtable) IItemContainerProvider : Windows::IInspectable
+struct __declspec(uuid("ef5cd845-e1d4-40f4-bad5-c7fad44a703e")) __declspec(novtable) IItemContainerProvider : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_FindItemByProperty(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple * startAfter, Windows::UI::Xaml::Automation::IAutomationProperty * automationProperty, Windows::IInspectable * value, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_FindItemByProperty(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple * startAfter, Windows::UI::Xaml::Automation::IAutomationProperty * automationProperty, Windows::Foundation::IInspectable * value, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** returnValue) = 0;
 };
 
-struct __declspec(uuid("d014e196-0e50-4843-a5d2-c22897c8845a")) __declspec(novtable) IMultipleViewProvider : Windows::IInspectable
+struct __declspec(uuid("d014e196-0e50-4843-a5d2-c22897c8845a")) __declspec(novtable) IMultipleViewProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CurrentView(int32_t * value) = 0;
     virtual HRESULT __stdcall abi_GetSupportedViews(uint32_t * __returnValueSize, int32_t ** returnValue) = 0;
@@ -94,12 +94,12 @@ struct __declspec(uuid("d014e196-0e50-4843-a5d2-c22897c8845a")) __declspec(novta
     virtual HRESULT __stdcall abi_SetCurrentView(int32_t viewId) = 0;
 };
 
-struct __declspec(uuid("c3ca36b9-0793-4ed0-bbf4-9ff4e0f98f80")) __declspec(novtable) IObjectModelProvider : Windows::IInspectable
+struct __declspec(uuid("c3ca36b9-0793-4ed0-bbf4-9ff4e0f98f80")) __declspec(novtable) IObjectModelProvider : Windows::Foundation::IInspectable
 {
-    virtual HRESULT __stdcall abi_GetUnderlyingObjectModel(Windows::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_GetUnderlyingObjectModel(Windows::Foundation::IInspectable ** returnValue) = 0;
 };
 
-struct __declspec(uuid("838a34a8-7d5f-4079-af03-c3d015e93413")) __declspec(novtable) IRangeValueProvider : Windows::IInspectable
+struct __declspec(uuid("838a34a8-7d5f-4079-af03-c3d015e93413")) __declspec(novtable) IRangeValueProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsReadOnly(bool * value) = 0;
     virtual HRESULT __stdcall get_LargeChange(double * value) = 0;
@@ -110,12 +110,12 @@ struct __declspec(uuid("838a34a8-7d5f-4079-af03-c3d015e93413")) __declspec(novta
     virtual HRESULT __stdcall abi_SetValue(double value) = 0;
 };
 
-struct __declspec(uuid("9a3ec090-5d2c-4e42-9ee6-9d58db100b55")) __declspec(novtable) IScrollItemProvider : Windows::IInspectable
+struct __declspec(uuid("9a3ec090-5d2c-4e42-9ee6-9d58db100b55")) __declspec(novtable) IScrollItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ScrollIntoView() = 0;
 };
 
-struct __declspec(uuid("374bf581-7716-4bbc-82eb-d997006ea999")) __declspec(novtable) IScrollProvider : Windows::IInspectable
+struct __declspec(uuid("374bf581-7716-4bbc-82eb-d997006ea999")) __declspec(novtable) IScrollProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_HorizontallyScrollable(bool * value) = 0;
     virtual HRESULT __stdcall get_HorizontalScrollPercent(double * value) = 0;
@@ -127,7 +127,7 @@ struct __declspec(uuid("374bf581-7716-4bbc-82eb-d997006ea999")) __declspec(novta
     virtual HRESULT __stdcall abi_SetScrollPercent(double horizontalPercent, double verticalPercent) = 0;
 };
 
-struct __declspec(uuid("6a4977c1-830d-42d2-bf62-042ebddecc19")) __declspec(novtable) ISelectionItemProvider : Windows::IInspectable
+struct __declspec(uuid("6a4977c1-830d-42d2-bf62-042ebddecc19")) __declspec(novtable) ISelectionItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsSelected(bool * value) = 0;
     virtual HRESULT __stdcall get_SelectionContainer(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** value) = 0;
@@ -136,26 +136,26 @@ struct __declspec(uuid("6a4977c1-830d-42d2-bf62-042ebddecc19")) __declspec(novta
     virtual HRESULT __stdcall abi_Select() = 0;
 };
 
-struct __declspec(uuid("1f018fca-b944-4395-8de1-88f674af51d3")) __declspec(novtable) ISelectionProvider : Windows::IInspectable
+struct __declspec(uuid("1f018fca-b944-4395-8de1-88f674af51d3")) __declspec(novtable) ISelectionProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CanSelectMultiple(bool * value) = 0;
     virtual HRESULT __stdcall get_IsSelectionRequired(bool * value) = 0;
     virtual HRESULT __stdcall abi_GetSelection(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
 };
 
-struct __declspec(uuid("ebde8f92-6015-4826-b719-47521a81c67e")) __declspec(novtable) ISpreadsheetItemProvider : Windows::IInspectable
+struct __declspec(uuid("ebde8f92-6015-4826-b719-47521a81c67e")) __declspec(novtable) ISpreadsheetItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Formula(hstring * value) = 0;
     virtual HRESULT __stdcall abi_GetAnnotationObjects(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetAnnotationTypes(uint32_t * __returnValueSize, winrt::Windows::UI::Xaml::Automation::AnnotationType ** returnValue) = 0;
 };
 
-struct __declspec(uuid("15359093-bd99-4cfd-9f07-3b14b315e23d")) __declspec(novtable) ISpreadsheetProvider : Windows::IInspectable
+struct __declspec(uuid("15359093-bd99-4cfd-9f07-3b14b315e23d")) __declspec(novtable) ISpreadsheetProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetItemByName(hstring name, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** returnValue) = 0;
 };
 
-struct __declspec(uuid("1a5b7a17-7c01-4bec-9cd4-2dfa7dc246cd")) __declspec(novtable) IStylesProvider : Windows::IInspectable
+struct __declspec(uuid("1a5b7a17-7c01-4bec-9cd4-2dfa7dc246cd")) __declspec(novtable) IStylesProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ExtendedProperties(hstring * value) = 0;
     virtual HRESULT __stdcall get_FillColor(Windows::UI::Color * value) = 0;
@@ -166,38 +166,38 @@ struct __declspec(uuid("1a5b7a17-7c01-4bec-9cd4-2dfa7dc246cd")) __declspec(novta
     virtual HRESULT __stdcall get_StyleName(hstring * value) = 0;
 };
 
-struct __declspec(uuid("3d60cecb-da54-4aa3-b915-e3244427d4ac")) __declspec(novtable) ISynchronizedInputProvider : Windows::IInspectable
+struct __declspec(uuid("3d60cecb-da54-4aa3-b915-e3244427d4ac")) __declspec(novtable) ISynchronizedInputProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Cancel() = 0;
     virtual HRESULT __stdcall abi_StartListening(winrt::Windows::UI::Xaml::Automation::SynchronizedInputType inputType) = 0;
 };
 
-struct __declspec(uuid("3b2c49cd-1de2-4ee2-a3e1-fb553559d15d")) __declspec(novtable) ITableItemProvider : Windows::IInspectable
+struct __declspec(uuid("3b2c49cd-1de2-4ee2-a3e1-fb553559d15d")) __declspec(novtable) ITableItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetColumnHeaderItems(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetRowHeaderItems(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
 };
 
-struct __declspec(uuid("7a8ed399-6824-4595-bab3-464bc9a04417")) __declspec(novtable) ITableProvider : Windows::IInspectable
+struct __declspec(uuid("7a8ed399-6824-4595-bab3-464bc9a04417")) __declspec(novtable) ITableProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_RowOrColumnMajor(winrt::Windows::UI::Xaml::Automation::RowOrColumnMajor * value) = 0;
     virtual HRESULT __stdcall abi_GetColumnHeaders(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetRowHeaders(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
 };
 
-struct __declspec(uuid("1133c336-a89b-4130-9be6-55e33334f557")) __declspec(novtable) ITextChildProvider : Windows::IInspectable
+struct __declspec(uuid("1133c336-a89b-4130-9be6-55e33334f557")) __declspec(novtable) ITextChildProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_TextContainer(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** value) = 0;
     virtual HRESULT __stdcall get_TextRange(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** value) = 0;
 };
 
-struct __declspec(uuid("ea3605b4-3a05-400e-b5f9-4e91b40f6176")) __declspec(novtable) ITextEditProvider : Windows::IInspectable
+struct __declspec(uuid("ea3605b4-3a05-400e-b5f9-4e91b40f6176")) __declspec(novtable) ITextEditProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetActiveComposition(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetConversionTarget(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
 };
 
-struct __declspec(uuid("db5bbc9f-4807-4f2a-8678-1b13f3c60e22")) __declspec(novtable) ITextProvider : Windows::IInspectable
+struct __declspec(uuid("db5bbc9f-4807-4f2a-8678-1b13f3c60e22")) __declspec(novtable) ITextProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DocumentRange(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** value) = 0;
     virtual HRESULT __stdcall get_SupportedTextSelection(winrt::Windows::UI::Xaml::Automation::SupportedTextSelection * value) = 0;
@@ -207,21 +207,21 @@ struct __declspec(uuid("db5bbc9f-4807-4f2a-8678-1b13f3c60e22")) __declspec(novta
     virtual HRESULT __stdcall abi_RangeFromPoint(Windows::Foundation::Point screenLocation, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
 };
 
-struct __declspec(uuid("df1d48bc-0487-4e7f-9d5e-f09e77e41246")) __declspec(novtable) ITextProvider2 : Windows::IInspectable
+struct __declspec(uuid("df1d48bc-0487-4e7f-9d5e-f09e77e41246")) __declspec(novtable) ITextProvider2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RangeFromAnnotation(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple * annotationElement, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetCaretRange(bool * isActive, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
 };
 
-struct __declspec(uuid("0274688d-06e9-4f66-9446-28a5be98fbd0")) __declspec(novtable) ITextRangeProvider : Windows::IInspectable
+struct __declspec(uuid("0274688d-06e9-4f66-9446-28a5be98fbd0")) __declspec(novtable) ITextRangeProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Clone(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
     virtual HRESULT __stdcall abi_Compare(Windows::UI::Xaml::Automation::Provider::ITextRangeProvider * textRangeProvider, bool * returnValue) = 0;
     virtual HRESULT __stdcall abi_CompareEndpoints(winrt::Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint endpoint, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider * textRangeProvider, winrt::Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint targetEndpoint, int32_t * returnValue) = 0;
     virtual HRESULT __stdcall abi_ExpandToEnclosingUnit(winrt::Windows::UI::Xaml::Automation::Text::TextUnit unit) = 0;
-    virtual HRESULT __stdcall abi_FindAttribute(int32_t attributeId, Windows::IInspectable * value, bool backward, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_FindAttribute(int32_t attributeId, Windows::Foundation::IInspectable * value, bool backward, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
     virtual HRESULT __stdcall abi_FindText(hstring text, bool backward, bool ignoreCase, Windows::UI::Xaml::Automation::Provider::ITextRangeProvider ** returnValue) = 0;
-    virtual HRESULT __stdcall abi_GetAttributeValue(int32_t attributeId, Windows::IInspectable ** returnValue) = 0;
+    virtual HRESULT __stdcall abi_GetAttributeValue(int32_t attributeId, Windows::Foundation::IInspectable ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetBoundingRectangles(uint32_t * __returnValueSize, double ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetEnclosingElement(Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple ** returnValue) = 0;
     virtual HRESULT __stdcall abi_GetText(int32_t maxLength, hstring * returnValue) = 0;
@@ -235,18 +235,18 @@ struct __declspec(uuid("0274688d-06e9-4f66-9446-28a5be98fbd0")) __declspec(novta
     virtual HRESULT __stdcall abi_GetChildren(uint32_t * __returnValueSize, Windows::UI::Xaml::Automation::Provider::IIRawElementProviderSimple *** returnValue) = 0;
 };
 
-struct __declspec(uuid("d3be3dfb-9f54-4642-a7a5-5c18d5ee2a3f")) __declspec(novtable) ITextRangeProvider2 : Windows::IInspectable
+struct __declspec(uuid("d3be3dfb-9f54-4642-a7a5-5c18d5ee2a3f")) __declspec(novtable) ITextRangeProvider2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ShowContextMenu() = 0;
 };
 
-struct __declspec(uuid("93b88290-656f-44f7-aeaf-78b8f944d062")) __declspec(novtable) IToggleProvider : Windows::IInspectable
+struct __declspec(uuid("93b88290-656f-44f7-aeaf-78b8f944d062")) __declspec(novtable) IToggleProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ToggleState(winrt::Windows::UI::Xaml::Automation::ToggleState * value) = 0;
     virtual HRESULT __stdcall abi_Toggle() = 0;
 };
 
-struct __declspec(uuid("79670fdd-f6a9-4a65-af17-861db799a2da")) __declspec(novtable) ITransformProvider : Windows::IInspectable
+struct __declspec(uuid("79670fdd-f6a9-4a65-af17-861db799a2da")) __declspec(novtable) ITransformProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CanMove(bool * value) = 0;
     virtual HRESULT __stdcall get_CanResize(bool * value) = 0;
@@ -256,7 +256,7 @@ struct __declspec(uuid("79670fdd-f6a9-4a65-af17-861db799a2da")) __declspec(novta
     virtual HRESULT __stdcall abi_Rotate(double degrees) = 0;
 };
 
-struct __declspec(uuid("a8b11756-a39f-4e97-8c7d-c1ea8dd633c5")) __declspec(novtable) ITransformProvider2 : Windows::IInspectable
+struct __declspec(uuid("a8b11756-a39f-4e97-8c7d-c1ea8dd633c5")) __declspec(novtable) ITransformProvider2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CanZoom(bool * value) = 0;
     virtual HRESULT __stdcall get_ZoomLevel(double * value) = 0;
@@ -266,19 +266,19 @@ struct __declspec(uuid("a8b11756-a39f-4e97-8c7d-c1ea8dd633c5")) __declspec(novta
     virtual HRESULT __stdcall abi_ZoomByUnit(winrt::Windows::UI::Xaml::Automation::ZoomUnit zoomUnit) = 0;
 };
 
-struct __declspec(uuid("2086b7a7-ac0e-47d1-ab9b-2a64292afdf8")) __declspec(novtable) IValueProvider : Windows::IInspectable
+struct __declspec(uuid("2086b7a7-ac0e-47d1-ab9b-2a64292afdf8")) __declspec(novtable) IValueProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsReadOnly(bool * value) = 0;
     virtual HRESULT __stdcall get_Value(hstring * value) = 0;
     virtual HRESULT __stdcall abi_SetValue(hstring value) = 0;
 };
 
-struct __declspec(uuid("17d4a04b-d658-48e0-a574-5a516c58dfa7")) __declspec(novtable) IVirtualizedItemProvider : Windows::IInspectable
+struct __declspec(uuid("17d4a04b-d658-48e0-a574-5a516c58dfa7")) __declspec(novtable) IVirtualizedItemProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Realize() = 0;
 };
 
-struct __declspec(uuid("1baa8b3d-38cf-415a-85d3-20e43a0ec1b1")) __declspec(novtable) IWindowProvider : Windows::IInspectable
+struct __declspec(uuid("1baa8b3d-38cf-415a-85d3-20e43a0ec1b1")) __declspec(novtable) IWindowProvider : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsModal(bool * value) = 0;
     virtual HRESULT __stdcall get_IsTopmost(bool * value) = 0;
@@ -301,42 +301,317 @@ template <> struct traits<Windows::UI::Xaml::Automation::Provider::IRawElementPr
 
 namespace Windows::UI::Xaml::Automation::Provider {
 
-template <typename T> struct impl_IAnnotationProvider;
-template <typename T> struct impl_ICustomNavigationProvider;
-template <typename T> struct impl_IDockProvider;
-template <typename T> struct impl_IDragProvider;
-template <typename T> struct impl_IDropTargetProvider;
-template <typename T> struct impl_IExpandCollapseProvider;
-template <typename T> struct impl_IGridItemProvider;
-template <typename T> struct impl_IGridProvider;
-template <typename T> struct impl_IIRawElementProviderSimple;
-template <typename T> struct impl_IInvokeProvider;
-template <typename T> struct impl_IItemContainerProvider;
-template <typename T> struct impl_IMultipleViewProvider;
-template <typename T> struct impl_IObjectModelProvider;
-template <typename T> struct impl_IRangeValueProvider;
-template <typename T> struct impl_IScrollItemProvider;
-template <typename T> struct impl_IScrollProvider;
-template <typename T> struct impl_ISelectionItemProvider;
-template <typename T> struct impl_ISelectionProvider;
-template <typename T> struct impl_ISpreadsheetItemProvider;
-template <typename T> struct impl_ISpreadsheetProvider;
-template <typename T> struct impl_IStylesProvider;
-template <typename T> struct impl_ISynchronizedInputProvider;
-template <typename T> struct impl_ITableItemProvider;
-template <typename T> struct impl_ITableProvider;
-template <typename T> struct impl_ITextChildProvider;
-template <typename T> struct impl_ITextEditProvider;
-template <typename T> struct impl_ITextProvider;
-template <typename T> struct impl_ITextProvider2;
-template <typename T> struct impl_ITextRangeProvider;
-template <typename T> struct impl_ITextRangeProvider2;
-template <typename T> struct impl_IToggleProvider;
-template <typename T> struct impl_ITransformProvider;
-template <typename T> struct impl_ITransformProvider2;
-template <typename T> struct impl_IValueProvider;
-template <typename T> struct impl_IVirtualizedItemProvider;
-template <typename T> struct impl_IWindowProvider;
+template <typename D>
+struct WINRT_EBO impl_IAnnotationProvider
+{
+    int32_t AnnotationTypeId() const;
+    hstring AnnotationTypeName() const;
+    hstring Author() const;
+    hstring DateTime() const;
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple Target() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ICustomNavigationProvider
+{
+    Windows::Foundation::IInspectable NavigateCustom(Windows::UI::Xaml::Automation::Peers::AutomationNavigationDirection direction) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDockProvider
+{
+    Windows::UI::Xaml::Automation::DockPosition DockPosition() const;
+    void SetDockPosition(Windows::UI::Xaml::Automation::DockPosition dockPosition) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDragProvider
+{
+    bool IsGrabbed() const;
+    hstring DropEffect() const;
+    com_array<hstring> DropEffects() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetGrabbedItems() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDropTargetProvider
+{
+    hstring DropEffect() const;
+    com_array<hstring> DropEffects() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IExpandCollapseProvider
+{
+    Windows::UI::Xaml::Automation::ExpandCollapseState ExpandCollapseState() const;
+    void Collapse() const;
+    void Expand() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGridItemProvider
+{
+    int32_t Column() const;
+    int32_t ColumnSpan() const;
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple ContainingGrid() const;
+    int32_t Row() const;
+    int32_t RowSpan() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGridProvider
+{
+    int32_t ColumnCount() const;
+    int32_t RowCount() const;
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple GetItem(int32_t row, int32_t column) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IIRawElementProviderSimple
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInvokeProvider
+{
+    void Invoke() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IItemContainerProvider
+{
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple FindItemByProperty(const Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple & startAfter, const Windows::UI::Xaml::Automation::AutomationProperty & automationProperty, const Windows::Foundation::IInspectable & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IMultipleViewProvider
+{
+    int32_t CurrentView() const;
+    com_array<int32_t> GetSupportedViews() const;
+    hstring GetViewName(int32_t viewId) const;
+    void SetCurrentView(int32_t viewId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IObjectModelProvider
+{
+    Windows::Foundation::IInspectable GetUnderlyingObjectModel() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRangeValueProvider
+{
+    bool IsReadOnly() const;
+    double LargeChange() const;
+    double Maximum() const;
+    double Minimum() const;
+    double SmallChange() const;
+    double Value() const;
+    void SetValue(double value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScrollItemProvider
+{
+    void ScrollIntoView() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IScrollProvider
+{
+    bool HorizontallyScrollable() const;
+    double HorizontalScrollPercent() const;
+    double HorizontalViewSize() const;
+    bool VerticallyScrollable() const;
+    double VerticalScrollPercent() const;
+    double VerticalViewSize() const;
+    void Scroll(Windows::UI::Xaml::Automation::ScrollAmount horizontalAmount, Windows::UI::Xaml::Automation::ScrollAmount verticalAmount) const;
+    void SetScrollPercent(double horizontalPercent, double verticalPercent) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISelectionItemProvider
+{
+    bool IsSelected() const;
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple SelectionContainer() const;
+    void AddToSelection() const;
+    void RemoveFromSelection() const;
+    void Select() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISelectionProvider
+{
+    bool CanSelectMultiple() const;
+    bool IsSelectionRequired() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetSelection() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISpreadsheetItemProvider
+{
+    hstring Formula() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetAnnotationObjects() const;
+    com_array<Windows::UI::Xaml::Automation::AnnotationType> GetAnnotationTypes() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISpreadsheetProvider
+{
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple GetItemByName(hstring_view name) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IStylesProvider
+{
+    hstring ExtendedProperties() const;
+    Windows::UI::Color FillColor() const;
+    Windows::UI::Color FillPatternColor() const;
+    hstring FillPatternStyle() const;
+    hstring Shape() const;
+    int32_t StyleId() const;
+    hstring StyleName() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISynchronizedInputProvider
+{
+    void Cancel() const;
+    void StartListening(Windows::UI::Xaml::Automation::SynchronizedInputType inputType) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITableItemProvider
+{
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetColumnHeaderItems() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetRowHeaderItems() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITableProvider
+{
+    Windows::UI::Xaml::Automation::RowOrColumnMajor RowOrColumnMajor() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetColumnHeaders() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetRowHeaders() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextChildProvider
+{
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple TextContainer() const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider TextRange() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextEditProvider
+{
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider GetActiveComposition() const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider GetConversionTarget() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextProvider
+{
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider DocumentRange() const;
+    Windows::UI::Xaml::Automation::SupportedTextSelection SupportedTextSelection() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::ITextRangeProvider> GetSelection() const;
+    com_array<Windows::UI::Xaml::Automation::Provider::ITextRangeProvider> GetVisibleRanges() const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider RangeFromChild(const Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple & childElement) const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider RangeFromPoint(const Windows::Foundation::Point & screenLocation) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextProvider2
+{
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider RangeFromAnnotation(const Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple & annotationElement) const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider GetCaretRange(bool & isActive) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextRangeProvider
+{
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider Clone() const;
+    bool Compare(const Windows::UI::Xaml::Automation::Provider::ITextRangeProvider & textRangeProvider) const;
+    int32_t CompareEndpoints(Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint endpoint, const Windows::UI::Xaml::Automation::Provider::ITextRangeProvider & textRangeProvider, Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint targetEndpoint) const;
+    void ExpandToEnclosingUnit(Windows::UI::Xaml::Automation::Text::TextUnit unit) const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider FindAttribute(int32_t attributeId, const Windows::Foundation::IInspectable & value, bool backward) const;
+    Windows::UI::Xaml::Automation::Provider::ITextRangeProvider FindText(hstring_view text, bool backward, bool ignoreCase) const;
+    Windows::Foundation::IInspectable GetAttributeValue(int32_t attributeId) const;
+    void GetBoundingRectangles(com_array<double> & returnValue) const;
+    Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple GetEnclosingElement() const;
+    hstring GetText(int32_t maxLength) const;
+    int32_t Move(Windows::UI::Xaml::Automation::Text::TextUnit unit, int32_t count) const;
+    int32_t MoveEndpointByUnit(Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint endpoint, Windows::UI::Xaml::Automation::Text::TextUnit unit, int32_t count) const;
+    void MoveEndpointByRange(Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint endpoint, const Windows::UI::Xaml::Automation::Provider::ITextRangeProvider & textRangeProvider, Windows::UI::Xaml::Automation::Text::TextPatternRangeEndpoint targetEndpoint) const;
+    void Select() const;
+    void AddToSelection() const;
+    void RemoveFromSelection() const;
+    void ScrollIntoView(bool alignToTop) const;
+    com_array<Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetChildren() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITextRangeProvider2
+{
+    void ShowContextMenu() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToggleProvider
+{
+    Windows::UI::Xaml::Automation::ToggleState ToggleState() const;
+    void Toggle() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITransformProvider
+{
+    bool CanMove() const;
+    bool CanResize() const;
+    bool CanRotate() const;
+    void Move(double x, double y) const;
+    void Resize(double width, double height) const;
+    void Rotate(double degrees) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ITransformProvider2
+{
+    bool CanZoom() const;
+    double ZoomLevel() const;
+    double MaxZoom() const;
+    double MinZoom() const;
+    void Zoom(double zoom) const;
+    void ZoomByUnit(Windows::UI::Xaml::Automation::ZoomUnit zoomUnit) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IValueProvider
+{
+    bool IsReadOnly() const;
+    hstring Value() const;
+    void SetValue(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IVirtualizedItemProvider
+{
+    void Realize() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IWindowProvider
+{
+    bool IsModal() const;
+    bool IsTopmost() const;
+    bool Maximizable() const;
+    bool Minimizable() const;
+    Windows::UI::Xaml::Automation::WindowInteractionState InteractionState() const;
+    Windows::UI::Xaml::Automation::WindowVisualState VisualState() const;
+    void Close() const;
+    void SetVisualState(Windows::UI::Xaml::Automation::WindowVisualState state) const;
+    bool WaitForInputIdle(int32_t milliseconds) const;
+};
 
 }
 

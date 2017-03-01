@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -68,7 +68,7 @@ struct WINRT_EBO UsbDevice :
     static hstring GetDeviceSelector(GUID winUsbInterfaceClass);
     static hstring GetDeviceSelector(uint32_t vendorId, uint32_t productId);
     static hstring GetDeviceClassSelector(const Windows::Devices::Usb::UsbDeviceClass & usbClass);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Usb::UsbDevice> FromIdAsync(hstring_ref deviceId);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Usb::UsbDevice> FromIdAsync(hstring_view deviceId);
 };
 
 struct WINRT_EBO UsbDeviceClass :

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,66 +34,66 @@ struct WINRT_EBO ImageDisplayProperties :
     ImageDisplayProperties(std::nullptr_t) noexcept {}
 };
 
-struct MediaControl
+struct [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] MediaControl
 {
     MediaControl() = delete;
-    static event_token SoundLevelChanged(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token SoundLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using SoundLevelChanged_revoker = factory_event_revoker<IMediaControl>;
-    static SoundLevelChanged_revoker SoundLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void SoundLevelChanged(event_token cookie);
-    static event_token PlayPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static SoundLevelChanged_revoker SoundLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void SoundLevelChanged(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token PlayPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using PlayPressed_revoker = factory_event_revoker<IMediaControl>;
-    static PlayPressed_revoker PlayPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void PlayPressed(event_token cookie);
-    static event_token PausePressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static PlayPressed_revoker PlayPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void PlayPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token PausePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using PausePressed_revoker = factory_event_revoker<IMediaControl>;
-    static PausePressed_revoker PausePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void PausePressed(event_token cookie);
-    static event_token StopPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static PausePressed_revoker PausePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void PausePressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token StopPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using StopPressed_revoker = factory_event_revoker<IMediaControl>;
-    static StopPressed_revoker StopPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void StopPressed(event_token cookie);
-    static event_token PlayPauseTogglePressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static StopPressed_revoker StopPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void StopPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token PlayPauseTogglePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using PlayPauseTogglePressed_revoker = factory_event_revoker<IMediaControl>;
-    static PlayPauseTogglePressed_revoker PlayPauseTogglePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void PlayPauseTogglePressed(event_token cookie);
-    static event_token RecordPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static PlayPauseTogglePressed_revoker PlayPauseTogglePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void PlayPauseTogglePressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token RecordPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using RecordPressed_revoker = factory_event_revoker<IMediaControl>;
-    static RecordPressed_revoker RecordPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void RecordPressed(event_token cookie);
-    static event_token NextTrackPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static RecordPressed_revoker RecordPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void RecordPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token NextTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using NextTrackPressed_revoker = factory_event_revoker<IMediaControl>;
-    static NextTrackPressed_revoker NextTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void NextTrackPressed(event_token cookie);
-    static event_token PreviousTrackPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static NextTrackPressed_revoker NextTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void NextTrackPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token PreviousTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using PreviousTrackPressed_revoker = factory_event_revoker<IMediaControl>;
-    static PreviousTrackPressed_revoker PreviousTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void PreviousTrackPressed(event_token cookie);
-    static event_token FastForwardPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static PreviousTrackPressed_revoker PreviousTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void PreviousTrackPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token FastForwardPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using FastForwardPressed_revoker = factory_event_revoker<IMediaControl>;
-    static FastForwardPressed_revoker FastForwardPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void FastForwardPressed(event_token cookie);
-    static event_token RewindPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static FastForwardPressed_revoker FastForwardPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void FastForwardPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token RewindPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using RewindPressed_revoker = factory_event_revoker<IMediaControl>;
-    static RewindPressed_revoker RewindPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void RewindPressed(event_token cookie);
-    static event_token ChannelUpPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static RewindPressed_revoker RewindPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void RewindPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token ChannelUpPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using ChannelUpPressed_revoker = factory_event_revoker<IMediaControl>;
-    static ChannelUpPressed_revoker ChannelUpPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void ChannelUpPressed(event_token cookie);
-    static event_token ChannelDownPressed(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static ChannelUpPressed_revoker ChannelUpPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void ChannelUpPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static event_token ChannelDownPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
     using ChannelDownPressed_revoker = factory_event_revoker<IMediaControl>;
-    static ChannelDownPressed_revoker ChannelDownPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler);
-    static void ChannelDownPressed(event_token cookie);
-    static Windows::Media::SoundLevel SoundLevel();
-    static void TrackName(hstring_ref value);
-    static hstring TrackName();
-    static void ArtistName(hstring_ref value);
-    static hstring ArtistName();
-    static void IsPlaying(bool value);
-    static bool IsPlaying();
-    static void AlbumArt(const Windows::Foundation::Uri & value);
-    static Windows::Foundation::Uri AlbumArt();
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static ChannelDownPressed_revoker ChannelDownPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void ChannelDownPressed(event_token cookie);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static Windows::Media::SoundLevel SoundLevel();
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void TrackName(hstring_view value);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static hstring TrackName();
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void ArtistName(hstring_view value);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static hstring ArtistName();
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void IsPlaying(bool value);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static bool IsPlaying();
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static void AlbumArt(const Windows::Foundation::Uri & value);
+    [[deprecated("MediaControl may be altered or unavailable for releases after Windows 8.1. Instead, use SystemMediaTransportControls.")]] static Windows::Foundation::Uri AlbumArt();
 };
 
 struct WINRT_EBO MediaExtensionManager :

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -92,6 +92,33 @@ struct PrintTaskRequestedEventArgs;
 struct PrintTaskSourceRequestedArgs;
 struct PrintTaskSourceRequestedDeferral;
 struct StandardPrintTaskOptions;
+
+}
+
+namespace Windows::Graphics::Printing {
+
+template <typename T> struct impl_IPrintDocumentSource;
+template <typename T> struct impl_IPrintManager;
+template <typename T> struct impl_IPrintManagerStatic;
+template <typename T> struct impl_IPrintManagerStatic2;
+template <typename T> struct impl_IPrintPageInfo;
+template <typename T> struct impl_IPrintTask;
+template <typename T> struct impl_IPrintTask2;
+template <typename T> struct impl_IPrintTaskCompletedEventArgs;
+template <typename T> struct impl_IPrintTaskOptions;
+template <typename T> struct impl_IPrintTaskOptionsCore;
+template <typename T> struct impl_IPrintTaskOptionsCoreProperties;
+template <typename T> struct impl_IPrintTaskOptionsCoreUIConfiguration;
+template <typename T> struct impl_IPrintTaskProgressingEventArgs;
+template <typename T> struct impl_IPrintTaskRequest;
+template <typename T> struct impl_IPrintTaskRequestedDeferral;
+template <typename T> struct impl_IPrintTaskRequestedEventArgs;
+template <typename T> struct impl_IPrintTaskSourceRequestedArgs;
+template <typename T> struct impl_IPrintTaskSourceRequestedDeferral;
+template <typename T> struct impl_IPrintTaskTargetDeviceSupport;
+template <typename T> struct impl_IStandardPrintTaskOptionsStatic;
+template <typename T> struct impl_IStandardPrintTaskOptionsStatic2;
+template <typename T> struct impl_PrintTaskSourceRequestedHandler;
 
 }
 

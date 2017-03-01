@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -57,6 +57,23 @@ struct IXamlType;
 struct XamlBinaryWriter;
 struct XamlBindingHelper;
 struct XamlReader;
+
+}
+
+namespace Windows::UI::Xaml::Markup {
+
+template <typename T> struct impl_IComponentConnector;
+template <typename T> struct impl_IComponentConnector2;
+template <typename T> struct impl_IDataTemplateComponent;
+template <typename T> struct impl_IXamlBinaryWriter;
+template <typename T> struct impl_IXamlBinaryWriterStatics;
+template <typename T> struct impl_IXamlBindingHelper;
+template <typename T> struct impl_IXamlBindingHelperStatics;
+template <typename T> struct impl_IXamlMember;
+template <typename T> struct impl_IXamlMetadataProvider;
+template <typename T> struct impl_IXamlReader;
+template <typename T> struct impl_IXamlReaderStatics;
+template <typename T> struct impl_IXamlType;
 
 }
 

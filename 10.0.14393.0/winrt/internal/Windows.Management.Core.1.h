@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -11,11 +11,11 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Management::Core {
 
-struct __declspec(uuid("74d10432-2e99-4000-9a3a-64307e858129")) __declspec(novtable) IApplicationDataManager : Windows::IInspectable
+struct __declspec(uuid("74d10432-2e99-4000-9a3a-64307e858129")) __declspec(novtable) IApplicationDataManager : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("1e1862e3-698e-49a1-9752-dee94925b9b3")) __declspec(novtable) IApplicationDataManagerStatics : Windows::IInspectable
+struct __declspec(uuid("1e1862e3-698e-49a1-9752-dee94925b9b3")) __declspec(novtable) IApplicationDataManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateForPackageFamily(hstring packageFamilyName, Windows::Storage::IApplicationData ** applicationData) = 0;
 };
@@ -30,8 +30,16 @@ template <> struct traits<Windows::Management::Core::ApplicationDataManager> { u
 
 namespace Windows::Management::Core {
 
-template <typename T> struct impl_IApplicationDataManager;
-template <typename T> struct impl_IApplicationDataManagerStatics;
+template <typename D>
+struct WINRT_EBO impl_IApplicationDataManager
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IApplicationDataManagerStatics
+{
+    Windows::Storage::ApplicationData CreateForPackageFamily(hstring_view packageFamilyName) const;
+};
 
 }
 

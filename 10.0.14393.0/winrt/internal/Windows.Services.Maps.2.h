@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -64,6 +64,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("e7617fc9-2cc7-5bd1-bc5a-f47260834ed8")) __declspec(novtable) IIterable<Windows::Devices::Geolocation::Geopoint> : impl_IIterable<Windows::Devices::Geolocation::Geopoint> {};
 #endif
 
+#ifndef WINRT_GENERIC_a8b77ef5_e194_5b6b_876a_2dd6f47da7e3
+#define WINRT_GENERIC_a8b77ef5_e194_5b6b_876a_2dd6f47da7e3
+template <> struct __declspec(uuid("a8b77ef5-e194-5b6b-876a-2dd6f47da7e3")) __declspec(novtable) IVector<Windows::Services::Maps::MapLocation> : impl_IVector<Windows::Services::Maps::MapLocation> {};
+#endif
+
 #ifndef WINRT_GENERIC_2a704d9a_3997_5f1e_8641_883eba408726
 #define WINRT_GENERIC_2a704d9a_3997_5f1e_8641_883eba408726
 template <> struct __declspec(uuid("2a704d9a-3997-5f1e-8641-883eba408726")) __declspec(novtable) IIterator<Windows::Services::Maps::MapLocation> : impl_IIterator<Windows::Services::Maps::MapLocation> {};
@@ -72,6 +77,11 @@ template <> struct __declspec(uuid("2a704d9a-3997-5f1e-8641-883eba408726")) __de
 #ifndef WINRT_GENERIC_77da6151_0763_508a_9041_3310baace575
 #define WINRT_GENERIC_77da6151_0763_508a_9041_3310baace575
 template <> struct __declspec(uuid("77da6151-0763-508a-9041-3310baace575")) __declspec(novtable) IIterable<Windows::Services::Maps::MapLocation> : impl_IIterable<Windows::Services::Maps::MapLocation> {};
+#endif
+
+#ifndef WINRT_GENERIC_ac11f763_bda9_5e83_8f08_f1b684be5c48
+#define WINRT_GENERIC_ac11f763_bda9_5e83_8f08_f1b684be5c48
+template <> struct __declspec(uuid("ac11f763-bda9-5e83-8f08-f1b684be5c48")) __declspec(novtable) IVector<Windows::Services::Maps::MapRouteManeuver> : impl_IVector<Windows::Services::Maps::MapRouteManeuver> {};
 #endif
 
 #ifndef WINRT_GENERIC_a7ab048b_a6dc_5e4c_9321_71b0e465dfe8
@@ -84,6 +94,11 @@ template <> struct __declspec(uuid("a7ab048b-a6dc-5e4c-9321-71b0e465dfe8")) __de
 template <> struct __declspec(uuid("de9015fb-91d7-556e-bb4d-200b6f58fad4")) __declspec(novtable) IIterable<Windows::Services::Maps::MapRouteManeuver> : impl_IIterable<Windows::Services::Maps::MapRouteManeuver> {};
 #endif
 
+#ifndef WINRT_GENERIC_ad459e89_b1e4_5f5f_a11f_c9f070944cb0
+#define WINRT_GENERIC_ad459e89_b1e4_5f5f_a11f_c9f070944cb0
+template <> struct __declspec(uuid("ad459e89-b1e4-5f5f-a11f-c9f070944cb0")) __declspec(novtable) IVector<Windows::Services::Maps::MapRouteLeg> : impl_IVector<Windows::Services::Maps::MapRouteLeg> {};
+#endif
+
 #ifndef WINRT_GENERIC_dd1be7d2_de62_5752_b2e0_a2b08723b787
 #define WINRT_GENERIC_dd1be7d2_de62_5752_b2e0_a2b08723b787
 template <> struct __declspec(uuid("dd1be7d2-de62-5752-b2e0-a2b08723b787")) __declspec(novtable) IIterator<Windows::Services::Maps::MapRouteLeg> : impl_IIterator<Windows::Services::Maps::MapRouteLeg> {};
@@ -92,6 +107,11 @@ template <> struct __declspec(uuid("dd1be7d2-de62-5752-b2e0-a2b08723b787")) __de
 #ifndef WINRT_GENERIC_8ff98759_78cd_56e8_877b_83ce846d6f8b
 #define WINRT_GENERIC_8ff98759_78cd_56e8_877b_83ce846d6f8b
 template <> struct __declspec(uuid("8ff98759-78cd-56e8-877b-83ce846d6f8b")) __declspec(novtable) IIterable<Windows::Services::Maps::MapRouteLeg> : impl_IIterable<Windows::Services::Maps::MapRouteLeg> {};
+#endif
+
+#ifndef WINRT_GENERIC_770b613e_c739_5fbc_98d2_51479e8d773d
+#define WINRT_GENERIC_770b613e_c739_5fbc_98d2_51479e8d773d
+template <> struct __declspec(uuid("770b613e-c739-5fbc-98d2-51479e8d773d")) __declspec(novtable) IVector<Windows::Services::Maps::MapRoute> : impl_IVector<Windows::Services::Maps::MapRoute> {};
 #endif
 
 #ifndef WINRT_GENERIC_97e8485a_79c0_5343_93d1_47cdfb55246b
@@ -124,6 +144,16 @@ template <> struct __declspec(uuid("6e7a2b4f-811c-54c3-8938-6795f4e67009")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_7f3bcfac_925d_5d3d_a7e7_e456b9f88e1d
+#define WINRT_GENERIC_7f3bcfac_925d_5d3d_a7e7_e456b9f88e1d
+template <> struct __declspec(uuid("7f3bcfac-925d-5d3d-a7e7-e456b9f88e1d")) __declspec(novtable) IVector<Windows::Devices::Geolocation::Geopoint> : impl_IVector<Windows::Devices::Geolocation::Geopoint> {};
+#endif
+
+#ifndef WINRT_GENERIC_cf6bdbc6_e87d_5cd2_88fa_9dab16dfee80
+#define WINRT_GENERIC_cf6bdbc6_e87d_5cd2_88fa_9dab16dfee80
+template <> struct __declspec(uuid("cf6bdbc6-e87d-5cd2-88fa-9dab16dfee80")) __declspec(novtable) IVectorView<Windows::Devices::Geolocation::Geopoint> : impl_IVectorView<Windows::Devices::Geolocation::Geopoint> {};
+#endif
+
 #ifndef WINRT_GENERIC_88225b39_8be9_5c03_9714_8f1642d8a43f
 #define WINRT_GENERIC_88225b39_8be9_5c03_9714_8f1642d8a43f
 template <> struct __declspec(uuid("88225b39-8be9-5c03-9714-8f1642d8a43f")) __declspec(novtable) IIterator<Windows::Devices::Geolocation::Geopoint> : impl_IIterator<Windows::Devices::Geolocation::Geopoint> {};
@@ -134,340 +164,144 @@ template <> struct __declspec(uuid("88225b39-8be9-5c03-9714-8f1642d8a43f")) __de
 
 namespace Windows::Services::Maps {
 
-template <typename D>
-struct WINRT_EBO impl_IMapAddress
-{
-    hstring BuildingName() const;
-    hstring BuildingFloor() const;
-    hstring BuildingRoom() const;
-    hstring BuildingWing() const;
-    hstring StreetNumber() const;
-    hstring Street() const;
-    hstring Neighborhood() const;
-    hstring District() const;
-    hstring Town() const;
-    hstring Region() const;
-    hstring RegionCode() const;
-    hstring Country() const;
-    hstring CountryCode() const;
-    hstring PostCode() const;
-    hstring Continent() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapAddress2
-{
-    hstring FormattedAddress() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapLocation
-{
-    Windows::Devices::Geolocation::Geopoint Point() const;
-    hstring DisplayName() const;
-    hstring Description() const;
-    Windows::Services::Maps::MapAddress Address() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapLocationFinderResult
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::MapLocation> Locations() const;
-    Windows::Services::Maps::MapLocationFinderStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapLocationFinderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapLocationFinderResult> FindLocationsAtAsync(const Windows::Devices::Geolocation::Geopoint & queryPoint) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapLocationFinderResult> FindLocationsAsync(hstring_ref searchText, const Windows::Devices::Geolocation::Geopoint & referencePoint) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapLocationFinderResult> FindLocationsAsync(hstring_ref searchText, const Windows::Devices::Geolocation::Geopoint & referencePoint, uint32_t maxCount) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapLocationFinderStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapLocationFinderResult> FindLocationsAtAsync(const Windows::Devices::Geolocation::Geopoint & queryPoint, Windows::Services::Maps::MapLocationDesiredAccuracy accuracy) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapManagerStatics
-{
-    void ShowDownloadedMapsUI() const;
-    void ShowMapsUpdateUI() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRoute
-{
-    Windows::Devices::Geolocation::GeoboundingBox BoundingBox() const;
-    double LengthInMeters() const;
-    Windows::Foundation::TimeSpan EstimatedDuration() const;
-    Windows::Devices::Geolocation::Geopath Path() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::MapRouteLeg> Legs() const;
-    bool IsTrafficBased() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRoute2
-{
-    Windows::Services::Maps::MapRouteRestrictions ViolatedRestrictions() const;
-    bool HasBlockedRoads() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteDrivingOptions
-{
-    uint32_t MaxAlternateRouteCount() const;
-    void MaxAlternateRouteCount(uint32_t value) const;
-    Windows::Foundation::IReference<double> InitialHeading() const;
-    void InitialHeading(const Windows::Foundation::IReference<double> & value) const;
-    Windows::Services::Maps::MapRouteOptimization RouteOptimization() const;
-    void RouteOptimization(Windows::Services::Maps::MapRouteOptimization value) const;
-    Windows::Services::Maps::MapRouteRestrictions RouteRestrictions() const;
-    void RouteRestrictions(Windows::Services::Maps::MapRouteRestrictions value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteFinderResult
-{
-    Windows::Services::Maps::MapRoute Route() const;
-    Windows::Services::Maps::MapRouteFinderStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteFinderResult2
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::MapRoute> AlternateRoutes() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteFinderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint, Windows::Services::Maps::MapRouteOptimization optimization) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint, Windows::Services::Maps::MapRouteOptimization optimization, Windows::Services::Maps::MapRouteRestrictions restrictions) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint, Windows::Services::Maps::MapRouteOptimization optimization, Windows::Services::Maps::MapRouteRestrictions restrictions, double headingInDegrees) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteFromWaypointsAsync(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & wayPoints) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteFromWaypointsAsync(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & wayPoints, Windows::Services::Maps::MapRouteOptimization optimization) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteFromWaypointsAsync(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & wayPoints, Windows::Services::Maps::MapRouteOptimization optimization, Windows::Services::Maps::MapRouteRestrictions restrictions) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteFromWaypointsAsync(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & wayPoints, Windows::Services::Maps::MapRouteOptimization optimization, Windows::Services::Maps::MapRouteRestrictions restrictions, double headingInDegrees) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetWalkingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint) const;
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetWalkingRouteFromWaypointsAsync(const Windows::Foundation::Collections::IIterable<Windows::Devices::Geolocation::Geopoint> & wayPoints) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteFinderStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Services::Maps::MapRouteFinderResult> GetDrivingRouteAsync(const Windows::Devices::Geolocation::Geopoint & startPoint, const Windows::Devices::Geolocation::Geopoint & endPoint, const Windows::Services::Maps::MapRouteDrivingOptions & options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteLeg
-{
-    Windows::Devices::Geolocation::GeoboundingBox BoundingBox() const;
-    Windows::Devices::Geolocation::Geopath Path() const;
-    double LengthInMeters() const;
-    Windows::Foundation::TimeSpan EstimatedDuration() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::MapRouteManeuver> Maneuvers() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteManeuver
-{
-    Windows::Devices::Geolocation::Geopoint StartingPoint() const;
-    double LengthInMeters() const;
-    hstring InstructionText() const;
-    Windows::Services::Maps::MapRouteManeuverKind Kind() const;
-    hstring ExitNumber() const;
-    Windows::Services::Maps::MapManeuverNotices ManeuverNotices() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapRouteManeuver2
-{
-    double StartHeading() const;
-    double EndHeading() const;
-    hstring StreetName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapServiceStatics
-{
-    void ServiceToken(hstring_ref value) const;
-    hstring ServiceToken() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapServiceStatics2
-{
-    hstring WorldViewRegionCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMapServiceStatics3
-{
-    hstring DataAttributions() const;
-};
-
 struct IMapAddress :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapAddress>
 {
     IMapAddress(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapAddress>(m_ptr); }
 };
 
 struct IMapAddress2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapAddress2>
 {
     IMapAddress2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapAddress2>(m_ptr); }
 };
 
 struct IMapLocation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapLocation>
 {
     IMapLocation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapLocation>(m_ptr); }
 };
 
 struct IMapLocationFinderResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapLocationFinderResult>
 {
     IMapLocationFinderResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapLocationFinderResult>(m_ptr); }
 };
 
 struct IMapLocationFinderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapLocationFinderStatics>
 {
     IMapLocationFinderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapLocationFinderStatics>(m_ptr); }
 };
 
 struct IMapLocationFinderStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapLocationFinderStatics2>
 {
     IMapLocationFinderStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapLocationFinderStatics2>(m_ptr); }
 };
 
 struct IMapManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapManagerStatics>
 {
     IMapManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapManagerStatics>(m_ptr); }
 };
 
 struct IMapRoute :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRoute>
 {
     IMapRoute(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRoute>(m_ptr); }
 };
 
 struct IMapRoute2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRoute2>
 {
     IMapRoute2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRoute2>(m_ptr); }
 };
 
 struct IMapRouteDrivingOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteDrivingOptions>
 {
     IMapRouteDrivingOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteDrivingOptions>(m_ptr); }
 };
 
 struct IMapRouteFinderResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteFinderResult>
 {
     IMapRouteFinderResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteFinderResult>(m_ptr); }
 };
 
 struct IMapRouteFinderResult2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteFinderResult2>
 {
     IMapRouteFinderResult2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteFinderResult2>(m_ptr); }
 };
 
 struct IMapRouteFinderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteFinderStatics>
 {
     IMapRouteFinderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteFinderStatics>(m_ptr); }
 };
 
 struct IMapRouteFinderStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteFinderStatics2>
 {
     IMapRouteFinderStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteFinderStatics2>(m_ptr); }
 };
 
 struct IMapRouteLeg :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteLeg>
 {
     IMapRouteLeg(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteLeg>(m_ptr); }
 };
 
 struct IMapRouteManeuver :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteManeuver>
 {
     IMapRouteManeuver(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteManeuver>(m_ptr); }
 };
 
 struct IMapRouteManeuver2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapRouteManeuver2>
 {
     IMapRouteManeuver2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapRouteManeuver2>(m_ptr); }
 };
 
 struct IMapServiceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapServiceStatics>
 {
     IMapServiceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapServiceStatics>(m_ptr); }
 };
 
 struct IMapServiceStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapServiceStatics2>
 {
     IMapServiceStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapServiceStatics2>(m_ptr); }
 };
 
 struct IMapServiceStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMapServiceStatics3>
 {
     IMapServiceStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMapServiceStatics3>(m_ptr); }
 };
 
 }

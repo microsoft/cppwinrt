@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,9 +9,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
@@ -39,9 +44,19 @@ template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+#define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
+#endif
+
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -189,6 +204,21 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("144b0f3d-2d59-5dd2-b012-908ec3e06435")) __declspec(novtable) IVectorView<Windows::Globalization::Language> : impl_IVectorView<Windows::Globalization::Language> {};
 #endif
 
+#ifndef WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
+#define WINRT_GENERIC_d7828cf7_4301_58d3_aab5_06e5eefcf79f
+template <> struct __declspec(uuid("d7828cf7-4301-58d3-aab5-06e5eefcf79f")) __declspec(novtable) IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> : impl_IVector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> {};
+#endif
+
+#ifndef WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+#define WINRT_GENERIC_36282c0f_2f1f_57f4_b2b1_867af90c3d13
+template <> struct __declspec(uuid("36282c0f-2f1f-57f4-b2b1-867af90c3d13")) __declspec(novtable) IVector<Windows::Security::Cryptography::Certificates::Certificate> : impl_IVector<Windows::Security::Cryptography::Certificates::Certificate> {};
+#endif
+
+#ifndef WINRT_GENERIC_dcf2525a_42c0_501d_9fcb_471fae060396
+#define WINRT_GENERIC_dcf2525a_42c0_501d_9fcb_471fae060396
+template <> struct __declspec(uuid("dcf2525a-42c0-501d-9fcb-471fae060396")) __declspec(novtable) IVector<Windows::Globalization::Language> : impl_IVector<Windows::Globalization::Language> {};
+#endif
+
 #ifndef WINRT_GENERIC_48409a10_61b6_5db1_a69d_8abc46ac608a
 #define WINRT_GENERIC_48409a10_61b6_5db1_a69d_8abc46ac608a
 template <> struct __declspec(uuid("48409a10-61b6-5db1-a69d-8abc46ac608a")) __declspec(novtable) IIterable<Windows::Globalization::Language> : impl_IIterable<Windows::Globalization::Language> {};
@@ -286,7 +316,7 @@ template <> struct __declspec(uuid("30e99ae6-f414-5243-8db2-aab38ea3f1f1")) __de
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
@@ -296,7 +326,7 @@ template <> struct __declspec(uuid("e9bdaaf0-cbf6-5c72-be90-29cbf3a1319b")) __de
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_05eb86f1_7140_5517_b88d_cbaebe57e6b1
@@ -309,729 +339,298 @@ template <> struct __declspec(uuid("05eb86f1-7140-5517-b88d-cbaebe57e6b1")) __de
 
 namespace Windows::Devices::AllJoyn {
 
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAboutData
-{
-    bool IsEnabled() const;
-    void IsEnabled(bool value) const;
-    hstring DefaultAppName() const;
-    void DefaultAppName(hstring_ref value) const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> AppNames() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> DateOfManufacture() const;
-    void DateOfManufacture(const Windows::Foundation::IReference<Windows::Foundation::DateTime> & value) const;
-    hstring DefaultDescription() const;
-    void DefaultDescription(hstring_ref value) const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Descriptions() const;
-    hstring DefaultManufacturer() const;
-    void DefaultManufacturer(hstring_ref value) const;
-    Windows::Foundation::Collections::IMap<hstring, hstring> Manufacturers() const;
-    hstring ModelNumber() const;
-    void ModelNumber(hstring_ref value) const;
-    hstring SoftwareVersion() const;
-    void SoftwareVersion(hstring_ref value) const;
-    Windows::Foundation::Uri SupportUrl() const;
-    void SupportUrl(const Windows::Foundation::Uri & value) const;
-    GUID AppId() const;
-    void AppId(GUID value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAboutDataView
-{
-    int32_t Status() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> Properties() const;
-    hstring AJSoftwareVersion() const;
-    GUID AppId() const;
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> DateOfManufacture() const;
-    Windows::Globalization::Language DefaultLanguage() const;
-    hstring DeviceId() const;
-    hstring HardwareVersion() const;
-    hstring ModelNumber() const;
-    hstring SoftwareVersion() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::Language> SupportedLanguages() const;
-    Windows::Foundation::Uri SupportUrl() const;
-    hstring AppName() const;
-    hstring Description() const;
-    hstring DeviceName() const;
-    hstring Manufacturer() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAboutDataViewStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_ref uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetDataBySessionPortAsync(hstring_ref uniqueName, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment, uint16_t sessionPort, const Windows::Globalization::Language & language) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAcceptSessionJoiner
-{
-    void Accept() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAcceptSessionJoinerEventArgs
-{
-    hstring UniqueName() const;
-    uint16_t SessionPort() const;
-    Windows::Devices::AllJoyn::AllJoynTrafficType TrafficType() const;
-    bool SamePhysicalNode() const;
-    bool SameNetwork() const;
-    void Accept() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAcceptSessionJoinerEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynAcceptSessionJoinerEventArgs Create(hstring_ref uniqueName, uint16_t sessionPort, Windows::Devices::AllJoyn::AllJoynTrafficType trafficType, uint8_t proximity, const Windows::Devices::AllJoyn::IAllJoynAcceptSessionJoiner & acceptSessionJoiner) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynAuthenticationCompleteEventArgs
-{
-    Windows::Devices::AllJoyn::AllJoynAuthenticationMechanism AuthenticationMechanism() const;
-    hstring PeerUniqueName() const;
-    bool Succeeded() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusAttachment
-{
-    Windows::Devices::AllJoyn::AllJoynAboutData AboutData() const;
-    hstring ConnectionSpecification() const;
-    Windows::Devices::AllJoyn::AllJoynBusAttachmentState State() const;
-    hstring UniqueName() const;
-    Windows::Foundation::IAsyncOperation<int32_t> PingAsync(hstring_ref uniqueName) const;
-    void Connect() const;
-    void Disconnect() const;
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynBusAttachmentStateChangedEventArgs> & handler) const;
-    using StateChanged_revoker = event_revoker<IAllJoynBusAttachment>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynBusAttachmentStateChangedEventArgs> & handler) const;
-    void StateChanged(event_token token) const;
-    Windows::Foundation::Collections::IVector<winrt::Windows::Devices::AllJoyn::AllJoynAuthenticationMechanism> AuthenticationMechanisms() const;
-    event_token CredentialsRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynCredentialsRequestedEventArgs> & handler) const;
-    using CredentialsRequested_revoker = event_revoker<IAllJoynBusAttachment>;
-    CredentialsRequested_revoker CredentialsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynCredentialsRequestedEventArgs> & handler) const;
-    void CredentialsRequested(event_token token) const;
-    event_token CredentialsVerificationRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynCredentialsVerificationRequestedEventArgs> & handler) const;
-    using CredentialsVerificationRequested_revoker = event_revoker<IAllJoynBusAttachment>;
-    CredentialsVerificationRequested_revoker CredentialsVerificationRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynCredentialsVerificationRequestedEventArgs> & handler) const;
-    void CredentialsVerificationRequested(event_token token) const;
-    event_token AuthenticationComplete(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynAuthenticationCompleteEventArgs> & handler) const;
-    using AuthenticationComplete_revoker = event_revoker<IAllJoynBusAttachment>;
-    AuthenticationComplete_revoker AuthenticationComplete(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynAuthenticationCompleteEventArgs> & handler) const;
-    void AuthenticationComplete(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusAttachment2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetAboutDataAsync(const Windows::Devices::AllJoyn::AllJoynServiceInfo & serviceInfo) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynAboutDataView> GetAboutDataAsync(const Windows::Devices::AllJoyn::AllJoynServiceInfo & serviceInfo, const Windows::Globalization::Language & language) const;
-    event_token AcceptSessionJoinerRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynAcceptSessionJoinerEventArgs> & handler) const;
-    using AcceptSessionJoinerRequested_revoker = event_revoker<IAllJoynBusAttachment2>;
-    AcceptSessionJoinerRequested_revoker AcceptSessionJoinerRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynAcceptSessionJoinerEventArgs> & handler) const;
-    void AcceptSessionJoinerRequested(event_token token) const;
-    event_token SessionJoined(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynSessionJoinedEventArgs> & handler) const;
-    using SessionJoined_revoker = event_revoker<IAllJoynBusAttachment2>;
-    SessionJoined_revoker SessionJoined(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusAttachment, Windows::Devices::AllJoyn::AllJoynSessionJoinedEventArgs> & handler) const;
-    void SessionJoined(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusAttachmentFactory
-{
-    Windows::Devices::AllJoyn::AllJoynBusAttachment Create(hstring_ref connectionSpecification) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusAttachmentStateChangedEventArgs
-{
-    Windows::Devices::AllJoyn::AllJoynBusAttachmentState State() const;
-    int32_t Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusAttachmentStatics
-{
-    Windows::Devices::AllJoyn::AllJoynBusAttachment GetDefault() const;
-    Windows::Devices::Enumeration::DeviceWatcher GetWatcher(const Windows::Foundation::Collections::IIterable<hstring> & requiredInterfaces) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusObject
-{
-    void Start() const;
-    void Stop() const;
-    void AddProducer(const Windows::Devices::AllJoyn::IAllJoynProducer & producer) const;
-    Windows::Devices::AllJoyn::AllJoynBusAttachment BusAttachment() const;
-    Windows::Devices::AllJoyn::AllJoynSession Session() const;
-    event_token Stopped(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusObject, Windows::Devices::AllJoyn::AllJoynBusObjectStoppedEventArgs> & handler) const;
-    using Stopped_revoker = event_revoker<IAllJoynBusObject>;
-    Stopped_revoker Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynBusObject, Windows::Devices::AllJoyn::AllJoynBusObjectStoppedEventArgs> & handler) const;
-    void Stopped(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusObjectFactory
-{
-    Windows::Devices::AllJoyn::AllJoynBusObject Create(hstring_ref objectPath) const;
-    Windows::Devices::AllJoyn::AllJoynBusObject CreateWithBusAttachment(hstring_ref objectPath, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusObjectStoppedEventArgs
-{
-    int32_t Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynBusObjectStoppedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynBusObjectStoppedEventArgs Create(int32_t status) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynCredentials
-{
-    Windows::Devices::AllJoyn::AllJoynAuthenticationMechanism AuthenticationMechanism() const;
-    Windows::Security::Cryptography::Certificates::Certificate Certificate() const;
-    void Certificate(const Windows::Security::Cryptography::Certificates::Certificate & value) const;
-    Windows::Security::Credentials::PasswordCredential PasswordCredential() const;
-    void PasswordCredential(const Windows::Security::Credentials::PasswordCredential & value) const;
-    Windows::Foundation::TimeSpan Timeout() const;
-    void Timeout(const Windows::Foundation::TimeSpan & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynCredentialsRequestedEventArgs
-{
-    uint16_t AttemptCount() const;
-    Windows::Devices::AllJoyn::AllJoynCredentials Credentials() const;
-    hstring PeerUniqueName() const;
-    hstring RequestedUserName() const;
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynCredentialsVerificationRequestedEventArgs
-{
-    Windows::Devices::AllJoyn::AllJoynAuthenticationMechanism AuthenticationMechanism() const;
-    hstring PeerUniqueName() const;
-    Windows::Security::Cryptography::Certificates::Certificate PeerCertificate() const;
-    Windows::Networking::Sockets::SocketSslErrorSeverity PeerCertificateErrorSeverity() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> PeerCertificateErrors() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> PeerIntermediateCertificates() const;
-    void Accept() const;
-    Windows::Foundation::Deferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynMessageInfo
-{
-    hstring SenderUniqueName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynMessageInfoFactory
-{
-    Windows::Devices::AllJoyn::AllJoynMessageInfo Create(hstring_ref senderUniqueName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynProducer
-{
-    void SetBusObject(const Windows::Devices::AllJoyn::AllJoynBusObject & busObject) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynProducerStoppedEventArgs
-{
-    int32_t Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynProducerStoppedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynProducerStoppedEventArgs Create(int32_t status) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynServiceInfo
-{
-    hstring UniqueName() const;
-    hstring ObjectPath() const;
-    uint16_t SessionPort() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynServiceInfoFactory
-{
-    Windows::Devices::AllJoyn::AllJoynServiceInfo Create(hstring_ref uniqueName, hstring_ref objectPath, uint16_t sessionPort) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynServiceInfoRemovedEventArgs
-{
-    hstring UniqueName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynServiceInfoRemovedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynServiceInfoRemovedEventArgs Create(hstring_ref uniqueName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynServiceInfoStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynServiceInfo> FromIdAsync(hstring_ref deviceId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSession
-{
-    int32_t Id() const;
-    int32_t Status() const;
-    Windows::Foundation::IAsyncOperation<int32_t> RemoveMemberAsync(hstring_ref uniqueName) const;
-    event_token MemberAdded(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionMemberAddedEventArgs> & handler) const;
-    using MemberAdded_revoker = event_revoker<IAllJoynSession>;
-    MemberAdded_revoker MemberAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionMemberAddedEventArgs> & handler) const;
-    void MemberAdded(event_token token) const;
-    event_token MemberRemoved(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionMemberRemovedEventArgs> & handler) const;
-    using MemberRemoved_revoker = event_revoker<IAllJoynSession>;
-    MemberRemoved_revoker MemberRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionMemberRemovedEventArgs> & handler) const;
-    void MemberRemoved(event_token token) const;
-    event_token Lost(const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionLostEventArgs> & handler) const;
-    using Lost_revoker = event_revoker<IAllJoynSession>;
-    Lost_revoker Lost(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::AllJoyn::AllJoynSession, Windows::Devices::AllJoyn::AllJoynSessionLostEventArgs> & handler) const;
-    void Lost(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionJoinedEventArgs
-{
-    Windows::Devices::AllJoyn::AllJoynSession Session() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionJoinedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynSessionJoinedEventArgs Create(const Windows::Devices::AllJoyn::AllJoynSession & session) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionLostEventArgs
-{
-    Windows::Devices::AllJoyn::AllJoynSessionLostReason Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionLostEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynSessionLostEventArgs Create(Windows::Devices::AllJoyn::AllJoynSessionLostReason reason) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionMemberAddedEventArgs
-{
-    hstring UniqueName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionMemberAddedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynSessionMemberAddedEventArgs Create(hstring_ref uniqueName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionMemberRemovedEventArgs
-{
-    hstring UniqueName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionMemberRemovedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynSessionMemberRemovedEventArgs Create(hstring_ref uniqueName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynSessionStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynSession> GetFromServiceInfoAsync(const Windows::Devices::AllJoyn::AllJoynServiceInfo & serviceInfo) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::AllJoyn::AllJoynSession> GetFromServiceInfoAsync(const Windows::Devices::AllJoyn::AllJoynServiceInfo & serviceInfo, const Windows::Devices::AllJoyn::AllJoynBusAttachment & busAttachment) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynStatusStatics
-{
-    int32_t Ok() const;
-    int32_t Fail() const;
-    int32_t OperationTimedOut() const;
-    int32_t OtherEndClosed() const;
-    int32_t ConnectionRefused() const;
-    int32_t AuthenticationFailed() const;
-    int32_t AuthenticationRejectedByUser() const;
-    int32_t SslConnectFailed() const;
-    int32_t SslIdentityVerificationFailed() const;
-    int32_t InsufficientSecurity() const;
-    int32_t InvalidArgument1() const;
-    int32_t InvalidArgument2() const;
-    int32_t InvalidArgument3() const;
-    int32_t InvalidArgument4() const;
-    int32_t InvalidArgument5() const;
-    int32_t InvalidArgument6() const;
-    int32_t InvalidArgument7() const;
-    int32_t InvalidArgument8() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynWatcherStoppedEventArgs
-{
-    int32_t Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAllJoynWatcherStoppedEventArgsFactory
-{
-    Windows::Devices::AllJoyn::AllJoynWatcherStoppedEventArgs Create(int32_t status) const;
-};
-
 struct IAllJoynAboutData :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAboutData>
 {
     IAllJoynAboutData(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAboutData>(m_ptr); }
 };
 
 struct IAllJoynAboutDataView :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAboutDataView>
 {
     IAllJoynAboutDataView(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAboutDataView>(m_ptr); }
 };
 
 struct IAllJoynAboutDataViewStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAboutDataViewStatics>
 {
     IAllJoynAboutDataViewStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAboutDataViewStatics>(m_ptr); }
 };
 
 struct IAllJoynAcceptSessionJoiner :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAcceptSessionJoiner>
 {
     IAllJoynAcceptSessionJoiner(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAcceptSessionJoiner>(m_ptr); }
 };
 
 struct IAllJoynAcceptSessionJoinerEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAcceptSessionJoinerEventArgs>
 {
     IAllJoynAcceptSessionJoinerEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAcceptSessionJoinerEventArgs>(m_ptr); }
 };
 
 struct IAllJoynAcceptSessionJoinerEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAcceptSessionJoinerEventArgsFactory>
 {
     IAllJoynAcceptSessionJoinerEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAcceptSessionJoinerEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynAuthenticationCompleteEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynAuthenticationCompleteEventArgs>
 {
     IAllJoynAuthenticationCompleteEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynAuthenticationCompleteEventArgs>(m_ptr); }
 };
 
 struct IAllJoynBusAttachment :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusAttachment>
 {
     IAllJoynBusAttachment(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusAttachment>(m_ptr); }
 };
 
 struct IAllJoynBusAttachment2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusAttachment2>
 {
     IAllJoynBusAttachment2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusAttachment2>(m_ptr); }
 };
 
 struct IAllJoynBusAttachmentFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusAttachmentFactory>
 {
     IAllJoynBusAttachmentFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusAttachmentFactory>(m_ptr); }
 };
 
 struct IAllJoynBusAttachmentStateChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusAttachmentStateChangedEventArgs>
 {
     IAllJoynBusAttachmentStateChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusAttachmentStateChangedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynBusAttachmentStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusAttachmentStatics>
 {
     IAllJoynBusAttachmentStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusAttachmentStatics>(m_ptr); }
 };
 
 struct IAllJoynBusObject :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusObject>
 {
     IAllJoynBusObject(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusObject>(m_ptr); }
 };
 
 struct IAllJoynBusObjectFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusObjectFactory>
 {
     IAllJoynBusObjectFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusObjectFactory>(m_ptr); }
 };
 
 struct IAllJoynBusObjectStoppedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusObjectStoppedEventArgs>
 {
     IAllJoynBusObjectStoppedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusObjectStoppedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynBusObjectStoppedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynBusObjectStoppedEventArgsFactory>
 {
     IAllJoynBusObjectStoppedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynBusObjectStoppedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynCredentials :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynCredentials>
 {
     IAllJoynCredentials(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynCredentials>(m_ptr); }
 };
 
 struct IAllJoynCredentialsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynCredentialsRequestedEventArgs>
 {
     IAllJoynCredentialsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynCredentialsRequestedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynCredentialsVerificationRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynCredentialsVerificationRequestedEventArgs>
 {
     IAllJoynCredentialsVerificationRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynCredentialsVerificationRequestedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynMessageInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynMessageInfo>
 {
     IAllJoynMessageInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynMessageInfo>(m_ptr); }
 };
 
 struct IAllJoynMessageInfoFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynMessageInfoFactory>
 {
     IAllJoynMessageInfoFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynMessageInfoFactory>(m_ptr); }
 };
 
 struct IAllJoynProducer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynProducer>
 {
     IAllJoynProducer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynProducer>(m_ptr); }
 };
 
 struct IAllJoynProducerStoppedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynProducerStoppedEventArgs>
 {
     IAllJoynProducerStoppedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynProducerStoppedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynProducerStoppedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynProducerStoppedEventArgsFactory>
 {
     IAllJoynProducerStoppedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynProducerStoppedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynServiceInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynServiceInfo>
 {
     IAllJoynServiceInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynServiceInfo>(m_ptr); }
 };
 
 struct IAllJoynServiceInfoFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynServiceInfoFactory>
 {
     IAllJoynServiceInfoFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynServiceInfoFactory>(m_ptr); }
 };
 
 struct IAllJoynServiceInfoRemovedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynServiceInfoRemovedEventArgs>
 {
     IAllJoynServiceInfoRemovedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynServiceInfoRemovedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynServiceInfoRemovedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynServiceInfoRemovedEventArgsFactory>
 {
     IAllJoynServiceInfoRemovedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynServiceInfoRemovedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynServiceInfoStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynServiceInfoStatics>
 {
     IAllJoynServiceInfoStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynServiceInfoStatics>(m_ptr); }
 };
 
 struct IAllJoynSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSession>
 {
     IAllJoynSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSession>(m_ptr); }
 };
 
 struct IAllJoynSessionJoinedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionJoinedEventArgs>
 {
     IAllJoynSessionJoinedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionJoinedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynSessionJoinedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionJoinedEventArgsFactory>
 {
     IAllJoynSessionJoinedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionJoinedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynSessionLostEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionLostEventArgs>
 {
     IAllJoynSessionLostEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionLostEventArgs>(m_ptr); }
 };
 
 struct IAllJoynSessionLostEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionLostEventArgsFactory>
 {
     IAllJoynSessionLostEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionLostEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynSessionMemberAddedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionMemberAddedEventArgs>
 {
     IAllJoynSessionMemberAddedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionMemberAddedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynSessionMemberAddedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionMemberAddedEventArgsFactory>
 {
     IAllJoynSessionMemberAddedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionMemberAddedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynSessionMemberRemovedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionMemberRemovedEventArgs>
 {
     IAllJoynSessionMemberRemovedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionMemberRemovedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynSessionMemberRemovedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionMemberRemovedEventArgsFactory>
 {
     IAllJoynSessionMemberRemovedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionMemberRemovedEventArgsFactory>(m_ptr); }
 };
 
 struct IAllJoynSessionStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynSessionStatics>
 {
     IAllJoynSessionStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynSessionStatics>(m_ptr); }
 };
 
 struct IAllJoynStatusStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynStatusStatics>
 {
     IAllJoynStatusStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynStatusStatics>(m_ptr); }
 };
 
 struct IAllJoynWatcherStoppedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynWatcherStoppedEventArgs>
 {
     IAllJoynWatcherStoppedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynWatcherStoppedEventArgs>(m_ptr); }
 };
 
 struct IAllJoynWatcherStoppedEventArgsFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAllJoynWatcherStoppedEventArgsFactory>
 {
     IAllJoynWatcherStoppedEventArgsFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAllJoynWatcherStoppedEventArgsFactory>(m_ptr); }
 };
 
 }

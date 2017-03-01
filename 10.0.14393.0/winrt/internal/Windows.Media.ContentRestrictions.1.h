@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,14 +13,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Media::ContentRestrictions {
 
-struct __declspec(uuid("8c0133a4-442e-461a-8757-fad2f5bd37e4")) __declspec(novtable) IContentRestrictionsBrowsePolicy : Windows::IInspectable
+struct __declspec(uuid("8c0133a4-442e-461a-8757-fad2f5bd37e4")) __declspec(novtable) IContentRestrictionsBrowsePolicy : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_GeographicRegion(hstring * value) = 0;
     virtual HRESULT __stdcall get_MaxBrowsableAgeRating(Windows::Foundation::IReference<uint32_t> ** value) = 0;
     virtual HRESULT __stdcall get_PreferredAgeRating(Windows::Foundation::IReference<uint32_t> ** value) = 0;
 };
 
-struct __declspec(uuid("694866df-66b2-4dc3-96b1-f090eedee255")) __declspec(novtable) IRatedContentDescription : Windows::IInspectable
+struct __declspec(uuid("694866df-66b2-4dc3-96b1-f090eedee255")) __declspec(novtable) IRatedContentDescription : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
     virtual HRESULT __stdcall put_Id(hstring value) = 0;
@@ -34,21 +34,21 @@ struct __declspec(uuid("694866df-66b2-4dc3-96b1-f090eedee255")) __declspec(novta
     virtual HRESULT __stdcall put_Ratings(Windows::Foundation::Collections::IVector<hstring> * value) = 0;
 };
 
-struct __declspec(uuid("2e38df62-9b90-4fa6-89c1-4b8d2ffb3573")) __declspec(novtable) IRatedContentDescriptionFactory : Windows::IInspectable
+struct __declspec(uuid("2e38df62-9b90-4fa6-89c1-4b8d2ffb3573")) __declspec(novtable) IRatedContentDescriptionFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Create(hstring id, hstring title, winrt::Windows::Media::ContentRestrictions::RatedContentCategory category, Windows::Media::ContentRestrictions::IRatedContentDescription ** RatedContentDescription) = 0;
 };
 
-struct __declspec(uuid("3f7f23cb-ba07-4401-a49d-8b9222205723")) __declspec(novtable) IRatedContentRestrictions : Windows::IInspectable
+struct __declspec(uuid("3f7f23cb-ba07-4401-a49d-8b9222205723")) __declspec(novtable) IRatedContentRestrictions : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetBrowsePolicyAsync(Windows::Foundation::IAsyncOperation<Windows::Media::ContentRestrictions::ContentRestrictionsBrowsePolicy> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetRestrictionLevelAsync(Windows::Media::ContentRestrictions::IRatedContentDescription * RatedContentDescription, Windows::Foundation::IAsyncOperation<winrt::Windows::Media::ContentRestrictions::ContentAccessRestrictionLevel> ** operation) = 0;
     virtual HRESULT __stdcall abi_RequestContentAccessAsync(Windows::Media::ContentRestrictions::IRatedContentDescription * RatedContentDescription, Windows::Foundation::IAsyncOperation<bool> ** operation) = 0;
-    virtual HRESULT __stdcall add_RestrictionsChanged(Windows::Foundation::EventHandler<Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_RestrictionsChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RestrictionsChanged(event_token token) = 0;
 };
 
-struct __declspec(uuid("fb4b2996-c3bd-4910-9619-97cfd0694d56")) __declspec(novtable) IRatedContentRestrictionsFactory : Windows::IInspectable
+struct __declspec(uuid("fb4b2996-c3bd-4910-9619-97cfd0694d56")) __declspec(novtable) IRatedContentRestrictionsFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateWithMaxAgeRating(uint32_t maxAgeRating, Windows::Media::ContentRestrictions::IRatedContentRestrictions ** ratedContentRestrictions) = 0;
 };
@@ -65,11 +65,52 @@ template <> struct traits<Windows::Media::ContentRestrictions::RatedContentRestr
 
 namespace Windows::Media::ContentRestrictions {
 
-template <typename T> struct impl_IContentRestrictionsBrowsePolicy;
-template <typename T> struct impl_IRatedContentDescription;
-template <typename T> struct impl_IRatedContentDescriptionFactory;
-template <typename T> struct impl_IRatedContentRestrictions;
-template <typename T> struct impl_IRatedContentRestrictionsFactory;
+template <typename D>
+struct WINRT_EBO impl_IContentRestrictionsBrowsePolicy
+{
+    hstring GeographicRegion() const;
+    Windows::Foundation::IReference<uint32_t> MaxBrowsableAgeRating() const;
+    Windows::Foundation::IReference<uint32_t> PreferredAgeRating() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRatedContentDescription
+{
+    hstring Id() const;
+    void Id(hstring_view value) const;
+    hstring Title() const;
+    void Title(hstring_view value) const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Image() const;
+    void Image(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
+    Windows::Media::ContentRestrictions::RatedContentCategory Category() const;
+    void Category(Windows::Media::ContentRestrictions::RatedContentCategory value) const;
+    Windows::Foundation::Collections::IVector<hstring> Ratings() const;
+    void Ratings(const Windows::Foundation::Collections::IVector<hstring> & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRatedContentDescriptionFactory
+{
+    Windows::Media::ContentRestrictions::RatedContentDescription Create(hstring_view id, hstring_view title, Windows::Media::ContentRestrictions::RatedContentCategory category) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRatedContentRestrictions
+{
+    Windows::Foundation::IAsyncOperation<Windows::Media::ContentRestrictions::ContentRestrictionsBrowsePolicy> GetBrowsePolicyAsync() const;
+    Windows::Foundation::IAsyncOperation<winrt::Windows::Media::ContentRestrictions::ContentAccessRestrictionLevel> GetRestrictionLevelAsync(const Windows::Media::ContentRestrictions::RatedContentDescription & RatedContentDescription) const;
+    Windows::Foundation::IAsyncOperation<bool> RequestContentAccessAsync(const Windows::Media::ContentRestrictions::RatedContentDescription & RatedContentDescription) const;
+    event_token RestrictionsChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    using RestrictionsChanged_revoker = event_revoker<IRatedContentRestrictions>;
+    RestrictionsChanged_revoker RestrictionsChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const;
+    void RestrictionsChanged(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRatedContentRestrictionsFactory
+{
+    Windows::Media::ContentRestrictions::RatedContentRestrictions CreateWithMaxAgeRating(uint32_t maxAgeRating) const;
+};
 
 }
 

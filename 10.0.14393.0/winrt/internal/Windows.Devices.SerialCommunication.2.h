@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.SerialCommunication.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -35,100 +35,33 @@ template <> struct __declspec(uuid("84a34b33-06fc-5e63-8ee2-eab4ff69acb7")) __de
 
 namespace Windows::Devices::SerialCommunication {
 
-template <typename D>
-struct WINRT_EBO impl_IErrorReceivedEventArgs
-{
-    Windows::Devices::SerialCommunication::SerialError Error() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPinChangedEventArgs
-{
-    Windows::Devices::SerialCommunication::SerialPinChange PinChange() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISerialDevice
-{
-    uint32_t BaudRate() const;
-    void BaudRate(uint32_t value) const;
-    bool BreakSignalState() const;
-    void BreakSignalState(bool value) const;
-    uint32_t BytesReceived() const;
-    bool CarrierDetectState() const;
-    bool ClearToSendState() const;
-    uint16_t DataBits() const;
-    void DataBits(uint16_t value) const;
-    bool DataSetReadyState() const;
-    Windows::Devices::SerialCommunication::SerialHandshake Handshake() const;
-    void Handshake(Windows::Devices::SerialCommunication::SerialHandshake value) const;
-    bool IsDataTerminalReadyEnabled() const;
-    void IsDataTerminalReadyEnabled(bool value) const;
-    bool IsRequestToSendEnabled() const;
-    void IsRequestToSendEnabled(bool value) const;
-    Windows::Devices::SerialCommunication::SerialParity Parity() const;
-    void Parity(Windows::Devices::SerialCommunication::SerialParity value) const;
-    hstring PortName() const;
-    Windows::Foundation::TimeSpan ReadTimeout() const;
-    void ReadTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Devices::SerialCommunication::SerialStopBitCount StopBits() const;
-    void StopBits(Windows::Devices::SerialCommunication::SerialStopBitCount value) const;
-    uint16_t UsbVendorId() const;
-    uint16_t UsbProductId() const;
-    Windows::Foundation::TimeSpan WriteTimeout() const;
-    void WriteTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Storage::Streams::IInputStream InputStream() const;
-    Windows::Storage::Streams::IOutputStream OutputStream() const;
-    event_token ErrorReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::SerialCommunication::SerialDevice, Windows::Devices::SerialCommunication::ErrorReceivedEventArgs> & reportHandler) const;
-    using ErrorReceived_revoker = event_revoker<ISerialDevice>;
-    ErrorReceived_revoker ErrorReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::SerialCommunication::SerialDevice, Windows::Devices::SerialCommunication::ErrorReceivedEventArgs> & reportHandler) const;
-    void ErrorReceived(event_token token) const;
-    event_token PinChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::SerialCommunication::SerialDevice, Windows::Devices::SerialCommunication::PinChangedEventArgs> & reportHandler) const;
-    using PinChanged_revoker = event_revoker<ISerialDevice>;
-    PinChanged_revoker PinChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::SerialCommunication::SerialDevice, Windows::Devices::SerialCommunication::PinChangedEventArgs> & reportHandler) const;
-    void PinChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISerialDeviceStatics
-{
-    hstring GetDeviceSelector() const;
-    hstring GetDeviceSelector(hstring_ref portName) const;
-    hstring GetDeviceSelectorFromUsbVidPid(uint16_t vendorId, uint16_t productId) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::SerialCommunication::SerialDevice> FromIdAsync(hstring_ref deviceId) const;
-};
-
 struct IErrorReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IErrorReceivedEventArgs>
 {
     IErrorReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IErrorReceivedEventArgs>(m_ptr); }
 };
 
 struct IPinChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPinChangedEventArgs>
 {
     IPinChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPinChangedEventArgs>(m_ptr); }
 };
 
 struct ISerialDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISerialDevice>,
     impl::require<ISerialDevice, Windows::Foundation::IClosable>
 {
     ISerialDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISerialDevice>(m_ptr); }
 };
 
 struct ISerialDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISerialDeviceStatics>
 {
     ISerialDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISerialDeviceStatics>(m_ptr); }
 };
 
 }

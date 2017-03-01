@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,12 +10,12 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Management::Deployment::Preview {
 
-struct __declspec(uuid("e2fad668-882c-4f33-b035-0df7b90d67e6")) __declspec(novtable) IClassicAppManagerStatics : Windows::IInspectable
+struct __declspec(uuid("e2fad668-882c-4f33-b035-0df7b90d67e6")) __declspec(novtable) IClassicAppManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FindInstalledApp(hstring appUninstallKey, Windows::Management::Deployment::Preview::IInstalledClassicAppInfo ** result) = 0;
 };
 
-struct __declspec(uuid("0a7d3da3-65d0-4086-80d6-0610d760207d")) __declspec(novtable) IInstalledClassicAppInfo : Windows::IInspectable
+struct __declspec(uuid("0a7d3da3-65d0-4086-80d6-0610d760207d")) __declspec(novtable) IInstalledClassicAppInfo : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
     virtual HRESULT __stdcall get_DisplayVersion(hstring * value) = 0;
@@ -31,8 +31,18 @@ template <> struct traits<Windows::Management::Deployment::Preview::InstalledCla
 
 namespace Windows::Management::Deployment::Preview {
 
-template <typename T> struct impl_IClassicAppManagerStatics;
-template <typename T> struct impl_IInstalledClassicAppInfo;
+template <typename D>
+struct WINRT_EBO impl_IClassicAppManagerStatics
+{
+    Windows::Management::Deployment::Preview::InstalledClassicAppInfo FindInstalledApp(hstring_view appUninstallKey) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IInstalledClassicAppInfo
+{
+    hstring DisplayName() const;
+    hstring DisplayVersion() const;
+};
 
 }
 

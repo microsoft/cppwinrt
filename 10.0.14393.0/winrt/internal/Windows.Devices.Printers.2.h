@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,49 +34,25 @@ template <> struct __declspec(uuid("3dddecf4-1d39-58e8-83b1-dbed541c7f35")) __de
 
 namespace Windows::Devices::Printers {
 
-template <typename D>
-struct WINRT_EBO impl_IPrint3DDevice
-{
-    Windows::Devices::Printers::PrintSchema PrintSchema() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DDeviceStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Printers::Print3DDevice> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintSchema
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> GetDefaultPrintTicketAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> GetCapabilitiesAsync(const Windows::Storage::Streams::IRandomAccessStreamWithContentType & constrainTicket) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> MergeAndValidateWithDefaultPrintTicketAsync(const Windows::Storage::Streams::IRandomAccessStreamWithContentType & deltaTicket) const;
-};
-
 struct IPrint3DDevice :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DDevice>
 {
     IPrint3DDevice(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DDevice>(m_ptr); }
 };
 
 struct IPrint3DDeviceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DDeviceStatics>
 {
     IPrint3DDeviceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DDeviceStatics>(m_ptr); }
 };
 
 struct IPrintSchema :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintSchema>
 {
     IPrintSchema(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintSchema>(m_ptr); }
 };
 
 }

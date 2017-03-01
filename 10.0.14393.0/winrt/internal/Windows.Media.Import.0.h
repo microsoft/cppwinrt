@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -82,6 +82,27 @@ struct PhotoImportSidecar;
 struct PhotoImportSource;
 struct PhotoImportStorageMedium;
 struct PhotoImportVideoSegment;
+
+}
+
+namespace Windows::Media::Import {
+
+template <typename T> struct impl_IPhotoImportDeleteImportedItemsFromSourceResult;
+template <typename T> struct impl_IPhotoImportFindItemsResult;
+template <typename T> struct impl_IPhotoImportFindItemsResult2;
+template <typename T> struct impl_IPhotoImportImportItemsResult;
+template <typename T> struct impl_IPhotoImportItem;
+template <typename T> struct impl_IPhotoImportItemImportedEventArgs;
+template <typename T> struct impl_IPhotoImportManagerStatics;
+template <typename T> struct impl_IPhotoImportOperation;
+template <typename T> struct impl_IPhotoImportSelectionChangedEventArgs;
+template <typename T> struct impl_IPhotoImportSession;
+template <typename T> struct impl_IPhotoImportSession2;
+template <typename T> struct impl_IPhotoImportSidecar;
+template <typename T> struct impl_IPhotoImportSource;
+template <typename T> struct impl_IPhotoImportSourceStatics;
+template <typename T> struct impl_IPhotoImportStorageMedium;
+template <typename T> struct impl_IPhotoImportVideoSegment;
 
 }
 

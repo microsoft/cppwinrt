@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,7 +12,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Phone::StartScreen {
 
-struct __declspec(uuid("143ab213-d05f-4041-a18c-3e3fcb75b41e")) __declspec(novtable) IDualSimTile : Windows::IInspectable
+struct __declspec(uuid("143ab213-d05f-4041-a18c-3e3fcb75b41e")) __declspec(novtable) IDualSimTile : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_DisplayName(hstring value) = 0;
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
@@ -22,7 +22,7 @@ struct __declspec(uuid("143ab213-d05f-4041-a18c-3e3fcb75b41e")) __declspec(novta
     virtual HRESULT __stdcall abi_DeleteAsync(Windows::Foundation::IAsyncOperation<bool> ** operation) = 0;
 };
 
-struct __declspec(uuid("50567c9e-c58f-4dc9-b6e8-fa6777eeeb37")) __declspec(novtable) IDualSimTileStatics : Windows::IInspectable
+struct __declspec(uuid("50567c9e-c58f-4dc9-b6e8-fa6777eeeb37")) __declspec(novtable) IDualSimTileStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetTileForSim2(Windows::Phone::StartScreen::IDualSimTile ** result) = 0;
     virtual HRESULT __stdcall abi_UpdateDisplayNameForSim1Async(hstring name, Windows::Foundation::IAsyncOperation<bool> ** operation) = 0;
@@ -34,7 +34,7 @@ struct __declspec(uuid("50567c9e-c58f-4dc9-b6e8-fa6777eeeb37")) __declspec(novta
     virtual HRESULT __stdcall abi_CreateToastNotifierForSim2(Windows::UI::Notifications::IToastNotifier ** notifier) = 0;
 };
 
-struct __declspec(uuid("2717f54b-50df-4455-8e6e-41e0fc8e13ce")) __declspec(novtable) IToastNotificationManagerStatics3 : Windows::IInspectable
+struct __declspec(uuid("2717f54b-50df-4455-8e6e-41e0fc8e13ce")) __declspec(novtable) IToastNotificationManagerStatics3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateToastNotifierForSecondaryTile(hstring tileId, Windows::UI::Notifications::IToastNotifier ** notifier) = 0;
 };
@@ -49,9 +49,35 @@ template <> struct traits<Windows::Phone::StartScreen::DualSimTile> { using defa
 
 namespace Windows::Phone::StartScreen {
 
-template <typename T> struct impl_IDualSimTile;
-template <typename T> struct impl_IDualSimTileStatics;
-template <typename T> struct impl_IToastNotificationManagerStatics3;
+template <typename D>
+struct WINRT_EBO impl_IDualSimTile
+{
+    void DisplayName(hstring_view value) const;
+    hstring DisplayName() const;
+    bool IsPinnedToStart() const;
+    Windows::Foundation::IAsyncOperation<bool> CreateAsync() const;
+    Windows::Foundation::IAsyncOperation<bool> UpdateAsync() const;
+    Windows::Foundation::IAsyncOperation<bool> DeleteAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDualSimTileStatics
+{
+    Windows::Phone::StartScreen::DualSimTile GetTileForSim2() const;
+    Windows::Foundation::IAsyncOperation<bool> UpdateDisplayNameForSim1Async(hstring_view name) const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim1() const;
+    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim2() const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSim1() const;
+    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSim2() const;
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSim1() const;
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSim2() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IToastNotificationManagerStatics3
+{
+    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSecondaryTile(hstring_view tileId) const;
+};
 
 }
 

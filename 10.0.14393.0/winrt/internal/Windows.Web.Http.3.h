@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -32,7 +32,7 @@ struct WINRT_EBO HttpCookie :
     impl::require<HttpCookie, Windows::Foundation::IStringable>
 {
     HttpCookie(std::nullptr_t) noexcept {}
-    HttpCookie(hstring_ref name, hstring_ref domain, hstring_ref path);
+    HttpCookie(hstring_view name, hstring_view domain, hstring_view path);
 };
 
 struct WINRT_EBO HttpCookieCollection :
@@ -52,7 +52,7 @@ struct WINRT_EBO HttpFormUrlEncodedContent :
     impl::require<HttpFormUrlEncodedContent, Windows::Foundation::IStringable>
 {
     HttpFormUrlEncodedContent(std::nullptr_t) noexcept {}
-    HttpFormUrlEncodedContent(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & content);
+    HttpFormUrlEncodedContent(iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> content);
 };
 
 struct WINRT_EBO HttpMethod :
@@ -60,7 +60,7 @@ struct WINRT_EBO HttpMethod :
     impl::require<HttpMethod, Windows::Foundation::IStringable>
 {
     HttpMethod(std::nullptr_t) noexcept {}
-    HttpMethod(hstring_ref method);
+    HttpMethod(hstring_view method);
     static Windows::Web::Http::HttpMethod Delete();
     static Windows::Web::Http::HttpMethod Get();
     static Windows::Web::Http::HttpMethod Head();
@@ -76,8 +76,8 @@ struct WINRT_EBO HttpMultipartContent :
 {
     HttpMultipartContent(std::nullptr_t) noexcept {}
     HttpMultipartContent();
-    HttpMultipartContent(hstring_ref subtype);
-    HttpMultipartContent(hstring_ref subtype, hstring_ref boundary);
+    HttpMultipartContent(hstring_view subtype);
+    HttpMultipartContent(hstring_view subtype, hstring_view boundary);
 };
 
 struct WINRT_EBO HttpMultipartFormDataContent :
@@ -86,7 +86,7 @@ struct WINRT_EBO HttpMultipartFormDataContent :
 {
     HttpMultipartFormDataContent(std::nullptr_t) noexcept {}
     HttpMultipartFormDataContent();
-    HttpMultipartFormDataContent(hstring_ref boundary);
+    HttpMultipartFormDataContent(hstring_view boundary);
 };
 
 struct WINRT_EBO HttpRequestMessage :
@@ -120,9 +120,9 @@ struct WINRT_EBO HttpStringContent :
     impl::require<HttpStringContent, Windows::Foundation::IStringable>
 {
     HttpStringContent(std::nullptr_t) noexcept {}
-    HttpStringContent(hstring_ref content);
-    HttpStringContent(hstring_ref content, Windows::Storage::Streams::UnicodeEncoding encoding);
-    HttpStringContent(hstring_ref content, Windows::Storage::Streams::UnicodeEncoding encoding, hstring_ref mediaType);
+    HttpStringContent(hstring_view content);
+    HttpStringContent(hstring_view content, Windows::Storage::Streams::UnicodeEncoding encoding);
+    HttpStringContent(hstring_view content, Windows::Storage::Streams::UnicodeEncoding encoding, hstring_view mediaType);
 };
 
 struct WINRT_EBO HttpTransportInformation :

@@ -1,14 +1,14 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Media.Core.1.h"
 #include "Windows.Foundation.1.h"
-#include "Windows.Foundation.2.h"
-#include "Windows.Media.2.h"
+#include "Windows.Media.1.h"
+#include "Windows.Media.Effects.1.h"
+#include "Windows.Media.Playback.1.h"
 #include "Windows.Media.Effects.2.h"
-#include "Windows.Media.Playback.2.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -29,19 +29,29 @@ template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_0dfd8e09_73f2_505c_a796_a8f031b4ede0
+#define WINRT_GENERIC_0dfd8e09_73f2_505c_a796_a8f031b4ede0
+template <> struct __declspec(uuid("0dfd8e09-73f2-505c-a796-a8f031b4ede0")) __declspec(novtable) IVector<Windows::Media::FaceAnalysis::DetectedFace> : impl_IVector<Windows::Media::FaceAnalysis::DetectedFace> {};
+#endif
+
 #ifndef WINRT_GENERIC_5ee3189c_7dbf_5998_ad07_5414fb82567c
 #define WINRT_GENERIC_5ee3189c_7dbf_5998_ad07_5414fb82567c
-template <> struct __declspec(uuid("5ee3189c-7dbf-5998-ad07-5414fb82567c")) __declspec(novtable) IMap<GUID, Windows::IInspectable> : impl_IMap<GUID, Windows::IInspectable> {};
+template <> struct __declspec(uuid("5ee3189c-7dbf-5998-ad07-5414fb82567c")) __declspec(novtable) IMap<GUID, Windows::Foundation::IInspectable> : impl_IMap<GUID, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_3bda1540_d089_5a1a_8f0d_94eba8068e58
 #define WINRT_GENERIC_3bda1540_d089_5a1a_8f0d_94eba8068e58
-template <> struct __declspec(uuid("3bda1540-d089-5a1a-8f0d-94eba8068e58")) __declspec(novtable) IKeyValuePair<GUID, Windows::IInspectable> : impl_IKeyValuePair<GUID, Windows::IInspectable> {};
+template <> struct __declspec(uuid("3bda1540-d089-5a1a-8f0d-94eba8068e58")) __declspec(novtable) IKeyValuePair<GUID, Windows::Foundation::IInspectable> : impl_IKeyValuePair<GUID, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_e4d2c732_bbc1_5ef4_869f_5007ceb55f6e
 #define WINRT_GENERIC_e4d2c732_bbc1_5ef4_869f_5007ceb55f6e
-template <> struct __declspec(uuid("e4d2c732-bbc1-5ef4-869f-5007ceb55f6e")) __declspec(novtable) IMapView<GUID, Windows::IInspectable> : impl_IMapView<GUID, Windows::IInspectable> {};
+template <> struct __declspec(uuid("e4d2c732-bbc1-5ef4-869f-5007ceb55f6e")) __declspec(novtable) IMapView<GUID, Windows::Foundation::IInspectable> : impl_IMapView<GUID, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_1c8f8276_b89a_5093_a1ed_af49dfb72a89
+#define WINRT_GENERIC_1c8f8276_b89a_5093_a1ed_af49dfb72a89
+template <> struct __declspec(uuid("1c8f8276-b89a-5093-a1ed-af49dfb72a89")) __declspec(novtable) IVector<Windows::Media::Devices::Core::FrameController> : impl_IVector<Windows::Media::Devices::Core::FrameController> {};
 #endif
 
 
@@ -61,7 +71,7 @@ template <> struct __declspec(uuid("a93d5846-c660-586e-b6b5-a52fb81f9240")) __de
 
 #ifndef WINRT_GENERIC_6fd6ded7_421b_5ef5_8bf5_edea45401665
 #define WINRT_GENERIC_6fd6ded7_421b_5ef5_8bf5_edea45401665
-template <> struct __declspec(uuid("6fd6ded7-421b-5ef5-8bf5-edea45401665")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::IInspectable> {};
+template <> struct __declspec(uuid("6fd6ded7-421b-5ef5-8bf5-edea45401665")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_4f1a3ae3_b8b7_5689_901d_b0b623f5a172
@@ -81,7 +91,7 @@ template <> struct __declspec(uuid("9d812c70-9f0d-5ad5-8274-f760c9ca0c38")) __de
 
 #ifndef WINRT_GENERIC_d4dc5ef1_c1cb_5c32_803d_f2f9a7ad9916
 #define WINRT_GENERIC_d4dc5ef1_c1cb_5c32_803d_f2f9a7ad9916
-template <> struct __declspec(uuid("d4dc5ef1-c1cb-5c32-803d-f2f9a7ad9916")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::IInspectable> {};
+template <> struct __declspec(uuid("d4dc5ef1-c1cb-5c32-803d-f2f9a7ad9916")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_3cdc5e86_4ada_5ef7_967a_e137a4621907
@@ -91,12 +101,12 @@ template <> struct __declspec(uuid("3cdc5e86-4ada-5ef7-967a-e137a4621907")) __de
 
 #ifndef WINRT_GENERIC_724bf4ef_de7a_5dbd_815e_522a87bc3344
 #define WINRT_GENERIC_724bf4ef_de7a_5dbd_815e_522a87bc3344
-template <> struct __declspec(uuid("724bf4ef-de7a-5dbd-815e-522a87bc3344")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> {};
+template <> struct __declspec(uuid("724bf4ef-de7a-5dbd-815e-522a87bc3344")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_187fd3d7_bb9d_541a_94fd_43c31dd84a67
 #define WINRT_GENERIC_187fd3d7_bb9d_541a_94fd_43c31dd84a67
-template <> struct __declspec(uuid("187fd3d7-bb9d-541a-94fd-43c31dd84a67")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> {};
+template <> struct __declspec(uuid("187fd3d7-bb9d-541a-94fd-43c31dd84a67")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -116,7 +126,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_0ff01695_fbb2_5e95_8ec7_da17d8e99f16
 #define WINRT_GENERIC_0ff01695_fbb2_5e95_8ec7_da17d8e99f16
-template <> struct __declspec(uuid("0ff01695-fbb2-5e95-8ec7-da17d8e99f16")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> {};
+template <> struct __declspec(uuid("0ff01695-fbb2-5e95-8ec7-da17d8e99f16")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -176,7 +186,7 @@ template <> struct __declspec(uuid("5b133719-ee98-59b2-b432-1c9a5a56ab05")) __de
 
 #ifndef WINRT_GENERIC_3f3b10e2_b2e9_55c6_abb3_4a258072ebb9
 #define WINRT_GENERIC_3f3b10e2_b2e9_55c6_abb3_4a258072ebb9
-template <> struct __declspec(uuid("3f3b10e2-b2e9-55c6-abb3-4a258072ebb9")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::IInspectable> {};
+template <> struct __declspec(uuid("3f3b10e2-b2e9-55c6-abb3-4a258072ebb9")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_425d53e3_fba6_5ea3_b713_db4d70787436
@@ -231,7 +241,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_21eb6e39_728a_56a9_8dce_062ba4c81bf5
 #define WINRT_GENERIC_21eb6e39_728a_56a9_8dce_062ba4c81bf5
-template <> struct __declspec(uuid("21eb6e39-728a-56a9-8dce-062ba4c81bf5")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::IInspectable> {};
+template <> struct __declspec(uuid("21eb6e39-728a-56a9-8dce-062ba4c81bf5")) __declspec(novtable) TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_4aac9411_c355_5c95_8c78_5a0f5ca1a54d
@@ -324,6 +334,11 @@ template <> struct __declspec(uuid("df7aacc9-a86c-5c7d-bf98-cc371c97c67b")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_875e4540_079c_59cf_9442_e608b0c5b852
+#define WINRT_GENERIC_875e4540_079c_59cf_9442_e608b0c5b852
+template <> struct __declspec(uuid("875e4540-079c-59cf-9442-e608b0c5b852")) __declspec(novtable) IVector<Windows::Media::Core::MseTimeRange> : impl_IVector<Windows::Media::Core::MseTimeRange> {};
+#endif
+
 #ifndef WINRT_GENERIC_92a36852_fbb3_5b48_b4ec_01dda0972a5c
 #define WINRT_GENERIC_92a36852_fbb3_5b48_b4ec_01dda0972a5c
 template <> struct __declspec(uuid("92a36852-fbb3-5b48-b4ec-01dda0972a5c")) __declspec(novtable) IIterator<Windows::Media::Core::MseTimeRange> : impl_IIterator<Windows::Media::Core::MseTimeRange> {};
@@ -332,6 +347,11 @@ template <> struct __declspec(uuid("92a36852-fbb3-5b48-b4ec-01dda0972a5c")) __de
 #ifndef WINRT_GENERIC_ed0c6e08_e22f_5ac2_ba14_e0ff1df3467f
 #define WINRT_GENERIC_ed0c6e08_e22f_5ac2_ba14_e0ff1df3467f
 template <> struct __declspec(uuid("ed0c6e08-e22f-5ac2-ba14-e0ff1df3467f")) __declspec(novtable) IIterable<Windows::Media::Core::MseTimeRange> : impl_IIterable<Windows::Media::Core::MseTimeRange> {};
+#endif
+
+#ifndef WINRT_GENERIC_645c522d_e120_58f7_92b6_46852058f593
+#define WINRT_GENERIC_645c522d_e120_58f7_92b6_46852058f593
+template <> struct __declspec(uuid("645c522d-e120-58f7-92b6-46852058f593")) __declspec(novtable) IVector<Windows::Media::Core::MseSourceBuffer> : impl_IVector<Windows::Media::Core::MseSourceBuffer> {};
 #endif
 
 #ifndef WINRT_GENERIC_53076581_01a9_51b9_98cc_5265504cd352
@@ -414,6 +434,11 @@ template <> struct __declspec(uuid("cee3ae43-c93c-56f7-8c55-9024ded72c76")) __de
 template <> struct __declspec(uuid("411a0e26-42e2-5e65-b9c4-980c4c3f31f7")) __declspec(novtable) IVectorView<Windows::Media::Core::TimedTextSubformat> : impl_IVectorView<Windows::Media::Core::TimedTextSubformat> {};
 #endif
 
+#ifndef WINRT_GENERIC_be136c59_0332_52e1_8ab9_7b32aaf2cd05
+#define WINRT_GENERIC_be136c59_0332_52e1_8ab9_7b32aaf2cd05
+template <> struct __declspec(uuid("be136c59-0332-52e1-8ab9-7b32aaf2cd05")) __declspec(novtable) IVector<Windows::Media::Core::IMediaCue> : impl_IVector<Windows::Media::Core::IMediaCue> {};
+#endif
+
 #ifndef WINRT_GENERIC_1a594dc8_a64b_55ed_9b34_7b274e1d5c70
 #define WINRT_GENERIC_1a594dc8_a64b_55ed_9b34_7b274e1d5c70
 template <> struct __declspec(uuid("1a594dc8-a64b-55ed-9b34-7b274e1d5c70")) __declspec(novtable) IIterator<Windows::Media::Core::IMediaCue> : impl_IIterator<Windows::Media::Core::IMediaCue> {};
@@ -426,12 +451,12 @@ template <> struct __declspec(uuid("737a2098-41bf-5d9f-a1d2-2f171c578b3c")) __de
 
 #ifndef WINRT_GENERIC_f3b20528_e3b3_5331_b2d0_0c2623aee785
 #define WINRT_GENERIC_f3b20528_e3b3_5331_b2d0_0c2623aee785
-template <> struct __declspec(uuid("f3b20528-e3b3-5331-b2d0-0c2623aee785")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("f3b20528-e3b3-5331-b2d0-0c2623aee785")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_4f25059a_0b9a_5f25_9b9e_4b9f1d22ff65
 #define WINRT_GENERIC_4f25059a_0b9a_5f25_9b9e_4b9f1d22ff65
-template <> struct __declspec(uuid("4f25059a-0b9a-5f25-9b9e-4b9f1d22ff65")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("4f25059a-0b9a-5f25-9b9e-4b9f1d22ff65")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<GUID, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -439,1355 +464,533 @@ template <> struct __declspec(uuid("4f25059a-0b9a-5f25-9b9e-4b9f1d22ff65")) __de
 
 namespace Windows::Media::Core {
 
-template <typename D>
-struct WINRT_EBO impl_IAudioStreamDescriptor
-{
-    Windows::Media::MediaProperties::AudioEncodingProperties EncodingProperties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAudioStreamDescriptor2
-{
-    void LeadingEncoderPadding(const Windows::Foundation::IReference<uint32_t> & value) const;
-    Windows::Foundation::IReference<uint32_t> LeadingEncoderPadding() const;
-    void TrailingEncoderPadding(const Windows::Foundation::IReference<uint32_t> & value) const;
-    Windows::Foundation::IReference<uint32_t> TrailingEncoderPadding() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAudioStreamDescriptorFactory
-{
-    Windows::Media::Core::AudioStreamDescriptor Create(const Windows::Media::MediaProperties::AudioEncodingProperties & encodingProperties) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAudioTrack
-{
-    event_token OpenFailed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::AudioTrack, Windows::Media::Core::AudioTrackOpenFailedEventArgs> & handler) const;
-    using OpenFailed_revoker = event_revoker<IAudioTrack>;
-    OpenFailed_revoker OpenFailed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::AudioTrack, Windows::Media::Core::AudioTrackOpenFailedEventArgs> & handler) const;
-    void OpenFailed(event_token token) const;
-    Windows::Media::MediaProperties::AudioEncodingProperties GetEncodingProperties() const;
-    Windows::Media::Playback::MediaPlaybackItem PlaybackItem() const;
-    hstring Name() const;
-    Windows::Media::Core::AudioTrackSupportInfo SupportInfo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAudioTrackOpenFailedEventArgs
-{
-    HRESULT ExtendedError() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAudioTrackSupportInfo
-{
-    Windows::Media::Core::MediaDecoderStatus DecoderStatus() const;
-    Windows::Media::Core::AudioDecoderDegradation Degradation() const;
-    Windows::Media::Core::AudioDecoderDegradationReason DegradationReason() const;
-    Windows::Media::Core::MediaSourceStatus MediaSourceStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDataCue
-{
-    void Data(const Windows::Storage::Streams::IBuffer & value) const;
-    Windows::Storage::Streams::IBuffer Data() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFaceDetectedEventArgs
-{
-    Windows::Media::Core::FaceDetectionEffectFrame ResultFrame() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFaceDetectionEffect
-{
-    void Enabled(bool value) const;
-    bool Enabled() const;
-    void DesiredDetectionInterval(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan DesiredDetectionInterval() const;
-    event_token FaceDetected(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::FaceDetectionEffect, Windows::Media::Core::FaceDetectedEventArgs> & handler) const;
-    using FaceDetected_revoker = event_revoker<IFaceDetectionEffect>;
-    FaceDetected_revoker FaceDetected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::FaceDetectionEffect, Windows::Media::Core::FaceDetectedEventArgs> & handler) const;
-    void FaceDetected(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFaceDetectionEffectDefinition
-{
-    void DetectionMode(Windows::Media::Core::FaceDetectionMode value) const;
-    Windows::Media::Core::FaceDetectionMode DetectionMode() const;
-    void SynchronousDetectionEnabled(bool value) const;
-    bool SynchronousDetectionEnabled() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFaceDetectionEffectFrame
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Media::FaceAnalysis::DetectedFace> DetectedFaces() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHighDynamicRangeControl
-{
-    void Enabled(bool value) const;
-    bool Enabled() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHighDynamicRangeOutput
-{
-    double Certainty() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Devices::Core::FrameController> FrameControllers() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaBinder
-{
-    event_token Binding(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaBinder, Windows::Media::Core::MediaBindingEventArgs> & handler) const;
-    using Binding_revoker = event_revoker<IMediaBinder>;
-    Binding_revoker Binding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaBinder, Windows::Media::Core::MediaBindingEventArgs> & handler) const;
-    void Binding(event_token token) const;
-    hstring Token() const;
-    void Token(hstring_ref value) const;
-    Windows::Media::Core::MediaSource Source() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaBindingEventArgs
-{
-    event_token Canceled(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::IInspectable> & handler) const;
-    using Canceled_revoker = event_revoker<IMediaBindingEventArgs>;
-    Canceled_revoker Canceled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaBindingEventArgs, Windows::IInspectable> & handler) const;
-    void Canceled(event_token token) const;
-    Windows::Media::Core::MediaBinder MediaBinder() const;
-    Windows::Foundation::Deferral GetDeferral() const;
-    void SetUri(const Windows::Foundation::Uri & uri) const;
-    void SetStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_ref contentType) const;
-    void SetStreamReference(const Windows::Storage::Streams::IRandomAccessStreamReference & stream, hstring_ref contentType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaCue
-{
-    void StartTime(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan StartTime() const;
-    void Duration(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan Duration() const;
-    void Id(hstring_ref value) const;
-    hstring Id() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaCueEventArgs
-{
-    Windows::Media::Core::IMediaCue Cue() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSource
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSource2
-{
-    event_token OpenOperationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaSource, Windows::Media::Core::MediaSourceOpenOperationCompletedEventArgs> & handler) const;
-    using OpenOperationCompleted_revoker = event_revoker<IMediaSource2>;
-    OpenOperationCompleted_revoker OpenOperationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaSource, Windows::Media::Core::MediaSourceOpenOperationCompletedEventArgs> & handler) const;
-    void OpenOperationCompleted(event_token token) const;
-    Windows::Foundation::Collections::ValueSet CustomProperties() const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> Duration() const;
-    bool IsOpen() const;
-    Windows::Foundation::Collections::IObservableVector<Windows::Media::Core::TimedTextSource> ExternalTimedTextSources() const;
-    Windows::Foundation::Collections::IObservableVector<Windows::Media::Core::TimedMetadataTrack> ExternalTimedMetadataTracks() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSource3
-{
-    event_token StateChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaSource, Windows::Media::Core::MediaSourceStateChangedEventArgs> & handler) const;
-    using StateChanged_revoker = event_revoker<IMediaSource3>;
-    StateChanged_revoker StateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaSource, Windows::Media::Core::MediaSourceStateChangedEventArgs> & handler) const;
-    void StateChanged(event_token token) const;
-    Windows::Media::Core::MediaSourceState State() const;
-    void Reset() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSourceError
-{
-    HRESULT ExtendedError() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSourceOpenOperationCompletedEventArgs
-{
-    Windows::Media::Core::MediaSourceError Error() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSourceStateChangedEventArgs
-{
-    Windows::Media::Core::MediaSourceState OldState() const;
-    Windows::Media::Core::MediaSourceState NewState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSourceStatics
-{
-    Windows::Media::Core::MediaSource CreateFromAdaptiveMediaSource(const Windows::Media::Streaming::Adaptive::AdaptiveMediaSource & mediaSource) const;
-    Windows::Media::Core::MediaSource CreateFromMediaStreamSource(const Windows::Media::Core::MediaStreamSource & mediaSource) const;
-    Windows::Media::Core::MediaSource CreateFromMseStreamSource(const Windows::Media::Core::MseStreamSource & mediaSource) const;
-    Windows::Media::Core::MediaSource CreateFromIMediaSource(const Windows::Media::Core::IMediaSource & mediaSource) const;
-    Windows::Media::Core::MediaSource CreateFromStorageFile(const Windows::Storage::IStorageFile & file) const;
-    Windows::Media::Core::MediaSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_ref contentType) const;
-    Windows::Media::Core::MediaSource CreateFromStreamReference(const Windows::Storage::Streams::IRandomAccessStreamReference & stream, hstring_ref contentType) const;
-    Windows::Media::Core::MediaSource CreateFromUri(const Windows::Foundation::Uri & uri) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaSourceStatics2
-{
-    Windows::Media::Core::MediaSource CreateFromMediaBinder(const Windows::Media::Core::MediaBinder & binder) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamDescriptor
-{
-    bool IsSelected() const;
-    void Name(hstring_ref value) const;
-    hstring Name() const;
-    void Language(hstring_ref value) const;
-    hstring Language() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSample
-{
-    event_token Processed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::IInspectable> & handler) const;
-    using Processed_revoker = event_revoker<IMediaStreamSample>;
-    Processed_revoker Processed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSample, Windows::IInspectable> & handler) const;
-    void Processed(event_token token) const;
-    Windows::Storage::Streams::Buffer Buffer() const;
-    Windows::Foundation::TimeSpan Timestamp() const;
-    Windows::Media::Core::MediaStreamSamplePropertySet ExtendedProperties() const;
-    Windows::Media::Core::MediaStreamSampleProtectionProperties Protection() const;
-    void DecodeTimestamp(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan DecodeTimestamp() const;
-    void Duration(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan Duration() const;
-    void KeyFrame(bool value) const;
-    bool KeyFrame() const;
-    void Discontinuous(bool value) const;
-    bool Discontinuous() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSampleProtectionProperties
-{
-    void SetKeyIdentifier(array_ref<const uint8_t> value) const;
-    void GetKeyIdentifier(com_array<uint8_t> & value) const;
-    void SetInitializationVector(array_ref<const uint8_t> value) const;
-    void GetInitializationVector(com_array<uint8_t> & value) const;
-    void SetSubSampleMapping(array_ref<const uint8_t> value) const;
-    void GetSubSampleMapping(com_array<uint8_t> & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSampleStatics
-{
-    Windows::Media::Core::MediaStreamSample CreateFromBuffer(const Windows::Storage::Streams::IBuffer & buffer, const Windows::Foundation::TimeSpan & timestamp) const;
-    Windows::Foundation::IAsyncOperation<Windows::Media::Core::MediaStreamSample> CreateFromStreamAsync(const Windows::Storage::Streams::IInputStream & stream, uint32_t count, const Windows::Foundation::TimeSpan & timestamp) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSource
-{
-    event_token Closed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceClosedEventArgs> & handler) const;
-    using Closed_revoker = event_revoker<IMediaStreamSource>;
-    Closed_revoker Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceClosedEventArgs> & handler) const;
-    void Closed(event_token token) const;
-    event_token Starting(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceStartingEventArgs> & handler) const;
-    using Starting_revoker = event_revoker<IMediaStreamSource>;
-    Starting_revoker Starting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceStartingEventArgs> & handler) const;
-    void Starting(event_token token) const;
-    event_token Paused(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::IInspectable> & handler) const;
-    using Paused_revoker = event_revoker<IMediaStreamSource>;
-    Paused_revoker Paused(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::IInspectable> & handler) const;
-    void Paused(event_token token) const;
-    event_token SampleRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSampleRequestedEventArgs> & handler) const;
-    using SampleRequested_revoker = event_revoker<IMediaStreamSource>;
-    SampleRequested_revoker SampleRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSampleRequestedEventArgs> & handler) const;
-    void SampleRequested(event_token token) const;
-    event_token SwitchStreamsRequested(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSwitchStreamsRequestedEventArgs> & handler) const;
-    using SwitchStreamsRequested_revoker = event_revoker<IMediaStreamSource>;
-    SwitchStreamsRequested_revoker SwitchStreamsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSwitchStreamsRequestedEventArgs> & handler) const;
-    void SwitchStreamsRequested(event_token token) const;
-    void NotifyError(Windows::Media::Core::MediaStreamSourceErrorStatus errorStatus) const;
-    void AddStreamDescriptor(const Windows::Media::Core::IMediaStreamDescriptor & descriptor) const;
-    void MediaProtectionManager(const Windows::Media::Protection::MediaProtectionManager & value) const;
-    Windows::Media::Protection::MediaProtectionManager MediaProtectionManager() const;
-    void Duration(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan Duration() const;
-    void CanSeek(bool value) const;
-    bool CanSeek() const;
-    void BufferTime(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan BufferTime() const;
-    void SetBufferedRange(const Windows::Foundation::TimeSpan & startOffset, const Windows::Foundation::TimeSpan & endOffset) const;
-    Windows::Storage::FileProperties::MusicProperties MusicProperties() const;
-    Windows::Storage::FileProperties::VideoProperties VideoProperties() const;
-    void Thumbnail(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const;
-    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
-    void AddProtectionKey(const Windows::Media::Core::IMediaStreamDescriptor & streamDescriptor, array_ref<const uint8_t> keyIdentifier, array_ref<const uint8_t> licenseData) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSource2
-{
-    event_token SampleRendered(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSampleRenderedEventArgs> & handler) const;
-    using SampleRendered_revoker = event_revoker<IMediaStreamSource2>;
-    SampleRendered_revoker SampleRendered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MediaStreamSource, Windows::Media::Core::MediaStreamSourceSampleRenderedEventArgs> & handler) const;
-    void SampleRendered(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceClosedEventArgs
-{
-    Windows::Media::Core::MediaStreamSourceClosedRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceClosedRequest
-{
-    Windows::Media::Core::MediaStreamSourceClosedReason Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceFactory
-{
-    Windows::Media::Core::MediaStreamSource CreateFromDescriptor(const Windows::Media::Core::IMediaStreamDescriptor & descriptor) const;
-    Windows::Media::Core::MediaStreamSource CreateFromDescriptors(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, const Windows::Media::Core::IMediaStreamDescriptor & descriptor2) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSampleRenderedEventArgs
-{
-    Windows::Foundation::TimeSpan SampleLag() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSampleRequest
-{
-    Windows::Media::Core::IMediaStreamDescriptor StreamDescriptor() const;
-    Windows::Media::Core::MediaStreamSourceSampleRequestDeferral GetDeferral() const;
-    void Sample(const Windows::Media::Core::MediaStreamSample & value) const;
-    Windows::Media::Core::MediaStreamSample Sample() const;
-    void ReportSampleProgress(uint32_t progress) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSampleRequestDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSampleRequestedEventArgs
-{
-    Windows::Media::Core::MediaStreamSourceSampleRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceStartingEventArgs
-{
-    Windows::Media::Core::MediaStreamSourceStartingRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceStartingRequest
-{
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> StartPosition() const;
-    Windows::Media::Core::MediaStreamSourceStartingRequestDeferral GetDeferral() const;
-    void SetActualStartPosition(const Windows::Foundation::TimeSpan & position) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceStartingRequestDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSwitchStreamsRequest
-{
-    Windows::Media::Core::IMediaStreamDescriptor OldStreamDescriptor() const;
-    Windows::Media::Core::IMediaStreamDescriptor NewStreamDescriptor() const;
-    Windows::Media::Core::MediaStreamSourceSwitchStreamsRequestDeferral GetDeferral() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSwitchStreamsRequestDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaStreamSourceSwitchStreamsRequestedEventArgs
-{
-    Windows::Media::Core::MediaStreamSourceSwitchStreamsRequest Request() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMediaTrack
-{
-    hstring Id() const;
-    hstring Language() const;
-    Windows::Media::Core::MediaTrackKind TrackKind() const;
-    void Label(hstring_ref value) const;
-    hstring Label() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMseSourceBuffer
-{
-    event_token UpdateStarting(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    using UpdateStarting_revoker = event_revoker<IMseSourceBuffer>;
-    UpdateStarting_revoker UpdateStarting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    void UpdateStarting(event_token token) const;
-    event_token Updated(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    using Updated_revoker = event_revoker<IMseSourceBuffer>;
-    Updated_revoker Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    void Updated(event_token token) const;
-    event_token UpdateEnded(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    using UpdateEnded_revoker = event_revoker<IMseSourceBuffer>;
-    UpdateEnded_revoker UpdateEnded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    void UpdateEnded(event_token token) const;
-    event_token ErrorOccurred(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    using ErrorOccurred_revoker = event_revoker<IMseSourceBuffer>;
-    ErrorOccurred_revoker ErrorOccurred(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    void ErrorOccurred(event_token token) const;
-    event_token Aborted(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    using Aborted_revoker = event_revoker<IMseSourceBuffer>;
-    Aborted_revoker Aborted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBuffer, Windows::IInspectable> & handler) const;
-    void Aborted(event_token token) const;
-    Windows::Media::Core::MseAppendMode Mode() const;
-    void Mode(Windows::Media::Core::MseAppendMode value) const;
-    bool IsUpdating() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Core::MseTimeRange> Buffered() const;
-    Windows::Foundation::TimeSpan TimestampOffset() const;
-    void TimestampOffset(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan AppendWindowStart() const;
-    void AppendWindowStart(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> AppendWindowEnd() const;
-    void AppendWindowEnd(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    void AppendBuffer(const Windows::Storage::Streams::IBuffer & buffer) const;
-    void AppendStream(const Windows::Storage::Streams::IInputStream & stream) const;
-    void AppendStream(const Windows::Storage::Streams::IInputStream & stream, uint64_t maxSize) const;
-    void Abort() const;
-    void Remove(const Windows::Foundation::TimeSpan & start, const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & end) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMseSourceBufferList
-{
-    event_token SourceBufferAdded(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> & handler) const;
-    using SourceBufferAdded_revoker = event_revoker<IMseSourceBufferList>;
-    SourceBufferAdded_revoker SourceBufferAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> & handler) const;
-    void SourceBufferAdded(event_token token) const;
-    event_token SourceBufferRemoved(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> & handler) const;
-    using SourceBufferRemoved_revoker = event_revoker<IMseSourceBufferList>;
-    SourceBufferRemoved_revoker SourceBufferRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseSourceBufferList, Windows::IInspectable> & handler) const;
-    void SourceBufferRemoved(event_token token) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Core::MseSourceBuffer> Buffers() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMseStreamSource
-{
-    event_token Opened(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    using Opened_revoker = event_revoker<IMseStreamSource>;
-    Opened_revoker Opened(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    void Opened(event_token token) const;
-    event_token Ended(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    using Ended_revoker = event_revoker<IMseStreamSource>;
-    Ended_revoker Ended(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    void Ended(event_token token) const;
-    event_token Closed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    using Closed_revoker = event_revoker<IMseStreamSource>;
-    Closed_revoker Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::MseStreamSource, Windows::IInspectable> & handler) const;
-    void Closed(event_token token) const;
-    Windows::Media::Core::MseSourceBufferList SourceBuffers() const;
-    Windows::Media::Core::MseSourceBufferList ActiveSourceBuffers() const;
-    Windows::Media::Core::MseReadyState ReadyState() const;
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> Duration() const;
-    void Duration(const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> & value) const;
-    Windows::Media::Core::MseSourceBuffer AddSourceBuffer(hstring_ref mimeType) const;
-    void RemoveSourceBuffer(const Windows::Media::Core::MseSourceBuffer & buffer) const;
-    void EndOfStream(Windows::Media::Core::MseEndOfStreamStatus status) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMseStreamSourceStatics
-{
-    bool IsContentTypeSupported(hstring_ref contentType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISceneAnalysisEffect
-{
-    Windows::Media::Core::HighDynamicRangeControl HighDynamicRangeAnalyzer() const;
-    void DesiredAnalysisInterval(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan DesiredAnalysisInterval() const;
-    event_token SceneAnalyzed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::SceneAnalysisEffect, Windows::Media::Core::SceneAnalyzedEventArgs> & handler) const;
-    using SceneAnalyzed_revoker = event_revoker<ISceneAnalysisEffect>;
-    SceneAnalyzed_revoker SceneAnalyzed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::SceneAnalysisEffect, Windows::Media::Core::SceneAnalyzedEventArgs> & handler) const;
-    void SceneAnalyzed(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISceneAnalysisEffectFrame
-{
-    Windows::Media::Capture::CapturedFrameControlValues FrameControlValues() const;
-    Windows::Media::Core::HighDynamicRangeOutput HighDynamicRange() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISceneAnalyzedEventArgs
-{
-    Windows::Media::Core::SceneAnalysisEffectFrame ResultFrame() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISingleSelectMediaTrackList
-{
-    event_token SelectedIndexChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::IInspectable> & handler) const;
-    using SelectedIndexChanged_revoker = event_revoker<ISingleSelectMediaTrackList>;
-    SelectedIndexChanged_revoker SelectedIndexChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::ISingleSelectMediaTrackList, Windows::IInspectable> & handler) const;
-    void SelectedIndexChanged(event_token token) const;
-    void SelectedIndex(int32_t value) const;
-    int32_t SelectedIndex() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedMetadataTrack
-{
-    event_token CueEntered(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::MediaCueEventArgs> & handler) const;
-    using CueEntered_revoker = event_revoker<ITimedMetadataTrack>;
-    CueEntered_revoker CueEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::MediaCueEventArgs> & handler) const;
-    void CueEntered(event_token token) const;
-    event_token CueExited(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::MediaCueEventArgs> & handler) const;
-    using CueExited_revoker = event_revoker<ITimedMetadataTrack>;
-    CueExited_revoker CueExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::MediaCueEventArgs> & handler) const;
-    void CueExited(event_token token) const;
-    event_token TrackFailed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::TimedMetadataTrackFailedEventArgs> & handler) const;
-    using TrackFailed_revoker = event_revoker<ITimedMetadataTrack>;
-    TrackFailed_revoker TrackFailed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedMetadataTrack, Windows::Media::Core::TimedMetadataTrackFailedEventArgs> & handler) const;
-    void TrackFailed(event_token token) const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Core::IMediaCue> Cues() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Core::IMediaCue> ActiveCues() const;
-    Windows::Media::Core::TimedMetadataKind TimedMetadataKind() const;
-    hstring DispatchType() const;
-    void AddCue(const Windows::Media::Core::IMediaCue & cue) const;
-    void RemoveCue(const Windows::Media::Core::IMediaCue & cue) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedMetadataTrack2
-{
-    Windows::Media::Playback::MediaPlaybackItem PlaybackItem() const;
-    hstring Name() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedMetadataTrackError
-{
-    Windows::Media::Core::TimedMetadataTrackErrorCode ErrorCode() const;
-    HRESULT ExtendedError() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedMetadataTrackFactory
-{
-    Windows::Media::Core::TimedMetadataTrack Create(hstring_ref id, hstring_ref language, Windows::Media::Core::TimedMetadataKind kind) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedMetadataTrackFailedEventArgs
-{
-    Windows::Media::Core::TimedMetadataTrackError Error() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextCue
-{
-    Windows::Media::Core::TimedTextRegion CueRegion() const;
-    void CueRegion(const Windows::Media::Core::TimedTextRegion & value) const;
-    Windows::Media::Core::TimedTextStyle CueStyle() const;
-    void CueStyle(const Windows::Media::Core::TimedTextStyle & value) const;
-    Windows::Foundation::Collections::IVector<Windows::Media::Core::TimedTextLine> Lines() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextLine
-{
-    hstring Text() const;
-    void Text(hstring_ref value) const;
-    Windows::Foundation::Collections::IVector<Windows::Media::Core::TimedTextSubformat> Subformats() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextRegion
-{
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-    Windows::Media::Core::TimedTextPoint Position() const;
-    void Position(const Windows::Media::Core::TimedTextPoint & value) const;
-    Windows::Media::Core::TimedTextSize Extent() const;
-    void Extent(const Windows::Media::Core::TimedTextSize & value) const;
-    Windows::UI::Color Background() const;
-    void Background(const Windows::UI::Color & value) const;
-    Windows::Media::Core::TimedTextWritingMode WritingMode() const;
-    void WritingMode(Windows::Media::Core::TimedTextWritingMode value) const;
-    Windows::Media::Core::TimedTextDisplayAlignment DisplayAlignment() const;
-    void DisplayAlignment(Windows::Media::Core::TimedTextDisplayAlignment value) const;
-    Windows::Media::Core::TimedTextDouble LineHeight() const;
-    void LineHeight(const Windows::Media::Core::TimedTextDouble & value) const;
-    bool IsOverflowClipped() const;
-    void IsOverflowClipped(bool value) const;
-    Windows::Media::Core::TimedTextPadding Padding() const;
-    void Padding(const Windows::Media::Core::TimedTextPadding & value) const;
-    Windows::Media::Core::TimedTextWrapping TextWrapping() const;
-    void TextWrapping(Windows::Media::Core::TimedTextWrapping value) const;
-    int32_t ZIndex() const;
-    void ZIndex(int32_t value) const;
-    Windows::Media::Core::TimedTextScrollMode ScrollMode() const;
-    void ScrollMode(Windows::Media::Core::TimedTextScrollMode value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextSource
-{
-    event_token Resolved(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedTextSource, Windows::Media::Core::TimedTextSourceResolveResultEventArgs> & handler) const;
-    using Resolved_revoker = event_revoker<ITimedTextSource>;
-    Resolved_revoker Resolved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::TimedTextSource, Windows::Media::Core::TimedTextSourceResolveResultEventArgs> & handler) const;
-    void Resolved(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextSourceResolveResultEventArgs
-{
-    Windows::Media::Core::TimedMetadataTrackError Error() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Media::Core::TimedMetadataTrack> Tracks() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextSourceStatics
-{
-    Windows::Media::Core::TimedTextSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream) const;
-    Windows::Media::Core::TimedTextSource CreateFromUri(const Windows::Foundation::Uri & uri) const;
-    Windows::Media::Core::TimedTextSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_ref defaultLanguage) const;
-    Windows::Media::Core::TimedTextSource CreateFromUri(const Windows::Foundation::Uri & uri, hstring_ref defaultLanguage) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextStyle
-{
-    hstring Name() const;
-    void Name(hstring_ref value) const;
-    hstring FontFamily() const;
-    void FontFamily(hstring_ref value) const;
-    Windows::Media::Core::TimedTextDouble FontSize() const;
-    void FontSize(const Windows::Media::Core::TimedTextDouble & value) const;
-    Windows::Media::Core::TimedTextWeight FontWeight() const;
-    void FontWeight(Windows::Media::Core::TimedTextWeight value) const;
-    Windows::UI::Color Foreground() const;
-    void Foreground(const Windows::UI::Color & value) const;
-    Windows::UI::Color Background() const;
-    void Background(const Windows::UI::Color & value) const;
-    bool IsBackgroundAlwaysShown() const;
-    void IsBackgroundAlwaysShown(bool value) const;
-    Windows::Media::Core::TimedTextFlowDirection FlowDirection() const;
-    void FlowDirection(Windows::Media::Core::TimedTextFlowDirection value) const;
-    Windows::Media::Core::TimedTextLineAlignment LineAlignment() const;
-    void LineAlignment(Windows::Media::Core::TimedTextLineAlignment value) const;
-    Windows::UI::Color OutlineColor() const;
-    void OutlineColor(const Windows::UI::Color & value) const;
-    Windows::Media::Core::TimedTextDouble OutlineThickness() const;
-    void OutlineThickness(const Windows::Media::Core::TimedTextDouble & value) const;
-    Windows::Media::Core::TimedTextDouble OutlineRadius() const;
-    void OutlineRadius(const Windows::Media::Core::TimedTextDouble & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimedTextSubformat
-{
-    int32_t StartIndex() const;
-    void StartIndex(int32_t value) const;
-    int32_t Length() const;
-    void Length(int32_t value) const;
-    Windows::Media::Core::TimedTextStyle SubformatStyle() const;
-    void SubformatStyle(const Windows::Media::Core::TimedTextStyle & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoStabilizationEffect
-{
-    void Enabled(bool value) const;
-    bool Enabled() const;
-    event_token EnabledChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::VideoStabilizationEffect, Windows::Media::Core::VideoStabilizationEffectEnabledChangedEventArgs> & handler) const;
-    using EnabledChanged_revoker = event_revoker<IVideoStabilizationEffect>;
-    EnabledChanged_revoker EnabledChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::VideoStabilizationEffect, Windows::Media::Core::VideoStabilizationEffectEnabledChangedEventArgs> & handler) const;
-    void EnabledChanged(event_token cookie) const;
-    Windows::Media::Capture::VideoStreamConfiguration GetRecommendedStreamConfiguration(const Windows::Media::Devices::VideoDeviceController & controller, const Windows::Media::MediaProperties::VideoEncodingProperties & desiredProperties) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoStabilizationEffectEnabledChangedEventArgs
-{
-    Windows::Media::Core::VideoStabilizationEffectEnabledChangedReason Reason() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoStreamDescriptor
-{
-    Windows::Media::MediaProperties::VideoEncodingProperties EncodingProperties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoStreamDescriptorFactory
-{
-    Windows::Media::Core::VideoStreamDescriptor Create(const Windows::Media::MediaProperties::VideoEncodingProperties & encodingProperties) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoTrack
-{
-    event_token OpenFailed(const Windows::Foundation::TypedEventHandler<Windows::Media::Core::VideoTrack, Windows::Media::Core::VideoTrackOpenFailedEventArgs> & handler) const;
-    using OpenFailed_revoker = event_revoker<IVideoTrack>;
-    OpenFailed_revoker OpenFailed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Core::VideoTrack, Windows::Media::Core::VideoTrackOpenFailedEventArgs> & handler) const;
-    void OpenFailed(event_token token) const;
-    Windows::Media::MediaProperties::VideoEncodingProperties GetEncodingProperties() const;
-    Windows::Media::Playback::MediaPlaybackItem PlaybackItem() const;
-    hstring Name() const;
-    Windows::Media::Core::VideoTrackSupportInfo SupportInfo() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoTrackOpenFailedEventArgs
-{
-    HRESULT ExtendedError() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IVideoTrackSupportInfo
-{
-    Windows::Media::Core::MediaDecoderStatus DecoderStatus() const;
-    Windows::Media::Core::MediaSourceStatus MediaSourceStatus() const;
-};
-
 struct IAudioStreamDescriptor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioStreamDescriptor>,
     impl::require<IAudioStreamDescriptor, Windows::Media::Core::IMediaStreamDescriptor>
 {
     IAudioStreamDescriptor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioStreamDescriptor>(m_ptr); }
 };
 
 struct IAudioStreamDescriptor2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioStreamDescriptor2>,
     impl::require<IAudioStreamDescriptor2, Windows::Media::Core::IMediaStreamDescriptor>
 {
     IAudioStreamDescriptor2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioStreamDescriptor2>(m_ptr); }
 };
 
 struct IAudioStreamDescriptorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioStreamDescriptorFactory>
 {
     IAudioStreamDescriptorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioStreamDescriptorFactory>(m_ptr); }
 };
 
 struct IAudioTrack :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioTrack>
 {
     IAudioTrack(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioTrack>(m_ptr); }
 };
 
 struct IAudioTrackOpenFailedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioTrackOpenFailedEventArgs>
 {
     IAudioTrackOpenFailedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioTrackOpenFailedEventArgs>(m_ptr); }
 };
 
 struct IAudioTrackSupportInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAudioTrackSupportInfo>
 {
     IAudioTrackSupportInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAudioTrackSupportInfo>(m_ptr); }
 };
 
 struct IDataCue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDataCue>,
     impl::require<IDataCue, Windows::Media::Core::IMediaCue>
 {
     IDataCue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDataCue>(m_ptr); }
 };
 
 struct IFaceDetectedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFaceDetectedEventArgs>
 {
     IFaceDetectedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFaceDetectedEventArgs>(m_ptr); }
 };
 
 struct IFaceDetectionEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFaceDetectionEffect>,
     impl::require<IFaceDetectionEffect, Windows::Media::IMediaExtension>
 {
     IFaceDetectionEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFaceDetectionEffect>(m_ptr); }
 };
 
 struct IFaceDetectionEffectDefinition :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFaceDetectionEffectDefinition>,
     impl::require<IFaceDetectionEffectDefinition, Windows::Media::Effects::IVideoEffectDefinition>
 {
     IFaceDetectionEffectDefinition(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFaceDetectionEffectDefinition>(m_ptr); }
 };
 
 struct IFaceDetectionEffectFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFaceDetectionEffectFrame>,
     impl::require<IFaceDetectionEffectFrame, Windows::Foundation::IClosable, Windows::Media::IMediaFrame>
 {
     IFaceDetectionEffectFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFaceDetectionEffectFrame>(m_ptr); }
 };
 
 struct IHighDynamicRangeControl :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHighDynamicRangeControl>
 {
     IHighDynamicRangeControl(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHighDynamicRangeControl>(m_ptr); }
 };
 
 struct IHighDynamicRangeOutput :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHighDynamicRangeOutput>
 {
     IHighDynamicRangeOutput(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHighDynamicRangeOutput>(m_ptr); }
 };
 
 struct IMediaBinder :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaBinder>
 {
     IMediaBinder(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaBinder>(m_ptr); }
 };
 
 struct IMediaBindingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaBindingEventArgs>
 {
     IMediaBindingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaBindingEventArgs>(m_ptr); }
 };
 
 struct IMediaCue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaCue>
 {
     IMediaCue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaCue>(m_ptr); }
 };
 
 struct IMediaCueEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaCueEventArgs>
 {
     IMediaCueEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaCueEventArgs>(m_ptr); }
 };
 
 struct IMediaSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSource>
 {
     IMediaSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSource>(m_ptr); }
 };
 
 struct IMediaSource2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSource2>,
     impl::require<IMediaSource2, Windows::Foundation::IClosable, Windows::Media::Playback::IMediaPlaybackSource>
 {
     IMediaSource2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSource2>(m_ptr); }
 };
 
 struct IMediaSource3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSource3>,
     impl::require<IMediaSource3, Windows::Foundation::IClosable, Windows::Media::Core::IMediaSource2, Windows::Media::Playback::IMediaPlaybackSource>
 {
     IMediaSource3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSource3>(m_ptr); }
 };
 
 struct IMediaSourceError :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSourceError>
 {
     IMediaSourceError(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSourceError>(m_ptr); }
 };
 
 struct IMediaSourceOpenOperationCompletedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSourceOpenOperationCompletedEventArgs>
 {
     IMediaSourceOpenOperationCompletedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSourceOpenOperationCompletedEventArgs>(m_ptr); }
 };
 
 struct IMediaSourceStateChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSourceStateChangedEventArgs>
 {
     IMediaSourceStateChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSourceStateChangedEventArgs>(m_ptr); }
 };
 
 struct IMediaSourceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSourceStatics>
 {
     IMediaSourceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSourceStatics>(m_ptr); }
 };
 
 struct IMediaSourceStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaSourceStatics2>
 {
     IMediaSourceStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaSourceStatics2>(m_ptr); }
 };
 
 struct IMediaStreamDescriptor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamDescriptor>
 {
     IMediaStreamDescriptor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamDescriptor>(m_ptr); }
 };
 
 struct IMediaStreamSample :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSample>
 {
     IMediaStreamSample(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSample>(m_ptr); }
 };
 
 struct IMediaStreamSampleProtectionProperties :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSampleProtectionProperties>
 {
     IMediaStreamSampleProtectionProperties(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSampleProtectionProperties>(m_ptr); }
 };
 
 struct IMediaStreamSampleStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSampleStatics>
 {
     IMediaStreamSampleStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSampleStatics>(m_ptr); }
 };
 
 struct IMediaStreamSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSource>,
     impl::require<IMediaStreamSource, Windows::Media::Core::IMediaSource>
 {
     IMediaStreamSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSource>(m_ptr); }
 };
 
 struct IMediaStreamSource2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSource2>,
     impl::require<IMediaStreamSource2, Windows::Media::Core::IMediaSource, Windows::Media::Core::IMediaStreamSource>
 {
     IMediaStreamSource2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSource2>(m_ptr); }
 };
 
 struct IMediaStreamSourceClosedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceClosedEventArgs>
 {
     IMediaStreamSourceClosedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceClosedEventArgs>(m_ptr); }
 };
 
 struct IMediaStreamSourceClosedRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceClosedRequest>
 {
     IMediaStreamSourceClosedRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceClosedRequest>(m_ptr); }
 };
 
 struct IMediaStreamSourceFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceFactory>
 {
     IMediaStreamSourceFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceFactory>(m_ptr); }
 };
 
 struct IMediaStreamSourceSampleRenderedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSampleRenderedEventArgs>
 {
     IMediaStreamSourceSampleRenderedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSampleRenderedEventArgs>(m_ptr); }
 };
 
 struct IMediaStreamSourceSampleRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSampleRequest>
 {
     IMediaStreamSourceSampleRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSampleRequest>(m_ptr); }
 };
 
 struct IMediaStreamSourceSampleRequestDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSampleRequestDeferral>
 {
     IMediaStreamSourceSampleRequestDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSampleRequestDeferral>(m_ptr); }
 };
 
 struct IMediaStreamSourceSampleRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSampleRequestedEventArgs>
 {
     IMediaStreamSourceSampleRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSampleRequestedEventArgs>(m_ptr); }
 };
 
 struct IMediaStreamSourceStartingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceStartingEventArgs>
 {
     IMediaStreamSourceStartingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceStartingEventArgs>(m_ptr); }
 };
 
 struct IMediaStreamSourceStartingRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceStartingRequest>
 {
     IMediaStreamSourceStartingRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceStartingRequest>(m_ptr); }
 };
 
 struct IMediaStreamSourceStartingRequestDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceStartingRequestDeferral>
 {
     IMediaStreamSourceStartingRequestDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceStartingRequestDeferral>(m_ptr); }
 };
 
 struct IMediaStreamSourceSwitchStreamsRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSwitchStreamsRequest>
 {
     IMediaStreamSourceSwitchStreamsRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSwitchStreamsRequest>(m_ptr); }
 };
 
 struct IMediaStreamSourceSwitchStreamsRequestDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSwitchStreamsRequestDeferral>
 {
     IMediaStreamSourceSwitchStreamsRequestDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSwitchStreamsRequestDeferral>(m_ptr); }
 };
 
 struct IMediaStreamSourceSwitchStreamsRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaStreamSourceSwitchStreamsRequestedEventArgs>
 {
     IMediaStreamSourceSwitchStreamsRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaStreamSourceSwitchStreamsRequestedEventArgs>(m_ptr); }
 };
 
 struct IMediaTrack :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMediaTrack>
 {
     IMediaTrack(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMediaTrack>(m_ptr); }
 };
 
 struct IMseSourceBuffer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMseSourceBuffer>
 {
     IMseSourceBuffer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMseSourceBuffer>(m_ptr); }
 };
 
 struct IMseSourceBufferList :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMseSourceBufferList>
 {
     IMseSourceBufferList(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMseSourceBufferList>(m_ptr); }
 };
 
 struct IMseStreamSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMseStreamSource>,
     impl::require<IMseStreamSource, Windows::Media::Core::IMediaSource>
 {
     IMseStreamSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMseStreamSource>(m_ptr); }
 };
 
 struct IMseStreamSourceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMseStreamSourceStatics>
 {
     IMseStreamSourceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMseStreamSourceStatics>(m_ptr); }
 };
 
 struct ISceneAnalysisEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISceneAnalysisEffect>,
     impl::require<ISceneAnalysisEffect, Windows::Media::IMediaExtension>
 {
     ISceneAnalysisEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISceneAnalysisEffect>(m_ptr); }
 };
 
 struct ISceneAnalysisEffectFrame :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISceneAnalysisEffectFrame>,
     impl::require<ISceneAnalysisEffectFrame, Windows::Foundation::IClosable, Windows::Media::IMediaFrame>
 {
     ISceneAnalysisEffectFrame(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISceneAnalysisEffectFrame>(m_ptr); }
 };
 
 struct ISceneAnalyzedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISceneAnalyzedEventArgs>
 {
     ISceneAnalyzedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISceneAnalyzedEventArgs>(m_ptr); }
 };
 
 struct ISingleSelectMediaTrackList :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISingleSelectMediaTrackList>
 {
     ISingleSelectMediaTrackList(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISingleSelectMediaTrackList>(m_ptr); }
 };
 
 struct ITimedMetadataTrack :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedMetadataTrack>,
     impl::require<ITimedMetadataTrack, Windows::Media::Core::IMediaTrack>
 {
     ITimedMetadataTrack(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedMetadataTrack>(m_ptr); }
 };
 
 struct ITimedMetadataTrack2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedMetadataTrack2>,
     impl::require<ITimedMetadataTrack2, Windows::Media::Core::IMediaTrack, Windows::Media::Core::ITimedMetadataTrack>
 {
     ITimedMetadataTrack2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedMetadataTrack2>(m_ptr); }
 };
 
 struct ITimedMetadataTrackError :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedMetadataTrackError>
 {
     ITimedMetadataTrackError(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedMetadataTrackError>(m_ptr); }
 };
 
 struct ITimedMetadataTrackFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedMetadataTrackFactory>
 {
     ITimedMetadataTrackFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedMetadataTrackFactory>(m_ptr); }
 };
 
 struct ITimedMetadataTrackFailedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedMetadataTrackFailedEventArgs>
 {
     ITimedMetadataTrackFailedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedMetadataTrackFailedEventArgs>(m_ptr); }
 };
 
 struct ITimedTextCue :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextCue>,
     impl::require<ITimedTextCue, Windows::Media::Core::IMediaCue>
 {
     ITimedTextCue(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextCue>(m_ptr); }
 };
 
 struct ITimedTextLine :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextLine>
 {
     ITimedTextLine(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextLine>(m_ptr); }
 };
 
 struct ITimedTextRegion :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextRegion>
 {
     ITimedTextRegion(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextRegion>(m_ptr); }
 };
 
 struct ITimedTextSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextSource>
 {
     ITimedTextSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextSource>(m_ptr); }
 };
 
 struct ITimedTextSourceResolveResultEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextSourceResolveResultEventArgs>
 {
     ITimedTextSourceResolveResultEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextSourceResolveResultEventArgs>(m_ptr); }
 };
 
 struct ITimedTextSourceStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextSourceStatics>
 {
     ITimedTextSourceStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextSourceStatics>(m_ptr); }
 };
 
 struct ITimedTextStyle :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextStyle>
 {
     ITimedTextStyle(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextStyle>(m_ptr); }
 };
 
 struct ITimedTextSubformat :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimedTextSubformat>
 {
     ITimedTextSubformat(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimedTextSubformat>(m_ptr); }
 };
 
 struct IVideoStabilizationEffect :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoStabilizationEffect>,
     impl::require<IVideoStabilizationEffect, Windows::Media::IMediaExtension>
 {
     IVideoStabilizationEffect(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoStabilizationEffect>(m_ptr); }
 };
 
 struct IVideoStabilizationEffectEnabledChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoStabilizationEffectEnabledChangedEventArgs>
 {
     IVideoStabilizationEffectEnabledChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoStabilizationEffectEnabledChangedEventArgs>(m_ptr); }
 };
 
 struct IVideoStreamDescriptor :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoStreamDescriptor>,
     impl::require<IVideoStreamDescriptor, Windows::Media::Core::IMediaStreamDescriptor>
 {
     IVideoStreamDescriptor(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoStreamDescriptor>(m_ptr); }
 };
 
 struct IVideoStreamDescriptorFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoStreamDescriptorFactory>
 {
     IVideoStreamDescriptorFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoStreamDescriptorFactory>(m_ptr); }
 };
 
 struct IVideoTrack :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoTrack>
 {
     IVideoTrack(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoTrack>(m_ptr); }
 };
 
 struct IVideoTrackOpenFailedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoTrackOpenFailedEventArgs>
 {
     IVideoTrackOpenFailedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoTrackOpenFailedEventArgs>(m_ptr); }
 };
 
 struct IVideoTrackSupportInfo :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IVideoTrackSupportInfo>
 {
     IVideoTrackSupportInfo(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IVideoTrackSupportInfo>(m_ptr); }
 };
 
 }

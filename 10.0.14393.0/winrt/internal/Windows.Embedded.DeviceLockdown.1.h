@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -12,12 +12,12 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Embedded::DeviceLockdown {
 
-struct __declspec(uuid("7980e14e-45b1-4a96-92fc-62756b739678")) __declspec(novtable) IDeviceLockdownProfileInformation : Windows::IInspectable
+struct __declspec(uuid("7980e14e-45b1-4a96-92fc-62756b739678")) __declspec(novtable) IDeviceLockdownProfileInformation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * phProfileName) = 0;
 };
 
-struct __declspec(uuid("622f6965-f9a8-41a1-a691-88cd80c7a069")) __declspec(novtable) IDeviceLockdownProfileStatics : Windows::IInspectable
+struct __declspec(uuid("622f6965-f9a8-41a1-a691-88cd80c7a069")) __declspec(novtable) IDeviceLockdownProfileStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetSupportedLockdownProfiles(Windows::Foundation::Collections::IVectorView<GUID> ** ppProfileIDs) = 0;
     virtual HRESULT __stdcall abi_GetCurrentLockdownProfile(GUID * pProfileID) = 0;
@@ -35,8 +35,20 @@ template <> struct traits<Windows::Embedded::DeviceLockdown::DeviceLockdownProfi
 
 namespace Windows::Embedded::DeviceLockdown {
 
-template <typename T> struct impl_IDeviceLockdownProfileInformation;
-template <typename T> struct impl_IDeviceLockdownProfileStatics;
+template <typename D>
+struct WINRT_EBO impl_IDeviceLockdownProfileInformation
+{
+    hstring Name() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IDeviceLockdownProfileStatics
+{
+    Windows::Foundation::Collections::IVectorView<GUID> GetSupportedLockdownProfiles() const;
+    GUID GetCurrentLockdownProfile() const;
+    Windows::Foundation::IAsyncAction ApplyLockdownProfileAsync(GUID profileID) const;
+    Windows::Embedded::DeviceLockdown::DeviceLockdownProfileInformation GetLockdownProfileInformation(GUID profileID) const;
+};
 
 }
 

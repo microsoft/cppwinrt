@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -29,166 +29,74 @@ template <> struct __declspec(uuid("0363f57a-b7a2-5e20-a156-253423e7ee40")) __de
 
 namespace Windows::Devices::Printers::Extensions {
 
-template <typename D>
-struct WINRT_EBO impl_IPrint3DWorkflow
-{
-    hstring DeviceID() const;
-    Windows::IInspectable GetPrintModelPackage() const;
-    bool IsPrintReady() const;
-    void IsPrintReady(bool value) const;
-    event_token PrintRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrintRequestedEventArgs> & eventHandler) const;
-    using PrintRequested_revoker = event_revoker<IPrint3DWorkflow>;
-    PrintRequested_revoker PrintRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrintRequestedEventArgs> & eventHandler) const;
-    void PrintRequested(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DWorkflow2
-{
-    event_token PrinterChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrinterChangedEventArgs> & eventHandler) const;
-    using PrinterChanged_revoker = event_revoker<IPrint3DWorkflow2>;
-    PrinterChanged_revoker PrinterChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrinterChangedEventArgs> & eventHandler) const;
-    void PrinterChanged(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DWorkflowPrintRequestedEventArgs
-{
-    Windows::Devices::Printers::Extensions::Print3DWorkflowStatus Status() const;
-    void SetExtendedStatus(Windows::Devices::Printers::Extensions::Print3DWorkflowDetail value) const;
-    void SetSource(const Windows::IInspectable & source) const;
-    void SetSourceChanged(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrint3DWorkflowPrinterChangedEventArgs
-{
-    hstring NewDeviceId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintExtensionContextStatic
-{
-    Windows::IInspectable FromDeviceId(hstring_ref deviceId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintNotificationEventDetails
-{
-    hstring PrinterName() const;
-    hstring EventData() const;
-    void EventData(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintTaskConfiguration
-{
-    Windows::IInspectable PrinterExtensionContext() const;
-    event_token SaveRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const;
-    using SaveRequested_revoker = event_revoker<IPrintTaskConfiguration>;
-    SaveRequested_revoker SaveRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const;
-    void SaveRequested(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintTaskConfigurationSaveRequest
-{
-    void Cancel() const;
-    void Save(const Windows::IInspectable & printerExtensionContext) const;
-    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedDeferral GetDeferral() const;
-    Windows::Foundation::DateTime Deadline() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintTaskConfigurationSaveRequestedDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPrintTaskConfigurationSaveRequestedEventArgs
-{
-    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequest Request() const;
-};
-
 struct IPrint3DWorkflow :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DWorkflow>
 {
     IPrint3DWorkflow(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DWorkflow>(m_ptr); }
 };
 
 struct IPrint3DWorkflow2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DWorkflow2>
 {
     IPrint3DWorkflow2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DWorkflow2>(m_ptr); }
 };
 
 struct IPrint3DWorkflowPrintRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DWorkflowPrintRequestedEventArgs>
 {
     IPrint3DWorkflowPrintRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DWorkflowPrintRequestedEventArgs>(m_ptr); }
 };
 
 struct IPrint3DWorkflowPrinterChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrint3DWorkflowPrinterChangedEventArgs>
 {
     IPrint3DWorkflowPrinterChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrint3DWorkflowPrinterChangedEventArgs>(m_ptr); }
 };
 
 struct IPrintExtensionContextStatic :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintExtensionContextStatic>
 {
     IPrintExtensionContextStatic(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintExtensionContextStatic>(m_ptr); }
 };
 
 struct IPrintNotificationEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintNotificationEventDetails>
 {
     IPrintNotificationEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintNotificationEventDetails>(m_ptr); }
 };
 
 struct IPrintTaskConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintTaskConfiguration>
 {
     IPrintTaskConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintTaskConfiguration>(m_ptr); }
 };
 
 struct IPrintTaskConfigurationSaveRequest :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintTaskConfigurationSaveRequest>
 {
     IPrintTaskConfigurationSaveRequest(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintTaskConfigurationSaveRequest>(m_ptr); }
 };
 
 struct IPrintTaskConfigurationSaveRequestedDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintTaskConfigurationSaveRequestedDeferral>
 {
     IPrintTaskConfigurationSaveRequestedDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintTaskConfigurationSaveRequestedDeferral>(m_ptr); }
 };
 
 struct IPrintTaskConfigurationSaveRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPrintTaskConfigurationSaveRequestedEventArgs>
 {
     IPrintTaskConfigurationSaveRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPrintTaskConfigurationSaveRequestedEventArgs>(m_ptr); }
 };
 
 }

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -74,13 +74,13 @@ using UINavigationReading = ABI::Windows::Gaming::Input::UINavigationReading;
 
 namespace ABI::Windows::Gaming::Input {
 
-struct __declspec(uuid("b14a539d-befb-4c81-8051-15ecf3b13036")) __declspec(novtable) IArcadeStick : Windows::IInspectable
+struct __declspec(uuid("b14a539d-befb-4c81-8051-15ecf3b13036")) __declspec(novtable) IArcadeStick : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetButtonLabel(winrt::Windows::Gaming::Input::ArcadeStickButtons button, winrt::Windows::Gaming::Input::GameControllerButtonLabel * value) = 0;
     virtual HRESULT __stdcall abi_GetCurrentReading(Windows::Gaming::Input::ArcadeStickReading * value) = 0;
 };
 
-struct __declspec(uuid("5c37b8c8-37b1-4ad8-9458-200f1a30018e")) __declspec(novtable) IArcadeStickStatics : Windows::IInspectable
+struct __declspec(uuid("5c37b8c8-37b1-4ad8-9458-200f1a30018e")) __declspec(novtable) IArcadeStickStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_ArcadeStickAdded(Windows::Foundation::EventHandler<Windows::Gaming::Input::ArcadeStick> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ArcadeStickAdded(event_token token) = 0;
@@ -89,7 +89,7 @@ struct __declspec(uuid("5c37b8c8-37b1-4ad8-9458-200f1a30018e")) __declspec(novta
     virtual HRESULT __stdcall get_ArcadeSticks(Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::ArcadeStick> ** value) = 0;
 };
 
-struct __declspec(uuid("1baf6522-5f64-42c5-8267-b9fe2215bfbd")) __declspec(novtable) IGameController : Windows::IInspectable
+struct __declspec(uuid("1baf6522-5f64-42c5-8267-b9fe2215bfbd")) __declspec(novtable) IGameController : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_HeadsetConnected(Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::Gaming::Input::Headset> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_HeadsetConnected(event_token token) = 0;
@@ -102,19 +102,19 @@ struct __declspec(uuid("1baf6522-5f64-42c5-8267-b9fe2215bfbd")) __declspec(novta
     virtual HRESULT __stdcall get_User(Windows::System::IUser ** value) = 0;
 };
 
-struct __declspec(uuid("bc7bb43c-0a69-3903-9e9d-a50f86a45de5")) __declspec(novtable) IGamepad : Windows::IInspectable
+struct __declspec(uuid("bc7bb43c-0a69-3903-9e9d-a50f86a45de5")) __declspec(novtable) IGamepad : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Vibration(Windows::Gaming::Input::GamepadVibration * value) = 0;
     virtual HRESULT __stdcall put_Vibration(Windows::Gaming::Input::GamepadVibration value) = 0;
     virtual HRESULT __stdcall abi_GetCurrentReading(Windows::Gaming::Input::GamepadReading * value) = 0;
 };
 
-struct __declspec(uuid("3c1689bd-5915-4245-b0c0-c89fae0308ff")) __declspec(novtable) IGamepad2 : Windows::IInspectable
+struct __declspec(uuid("3c1689bd-5915-4245-b0c0-c89fae0308ff")) __declspec(novtable) IGamepad2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetButtonLabel(winrt::Windows::Gaming::Input::GamepadButtons button, winrt::Windows::Gaming::Input::GameControllerButtonLabel * value) = 0;
 };
 
-struct __declspec(uuid("8bbce529-d49c-39e9-9560-e47dde96b7c8")) __declspec(novtable) IGamepadStatics : Windows::IInspectable
+struct __declspec(uuid("8bbce529-d49c-39e9-9560-e47dde96b7c8")) __declspec(novtable) IGamepadStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_GamepadAdded(Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_GamepadAdded(event_token token) = 0;
@@ -123,13 +123,13 @@ struct __declspec(uuid("8bbce529-d49c-39e9-9560-e47dde96b7c8")) __declspec(novta
     virtual HRESULT __stdcall get_Gamepads(Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::Gamepad> ** value) = 0;
 };
 
-struct __declspec(uuid("3fd156ef-6925-3fa8-9181-029c5223ae3b")) __declspec(novtable) IHeadset : Windows::IInspectable
+struct __declspec(uuid("3fd156ef-6925-3fa8-9181-029c5223ae3b")) __declspec(novtable) IHeadset : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CaptureDeviceId(hstring * value) = 0;
     virtual HRESULT __stdcall get_RenderDeviceId(hstring * value) = 0;
 };
 
-struct __declspec(uuid("f546656f-e106-4c82-a90f-554012904b85")) __declspec(novtable) IRacingWheel : Windows::IInspectable
+struct __declspec(uuid("f546656f-e106-4c82-a90f-554012904b85")) __declspec(novtable) IRacingWheel : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_HasClutch(bool * value) = 0;
     virtual HRESULT __stdcall get_HasHandbrake(bool * value) = 0;
@@ -141,7 +141,7 @@ struct __declspec(uuid("f546656f-e106-4c82-a90f-554012904b85")) __declspec(novta
     virtual HRESULT __stdcall abi_GetCurrentReading(Windows::Gaming::Input::RacingWheelReading * value) = 0;
 };
 
-struct __declspec(uuid("3ac12cd5-581b-4936-9f94-69f1e6514c7d")) __declspec(novtable) IRacingWheelStatics : Windows::IInspectable
+struct __declspec(uuid("3ac12cd5-581b-4936-9f94-69f1e6514c7d")) __declspec(novtable) IRacingWheelStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_RacingWheelAdded(Windows::Foundation::EventHandler<Windows::Gaming::Input::RacingWheel> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RacingWheelAdded(event_token token) = 0;
@@ -150,14 +150,14 @@ struct __declspec(uuid("3ac12cd5-581b-4936-9f94-69f1e6514c7d")) __declspec(novta
     virtual HRESULT __stdcall get_RacingWheels(Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::RacingWheel> ** value) = 0;
 };
 
-struct __declspec(uuid("e5aeefdd-f50e-4a55-8cdc-d33229548175")) __declspec(novtable) IUINavigationController : Windows::IInspectable
+struct __declspec(uuid("e5aeefdd-f50e-4a55-8cdc-d33229548175")) __declspec(novtable) IUINavigationController : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetCurrentReading(Windows::Gaming::Input::UINavigationReading * value) = 0;
     virtual HRESULT __stdcall abi_GetOptionalButtonLabel(winrt::Windows::Gaming::Input::OptionalUINavigationButtons button, winrt::Windows::Gaming::Input::GameControllerButtonLabel * value) = 0;
     virtual HRESULT __stdcall abi_GetRequiredButtonLabel(winrt::Windows::Gaming::Input::RequiredUINavigationButtons button, winrt::Windows::Gaming::Input::GameControllerButtonLabel * value) = 0;
 };
 
-struct __declspec(uuid("2f14930a-f6f8-4a48-8d89-94786cca0c2e")) __declspec(novtable) IUINavigationControllerStatics : Windows::IInspectable
+struct __declspec(uuid("2f14930a-f6f8-4a48-8d89-94786cca0c2e")) __declspec(novtable) IUINavigationControllerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_UINavigationControllerAdded(Windows::Foundation::EventHandler<Windows::Gaming::Input::UINavigationController> * value, event_token * token) = 0;
     virtual HRESULT __stdcall remove_UINavigationControllerAdded(event_token token) = 0;
@@ -180,17 +180,130 @@ template <> struct traits<Windows::Gaming::Input::UINavigationController> { usin
 
 namespace Windows::Gaming::Input {
 
-template <typename T> struct impl_IArcadeStick;
-template <typename T> struct impl_IArcadeStickStatics;
-template <typename T> struct impl_IGameController;
-template <typename T> struct impl_IGamepad;
-template <typename T> struct impl_IGamepad2;
-template <typename T> struct impl_IGamepadStatics;
-template <typename T> struct impl_IHeadset;
-template <typename T> struct impl_IRacingWheel;
-template <typename T> struct impl_IRacingWheelStatics;
-template <typename T> struct impl_IUINavigationController;
-template <typename T> struct impl_IUINavigationControllerStatics;
+template <typename D>
+struct WINRT_EBO impl_IArcadeStick
+{
+    Windows::Gaming::Input::GameControllerButtonLabel GetButtonLabel(Windows::Gaming::Input::ArcadeStickButtons button) const;
+    Windows::Gaming::Input::ArcadeStickReading GetCurrentReading() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IArcadeStickStatics
+{
+    event_token ArcadeStickAdded(const Windows::Foundation::EventHandler<Windows::Gaming::Input::ArcadeStick> & value) const;
+    using ArcadeStickAdded_revoker = event_revoker<IArcadeStickStatics>;
+    ArcadeStickAdded_revoker ArcadeStickAdded(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::ArcadeStick> & value) const;
+    void ArcadeStickAdded(event_token token) const;
+    event_token ArcadeStickRemoved(const Windows::Foundation::EventHandler<Windows::Gaming::Input::ArcadeStick> & value) const;
+    using ArcadeStickRemoved_revoker = event_revoker<IArcadeStickStatics>;
+    ArcadeStickRemoved_revoker ArcadeStickRemoved(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::ArcadeStick> & value) const;
+    void ArcadeStickRemoved(event_token token) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::ArcadeStick> ArcadeSticks() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGameController
+{
+    event_token HeadsetConnected(const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::Gaming::Input::Headset> & value) const;
+    using HeadsetConnected_revoker = event_revoker<IGameController>;
+    HeadsetConnected_revoker HeadsetConnected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::Gaming::Input::Headset> & value) const;
+    void HeadsetConnected(event_token token) const;
+    event_token HeadsetDisconnected(const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::Gaming::Input::Headset> & value) const;
+    using HeadsetDisconnected_revoker = event_revoker<IGameController>;
+    HeadsetDisconnected_revoker HeadsetDisconnected(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::Gaming::Input::Headset> & value) const;
+    void HeadsetDisconnected(event_token token) const;
+    event_token UserChanged(const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::System::UserChangedEventArgs> & value) const;
+    using UserChanged_revoker = event_revoker<IGameController>;
+    UserChanged_revoker UserChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Gaming::Input::IGameController, Windows::System::UserChangedEventArgs> & value) const;
+    void UserChanged(event_token token) const;
+    Windows::Gaming::Input::Headset Headset() const;
+    bool IsWireless() const;
+    Windows::System::User User() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGamepad
+{
+    Windows::Gaming::Input::GamepadVibration Vibration() const;
+    void Vibration(const Windows::Gaming::Input::GamepadVibration & value) const;
+    Windows::Gaming::Input::GamepadReading GetCurrentReading() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGamepad2
+{
+    Windows::Gaming::Input::GameControllerButtonLabel GetButtonLabel(Windows::Gaming::Input::GamepadButtons button) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IGamepadStatics
+{
+    event_token GamepadAdded(const Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad> & value) const;
+    using GamepadAdded_revoker = event_revoker<IGamepadStatics>;
+    GamepadAdded_revoker GamepadAdded(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad> & value) const;
+    void GamepadAdded(event_token token) const;
+    event_token GamepadRemoved(const Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad> & value) const;
+    using GamepadRemoved_revoker = event_revoker<IGamepadStatics>;
+    GamepadRemoved_revoker GamepadRemoved(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::Gamepad> & value) const;
+    void GamepadRemoved(event_token token) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::Gamepad> Gamepads() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IHeadset
+{
+    hstring CaptureDeviceId() const;
+    hstring RenderDeviceId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRacingWheel
+{
+    bool HasClutch() const;
+    bool HasHandbrake() const;
+    bool HasPatternShifter() const;
+    int32_t MaxPatternShifterGear() const;
+    double MaxWheelAngle() const;
+    Windows::Gaming::Input::ForceFeedback::ForceFeedbackMotor WheelMotor() const;
+    Windows::Gaming::Input::GameControllerButtonLabel GetButtonLabel(Windows::Gaming::Input::RacingWheelButtons button) const;
+    Windows::Gaming::Input::RacingWheelReading GetCurrentReading() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IRacingWheelStatics
+{
+    event_token RacingWheelAdded(const Windows::Foundation::EventHandler<Windows::Gaming::Input::RacingWheel> & value) const;
+    using RacingWheelAdded_revoker = event_revoker<IRacingWheelStatics>;
+    RacingWheelAdded_revoker RacingWheelAdded(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::RacingWheel> & value) const;
+    void RacingWheelAdded(event_token token) const;
+    event_token RacingWheelRemoved(const Windows::Foundation::EventHandler<Windows::Gaming::Input::RacingWheel> & value) const;
+    using RacingWheelRemoved_revoker = event_revoker<IRacingWheelStatics>;
+    RacingWheelRemoved_revoker RacingWheelRemoved(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::RacingWheel> & value) const;
+    void RacingWheelRemoved(event_token token) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::RacingWheel> RacingWheels() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUINavigationController
+{
+    Windows::Gaming::Input::UINavigationReading GetCurrentReading() const;
+    Windows::Gaming::Input::GameControllerButtonLabel GetOptionalButtonLabel(Windows::Gaming::Input::OptionalUINavigationButtons button) const;
+    Windows::Gaming::Input::GameControllerButtonLabel GetRequiredButtonLabel(Windows::Gaming::Input::RequiredUINavigationButtons button) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IUINavigationControllerStatics
+{
+    event_token UINavigationControllerAdded(const Windows::Foundation::EventHandler<Windows::Gaming::Input::UINavigationController> & value) const;
+    using UINavigationControllerAdded_revoker = event_revoker<IUINavigationControllerStatics>;
+    UINavigationControllerAdded_revoker UINavigationControllerAdded(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::UINavigationController> & value) const;
+    void UINavigationControllerAdded(event_token token) const;
+    event_token UINavigationControllerRemoved(const Windows::Foundation::EventHandler<Windows::Gaming::Input::UINavigationController> & value) const;
+    using UINavigationControllerRemoved_revoker = event_revoker<IUINavigationControllerStatics>;
+    UINavigationControllerRemoved_revoker UINavigationControllerRemoved(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Gaming::Input::UINavigationController> & value) const;
+    void UINavigationControllerRemoved(event_token token) const;
+    Windows::Foundation::Collections::IVectorView<Windows::Gaming::Input::UINavigationController> UINavigationControllers() const;
+};
 
 }
 

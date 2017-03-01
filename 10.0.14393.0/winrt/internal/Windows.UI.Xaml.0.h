@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -452,6 +452,159 @@ struct WindowCreatedEventArgs;
 
 namespace Windows::UI::Xaml {
 
+template <typename T> struct impl_IAdaptiveTrigger;
+template <typename T> struct impl_IAdaptiveTriggerFactory;
+template <typename T> struct impl_IAdaptiveTriggerStatics;
+template <typename T> struct impl_IApplication;
+template <typename T> struct impl_IApplication2;
+template <typename T> struct impl_IApplicationFactory;
+template <typename T> struct impl_IApplicationInitializationCallbackParams;
+template <typename T> struct impl_IApplicationOverrides;
+template <typename T> struct impl_IApplicationOverrides2;
+template <typename T> struct impl_IApplicationStatics;
+template <typename T> struct impl_IBindingFailedEventArgs;
+template <typename T> struct impl_ICornerRadiusHelper;
+template <typename T> struct impl_ICornerRadiusHelperStatics;
+template <typename T> struct impl_IDataContextChangedEventArgs;
+template <typename T> struct impl_IDataTemplate;
+template <typename T> struct impl_IDataTemplateExtension;
+template <typename T> struct impl_IDataTemplateFactory;
+template <typename T> struct impl_IDataTemplateKey;
+template <typename T> struct impl_IDataTemplateKeyFactory;
+template <typename T> struct impl_IDataTemplateStatics2;
+template <typename T> struct impl_IDebugSettings;
+template <typename T> struct impl_IDebugSettings2;
+template <typename T> struct impl_IDebugSettings3;
+template <typename T> struct impl_IDependencyObject;
+template <typename T> struct impl_IDependencyObject2;
+template <typename T> struct impl_IDependencyObjectCollectionFactory;
+template <typename T> struct impl_IDependencyObjectFactory;
+template <typename T> struct impl_IDependencyProperty;
+template <typename T> struct impl_IDependencyPropertyChangedEventArgs;
+template <typename T> struct impl_IDependencyPropertyStatics;
+template <typename T> struct impl_IDispatcherTimer;
+template <typename T> struct impl_IDispatcherTimerFactory;
+template <typename T> struct impl_IDragEventArgs;
+template <typename T> struct impl_IDragEventArgs2;
+template <typename T> struct impl_IDragEventArgs3;
+template <typename T> struct impl_IDragOperationDeferral;
+template <typename T> struct impl_IDragStartingEventArgs;
+template <typename T> struct impl_IDragStartingEventArgs2;
+template <typename T> struct impl_IDragUI;
+template <typename T> struct impl_IDragUIOverride;
+template <typename T> struct impl_IDropCompletedEventArgs;
+template <typename T> struct impl_IDurationHelper;
+template <typename T> struct impl_IDurationHelperStatics;
+template <typename T> struct impl_IElementSoundPlayer;
+template <typename T> struct impl_IElementSoundPlayerStatics;
+template <typename T> struct impl_IEventTrigger;
+template <typename T> struct impl_IExceptionRoutedEventArgs;
+template <typename T> struct impl_IExceptionRoutedEventArgsFactory;
+template <typename T> struct impl_IFrameworkElement;
+template <typename T> struct impl_IFrameworkElement2;
+template <typename T> struct impl_IFrameworkElement3;
+template <typename T> struct impl_IFrameworkElement4;
+template <typename T> struct impl_IFrameworkElementFactory;
+template <typename T> struct impl_IFrameworkElementOverrides;
+template <typename T> struct impl_IFrameworkElementOverrides2;
+template <typename T> struct impl_IFrameworkElementStatics;
+template <typename T> struct impl_IFrameworkElementStatics2;
+template <typename T> struct impl_IFrameworkElementStatics4;
+template <typename T> struct impl_IFrameworkTemplate;
+template <typename T> struct impl_IFrameworkTemplateFactory;
+template <typename T> struct impl_IFrameworkView;
+template <typename T> struct impl_IFrameworkViewSource;
+template <typename T> struct impl_IGridLengthHelper;
+template <typename T> struct impl_IGridLengthHelperStatics;
+template <typename T> struct impl_IMediaFailedRoutedEventArgs;
+template <typename T> struct impl_IPointHelper;
+template <typename T> struct impl_IPointHelperStatics;
+template <typename T> struct impl_IPropertyMetadata;
+template <typename T> struct impl_IPropertyMetadataFactory;
+template <typename T> struct impl_IPropertyMetadataStatics;
+template <typename T> struct impl_IPropertyPath;
+template <typename T> struct impl_IPropertyPathFactory;
+template <typename T> struct impl_IRectHelper;
+template <typename T> struct impl_IRectHelperStatics;
+template <typename T> struct impl_IResourceDictionary;
+template <typename T> struct impl_IResourceDictionaryFactory;
+template <typename T> struct impl_IRoutedEvent;
+template <typename T> struct impl_IRoutedEventArgs;
+template <typename T> struct impl_IRoutedEventArgsFactory;
+template <typename T> struct impl_ISetter;
+template <typename T> struct impl_ISetter2;
+template <typename T> struct impl_ISetterBase;
+template <typename T> struct impl_ISetterBaseCollection;
+template <typename T> struct impl_ISetterBaseFactory;
+template <typename T> struct impl_ISetterFactory;
+template <typename T> struct impl_ISizeChangedEventArgs;
+template <typename T> struct impl_ISizeHelper;
+template <typename T> struct impl_ISizeHelperStatics;
+template <typename T> struct impl_IStateTrigger;
+template <typename T> struct impl_IStateTriggerBase;
+template <typename T> struct impl_IStateTriggerBaseFactory;
+template <typename T> struct impl_IStateTriggerBaseProtected;
+template <typename T> struct impl_IStateTriggerStatics;
+template <typename T> struct impl_IStyle;
+template <typename T> struct impl_IStyleFactory;
+template <typename T> struct impl_ITargetPropertyPath;
+template <typename T> struct impl_ITargetPropertyPathFactory;
+template <typename T> struct impl_IThicknessHelper;
+template <typename T> struct impl_IThicknessHelperStatics;
+template <typename T> struct impl_ITriggerAction;
+template <typename T> struct impl_ITriggerActionFactory;
+template <typename T> struct impl_ITriggerBase;
+template <typename T> struct impl_ITriggerBaseFactory;
+template <typename T> struct impl_IUIElement;
+template <typename T> struct impl_IUIElement2;
+template <typename T> struct impl_IUIElement3;
+template <typename T> struct impl_IUIElement4;
+template <typename T> struct impl_IUIElementFactory;
+template <typename T> struct impl_IUIElementOverrides;
+template <typename T> struct impl_IUIElementStatics;
+template <typename T> struct impl_IUIElementStatics2;
+template <typename T> struct impl_IUIElementStatics3;
+template <typename T> struct impl_IUIElementStatics4;
+template <typename T> struct impl_IUnhandledExceptionEventArgs;
+template <typename T> struct impl_IVisualState;
+template <typename T> struct impl_IVisualState2;
+template <typename T> struct impl_IVisualStateChangedEventArgs;
+template <typename T> struct impl_IVisualStateGroup;
+template <typename T> struct impl_IVisualStateManager;
+template <typename T> struct impl_IVisualStateManagerFactory;
+template <typename T> struct impl_IVisualStateManagerOverrides;
+template <typename T> struct impl_IVisualStateManagerProtected;
+template <typename T> struct impl_IVisualStateManagerStatics;
+template <typename T> struct impl_IVisualTransition;
+template <typename T> struct impl_IVisualTransitionFactory;
+template <typename T> struct impl_IWindow;
+template <typename T> struct impl_IWindow2;
+template <typename T> struct impl_IWindowCreatedEventArgs;
+template <typename T> struct impl_IWindowStatics;
+template <typename T> struct impl_ApplicationInitializationCallback;
+template <typename T> struct impl_BindingFailedEventHandler;
+template <typename T> struct impl_CreateDefaultValueCallback;
+template <typename T> struct impl_DependencyPropertyChangedCallback;
+template <typename T> struct impl_DependencyPropertyChangedEventHandler;
+template <typename T> struct impl_DragEventHandler;
+template <typename T> struct impl_EnteredBackgroundEventHandler;
+template <typename T> struct impl_ExceptionRoutedEventHandler;
+template <typename T> struct impl_LeavingBackgroundEventHandler;
+template <typename T> struct impl_PropertyChangedCallback;
+template <typename T> struct impl_RoutedEventHandler;
+template <typename T> struct impl_SizeChangedEventHandler;
+template <typename T> struct impl_SuspendingEventHandler;
+template <typename T> struct impl_UnhandledExceptionEventHandler;
+template <typename T> struct impl_VisualStateChangedEventHandler;
+template <typename T> struct impl_WindowActivatedEventHandler;
+template <typename T> struct impl_WindowClosedEventHandler;
+template <typename T> struct impl_WindowSizeChangedEventHandler;
+template <typename T> struct impl_WindowVisibilityChangedEventHandler;
+
+}
+
+namespace Windows::UI::Xaml {
+
 enum class ApplicationRequiresPointerMode
 {
     Auto = 0,
@@ -680,7 +833,7 @@ enum class TextLineBounds
 
 enum class TextReadingOrder
 {
-    Default = 0,
+    Default [[deprecated("Consider using UseFlowDirection, which is an improved version of Default. For more info, see MSDN.")]] = 0,
     UseFlowDirection = 0,
     DetectFromContent = 1,
 };

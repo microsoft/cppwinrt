@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -19,6 +19,11 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -82,7 +87,7 @@ template <> struct __declspec(uuid("0e865096-1ffa-5792-8d4f-8623e3c77f56")) __de
 
 #ifndef WINRT_GENERIC_e4dc9cfc_f462_5afd_856d_04ace229d00e
 #define WINRT_GENERIC_e4dc9cfc_f462_5afd_856d_04ace229d00e
-template <> struct __declspec(uuid("e4dc9cfc-f462-5afd-856d-04ace229d00e")) __declspec(novtable) TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> : impl_TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> {};
+template <> struct __declspec(uuid("e4dc9cfc-f462-5afd-856d-04ace229d00e")) __declspec(novtable) TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -225,9 +230,19 @@ template <> struct __declspec(uuid("9dd0a063-6153-5afd-8288-8770ddcff2db")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_90c71c29_a9b5_5267_a5ad_8b756736317c
+#define WINRT_GENERIC_90c71c29_a9b5_5267_a5ad_8b756736317c
+template <> struct __declspec(uuid("90c71c29-a9b5-5267-a5ad-8b756736317c")) __declspec(novtable) IVector<Windows::Networking::HostName> : impl_IVector<Windows::Networking::HostName> {};
+#endif
+
 #ifndef WINRT_GENERIC_9e5f3ed0_cf1c_5d38_832c_acea6164bf5c
 #define WINRT_GENERIC_9e5f3ed0_cf1c_5d38_832c_acea6164bf5c
 template <> struct __declspec(uuid("9e5f3ed0-cf1c-5d38-832c-acea6164bf5c")) __declspec(novtable) IIterable<Windows::Networking::HostName> : impl_IIterable<Windows::Networking::HostName> {};
+#endif
+
+#ifndef WINRT_GENERIC_534832ed_2a03_5604_890d_5a928cd427b9
+#define WINRT_GENERIC_534832ed_2a03_5604_890d_5a928cd427b9
+template <> struct __declspec(uuid("534832ed-2a03-5604-890d-5a928cd427b9")) __declspec(novtable) IVector<uint32_t> : impl_IVector<uint32_t> {};
 #endif
 
 
@@ -250,6 +265,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
 #endif
 
+#ifndef WINRT_GENERIC_d0a5c969_441b_594c_8891_6fda42d8283f
+#define WINRT_GENERIC_d0a5c969_441b_594c_8891_6fda42d8283f
+template <> struct __declspec(uuid("d0a5c969-441b-594c-8891-6fda42d8283f")) __declspec(novtable) IVector<Windows::Networking::Connectivity::ConnectionProfile> : impl_IVector<Windows::Networking::Connectivity::ConnectionProfile> {};
+#endif
+
 #ifndef WINRT_GENERIC_89913732_a08b_5cb2_af16_bbbb2223839e
 #define WINRT_GENERIC_89913732_a08b_5cb2_af16_bbbb2223839e
 template <> struct __declspec(uuid("89913732-a08b-5cb2-af16-bbbb2223839e")) __declspec(novtable) IIterator<Windows::Networking::Connectivity::ConnectionProfile> : impl_IIterator<Windows::Networking::Connectivity::ConnectionProfile> {};
@@ -258,6 +278,11 @@ template <> struct __declspec(uuid("89913732-a08b-5cb2-af16-bbbb2223839e")) __de
 #ifndef WINRT_GENERIC_34dabef9_87d0_5b1c_a7ac_9d290adeb0c8
 #define WINRT_GENERIC_34dabef9_87d0_5b1c_a7ac_9d290adeb0c8
 template <> struct __declspec(uuid("34dabef9-87d0-5b1c-a7ac-9d290adeb0c8")) __declspec(novtable) IIterable<Windows::Networking::Connectivity::ConnectionProfile> : impl_IIterable<Windows::Networking::Connectivity::ConnectionProfile> {};
+#endif
+
+#ifndef WINRT_GENERIC_cba61194_67a5_59a7_a551_544f81088916
+#define WINRT_GENERIC_cba61194_67a5_59a7_a551_544f81088916
+template <> struct __declspec(uuid("cba61194-67a5-59a7-a551-544f81088916")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::MobileBroadbandUiccApp> : impl_IVector<Windows::Networking::NetworkOperators::MobileBroadbandUiccApp> {};
 #endif
 
 #ifndef WINRT_GENERIC_4bb2066f_1b75_57cf_a722_1e58bfc5ae50
@@ -290,6 +315,11 @@ namespace ABI::Windows::Foundation::Collections {
 template <> struct __declspec(uuid("557bf83c-a428-5dbd-a0fe-05f6ee543d45")) __declspec(novtable) IIterator<Windows::Networking::HostName> : impl_IIterator<Windows::Networking::HostName> {};
 #endif
 
+#ifndef WINRT_GENERIC_60c9dc73_6fd2_58cb_b984_b03ffd47bdbf
+#define WINRT_GENERIC_60c9dc73_6fd2_58cb_b984_b03ffd47bdbf
+template <> struct __declspec(uuid("60c9dc73-6fd2-58cb-b984-b03ffd47bdbf")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> : impl_IVector<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> {};
+#endif
+
 #ifndef WINRT_GENERIC_5653d065_c708_5341_bc05_d3b9cecd2ac7
 #define WINRT_GENERIC_5653d065_c708_5341_bc05_d3b9cecd2ac7
 template <> struct __declspec(uuid("5653d065-c708-5341-bc05-d3b9cecd2ac7")) __declspec(novtable) IIterator<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> : impl_IIterator<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> {};
@@ -298,6 +328,11 @@ template <> struct __declspec(uuid("5653d065-c708-5341-bc05-d3b9cecd2ac7")) __de
 #ifndef WINRT_GENERIC_4762ecb3_af48_5b63_89b7_78a42056549f
 #define WINRT_GENERIC_4762ecb3_af48_5b63_89b7_78a42056549f
 template <> struct __declspec(uuid("4762ecb3-af48-5b63-89b7-78a42056549f")) __declspec(novtable) IIterable<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> : impl_IIterable<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> {};
+#endif
+
+#ifndef WINRT_GENERIC_143299e9_9056_50dd_9e98_920019b4bf2c
+#define WINRT_GENERIC_143299e9_9056_50dd_9e98_920019b4bf2c
+template <> struct __declspec(uuid("143299e9-9056-50dd-9e98-920019b4bf2c")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceInformation> : impl_IVector<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceInformation> {};
 #endif
 
 #ifndef WINRT_GENERIC_d8d776f6_4692_5461_9155_816e63bac874
@@ -324,6 +359,11 @@ template <> struct __declspec(uuid("c11e0649-8237-5c93-bbdb-2eda5216fd3f")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_5eb36a5d_f0b3_5435_b839_ff4a0b114ac1
+#define WINRT_GENERIC_5eb36a5d_f0b3_5435_b839_ff4a0b114ac1
+template <> struct __declspec(uuid("5eb36a5d-f0b3-5435-b839-ff4a0b114ac1")) __declspec(novtable) IVector<winrt::Windows::Networking::NetworkOperators::MobileBroadbandPinType> : impl_IVector<winrt::Windows::Networking::NetworkOperators::MobileBroadbandPinType> {};
+#endif
 
 #ifndef WINRT_GENERIC_23efcf0c_1f8e_5bd9_8b57_f0850121201c
 #define WINRT_GENERIC_23efcf0c_1f8e_5bd9_8b57_f0850121201c
@@ -385,6 +425,11 @@ template <> struct __declspec(uuid("b81892b3-4ca9-5ec4-8971-2fbc19b56ca9")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_5d69e663_e64e_5d4b_b50f_f6f34bdd9015
+#define WINRT_GENERIC_5d69e663_e64e_5d4b_b50f_f6f34bdd9015
+template <> struct __declspec(uuid("5d69e663-e64e-5d4b-b50f-f6f34bdd9015")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> : impl_IVector<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> {};
+#endif
+
 #ifndef WINRT_GENERIC_9cb0f858_e589_57a7_9d01_2c6291567cc7
 #define WINRT_GENERIC_9cb0f858_e589_57a7_9d01_2c6291567cc7
 template <> struct __declspec(uuid("9cb0f858-e589-57a7-9d01-2c6291567cc7")) __declspec(novtable) IIterator<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> : impl_IIterator<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> {};
@@ -395,6 +440,11 @@ template <> struct __declspec(uuid("9cb0f858-e589-57a7-9d01-2c6291567cc7")) __de
 template <> struct __declspec(uuid("0b90bb30-660c-51c6-9b8c-31dd8486e10e")) __declspec(novtable) IIterable<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> : impl_IIterable<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> {};
 #endif
 
+#ifndef WINRT_GENERIC_6eb2f385_5242_55ef_a303_8b04c7eb8d50
+#define WINRT_GENERIC_6eb2f385_5242_55ef_a303_8b04c7eb8d50
+template <> struct __declspec(uuid("6eb2f385-5242-55ef-a303-8b04c7eb8d50")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> : impl_IVector<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> {};
+#endif
+
 #ifndef WINRT_GENERIC_c088cec3_08e5_5f35_a2b9_0900d028c83b
 #define WINRT_GENERIC_c088cec3_08e5_5f35_a2b9_0900d028c83b
 template <> struct __declspec(uuid("c088cec3-08e5-5f35-a2b9-0900d028c83b")) __declspec(novtable) IIterator<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> : impl_IIterator<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> {};
@@ -403,6 +453,11 @@ template <> struct __declspec(uuid("c088cec3-08e5-5f35-a2b9-0900d028c83b")) __de
 #ifndef WINRT_GENERIC_c385adaa_574c_5ad8_98c2_61309525132d
 #define WINRT_GENERIC_c385adaa_574c_5ad8_98c2_61309525132d
 template <> struct __declspec(uuid("c385adaa-574c-5ad8-98c2-61309525132d")) __declspec(novtable) IIterable<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> : impl_IIterable<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> {};
+#endif
+
+#ifndef WINRT_GENERIC_29932318_9b61_5ced_842c_56e99cc2dc71
+#define WINRT_GENERIC_29932318_9b61_5ced_842c_56e99cc2dc71
+template <> struct __declspec(uuid("29932318-9b61-5ced-842c-56e99cc2dc71")) __declspec(novtable) IVector<Windows::Networking::NetworkOperators::MobileBroadbandPinLockStateChange> : impl_IVector<Windows::Networking::NetworkOperators::MobileBroadbandPinLockStateChange> {};
 #endif
 
 #ifndef WINRT_GENERIC_e61b479f_7bd9_5550_bc69_f9c2f71c6a05
@@ -440,1047 +495,445 @@ template <> struct __declspec(uuid("9385bd8f-5e14-557a-a7f1-63f33d9ecacf")) __de
 
 namespace Windows::Networking::NetworkOperators {
 
-template <typename D>
-struct WINRT_EBO impl_IFdnAccessManagerStatics
-{
-    Windows::Foundation::IAsyncOperation<bool> RequestUnlockAsync(hstring_ref contactListId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHotspotAuthenticationContext
-{
-    com_array<uint8_t> WirelessNetworkId() const;
-    Windows::Networking::Connectivity::NetworkAdapter NetworkAdapter() const;
-    Windows::Foundation::Uri RedirectMessageUrl() const;
-    Windows::Data::Xml::Dom::XmlDocument RedirectMessageXml() const;
-    Windows::Foundation::Uri AuthenticationUrl() const;
-    void IssueCredentials(hstring_ref userName, hstring_ref password, hstring_ref extraParameters, bool markAsManualConnectOnFailure) const;
-    void AbortAuthentication(bool markAsManual) const;
-    void SkipAuthentication() const;
-    void TriggerAttentionRequired(hstring_ref packageRelativeApplicationId, hstring_ref applicationParameters) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHotspotAuthenticationContext2
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::HotspotCredentialsAuthenticationResult> IssueCredentialsAsync(hstring_ref userName, hstring_ref password, hstring_ref extraParameters, bool markAsManualConnectOnFailure) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHotspotAuthenticationContextStatics
-{
-    bool TryGetAuthenticationContext(hstring_ref evenToken, Windows::Networking::NetworkOperators::HotspotAuthenticationContext & context) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHotspotAuthenticationEventDetails
-{
-    hstring EventToken() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IHotspotCredentialsAuthenticationResult
-{
-    bool HasNetworkErrorOccurred() const;
-    Windows::Networking::NetworkOperators::HotspotAuthenticationResponseCode ResponseCode() const;
-    Windows::Foundation::Uri LogoffUrl() const;
-    Windows::Data::Xml::Dom::XmlDocument AuthenticationReplyXml() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownCSimFilePathsStatics
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFSpn() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid1() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid2() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownRuimFilePathsStatics
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFSpn() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid1() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid2() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownSimFilePathsStatics
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFOns() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFSpn() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid1() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid2() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownUSimFilePathsStatics
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFSpn() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFOpl() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> EFPnn() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid1() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> Gid2() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccount
-{
-    hstring NetworkAccountId() const;
-    GUID ServiceProviderGuid() const;
-    hstring ServiceProviderName() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandNetwork CurrentNetwork() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceInformation CurrentDeviceInformation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccount2
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::Connectivity::ConnectionProfile> GetConnectionProfiles() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccountEventArgs
-{
-    hstring NetworkAccountId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccountStatics
-{
-    Windows::Foundation::Collections::IVectorView<hstring> AvailableNetworkAccountIds() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandAccount CreateFromNetworkAccountId(hstring_ref networkAccountId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccountUpdatedEventArgs
-{
-    hstring NetworkAccountId() const;
-    bool HasDeviceInformationChanged() const;
-    bool HasNetworkChanged() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandAccountWatcher
-{
-    event_token AccountAdded(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountEventArgs> & handler) const;
-    using AccountAdded_revoker = event_revoker<IMobileBroadbandAccountWatcher>;
-    AccountAdded_revoker AccountAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountEventArgs> & handler) const;
-    void AccountAdded(event_token cookie) const;
-    event_token AccountUpdated(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountUpdatedEventArgs> & handler) const;
-    using AccountUpdated_revoker = event_revoker<IMobileBroadbandAccountWatcher>;
-    AccountUpdated_revoker AccountUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountUpdatedEventArgs> & handler) const;
-    void AccountUpdated(event_token cookie) const;
-    event_token AccountRemoved(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountEventArgs> & handler) const;
-    using AccountRemoved_revoker = event_revoker<IMobileBroadbandAccountWatcher>;
-    AccountRemoved_revoker AccountRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::Networking::NetworkOperators::MobileBroadbandAccountEventArgs> & handler) const;
-    void AccountRemoved(event_token cookie) const;
-    event_token EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> & handler) const;
-    using EnumerationCompleted_revoker = event_revoker<IMobileBroadbandAccountWatcher>;
-    EnumerationCompleted_revoker EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> & handler) const;
-    void EnumerationCompleted(event_token cookie) const;
-    event_token Stopped(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> & handler) const;
-    using Stopped_revoker = event_revoker<IMobileBroadbandAccountWatcher>;
-    Stopped_revoker Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcher, Windows::IInspectable> & handler) const;
-    void Stopped(event_token cookie) const;
-    Windows::Networking::NetworkOperators::MobileBroadbandAccountWatcherStatus Status() const;
-    void Start() const;
-    void Stop() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceInformation
-{
-    Windows::Networking::NetworkOperators::NetworkDeviceStatus NetworkDeviceStatus() const;
-    hstring Manufacturer() const;
-    hstring Model() const;
-    hstring FirmwareInformation() const;
-    Windows::Devices::Sms::CellularClass CellularClass() const;
-    Windows::Networking::NetworkOperators::DataClasses DataClasses() const;
-    hstring CustomDataClass() const;
-    hstring MobileEquipmentId() const;
-    Windows::Foundation::Collections::IVectorView<hstring> TelephoneNumbers() const;
-    hstring SubscriberId() const;
-    hstring SimIccId() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceType DeviceType() const;
-    hstring DeviceId() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandRadioState CurrentRadioState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceInformation2
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandPinManager PinManager() const;
-    hstring Revision() const;
-    hstring SerialNumber() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceService
-{
-    GUID DeviceServiceId() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> SupportedCommands() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceDataSession OpenDataSession() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceCommandSession OpenCommandSession() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceCommandResult
-{
-    uint32_t StatusCode() const;
-    Windows::Storage::Streams::IBuffer ResponseData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceCommandSession
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceCommandResult> SendQueryCommandAsync(uint32_t commandId, const Windows::Storage::Streams::IBuffer & data) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceCommandResult> SendSetCommandAsync(uint32_t commandId, const Windows::Storage::Streams::IBuffer & data) const;
-    void CloseSession() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceDataReceivedEventArgs
-{
-    Windows::Storage::Streams::IBuffer ReceivedData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceDataSession
-{
-    Windows::Foundation::IAsyncAction WriteDataAsync(const Windows::Storage::Streams::IBuffer & value) const;
-    void CloseSession() const;
-    event_token DataReceived(const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceDataSession, Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceDataReceivedEventArgs> & eventHandler) const;
-    using DataReceived_revoker = event_revoker<IMobileBroadbandDeviceServiceDataSession>;
-    DataReceived_revoker DataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceDataSession, Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceDataReceivedEventArgs> & eventHandler) const;
-    void DataReceived(event_token eventCookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceInformation
-{
-    GUID DeviceServiceId() const;
-    bool IsDataReadSupported() const;
-    bool IsDataWriteSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandDeviceServiceTriggerDetails
-{
-    hstring DeviceId() const;
-    GUID DeviceServiceId() const;
-    Windows::Storage::Streams::IBuffer ReceivedData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandModem
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandAccount CurrentAccount() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceInformation DeviceInformation() const;
-    uint32_t MaxDeviceServiceCommandSizeInBytes() const;
-    uint32_t MaxDeviceServiceDataSizeInBytes() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandDeviceServiceInformation> DeviceServices() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandDeviceService GetDeviceService(GUID deviceServiceId) const;
-    bool IsResetSupported() const;
-    Windows::Foundation::IAsyncAction ResetAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandModemConfiguration> GetCurrentConfigurationAsync() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandNetwork CurrentNetwork() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandModemConfiguration
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandUicc Uicc() const;
-    hstring HomeProviderId() const;
-    hstring HomeProviderName() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandModemStatics
-{
-    hstring GetDeviceSelector() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandModem FromId(hstring_ref deviceId) const;
-    Windows::Networking::NetworkOperators::MobileBroadbandModem GetDefault() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandNetwork
-{
-    Windows::Networking::Connectivity::NetworkAdapter NetworkAdapter() const;
-    Windows::Networking::NetworkOperators::NetworkRegistrationState NetworkRegistrationState() const;
-    uint32_t RegistrationNetworkError() const;
-    uint32_t PacketAttachNetworkError() const;
-    uint32_t ActivationNetworkError() const;
-    hstring AccessPointName() const;
-    Windows::Networking::NetworkOperators::DataClasses RegisteredDataClass() const;
-    hstring RegisteredProviderId() const;
-    hstring RegisteredProviderName() const;
-    void ShowConnectionUI() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandNetwork2
-{
-    Windows::Foundation::IAsyncOperation<bool> GetVoiceCallSupportAsync() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandUiccApp> RegistrationUiccApps() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandNetworkRegistrationStateChange
-{
-    hstring DeviceId() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandNetwork Network() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandNetworkRegistrationStateChange> NetworkRegistrationStateChanges() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandPin
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandPinType Type() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandPinLockState LockState() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandPinFormat Format() const;
-    bool Enabled() const;
-    uint32_t MaxLength() const;
-    uint32_t MinLength() const;
-    uint32_t AttemptsRemaining() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandPinOperationResult> EnableAsync(hstring_ref currentPin) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandPinOperationResult> DisableAsync(hstring_ref currentPin) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandPinOperationResult> EnterAsync(hstring_ref currentPin) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandPinOperationResult> ChangeAsync(hstring_ref currentPin, hstring_ref newPin) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandPinOperationResult> UnblockAsync(hstring_ref pinUnblockKey, hstring_ref newPin) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandPinLockStateChange
-{
-    hstring DeviceId() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandPinType PinType() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandPinLockState PinLockState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandPinLockStateChangeTriggerDetails
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandPinLockStateChange> PinLockStateChanges() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandPinManager
-{
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Networking::NetworkOperators::MobileBroadbandPinType> SupportedPins() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandPin GetPin(Windows::Networking::NetworkOperators::MobileBroadbandPinType pinType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandPinOperationResult
-{
-    bool IsSuccessful() const;
-    uint32_t AttemptsRemaining() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandRadioStateChange
-{
-    hstring DeviceId() const;
-    Windows::Networking::NetworkOperators::MobileBroadbandRadioState RadioState() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandRadioStateChangeTriggerDetails
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandRadioStateChange> RadioStateChanges() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandUicc
-{
-    hstring SimIccId() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandUiccAppsResult> GetUiccAppsAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandUiccApp
-{
-    Windows::Storage::Streams::IBuffer Id() const;
-    Windows::Networking::NetworkOperators::UiccAppKind Kind() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandUiccAppRecordDetailsResult> GetRecordDetailsAsync(const Windows::Foundation::Collections::IIterable<uint32_t> & uiccFilePath) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::MobileBroadbandUiccAppReadRecordResult> ReadRecordAsync(const Windows::Foundation::Collections::IIterable<uint32_t> & uiccFilePath, int32_t recordIndex) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandUiccAppReadRecordResult
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandUiccAppOperationStatus Status() const;
-    Windows::Storage::Streams::IBuffer Data() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandUiccAppRecordDetailsResult
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandUiccAppOperationStatus Status() const;
-    Windows::Networking::NetworkOperators::UiccAppRecordKind Kind() const;
-    int32_t RecordCount() const;
-    int32_t RecordSize() const;
-    Windows::Networking::NetworkOperators::UiccAccessCondition ReadAccessCondition() const;
-    Windows::Networking::NetworkOperators::UiccAccessCondition WriteAccessCondition() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMobileBroadbandUiccAppsResult
-{
-    Windows::Networking::NetworkOperators::MobileBroadbandUiccAppOperationStatus Status() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::MobileBroadbandUiccApp> UiccApps() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorNotificationEventDetails
-{
-    Windows::Networking::NetworkOperators::NetworkOperatorEventMessageType NotificationType() const;
-    hstring NetworkAccountId() const;
-    uint8_t EncodingType() const;
-    hstring Message() const;
-    hstring RuleId() const;
-    Windows::Devices::Sms::ISmsMessage SmsMessage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringAccessPointConfiguration
-{
-    hstring Ssid() const;
-    void Ssid(hstring_ref value) const;
-    hstring Passphrase() const;
-    void Passphrase(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringClient
-{
-    hstring MacAddress() const;
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::HostName> HostNames() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringClientManager
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Networking::NetworkOperators::NetworkOperatorTetheringClient> GetTetheringClients() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringEntitlementCheck
-{
-    void AuthorizeTethering(bool allow, hstring_ref entitlementFailureReason) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringManager
-{
-    uint32_t MaxClientCount() const;
-    uint32_t ClientCount() const;
-    Windows::Networking::NetworkOperators::TetheringOperationalState TetheringOperationalState() const;
-    Windows::Networking::NetworkOperators::NetworkOperatorTetheringAccessPointConfiguration GetCurrentAccessPointConfiguration() const;
-    Windows::Foundation::IAsyncAction ConfigureAccessPointAsync(const Windows::Networking::NetworkOperators::NetworkOperatorTetheringAccessPointConfiguration & configuration) const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::NetworkOperatorTetheringOperationResult> StartTetheringAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::NetworkOperatorTetheringOperationResult> StopTetheringAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringManagerStatics
-{
-    Windows::Networking::NetworkOperators::TetheringCapability GetTetheringCapability(hstring_ref networkAccountId) const;
-    Windows::Networking::NetworkOperators::NetworkOperatorTetheringManager CreateFromNetworkAccountId(hstring_ref networkAccountId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringManagerStatics2
-{
-    Windows::Networking::NetworkOperators::TetheringCapability GetTetheringCapabilityFromConnectionProfile(const Windows::Networking::Connectivity::ConnectionProfile & profile) const;
-    Windows::Networking::NetworkOperators::NetworkOperatorTetheringManager CreateFromConnectionProfile(const Windows::Networking::Connectivity::ConnectionProfile & profile) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringManagerStatics3
-{
-    Windows::Networking::NetworkOperators::NetworkOperatorTetheringManager CreateFromConnectionProfile(const Windows::Networking::Connectivity::ConnectionProfile & profile, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_INetworkOperatorTetheringOperationResult
-{
-    Windows::Networking::NetworkOperators::TetheringOperationStatus Status() const;
-    hstring AdditionalErrorMessage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProvisionFromXmlDocumentResults
-{
-    bool AllElementsProvisioned() const;
-    hstring ProvisionResultsXml() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProvisionedProfile
-{
-    void UpdateCost(Windows::Networking::Connectivity::NetworkCostType value) const;
-    void UpdateUsage(const Windows::Networking::NetworkOperators::ProfileUsage & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProvisioningAgent
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::ProvisionFromXmlDocumentResults> ProvisionFromXmlDocumentAsync(hstring_ref provisioningXmlDocument) const;
-    Windows::Networking::NetworkOperators::ProvisionedProfile GetProvisionedProfile(Windows::Networking::NetworkOperators::ProfileMediaType mediaType, hstring_ref profileName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProvisioningAgentStaticMethods
-{
-    Windows::Networking::NetworkOperators::ProvisioningAgent CreateFromNetworkAccountId(hstring_ref networkAccountId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUssdMessage
-{
-    uint8_t DataCodingScheme() const;
-    void DataCodingScheme(uint8_t value) const;
-    com_array<uint8_t> GetPayload() const;
-    void SetPayload(array_ref<const uint8_t> value) const;
-    hstring PayloadAsText() const;
-    void PayloadAsText(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUssdMessageFactory
-{
-    Windows::Networking::NetworkOperators::UssdMessage CreateMessage(hstring_ref messageText) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUssdReply
-{
-    Windows::Networking::NetworkOperators::UssdResultCode ResultCode() const;
-    Windows::Networking::NetworkOperators::UssdMessage Message() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUssdSession
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::NetworkOperators::UssdReply> SendMessageAndGetReplyAsync(const Windows::Networking::NetworkOperators::UssdMessage & message) const;
-    void Close() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUssdSessionStatics
-{
-    Windows::Networking::NetworkOperators::UssdSession CreateFromNetworkAccountId(hstring_ref networkAccountId) const;
-    Windows::Networking::NetworkOperators::UssdSession CreateFromNetworkInterfaceId(hstring_ref networkInterfaceId) const;
-};
-
 struct IFdnAccessManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFdnAccessManagerStatics>
 {
     IFdnAccessManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFdnAccessManagerStatics>(m_ptr); }
 };
 
 struct IHotspotAuthenticationContext :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHotspotAuthenticationContext>
 {
     IHotspotAuthenticationContext(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHotspotAuthenticationContext>(m_ptr); }
 };
 
 struct IHotspotAuthenticationContext2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHotspotAuthenticationContext2>
 {
     IHotspotAuthenticationContext2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHotspotAuthenticationContext2>(m_ptr); }
 };
 
 struct IHotspotAuthenticationContextStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHotspotAuthenticationContextStatics>
 {
     IHotspotAuthenticationContextStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHotspotAuthenticationContextStatics>(m_ptr); }
 };
 
 struct IHotspotAuthenticationEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHotspotAuthenticationEventDetails>
 {
     IHotspotAuthenticationEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHotspotAuthenticationEventDetails>(m_ptr); }
 };
 
 struct IHotspotCredentialsAuthenticationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IHotspotCredentialsAuthenticationResult>
 {
     IHotspotCredentialsAuthenticationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IHotspotCredentialsAuthenticationResult>(m_ptr); }
 };
 
 struct IKnownCSimFilePathsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownCSimFilePathsStatics>
 {
     IKnownCSimFilePathsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownCSimFilePathsStatics>(m_ptr); }
 };
 
 struct IKnownRuimFilePathsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownRuimFilePathsStatics>
 {
     IKnownRuimFilePathsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownRuimFilePathsStatics>(m_ptr); }
 };
 
 struct IKnownSimFilePathsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownSimFilePathsStatics>
 {
     IKnownSimFilePathsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownSimFilePathsStatics>(m_ptr); }
 };
 
 struct IKnownUSimFilePathsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownUSimFilePathsStatics>
 {
     IKnownUSimFilePathsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownUSimFilePathsStatics>(m_ptr); }
 };
 
 struct IMobileBroadbandAccount :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccount>
 {
     IMobileBroadbandAccount(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccount>(m_ptr); }
 };
 
 struct IMobileBroadbandAccount2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccount2>
 {
     IMobileBroadbandAccount2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccount2>(m_ptr); }
 };
 
 struct IMobileBroadbandAccountEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccountEventArgs>
 {
     IMobileBroadbandAccountEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccountEventArgs>(m_ptr); }
 };
 
 struct IMobileBroadbandAccountStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccountStatics>
 {
     IMobileBroadbandAccountStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccountStatics>(m_ptr); }
 };
 
 struct IMobileBroadbandAccountUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccountUpdatedEventArgs>
 {
     IMobileBroadbandAccountUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccountUpdatedEventArgs>(m_ptr); }
 };
 
 struct IMobileBroadbandAccountWatcher :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandAccountWatcher>
 {
     IMobileBroadbandAccountWatcher(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandAccountWatcher>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceInformation>
 {
     IMobileBroadbandDeviceInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceInformation>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceInformation2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceInformation2>
 {
     IMobileBroadbandDeviceInformation2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceInformation2>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceService :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceService>
 {
     IMobileBroadbandDeviceService(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceService>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceCommandResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceCommandResult>
 {
     IMobileBroadbandDeviceServiceCommandResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceCommandResult>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceCommandSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceCommandSession>
 {
     IMobileBroadbandDeviceServiceCommandSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceCommandSession>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceDataReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceDataReceivedEventArgs>
 {
     IMobileBroadbandDeviceServiceDataReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceDataReceivedEventArgs>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceDataSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceDataSession>
 {
     IMobileBroadbandDeviceServiceDataSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceDataSession>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceInformation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceInformation>
 {
     IMobileBroadbandDeviceServiceInformation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceInformation>(m_ptr); }
 };
 
 struct IMobileBroadbandDeviceServiceTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandDeviceServiceTriggerDetails>
 {
     IMobileBroadbandDeviceServiceTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandDeviceServiceTriggerDetails>(m_ptr); }
 };
 
 struct IMobileBroadbandModem :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandModem>
 {
     IMobileBroadbandModem(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandModem>(m_ptr); }
 };
 
 struct IMobileBroadbandModemConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandModemConfiguration>
 {
     IMobileBroadbandModemConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandModemConfiguration>(m_ptr); }
 };
 
 struct IMobileBroadbandModemStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandModemStatics>
 {
     IMobileBroadbandModemStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandModemStatics>(m_ptr); }
 };
 
 struct IMobileBroadbandNetwork :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandNetwork>
 {
     IMobileBroadbandNetwork(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandNetwork>(m_ptr); }
 };
 
 struct IMobileBroadbandNetwork2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandNetwork2>
 {
     IMobileBroadbandNetwork2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandNetwork2>(m_ptr); }
 };
 
 struct IMobileBroadbandNetworkRegistrationStateChange :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandNetworkRegistrationStateChange>
 {
     IMobileBroadbandNetworkRegistrationStateChange(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandNetworkRegistrationStateChange>(m_ptr); }
 };
 
 struct IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails>
 {
     IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails>(m_ptr); }
 };
 
 struct IMobileBroadbandPin :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandPin>
 {
     IMobileBroadbandPin(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandPin>(m_ptr); }
 };
 
 struct IMobileBroadbandPinLockStateChange :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandPinLockStateChange>
 {
     IMobileBroadbandPinLockStateChange(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandPinLockStateChange>(m_ptr); }
 };
 
 struct IMobileBroadbandPinLockStateChangeTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandPinLockStateChangeTriggerDetails>
 {
     IMobileBroadbandPinLockStateChangeTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandPinLockStateChangeTriggerDetails>(m_ptr); }
 };
 
 struct IMobileBroadbandPinManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandPinManager>
 {
     IMobileBroadbandPinManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandPinManager>(m_ptr); }
 };
 
 struct IMobileBroadbandPinOperationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandPinOperationResult>
 {
     IMobileBroadbandPinOperationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandPinOperationResult>(m_ptr); }
 };
 
 struct IMobileBroadbandRadioStateChange :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandRadioStateChange>
 {
     IMobileBroadbandRadioStateChange(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandRadioStateChange>(m_ptr); }
 };
 
 struct IMobileBroadbandRadioStateChangeTriggerDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandRadioStateChangeTriggerDetails>
 {
     IMobileBroadbandRadioStateChangeTriggerDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandRadioStateChangeTriggerDetails>(m_ptr); }
 };
 
 struct IMobileBroadbandUicc :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandUicc>
 {
     IMobileBroadbandUicc(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandUicc>(m_ptr); }
 };
 
 struct IMobileBroadbandUiccApp :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandUiccApp>
 {
     IMobileBroadbandUiccApp(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandUiccApp>(m_ptr); }
 };
 
 struct IMobileBroadbandUiccAppReadRecordResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandUiccAppReadRecordResult>
 {
     IMobileBroadbandUiccAppReadRecordResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandUiccAppReadRecordResult>(m_ptr); }
 };
 
 struct IMobileBroadbandUiccAppRecordDetailsResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandUiccAppRecordDetailsResult>
 {
     IMobileBroadbandUiccAppRecordDetailsResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandUiccAppRecordDetailsResult>(m_ptr); }
 };
 
 struct IMobileBroadbandUiccAppsResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMobileBroadbandUiccAppsResult>
 {
     IMobileBroadbandUiccAppsResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMobileBroadbandUiccAppsResult>(m_ptr); }
 };
 
 struct INetworkOperatorNotificationEventDetails :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorNotificationEventDetails>
 {
     INetworkOperatorNotificationEventDetails(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorNotificationEventDetails>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringAccessPointConfiguration :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringAccessPointConfiguration>
 {
     INetworkOperatorTetheringAccessPointConfiguration(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringAccessPointConfiguration>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringClient :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringClient>
 {
     INetworkOperatorTetheringClient(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringClient>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringClientManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringClientManager>
 {
     INetworkOperatorTetheringClientManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringClientManager>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringEntitlementCheck :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringEntitlementCheck>
 {
     INetworkOperatorTetheringEntitlementCheck(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringEntitlementCheck>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringManager :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringManager>
 {
     INetworkOperatorTetheringManager(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringManager>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringManagerStatics>
 {
     INetworkOperatorTetheringManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringManagerStatics>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringManagerStatics2>
 {
     INetworkOperatorTetheringManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringManagerStatics2>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringManagerStatics3>
 {
     INetworkOperatorTetheringManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringManagerStatics3>(m_ptr); }
 };
 
 struct INetworkOperatorTetheringOperationResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<INetworkOperatorTetheringOperationResult>
 {
     INetworkOperatorTetheringOperationResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<INetworkOperatorTetheringOperationResult>(m_ptr); }
 };
 
 struct IProvisionFromXmlDocumentResults :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProvisionFromXmlDocumentResults>
 {
     IProvisionFromXmlDocumentResults(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProvisionFromXmlDocumentResults>(m_ptr); }
 };
 
 struct IProvisionedProfile :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProvisionedProfile>
 {
     IProvisionedProfile(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProvisionedProfile>(m_ptr); }
 };
 
 struct IProvisioningAgent :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProvisioningAgent>
 {
     IProvisioningAgent(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProvisioningAgent>(m_ptr); }
 };
 
 struct IProvisioningAgentStaticMethods :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProvisioningAgentStaticMethods>
 {
     IProvisioningAgentStaticMethods(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProvisioningAgentStaticMethods>(m_ptr); }
 };
 
 struct IUssdMessage :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUssdMessage>
 {
     IUssdMessage(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUssdMessage>(m_ptr); }
 };
 
 struct IUssdMessageFactory :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUssdMessageFactory>
 {
     IUssdMessageFactory(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUssdMessageFactory>(m_ptr); }
 };
 
 struct IUssdReply :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUssdReply>
 {
     IUssdReply(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUssdReply>(m_ptr); }
 };
 
 struct IUssdSession :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUssdSession>
 {
     IUssdSession(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUssdSession>(m_ptr); }
 };
 
 struct IUssdSessionStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUssdSessionStatics>
 {
     IUssdSessionStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUssdSessionStatics>(m_ptr); }
 };
 
 }

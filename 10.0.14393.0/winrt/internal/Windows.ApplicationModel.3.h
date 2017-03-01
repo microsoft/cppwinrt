@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -43,9 +43,9 @@ struct FullTrustProcessLauncher
 {
     FullTrustProcessLauncher() = delete;
     static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForCurrentAppAsync();
-    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForCurrentAppAsync(hstring_ref parameterGroupId);
-    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_ref fullTrustPackageRelativeAppId);
-    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_ref fullTrustPackageRelativeAppId, hstring_ref parameterGroupId);
+    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForCurrentAppAsync(hstring_view parameterGroupId);
+    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId);
+    static Windows::Foundation::IAsyncAction LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId, hstring_view parameterGroupId);
 };
 
 struct WINRT_EBO LeavingBackgroundEventArgs :
@@ -118,7 +118,7 @@ struct WINRT_EBO StartupTask :
 {
     StartupTask(std::nullptr_t) noexcept {}
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> GetForCurrentPackageAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> GetAsync(hstring_ref taskId);
+    static Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> GetAsync(hstring_view taskId);
 };
 
 struct WINRT_EBO SuspendingDeferral :

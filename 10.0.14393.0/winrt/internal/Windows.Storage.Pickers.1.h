@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Storage::Pickers {
 
-struct __declspec(uuid("2ca8278a-12c5-4c5f-8977-94547793c241")) __declspec(novtable) IFileOpenPicker : Windows::IInspectable
+struct __declspec(uuid("2ca8278a-12c5-4c5f-8977-94547793c241")) __declspec(novtable) IFileOpenPicker : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ViewMode(winrt::Windows::Storage::Pickers::PickerViewMode * value) = 0;
     virtual HRESULT __stdcall put_ViewMode(winrt::Windows::Storage::Pickers::PickerViewMode value) = 0;
@@ -30,24 +30,24 @@ struct __declspec(uuid("2ca8278a-12c5-4c5f-8977-94547793c241")) __declspec(novta
     virtual HRESULT __stdcall abi_PickMultipleFilesAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> ** pickMultipleFilesOperation) = 0;
 };
 
-struct __declspec(uuid("8ceb6cd2-b446-46f7-b265-90f8e55ad650")) __declspec(novtable) IFileOpenPicker2 : Windows::IInspectable
+struct __declspec(uuid("8ceb6cd2-b446-46f7-b265-90f8e55ad650")) __declspec(novtable) IFileOpenPicker2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContinuationData(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall abi_PickSingleFileAndContinue() = 0;
     virtual HRESULT __stdcall abi_PickMultipleFilesAndContinue() = 0;
 };
 
-struct __declspec(uuid("6821573b-2f02-4833-96d4-abbfad72b67b")) __declspec(novtable) IFileOpenPickerStatics : Windows::IInspectable
+struct __declspec(uuid("6821573b-2f02-4833-96d4-abbfad72b67b")) __declspec(novtable) IFileOpenPickerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ResumePickSingleFileAsync(Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ** pickSingleFileOperation) = 0;
 };
 
-struct __declspec(uuid("3f57b569-2522-4ca5-aa73-a15509f1fcbf")) __declspec(novtable) IFileOpenPickerWithOperationId : Windows::IInspectable
+struct __declspec(uuid("3f57b569-2522-4ca5-aa73-a15509f1fcbf")) __declspec(novtable) IFileOpenPickerWithOperationId : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_PickSingleFileAsync(hstring pickerOperationId, Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ** pickSingleFileOperation) = 0;
 };
 
-struct __declspec(uuid("3286ffcb-617f-4cc5-af6a-b3fdf29ad145")) __declspec(novtable) IFileSavePicker : Windows::IInspectable
+struct __declspec(uuid("3286ffcb-617f-4cc5-af6a-b3fdf29ad145")) __declspec(novtable) IFileSavePicker : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SettingsIdentifier(hstring * value) = 0;
     virtual HRESULT __stdcall put_SettingsIdentifier(hstring value) = 0;
@@ -65,19 +65,19 @@ struct __declspec(uuid("3286ffcb-617f-4cc5-af6a-b3fdf29ad145")) __declspec(novta
     virtual HRESULT __stdcall abi_PickSaveFileAsync(Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ** pickSaveFileOperation) = 0;
 };
 
-struct __declspec(uuid("0ec313a2-d24b-449a-8197-e89104fd42cc")) __declspec(novtable) IFileSavePicker2 : Windows::IInspectable
+struct __declspec(uuid("0ec313a2-d24b-449a-8197-e89104fd42cc")) __declspec(novtable) IFileSavePicker2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContinuationData(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall abi_PickSaveFileAndContinue() = 0;
 };
 
-struct __declspec(uuid("698aec69-ba3c-4e51-bd90-4abcbbf4cfaf")) __declspec(novtable) IFileSavePicker3 : Windows::IInspectable
+struct __declspec(uuid("698aec69-ba3c-4e51-bd90-4abcbbf4cfaf")) __declspec(novtable) IFileSavePicker3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_EnterpriseId(hstring * value) = 0;
     virtual HRESULT __stdcall put_EnterpriseId(hstring value) = 0;
 };
 
-struct __declspec(uuid("084f7799-f3fb-400a-99b1-7b4a772fd60d")) __declspec(novtable) IFolderPicker : Windows::IInspectable
+struct __declspec(uuid("084f7799-f3fb-400a-99b1-7b4a772fd60d")) __declspec(novtable) IFolderPicker : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ViewMode(winrt::Windows::Storage::Pickers::PickerViewMode * value) = 0;
     virtual HRESULT __stdcall put_ViewMode(winrt::Windows::Storage::Pickers::PickerViewMode value) = 0;
@@ -91,7 +91,7 @@ struct __declspec(uuid("084f7799-f3fb-400a-99b1-7b4a772fd60d")) __declspec(novta
     virtual HRESULT __stdcall abi_PickSingleFolderAsync(Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> ** pickSingleFolderOperation) = 0;
 };
 
-struct __declspec(uuid("8eb3ba97-dc85-4616-be94-9660881f2f5d")) __declspec(novtable) IFolderPicker2 : Windows::IInspectable
+struct __declspec(uuid("8eb3ba97-dc85-4616-be94-9660881f2f5d")) __declspec(novtable) IFolderPicker2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContinuationData(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall abi_PickFolderAndContinue() = 0;
@@ -112,15 +112,96 @@ template <> struct traits<Windows::Storage::Pickers::FolderPicker> { using defau
 
 namespace Windows::Storage::Pickers {
 
-template <typename T> struct impl_IFileOpenPicker;
-template <typename T> struct impl_IFileOpenPicker2;
-template <typename T> struct impl_IFileOpenPickerStatics;
-template <typename T> struct impl_IFileOpenPickerWithOperationId;
-template <typename T> struct impl_IFileSavePicker;
-template <typename T> struct impl_IFileSavePicker2;
-template <typename T> struct impl_IFileSavePicker3;
-template <typename T> struct impl_IFolderPicker;
-template <typename T> struct impl_IFolderPicker2;
+template <typename D>
+struct WINRT_EBO impl_IFileOpenPicker
+{
+    Windows::Storage::Pickers::PickerViewMode ViewMode() const;
+    void ViewMode(Windows::Storage::Pickers::PickerViewMode value) const;
+    hstring SettingsIdentifier() const;
+    void SettingsIdentifier(hstring_view value) const;
+    Windows::Storage::Pickers::PickerLocationId SuggestedStartLocation() const;
+    void SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const;
+    hstring CommitButtonText() const;
+    void CommitButtonText(hstring_view value) const;
+    Windows::Foundation::Collections::IVector<hstring> FileTypeFilter() const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> PickSingleFileAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> PickMultipleFilesAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileOpenPicker2
+{
+    [[deprecated("Instead, use PickSingleFileAsync/PickMultipleFilesAsync")]] Windows::Foundation::Collections::ValueSet ContinuationData() const;
+    [[deprecated("Instead, use PickSingleFileAsync")]] void PickSingleFileAndContinue() const;
+    [[deprecated("Instead, use PickMultipleFilesAsync")]] void PickMultipleFilesAndContinue() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileOpenPickerStatics
+{
+    [[deprecated("Instead, use PickSingleFileAsync")]] Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ResumePickSingleFileAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileOpenPickerWithOperationId
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> PickSingleFileAsync(hstring_view pickerOperationId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileSavePicker
+{
+    hstring SettingsIdentifier() const;
+    void SettingsIdentifier(hstring_view value) const;
+    Windows::Storage::Pickers::PickerLocationId SuggestedStartLocation() const;
+    void SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const;
+    hstring CommitButtonText() const;
+    void CommitButtonText(hstring_view value) const;
+    Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>> FileTypeChoices() const;
+    hstring DefaultFileExtension() const;
+    void DefaultFileExtension(hstring_view value) const;
+    Windows::Storage::StorageFile SuggestedSaveFile() const;
+    void SuggestedSaveFile(const Windows::Storage::StorageFile & value) const;
+    hstring SuggestedFileName() const;
+    void SuggestedFileName(hstring_view value) const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> PickSaveFileAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileSavePicker2
+{
+    Windows::Foundation::Collections::ValueSet ContinuationData() const;
+    [[deprecated("Instead, use PickSaveFileAsync")]] void PickSaveFileAndContinue() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFileSavePicker3
+{
+    hstring EnterpriseId() const;
+    void EnterpriseId(hstring_view value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFolderPicker
+{
+    Windows::Storage::Pickers::PickerViewMode ViewMode() const;
+    void ViewMode(Windows::Storage::Pickers::PickerViewMode value) const;
+    hstring SettingsIdentifier() const;
+    void SettingsIdentifier(hstring_view value) const;
+    Windows::Storage::Pickers::PickerLocationId SuggestedStartLocation() const;
+    void SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const;
+    hstring CommitButtonText() const;
+    void CommitButtonText(hstring_view value) const;
+    Windows::Foundation::Collections::IVector<hstring> FileTypeFilter() const;
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> PickSingleFolderAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IFolderPicker2
+{
+    Windows::Foundation::Collections::ValueSet ContinuationData() const;
+    [[deprecated("Instead, use PickSingleFolderAsync")]] void PickFolderAndContinue() const;
+};
 
 }
 

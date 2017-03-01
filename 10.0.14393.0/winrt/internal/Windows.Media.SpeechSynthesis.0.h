@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -27,6 +27,15 @@ struct IVoiceInformation;
 struct SpeechSynthesisStream;
 struct SpeechSynthesizer;
 struct VoiceInformation;
+
+}
+
+namespace Windows::Media::SpeechSynthesis {
+
+template <typename T> struct impl_IInstalledVoicesStatic;
+template <typename T> struct impl_ISpeechSynthesisStream;
+template <typename T> struct impl_ISpeechSynthesizer;
+template <typename T> struct impl_IVoiceInformation;
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -35,9 +35,9 @@ struct WINRT_EBO SpiDevice :
 {
     SpiDevice(std::nullptr_t) noexcept {}
     static hstring GetDeviceSelector();
-    static hstring GetDeviceSelector(hstring_ref friendlyName);
-    static Windows::Devices::Spi::SpiBusInfo GetBusInfo(hstring_ref busId);
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Spi::SpiDevice> FromIdAsync(hstring_ref busId, const Windows::Devices::Spi::SpiConnectionSettings & settings);
+    static hstring GetDeviceSelector(hstring_view friendlyName);
+    static Windows::Devices::Spi::SpiBusInfo GetBusInfo(hstring_view busId);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Spi::SpiDevice> FromIdAsync(hstring_view busId, const Windows::Devices::Spi::SpiConnectionSettings & settings);
 };
 
 }

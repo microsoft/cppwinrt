@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -41,7 +41,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 #define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
-template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::IInspectable> : impl_EventHandler<Windows::IInspectable> {};
+template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -61,7 +61,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_abf53c57_ee50_5342_b52a_26e3b8cc024f
 #define WINRT_GENERIC_abf53c57_ee50_5342_b52a_26e3b8cc024f
-template <> struct __declspec(uuid("abf53c57-ee50-5342-b52a-26e3b8cc024f")) __declspec(novtable) IAsyncOperation<Windows::IInspectable> : impl_IAsyncOperation<Windows::IInspectable> {};
+template <> struct __declspec(uuid("abf53c57-ee50-5342-b52a-26e3b8cc024f")) __declspec(novtable) IAsyncOperation<Windows::Foundation::IInspectable> : impl_IAsyncOperation<Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -131,7 +131,7 @@ template <> struct __declspec(uuid("9ec3d9d5-b413-51df-8c64-640e3356e351")) __de
 
 #ifndef WINRT_GENERIC_f155e0ff_dbb5_5c34_ac0c_7e291e3300ab
 #define WINRT_GENERIC_f155e0ff_dbb5_5c34_ac0c_7e291e3300ab
-template <> struct __declspec(uuid("f155e0ff-dbb5-5c34-ac0c-7e291e3300ab")) __declspec(novtable) TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> : impl_TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> {};
+template <> struct __declspec(uuid("f155e0ff-dbb5-5c34-ac0c-7e291e3300ab")) __declspec(novtable) TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_a895d2f9_2399_5104_a532_5ba44ab4b165
@@ -199,6 +199,11 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_d1e8852e_d987_5357_a3ab_7e9b7168cbea
+#define WINRT_GENERIC_d1e8852e_d987_5357_a3ab_7e9b7168cbea
+template <> struct __declspec(uuid("d1e8852e-d987-5357-a3ab-7e9b7168cbea")) __declspec(novtable) IVector<Windows::ApplicationModel::AppInfo> : impl_IVector<Windows::ApplicationModel::AppInfo> {};
+#endif
+
 #ifndef WINRT_GENERIC_69cec62c_41eb_5d69_a475_29ee22323dd8
 #define WINRT_GENERIC_69cec62c_41eb_5d69_a475_29ee22323dd8
 template <> struct __declspec(uuid("69cec62c-41eb-5d69-a475-29ee22323dd8")) __declspec(novtable) IIterator<Windows::ApplicationModel::AppInfo> : impl_IIterator<Windows::ApplicationModel::AppInfo> {};
@@ -221,7 +226,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_3f08262e_a2e1_5134_9297_e9211f481a2d
 #define WINRT_GENERIC_3f08262e_a2e1_5134_9297_e9211f481a2d
-template <> struct __declspec(uuid("3f08262e-a2e1-5134-9297-e9211f481a2d")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::IInspectable> : impl_AsyncOperationCompletedHandler<Windows::IInspectable> {};
+template <> struct __declspec(uuid("3f08262e-a2e1-5134-9297-e9211f481a2d")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::IInspectable> : impl_AsyncOperationCompletedHandler<Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -253,6 +258,11 @@ template <> struct __declspec(uuid("60847289-ea0b-5df6-89df-f2c62cba9693")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_8cb35b00_501c_5532_a664_38c9c429bb1a
+#define WINRT_GENERIC_8cb35b00_501c_5532_a664_38c9c429bb1a
+template <> struct __declspec(uuid("8cb35b00-501c-5532-a664-38c9c429bb1a")) __declspec(novtable) IVector<Windows::System::User> : impl_IVector<Windows::System::User> {};
+#endif
 
 #ifndef WINRT_GENERIC_326fe162_582b_5659_b8a4_68ff0f525745
 #define WINRT_GENERIC_326fe162_582b_5659_b8a4_68ff0f525745
@@ -324,647 +334,256 @@ template <> struct __declspec(uuid("09870533-f7cb-569c-b797-dcb48debd709")) __de
 
 namespace Windows::System {
 
-template <typename D>
-struct WINRT_EBO impl_IAppMemoryReport
-{
-    uint64_t PrivateCommitUsage() const;
-    uint64_t PeakPrivateCommitUsage() const;
-    uint64_t TotalCommitUsage() const;
-    uint64_t TotalCommitLimit() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppMemoryUsageLimitChangingEventArgs
-{
-    uint64_t OldLimit() const;
-    uint64_t NewLimit() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IFolderLauncherOptions
-{
-    Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem> ItemsToSelect() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IKnownUserPropertiesStatics
-{
-    hstring DisplayName() const;
-    hstring FirstName() const;
-    hstring LastName() const;
-    hstring ProviderName() const;
-    hstring AccountName() const;
-    hstring GuestHost() const;
-    hstring PrincipalName() const;
-    hstring DomainName() const;
-    hstring SessionInitiationProtocolUri() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILaunchUriResult
-{
-    Windows::System::LaunchUriStatus Status() const;
-    Windows::Foundation::Collections::ValueSet Result() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherOptions
-{
-    bool TreatAsUntrusted() const;
-    void TreatAsUntrusted(bool value) const;
-    bool DisplayApplicationPicker() const;
-    void DisplayApplicationPicker(bool value) const;
-    Windows::System::LauncherUIOptions UI() const;
-    hstring PreferredApplicationPackageFamilyName() const;
-    void PreferredApplicationPackageFamilyName(hstring_ref value) const;
-    hstring PreferredApplicationDisplayName() const;
-    void PreferredApplicationDisplayName(hstring_ref value) const;
-    Windows::Foundation::Uri FallbackUri() const;
-    void FallbackUri(const Windows::Foundation::Uri & value) const;
-    hstring ContentType() const;
-    void ContentType(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherOptions2
-{
-    hstring TargetApplicationPackageFamilyName() const;
-    void TargetApplicationPackageFamilyName(hstring_ref value) const;
-    Windows::Storage::Search::StorageFileQueryResult NeighboringFilesQuery() const;
-    void NeighboringFilesQuery(const Windows::Storage::Search::StorageFileQueryResult & value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherOptions3
-{
-    bool IgnoreAppUriHandlers() const;
-    void IgnoreAppUriHandlers(bool value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherStatics
-{
-    Windows::Foundation::IAsyncOperation<bool> LaunchFileAsync(const Windows::Storage::IStorageFile & file) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchFileAsync(const Windows::Storage::IStorageFile & file, const Windows::System::LauncherOptions & options) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchUriAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherStatics2
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const;
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, hstring_ref packageFamilyName) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryFileSupportAsync(const Windows::Storage::StorageFile & file) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryFileSupportAsync(const Windows::Storage::StorageFile & file, hstring_ref packageFamilyName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_ref scheme) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindUriSchemeHandlersAsync(hstring_ref scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindFileHandlersAsync(hstring_ref extension) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherStatics3
-{
-    Windows::Foundation::IAsyncOperation<bool> LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder, const Windows::System::FolderLauncherOptions & options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherStatics4
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri, hstring_ref packageFamilyName) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> FindAppUriHandlersAsync(const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const;
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const;
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherUIOptions
-{
-    Windows::Foundation::IReference<Windows::Foundation::Point> InvocationPoint() const;
-    void InvocationPoint(const Windows::Foundation::IReference<Windows::Foundation::Point> & value) const;
-    Windows::Foundation::IReference<Windows::Foundation::Rect> SelectionRect() const;
-    void SelectionRect(const Windows::Foundation::IReference<Windows::Foundation::Rect> & value) const;
-    Windows::UI::Popups::Placement PreferredPlacement() const;
-    void PreferredPlacement(Windows::UI::Popups::Placement value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ILauncherViewOptions
-{
-    Windows::UI::ViewManagement::ViewSizePreference DesiredRemainingView() const;
-    void DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMemoryManagerStatics
-{
-    uint64_t AppMemoryUsage() const;
-    uint64_t AppMemoryUsageLimit() const;
-    Windows::System::AppMemoryUsageLevel AppMemoryUsageLevel() const;
-    event_token AppMemoryUsageIncreased(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    using AppMemoryUsageIncreased_revoker = event_revoker<IMemoryManagerStatics>;
-    AppMemoryUsageIncreased_revoker AppMemoryUsageIncreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    void AppMemoryUsageIncreased(event_token token) const;
-    event_token AppMemoryUsageDecreased(const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    using AppMemoryUsageDecreased_revoker = event_revoker<IMemoryManagerStatics>;
-    AppMemoryUsageDecreased_revoker AppMemoryUsageDecreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & handler) const;
-    void AppMemoryUsageDecreased(event_token token) const;
-    event_token AppMemoryUsageLimitChanging(const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler) const;
-    using AppMemoryUsageLimitChanging_revoker = event_revoker<IMemoryManagerStatics>;
-    AppMemoryUsageLimitChanging_revoker AppMemoryUsageLimitChanging(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler) const;
-    void AppMemoryUsageLimitChanging(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMemoryManagerStatics2
-{
-    Windows::System::AppMemoryReport GetAppMemoryReport() const;
-    Windows::System::ProcessMemoryReport GetProcessMemoryReport() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMemoryManagerStatics3
-{
-    bool TrySetAppMemoryUsageLimit(uint64_t value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProcessLauncherOptions
-{
-    Windows::Storage::Streams::IInputStream StandardInput() const;
-    void StandardInput(const Windows::Storage::Streams::IInputStream & value) const;
-    Windows::Storage::Streams::IOutputStream StandardOutput() const;
-    void StandardOutput(const Windows::Storage::Streams::IOutputStream & value) const;
-    Windows::Storage::Streams::IOutputStream StandardError() const;
-    void StandardError(const Windows::Storage::Streams::IOutputStream & value) const;
-    hstring WorkingDirectory() const;
-    void WorkingDirectory(hstring_ref value) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProcessLauncherResult
-{
-    uint32_t ExitCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProcessLauncherStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_ref fileName, hstring_ref args) const;
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> RunToCompletionAsync(hstring_ref fileName, hstring_ref args, const Windows::System::ProcessLauncherOptions & options) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProcessMemoryReport
-{
-    uint64_t PrivateWorkingSetUsage() const;
-    uint64_t TotalWorkingSetUsage() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IProtocolForResultsOperation
-{
-    void ReportCompleted(const Windows::Foundation::Collections::ValueSet & data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRemoteLauncherOptions
-{
-    Windows::Foundation::Uri FallbackUri() const;
-    void FallbackUri(const Windows::Foundation::Uri & value) const;
-    Windows::Foundation::Collections::IVector<hstring> PreferredAppIds() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IRemoteLauncherStatics
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options) const;
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IShutdownManagerStatics
-{
-    void BeginShutdown(Windows::System::ShutdownKind shutdownKind, const Windows::Foundation::TimeSpan & timeout) const;
-    void CancelShutdown() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ITimeZoneSettingsStatics
-{
-    hstring CurrentTimeZoneDisplayName() const;
-    Windows::Foundation::Collections::IVectorView<hstring> SupportedTimeZoneDisplayNames() const;
-    bool CanChangeTimeZone() const;
-    void ChangeTimeZoneByDisplayName(hstring_ref timeZoneDisplayName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUser
-{
-    hstring NonRoamableId() const;
-    Windows::System::UserAuthenticationStatus AuthenticationStatus() const;
-    Windows::System::UserType Type() const;
-    Windows::Foundation::IAsyncOperation<Windows::IInspectable> GetPropertyAsync(hstring_ref value) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> GetPropertiesAsync(const Windows::Foundation::Collections::IVectorView<hstring> & values) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference> GetPictureAsync(Windows::System::UserPictureSize desiredSize) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserAuthenticationStatusChangeDeferral
-{
-    void Complete() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserAuthenticationStatusChangingEventArgs
-{
-    Windows::System::UserAuthenticationStatusChangeDeferral GetDeferral() const;
-    Windows::System::User User() const;
-    Windows::System::UserAuthenticationStatus NewStatus() const;
-    Windows::System::UserAuthenticationStatus CurrentStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserChangedEventArgs
-{
-    Windows::System::User User() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserDeviceAssociationChangedEventArgs
-{
-    hstring DeviceId() const;
-    Windows::System::User NewUser() const;
-    Windows::System::User OldUser() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserDeviceAssociationStatics
-{
-    Windows::System::User FindUserFromDeviceId(hstring_ref deviceId) const;
-    event_token UserDeviceAssociationChanged(const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler) const;
-    using UserDeviceAssociationChanged_revoker = event_revoker<IUserDeviceAssociationStatics>;
-    UserDeviceAssociationChanged_revoker UserDeviceAssociationChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler) const;
-    void UserDeviceAssociationChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserPicker
-{
-    bool AllowGuestAccounts() const;
-    void AllowGuestAccounts(bool value) const;
-    Windows::System::User SuggestedSelectedUser() const;
-    void SuggestedSelectedUser(const Windows::System::User & value) const;
-    Windows::Foundation::IAsyncOperation<Windows::System::User> PickSingleUserAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserPickerStatics
-{
-    bool IsSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserStatics
-{
-    Windows::System::UserWatcher CreateWatcher() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync(Windows::System::UserType type) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> FindAllAsync(Windows::System::UserType type, Windows::System::UserAuthenticationStatus status) const;
-    Windows::System::User GetFromId(hstring_ref nonRoamableId) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUserWatcher
-{
-    Windows::System::UserWatcherStatus Status() const;
-    void Start() const;
-    void Stop() const;
-    event_token Added(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    using Added_revoker = event_revoker<IUserWatcher>;
-    Added_revoker Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    void Added(event_token token) const;
-    event_token Removed(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    using Removed_revoker = event_revoker<IUserWatcher>;
-    Removed_revoker Removed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    void Removed(event_token token) const;
-    event_token Updated(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    using Updated_revoker = event_revoker<IUserWatcher>;
-    Updated_revoker Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    void Updated(event_token token) const;
-    event_token AuthenticationStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    using AuthenticationStatusChanged_revoker = event_revoker<IUserWatcher>;
-    AuthenticationStatusChanged_revoker AuthenticationStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const;
-    void AuthenticationStatusChanged(event_token token) const;
-    event_token AuthenticationStatusChanging(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> & handler) const;
-    using AuthenticationStatusChanging_revoker = event_revoker<IUserWatcher>;
-    AuthenticationStatusChanging_revoker AuthenticationStatusChanging(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> & handler) const;
-    void AuthenticationStatusChanging(event_token token) const;
-    event_token EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> & handler) const;
-    using EnumerationCompleted_revoker = event_revoker<IUserWatcher>;
-    EnumerationCompleted_revoker EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> & handler) const;
-    void EnumerationCompleted(event_token token) const;
-    event_token Stopped(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> & handler) const;
-    using Stopped_revoker = event_revoker<IUserWatcher>;
-    Stopped_revoker Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::IInspectable> & handler) const;
-    void Stopped(event_token token) const;
-};
-
 struct IAppMemoryReport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppMemoryReport>
 {
     IAppMemoryReport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppMemoryReport>(m_ptr); }
 };
 
 struct IAppMemoryUsageLimitChangingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppMemoryUsageLimitChangingEventArgs>
 {
     IAppMemoryUsageLimitChangingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppMemoryUsageLimitChangingEventArgs>(m_ptr); }
 };
 
 struct IFolderLauncherOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IFolderLauncherOptions>
 {
     IFolderLauncherOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IFolderLauncherOptions>(m_ptr); }
 };
 
 struct IKnownUserPropertiesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IKnownUserPropertiesStatics>
 {
     IKnownUserPropertiesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IKnownUserPropertiesStatics>(m_ptr); }
 };
 
 struct ILaunchUriResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILaunchUriResult>
 {
     ILaunchUriResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILaunchUriResult>(m_ptr); }
 };
 
 struct ILauncherOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherOptions>
 {
     ILauncherOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherOptions>(m_ptr); }
 };
 
 struct ILauncherOptions2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherOptions2>
 {
     ILauncherOptions2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherOptions2>(m_ptr); }
 };
 
 struct ILauncherOptions3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherOptions3>
 {
     ILauncherOptions3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherOptions3>(m_ptr); }
 };
 
 struct ILauncherStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherStatics>
 {
     ILauncherStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherStatics>(m_ptr); }
 };
 
 struct ILauncherStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherStatics2>
 {
     ILauncherStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherStatics2>(m_ptr); }
 };
 
 struct ILauncherStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherStatics3>
 {
     ILauncherStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherStatics3>(m_ptr); }
 };
 
 struct ILauncherStatics4 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherStatics4>
 {
     ILauncherStatics4(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherStatics4>(m_ptr); }
 };
 
 struct ILauncherUIOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherUIOptions>
 {
     ILauncherUIOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherUIOptions>(m_ptr); }
 };
 
 struct ILauncherViewOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ILauncherViewOptions>
 {
     ILauncherViewOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ILauncherViewOptions>(m_ptr); }
 };
 
 struct IMemoryManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMemoryManagerStatics>
 {
     IMemoryManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMemoryManagerStatics>(m_ptr); }
 };
 
 struct IMemoryManagerStatics2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMemoryManagerStatics2>
 {
     IMemoryManagerStatics2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMemoryManagerStatics2>(m_ptr); }
 };
 
 struct IMemoryManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMemoryManagerStatics3>
 {
     IMemoryManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMemoryManagerStatics3>(m_ptr); }
 };
 
 struct IProcessLauncherOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProcessLauncherOptions>
 {
     IProcessLauncherOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProcessLauncherOptions>(m_ptr); }
 };
 
 struct IProcessLauncherResult :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProcessLauncherResult>
 {
     IProcessLauncherResult(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProcessLauncherResult>(m_ptr); }
 };
 
 struct IProcessLauncherStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProcessLauncherStatics>
 {
     IProcessLauncherStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProcessLauncherStatics>(m_ptr); }
 };
 
 struct IProcessMemoryReport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProcessMemoryReport>
 {
     IProcessMemoryReport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProcessMemoryReport>(m_ptr); }
 };
 
 struct IProtocolForResultsOperation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IProtocolForResultsOperation>
 {
     IProtocolForResultsOperation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IProtocolForResultsOperation>(m_ptr); }
 };
 
 struct IRemoteLauncherOptions :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRemoteLauncherOptions>
 {
     IRemoteLauncherOptions(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRemoteLauncherOptions>(m_ptr); }
 };
 
 struct IRemoteLauncherStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IRemoteLauncherStatics>
 {
     IRemoteLauncherStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IRemoteLauncherStatics>(m_ptr); }
 };
 
 struct IShutdownManagerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IShutdownManagerStatics>
 {
     IShutdownManagerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IShutdownManagerStatics>(m_ptr); }
 };
 
 struct ITimeZoneSettingsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ITimeZoneSettingsStatics>
 {
     ITimeZoneSettingsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ITimeZoneSettingsStatics>(m_ptr); }
 };
 
 struct IUser :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUser>
 {
     IUser(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUser>(m_ptr); }
 };
 
 struct IUserAuthenticationStatusChangeDeferral :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserAuthenticationStatusChangeDeferral>
 {
     IUserAuthenticationStatusChangeDeferral(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserAuthenticationStatusChangeDeferral>(m_ptr); }
 };
 
 struct IUserAuthenticationStatusChangingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserAuthenticationStatusChangingEventArgs>
 {
     IUserAuthenticationStatusChangingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserAuthenticationStatusChangingEventArgs>(m_ptr); }
 };
 
 struct IUserChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserChangedEventArgs>
 {
     IUserChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserChangedEventArgs>(m_ptr); }
 };
 
 struct IUserDeviceAssociationChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserDeviceAssociationChangedEventArgs>
 {
     IUserDeviceAssociationChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserDeviceAssociationChangedEventArgs>(m_ptr); }
 };
 
 struct IUserDeviceAssociationStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserDeviceAssociationStatics>
 {
     IUserDeviceAssociationStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserDeviceAssociationStatics>(m_ptr); }
 };
 
 struct IUserPicker :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserPicker>
 {
     IUserPicker(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserPicker>(m_ptr); }
 };
 
 struct IUserPickerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserPickerStatics>
 {
     IUserPickerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserPickerStatics>(m_ptr); }
 };
 
 struct IUserStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserStatics>
 {
     IUserStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserStatics>(m_ptr); }
 };
 
 struct IUserWatcher :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUserWatcher>
 {
     IUserWatcher(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUserWatcher>(m_ptr); }
 };
 
 }

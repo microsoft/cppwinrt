@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -18,7 +18,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Media::Protection::PlayReady {
 
-struct __declspec(uuid("3bd6781b-61b8-46e2-99a5-8abcb6b9f7d6")) __declspec(novtable) INDClient : Windows::IInspectable
+struct __declspec(uuid("3bd6781b-61b8-46e2-99a5-8abcb6b9f7d6")) __declspec(novtable) INDClient : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall add_RegistrationCompleted(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_RegistrationCompleted(event_token token) = 0;
@@ -26,7 +26,7 @@ struct __declspec(uuid("3bd6781b-61b8-46e2-99a5-8abcb6b9f7d6")) __declspec(novta
     virtual HRESULT __stdcall remove_ProximityDetectionCompleted(event_token token) = 0;
     virtual HRESULT __stdcall add_LicenseFetchCompleted(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_LicenseFetchCompleted(event_token token) = 0;
-    virtual HRESULT __stdcall add_ReRegistrationNeeded(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::IInspectable> * handler, event_token * token) = 0;
+    virtual HRESULT __stdcall add_ReRegistrationNeeded(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ReRegistrationNeeded(event_token token) = 0;
     virtual HRESULT __stdcall add_ClosedCaptionDataReceived(Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> * handler, event_token * token) = 0;
     virtual HRESULT __stdcall remove_ClosedCaptionDataReceived(event_token token) = 0;
@@ -36,30 +36,30 @@ struct __declspec(uuid("3bd6781b-61b8-46e2-99a5-8abcb6b9f7d6")) __declspec(novta
     virtual HRESULT __stdcall abi_Close() = 0;
 };
 
-struct __declspec(uuid("3e53dd62-fee8-451f-b0d4-f706cca3e037")) __declspec(novtable) INDClientFactory : Windows::IInspectable
+struct __declspec(uuid("3e53dd62-fee8-451f-b0d4-f706cca3e037")) __declspec(novtable) INDClientFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(Windows::Media::Protection::PlayReady::INDDownloadEngine * downloadEngine, Windows::Media::Protection::PlayReady::INDStreamParser * streamParser, Windows::Media::Protection::PlayReady::INDMessenger * pMessenger, Windows::Media::Protection::PlayReady::INDClient ** instance) = 0;
 };
 
-struct __declspec(uuid("4738d29f-c345-4649-8468-b8c5fc357190")) __declspec(novtable) INDClosedCaptionDataReceivedEventArgs : Windows::IInspectable
+struct __declspec(uuid("4738d29f-c345-4649-8468-b8c5fc357190")) __declspec(novtable) INDClosedCaptionDataReceivedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ClosedCaptionDataFormat(winrt::Windows::Media::Protection::PlayReady::NDClosedCaptionFormat * ccForamt) = 0;
     virtual HRESULT __stdcall get_PresentationTimestamp(int64_t * presentationTimestamp) = 0;
     virtual HRESULT __stdcall get_ClosedCaptionData(uint32_t * __ccDataBytesSize, uint8_t ** ccDataBytes) = 0;
 };
 
-struct __declspec(uuid("f5cb0fdc-2d09-4f19-b5e1-76a0b3ee9267")) __declspec(novtable) INDCustomData : Windows::IInspectable
+struct __declspec(uuid("f5cb0fdc-2d09-4f19-b5e1-76a0b3ee9267")) __declspec(novtable) INDCustomData : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CustomDataTypeID(uint32_t * __customDataTypeIDBytesSize, uint8_t ** customDataTypeIDBytes) = 0;
     virtual HRESULT __stdcall get_CustomData(uint32_t * __customDataBytesSize, uint8_t ** customDataBytes) = 0;
 };
 
-struct __declspec(uuid("d65405ab-3424-4833-8c9a-af5fdeb22872")) __declspec(novtable) INDCustomDataFactory : Windows::IInspectable
+struct __declspec(uuid("d65405ab-3424-4833-8c9a-af5fdeb22872")) __declspec(novtable) INDCustomDataFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(uint32_t __customDataTypeIDBytesSize, uint8_t * customDataTypeIDBytes, uint32_t __customDataBytesSize, uint8_t * customDataBytes, Windows::Media::Protection::PlayReady::INDCustomData ** instance) = 0;
 };
 
-struct __declspec(uuid("2d223d65-c4b6-4438-8d46-b96e6d0fb21f")) __declspec(novtable) INDDownloadEngine : Windows::IInspectable
+struct __declspec(uuid("2d223d65-c4b6-4438-8d46-b96e6d0fb21f")) __declspec(novtable) INDDownloadEngine : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_Open(Windows::Foundation::IUriRuntimeClass * uri, uint32_t __sessionIDBytesSize, uint8_t * sessionIDBytes) = 0;
     virtual HRESULT __stdcall abi_Pause() = 0;
@@ -72,7 +72,7 @@ struct __declspec(uuid("2d223d65-c4b6-4438-8d46-b96e6d0fb21f")) __declspec(novta
     virtual HRESULT __stdcall get_Notifier(Windows::Media::Protection::PlayReady::INDDownloadEngineNotifier ** instance) = 0;
 };
 
-struct __declspec(uuid("d720b4d4-f4b8-4530-a809-9193a571e7fc")) __declspec(novtable) INDDownloadEngineNotifier : Windows::IInspectable
+struct __declspec(uuid("d720b4d4-f4b8-4530-a809-9193a571e7fc")) __declspec(novtable) INDDownloadEngineNotifier : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_OnStreamOpened() = 0;
     virtual HRESULT __stdcall abi_OnPlayReadyObjectReceived(uint32_t __dataBytesSize, uint8_t * dataBytes) = 0;
@@ -82,12 +82,12 @@ struct __declspec(uuid("d720b4d4-f4b8-4530-a809-9193a571e7fc")) __declspec(novta
     virtual HRESULT __stdcall abi_OnNetworkError() = 0;
 };
 
-struct __declspec(uuid("1ee30a1a-11b2-4558-8865-e3a516922517")) __declspec(novtable) INDLicenseFetchCompletedEventArgs : Windows::IInspectable
+struct __declspec(uuid("1ee30a1a-11b2-4558-8865-e3a516922517")) __declspec(novtable) INDLicenseFetchCompletedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ResponseCustomData(Windows::Media::Protection::PlayReady::INDCustomData ** customData) = 0;
 };
 
-struct __declspec(uuid("5498d33a-e686-4935-a567-7ca77ad20fa4")) __declspec(novtable) INDLicenseFetchDescriptor : Windows::IInspectable
+struct __declspec(uuid("5498d33a-e686-4935-a567-7ca77ad20fa4")) __declspec(novtable) INDLicenseFetchDescriptor : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContentIDType(winrt::Windows::Media::Protection::PlayReady::NDContentIDType * contentIDType) = 0;
     virtual HRESULT __stdcall get_ContentID(uint32_t * __contentIDBytesSize, uint8_t ** contentIDBytes) = 0;
@@ -95,17 +95,17 @@ struct __declspec(uuid("5498d33a-e686-4935-a567-7ca77ad20fa4")) __declspec(novta
     virtual HRESULT __stdcall put_LicenseFetchChallengeCustomData(Windows::Media::Protection::PlayReady::INDCustomData * licenseFetchChallengeCustomData) = 0;
 };
 
-struct __declspec(uuid("d0031202-cfac-4f00-ae6a-97af80b848f2")) __declspec(novtable) INDLicenseFetchDescriptorFactory : Windows::IInspectable
+struct __declspec(uuid("d0031202-cfac-4f00-ae6a-97af80b848f2")) __declspec(novtable) INDLicenseFetchDescriptorFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(winrt::Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, uint32_t __contentIDBytesSize, uint8_t * contentIDBytes, Windows::Media::Protection::PlayReady::INDCustomData * licenseFetchChallengeCustomData, Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor ** instance) = 0;
 };
 
-struct __declspec(uuid("21d39698-aa62-45ff-a5ff-8037e5433825")) __declspec(novtable) INDLicenseFetchResult : Windows::IInspectable
+struct __declspec(uuid("21d39698-aa62-45ff-a5ff-8037e5433825")) __declspec(novtable) INDLicenseFetchResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ResponseCustomData(Windows::Media::Protection::PlayReady::INDCustomData ** customData) = 0;
 };
 
-struct __declspec(uuid("d42df95d-a75b-47bf-8249-bc83820da38a")) __declspec(novtable) INDMessenger : Windows::IInspectable
+struct __declspec(uuid("d42df95d-a75b-47bf-8249-bc83820da38a")) __declspec(novtable) INDMessenger : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_SendRegistrationRequestAsync(uint32_t __sessionIDBytesSize, uint8_t * sessionIDBytes, uint32_t __challengeDataBytesSize, uint8_t * challengeDataBytes, Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> ** result) = 0;
     virtual HRESULT __stdcall abi_SendProximityDetectionStartAsync(winrt::Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, uint32_t __transmitterChannelBytesSize, uint8_t * transmitterChannelBytes, uint32_t __sessionIDBytesSize, uint8_t * sessionIDBytes, uint32_t __challengeDataBytesSize, uint8_t * challengeDataBytes, Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> ** result) = 0;
@@ -113,12 +113,12 @@ struct __declspec(uuid("d42df95d-a75b-47bf-8249-bc83820da38a")) __declspec(novta
     virtual HRESULT __stdcall abi_SendLicenseFetchRequestAsync(uint32_t __sessionIDBytesSize, uint8_t * sessionIDBytes, uint32_t __challengeDataBytesSize, uint8_t * challengeDataBytes, Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> ** result) = 0;
 };
 
-struct __declspec(uuid("2a706328-da25-4f8c-9eb7-5d0fc3658bca")) __declspec(novtable) INDProximityDetectionCompletedEventArgs : Windows::IInspectable
+struct __declspec(uuid("2a706328-da25-4f8c-9eb7-5d0fc3658bca")) __declspec(novtable) INDProximityDetectionCompletedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ProximityDetectionRetryCount(uint32_t * retryCount) = 0;
 };
 
-struct __declspec(uuid("9e39b64d-ab5b-4905-acdc-787a77c6374d")) __declspec(novtable) INDRegistrationCompletedEventArgs : Windows::IInspectable
+struct __declspec(uuid("9e39b64d-ab5b-4905-acdc-787a77c6374d")) __declspec(novtable) INDRegistrationCompletedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ResponseCustomData(Windows::Media::Protection::PlayReady::INDCustomData ** customData) = 0;
     virtual HRESULT __stdcall get_TransmitterProperties(Windows::Media::Protection::PlayReady::INDTransmitterProperties ** transmitterProperties) = 0;
@@ -126,22 +126,22 @@ struct __declspec(uuid("9e39b64d-ab5b-4905-acdc-787a77c6374d")) __declspec(novta
     virtual HRESULT __stdcall put_TransmitterCertificateAccepted(bool accept) = 0;
 };
 
-struct __declspec(uuid("e3685517-a584-479d-90b7-d689c7bf7c80")) __declspec(novtable) INDSendResult : Windows::IInspectable
+struct __declspec(uuid("e3685517-a584-479d-90b7-d689c7bf7c80")) __declspec(novtable) INDSendResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Response(uint32_t * __responseDataBytesSize, uint8_t ** responseDataBytes) = 0;
 };
 
-struct __declspec(uuid("79f6e96e-f50f-4015-8ba4-c2bc344ebd4e")) __declspec(novtable) INDStartResult : Windows::IInspectable
+struct __declspec(uuid("79f6e96e-f50f-4015-8ba4-c2bc344ebd4e")) __declspec(novtable) INDStartResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MediaStreamSource(Windows::Media::Core::IMediaStreamSource ** mediaStreamSource) = 0;
 };
 
-struct __declspec(uuid("d8f0bef8-91d2-4d47-a3f9-eaff4edb729f")) __declspec(novtable) INDStorageFileHelper : Windows::IInspectable
+struct __declspec(uuid("d8f0bef8-91d2-4d47-a3f9-eaff4edb729f")) __declspec(novtable) INDStorageFileHelper : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetFileURLs(Windows::Storage::IStorageFile * file, Windows::Foundation::Collections::IVector<hstring> ** fileURLs) = 0;
 };
 
-struct __declspec(uuid("e0baa198-9796-41c9-8695-59437e67e66a")) __declspec(novtable) INDStreamParser : Windows::IInspectable
+struct __declspec(uuid("e0baa198-9796-41c9-8695-59437e67e66a")) __declspec(novtable) INDStreamParser : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ParseData(uint32_t __dataBytesSize, uint8_t * dataBytes) = 0;
     virtual HRESULT __stdcall abi_GetStreamInformation(Windows::Media::Core::IMediaStreamDescriptor * descriptor, winrt::Windows::Media::Protection::PlayReady::NDMediaStreamType * streamType, uint32_t * streamID) = 0;
@@ -150,7 +150,7 @@ struct __declspec(uuid("e0baa198-9796-41c9-8695-59437e67e66a")) __declspec(novta
     virtual HRESULT __stdcall get_Notifier(Windows::Media::Protection::PlayReady::INDStreamParserNotifier ** instance) = 0;
 };
 
-struct __declspec(uuid("c167acd0-2ce6-426c-ace5-5e9275fea715")) __declspec(novtable) INDStreamParserNotifier : Windows::IInspectable
+struct __declspec(uuid("c167acd0-2ce6-426c-ace5-5e9275fea715")) __declspec(novtable) INDStreamParserNotifier : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_OnContentIDReceived(Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor * licenseFetchDescriptor) = 0;
     virtual HRESULT __stdcall abi_OnMediaStreamDescriptorCreated(Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor> * audioStreamDescriptors, Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor> * videoStreamDescriptors) = 0;
@@ -158,12 +158,12 @@ struct __declspec(uuid("c167acd0-2ce6-426c-ace5-5e9275fea715")) __declspec(novta
     virtual HRESULT __stdcall abi_OnBeginSetupDecryptor(Windows::Media::Core::IMediaStreamDescriptor * descriptor, GUID keyID, uint32_t __proBytesSize, uint8_t * proBytes) = 0;
 };
 
-struct __declspec(uuid("7dd85cfe-1b99-4f68-8f82-8177f7cedf2b")) __declspec(novtable) INDTCPMessengerFactory : Windows::IInspectable
+struct __declspec(uuid("7dd85cfe-1b99-4f68-8f82-8177f7cedf2b")) __declspec(novtable) INDTCPMessengerFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(hstring remoteHostName, uint32_t remoteHostPort, Windows::Media::Protection::PlayReady::INDMessenger ** instance) = 0;
 };
 
-struct __declspec(uuid("e536af23-ac4f-4adc-8c66-4ff7c2702dd6")) __declspec(novtable) INDTransmitterProperties : Windows::IInspectable
+struct __declspec(uuid("e536af23-ac4f-4adc-8c66-4ff7c2702dd6")) __declspec(novtable) INDTransmitterProperties : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CertificateType(winrt::Windows::Media::Protection::PlayReady::NDCertificateType * type) = 0;
     virtual HRESULT __stdcall get_PlatformIdentifier(winrt::Windows::Media::Protection::PlayReady::NDCertificatePlatformID * identifier) = 0;
@@ -178,7 +178,7 @@ struct __declspec(uuid("e536af23-ac4f-4adc-8c66-4ff7c2702dd6")) __declspec(novta
     virtual HRESULT __stdcall get_ModelNumber(hstring * modelNumber) = 0;
 };
 
-struct __declspec(uuid("9a438a6a-7f4c-452e-88bd-0148c6387a2c")) __declspec(novtable) IPlayReadyContentHeader : Windows::IInspectable
+struct __declspec(uuid("9a438a6a-7f4c-452e-88bd-0148c6387a2c")) __declspec(novtable) IPlayReadyContentHeader : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_KeyId(GUID * value) = 0;
     virtual HRESULT __stdcall get_KeyIdString(hstring * value) = 0;
@@ -192,30 +192,30 @@ struct __declspec(uuid("9a438a6a-7f4c-452e-88bd-0148c6387a2c")) __declspec(novta
     virtual HRESULT __stdcall get_HeaderWithEmbeddedUpdates(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** value) = 0;
 };
 
-struct __declspec(uuid("359c79f4-2180-498c-965b-e754d875eab2")) __declspec(novtable) IPlayReadyContentHeader2 : Windows::IInspectable
+struct __declspec(uuid("359c79f4-2180-498c-965b-e754d875eab2")) __declspec(novtable) IPlayReadyContentHeader2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_KeyIds(uint32_t * __contentKeyIdsSize, GUID ** contentKeyIds) = 0;
     virtual HRESULT __stdcall get_KeyIdStrings(uint32_t * __contentKeyIdStringsSize, hstring ** contentKeyIdStrings) = 0;
 };
 
-struct __declspec(uuid("cb97c8ff-b758-4776-bf01-217a8b510b2c")) __declspec(novtable) IPlayReadyContentHeaderFactory : Windows::IInspectable
+struct __declspec(uuid("cb97c8ff-b758-4776-bf01-217a8b510b2c")) __declspec(novtable) IPlayReadyContentHeaderFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstanceFromWindowsMediaDrmHeader(uint32_t __headerBytesSize, uint8_t * headerBytes, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUrl, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUserInterfaceUrl, hstring customAttributes, GUID domainServiceId, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateInstanceFromComponents(GUID contentKeyId, hstring contentKeyIdString, winrt::Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUrl, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUserInterfaceUrl, hstring customAttributes, GUID domainServiceId, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateInstanceFromPlayReadyHeader(uint32_t __headerBytesSize, uint8_t * headerBytes, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** instance) = 0;
 };
 
-struct __declspec(uuid("d1239cf5-ae6d-4778-97fd-6e3a2eeadbeb")) __declspec(novtable) IPlayReadyContentHeaderFactory2 : Windows::IInspectable
+struct __declspec(uuid("d1239cf5-ae6d-4778-97fd-6e3a2eeadbeb")) __declspec(novtable) IPlayReadyContentHeaderFactory2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstanceFromComponents2(uint32_t dwFlags, uint32_t __contentKeyIdsSize, GUID * contentKeyIds, uint32_t __contentKeyIdStringsSize, hstring * contentKeyIdStrings, winrt::Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUrl, Windows::Foundation::IUriRuntimeClass * licenseAcquisitionUserInterfaceUrl, hstring customAttributes, GUID domainServiceId, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** instance) = 0;
 };
 
-struct __declspec(uuid("fbfd2523-906d-4982-a6b8-6849565a7ce8")) __declspec(novtable) IPlayReadyContentResolver : Windows::IInspectable
+struct __declspec(uuid("fbfd2523-906d-4982-a6b8-6849565a7ce8")) __declspec(novtable) IPlayReadyContentResolver : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_ServiceRequest(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader * contentHeader, Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest ** serviceRequest) = 0;
 };
 
-struct __declspec(uuid("adcc93ac-97e6-43ef-95e4-d7868f3b16a9")) __declspec(novtable) IPlayReadyDomain : Windows::IInspectable
+struct __declspec(uuid("adcc93ac-97e6-43ef-95e4-d7868f3b16a9")) __declspec(novtable) IPlayReadyDomain : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_AccountId(GUID * value) = 0;
     virtual HRESULT __stdcall get_ServiceId(GUID * value) = 0;
@@ -224,12 +224,12 @@ struct __declspec(uuid("adcc93ac-97e6-43ef-95e4-d7868f3b16a9")) __declspec(novta
     virtual HRESULT __stdcall get_DomainJoinUrl(Windows::Foundation::IUriRuntimeClass ** value) = 0;
 };
 
-struct __declspec(uuid("4df384ee-3121-4df3-a5e8-d0c24c0500fc")) __declspec(novtable) IPlayReadyDomainIterableFactory : Windows::IInspectable
+struct __declspec(uuid("4df384ee-3121-4df3-a5e8-d0c24c0500fc")) __declspec(novtable) IPlayReadyDomainIterableFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(GUID domainAccountId, Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyDomain> ** domainIterable) = 0;
 };
 
-struct __declspec(uuid("171b4a5a-405f-4739-b040-67b9f0c38758")) __declspec(novtable) IPlayReadyDomainJoinServiceRequest : Windows::IInspectable
+struct __declspec(uuid("171b4a5a-405f-4739-b040-67b9f0c38758")) __declspec(novtable) IPlayReadyDomainJoinServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DomainAccountId(GUID * value) = 0;
     virtual HRESULT __stdcall put_DomainAccountId(GUID value) = 0;
@@ -239,7 +239,7 @@ struct __declspec(uuid("171b4a5a-405f-4739-b040-67b9f0c38758")) __declspec(novta
     virtual HRESULT __stdcall put_DomainServiceId(GUID value) = 0;
 };
 
-struct __declspec(uuid("062d58be-97ad-4917-aa03-46d4c252d464")) __declspec(novtable) IPlayReadyDomainLeaveServiceRequest : Windows::IInspectable
+struct __declspec(uuid("062d58be-97ad-4917-aa03-46d4c252d464")) __declspec(novtable) IPlayReadyDomainLeaveServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DomainAccountId(GUID * value) = 0;
     virtual HRESULT __stdcall put_DomainAccountId(GUID value) = 0;
@@ -247,16 +247,16 @@ struct __declspec(uuid("062d58be-97ad-4917-aa03-46d4c252d464")) __declspec(novta
     virtual HRESULT __stdcall put_DomainServiceId(GUID value) = 0;
 };
 
-struct __declspec(uuid("24446b8e-10b9-4530-b25b-901a8029a9b2")) __declspec(novtable) IPlayReadyITADataGenerator : Windows::IInspectable
+struct __declspec(uuid("24446b8e-10b9-4530-b25b-901a8029a9b2")) __declspec(novtable) IPlayReadyITADataGenerator : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GenerateData(GUID guidCPSystemId, uint32_t countOfStreams, Windows::Foundation::Collections::IPropertySet * configuration, winrt::Windows::Media::Protection::PlayReady::PlayReadyITADataFormat format, uint32_t * __dataBytesSize, uint8_t ** dataBytes) = 0;
 };
 
-struct __declspec(uuid("21f5a86b-008c-4611-ab2f-aaa6c69f0e24")) __declspec(novtable) IPlayReadyIndividualizationServiceRequest : Windows::IInspectable
+struct __declspec(uuid("21f5a86b-008c-4611-ab2f-aaa6c69f0e24")) __declspec(novtable) IPlayReadyIndividualizationServiceRequest : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("ee474c4e-fa3c-414d-a9f2-3ffc1ef832d4")) __declspec(novtable) IPlayReadyLicense : Windows::IInspectable
+struct __declspec(uuid("ee474c4e-fa3c-414d-a9f2-3ffc1ef832d4")) __declspec(novtable) IPlayReadyLicense : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_FullyEvaluated(bool * value) = 0;
     virtual HRESULT __stdcall get_UsableForPlay(bool * value) = 0;
@@ -267,7 +267,7 @@ struct __declspec(uuid("ee474c4e-fa3c-414d-a9f2-3ffc1ef832d4")) __declspec(novta
     virtual HRESULT __stdcall abi_GetKIDAtChainDepth(uint32_t chainDepth, GUID * kid) = 0;
 };
 
-struct __declspec(uuid("5d85ff45-3e9f-4f48-93e1-9530c8d58c3e")) __declspec(novtable) IPlayReadyLicenseAcquisitionServiceRequest : Windows::IInspectable
+struct __declspec(uuid("5d85ff45-3e9f-4f48-93e1-9530c8d58c3e")) __declspec(novtable) IPlayReadyLicenseAcquisitionServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ContentHeader(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader ** value) = 0;
     virtual HRESULT __stdcall put_ContentHeader(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader * value) = 0;
@@ -275,48 +275,48 @@ struct __declspec(uuid("5d85ff45-3e9f-4f48-93e1-9530c8d58c3e")) __declspec(novta
     virtual HRESULT __stdcall put_DomainServiceId(GUID value) = 0;
 };
 
-struct __declspec(uuid("b7fa5eb5-fe0c-b225-bc60-5a9edd32ceb5")) __declspec(novtable) IPlayReadyLicenseAcquisitionServiceRequest2 : Windows::IInspectable
+struct __declspec(uuid("b7fa5eb5-fe0c-b225-bc60-5a9edd32ceb5")) __declspec(novtable) IPlayReadyLicenseAcquisitionServiceRequest2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SessionId(GUID * value) = 0;
 };
 
-struct __declspec(uuid("d4179f08-0837-4978-8e68-be4293c8d7a6")) __declspec(novtable) IPlayReadyLicenseIterableFactory : Windows::IInspectable
+struct __declspec(uuid("d4179f08-0837-4978-8e68-be4293c8d7a6")) __declspec(novtable) IPlayReadyLicenseIterableFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader * contentHeader, bool fullyEvaluated, Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyLicense> ** instance) = 0;
 };
 
-struct __declspec(uuid("aaeb2141-0957-4405-b892-8bf3ec5dadd9")) __declspec(novtable) IPlayReadyLicenseManagement : Windows::IInspectable
+struct __declspec(uuid("aaeb2141-0957-4405-b892-8bf3ec5dadd9")) __declspec(novtable) IPlayReadyLicenseManagement : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_DeleteLicenses(Windows::Media::Protection::PlayReady::IPlayReadyContentHeader * contentHeader, Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("a1723a39-87fa-4fdd-abbb-a9720e845259")) __declspec(novtable) IPlayReadyLicenseSession : Windows::IInspectable
+struct __declspec(uuid("a1723a39-87fa-4fdd-abbb-a9720e845259")) __declspec(novtable) IPlayReadyLicenseSession : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateLAServiceRequest(Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest ** serviceRequest) = 0;
     virtual HRESULT __stdcall abi_ConfigureMediaProtectionManager(Windows::Media::Protection::IMediaProtectionManager * mpm) = 0;
 };
 
-struct __declspec(uuid("62492699-6527-429e-98be-48d798ac2739")) __declspec(novtable) IPlayReadyLicenseSessionFactory : Windows::IInspectable
+struct __declspec(uuid("62492699-6527-429e-98be-48d798ac2739")) __declspec(novtable) IPlayReadyLicenseSessionFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(Windows::Foundation::Collections::IPropertySet * configuration, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession ** instance) = 0;
 };
 
-struct __declspec(uuid("c12b231c-0ecd-4f11-a185-1e24a4a67fb7")) __declspec(novtable) IPlayReadyMeteringReportServiceRequest : Windows::IInspectable
+struct __declspec(uuid("c12b231c-0ecd-4f11-a185-1e24a4a67fb7")) __declspec(novtable) IPlayReadyMeteringReportServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MeteringCertificate(uint32_t * __meteringCertBytesSize, uint8_t ** meteringCertBytes) = 0;
     virtual HRESULT __stdcall put_MeteringCertificate(uint32_t __meteringCertBytesSize, uint8_t * meteringCertBytes) = 0;
 };
 
-struct __declspec(uuid("543d66ac-faf0-4560-84a5-0e4acec939e4")) __declspec(novtable) IPlayReadyRevocationServiceRequest : Windows::IInspectable
+struct __declspec(uuid("543d66ac-faf0-4560-84a5-0e4acec939e4")) __declspec(novtable) IPlayReadyRevocationServiceRequest : Windows::Foundation::IInspectable
 {
 };
 
-struct __declspec(uuid("5f1f0165-4214-4d9e-81eb-e89f9d294aee")) __declspec(novtable) IPlayReadySecureStopIterableFactory : Windows::IInspectable
+struct __declspec(uuid("5f1f0165-4214-4d9e-81eb-e89f9d294aee")) __declspec(novtable) IPlayReadySecureStopIterableFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, uint8_t * publisherCertBytes, Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest> ** instance) = 0;
 };
 
-struct __declspec(uuid("b5501ee5-01bf-4401-9677-05630a6a4cc8")) __declspec(novtable) IPlayReadySecureStopServiceRequest : Windows::IInspectable
+struct __declspec(uuid("b5501ee5-01bf-4401-9677-05630a6a4cc8")) __declspec(novtable) IPlayReadySecureStopServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SessionID(GUID * value) = 0;
     virtual HRESULT __stdcall get_StartTime(Windows::Foundation::DateTime * value) = 0;
@@ -325,13 +325,13 @@ struct __declspec(uuid("b5501ee5-01bf-4401-9677-05630a6a4cc8")) __declspec(novta
     virtual HRESULT __stdcall get_PublisherCertificate(uint32_t * __publisherCertBytesSize, uint8_t ** publisherCertBytes) = 0;
 };
 
-struct __declspec(uuid("0e448ac9-e67e-494e-9f49-6285438c76cf")) __declspec(novtable) IPlayReadySecureStopServiceRequestFactory : Windows::IInspectable
+struct __declspec(uuid("0e448ac9-e67e-494e-9f49-6285438c76cf")) __declspec(novtable) IPlayReadySecureStopServiceRequestFactory : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, uint8_t * publisherCertBytes, Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest ** instance) = 0;
     virtual HRESULT __stdcall abi_CreateInstanceFromSessionID(GUID sessionID, uint32_t __publisherCertBytesSize, uint8_t * publisherCertBytes, Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest ** instance) = 0;
 };
 
-struct __declspec(uuid("8bad2836-a703-45a6-a180-76f3565aa725")) __declspec(novtable) IPlayReadyServiceRequest : Windows::IInspectable
+struct __declspec(uuid("8bad2836-a703-45a6-a180-76f3565aa725")) __declspec(novtable) IPlayReadyServiceRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Uri(Windows::Foundation::IUriRuntimeClass ** value) = 0;
     virtual HRESULT __stdcall put_Uri(Windows::Foundation::IUriRuntimeClass * value) = 0;
@@ -344,14 +344,14 @@ struct __declspec(uuid("8bad2836-a703-45a6-a180-76f3565aa725")) __declspec(novta
     virtual HRESULT __stdcall abi_ProcessManualEnablingResponse(uint32_t __responseBytesSize, uint8_t * responseBytes, HRESULT * result) = 0;
 };
 
-struct __declspec(uuid("b659fcb5-ce41-41ba-8a0d-61df5fffa139")) __declspec(novtable) IPlayReadySoapMessage : Windows::IInspectable
+struct __declspec(uuid("b659fcb5-ce41-41ba-8a0d-61df5fffa139")) __declspec(novtable) IPlayReadySoapMessage : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_GetMessageBody(uint32_t * __messageBodyBytesSize, uint8_t ** messageBodyBytes) = 0;
     virtual HRESULT __stdcall get_MessageHeaders(Windows::Foundation::Collections::IPropertySet ** value) = 0;
     virtual HRESULT __stdcall get_Uri(Windows::Foundation::IUriRuntimeClass ** messageUri) = 0;
 };
 
-struct __declspec(uuid("5e69c00d-247c-469a-8f31-5c1a1571d9c6")) __declspec(novtable) IPlayReadyStatics : Windows::IInspectable
+struct __declspec(uuid("5e69c00d-247c-469a-8f31-5c1a1571d9c6")) __declspec(novtable) IPlayReadyStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DomainJoinServiceRequestType(GUID * value) = 0;
     virtual HRESULT __stdcall get_DomainLeaveServiceRequestType(GUID * value) = 0;
@@ -363,18 +363,18 @@ struct __declspec(uuid("5e69c00d-247c-469a-8f31-5c1a1571d9c6")) __declspec(novta
     virtual HRESULT __stdcall get_PlayReadySecurityVersion(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("1f8d6a92-5f9a-423e-9466-b33969af7a3d")) __declspec(novtable) IPlayReadyStatics2 : Windows::IInspectable
+struct __declspec(uuid("1f8d6a92-5f9a-423e-9466-b33969af7a3d")) __declspec(novtable) IPlayReadyStatics2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_PlayReadyCertificateSecurityLevel(uint32_t * value) = 0;
 };
 
-struct __declspec(uuid("3fa33f71-2dd3-4bed-ae49-f7148e63e710")) __declspec(novtable) IPlayReadyStatics3 : Windows::IInspectable
+struct __declspec(uuid("3fa33f71-2dd3-4bed-ae49-f7148e63e710")) __declspec(novtable) IPlayReadyStatics3 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_SecureStopServiceRequestType(GUID * value) = 0;
     virtual HRESULT __stdcall abi_CheckSupportedHardware(winrt::Windows::Media::Protection::PlayReady::PlayReadyHardwareDRMFeatures hwdrmFeature, bool * value) = 0;
 };
 
-struct __declspec(uuid("50a91300-d824-4231-9d5e-78ef8844c7d7")) __declspec(novtable) IPlayReadyStatics4 : Windows::IInspectable
+struct __declspec(uuid("50a91300-d824-4231-9d5e-78ef8844c7d7")) __declspec(novtable) IPlayReadyStatics4 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_InputTrustAuthorityToCreate(hstring * value) = 0;
     virtual HRESULT __stdcall get_ProtectionSystemId(GUID * value) = 0;
@@ -415,56 +415,427 @@ template <> struct traits<Windows::Media::Protection::PlayReady::PlayReadySoapMe
 
 namespace Windows::Media::Protection::PlayReady {
 
-template <typename T> struct impl_INDClient;
-template <typename T> struct impl_INDClientFactory;
-template <typename T> struct impl_INDClosedCaptionDataReceivedEventArgs;
-template <typename T> struct impl_INDCustomData;
-template <typename T> struct impl_INDCustomDataFactory;
-template <typename T> struct impl_INDDownloadEngine;
-template <typename T> struct impl_INDDownloadEngineNotifier;
-template <typename T> struct impl_INDLicenseFetchCompletedEventArgs;
-template <typename T> struct impl_INDLicenseFetchDescriptor;
-template <typename T> struct impl_INDLicenseFetchDescriptorFactory;
-template <typename T> struct impl_INDLicenseFetchResult;
-template <typename T> struct impl_INDMessenger;
-template <typename T> struct impl_INDProximityDetectionCompletedEventArgs;
-template <typename T> struct impl_INDRegistrationCompletedEventArgs;
-template <typename T> struct impl_INDSendResult;
-template <typename T> struct impl_INDStartResult;
-template <typename T> struct impl_INDStorageFileHelper;
-template <typename T> struct impl_INDStreamParser;
-template <typename T> struct impl_INDStreamParserNotifier;
-template <typename T> struct impl_INDTCPMessengerFactory;
-template <typename T> struct impl_INDTransmitterProperties;
-template <typename T> struct impl_IPlayReadyContentHeader;
-template <typename T> struct impl_IPlayReadyContentHeader2;
-template <typename T> struct impl_IPlayReadyContentHeaderFactory;
-template <typename T> struct impl_IPlayReadyContentHeaderFactory2;
-template <typename T> struct impl_IPlayReadyContentResolver;
-template <typename T> struct impl_IPlayReadyDomain;
-template <typename T> struct impl_IPlayReadyDomainIterableFactory;
-template <typename T> struct impl_IPlayReadyDomainJoinServiceRequest;
-template <typename T> struct impl_IPlayReadyDomainLeaveServiceRequest;
-template <typename T> struct impl_IPlayReadyITADataGenerator;
-template <typename T> struct impl_IPlayReadyIndividualizationServiceRequest;
-template <typename T> struct impl_IPlayReadyLicense;
-template <typename T> struct impl_IPlayReadyLicenseAcquisitionServiceRequest;
-template <typename T> struct impl_IPlayReadyLicenseAcquisitionServiceRequest2;
-template <typename T> struct impl_IPlayReadyLicenseIterableFactory;
-template <typename T> struct impl_IPlayReadyLicenseManagement;
-template <typename T> struct impl_IPlayReadyLicenseSession;
-template <typename T> struct impl_IPlayReadyLicenseSessionFactory;
-template <typename T> struct impl_IPlayReadyMeteringReportServiceRequest;
-template <typename T> struct impl_IPlayReadyRevocationServiceRequest;
-template <typename T> struct impl_IPlayReadySecureStopIterableFactory;
-template <typename T> struct impl_IPlayReadySecureStopServiceRequest;
-template <typename T> struct impl_IPlayReadySecureStopServiceRequestFactory;
-template <typename T> struct impl_IPlayReadyServiceRequest;
-template <typename T> struct impl_IPlayReadySoapMessage;
-template <typename T> struct impl_IPlayReadyStatics;
-template <typename T> struct impl_IPlayReadyStatics2;
-template <typename T> struct impl_IPlayReadyStatics3;
-template <typename T> struct impl_IPlayReadyStatics4;
+template <typename D>
+struct WINRT_EBO impl_INDClient
+{
+    event_token RegistrationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> & handler) const;
+    using RegistrationCompleted_revoker = event_revoker<INDClient>;
+    RegistrationCompleted_revoker RegistrationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> & handler) const;
+    void RegistrationCompleted(event_token token) const;
+    event_token ProximityDetectionCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs> & handler) const;
+    using ProximityDetectionCompleted_revoker = event_revoker<INDClient>;
+    ProximityDetectionCompleted_revoker ProximityDetectionCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs> & handler) const;
+    void ProximityDetectionCompleted(event_token token) const;
+    event_token LicenseFetchCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> & handler) const;
+    using LicenseFetchCompleted_revoker = event_revoker<INDClient>;
+    LicenseFetchCompleted_revoker LicenseFetchCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> & handler) const;
+    void LicenseFetchCompleted(event_token token) const;
+    event_token ReRegistrationNeeded(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> & handler) const;
+    using ReRegistrationNeeded_revoker = event_revoker<INDClient>;
+    ReRegistrationNeeded_revoker ReRegistrationNeeded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> & handler) const;
+    void ReRegistrationNeeded(event_token token) const;
+    event_token ClosedCaptionDataReceived(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> & handler) const;
+    using ClosedCaptionDataReceived_revoker = event_revoker<INDClient>;
+    ClosedCaptionDataReceived_revoker ClosedCaptionDataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> & handler) const;
+    void ClosedCaptionDataReceived(event_token token) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDStartResult> StartAsync(const Windows::Foundation::Uri & contentUrl, uint32_t startAsyncOptions, const Windows::Media::Protection::PlayReady::INDCustomData & registrationCustomData, const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDLicenseFetchResult> LicenseFetchAsync(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const;
+    Windows::Foundation::IAsyncAction ReRegistrationAsync(const Windows::Media::Protection::PlayReady::INDCustomData & registrationCustomData) const;
+    void Close() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDClientFactory
+{
+    Windows::Media::Protection::PlayReady::NDClient CreateInstance(const Windows::Media::Protection::PlayReady::INDDownloadEngine & downloadEngine, const Windows::Media::Protection::PlayReady::INDStreamParser & streamParser, const Windows::Media::Protection::PlayReady::INDMessenger & pMessenger) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDClosedCaptionDataReceivedEventArgs
+{
+    Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ClosedCaptionDataFormat() const;
+    int64_t PresentationTimestamp() const;
+    com_array<uint8_t> ClosedCaptionData() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDCustomData
+{
+    com_array<uint8_t> CustomDataTypeID() const;
+    com_array<uint8_t> CustomData() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDCustomDataFactory
+{
+    Windows::Media::Protection::PlayReady::NDCustomData CreateInstance(array_view<const uint8_t> customDataTypeIDBytes, array_view<const uint8_t> customDataBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDDownloadEngine
+{
+    void Open(const Windows::Foundation::Uri & uri, array_view<const uint8_t> sessionIDBytes) const;
+    void Pause() const;
+    void Resume() const;
+    void Close() const;
+    void Seek(const Windows::Foundation::TimeSpan & startPosition) const;
+    bool CanSeek() const;
+    uint32_t BufferFullMinThresholdInSamples() const;
+    uint32_t BufferFullMaxThresholdInSamples() const;
+    Windows::Media::Protection::PlayReady::NDDownloadEngineNotifier Notifier() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDDownloadEngineNotifier
+{
+    void OnStreamOpened() const;
+    void OnPlayReadyObjectReceived(array_view<const uint8_t> dataBytes) const;
+    void OnContentIDReceived(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const;
+    void OnDataReceived(array_view<const uint8_t> dataBytes, uint32_t bytesReceived) const;
+    void OnEndOfStream() const;
+    void OnNetworkError() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDLicenseFetchCompletedEventArgs
+{
+    Windows::Media::Protection::PlayReady::INDCustomData ResponseCustomData() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDLicenseFetchDescriptor
+{
+    Windows::Media::Protection::PlayReady::NDContentIDType ContentIDType() const;
+    com_array<uint8_t> ContentID() const;
+    Windows::Media::Protection::PlayReady::INDCustomData LicenseFetchChallengeCustomData() const;
+    void LicenseFetchChallengeCustomData(const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDLicenseFetchDescriptorFactory
+{
+    Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor CreateInstance(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_view<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDLicenseFetchResult
+{
+    Windows::Media::Protection::PlayReady::INDCustomData ResponseCustomData() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDMessenger
+{
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> SendRegistrationRequestAsync(array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> SendProximityDetectionStartAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_view<const uint8_t> transmitterChannelBytes, array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> SendProximityDetectionResponseAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_view<const uint8_t> transmitterChannelBytes, array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> responseDataBytes) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> SendLicenseFetchRequestAsync(array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDProximityDetectionCompletedEventArgs
+{
+    uint32_t ProximityDetectionRetryCount() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDRegistrationCompletedEventArgs
+{
+    Windows::Media::Protection::PlayReady::INDCustomData ResponseCustomData() const;
+    Windows::Media::Protection::PlayReady::INDTransmitterProperties TransmitterProperties() const;
+    bool TransmitterCertificateAccepted() const;
+    void TransmitterCertificateAccepted(bool accept) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDSendResult
+{
+    com_array<uint8_t> Response() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDStartResult
+{
+    Windows::Media::Core::MediaStreamSource MediaStreamSource() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDStorageFileHelper
+{
+    Windows::Foundation::Collections::IVector<hstring> GetFileURLs(const Windows::Storage::IStorageFile & file) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDStreamParser
+{
+    void ParseData(array_view<const uint8_t> dataBytes) const;
+    uint32_t GetStreamInformation(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, Windows::Media::Protection::PlayReady::NDMediaStreamType & streamType) const;
+    void BeginOfStream() const;
+    void EndOfStream() const;
+    Windows::Media::Protection::PlayReady::NDStreamParserNotifier Notifier() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDStreamParserNotifier
+{
+    void OnContentIDReceived(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const;
+    void OnMediaStreamDescriptorCreated(const Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor> & audioStreamDescriptors, const Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor> & videoStreamDescriptors) const;
+    void OnSampleParsed(uint32_t streamID, Windows::Media::Protection::PlayReady::NDMediaStreamType streamType, const Windows::Media::Core::MediaStreamSample & streamSample, int64_t pts, Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccFormat, array_view<const uint8_t> ccDataBytes) const;
+    void OnBeginSetupDecryptor(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, GUID keyID, array_view<const uint8_t> proBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDTCPMessengerFactory
+{
+    Windows::Media::Protection::PlayReady::NDTCPMessenger CreateInstance(hstring_view remoteHostName, uint32_t remoteHostPort) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_INDTransmitterProperties
+{
+    Windows::Media::Protection::PlayReady::NDCertificateType CertificateType() const;
+    Windows::Media::Protection::PlayReady::NDCertificatePlatformID PlatformIdentifier() const;
+    com_array<Windows::Media::Protection::PlayReady::NDCertificateFeature> SupportedFeatures() const;
+    uint32_t SecurityLevel() const;
+    uint32_t SecurityVersion() const;
+    Windows::Foundation::DateTime ExpirationDate() const;
+    com_array<uint8_t> ClientID() const;
+    com_array<uint8_t> ModelDigest() const;
+    hstring ModelManufacturerName() const;
+    hstring ModelName() const;
+    hstring ModelNumber() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyContentHeader
+{
+    GUID KeyId() const;
+    hstring KeyIdString() const;
+    Windows::Foundation::Uri LicenseAcquisitionUrl() const;
+    Windows::Foundation::Uri LicenseAcquisitionUserInterfaceUrl() const;
+    GUID DomainServiceId() const;
+    Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm EncryptionType() const;
+    hstring CustomAttributes() const;
+    Windows::Media::Protection::PlayReady::PlayReadyDecryptorSetup DecryptorSetup() const;
+    com_array<uint8_t> GetSerializedHeader() const;
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader HeaderWithEmbeddedUpdates() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyContentHeader2
+{
+    com_array<GUID> KeyIds() const;
+    com_array<hstring> KeyIdStrings() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyContentHeaderFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader CreateInstanceFromWindowsMediaDrmHeader(array_view<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const;
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader CreateInstanceFromComponents(GUID contentKeyId, hstring_view contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const;
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader CreateInstanceFromPlayReadyHeader(array_view<const uint8_t> headerBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyContentHeaderFactory2
+{
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader CreateInstanceFromComponents2(uint32_t dwFlags, array_view<const GUID> contentKeyIds, array_view<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyContentResolver
+{
+    Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest ServiceRequest(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyDomain
+{
+    GUID AccountId() const;
+    GUID ServiceId() const;
+    uint32_t Revision() const;
+    hstring FriendlyName() const;
+    Windows::Foundation::Uri DomainJoinUrl() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyDomainIterableFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadyDomainIterable CreateInstance(GUID domainAccountId) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyDomainJoinServiceRequest
+{
+    GUID DomainAccountId() const;
+    void DomainAccountId(GUID value) const;
+    hstring DomainFriendlyName() const;
+    void DomainFriendlyName(hstring_view value) const;
+    GUID DomainServiceId() const;
+    void DomainServiceId(GUID value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyDomainLeaveServiceRequest
+{
+    GUID DomainAccountId() const;
+    void DomainAccountId(GUID value) const;
+    GUID DomainServiceId() const;
+    void DomainServiceId(GUID value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyITADataGenerator
+{
+    com_array<uint8_t> GenerateData(GUID guidCPSystemId, uint32_t countOfStreams, const Windows::Foundation::Collections::IPropertySet & configuration, Windows::Media::Protection::PlayReady::PlayReadyITADataFormat format) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyIndividualizationServiceRequest
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicense
+{
+    bool FullyEvaluated() const;
+    bool UsableForPlay() const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> ExpirationDate() const;
+    uint32_t ExpireAfterFirstPlay() const;
+    GUID DomainAccountID() const;
+    uint32_t ChainDepth() const;
+    GUID GetKIDAtChainDepth(uint32_t chainDepth) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseAcquisitionServiceRequest
+{
+    Windows::Media::Protection::PlayReady::PlayReadyContentHeader ContentHeader() const;
+    void ContentHeader(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & value) const;
+    GUID DomainServiceId() const;
+    void DomainServiceId(GUID value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseAcquisitionServiceRequest2
+{
+    GUID SessionId() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseIterableFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadyLicenseIterable CreateInstance(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader, bool fullyEvaluated) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseManagement
+{
+    Windows::Foundation::IAsyncAction DeleteLicenses(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseSession
+{
+    Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest CreateLAServiceRequest() const;
+    void ConfigureMediaProtectionManager(const Windows::Media::Protection::MediaProtectionManager & mpm) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyLicenseSessionFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadyLicenseSession CreateInstance(const Windows::Foundation::Collections::IPropertySet & configuration) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyMeteringReportServiceRequest
+{
+    com_array<uint8_t> MeteringCertificate() const;
+    void MeteringCertificate(array_view<const uint8_t> meteringCertBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyRevocationServiceRequest
+{
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadySecureStopIterableFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable CreateInstance(array_view<const uint8_t> publisherCertBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadySecureStopServiceRequest
+{
+    GUID SessionID() const;
+    Windows::Foundation::DateTime StartTime() const;
+    Windows::Foundation::DateTime UpdateTime() const;
+    bool Stopped() const;
+    com_array<uint8_t> PublisherCertificate() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadySecureStopServiceRequestFactory
+{
+    Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest CreateInstance(array_view<const uint8_t> publisherCertBytes) const;
+    Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest CreateInstanceFromSessionID(GUID sessionID, array_view<const uint8_t> publisherCertBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyServiceRequest
+{
+    Windows::Foundation::Uri Uri() const;
+    void Uri(const Windows::Foundation::Uri & value) const;
+    hstring ResponseCustomData() const;
+    hstring ChallengeCustomData() const;
+    void ChallengeCustomData(hstring_view value) const;
+    Windows::Foundation::IAsyncAction BeginServiceRequest() const;
+    Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest NextServiceRequest() const;
+    Windows::Media::Protection::PlayReady::PlayReadySoapMessage GenerateManualEnablingChallenge() const;
+    HRESULT ProcessManualEnablingResponse(array_view<const uint8_t> responseBytes) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadySoapMessage
+{
+    com_array<uint8_t> GetMessageBody() const;
+    Windows::Foundation::Collections::IPropertySet MessageHeaders() const;
+    Windows::Foundation::Uri Uri() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyStatics
+{
+    GUID DomainJoinServiceRequestType() const;
+    GUID DomainLeaveServiceRequestType() const;
+    GUID IndividualizationServiceRequestType() const;
+    GUID LicenseAcquirerServiceRequestType() const;
+    GUID MeteringReportServiceRequestType() const;
+    GUID RevocationServiceRequestType() const;
+    GUID MediaProtectionSystemId() const;
+    uint32_t PlayReadySecurityVersion() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyStatics2
+{
+    uint32_t PlayReadyCertificateSecurityLevel() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyStatics3
+{
+    GUID SecureStopServiceRequestType() const;
+    bool CheckSupportedHardware(Windows::Media::Protection::PlayReady::PlayReadyHardwareDRMFeatures hwdrmFeature) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPlayReadyStatics4
+{
+    hstring InputTrustAuthorityToCreate() const;
+    GUID ProtectionSystemId() const;
+};
 
 }
 

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -25,6 +25,16 @@ struct IResourceLoaderFactory;
 struct IResourceLoaderStatics;
 struct IResourceLoaderStatics2;
 struct ResourceLoader;
+
+}
+
+namespace Windows::ApplicationModel::Resources {
+
+template <typename T> struct impl_IResourceLoader;
+template <typename T> struct impl_IResourceLoader2;
+template <typename T> struct impl_IResourceLoaderFactory;
+template <typename T> struct impl_IResourceLoaderStatics;
+template <typename T> struct impl_IResourceLoaderStatics2;
 
 }
 

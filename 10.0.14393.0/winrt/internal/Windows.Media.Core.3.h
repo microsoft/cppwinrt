@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -110,8 +110,8 @@ struct WINRT_EBO MediaSource :
     static Windows::Media::Core::MediaSource CreateFromMseStreamSource(const Windows::Media::Core::MseStreamSource & mediaSource);
     static Windows::Media::Core::MediaSource CreateFromIMediaSource(const Windows::Media::Core::IMediaSource & mediaSource);
     static Windows::Media::Core::MediaSource CreateFromStorageFile(const Windows::Storage::IStorageFile & file);
-    static Windows::Media::Core::MediaSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_ref contentType);
-    static Windows::Media::Core::MediaSource CreateFromStreamReference(const Windows::Storage::Streams::IRandomAccessStreamReference & stream, hstring_ref contentType);
+    static Windows::Media::Core::MediaSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_view contentType);
+    static Windows::Media::Core::MediaSource CreateFromStreamReference(const Windows::Storage::Streams::IRandomAccessStreamReference & stream, hstring_view contentType);
     static Windows::Media::Core::MediaSource CreateFromUri(const Windows::Foundation::Uri & uri);
     static Windows::Media::Core::MediaSource CreateFromMediaBinder(const Windows::Media::Core::MediaBinder & binder);
 };
@@ -143,7 +143,7 @@ struct WINRT_EBO MediaStreamSample :
 };
 
 struct WINRT_EBO MediaStreamSamplePropertySet :
-    Windows::Foundation::Collections::IMap<GUID, Windows::IInspectable>
+    Windows::Foundation::Collections::IMap<GUID, Windows::Foundation::IInspectable>
 {
     MediaStreamSamplePropertySet(std::nullptr_t) noexcept {}
 };
@@ -252,7 +252,7 @@ struct WINRT_EBO MseStreamSource :
 {
     MseStreamSource(std::nullptr_t) noexcept {}
     MseStreamSource();
-    static bool IsContentTypeSupported(hstring_ref contentType);
+    static bool IsContentTypeSupported(hstring_view contentType);
 };
 
 struct WINRT_EBO SceneAnalysisEffect :
@@ -285,7 +285,7 @@ struct WINRT_EBO TimedMetadataTrack :
     impl::require<TimedMetadataTrack, Windows::Media::Core::ITimedMetadataTrack2>
 {
     TimedMetadataTrack(std::nullptr_t) noexcept {}
-    TimedMetadataTrack(hstring_ref id, hstring_ref language, Windows::Media::Core::TimedMetadataKind kind);
+    TimedMetadataTrack(hstring_view id, hstring_view language, Windows::Media::Core::TimedMetadataKind kind);
 };
 
 struct WINRT_EBO TimedMetadataTrackError :
@@ -327,8 +327,8 @@ struct WINRT_EBO TimedTextSource :
     TimedTextSource(std::nullptr_t) noexcept {}
     static Windows::Media::Core::TimedTextSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream);
     static Windows::Media::Core::TimedTextSource CreateFromUri(const Windows::Foundation::Uri & uri);
-    static Windows::Media::Core::TimedTextSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_ref defaultLanguage);
-    static Windows::Media::Core::TimedTextSource CreateFromUri(const Windows::Foundation::Uri & uri, hstring_ref defaultLanguage);
+    static Windows::Media::Core::TimedTextSource CreateFromStream(const Windows::Storage::Streams::IRandomAccessStream & stream, hstring_view defaultLanguage);
+    static Windows::Media::Core::TimedTextSource CreateFromUri(const Windows::Foundation::Uri & uri, hstring_view defaultLanguage);
 };
 
 struct WINRT_EBO TimedTextSourceResolveResultEventArgs :

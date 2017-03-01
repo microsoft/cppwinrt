@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Gaming.Input.ForceFeedback.3.h"
@@ -18,7 +21,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffect> 
     {
         try
         {
-            *value = detach(this->shim().Kind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Kind());
             return S_OK;
         }
         catch (...)
@@ -27,10 +31,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffect> 
         }
     }
 
-    HRESULT __stdcall abi_SetParameters(abi_arg_in<Windows::Foundation::Numerics::float3> direction, float positiveCoefficient, float negativeCoefficient, float maxPositiveMagnitude, float maxNegativeMagnitude, float deadZone, float bias) noexcept override
+    HRESULT __stdcall abi_SetParameters(impl::abi_arg_in<Windows::Foundation::Numerics::float3> direction, float positiveCoefficient, float negativeCoefficient, float maxPositiveMagnitude, float maxNegativeMagnitude, float deadZone, float bias) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParameters(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&direction), positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias);
             return S_OK;
         }
@@ -44,11 +49,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffect> 
 template <typename D>
 struct produce<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffectFactory> : produce_base<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffectFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind effectKind, abi_arg_out<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> value) noexcept override
+    HRESULT __stdcall abi_CreateInstance(Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind effectKind, impl::abi_arg_out<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateInstance(effectKind));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateInstance(effectKind));
             return S_OK;
         }
         catch (...)
@@ -62,10 +68,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IConditionForceEffectFa
 template <typename D>
 struct produce<D, Windows::Gaming::Input::ForceFeedback::IConstantForceEffect> : produce_base<D, Windows::Gaming::Input::ForceFeedback::IConstantForceEffect>
 {
-    HRESULT __stdcall abi_SetParameters(abi_arg_in<Windows::Foundation::Numerics::float3> vector, abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
+    HRESULT __stdcall abi_SetParameters(impl::abi_arg_in<Windows::Foundation::Numerics::float3> vector, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParameters(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&vector), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration));
             return S_OK;
         }
@@ -75,10 +82,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IConstantForceEffect> :
         }
     }
 
-    HRESULT __stdcall abi_SetParametersWithEnvelope(abi_arg_in<Windows::Foundation::Numerics::float3> vector, float attackGain, float sustainGain, float releaseGain, abi_arg_in<Windows::Foundation::TimeSpan> startDelay, abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
+    HRESULT __stdcall abi_SetParametersWithEnvelope(impl::abi_arg_in<Windows::Foundation::Numerics::float3> vector, float attackGain, float sustainGain, float releaseGain, impl::abi_arg_in<Windows::Foundation::TimeSpan> startDelay, impl::abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParametersWithEnvelope(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&vector), attackGain, sustainGain, releaseGain, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&startDelay), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&attackDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&sustainDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&releaseDuration), repeatCount);
             return S_OK;
         }
@@ -96,7 +104,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> :
     {
         try
         {
-            *value = detach(this->shim().Gain());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Gain());
             return S_OK;
         }
         catch (...)
@@ -109,6 +118,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Gain(value);
             return S_OK;
         }
@@ -122,7 +132,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> :
     {
         try
         {
-            *value = detach(this->shim().State());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().State());
             return S_OK;
         }
         catch (...)
@@ -135,6 +146,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Start();
             return S_OK;
         }
@@ -148,6 +160,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> :
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Stop();
             return S_OK;
         }
@@ -165,7 +178,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
-            *value = detach(this->shim().AreEffectsPaused());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AreEffectsPaused());
             return S_OK;
         }
         catch (...)
@@ -178,7 +192,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
-            *value = detach(this->shim().MasterGain());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MasterGain());
             return S_OK;
         }
         catch (...)
@@ -191,6 +206,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().MasterGain(value);
             return S_OK;
         }
@@ -204,7 +220,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
-            *value = detach(this->shim().IsEnabled());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsEnabled());
             return S_OK;
         }
         catch (...)
@@ -217,7 +234,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
-            *value = detach(this->shim().SupportedAxes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SupportedAxes());
             return S_OK;
         }
         catch (...)
@@ -226,11 +244,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
         }
     }
 
-    HRESULT __stdcall abi_LoadEffectAsync(abi_arg_in<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> effect, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackLoadEffectResult>> asyncOperation) noexcept override
+    HRESULT __stdcall abi_LoadEffectAsync(impl::abi_arg_in<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> effect, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackLoadEffectResult>> asyncOperation) noexcept override
     {
         try
         {
-            *asyncOperation = detach(this->shim().LoadEffectAsync(*reinterpret_cast<const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect *>(&effect)));
+            typename D::abi_guard guard(this->shim());
+            *asyncOperation = detach_abi(this->shim().LoadEffectAsync(*reinterpret_cast<const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect *>(&effect)));
             return S_OK;
         }
         catch (...)
@@ -244,6 +263,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().PauseAllEffects();
             return S_OK;
         }
@@ -257,6 +277,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ResumeAllEffects();
             return S_OK;
         }
@@ -270,6 +291,7 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().StopAllEffects();
             return S_OK;
         }
@@ -279,11 +301,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
         }
     }
 
-    HRESULT __stdcall abi_TryDisableAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
+    HRESULT __stdcall abi_TryDisableAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
     {
         try
         {
-            *asyncOperation = detach(this->shim().TryDisableAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncOperation = detach_abi(this->shim().TryDisableAsync());
             return S_OK;
         }
         catch (...)
@@ -293,11 +316,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
         }
     }
 
-    HRESULT __stdcall abi_TryEnableAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
+    HRESULT __stdcall abi_TryEnableAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
     {
         try
         {
-            *asyncOperation = detach(this->shim().TryEnableAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncOperation = detach_abi(this->shim().TryEnableAsync());
             return S_OK;
         }
         catch (...)
@@ -307,11 +331,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
         }
     }
 
-    HRESULT __stdcall abi_TryResetAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
+    HRESULT __stdcall abi_TryResetAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
     {
         try
         {
-            *asyncOperation = detach(this->shim().TryResetAsync());
+            typename D::abi_guard guard(this->shim());
+            *asyncOperation = detach_abi(this->shim().TryResetAsync());
             return S_OK;
         }
         catch (...)
@@ -321,11 +346,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor> : 
         }
     }
 
-    HRESULT __stdcall abi_TryUnloadEffectAsync(abi_arg_in<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> effect, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
+    HRESULT __stdcall abi_TryUnloadEffectAsync(impl::abi_arg_in<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> effect, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> asyncOperation) noexcept override
     {
         try
         {
-            *asyncOperation = detach(this->shim().TryUnloadEffectAsync(*reinterpret_cast<const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect *>(&effect)));
+            typename D::abi_guard guard(this->shim());
+            *asyncOperation = detach_abi(this->shim().TryUnloadEffectAsync(*reinterpret_cast<const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect *>(&effect)));
             return S_OK;
         }
         catch (...)
@@ -343,7 +369,8 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect> :
     {
         try
         {
-            *value = detach(this->shim().Kind());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Kind());
             return S_OK;
         }
         catch (...)
@@ -352,10 +379,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect> :
         }
     }
 
-    HRESULT __stdcall abi_SetParameters(abi_arg_in<Windows::Foundation::Numerics::float3> vector, float frequency, float phase, float bias, abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
+    HRESULT __stdcall abi_SetParameters(impl::abi_arg_in<Windows::Foundation::Numerics::float3> vector, float frequency, float phase, float bias, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParameters(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&vector), frequency, phase, bias, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration));
             return S_OK;
         }
@@ -365,10 +393,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect> :
         }
     }
 
-    HRESULT __stdcall abi_SetParametersWithEnvelope(abi_arg_in<Windows::Foundation::Numerics::float3> vector, float frequency, float phase, float bias, float attackGain, float sustainGain, float releaseGain, abi_arg_in<Windows::Foundation::TimeSpan> startDelay, abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
+    HRESULT __stdcall abi_SetParametersWithEnvelope(impl::abi_arg_in<Windows::Foundation::Numerics::float3> vector, float frequency, float phase, float bias, float attackGain, float sustainGain, float releaseGain, impl::abi_arg_in<Windows::Foundation::TimeSpan> startDelay, impl::abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParametersWithEnvelope(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&vector), frequency, phase, bias, attackGain, sustainGain, releaseGain, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&startDelay), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&attackDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&sustainDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&releaseDuration), repeatCount);
             return S_OK;
         }
@@ -382,11 +411,12 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect> :
 template <typename D>
 struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffectFactory> : produce_base<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffectFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind effectKind, abi_arg_out<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> value) noexcept override
+    HRESULT __stdcall abi_CreateInstance(Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind effectKind, impl::abi_arg_out<Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CreateInstance(effectKind));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CreateInstance(effectKind));
             return S_OK;
         }
         catch (...)
@@ -400,10 +430,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffectFac
 template <typename D>
 struct produce<D, Windows::Gaming::Input::ForceFeedback::IRampForceEffect> : produce_base<D, Windows::Gaming::Input::ForceFeedback::IRampForceEffect>
 {
-    HRESULT __stdcall abi_SetParameters(abi_arg_in<Windows::Foundation::Numerics::float3> startVector, abi_arg_in<Windows::Foundation::Numerics::float3> endVector, abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
+    HRESULT __stdcall abi_SetParameters(impl::abi_arg_in<Windows::Foundation::Numerics::float3> startVector, impl::abi_arg_in<Windows::Foundation::Numerics::float3> endVector, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParameters(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&startVector), *reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&endVector), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration));
             return S_OK;
         }
@@ -413,10 +444,11 @@ struct produce<D, Windows::Gaming::Input::ForceFeedback::IRampForceEffect> : pro
         }
     }
 
-    HRESULT __stdcall abi_SetParametersWithEnvelope(abi_arg_in<Windows::Foundation::Numerics::float3> startVector, abi_arg_in<Windows::Foundation::Numerics::float3> endVector, float attackGain, float sustainGain, float releaseGain, abi_arg_in<Windows::Foundation::TimeSpan> startDelay, abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
+    HRESULT __stdcall abi_SetParametersWithEnvelope(impl::abi_arg_in<Windows::Foundation::Numerics::float3> startVector, impl::abi_arg_in<Windows::Foundation::Numerics::float3> endVector, float attackGain, float sustainGain, float releaseGain, impl::abi_arg_in<Windows::Foundation::TimeSpan> startDelay, impl::abi_arg_in<Windows::Foundation::TimeSpan> attackDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> sustainDuration, impl::abi_arg_in<Windows::Foundation::TimeSpan> releaseDuration, uint32_t repeatCount) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SetParametersWithEnvelope(*reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&startVector), *reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&endVector), attackGain, sustainGain, releaseGain, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&startDelay), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&attackDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&sustainDuration), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&releaseDuration), repeatCount);
             return S_OK;
         }
@@ -434,175 +466,175 @@ namespace Windows::Gaming::Input::ForceFeedback {
 template <typename D> double impl_IForceFeedbackEffect<D>::Gain() const
 {
     double value {};
-    check_hresult(static_cast<const IForceFeedbackEffect &>(static_cast<const D &>(*this))->get_Gain(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackEffect)->get_Gain(&value));
     return value;
 }
 
 template <typename D> void impl_IForceFeedbackEffect<D>::Gain(double value) const
 {
-    check_hresult(static_cast<const IForceFeedbackEffect &>(static_cast<const D &>(*this))->put_Gain(value));
+    check_hresult(WINRT_SHIM(IForceFeedbackEffect)->put_Gain(value));
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectState impl_IForceFeedbackEffect<D>::State() const
 {
     Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectState value {};
-    check_hresult(static_cast<const IForceFeedbackEffect &>(static_cast<const D &>(*this))->get_State(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackEffect)->get_State(&value));
     return value;
 }
 
 template <typename D> void impl_IForceFeedbackEffect<D>::Start() const
 {
-    check_hresult(static_cast<const IForceFeedbackEffect &>(static_cast<const D &>(*this))->abi_Start());
+    check_hresult(WINRT_SHIM(IForceFeedbackEffect)->abi_Start());
 }
 
 template <typename D> void impl_IForceFeedbackEffect<D>::Stop() const
 {
-    check_hresult(static_cast<const IForceFeedbackEffect &>(static_cast<const D &>(*this))->abi_Stop());
+    check_hresult(WINRT_SHIM(IForceFeedbackEffect)->abi_Stop());
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind impl_IConditionForceEffect<D>::Kind() const
 {
     Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind value {};
-    check_hresult(static_cast<const IConditionForceEffect &>(static_cast<const D &>(*this))->get_Kind(&value));
+    check_hresult(WINRT_SHIM(IConditionForceEffect)->get_Kind(&value));
     return value;
 }
 
 template <typename D> void impl_IConditionForceEffect<D>::SetParameters(const Windows::Foundation::Numerics::float3 & direction, float positiveCoefficient, float negativeCoefficient, float maxPositiveMagnitude, float maxNegativeMagnitude, float deadZone, float bias) const
 {
-    check_hresult(static_cast<const IConditionForceEffect &>(static_cast<const D &>(*this))->abi_SetParameters(get(direction), positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias));
+    check_hresult(WINRT_SHIM(IConditionForceEffect)->abi_SetParameters(get_abi(direction), positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias));
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::ConditionForceEffect impl_IConditionForceEffectFactory<D>::CreateInstance(Windows::Gaming::Input::ForceFeedback::ConditionForceEffectKind effectKind) const
 {
     Windows::Gaming::Input::ForceFeedback::ConditionForceEffect value { nullptr };
-    check_hresult(static_cast<const IConditionForceEffectFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(effectKind, put(value)));
+    check_hresult(WINRT_SHIM(IConditionForceEffectFactory)->abi_CreateInstance(effectKind, put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IConstantForceEffect<D>::SetParameters(const Windows::Foundation::Numerics::float3 & vector, const Windows::Foundation::TimeSpan & duration) const
 {
-    check_hresult(static_cast<const IConstantForceEffect &>(static_cast<const D &>(*this))->abi_SetParameters(get(vector), get(duration)));
+    check_hresult(WINRT_SHIM(IConstantForceEffect)->abi_SetParameters(get_abi(vector), get_abi(duration)));
 }
 
 template <typename D> void impl_IConstantForceEffect<D>::SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & vector, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const
 {
-    check_hresult(static_cast<const IConstantForceEffect &>(static_cast<const D &>(*this))->abi_SetParametersWithEnvelope(get(vector), attackGain, sustainGain, releaseGain, get(startDelay), get(attackDuration), get(sustainDuration), get(releaseDuration), repeatCount));
+    check_hresult(WINRT_SHIM(IConstantForceEffect)->abi_SetParametersWithEnvelope(get_abi(vector), attackGain, sustainGain, releaseGain, get_abi(startDelay), get_abi(attackDuration), get_abi(sustainDuration), get_abi(releaseDuration), repeatCount));
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind impl_IPeriodicForceEffect<D>::Kind() const
 {
     Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind value {};
-    check_hresult(static_cast<const IPeriodicForceEffect &>(static_cast<const D &>(*this))->get_Kind(&value));
+    check_hresult(WINRT_SHIM(IPeriodicForceEffect)->get_Kind(&value));
     return value;
 }
 
 template <typename D> void impl_IPeriodicForceEffect<D>::SetParameters(const Windows::Foundation::Numerics::float3 & vector, float frequency, float phase, float bias, const Windows::Foundation::TimeSpan & duration) const
 {
-    check_hresult(static_cast<const IPeriodicForceEffect &>(static_cast<const D &>(*this))->abi_SetParameters(get(vector), frequency, phase, bias, get(duration)));
+    check_hresult(WINRT_SHIM(IPeriodicForceEffect)->abi_SetParameters(get_abi(vector), frequency, phase, bias, get_abi(duration)));
 }
 
 template <typename D> void impl_IPeriodicForceEffect<D>::SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & vector, float frequency, float phase, float bias, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const
 {
-    check_hresult(static_cast<const IPeriodicForceEffect &>(static_cast<const D &>(*this))->abi_SetParametersWithEnvelope(get(vector), frequency, phase, bias, attackGain, sustainGain, releaseGain, get(startDelay), get(attackDuration), get(sustainDuration), get(releaseDuration), repeatCount));
+    check_hresult(WINRT_SHIM(IPeriodicForceEffect)->abi_SetParametersWithEnvelope(get_abi(vector), frequency, phase, bias, attackGain, sustainGain, releaseGain, get_abi(startDelay), get_abi(attackDuration), get_abi(sustainDuration), get_abi(releaseDuration), repeatCount));
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::PeriodicForceEffect impl_IPeriodicForceEffectFactory<D>::CreateInstance(Windows::Gaming::Input::ForceFeedback::PeriodicForceEffectKind effectKind) const
 {
     Windows::Gaming::Input::ForceFeedback::PeriodicForceEffect value { nullptr };
-    check_hresult(static_cast<const IPeriodicForceEffectFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(effectKind, put(value)));
+    check_hresult(WINRT_SHIM(IPeriodicForceEffectFactory)->abi_CreateInstance(effectKind, put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IRampForceEffect<D>::SetParameters(const Windows::Foundation::Numerics::float3 & startVector, const Windows::Foundation::Numerics::float3 & endVector, const Windows::Foundation::TimeSpan & duration) const
 {
-    check_hresult(static_cast<const IRampForceEffect &>(static_cast<const D &>(*this))->abi_SetParameters(get(startVector), get(endVector), get(duration)));
+    check_hresult(WINRT_SHIM(IRampForceEffect)->abi_SetParameters(get_abi(startVector), get_abi(endVector), get_abi(duration)));
 }
 
 template <typename D> void impl_IRampForceEffect<D>::SetParametersWithEnvelope(const Windows::Foundation::Numerics::float3 & startVector, const Windows::Foundation::Numerics::float3 & endVector, float attackGain, float sustainGain, float releaseGain, const Windows::Foundation::TimeSpan & startDelay, const Windows::Foundation::TimeSpan & attackDuration, const Windows::Foundation::TimeSpan & sustainDuration, const Windows::Foundation::TimeSpan & releaseDuration, uint32_t repeatCount) const
 {
-    check_hresult(static_cast<const IRampForceEffect &>(static_cast<const D &>(*this))->abi_SetParametersWithEnvelope(get(startVector), get(endVector), attackGain, sustainGain, releaseGain, get(startDelay), get(attackDuration), get(sustainDuration), get(releaseDuration), repeatCount));
+    check_hresult(WINRT_SHIM(IRampForceEffect)->abi_SetParametersWithEnvelope(get_abi(startVector), get_abi(endVector), attackGain, sustainGain, releaseGain, get_abi(startDelay), get_abi(attackDuration), get_abi(sustainDuration), get_abi(releaseDuration), repeatCount));
 }
 
 template <typename D> bool impl_IForceFeedbackMotor<D>::AreEffectsPaused() const
 {
     bool value {};
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->get_AreEffectsPaused(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->get_AreEffectsPaused(&value));
     return value;
 }
 
 template <typename D> double impl_IForceFeedbackMotor<D>::MasterGain() const
 {
     double value {};
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->get_MasterGain(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->get_MasterGain(&value));
     return value;
 }
 
 template <typename D> void impl_IForceFeedbackMotor<D>::MasterGain(double value) const
 {
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->put_MasterGain(value));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->put_MasterGain(value));
 }
 
 template <typename D> bool impl_IForceFeedbackMotor<D>::IsEnabled() const
 {
     bool value {};
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->get_IsEnabled(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->get_IsEnabled(&value));
     return value;
 }
 
 template <typename D> Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectAxes impl_IForceFeedbackMotor<D>::SupportedAxes() const
 {
     Windows::Gaming::Input::ForceFeedback::ForceFeedbackEffectAxes value {};
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->get_SupportedAxes(&value));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->get_SupportedAxes(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackLoadEffectResult> impl_IForceFeedbackMotor<D>::LoadEffectAsync(const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect & effect) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackLoadEffectResult> asyncOperation;
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_LoadEffectAsync(get(effect), put(asyncOperation)));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_LoadEffectAsync(get_abi(effect), put_abi(asyncOperation)));
     return asyncOperation;
 }
 
 template <typename D> void impl_IForceFeedbackMotor<D>::PauseAllEffects() const
 {
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_PauseAllEffects());
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_PauseAllEffects());
 }
 
 template <typename D> void impl_IForceFeedbackMotor<D>::ResumeAllEffects() const
 {
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_ResumeAllEffects());
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_ResumeAllEffects());
 }
 
 template <typename D> void impl_IForceFeedbackMotor<D>::StopAllEffects() const
 {
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_StopAllEffects());
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_StopAllEffects());
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IForceFeedbackMotor<D>::TryDisableAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> asyncOperation;
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_TryDisableAsync(put(asyncOperation)));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_TryDisableAsync(put_abi(asyncOperation)));
     return asyncOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IForceFeedbackMotor<D>::TryEnableAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> asyncOperation;
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_TryEnableAsync(put(asyncOperation)));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_TryEnableAsync(put_abi(asyncOperation)));
     return asyncOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IForceFeedbackMotor<D>::TryResetAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> asyncOperation;
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_TryResetAsync(put(asyncOperation)));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_TryResetAsync(put_abi(asyncOperation)));
     return asyncOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IForceFeedbackMotor<D>::TryUnloadEffectAsync(const Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect & effect) const
 {
     Windows::Foundation::IAsyncOperation<bool> asyncOperation;
-    check_hresult(static_cast<const IForceFeedbackMotor &>(static_cast<const D &>(*this))->abi_TryUnloadEffectAsync(get(effect), put(asyncOperation)));
+    check_hresult(WINRT_SHIM(IForceFeedbackMotor)->abi_TryUnloadEffectAsync(get_abi(effect), put_abi(asyncOperation)));
     return asyncOperation;
 }
 
@@ -625,3 +657,122 @@ inline RampForceEffect::RampForceEffect() :
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IConditionForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IConditionForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IConditionForceEffectFactory>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IConditionForceEffectFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IConstantForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IConstantForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IForceFeedbackEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IForceFeedbackMotor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffectFactory>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IPeriodicForceEffectFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::IRampForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::IRampForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::ConditionForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::ConditionForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::ConstantForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::ConstantForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackMotor>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::ForceFeedbackMotor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::PeriodicForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::PeriodicForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Input::ForceFeedback::RampForceEffect>
+{
+    size_t operator()(const winrt::Windows::Gaming::Input::ForceFeedback::RampForceEffect & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -91,6 +91,34 @@ struct XmlNamedNodeMap;
 struct XmlNodeList;
 struct XmlProcessingInstruction;
 struct XmlText;
+
+}
+
+namespace Windows::Data::Xml::Dom {
+
+template <typename T> struct impl_IDtdEntity;
+template <typename T> struct impl_IDtdNotation;
+template <typename T> struct impl_IXmlAttribute;
+template <typename T> struct impl_IXmlCDataSection;
+template <typename T> struct impl_IXmlCharacterData;
+template <typename T> struct impl_IXmlComment;
+template <typename T> struct impl_IXmlDocument;
+template <typename T> struct impl_IXmlDocumentFragment;
+template <typename T> struct impl_IXmlDocumentIO;
+template <typename T> struct impl_IXmlDocumentIO2;
+template <typename T> struct impl_IXmlDocumentStatics;
+template <typename T> struct impl_IXmlDocumentType;
+template <typename T> struct impl_IXmlDomImplementation;
+template <typename T> struct impl_IXmlElement;
+template <typename T> struct impl_IXmlEntityReference;
+template <typename T> struct impl_IXmlLoadSettings;
+template <typename T> struct impl_IXmlNamedNodeMap;
+template <typename T> struct impl_IXmlNode;
+template <typename T> struct impl_IXmlNodeList;
+template <typename T> struct impl_IXmlNodeSelector;
+template <typename T> struct impl_IXmlNodeSerializer;
+template <typename T> struct impl_IXmlProcessingInstruction;
+template <typename T> struct impl_IXmlText;
 
 }
 

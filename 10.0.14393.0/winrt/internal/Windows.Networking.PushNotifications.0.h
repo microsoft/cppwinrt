@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,6 +34,17 @@ struct PushNotificationChannelManager;
 struct PushNotificationChannelManagerForUser;
 struct PushNotificationReceivedEventArgs;
 struct RawNotification;
+
+}
+
+namespace Windows::Networking::PushNotifications {
+
+template <typename T> struct impl_IPushNotificationChannel;
+template <typename T> struct impl_IPushNotificationChannelManagerForUser;
+template <typename T> struct impl_IPushNotificationChannelManagerStatics;
+template <typename T> struct impl_IPushNotificationChannelManagerStatics2;
+template <typename T> struct impl_IPushNotificationReceivedEventArgs;
+template <typename T> struct impl_IRawNotification;
 
 }
 

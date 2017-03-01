@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_RateChangedRoutedEventHandler : implements<imp
 {
     impl_RateChangedRoutedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Media::IRateChangedRoutedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Media::IRateChangedRoutedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Media::RateChangedRoutedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Media::RateChangedRoutedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -31,11 +31,11 @@ template <typename H> struct impl_TimelineMarkerRoutedEventHandler : implements<
 {
     impl_TimelineMarkerRoutedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender, abi_arg_in<Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs> e) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender, impl::abi_arg_in<Windows::UI::Xaml::Media::ITimelineMarkerRoutedEventArgs> e) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs *>(&e));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender), *reinterpret_cast<const Windows::UI::Xaml::Media::TimelineMarkerRoutedEventArgs *>(&e));
             return S_OK;
         }
         catch (...)
@@ -132,13 +132,13 @@ struct WINRT_EBO CompositionTarget :
     Windows::UI::Xaml::Media::ICompositionTarget
 {
     CompositionTarget(std::nullptr_t) noexcept {}
-    static event_token Rendering(const Windows::Foundation::EventHandler<Windows::IInspectable> & value);
+    static event_token Rendering(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value);
     using Rendering_revoker = factory_event_revoker<ICompositionTargetStatics>;
-    static Rendering_revoker Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value);
+    static Rendering_revoker Rendering(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value);
     static void Rendering(event_token token);
-    static event_token SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::IInspectable> & value);
+    static event_token SurfaceContentsLost(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value);
     using SurfaceContentsLost_revoker = factory_event_revoker<ICompositionTargetStatics>;
-    static SurfaceContentsLost_revoker SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::IInspectable> & value);
+    static SurfaceContentsLost_revoker SurfaceContentsLost(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value);
     static void SurfaceContentsLost(event_token token);
 };
 
@@ -165,7 +165,7 @@ struct WINRT_EBO FontFamily :
     Windows::UI::Xaml::Media::IFontFamily
 {
     FontFamily(std::nullptr_t) noexcept {}
-    FontFamily(hstring_ref familyName);
+    FontFamily(hstring_view familyName);
     static Windows::UI::Xaml::Media::FontFamily XamlAutoFontFamily();
 };
 

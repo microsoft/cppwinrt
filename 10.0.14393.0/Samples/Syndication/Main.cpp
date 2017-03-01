@@ -21,7 +21,7 @@ IAsyncAction Sample()
 
 int main()
 {
-    initialize();
+    init_apartment();
 
     Sample().get();
 }

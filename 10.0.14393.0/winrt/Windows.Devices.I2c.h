@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Devices.I2c.Provider.3.h"
@@ -20,7 +23,8 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().SlaveAddress());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SlaveAddress());
             return S_OK;
         }
         catch (...)
@@ -33,6 +37,7 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SlaveAddress(value);
             return S_OK;
         }
@@ -46,7 +51,8 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().BusSpeed());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().BusSpeed());
             return S_OK;
         }
         catch (...)
@@ -59,6 +65,7 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BusSpeed(value);
             return S_OK;
         }
@@ -72,7 +79,8 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
-            *value = detach(this->shim().SharingMode());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SharingMode());
             return S_OK;
         }
         catch (...)
@@ -85,6 +93,7 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SharingMode(value);
             return S_OK;
         }
@@ -98,11 +107,12 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettings> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::I2c::II2cConnectionSettingsFactory> : produce_base<D, Windows::Devices::I2c::II2cConnectionSettingsFactory>
 {
-    HRESULT __stdcall abi_Create(int32_t slaveAddress, abi_arg_out<Windows::Devices::I2c::II2cConnectionSettings> value) noexcept override
+    HRESULT __stdcall abi_Create(int32_t slaveAddress, impl::abi_arg_out<Windows::Devices::I2c::II2cConnectionSettings> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Create(slaveAddress));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Create(slaveAddress));
             return S_OK;
         }
         catch (...)
@@ -116,11 +126,12 @@ struct produce<D, Windows::Devices::I2c::II2cConnectionSettingsFactory> : produc
 template <typename D>
 struct produce<D, Windows::Devices::I2c::II2cController> : produce_base<D, Windows::Devices::I2c::II2cController>
 {
-    HRESULT __stdcall abi_GetDevice(abi_arg_in<Windows::Devices::I2c::II2cConnectionSettings> settings, abi_arg_out<Windows::Devices::I2c::II2cDevice> device) noexcept override
+    HRESULT __stdcall abi_GetDevice(impl::abi_arg_in<Windows::Devices::I2c::II2cConnectionSettings> settings, impl::abi_arg_out<Windows::Devices::I2c::II2cDevice> device) noexcept override
     {
         try
         {
-            *device = detach(this->shim().GetDevice(*reinterpret_cast<const Windows::Devices::I2c::I2cConnectionSettings *>(&settings)));
+            typename D::abi_guard guard(this->shim());
+            *device = detach_abi(this->shim().GetDevice(*reinterpret_cast<const Windows::Devices::I2c::I2cConnectionSettings *>(&settings)));
             return S_OK;
         }
         catch (...)
@@ -134,11 +145,12 @@ struct produce<D, Windows::Devices::I2c::II2cController> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::I2c::II2cControllerStatics> : produce_base<D, Windows::Devices::I2c::II2cControllerStatics>
 {
-    HRESULT __stdcall abi_GetControllersAsync(abi_arg_in<Windows::Devices::I2c::Provider::II2cProvider> provider, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::I2c::I2cController>>> operation) noexcept override
+    HRESULT __stdcall abi_GetControllersAsync(impl::abi_arg_in<Windows::Devices::I2c::Provider::II2cProvider> provider, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::I2c::I2cController>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetControllersAsync(*reinterpret_cast<const Windows::Devices::I2c::Provider::II2cProvider *>(&provider)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetControllersAsync(*reinterpret_cast<const Windows::Devices::I2c::Provider::II2cProvider *>(&provider)));
             return S_OK;
         }
         catch (...)
@@ -148,11 +160,12 @@ struct produce<D, Windows::Devices::I2c::II2cControllerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cController>> operation) noexcept override
+    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cController>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetDefaultAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetDefaultAsync());
             return S_OK;
         }
         catch (...)
@@ -166,11 +179,12 @@ struct produce<D, Windows::Devices::I2c::II2cControllerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::Devices::I2c::II2cDevice>
 {
-    HRESULT __stdcall get_DeviceId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DeviceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DeviceId());
             return S_OK;
         }
         catch (...)
@@ -180,11 +194,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_ConnectionSettings(abi_arg_out<Windows::Devices::I2c::II2cConnectionSettings> value) noexcept override
+    HRESULT __stdcall get_ConnectionSettings(impl::abi_arg_out<Windows::Devices::I2c::II2cConnectionSettings> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ConnectionSettings());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ConnectionSettings());
             return S_OK;
         }
         catch (...)
@@ -194,11 +209,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_Write(uint32_t __bufferSize, abi_arg_in<uint8_t> * buffer) noexcept override
+    HRESULT __stdcall abi_Write(uint32_t __bufferSize, impl::abi_arg_in<uint8_t> * buffer) noexcept override
     {
         try
         {
-            this->shim().Write(array_ref<const uint8_t>(buffer, buffer + __bufferSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().Write(array_view<const uint8_t>(buffer, buffer + __bufferSize));
             return S_OK;
         }
         catch (...)
@@ -207,11 +223,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_WritePartial(uint32_t __bufferSize, abi_arg_in<uint8_t> * buffer, abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
+    HRESULT __stdcall abi_WritePartial(uint32_t __bufferSize, impl::abi_arg_in<uint8_t> * buffer, impl::abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().WritePartial(array_ref<const uint8_t>(buffer, buffer + __bufferSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().WritePartial(array_view<const uint8_t>(buffer, buffer + __bufferSize)));
             return S_OK;
         }
         catch (...)
@@ -220,10 +237,11 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_Read(uint32_t __bufferSize, abi_arg_out<uint8_t> buffer) noexcept override
+    HRESULT __stdcall abi_Read(uint32_t __bufferSize, impl::abi_arg_out<uint8_t> buffer) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Read(*buffer);
             return S_OK;
         }
@@ -233,11 +251,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_ReadPartial(uint32_t __bufferSize, abi_arg_out<uint8_t> buffer, abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
+    HRESULT __stdcall abi_ReadPartial(uint32_t __bufferSize, impl::abi_arg_out<uint8_t> buffer, impl::abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().ReadPartial(*buffer));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().ReadPartial(*buffer));
             return S_OK;
         }
         catch (...)
@@ -246,11 +265,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_WriteRead(uint32_t __writeBufferSize, abi_arg_in<uint8_t> * writeBuffer, uint32_t __readBufferSize, abi_arg_out<uint8_t> readBuffer) noexcept override
+    HRESULT __stdcall abi_WriteRead(uint32_t __writeBufferSize, impl::abi_arg_in<uint8_t> * writeBuffer, uint32_t __readBufferSize, impl::abi_arg_out<uint8_t> readBuffer) noexcept override
     {
         try
         {
-            this->shim().WriteRead(array_ref<const uint8_t>(writeBuffer, writeBuffer + __writeBufferSize), *readBuffer);
+            typename D::abi_guard guard(this->shim());
+            this->shim().WriteRead(array_view<const uint8_t>(writeBuffer, writeBuffer + __writeBufferSize), *readBuffer);
             return S_OK;
         }
         catch (...)
@@ -259,11 +279,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_WriteReadPartial(uint32_t __writeBufferSize, abi_arg_in<uint8_t> * writeBuffer, uint32_t __readBufferSize, abi_arg_out<uint8_t> readBuffer, abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
+    HRESULT __stdcall abi_WriteReadPartial(uint32_t __writeBufferSize, impl::abi_arg_in<uint8_t> * writeBuffer, uint32_t __readBufferSize, impl::abi_arg_out<uint8_t> readBuffer, impl::abi_arg_out<Windows::Devices::I2c::I2cTransferResult> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().WriteReadPartial(array_ref<const uint8_t>(writeBuffer, writeBuffer + __writeBufferSize), *readBuffer));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().WriteReadPartial(array_view<const uint8_t>(writeBuffer, writeBuffer + __writeBufferSize), *readBuffer));
             return S_OK;
         }
         catch (...)
@@ -276,11 +297,12 @@ struct produce<D, Windows::Devices::I2c::II2cDevice> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Devices::I2c::II2cDeviceStatics> : produce_base<D, Windows::Devices::I2c::II2cDeviceStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector());
             return S_OK;
         }
         catch (...)
@@ -290,11 +312,12 @@ struct produce<D, Windows::Devices::I2c::II2cDeviceStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelectorFromFriendlyName(abi_arg_in<hstring> friendlyName, abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall abi_GetDeviceSelectorFromFriendlyName(impl::abi_arg_in<hstring> friendlyName, impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetDeviceSelector(*reinterpret_cast<const hstring *>(&friendlyName)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetDeviceSelector(*reinterpret_cast<const hstring *>(&friendlyName)));
             return S_OK;
         }
         catch (...)
@@ -304,11 +327,12 @@ struct produce<D, Windows::Devices::I2c::II2cDeviceStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(abi_arg_in<hstring> deviceId, abi_arg_in<Windows::Devices::I2c::II2cConnectionSettings> settings, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice>> operation) noexcept override
+    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_in<Windows::Devices::I2c::II2cConnectionSettings> settings, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const Windows::Devices::I2c::I2cConnectionSettings *>(&settings)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const Windows::Devices::I2c::I2cConnectionSettings *>(&settings)));
             return S_OK;
         }
         catch (...)
@@ -326,135 +350,135 @@ namespace Windows::Devices::I2c {
 template <typename D> Windows::Devices::I2c::I2cConnectionSettings impl_II2cConnectionSettingsFactory<D>::Create(int32_t slaveAddress) const
 {
     Windows::Devices::I2c::I2cConnectionSettings value { nullptr };
-    check_hresult(static_cast<const II2cConnectionSettingsFactory &>(static_cast<const D &>(*this))->abi_Create(slaveAddress, put(value)));
+    check_hresult(WINRT_SHIM(II2cConnectionSettingsFactory)->abi_Create(slaveAddress, put_abi(value)));
     return value;
 }
 
 template <typename D> int32_t impl_II2cConnectionSettings<D>::SlaveAddress() const
 {
     int32_t value {};
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->get_SlaveAddress(&value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->get_SlaveAddress(&value));
     return value;
 }
 
 template <typename D> void impl_II2cConnectionSettings<D>::SlaveAddress(int32_t value) const
 {
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->put_SlaveAddress(value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->put_SlaveAddress(value));
 }
 
 template <typename D> Windows::Devices::I2c::I2cBusSpeed impl_II2cConnectionSettings<D>::BusSpeed() const
 {
     Windows::Devices::I2c::I2cBusSpeed value {};
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->get_BusSpeed(&value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->get_BusSpeed(&value));
     return value;
 }
 
 template <typename D> void impl_II2cConnectionSettings<D>::BusSpeed(Windows::Devices::I2c::I2cBusSpeed value) const
 {
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->put_BusSpeed(value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->put_BusSpeed(value));
 }
 
 template <typename D> Windows::Devices::I2c::I2cSharingMode impl_II2cConnectionSettings<D>::SharingMode() const
 {
     Windows::Devices::I2c::I2cSharingMode value {};
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->get_SharingMode(&value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->get_SharingMode(&value));
     return value;
 }
 
 template <typename D> void impl_II2cConnectionSettings<D>::SharingMode(Windows::Devices::I2c::I2cSharingMode value) const
 {
-    check_hresult(static_cast<const II2cConnectionSettings &>(static_cast<const D &>(*this))->put_SharingMode(value));
+    check_hresult(WINRT_SHIM(II2cConnectionSettings)->put_SharingMode(value));
 }
 
 template <typename D> hstring impl_II2cDeviceStatics<D>::GetDeviceSelector() const
 {
     hstring value;
-    check_hresult(static_cast<const II2cDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelector(put(value)));
+    check_hresult(WINRT_SHIM(II2cDeviceStatics)->abi_GetDeviceSelector(put_abi(value)));
     return value;
 }
 
-template <typename D> hstring impl_II2cDeviceStatics<D>::GetDeviceSelector(hstring_ref friendlyName) const
+template <typename D> hstring impl_II2cDeviceStatics<D>::GetDeviceSelector(hstring_view friendlyName) const
 {
     hstring value;
-    check_hresult(static_cast<const II2cDeviceStatics &>(static_cast<const D &>(*this))->abi_GetDeviceSelectorFromFriendlyName(get(friendlyName), put(value)));
+    check_hresult(WINRT_SHIM(II2cDeviceStatics)->abi_GetDeviceSelectorFromFriendlyName(get_abi(friendlyName), put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> impl_II2cDeviceStatics<D>::FromIdAsync(hstring_ref deviceId, const Windows::Devices::I2c::I2cConnectionSettings & settings) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> impl_II2cDeviceStatics<D>::FromIdAsync(hstring_view deviceId, const Windows::Devices::I2c::I2cConnectionSettings & settings) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> operation;
-    check_hresult(static_cast<const II2cDeviceStatics &>(static_cast<const D &>(*this))->abi_FromIdAsync(get(deviceId), get(settings), put(operation)));
+    check_hresult(WINRT_SHIM(II2cDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), get_abi(settings), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Devices::I2c::I2cDevice impl_II2cController<D>::GetDevice(const Windows::Devices::I2c::I2cConnectionSettings & settings) const
 {
     Windows::Devices::I2c::I2cDevice device { nullptr };
-    check_hresult(static_cast<const II2cController &>(static_cast<const D &>(*this))->abi_GetDevice(get(settings), put(device)));
+    check_hresult(WINRT_SHIM(II2cController)->abi_GetDevice(get_abi(settings), put_abi(device)));
     return device;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::I2c::I2cController>> impl_II2cControllerStatics<D>::GetControllersAsync(const Windows::Devices::I2c::Provider::II2cProvider & provider) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::I2c::I2cController>> operation;
-    check_hresult(static_cast<const II2cControllerStatics &>(static_cast<const D &>(*this))->abi_GetControllersAsync(get(provider), put(operation)));
+    check_hresult(WINRT_SHIM(II2cControllerStatics)->abi_GetControllersAsync(get_abi(provider), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cController> impl_II2cControllerStatics<D>::GetDefaultAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cController> operation;
-    check_hresult(static_cast<const II2cControllerStatics &>(static_cast<const D &>(*this))->abi_GetDefaultAsync(put(operation)));
+    check_hresult(WINRT_SHIM(II2cControllerStatics)->abi_GetDefaultAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_II2cDevice<D>::DeviceId() const
 {
     hstring value;
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->get_DeviceId(put(value)));
+    check_hresult(WINRT_SHIM(II2cDevice)->get_DeviceId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Devices::I2c::I2cConnectionSettings impl_II2cDevice<D>::ConnectionSettings() const
 {
     Windows::Devices::I2c::I2cConnectionSettings value { nullptr };
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->get_ConnectionSettings(put(value)));
+    check_hresult(WINRT_SHIM(II2cDevice)->get_ConnectionSettings(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_II2cDevice<D>::Write(array_ref<const uint8_t> buffer) const
+template <typename D> void impl_II2cDevice<D>::Write(array_view<const uint8_t> buffer) const
 {
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_Write(buffer.size(), get(buffer)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_Write(buffer.size(), get_abi(buffer)));
 }
 
-template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::WritePartial(array_ref<const uint8_t> buffer) const
+template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::WritePartial(array_view<const uint8_t> buffer) const
 {
     Windows::Devices::I2c::I2cTransferResult result {};
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_WritePartial(buffer.size(), get(buffer), put(result)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_WritePartial(buffer.size(), get_abi(buffer), put_abi(result)));
     return result;
 }
 
-template <typename D> void impl_II2cDevice<D>::Read(array_ref<uint8_t> buffer) const
+template <typename D> void impl_II2cDevice<D>::Read(array_view<uint8_t> buffer) const
 {
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_Read(buffer.size(), get(buffer)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_Read(buffer.size(), get_abi(buffer)));
 }
 
-template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::ReadPartial(array_ref<uint8_t> buffer) const
+template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::ReadPartial(array_view<uint8_t> buffer) const
 {
     Windows::Devices::I2c::I2cTransferResult result {};
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_ReadPartial(buffer.size(), get(buffer), put(result)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_ReadPartial(buffer.size(), get_abi(buffer), put_abi(result)));
     return result;
 }
 
-template <typename D> void impl_II2cDevice<D>::WriteRead(array_ref<const uint8_t> writeBuffer, array_ref<uint8_t> readBuffer) const
+template <typename D> void impl_II2cDevice<D>::WriteRead(array_view<const uint8_t> writeBuffer, array_view<uint8_t> readBuffer) const
 {
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_WriteRead(writeBuffer.size(), get(writeBuffer), readBuffer.size(), get(readBuffer)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_WriteRead(writeBuffer.size(), get_abi(writeBuffer), readBuffer.size(), get_abi(readBuffer)));
 }
 
-template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::WriteReadPartial(array_ref<const uint8_t> writeBuffer, array_ref<uint8_t> readBuffer) const
+template <typename D> Windows::Devices::I2c::I2cTransferResult impl_II2cDevice<D>::WriteReadPartial(array_view<const uint8_t> writeBuffer, array_view<uint8_t> readBuffer) const
 {
     Windows::Devices::I2c::I2cTransferResult result {};
-    check_hresult(static_cast<const II2cDevice &>(static_cast<const D &>(*this))->abi_WriteReadPartial(writeBuffer.size(), get(writeBuffer), readBuffer.size(), get(readBuffer), put(result)));
+    check_hresult(WINRT_SHIM(II2cDevice)->abi_WriteReadPartial(writeBuffer.size(), get_abi(writeBuffer), readBuffer.size(), get_abi(readBuffer), put_abi(result)));
     return result;
 }
 
@@ -477,12 +501,12 @@ inline hstring I2cDevice::GetDeviceSelector()
     return get_activation_factory<I2cDevice, II2cDeviceStatics>().GetDeviceSelector();
 }
 
-inline hstring I2cDevice::GetDeviceSelector(hstring_ref friendlyName)
+inline hstring I2cDevice::GetDeviceSelector(hstring_view friendlyName)
 {
     return get_activation_factory<I2cDevice, II2cDeviceStatics>().GetDeviceSelector(friendlyName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> I2cDevice::FromIdAsync(hstring_ref deviceId, const Windows::Devices::I2c::I2cConnectionSettings & settings)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> I2cDevice::FromIdAsync(hstring_view deviceId, const Windows::Devices::I2c::I2cConnectionSettings & settings)
 {
     return get_activation_factory<I2cDevice, II2cDeviceStatics>().FromIdAsync(deviceId, settings);
 }
@@ -490,3 +514,86 @@ inline Windows::Foundation::IAsyncOperation<Windows::Devices::I2c::I2cDevice> I2
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cConnectionSettings>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cConnectionSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cConnectionSettingsFactory>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cConnectionSettingsFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cController>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cController & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cControllerStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cControllerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::II2cDeviceStatics>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::II2cDeviceStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::I2cConnectionSettings>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::I2cConnectionSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::I2cController>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::I2cController & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Devices::I2c::I2cDevice>
+{
+    size_t operator()(const winrt::Windows::Devices::I2c::I2cDevice & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -101,7 +101,7 @@ struct WINRT_EBO PerceptionColorFrameSource :
     PerceptionColorFrameSource(std::nullptr_t) noexcept {}
     static Windows::Devices::Perception::PerceptionColorFrameSourceWatcher CreateWatcher();
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::PerceptionColorFrameSource>> FindAllAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionColorFrameSource> FromIdAsync(hstring_ref id);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionColorFrameSource> FromIdAsync(hstring_view id);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Perception::PerceptionFrameSourceAccessStatus> RequestAccessAsync();
 };
 
@@ -166,7 +166,7 @@ struct WINRT_EBO PerceptionDepthFrameSource :
     PerceptionDepthFrameSource(std::nullptr_t) noexcept {}
     static Windows::Devices::Perception::PerceptionDepthFrameSourceWatcher CreateWatcher();
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::PerceptionDepthFrameSource>> FindAllAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionDepthFrameSource> FromIdAsync(hstring_ref id);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionDepthFrameSource> FromIdAsync(hstring_view id);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Perception::PerceptionFrameSourceAccessStatus> RequestAccessAsync();
 };
 
@@ -225,7 +225,7 @@ struct WINRT_EBO PerceptionInfraredFrameSource :
     PerceptionInfraredFrameSource(std::nullptr_t) noexcept {}
     static Windows::Devices::Perception::PerceptionInfraredFrameSourceWatcher CreateWatcher();
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::PerceptionInfraredFrameSource>> FindAllAsync();
-    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionInfraredFrameSource> FromIdAsync(hstring_ref id);
+    static Windows::Foundation::IAsyncOperation<Windows::Devices::Perception::PerceptionInfraredFrameSource> FromIdAsync(hstring_view id);
     static Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Perception::PerceptionFrameSourceAccessStatus> RequestAccessAsync();
 };
 

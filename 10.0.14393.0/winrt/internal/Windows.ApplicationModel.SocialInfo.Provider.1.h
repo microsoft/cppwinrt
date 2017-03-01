@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -15,7 +15,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::ApplicationModel::SocialInfo::Provider {
 
-struct __declspec(uuid("3cde9dc9-4800-46cd-869b-1973ec685bde")) __declspec(novtable) ISocialDashboardItemUpdater : Windows::IInspectable
+struct __declspec(uuid("3cde9dc9-4800-46cd-869b-1973ec685bde")) __declspec(novtable) ISocialDashboardItemUpdater : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_OwnerRemoteId(hstring * value) = 0;
     virtual HRESULT __stdcall get_Content(Windows::ApplicationModel::SocialInfo::ISocialFeedContent ** value) = 0;
@@ -28,7 +28,7 @@ struct __declspec(uuid("3cde9dc9-4800-46cd-869b-1973ec685bde")) __declspec(novta
     virtual HRESULT __stdcall put_TargetUri(Windows::Foundation::IUriRuntimeClass * value) = 0;
 };
 
-struct __declspec(uuid("7a0c0aa7-ed89-4bd5-a8d9-15f4d9861c10")) __declspec(novtable) ISocialFeedUpdater : Windows::IInspectable
+struct __declspec(uuid("7a0c0aa7-ed89-4bd5-a8d9-15f4d9861c10")) __declspec(novtable) ISocialFeedUpdater : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_OwnerRemoteId(hstring * value) = 0;
     virtual HRESULT __stdcall get_Kind(winrt::Windows::ApplicationModel::SocialInfo::SocialFeedKind * value) = 0;
@@ -36,7 +36,7 @@ struct __declspec(uuid("7a0c0aa7-ed89-4bd5-a8d9-15f4d9861c10")) __declspec(novta
     virtual HRESULT __stdcall abi_CommitAsync(Windows::Foundation::IAsyncAction ** operation) = 0;
 };
 
-struct __declspec(uuid("1b88e52b-7787-48d6-aa12-d8e8f47ab85a")) __declspec(novtable) ISocialInfoProviderManagerStatics : Windows::IInspectable
+struct __declspec(uuid("1b88e52b-7787-48d6-aa12-d8e8f47ab85a")) __declspec(novtable) ISocialInfoProviderManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_CreateSocialFeedUpdaterAsync(winrt::Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, winrt::Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, hstring ownerRemoteId, Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> ** operation) = 0;
     virtual HRESULT __stdcall abi_CreateDashboardItemUpdaterAsync(hstring ownerRemoteId, Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> ** operation) = 0;
@@ -57,9 +57,39 @@ template <> struct traits<Windows::ApplicationModel::SocialInfo::Provider::Socia
 
 namespace Windows::ApplicationModel::SocialInfo::Provider {
 
-template <typename T> struct impl_ISocialDashboardItemUpdater;
-template <typename T> struct impl_ISocialFeedUpdater;
-template <typename T> struct impl_ISocialInfoProviderManagerStatics;
+template <typename D>
+struct WINRT_EBO impl_ISocialDashboardItemUpdater
+{
+    hstring OwnerRemoteId() const;
+    Windows::ApplicationModel::SocialInfo::SocialFeedContent Content() const;
+    Windows::Foundation::DateTime Timestamp() const;
+    void Timestamp(const Windows::Foundation::DateTime & value) const;
+    void Thumbnail(const Windows::ApplicationModel::SocialInfo::SocialItemThumbnail & value) const;
+    Windows::ApplicationModel::SocialInfo::SocialItemThumbnail Thumbnail() const;
+    Windows::Foundation::IAsyncAction CommitAsync() const;
+    Windows::Foundation::Uri TargetUri() const;
+    void TargetUri(const Windows::Foundation::Uri & value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocialFeedUpdater
+{
+    hstring OwnerRemoteId() const;
+    Windows::ApplicationModel::SocialInfo::SocialFeedKind Kind() const;
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> Items() const;
+    Windows::Foundation::IAsyncAction CommitAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_ISocialInfoProviderManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, hstring_view ownerRemoteId) const;
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> CreateDashboardItemUpdaterAsync(hstring_view ownerRemoteId) const;
+    void UpdateBadgeCountValue(hstring_view itemRemoteId, int32_t newCount) const;
+    void ReportNewContentAvailable(hstring_view contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind kind) const;
+    Windows::Foundation::IAsyncOperation<bool> ProvisionAsync() const;
+    Windows::Foundation::IAsyncAction DeprovisionAsync() const;
+};
 
 }
 

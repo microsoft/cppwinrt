@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -33,7 +33,7 @@ using ImageScannerResolution = ABI::Windows::Devices::Scanners::ImageScannerReso
 
 namespace ABI::Windows::Devices::Scanners {
 
-struct __declspec(uuid("53a88f78-5298-48a0-8da3-8087519665e0")) __declspec(novtable) IImageScanner : Windows::IInspectable
+struct __declspec(uuid("53a88f78-5298-48a0-8da3-8087519665e0")) __declspec(novtable) IImageScanner : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DeviceId(hstring * value) = 0;
     virtual HRESULT __stdcall get_DefaultScanSource(winrt::Windows::Devices::Scanners::ImageScannerScanSource * value) = 0;
@@ -46,7 +46,7 @@ struct __declspec(uuid("53a88f78-5298-48a0-8da3-8087519665e0")) __declspec(novta
     virtual HRESULT __stdcall abi_ScanFilesToFolderAsync(winrt::Windows::Devices::Scanners::ImageScannerScanSource scanSource, Windows::Storage::IStorageFolder * storageFolder, Windows::Foundation::IAsyncOperationWithProgress<Windows::Devices::Scanners::ImageScannerScanResult, uint32_t> ** operation) = 0;
 };
 
-struct __declspec(uuid("74bdacee-fa97-4c17-8280-40e39c6dcc67")) __declspec(novtable) IImageScannerFeederConfiguration : Windows::IInspectable
+struct __declspec(uuid("74bdacee-fa97-4c17-8280-40e39c6dcc67")) __declspec(novtable) IImageScannerFeederConfiguration : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_CanAutoDetectPageSize(bool * value) = 0;
     virtual HRESULT __stdcall get_AutoDetectPageSize(bool * value) = 0;
@@ -67,7 +67,7 @@ struct __declspec(uuid("74bdacee-fa97-4c17-8280-40e39c6dcc67")) __declspec(novta
     virtual HRESULT __stdcall put_ScanAhead(bool value) = 0;
 };
 
-struct __declspec(uuid("ae275d11-dadf-4010-bf10-cca5c83dcbb0")) __declspec(novtable) IImageScannerFormatConfiguration : Windows::IInspectable
+struct __declspec(uuid("ae275d11-dadf-4010-bf10-cca5c83dcbb0")) __declspec(novtable) IImageScannerFormatConfiguration : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_DefaultFormat(winrt::Windows::Devices::Scanners::ImageScannerFormat * value) = 0;
     virtual HRESULT __stdcall get_Format(winrt::Windows::Devices::Scanners::ImageScannerFormat * value) = 0;
@@ -75,18 +75,18 @@ struct __declspec(uuid("ae275d11-dadf-4010-bf10-cca5c83dcbb0")) __declspec(novta
     virtual HRESULT __stdcall abi_IsFormatSupported(winrt::Windows::Devices::Scanners::ImageScannerFormat value, bool * result) = 0;
 };
 
-struct __declspec(uuid("08b7fe8e-8891-441d-be9c-176fa109c8bb")) __declspec(novtable) IImageScannerPreviewResult : Windows::IInspectable
+struct __declspec(uuid("08b7fe8e-8891-441d-be9c-176fa109c8bb")) __declspec(novtable) IImageScannerPreviewResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Succeeded(bool * value) = 0;
     virtual HRESULT __stdcall get_Format(winrt::Windows::Devices::Scanners::ImageScannerFormat * value) = 0;
 };
 
-struct __declspec(uuid("c91624cd-9037-4e48-84c1-ac0975076bc5")) __declspec(novtable) IImageScannerScanResult : Windows::IInspectable
+struct __declspec(uuid("c91624cd-9037-4e48-84c1-ac0975076bc5")) __declspec(novtable) IImageScannerScanResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ScannedFiles(Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile> ** value) = 0;
 };
 
-struct __declspec(uuid("bfb50055-0b44-4c82-9e89-205f9c234e59")) __declspec(novtable) IImageScannerSourceConfiguration : Windows::IInspectable
+struct __declspec(uuid("bfb50055-0b44-4c82-9e89-205f9c234e59")) __declspec(novtable) IImageScannerSourceConfiguration : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_MinScanArea(Windows::Foundation::Size * value) = 0;
     virtual HRESULT __stdcall get_MaxScanArea(Windows::Foundation::Size * value) = 0;
@@ -119,7 +119,7 @@ struct __declspec(uuid("bfb50055-0b44-4c82-9e89-205f9c234e59")) __declspec(novta
     virtual HRESULT __stdcall put_Contrast(int32_t value) = 0;
 };
 
-struct __declspec(uuid("bc57e70e-d804-4477-9fb5-b911b5473897")) __declspec(novtable) IImageScannerStatics : Windows::IInspectable
+struct __declspec(uuid("bc57e70e-d804-4477-9fb5-b911b5473897")) __declspec(novtable) IImageScannerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FromIdAsync(hstring deviceId, Windows::Foundation::IAsyncOperation<Windows::Devices::Scanners::ImageScanner> ** asyncInfo) = 0;
     virtual HRESULT __stdcall abi_GetDeviceSelector(hstring * selector) = 0;
@@ -140,13 +140,104 @@ template <> struct traits<Windows::Devices::Scanners::ImageScannerScanResult> { 
 
 namespace Windows::Devices::Scanners {
 
-template <typename T> struct impl_IImageScanner;
-template <typename T> struct impl_IImageScannerFeederConfiguration;
-template <typename T> struct impl_IImageScannerFormatConfiguration;
-template <typename T> struct impl_IImageScannerPreviewResult;
-template <typename T> struct impl_IImageScannerScanResult;
-template <typename T> struct impl_IImageScannerSourceConfiguration;
-template <typename T> struct impl_IImageScannerStatics;
+template <typename D>
+struct WINRT_EBO impl_IImageScanner
+{
+    hstring DeviceId() const;
+    Windows::Devices::Scanners::ImageScannerScanSource DefaultScanSource() const;
+    bool IsScanSourceSupported(Windows::Devices::Scanners::ImageScannerScanSource value) const;
+    Windows::Devices::Scanners::ImageScannerFlatbedConfiguration FlatbedConfiguration() const;
+    Windows::Devices::Scanners::ImageScannerFeederConfiguration FeederConfiguration() const;
+    Windows::Devices::Scanners::ImageScannerAutoConfiguration AutoConfiguration() const;
+    bool IsPreviewSupported(Windows::Devices::Scanners::ImageScannerScanSource scanSource) const;
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Scanners::ImageScannerPreviewResult> ScanPreviewToStreamAsync(Windows::Devices::Scanners::ImageScannerScanSource scanSource, const Windows::Storage::Streams::IRandomAccessStream & targetStream) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Devices::Scanners::ImageScannerScanResult, uint32_t> ScanFilesToFolderAsync(Windows::Devices::Scanners::ImageScannerScanSource scanSource, const Windows::Storage::StorageFolder & storageFolder) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerFeederConfiguration
+{
+    bool CanAutoDetectPageSize() const;
+    bool AutoDetectPageSize() const;
+    void AutoDetectPageSize(bool value) const;
+    Windows::Graphics::Printing::PrintMediaSize PageSize() const;
+    void PageSize(Windows::Graphics::Printing::PrintMediaSize value) const;
+    Windows::Graphics::Printing::PrintOrientation PageOrientation() const;
+    void PageOrientation(Windows::Graphics::Printing::PrintOrientation value) const;
+    Windows::Foundation::Size PageSizeDimensions() const;
+    bool IsPageSizeSupported(Windows::Graphics::Printing::PrintMediaSize pageSize, Windows::Graphics::Printing::PrintOrientation pageOrientation) const;
+    uint32_t MaxNumberOfPages() const;
+    void MaxNumberOfPages(uint32_t value) const;
+    bool CanScanDuplex() const;
+    bool Duplex() const;
+    void Duplex(bool value) const;
+    bool CanScanAhead() const;
+    bool ScanAhead() const;
+    void ScanAhead(bool value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerFormatConfiguration
+{
+    Windows::Devices::Scanners::ImageScannerFormat DefaultFormat() const;
+    Windows::Devices::Scanners::ImageScannerFormat Format() const;
+    void Format(Windows::Devices::Scanners::ImageScannerFormat value) const;
+    bool IsFormatSupported(Windows::Devices::Scanners::ImageScannerFormat value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerPreviewResult
+{
+    bool Succeeded() const;
+    Windows::Devices::Scanners::ImageScannerFormat Format() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerScanResult
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile> ScannedFiles() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerSourceConfiguration
+{
+    Windows::Foundation::Size MinScanArea() const;
+    Windows::Foundation::Size MaxScanArea() const;
+    Windows::Foundation::Rect SelectedScanRegion() const;
+    void SelectedScanRegion(const Windows::Foundation::Rect & value) const;
+    Windows::Devices::Scanners::ImageScannerAutoCroppingMode AutoCroppingMode() const;
+    void AutoCroppingMode(Windows::Devices::Scanners::ImageScannerAutoCroppingMode value) const;
+    bool IsAutoCroppingModeSupported(Windows::Devices::Scanners::ImageScannerAutoCroppingMode value) const;
+    Windows::Devices::Scanners::ImageScannerResolution MinResolution() const;
+    Windows::Devices::Scanners::ImageScannerResolution MaxResolution() const;
+    Windows::Devices::Scanners::ImageScannerResolution OpticalResolution() const;
+    Windows::Devices::Scanners::ImageScannerResolution DesiredResolution() const;
+    void DesiredResolution(const Windows::Devices::Scanners::ImageScannerResolution & value) const;
+    Windows::Devices::Scanners::ImageScannerResolution ActualResolution() const;
+    Windows::Devices::Scanners::ImageScannerColorMode DefaultColorMode() const;
+    Windows::Devices::Scanners::ImageScannerColorMode ColorMode() const;
+    void ColorMode(Windows::Devices::Scanners::ImageScannerColorMode value) const;
+    bool IsColorModeSupported(Windows::Devices::Scanners::ImageScannerColorMode value) const;
+    int32_t MinBrightness() const;
+    int32_t MaxBrightness() const;
+    uint32_t BrightnessStep() const;
+    int32_t DefaultBrightness() const;
+    int32_t Brightness() const;
+    void Brightness(int32_t value) const;
+    int32_t MinContrast() const;
+    int32_t MaxContrast() const;
+    uint32_t ContrastStep() const;
+    int32_t DefaultContrast() const;
+    int32_t Contrast() const;
+    void Contrast(int32_t value) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IImageScannerStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Scanners::ImageScanner> FromIdAsync(hstring_view deviceId) const;
+    hstring GetDeviceSelector() const;
+};
 
 }
 

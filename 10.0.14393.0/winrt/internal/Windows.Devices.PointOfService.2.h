@@ -1,10 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 #include "Windows.Devices.PointOfService.1.h"
-#include "Windows.Foundation.2.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 
@@ -19,6 +19,11 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
 #define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
@@ -39,6 +44,11 @@ template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -172,7 +182,7 @@ template <> struct __declspec(uuid("64662ef4-cb0e-5c6f-a820-7d0a769554c9")) __de
 
 #ifndef WINRT_GENERIC_c54fbda4_5e0b_54c3_94f2_83351e41c46f
 #define WINRT_GENERIC_c54fbda4_5e0b_54c3_94f2_83351e41c46f
-template <> struct __declspec(uuid("c54fbda4-5e0b-54c3-94f2-83351e41c46f")) __declspec(novtable) TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::IInspectable> {};
+template <> struct __declspec(uuid("c54fbda4-5e0b-54c3-94f2-83351e41c46f")) __declspec(novtable) TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_4f64e49a_bd8c_549d_970c_a5a250bd27ca
@@ -227,8 +237,23 @@ template <> struct __declspec(uuid("31424f6f-cfeb-5031-8a95-bea59b09e584")) __de
 
 #ifndef WINRT_GENERIC_db886581_2462_5c81_880c_06112ca70012
 #define WINRT_GENERIC_db886581_2462_5c81_880c_06112ca70012
-template <> struct __declspec(uuid("db886581-2462-5c81-880c-06112ca70012")) __declspec(novtable) TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::IInspectable> {};
+template <> struct __declspec(uuid("db886581-2462-5c81-880c-06112ca70012")) __declspec(novtable) TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::Foundation::IInspectable> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_534832ed_2a03_5604_890d_5a928cd427b9
+#define WINRT_GENERIC_534832ed_2a03_5604_890d_5a928cd427b9
+template <> struct __declspec(uuid("534832ed-2a03-5604-890d-5a928cd427b9")) __declspec(novtable) IVector<uint32_t> : impl_IVector<uint32_t> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 #define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -289,6 +314,11 @@ template <> struct __declspec(uuid("946c2d64-22d4-552d-abfb-9eb341bd67f3")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_6e92e194_9a46_55b3_8db1_490661f27f9d
+#define WINRT_GENERIC_6e92e194_9a46_55b3_8db1_490661f27f9d
+template <> struct __declspec(uuid("6e92e194-9a46-55b3-8db1-490661f27f9d")) __declspec(novtable) IVector<winrt::Windows::Devices::PointOfService::PosPrinterRotation> : impl_IVector<winrt::Windows::Devices::PointOfService::PosPrinterRotation> {};
+#endif
 
 #ifndef WINRT_GENERIC_f687ef7c_b11e_56c3_9158_e6ba15bd521b
 #define WINRT_GENERIC_f687ef7c_b11e_56c3_9158_e6ba15bd521b
@@ -370,1240 +400,410 @@ template <> struct __declspec(uuid("55772f29-da64-5c87-871c-074337a84573")) __de
 
 namespace Windows::Devices::PointOfService {
 
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScanner
-{
-    hstring DeviceId() const;
-    Windows::Devices::PointOfService::BarcodeScannerCapabilities Capabilities() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::ClaimedBarcodeScanner> ClaimScannerAsync() const;
-    Windows::Foundation::IAsyncOperation<hstring> CheckHealthAsync(Windows::Devices::PointOfService::UnifiedPosHealthCheckLevel level) const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<uint32_t>> GetSupportedSymbologiesAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> IsSymbologySupportedAsync(uint32_t barcodeSymbology) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> RetrieveStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Foundation::Collections::IVectorView<hstring> GetSupportedProfiles() const;
-    bool IsProfileSupported(hstring_ref profile) const;
-    event_token StatusUpdated(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::BarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerStatusUpdatedEventArgs> & handler) const;
-    using StatusUpdated_revoker = event_revoker<IBarcodeScanner>;
-    StatusUpdated_revoker StatusUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::BarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerStatusUpdatedEventArgs> & handler) const;
-    void StatusUpdated(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScanner2
-{
-    hstring VideoDeviceId() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerCapabilities
-{
-    Windows::Devices::PointOfService::UnifiedPosPowerReportingType PowerReportingType() const;
-    bool IsStatisticsReportingSupported() const;
-    bool IsStatisticsUpdatingSupported() const;
-    bool IsImagePreviewSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerCapabilities1
-{
-    bool IsSoftwareTriggerSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerDataReceivedEventArgs
-{
-    Windows::Devices::PointOfService::BarcodeScannerReport Report() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerErrorOccurredEventArgs
-{
-    Windows::Devices::PointOfService::BarcodeScannerReport PartialInputData() const;
-    bool IsRetriable() const;
-    Windows::Devices::PointOfService::UnifiedPosErrorData ErrorData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerImagePreviewReceivedEventArgs
-{
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType Preview() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerReport
-{
-    uint32_t ScanDataType() const;
-    Windows::Storage::Streams::IBuffer ScanData() const;
-    Windows::Storage::Streams::IBuffer ScanDataLabel() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::BarcodeScanner> GetDefaultAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::BarcodeScanner> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeScannerStatusUpdatedEventArgs
-{
-    Windows::Devices::PointOfService::BarcodeScannerStatus Status() const;
-    uint32_t ExtendedStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IBarcodeSymbologiesStatics
-{
-    uint32_t Unknown() const;
-    uint32_t Ean8() const;
-    uint32_t Ean8Add2() const;
-    uint32_t Ean8Add5() const;
-    uint32_t Eanv() const;
-    uint32_t EanvAdd2() const;
-    uint32_t EanvAdd5() const;
-    uint32_t Ean13() const;
-    uint32_t Ean13Add2() const;
-    uint32_t Ean13Add5() const;
-    uint32_t Isbn() const;
-    uint32_t IsbnAdd5() const;
-    uint32_t Ismn() const;
-    uint32_t IsmnAdd2() const;
-    uint32_t IsmnAdd5() const;
-    uint32_t Issn() const;
-    uint32_t IssnAdd2() const;
-    uint32_t IssnAdd5() const;
-    uint32_t Ean99() const;
-    uint32_t Ean99Add2() const;
-    uint32_t Ean99Add5() const;
-    uint32_t Upca() const;
-    uint32_t UpcaAdd2() const;
-    uint32_t UpcaAdd5() const;
-    uint32_t Upce() const;
-    uint32_t UpceAdd2() const;
-    uint32_t UpceAdd5() const;
-    uint32_t UpcCoupon() const;
-    uint32_t TfStd() const;
-    uint32_t TfDis() const;
-    uint32_t TfInt() const;
-    uint32_t TfInd() const;
-    uint32_t TfMat() const;
-    uint32_t TfIata() const;
-    uint32_t Gs1DatabarType1() const;
-    uint32_t Gs1DatabarType2() const;
-    uint32_t Gs1DatabarType3() const;
-    uint32_t Code39() const;
-    uint32_t Code39Ex() const;
-    uint32_t Trioptic39() const;
-    uint32_t Code32() const;
-    uint32_t Pzn() const;
-    uint32_t Code93() const;
-    uint32_t Code93Ex() const;
-    uint32_t Code128() const;
-    uint32_t Gs1128() const;
-    uint32_t Gs1128Coupon() const;
-    uint32_t UccEan128() const;
-    uint32_t Sisac() const;
-    uint32_t Isbt() const;
-    uint32_t Codabar() const;
-    uint32_t Code11() const;
-    uint32_t Msi() const;
-    uint32_t Plessey() const;
-    uint32_t Telepen() const;
-    uint32_t Code16k() const;
-    uint32_t CodablockA() const;
-    uint32_t CodablockF() const;
-    uint32_t Codablock128() const;
-    uint32_t Code49() const;
-    uint32_t Aztec() const;
-    uint32_t DataCode() const;
-    uint32_t DataMatrix() const;
-    uint32_t HanXin() const;
-    uint32_t Maxicode() const;
-    uint32_t MicroPdf417() const;
-    uint32_t MicroQr() const;
-    uint32_t Pdf417() const;
-    uint32_t Qr() const;
-    uint32_t MsTag() const;
-    uint32_t Ccab() const;
-    uint32_t Ccc() const;
-    uint32_t Tlc39() const;
-    uint32_t AusPost() const;
-    uint32_t CanPost() const;
-    uint32_t ChinaPost() const;
-    uint32_t DutchKix() const;
-    uint32_t InfoMail() const;
-    uint32_t ItalianPost25() const;
-    uint32_t ItalianPost39() const;
-    uint32_t JapanPost() const;
-    uint32_t KoreanPost() const;
-    uint32_t SwedenPost() const;
-    uint32_t UkPost() const;
-    uint32_t UsIntelligent() const;
-    uint32_t UsIntelligentPkg() const;
-    uint32_t UsPlanet() const;
-    uint32_t UsPostNet() const;
-    uint32_t Us4StateFics() const;
-    uint32_t OcrA() const;
-    uint32_t OcrB() const;
-    uint32_t Micr() const;
-    uint32_t ExtendedBase() const;
-    hstring GetName(uint32_t scanDataType) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawer
-{
-    hstring DeviceId() const;
-    Windows::Devices::PointOfService::CashDrawerCapabilities Capabilities() const;
-    Windows::Devices::PointOfService::CashDrawerStatus Status() const;
-    bool IsDrawerOpen() const;
-    Windows::Devices::PointOfService::CashDrawerEventSource DrawerEventSource() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::ClaimedCashDrawer> ClaimDrawerAsync() const;
-    Windows::Foundation::IAsyncOperation<hstring> CheckHealthAsync(Windows::Devices::PointOfService::UnifiedPosHealthCheckLevel level) const;
-    Windows::Foundation::IAsyncOperation<hstring> GetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    event_token StatusUpdated(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawer, Windows::Devices::PointOfService::CashDrawerStatusUpdatedEventArgs> & handler) const;
-    using StatusUpdated_revoker = event_revoker<ICashDrawer>;
-    StatusUpdated_revoker StatusUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawer, Windows::Devices::PointOfService::CashDrawerStatusUpdatedEventArgs> & handler) const;
-    void StatusUpdated(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerCapabilities
-{
-    Windows::Devices::PointOfService::UnifiedPosPowerReportingType PowerReportingType() const;
-    bool IsStatisticsReportingSupported() const;
-    bool IsStatisticsUpdatingSupported() const;
-    bool IsStatusReportingSupported() const;
-    bool IsStatusMultiDrawerDetectSupported() const;
-    bool IsDrawerOpenSensorAvailable() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerCloseAlarm
-{
-    void AlarmTimeout(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan AlarmTimeout() const;
-    void BeepFrequency(uint32_t value) const;
-    uint32_t BeepFrequency() const;
-    void BeepDuration(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan BeepDuration() const;
-    void BeepDelay(const Windows::Foundation::TimeSpan & value) const;
-    Windows::Foundation::TimeSpan BeepDelay() const;
-    event_token AlarmTimeoutExpired(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::IInspectable> & handler) const;
-    using AlarmTimeoutExpired_revoker = event_revoker<ICashDrawerCloseAlarm>;
-    AlarmTimeoutExpired_revoker AlarmTimeoutExpired(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerCloseAlarm, Windows::IInspectable> & handler) const;
-    void AlarmTimeoutExpired(event_token token) const;
-    Windows::Foundation::IAsyncOperation<bool> StartAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerEventSource
-{
-    event_token DrawerClosed(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerEventSource, Windows::Devices::PointOfService::CashDrawerClosedEventArgs> & handler) const;
-    using DrawerClosed_revoker = event_revoker<ICashDrawerEventSource>;
-    DrawerClosed_revoker DrawerClosed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerEventSource, Windows::Devices::PointOfService::CashDrawerClosedEventArgs> & handler) const;
-    void DrawerClosed(event_token token) const;
-    event_token DrawerOpened(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerEventSource, Windows::Devices::PointOfService::CashDrawerOpenedEventArgs> & handler) const;
-    using DrawerOpened_revoker = event_revoker<ICashDrawerEventSource>;
-    DrawerOpened_revoker DrawerOpened(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::CashDrawerEventSource, Windows::Devices::PointOfService::CashDrawerOpenedEventArgs> & handler) const;
-    void DrawerOpened(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerEventSourceEventArgs
-{
-    Windows::Devices::PointOfService::CashDrawer CashDrawer() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::CashDrawer> GetDefaultAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::CashDrawer> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerStatus
-{
-    Windows::Devices::PointOfService::CashDrawerStatusKind StatusKind() const;
-    uint32_t ExtendedStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICashDrawerStatusUpdatedEventArgs
-{
-    Windows::Devices::PointOfService::CashDrawerStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedBarcodeScanner
-{
-    hstring DeviceId() const;
-    bool IsEnabled() const;
-    void IsDisabledOnDataReceived(bool value) const;
-    bool IsDisabledOnDataReceived() const;
-    void IsDecodeDataEnabled(bool value) const;
-    bool IsDecodeDataEnabled() const;
-    Windows::Foundation::IAsyncAction EnableAsync() const;
-    Windows::Foundation::IAsyncAction DisableAsync() const;
-    void RetainDevice() const;
-    Windows::Foundation::IAsyncAction SetActiveSymbologiesAsync(const Windows::Foundation::Collections::IIterable<uint32_t> & symbologies) const;
-    Windows::Foundation::IAsyncAction ResetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Foundation::IAsyncAction UpdateStatisticsAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & statistics) const;
-    Windows::Foundation::IAsyncAction SetActiveProfileAsync(hstring_ref profile) const;
-    event_token DataReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerDataReceivedEventArgs> & handler) const;
-    using DataReceived_revoker = event_revoker<IClaimedBarcodeScanner>;
-    DataReceived_revoker DataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerDataReceivedEventArgs> & handler) const;
-    void DataReceived(event_token token) const;
-    event_token TriggerPressed(const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    using TriggerPressed_revoker = event_revoker<IClaimedBarcodeScanner>;
-    TriggerPressed_revoker TriggerPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    void TriggerPressed(event_token token) const;
-    event_token TriggerReleased(const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    using TriggerReleased_revoker = event_revoker<IClaimedBarcodeScanner>;
-    TriggerReleased_revoker TriggerReleased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    void TriggerReleased(event_token token) const;
-    event_token ReleaseDeviceRequested(const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    using ReleaseDeviceRequested_revoker = event_revoker<IClaimedBarcodeScanner>;
-    ReleaseDeviceRequested_revoker ReleaseDeviceRequested(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner> & handler) const;
-    void ReleaseDeviceRequested(event_token token) const;
-    event_token ImagePreviewReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerImagePreviewReceivedEventArgs> & handler) const;
-    using ImagePreviewReceived_revoker = event_revoker<IClaimedBarcodeScanner>;
-    ImagePreviewReceived_revoker ImagePreviewReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerImagePreviewReceivedEventArgs> & handler) const;
-    void ImagePreviewReceived(event_token token) const;
-    event_token ErrorOccurred(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerErrorOccurredEventArgs> & handler) const;
-    using ErrorOccurred_revoker = event_revoker<IClaimedBarcodeScanner>;
-    ErrorOccurred_revoker ErrorOccurred(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedBarcodeScanner, Windows::Devices::PointOfService::BarcodeScannerErrorOccurredEventArgs> & handler) const;
-    void ErrorOccurred(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedBarcodeScanner1
-{
-    Windows::Foundation::IAsyncAction StartSoftwareTriggerAsync() const;
-    Windows::Foundation::IAsyncAction StopSoftwareTriggerAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedCashDrawer
-{
-    hstring DeviceId() const;
-    bool IsEnabled() const;
-    bool IsDrawerOpen() const;
-    Windows::Devices::PointOfService::CashDrawerCloseAlarm CloseAlarm() const;
-    Windows::Foundation::IAsyncOperation<bool> OpenDrawerAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> EnableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> DisableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RetainDeviceAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> ResetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Foundation::IAsyncOperation<bool> UpdateStatisticsAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & statistics) const;
-    event_token ReleaseDeviceRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::IInspectable> & handler) const;
-    using ReleaseDeviceRequested_revoker = event_revoker<IClaimedCashDrawer>;
-    ReleaseDeviceRequested_revoker ReleaseDeviceRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedCashDrawer, Windows::IInspectable> & handler) const;
-    void ReleaseDeviceRequested(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedJournalPrinter
-{
-    Windows::Devices::PointOfService::JournalPrintJob CreateJob() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedMagneticStripeReader
-{
-    hstring DeviceId() const;
-    bool IsEnabled() const;
-    void IsDisabledOnDataReceived(bool value) const;
-    bool IsDisabledOnDataReceived() const;
-    void IsDecodeDataEnabled(bool value) const;
-    bool IsDecodeDataEnabled() const;
-    bool IsDeviceAuthenticated() const;
-    void DataEncryptionAlgorithm(uint32_t value) const;
-    uint32_t DataEncryptionAlgorithm() const;
-    void TracksToRead(Windows::Devices::PointOfService::MagneticStripeReaderTrackIds value) const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackIds TracksToRead() const;
-    void IsTransmitSentinelsEnabled(bool value) const;
-    bool IsTransmitSentinelsEnabled() const;
-    Windows::Foundation::IAsyncAction EnableAsync() const;
-    Windows::Foundation::IAsyncAction DisableAsync() const;
-    void RetainDevice() const;
-    void SetErrorReportingType(Windows::Devices::PointOfService::MagneticStripeReaderErrorReportingType value) const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> RetrieveDeviceAuthenticationDataAsync() const;
-    Windows::Foundation::IAsyncAction AuthenticateDeviceAsync(array_ref<const uint8_t> responseToken) const;
-    Windows::Foundation::IAsyncAction DeAuthenticateDeviceAsync(array_ref<const uint8_t> responseToken) const;
-    Windows::Foundation::IAsyncAction UpdateKeyAsync(hstring_ref key, hstring_ref keyName) const;
-    Windows::Foundation::IAsyncAction ResetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Foundation::IAsyncAction UpdateStatisticsAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & statistics) const;
-    event_token BankCardDataReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderBankCardDataReceivedEventArgs> & handler) const;
-    using BankCardDataReceived_revoker = event_revoker<IClaimedMagneticStripeReader>;
-    BankCardDataReceived_revoker BankCardDataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderBankCardDataReceivedEventArgs> & handler) const;
-    void BankCardDataReceived(event_token token) const;
-    event_token AamvaCardDataReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderAamvaCardDataReceivedEventArgs> & handler) const;
-    using AamvaCardDataReceived_revoker = event_revoker<IClaimedMagneticStripeReader>;
-    AamvaCardDataReceived_revoker AamvaCardDataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderAamvaCardDataReceivedEventArgs> & handler) const;
-    void AamvaCardDataReceived(event_token token) const;
-    event_token VendorSpecificDataReceived(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs> & handler) const;
-    using VendorSpecificDataReceived_revoker = event_revoker<IClaimedMagneticStripeReader>;
-    VendorSpecificDataReceived_revoker VendorSpecificDataReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs> & handler) const;
-    void VendorSpecificDataReceived(event_token token) const;
-    event_token ReleaseDeviceRequested(const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader> & handler) const;
-    using ReleaseDeviceRequested_revoker = event_revoker<IClaimedMagneticStripeReader>;
-    ReleaseDeviceRequested_revoker ReleaseDeviceRequested(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader> & handler) const;
-    void ReleaseDeviceRequested(event_token token) const;
-    event_token ErrorOccurred(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderErrorOccurredEventArgs> & handler) const;
-    using ErrorOccurred_revoker = event_revoker<IClaimedMagneticStripeReader>;
-    ErrorOccurred_revoker ErrorOccurred(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedMagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderErrorOccurredEventArgs> & handler) const;
-    void ErrorOccurred(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedPosPrinter
-{
-    hstring DeviceId() const;
-    bool IsEnabled() const;
-    void CharacterSet(uint32_t value) const;
-    uint32_t CharacterSet() const;
-    bool IsCoverOpen() const;
-    void IsCharacterSetMappingEnabled(bool value) const;
-    bool IsCharacterSetMappingEnabled() const;
-    void MapMode(Windows::Devices::PointOfService::PosPrinterMapMode value) const;
-    Windows::Devices::PointOfService::PosPrinterMapMode MapMode() const;
-    Windows::Devices::PointOfService::ClaimedReceiptPrinter Receipt() const;
-    Windows::Devices::PointOfService::ClaimedSlipPrinter Slip() const;
-    Windows::Devices::PointOfService::ClaimedJournalPrinter Journal() const;
-    Windows::Foundation::IAsyncOperation<bool> EnableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> DisableAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RetainDeviceAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> ResetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Foundation::IAsyncOperation<bool> UpdateStatisticsAsync(const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> & statistics) const;
-    event_token ReleaseDeviceRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedPosPrinter, Windows::Devices::PointOfService::PosPrinterReleaseDeviceRequestedEventArgs> & handler) const;
-    using ReleaseDeviceRequested_revoker = event_revoker<IClaimedPosPrinter>;
-    ReleaseDeviceRequested_revoker ReleaseDeviceRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::ClaimedPosPrinter, Windows::Devices::PointOfService::PosPrinterReleaseDeviceRequestedEventArgs> & handler) const;
-    void ReleaseDeviceRequested(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedReceiptPrinter
-{
-    uint32_t SidewaysMaxLines() const;
-    uint32_t SidewaysMaxChars() const;
-    uint32_t LinesToPaperCut() const;
-    Windows::Foundation::Size PageSize() const;
-    Windows::Foundation::Rect PrintArea() const;
-    Windows::Devices::PointOfService::ReceiptPrintJob CreateJob() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IClaimedSlipPrinter
-{
-    uint32_t SidewaysMaxLines() const;
-    uint32_t SidewaysMaxChars() const;
-    uint32_t MaxLines() const;
-    uint32_t LinesNearEndToEnd() const;
-    Windows::Devices::PointOfService::PosPrinterPrintSide PrintSide() const;
-    Windows::Foundation::Size PageSize() const;
-    Windows::Foundation::Rect PrintArea() const;
-    void OpenJaws() const;
-    void CloseJaws() const;
-    Windows::Foundation::IAsyncOperation<bool> InsertSlipAsync(const Windows::Foundation::TimeSpan & timeout) const;
-    Windows::Foundation::IAsyncOperation<bool> RemoveSlipAsync(const Windows::Foundation::TimeSpan & timeout) const;
-    void ChangePrintSide(Windows::Devices::PointOfService::PosPrinterPrintSide printSide) const;
-    Windows::Devices::PointOfService::SlipPrintJob CreateJob() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICommonClaimedPosPrinterStation
-{
-    void CharactersPerLine(uint32_t value) const;
-    uint32_t CharactersPerLine() const;
-    void LineHeight(uint32_t value) const;
-    uint32_t LineHeight() const;
-    void LineSpacing(uint32_t value) const;
-    uint32_t LineSpacing() const;
-    uint32_t LineWidth() const;
-    void IsLetterQuality(bool value) const;
-    bool IsLetterQuality() const;
-    bool IsPaperNearEnd() const;
-    void ColorCartridge(Windows::Devices::PointOfService::PosPrinterColorCartridge value) const;
-    Windows::Devices::PointOfService::PosPrinterColorCartridge ColorCartridge() const;
-    bool IsCoverOpen() const;
-    bool IsCartridgeRemoved() const;
-    bool IsCartridgeEmpty() const;
-    bool IsHeadCleaning() const;
-    bool IsPaperEmpty() const;
-    bool IsReadyToPrint() const;
-    bool ValidateData(hstring_ref data) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICommonPosPrintStationCapabilities
-{
-    bool IsPrinterPresent() const;
-    bool IsDualColorSupported() const;
-    Windows::Devices::PointOfService::PosPrinterColorCapabilities ColorCartridgeCapabilities() const;
-    Windows::Devices::PointOfService::PosPrinterCartridgeSensors CartridgeSensors() const;
-    bool IsBoldSupported() const;
-    bool IsItalicSupported() const;
-    bool IsUnderlineSupported() const;
-    bool IsDoubleHighPrintSupported() const;
-    bool IsDoubleWidePrintSupported() const;
-    bool IsDoubleHighDoubleWidePrintSupported() const;
-    bool IsPaperEmptySensorSupported() const;
-    bool IsPaperNearEndSensorSupported() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> SupportedCharactersPerLine() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ICommonReceiptSlipCapabilities
-{
-    bool IsBarcodeSupported() const;
-    bool IsBitmapSupported() const;
-    bool IsLeft90RotationSupported() const;
-    bool IsRight90RotationSupported() const;
-    bool Is180RotationSupported() const;
-    bool IsPrintAreaSupported() const;
-    Windows::Devices::PointOfService::PosPrinterRuledLineCapabilities RuledLineCapabilities() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::PointOfService::PosPrinterRotation> SupportedBarcodeRotations() const;
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::PointOfService::PosPrinterRotation> SupportedBitmapRotations() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IJournalPrinterCapabilities
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReader
-{
-    hstring DeviceId() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderCapabilities Capabilities() const;
-    com_array<uint32_t> SupportedCardTypes() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderAuthenticationProtocol DeviceAuthenticationProtocol() const;
-    Windows::Foundation::IAsyncOperation<hstring> CheckHealthAsync(Windows::Devices::PointOfService::UnifiedPosHealthCheckLevel level) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::ClaimedMagneticStripeReader> ClaimReaderAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> RetrieveStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    Windows::Devices::PointOfService::MagneticStripeReaderErrorReportingType GetErrorReportingType() const;
-    event_token StatusUpdated(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::MagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderStatusUpdatedEventArgs> & handler) const;
-    using StatusUpdated_revoker = event_revoker<IMagneticStripeReader>;
-    StatusUpdated_revoker StatusUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::MagneticStripeReader, Windows::Devices::PointOfService::MagneticStripeReaderStatusUpdatedEventArgs> & handler) const;
-    void StatusUpdated(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderAamvaCardDataReceivedEventArgs
-{
-    Windows::Devices::PointOfService::MagneticStripeReaderReport Report() const;
-    hstring LicenseNumber() const;
-    hstring ExpirationDate() const;
-    hstring Restrictions() const;
-    hstring Class() const;
-    hstring Endorsements() const;
-    hstring BirthDate() const;
-    hstring FirstName() const;
-    hstring Surname() const;
-    hstring Suffix() const;
-    hstring Gender() const;
-    hstring HairColor() const;
-    hstring EyeColor() const;
-    hstring Height() const;
-    hstring Weight() const;
-    hstring Address() const;
-    hstring City() const;
-    hstring State() const;
-    hstring PostalCode() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderBankCardDataReceivedEventArgs
-{
-    Windows::Devices::PointOfService::MagneticStripeReaderReport Report() const;
-    hstring AccountNumber() const;
-    hstring ExpirationDate() const;
-    hstring ServiceCode() const;
-    hstring Title() const;
-    hstring FirstName() const;
-    hstring MiddleInitial() const;
-    hstring Surname() const;
-    hstring Suffix() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderCapabilities
-{
-    hstring CardAuthentication() const;
-    uint32_t SupportedEncryptionAlgorithms() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderAuthenticationLevel AuthenticationLevel() const;
-    bool IsIsoSupported() const;
-    bool IsJisOneSupported() const;
-    bool IsJisTwoSupported() const;
-    Windows::Devices::PointOfService::UnifiedPosPowerReportingType PowerReportingType() const;
-    bool IsStatisticsReportingSupported() const;
-    bool IsStatisticsUpdatingSupported() const;
-    bool IsTrackDataMaskingSupported() const;
-    bool IsTransmitSentinelsSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderCardTypesStatics
-{
-    uint32_t Unknown() const;
-    uint32_t Bank() const;
-    uint32_t Aamva() const;
-    uint32_t ExtendedBase() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderEncryptionAlgorithmsStatics
-{
-    uint32_t None() const;
-    uint32_t TripleDesDukpt() const;
-    uint32_t ExtendedBase() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderErrorOccurredEventArgs
-{
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackErrorType Track1Status() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackErrorType Track2Status() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackErrorType Track3Status() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackErrorType Track4Status() const;
-    Windows::Devices::PointOfService::UnifiedPosErrorData ErrorData() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderReport PartialInputData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderReport
-{
-    uint32_t CardType() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackData Track1() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackData Track2() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackData Track3() const;
-    Windows::Devices::PointOfService::MagneticStripeReaderTrackData Track4() const;
-    Windows::Foundation::Collections::IMapView<hstring, hstring> Properties() const;
-    Windows::Storage::Streams::IBuffer CardAuthenticationData() const;
-    uint32_t CardAuthenticationDataLength() const;
-    Windows::Storage::Streams::IBuffer AdditionalSecurityInformation() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::MagneticStripeReader> GetDefaultAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::MagneticStripeReader> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderStatusUpdatedEventArgs
-{
-    Windows::Devices::PointOfService::MagneticStripeReaderStatus Status() const;
-    uint32_t ExtendedStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderTrackData
-{
-    Windows::Storage::Streams::IBuffer Data() const;
-    Windows::Storage::Streams::IBuffer DiscretionaryData() const;
-    Windows::Storage::Streams::IBuffer EncryptedData() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs
-{
-    Windows::Devices::PointOfService::MagneticStripeReaderReport Report() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinter
-{
-    hstring DeviceId() const;
-    Windows::Devices::PointOfService::PosPrinterCapabilities Capabilities() const;
-    Windows::Foundation::Collections::IVectorView<uint32_t> SupportedCharacterSets() const;
-    Windows::Foundation::Collections::IVectorView<hstring> SupportedTypeFaces() const;
-    Windows::Devices::PointOfService::PosPrinterStatus Status() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::ClaimedPosPrinter> ClaimPrinterAsync() const;
-    Windows::Foundation::IAsyncOperation<hstring> CheckHealthAsync(Windows::Devices::PointOfService::UnifiedPosHealthCheckLevel level) const;
-    Windows::Foundation::IAsyncOperation<hstring> GetStatisticsAsync(const Windows::Foundation::Collections::IIterable<hstring> & statisticsCategories) const;
-    event_token StatusUpdated(const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::PosPrinter, Windows::Devices::PointOfService::PosPrinterStatusUpdatedEventArgs> & handler) const;
-    using StatusUpdated_revoker = event_revoker<IPosPrinter>;
-    StatusUpdated_revoker StatusUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::PointOfService::PosPrinter, Windows::Devices::PointOfService::PosPrinterStatusUpdatedEventArgs> & handler) const;
-    void StatusUpdated(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterCapabilities
-{
-    Windows::Devices::PointOfService::UnifiedPosPowerReportingType PowerReportingType() const;
-    bool IsStatisticsReportingSupported() const;
-    bool IsStatisticsUpdatingSupported() const;
-    uint32_t DefaultCharacterSet() const;
-    bool HasCoverSensor() const;
-    bool CanMapCharacterSet() const;
-    bool IsTransactionSupported() const;
-    Windows::Devices::PointOfService::ReceiptPrinterCapabilities Receipt() const;
-    Windows::Devices::PointOfService::SlipPrinterCapabilities Slip() const;
-    Windows::Devices::PointOfService::JournalPrinterCapabilities Journal() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterCharacterSetIdsStatics
-{
-    uint32_t Utf16LE() const;
-    uint32_t Ascii() const;
-    uint32_t Ansi() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterJob
-{
-    void Print(hstring_ref data) const;
-    void PrintLine(hstring_ref data) const;
-    void PrintLine() const;
-    Windows::Foundation::IAsyncOperation<bool> ExecuteAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterReleaseDeviceRequestedEventArgs
-{
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::PosPrinter> GetDefaultAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::PointOfService::PosPrinter> FromIdAsync(hstring_ref deviceId) const;
-    hstring GetDeviceSelector() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterStatus
-{
-    Windows::Devices::PointOfService::PosPrinterStatusKind StatusKind() const;
-    uint32_t ExtendedStatus() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPosPrinterStatusUpdatedEventArgs
-{
-    Windows::Devices::PointOfService::PosPrinterStatus Status() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IReceiptOrSlipJob
-{
-    void SetBarcodeRotation(Windows::Devices::PointOfService::PosPrinterRotation value) const;
-    void SetPrintRotation(Windows::Devices::PointOfService::PosPrinterRotation value, bool includeBitmaps) const;
-    void SetPrintArea(const Windows::Foundation::Rect & value) const;
-    void SetBitmap(uint32_t bitmapNumber, const Windows::Graphics::Imaging::BitmapFrame & bitmap, Windows::Devices::PointOfService::PosPrinterAlignment alignment) const;
-    void SetBitmap(uint32_t bitmapNumber, const Windows::Graphics::Imaging::BitmapFrame & bitmap, Windows::Devices::PointOfService::PosPrinterAlignment alignment, uint32_t width) const;
-    void SetCustomAlignedBitmap(uint32_t bitmapNumber, const Windows::Graphics::Imaging::BitmapFrame & bitmap, uint32_t alignmentDistance) const;
-    void SetCustomAlignedBitmap(uint32_t bitmapNumber, const Windows::Graphics::Imaging::BitmapFrame & bitmap, uint32_t alignmentDistance, uint32_t width) const;
-    void PrintSavedBitmap(uint32_t bitmapNumber) const;
-    void DrawRuledLine(hstring_ref positionList, Windows::Devices::PointOfService::PosPrinterLineDirection lineDirection, uint32_t lineWidth, Windows::Devices::PointOfService::PosPrinterLineStyle lineStyle, uint32_t lineColor) const;
-    void PrintBarcode(hstring_ref data, uint32_t symbology, uint32_t height, uint32_t width, Windows::Devices::PointOfService::PosPrinterBarcodeTextPosition textPosition, Windows::Devices::PointOfService::PosPrinterAlignment alignment) const;
-    void PrintBarcodeCustomAlign(hstring_ref data, uint32_t symbology, uint32_t height, uint32_t width, Windows::Devices::PointOfService::PosPrinterBarcodeTextPosition textPosition, uint32_t alignmentDistance) const;
-    void PrintBitmap(const Windows::Graphics::Imaging::BitmapFrame & bitmap, Windows::Devices::PointOfService::PosPrinterAlignment alignment) const;
-    void PrintBitmap(const Windows::Graphics::Imaging::BitmapFrame & bitmap, Windows::Devices::PointOfService::PosPrinterAlignment alignment, uint32_t width) const;
-    void PrintCustomAlignedBitmap(const Windows::Graphics::Imaging::BitmapFrame & bitmap, uint32_t alignmentDistance) const;
-    void PrintCustomAlignedBitmap(const Windows::Graphics::Imaging::BitmapFrame & bitmap, uint32_t alignmentDistance, uint32_t width) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IReceiptPrintJob
-{
-    void MarkFeed(Windows::Devices::PointOfService::PosPrinterMarkFeedKind kind) const;
-    void CutPaper(double percentage) const;
-    void CutPaper() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IReceiptPrinterCapabilities
-{
-    bool CanCutPaper() const;
-    bool IsStampSupported() const;
-    Windows::Devices::PointOfService::PosPrinterMarkFeedCapabilities MarkFeedCapabilities() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_ISlipPrinterCapabilities
-{
-    bool IsFullLengthSupported() const;
-    bool IsBothSidesPrintingSupported() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IUnifiedPosErrorData
-{
-    hstring Message() const;
-    Windows::Devices::PointOfService::UnifiedPosErrorSeverity Severity() const;
-    Windows::Devices::PointOfService::UnifiedPosErrorReason Reason() const;
-    uint32_t ExtendedReason() const;
-};
-
 struct IBarcodeScanner :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScanner>
 {
     IBarcodeScanner(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScanner>(m_ptr); }
 };
 
 struct IBarcodeScanner2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScanner2>
 {
     IBarcodeScanner2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScanner2>(m_ptr); }
 };
 
 struct IBarcodeScannerCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerCapabilities>
 {
     IBarcodeScannerCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerCapabilities>(m_ptr); }
 };
 
 struct IBarcodeScannerCapabilities1 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerCapabilities1>
 {
     IBarcodeScannerCapabilities1(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerCapabilities1>(m_ptr); }
 };
 
 struct IBarcodeScannerDataReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerDataReceivedEventArgs>
 {
     IBarcodeScannerDataReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerDataReceivedEventArgs>(m_ptr); }
 };
 
 struct IBarcodeScannerErrorOccurredEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerErrorOccurredEventArgs>
 {
     IBarcodeScannerErrorOccurredEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerErrorOccurredEventArgs>(m_ptr); }
 };
 
 struct IBarcodeScannerImagePreviewReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerImagePreviewReceivedEventArgs>
 {
     IBarcodeScannerImagePreviewReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerImagePreviewReceivedEventArgs>(m_ptr); }
 };
 
 struct IBarcodeScannerReport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerReport>
 {
     IBarcodeScannerReport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerReport>(m_ptr); }
 };
 
 struct IBarcodeScannerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerStatics>
 {
     IBarcodeScannerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerStatics>(m_ptr); }
 };
 
 struct IBarcodeScannerStatusUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeScannerStatusUpdatedEventArgs>
 {
     IBarcodeScannerStatusUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeScannerStatusUpdatedEventArgs>(m_ptr); }
 };
 
 struct IBarcodeSymbologiesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IBarcodeSymbologiesStatics>
 {
     IBarcodeSymbologiesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IBarcodeSymbologiesStatics>(m_ptr); }
 };
 
 struct ICashDrawer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawer>
 {
     ICashDrawer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawer>(m_ptr); }
 };
 
 struct ICashDrawerCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerCapabilities>
 {
     ICashDrawerCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerCapabilities>(m_ptr); }
 };
 
 struct ICashDrawerCloseAlarm :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerCloseAlarm>
 {
     ICashDrawerCloseAlarm(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerCloseAlarm>(m_ptr); }
 };
 
 struct ICashDrawerEventSource :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerEventSource>
 {
     ICashDrawerEventSource(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerEventSource>(m_ptr); }
 };
 
 struct ICashDrawerEventSourceEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerEventSourceEventArgs>
 {
     ICashDrawerEventSourceEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerEventSourceEventArgs>(m_ptr); }
 };
 
 struct ICashDrawerStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerStatics>
 {
     ICashDrawerStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerStatics>(m_ptr); }
 };
 
 struct ICashDrawerStatus :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerStatus>
 {
     ICashDrawerStatus(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerStatus>(m_ptr); }
 };
 
 struct ICashDrawerStatusUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICashDrawerStatusUpdatedEventArgs>
 {
     ICashDrawerStatusUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICashDrawerStatusUpdatedEventArgs>(m_ptr); }
 };
 
 struct IClaimedBarcodeScanner :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedBarcodeScanner>,
     impl::require<IClaimedBarcodeScanner, Windows::Foundation::IClosable>
 {
     IClaimedBarcodeScanner(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedBarcodeScanner>(m_ptr); }
 };
 
 struct IClaimedBarcodeScanner1 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedBarcodeScanner1>,
     impl::require<IClaimedBarcodeScanner1, Windows::Foundation::IClosable>
 {
     IClaimedBarcodeScanner1(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedBarcodeScanner1>(m_ptr); }
 };
 
 struct IClaimedCashDrawer :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedCashDrawer>,
     impl::require<IClaimedCashDrawer, Windows::Foundation::IClosable>
 {
     IClaimedCashDrawer(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedCashDrawer>(m_ptr); }
 };
 
 struct IClaimedJournalPrinter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedJournalPrinter>,
     impl::require<IClaimedJournalPrinter, Windows::Devices::PointOfService::ICommonClaimedPosPrinterStation>
 {
     IClaimedJournalPrinter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedJournalPrinter>(m_ptr); }
 };
 
 struct IClaimedMagneticStripeReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedMagneticStripeReader>,
     impl::require<IClaimedMagneticStripeReader, Windows::Foundation::IClosable>
 {
     IClaimedMagneticStripeReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedMagneticStripeReader>(m_ptr); }
 };
 
 struct IClaimedPosPrinter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedPosPrinter>,
     impl::require<IClaimedPosPrinter, Windows::Foundation::IClosable>
 {
     IClaimedPosPrinter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedPosPrinter>(m_ptr); }
 };
 
 struct IClaimedReceiptPrinter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedReceiptPrinter>,
     impl::require<IClaimedReceiptPrinter, Windows::Devices::PointOfService::ICommonClaimedPosPrinterStation>
 {
     IClaimedReceiptPrinter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedReceiptPrinter>(m_ptr); }
 };
 
 struct IClaimedSlipPrinter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IClaimedSlipPrinter>,
     impl::require<IClaimedSlipPrinter, Windows::Devices::PointOfService::ICommonClaimedPosPrinterStation>
 {
     IClaimedSlipPrinter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IClaimedSlipPrinter>(m_ptr); }
 };
 
 struct ICommonClaimedPosPrinterStation :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICommonClaimedPosPrinterStation>
 {
     ICommonClaimedPosPrinterStation(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICommonClaimedPosPrinterStation>(m_ptr); }
 };
 
 struct ICommonPosPrintStationCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICommonPosPrintStationCapabilities>
 {
     ICommonPosPrintStationCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICommonPosPrintStationCapabilities>(m_ptr); }
 };
 
 struct ICommonReceiptSlipCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ICommonReceiptSlipCapabilities>,
     impl::require<ICommonReceiptSlipCapabilities, Windows::Devices::PointOfService::ICommonPosPrintStationCapabilities>
 {
     ICommonReceiptSlipCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ICommonReceiptSlipCapabilities>(m_ptr); }
 };
 
 struct IJournalPrinterCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IJournalPrinterCapabilities>,
     impl::require<IJournalPrinterCapabilities, Windows::Devices::PointOfService::ICommonPosPrintStationCapabilities>
 {
     IJournalPrinterCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IJournalPrinterCapabilities>(m_ptr); }
 };
 
 struct IMagneticStripeReader :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReader>
 {
     IMagneticStripeReader(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReader>(m_ptr); }
 };
 
 struct IMagneticStripeReaderAamvaCardDataReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderAamvaCardDataReceivedEventArgs>
 {
     IMagneticStripeReaderAamvaCardDataReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderAamvaCardDataReceivedEventArgs>(m_ptr); }
 };
 
 struct IMagneticStripeReaderBankCardDataReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderBankCardDataReceivedEventArgs>
 {
     IMagneticStripeReaderBankCardDataReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderBankCardDataReceivedEventArgs>(m_ptr); }
 };
 
 struct IMagneticStripeReaderCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderCapabilities>
 {
     IMagneticStripeReaderCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderCapabilities>(m_ptr); }
 };
 
 struct IMagneticStripeReaderCardTypesStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderCardTypesStatics>
 {
     IMagneticStripeReaderCardTypesStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderCardTypesStatics>(m_ptr); }
 };
 
 struct IMagneticStripeReaderEncryptionAlgorithmsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderEncryptionAlgorithmsStatics>
 {
     IMagneticStripeReaderEncryptionAlgorithmsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderEncryptionAlgorithmsStatics>(m_ptr); }
 };
 
 struct IMagneticStripeReaderErrorOccurredEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderErrorOccurredEventArgs>
 {
     IMagneticStripeReaderErrorOccurredEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderErrorOccurredEventArgs>(m_ptr); }
 };
 
 struct IMagneticStripeReaderReport :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderReport>
 {
     IMagneticStripeReaderReport(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderReport>(m_ptr); }
 };
 
 struct IMagneticStripeReaderStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderStatics>
 {
     IMagneticStripeReaderStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderStatics>(m_ptr); }
 };
 
 struct IMagneticStripeReaderStatusUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderStatusUpdatedEventArgs>
 {
     IMagneticStripeReaderStatusUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderStatusUpdatedEventArgs>(m_ptr); }
 };
 
 struct IMagneticStripeReaderTrackData :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderTrackData>
 {
     IMagneticStripeReaderTrackData(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderTrackData>(m_ptr); }
 };
 
 struct IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs>
 {
     IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs>(m_ptr); }
 };
 
 struct IPosPrinter :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinter>
 {
     IPosPrinter(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinter>(m_ptr); }
 };
 
 struct IPosPrinterCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterCapabilities>
 {
     IPosPrinterCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterCapabilities>(m_ptr); }
 };
 
 struct IPosPrinterCharacterSetIdsStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterCharacterSetIdsStatics>
 {
     IPosPrinterCharacterSetIdsStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterCharacterSetIdsStatics>(m_ptr); }
 };
 
 struct IPosPrinterJob :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterJob>
 {
     IPosPrinterJob(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterJob>(m_ptr); }
 };
 
 struct IPosPrinterReleaseDeviceRequestedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterReleaseDeviceRequestedEventArgs>
 {
     IPosPrinterReleaseDeviceRequestedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterReleaseDeviceRequestedEventArgs>(m_ptr); }
 };
 
 struct IPosPrinterStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterStatics>
 {
     IPosPrinterStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterStatics>(m_ptr); }
 };
 
 struct IPosPrinterStatus :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterStatus>
 {
     IPosPrinterStatus(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterStatus>(m_ptr); }
 };
 
 struct IPosPrinterStatusUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPosPrinterStatusUpdatedEventArgs>
 {
     IPosPrinterStatusUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPosPrinterStatusUpdatedEventArgs>(m_ptr); }
 };
 
 struct IReceiptOrSlipJob :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IReceiptOrSlipJob>,
     impl::require<IReceiptOrSlipJob, Windows::Devices::PointOfService::IPosPrinterJob>
 {
     IReceiptOrSlipJob(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IReceiptOrSlipJob>(m_ptr); }
 };
 
 struct IReceiptPrintJob :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IReceiptPrintJob>,
     impl::require<IReceiptPrintJob, Windows::Devices::PointOfService::IPosPrinterJob, Windows::Devices::PointOfService::IReceiptOrSlipJob>
 {
     IReceiptPrintJob(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IReceiptPrintJob>(m_ptr); }
 };
 
 struct IReceiptPrinterCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IReceiptPrinterCapabilities>,
     impl::require<IReceiptPrinterCapabilities, Windows::Devices::PointOfService::ICommonPosPrintStationCapabilities, Windows::Devices::PointOfService::ICommonReceiptSlipCapabilities>
 {
     IReceiptPrinterCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IReceiptPrinterCapabilities>(m_ptr); }
 };
 
 struct ISlipPrinterCapabilities :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<ISlipPrinterCapabilities>,
     impl::require<ISlipPrinterCapabilities, Windows::Devices::PointOfService::ICommonPosPrintStationCapabilities, Windows::Devices::PointOfService::ICommonReceiptSlipCapabilities>
 {
     ISlipPrinterCapabilities(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<ISlipPrinterCapabilities>(m_ptr); }
 };
 
 struct IUnifiedPosErrorData :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IUnifiedPosErrorData>
 {
     IUnifiedPosErrorData(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IUnifiedPosErrorData>(m_ptr); }
 };
 
 }

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
@@ -19,11 +22,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_base<D, Windows::Media::Protection::PlayReady::INDClient>
 {
-    HRESULT __stdcall add_RegistrationCompleted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_RegistrationCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().RegistrationCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().RegistrationCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -36,6 +40,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().RegistrationCompleted(token);
             return S_OK;
         }
@@ -45,11 +50,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_ProximityDetectionCompleted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ProximityDetectionCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ProximityDetectionCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ProximityDetectionCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -62,6 +68,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ProximityDetectionCompleted(token);
             return S_OK;
         }
@@ -71,11 +78,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_LicenseFetchCompleted(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LicenseFetchCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().LicenseFetchCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().LicenseFetchCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -88,6 +96,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LicenseFetchCompleted(token);
             return S_OK;
         }
@@ -97,11 +106,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_ReRegistrationNeeded(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReRegistrationNeeded(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ReRegistrationNeeded(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ReRegistrationNeeded(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -114,6 +124,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ReRegistrationNeeded(token);
             return S_OK;
         }
@@ -123,11 +134,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_ClosedCaptionDataReceived(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ClosedCaptionDataReceived(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().ClosedCaptionDataReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().ClosedCaptionDataReceived(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -140,6 +152,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ClosedCaptionDataReceived(token);
             return S_OK;
         }
@@ -149,11 +162,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_StartAsync(abi_arg_in<Windows::Foundation::IUriRuntimeClass> contentUrl, uint32_t startAsyncOptions, abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> registrationCustomData, abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDStartResult>> result) noexcept override
+    HRESULT __stdcall abi_StartAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> contentUrl, uint32_t startAsyncOptions, impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> registrationCustomData, impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDStartResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().StartAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&contentUrl), startAsyncOptions, *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&registrationCustomData), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().StartAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&contentUrl), startAsyncOptions, *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&registrationCustomData), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor)));
             return S_OK;
         }
         catch (...)
@@ -163,11 +177,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_LicenseFetchAsync(abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDLicenseFetchResult>> result) noexcept override
+    HRESULT __stdcall abi_LicenseFetchAsync(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDLicenseFetchResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().LicenseFetchAsync(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().LicenseFetchAsync(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor)));
             return S_OK;
         }
         catch (...)
@@ -177,11 +192,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_ReRegistrationAsync(abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> registrationCustomData, abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall abi_ReRegistrationAsync(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> registrationCustomData, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().ReRegistrationAsync(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&registrationCustomData)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().ReRegistrationAsync(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&registrationCustomData)));
             return S_OK;
         }
         catch (...)
@@ -195,6 +211,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Close();
             return S_OK;
         }
@@ -208,11 +225,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClient> : produce_ba
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDClientFactory> : produce_base<D, Windows::Media::Protection::PlayReady::INDClientFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::Media::Protection::PlayReady::INDDownloadEngine> downloadEngine, abi_arg_in<Windows::Media::Protection::PlayReady::INDStreamParser> streamParser, abi_arg_in<Windows::Media::Protection::PlayReady::INDMessenger> pMessenger, abi_arg_out<Windows::Media::Protection::PlayReady::INDClient> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDDownloadEngine> downloadEngine, impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDStreamParser> streamParser, impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDMessenger> pMessenger, impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDClient> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDDownloadEngine *>(&downloadEngine), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDStreamParser *>(&streamParser), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDMessenger *>(&pMessenger)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDDownloadEngine *>(&downloadEngine), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDStreamParser *>(&streamParser), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDMessenger *>(&pMessenger)));
             return S_OK;
         }
         catch (...)
@@ -230,7 +248,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClosedCaptionDataRec
     {
         try
         {
-            *ccForamt = detach(this->shim().ClosedCaptionDataFormat());
+            typename D::abi_guard guard(this->shim());
+            *ccForamt = detach_abi(this->shim().ClosedCaptionDataFormat());
             return S_OK;
         }
         catch (...)
@@ -243,7 +262,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClosedCaptionDataRec
     {
         try
         {
-            *presentationTimestamp = detach(this->shim().PresentationTimestamp());
+            typename D::abi_guard guard(this->shim());
+            *presentationTimestamp = detach_abi(this->shim().PresentationTimestamp());
             return S_OK;
         }
         catch (...)
@@ -252,11 +272,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClosedCaptionDataRec
         }
     }
 
-    HRESULT __stdcall get_ClosedCaptionData(uint32_t * __ccDataBytesSize, abi_arg_out<uint8_t> * ccDataBytes) noexcept override
+    HRESULT __stdcall get_ClosedCaptionData(uint32_t * __ccDataBytesSize, impl::abi_arg_out<uint8_t> * ccDataBytes) noexcept override
     {
         try
         {
-            std::tie(*__ccDataBytesSize, *ccDataBytes) = detach(this->shim().ClosedCaptionData());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__ccDataBytesSize, *ccDataBytes) = detach_abi(this->shim().ClosedCaptionData());
             return S_OK;
         }
         catch (...)
@@ -271,11 +292,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDClosedCaptionDataRec
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDCustomData> : produce_base<D, Windows::Media::Protection::PlayReady::INDCustomData>
 {
-    HRESULT __stdcall get_CustomDataTypeID(uint32_t * __customDataTypeIDBytesSize, abi_arg_out<uint8_t> * customDataTypeIDBytes) noexcept override
+    HRESULT __stdcall get_CustomDataTypeID(uint32_t * __customDataTypeIDBytesSize, impl::abi_arg_out<uint8_t> * customDataTypeIDBytes) noexcept override
     {
         try
         {
-            std::tie(*__customDataTypeIDBytesSize, *customDataTypeIDBytes) = detach(this->shim().CustomDataTypeID());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__customDataTypeIDBytesSize, *customDataTypeIDBytes) = detach_abi(this->shim().CustomDataTypeID());
             return S_OK;
         }
         catch (...)
@@ -286,11 +308,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDCustomData> : produc
         }
     }
 
-    HRESULT __stdcall get_CustomData(uint32_t * __customDataBytesSize, abi_arg_out<uint8_t> * customDataBytes) noexcept override
+    HRESULT __stdcall get_CustomData(uint32_t * __customDataBytesSize, impl::abi_arg_out<uint8_t> * customDataBytes) noexcept override
     {
         try
         {
-            std::tie(*__customDataBytesSize, *customDataBytes) = detach(this->shim().CustomData());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__customDataBytesSize, *customDataBytes) = detach_abi(this->shim().CustomData());
             return S_OK;
         }
         catch (...)
@@ -305,11 +328,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDCustomData> : produc
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDCustomDataFactory> : produce_base<D, Windows::Media::Protection::PlayReady::INDCustomDataFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(uint32_t __customDataTypeIDBytesSize, abi_arg_in<uint8_t> * customDataTypeIDBytes, uint32_t __customDataBytesSize, abi_arg_in<uint8_t> * customDataBytes, abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(uint32_t __customDataTypeIDBytesSize, impl::abi_arg_in<uint8_t> * customDataTypeIDBytes, uint32_t __customDataBytesSize, impl::abi_arg_in<uint8_t> * customDataBytes, impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(array_ref<const uint8_t>(customDataTypeIDBytes, customDataTypeIDBytes + __customDataTypeIDBytesSize), array_ref<const uint8_t>(customDataBytes, customDataBytes + __customDataBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(array_view<const uint8_t>(customDataTypeIDBytes, customDataTypeIDBytes + __customDataTypeIDBytesSize), array_view<const uint8_t>(customDataBytes, customDataBytes + __customDataBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -323,11 +347,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDCustomDataFactory> :
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : produce_base<D, Windows::Media::Protection::PlayReady::INDDownloadEngine>
 {
-    HRESULT __stdcall abi_Open(abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, uint32_t __sessionIDBytesSize, abi_arg_in<uint8_t> * sessionIDBytes) noexcept override
+    HRESULT __stdcall abi_Open(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, uint32_t __sessionIDBytesSize, impl::abi_arg_in<uint8_t> * sessionIDBytes) noexcept override
     {
         try
         {
-            this->shim().Open(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), array_ref<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().Open(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), array_view<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize));
             return S_OK;
         }
         catch (...)
@@ -340,6 +365,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Pause();
             return S_OK;
         }
@@ -353,6 +379,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Resume();
             return S_OK;
         }
@@ -366,6 +393,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Close();
             return S_OK;
         }
@@ -375,10 +403,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
         }
     }
 
-    HRESULT __stdcall abi_Seek(abi_arg_in<Windows::Foundation::TimeSpan> startPosition) noexcept override
+    HRESULT __stdcall abi_Seek(impl::abi_arg_in<Windows::Foundation::TimeSpan> startPosition) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Seek(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&startPosition));
             return S_OK;
         }
@@ -392,7 +421,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
-            *canSeek = detach(this->shim().CanSeek());
+            typename D::abi_guard guard(this->shim());
+            *canSeek = detach_abi(this->shim().CanSeek());
             return S_OK;
         }
         catch (...)
@@ -405,7 +435,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
-            *bufferFullMinThreshold = detach(this->shim().BufferFullMinThresholdInSamples());
+            typename D::abi_guard guard(this->shim());
+            *bufferFullMinThreshold = detach_abi(this->shim().BufferFullMinThresholdInSamples());
             return S_OK;
         }
         catch (...)
@@ -418,7 +449,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
     {
         try
         {
-            *bufferFullMaxThreshold = detach(this->shim().BufferFullMaxThresholdInSamples());
+            typename D::abi_guard guard(this->shim());
+            *bufferFullMaxThreshold = detach_abi(this->shim().BufferFullMaxThresholdInSamples());
             return S_OK;
         }
         catch (...)
@@ -427,11 +459,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngine> : pr
         }
     }
 
-    HRESULT __stdcall get_Notifier(abi_arg_out<Windows::Media::Protection::PlayReady::INDDownloadEngineNotifier> instance) noexcept override
+    HRESULT __stdcall get_Notifier(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDDownloadEngineNotifier> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().Notifier());
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().Notifier());
             return S_OK;
         }
         catch (...)
@@ -449,6 +482,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnStreamOpened();
             return S_OK;
         }
@@ -458,11 +492,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
         }
     }
 
-    HRESULT __stdcall abi_OnPlayReadyObjectReceived(uint32_t __dataBytesSize, abi_arg_in<uint8_t> * dataBytes) noexcept override
+    HRESULT __stdcall abi_OnPlayReadyObjectReceived(uint32_t __dataBytesSize, impl::abi_arg_in<uint8_t> * dataBytes) noexcept override
     {
         try
         {
-            this->shim().OnPlayReadyObjectReceived(array_ref<const uint8_t>(dataBytes, dataBytes + __dataBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().OnPlayReadyObjectReceived(array_view<const uint8_t>(dataBytes, dataBytes + __dataBytesSize));
             return S_OK;
         }
         catch (...)
@@ -471,10 +506,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
         }
     }
 
-    HRESULT __stdcall abi_OnContentIDReceived(abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor) noexcept override
+    HRESULT __stdcall abi_OnContentIDReceived(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnContentIDReceived(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor));
             return S_OK;
         }
@@ -484,11 +520,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
         }
     }
 
-    HRESULT __stdcall abi_OnDataReceived(uint32_t __dataBytesSize, abi_arg_in<uint8_t> * dataBytes, uint32_t bytesReceived) noexcept override
+    HRESULT __stdcall abi_OnDataReceived(uint32_t __dataBytesSize, impl::abi_arg_in<uint8_t> * dataBytes, uint32_t bytesReceived) noexcept override
     {
         try
         {
-            this->shim().OnDataReceived(array_ref<const uint8_t>(dataBytes, dataBytes + __dataBytesSize), bytesReceived);
+            typename D::abi_guard guard(this->shim());
+            this->shim().OnDataReceived(array_view<const uint8_t>(dataBytes, dataBytes + __dataBytesSize), bytesReceived);
             return S_OK;
         }
         catch (...)
@@ -501,6 +538,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnEndOfStream();
             return S_OK;
         }
@@ -514,6 +552,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnNetworkError();
             return S_OK;
         }
@@ -527,11 +566,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDDownloadEngineNotifi
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> : produce_base<D, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs>
 {
-    HRESULT __stdcall get_ResponseCustomData(abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
+    HRESULT __stdcall get_ResponseCustomData(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
     {
         try
         {
-            *customData = detach(this->shim().ResponseCustomData());
+            typename D::abi_guard guard(this->shim());
+            *customData = detach_abi(this->shim().ResponseCustomData());
             return S_OK;
         }
         catch (...)
@@ -549,7 +589,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
     {
         try
         {
-            *contentIDType = detach(this->shim().ContentIDType());
+            typename D::abi_guard guard(this->shim());
+            *contentIDType = detach_abi(this->shim().ContentIDType());
             return S_OK;
         }
         catch (...)
@@ -558,11 +599,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
         }
     }
 
-    HRESULT __stdcall get_ContentID(uint32_t * __contentIDBytesSize, abi_arg_out<uint8_t> * contentIDBytes) noexcept override
+    HRESULT __stdcall get_ContentID(uint32_t * __contentIDBytesSize, impl::abi_arg_out<uint8_t> * contentIDBytes) noexcept override
     {
         try
         {
-            std::tie(*__contentIDBytesSize, *contentIDBytes) = detach(this->shim().ContentID());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__contentIDBytesSize, *contentIDBytes) = detach_abi(this->shim().ContentID());
             return S_OK;
         }
         catch (...)
@@ -573,11 +615,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
         }
     }
 
-    HRESULT __stdcall get_LicenseFetchChallengeCustomData(abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData) noexcept override
+    HRESULT __stdcall get_LicenseFetchChallengeCustomData(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData) noexcept override
     {
         try
         {
-            *licenseFetchChallengeCustomData = detach(this->shim().LicenseFetchChallengeCustomData());
+            typename D::abi_guard guard(this->shim());
+            *licenseFetchChallengeCustomData = detach_abi(this->shim().LicenseFetchChallengeCustomData());
             return S_OK;
         }
         catch (...)
@@ -587,10 +630,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
         }
     }
 
-    HRESULT __stdcall put_LicenseFetchChallengeCustomData(abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData) noexcept override
+    HRESULT __stdcall put_LicenseFetchChallengeCustomData(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().LicenseFetchChallengeCustomData(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&licenseFetchChallengeCustomData));
             return S_OK;
         }
@@ -604,11 +648,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptorFactory> : produce_base<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptorFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, uint32_t __contentIDBytesSize, abi_arg_in<uint8_t> * contentIDBytes, abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData, abi_arg_out<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, uint32_t __contentIDBytesSize, impl::abi_arg_in<uint8_t> * contentIDBytes, impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDCustomData> licenseFetchChallengeCustomData, impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(contentIDType, array_ref<const uint8_t>(contentIDBytes, contentIDBytes + __contentIDBytesSize), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&licenseFetchChallengeCustomData)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(contentIDType, array_view<const uint8_t>(contentIDBytes, contentIDBytes + __contentIDBytesSize), *reinterpret_cast<const Windows::Media::Protection::PlayReady::INDCustomData *>(&licenseFetchChallengeCustomData)));
             return S_OK;
         }
         catch (...)
@@ -622,11 +667,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchDescript
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchResult> : produce_base<D, Windows::Media::Protection::PlayReady::INDLicenseFetchResult>
 {
-    HRESULT __stdcall get_ResponseCustomData(abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
+    HRESULT __stdcall get_ResponseCustomData(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
     {
         try
         {
-            *customData = detach(this->shim().ResponseCustomData());
+            typename D::abi_guard guard(this->shim());
+            *customData = detach_abi(this->shim().ResponseCustomData());
             return S_OK;
         }
         catch (...)
@@ -640,11 +686,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDLicenseFetchResult> 
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDMessenger> : produce_base<D, Windows::Media::Protection::PlayReady::INDMessenger>
 {
-    HRESULT __stdcall abi_SendRegistrationRequestAsync(uint32_t __sessionIDBytesSize, abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, abi_arg_in<uint8_t> * challengeDataBytes, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
+    HRESULT __stdcall abi_SendRegistrationRequestAsync(uint32_t __sessionIDBytesSize, impl::abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, impl::abi_arg_in<uint8_t> * challengeDataBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().SendRegistrationRequestAsync(array_ref<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_ref<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().SendRegistrationRequestAsync(array_view<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_view<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -654,11 +701,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDMessenger> : produce
         }
     }
 
-    HRESULT __stdcall abi_SendProximityDetectionStartAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, uint32_t __transmitterChannelBytesSize, abi_arg_in<uint8_t> * transmitterChannelBytes, uint32_t __sessionIDBytesSize, abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, abi_arg_in<uint8_t> * challengeDataBytes, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
+    HRESULT __stdcall abi_SendProximityDetectionStartAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, uint32_t __transmitterChannelBytesSize, impl::abi_arg_in<uint8_t> * transmitterChannelBytes, uint32_t __sessionIDBytesSize, impl::abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, impl::abi_arg_in<uint8_t> * challengeDataBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().SendProximityDetectionStartAsync(pdType, array_ref<const uint8_t>(transmitterChannelBytes, transmitterChannelBytes + __transmitterChannelBytesSize), array_ref<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_ref<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().SendProximityDetectionStartAsync(pdType, array_view<const uint8_t>(transmitterChannelBytes, transmitterChannelBytes + __transmitterChannelBytesSize), array_view<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_view<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -668,11 +716,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDMessenger> : produce
         }
     }
 
-    HRESULT __stdcall abi_SendProximityDetectionResponseAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, uint32_t __transmitterChannelBytesSize, abi_arg_in<uint8_t> * transmitterChannelBytes, uint32_t __sessionIDBytesSize, abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __responseDataBytesSize, abi_arg_in<uint8_t> * responseDataBytes, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
+    HRESULT __stdcall abi_SendProximityDetectionResponseAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, uint32_t __transmitterChannelBytesSize, impl::abi_arg_in<uint8_t> * transmitterChannelBytes, uint32_t __sessionIDBytesSize, impl::abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __responseDataBytesSize, impl::abi_arg_in<uint8_t> * responseDataBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().SendProximityDetectionResponseAsync(pdType, array_ref<const uint8_t>(transmitterChannelBytes, transmitterChannelBytes + __transmitterChannelBytesSize), array_ref<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_ref<const uint8_t>(responseDataBytes, responseDataBytes + __responseDataBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().SendProximityDetectionResponseAsync(pdType, array_view<const uint8_t>(transmitterChannelBytes, transmitterChannelBytes + __transmitterChannelBytesSize), array_view<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_view<const uint8_t>(responseDataBytes, responseDataBytes + __responseDataBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -682,11 +731,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDMessenger> : produce
         }
     }
 
-    HRESULT __stdcall abi_SendLicenseFetchRequestAsync(uint32_t __sessionIDBytesSize, abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, abi_arg_in<uint8_t> * challengeDataBytes, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
+    HRESULT __stdcall abi_SendLicenseFetchRequestAsync(uint32_t __sessionIDBytesSize, impl::abi_arg_in<uint8_t> * sessionIDBytes, uint32_t __challengeDataBytesSize, impl::abi_arg_in<uint8_t> * challengeDataBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult>> result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().SendLicenseFetchRequestAsync(array_ref<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_ref<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().SendLicenseFetchRequestAsync(array_view<const uint8_t>(sessionIDBytes, sessionIDBytes + __sessionIDBytesSize), array_view<const uint8_t>(challengeDataBytes, challengeDataBytes + __challengeDataBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -704,7 +754,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDProximityDetectionCo
     {
         try
         {
-            *retryCount = detach(this->shim().ProximityDetectionRetryCount());
+            typename D::abi_guard guard(this->shim());
+            *retryCount = detach_abi(this->shim().ProximityDetectionRetryCount());
             return S_OK;
         }
         catch (...)
@@ -717,11 +768,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDProximityDetectionCo
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> : produce_base<D, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs>
 {
-    HRESULT __stdcall get_ResponseCustomData(abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
+    HRESULT __stdcall get_ResponseCustomData(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDCustomData> customData) noexcept override
     {
         try
         {
-            *customData = detach(this->shim().ResponseCustomData());
+            typename D::abi_guard guard(this->shim());
+            *customData = detach_abi(this->shim().ResponseCustomData());
             return S_OK;
         }
         catch (...)
@@ -731,11 +783,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDRegistrationComplete
         }
     }
 
-    HRESULT __stdcall get_TransmitterProperties(abi_arg_out<Windows::Media::Protection::PlayReady::INDTransmitterProperties> transmitterProperties) noexcept override
+    HRESULT __stdcall get_TransmitterProperties(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDTransmitterProperties> transmitterProperties) noexcept override
     {
         try
         {
-            *transmitterProperties = detach(this->shim().TransmitterProperties());
+            typename D::abi_guard guard(this->shim());
+            *transmitterProperties = detach_abi(this->shim().TransmitterProperties());
             return S_OK;
         }
         catch (...)
@@ -749,7 +802,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDRegistrationComplete
     {
         try
         {
-            *acceptpt = detach(this->shim().TransmitterCertificateAccepted());
+            typename D::abi_guard guard(this->shim());
+            *acceptpt = detach_abi(this->shim().TransmitterCertificateAccepted());
             return S_OK;
         }
         catch (...)
@@ -762,6 +816,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDRegistrationComplete
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().TransmitterCertificateAccepted(accept);
             return S_OK;
         }
@@ -775,11 +830,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDRegistrationComplete
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDSendResult> : produce_base<D, Windows::Media::Protection::PlayReady::INDSendResult>
 {
-    HRESULT __stdcall get_Response(uint32_t * __responseDataBytesSize, abi_arg_out<uint8_t> * responseDataBytes) noexcept override
+    HRESULT __stdcall get_Response(uint32_t * __responseDataBytesSize, impl::abi_arg_out<uint8_t> * responseDataBytes) noexcept override
     {
         try
         {
-            std::tie(*__responseDataBytesSize, *responseDataBytes) = detach(this->shim().Response());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__responseDataBytesSize, *responseDataBytes) = detach_abi(this->shim().Response());
             return S_OK;
         }
         catch (...)
@@ -794,11 +850,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDSendResult> : produc
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDStartResult> : produce_base<D, Windows::Media::Protection::PlayReady::INDStartResult>
 {
-    HRESULT __stdcall get_MediaStreamSource(abi_arg_out<Windows::Media::Core::IMediaStreamSource> mediaStreamSource) noexcept override
+    HRESULT __stdcall get_MediaStreamSource(impl::abi_arg_out<Windows::Media::Core::IMediaStreamSource> mediaStreamSource) noexcept override
     {
         try
         {
-            *mediaStreamSource = detach(this->shim().MediaStreamSource());
+            typename D::abi_guard guard(this->shim());
+            *mediaStreamSource = detach_abi(this->shim().MediaStreamSource());
             return S_OK;
         }
         catch (...)
@@ -812,11 +869,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStartResult> : produ
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDStorageFileHelper> : produce_base<D, Windows::Media::Protection::PlayReady::INDStorageFileHelper>
 {
-    HRESULT __stdcall abi_GetFileURLs(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> fileURLs) noexcept override
+    HRESULT __stdcall abi_GetFileURLs(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> fileURLs) noexcept override
     {
         try
         {
-            *fileURLs = detach(this->shim().GetFileURLs(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *fileURLs = detach_abi(this->shim().GetFileURLs(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -830,11 +888,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStorageFileHelper> :
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : produce_base<D, Windows::Media::Protection::PlayReady::INDStreamParser>
 {
-    HRESULT __stdcall abi_ParseData(uint32_t __dataBytesSize, abi_arg_in<uint8_t> * dataBytes) noexcept override
+    HRESULT __stdcall abi_ParseData(uint32_t __dataBytesSize, impl::abi_arg_in<uint8_t> * dataBytes) noexcept override
     {
         try
         {
-            this->shim().ParseData(array_ref<const uint8_t>(dataBytes, dataBytes + __dataBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().ParseData(array_view<const uint8_t>(dataBytes, dataBytes + __dataBytesSize));
             return S_OK;
         }
         catch (...)
@@ -843,11 +902,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : prod
         }
     }
 
-    HRESULT __stdcall abi_GetStreamInformation(abi_arg_in<Windows::Media::Core::IMediaStreamDescriptor> descriptor, Windows::Media::Protection::PlayReady::NDMediaStreamType * streamType, uint32_t * streamID) noexcept override
+    HRESULT __stdcall abi_GetStreamInformation(impl::abi_arg_in<Windows::Media::Core::IMediaStreamDescriptor> descriptor, Windows::Media::Protection::PlayReady::NDMediaStreamType * streamType, uint32_t * streamID) noexcept override
     {
         try
         {
-            *streamID = detach(this->shim().GetStreamInformation(*reinterpret_cast<const Windows::Media::Core::IMediaStreamDescriptor *>(&descriptor), *streamType));
+            typename D::abi_guard guard(this->shim());
+            *streamID = detach_abi(this->shim().GetStreamInformation(*reinterpret_cast<const Windows::Media::Core::IMediaStreamDescriptor *>(&descriptor), *streamType));
             return S_OK;
         }
         catch (...)
@@ -860,6 +920,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : prod
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().BeginOfStream();
             return S_OK;
         }
@@ -873,6 +934,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : prod
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().EndOfStream();
             return S_OK;
         }
@@ -882,11 +944,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : prod
         }
     }
 
-    HRESULT __stdcall get_Notifier(abi_arg_out<Windows::Media::Protection::PlayReady::INDStreamParserNotifier> instance) noexcept override
+    HRESULT __stdcall get_Notifier(impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDStreamParserNotifier> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().Notifier());
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().Notifier());
             return S_OK;
         }
         catch (...)
@@ -900,10 +963,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParser> : prod
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier> : produce_base<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier>
 {
-    HRESULT __stdcall abi_OnContentIDReceived(abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor) noexcept override
+    HRESULT __stdcall abi_OnContentIDReceived(impl::abi_arg_in<Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor> licenseFetchDescriptor) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnContentIDReceived(*reinterpret_cast<const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor *>(&licenseFetchDescriptor));
             return S_OK;
         }
@@ -913,10 +977,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier
         }
     }
 
-    HRESULT __stdcall abi_OnMediaStreamDescriptorCreated(abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor>> audioStreamDescriptors, abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor>> videoStreamDescriptors) noexcept override
+    HRESULT __stdcall abi_OnMediaStreamDescriptorCreated(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor>> audioStreamDescriptors, impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor>> videoStreamDescriptors) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().OnMediaStreamDescriptorCreated(*reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor> *>(&audioStreamDescriptors), *reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor> *>(&videoStreamDescriptors));
             return S_OK;
         }
@@ -926,11 +991,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier
         }
     }
 
-    HRESULT __stdcall abi_OnSampleParsed(uint32_t streamID, Windows::Media::Protection::PlayReady::NDMediaStreamType streamType, abi_arg_in<Windows::Media::Core::IMediaStreamSample> streamSample, int64_t pts, Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccFormat, uint32_t __ccDataBytesSize, abi_arg_in<uint8_t> * ccDataBytes) noexcept override
+    HRESULT __stdcall abi_OnSampleParsed(uint32_t streamID, Windows::Media::Protection::PlayReady::NDMediaStreamType streamType, impl::abi_arg_in<Windows::Media::Core::IMediaStreamSample> streamSample, int64_t pts, Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccFormat, uint32_t __ccDataBytesSize, impl::abi_arg_in<uint8_t> * ccDataBytes) noexcept override
     {
         try
         {
-            this->shim().OnSampleParsed(streamID, streamType, *reinterpret_cast<const Windows::Media::Core::MediaStreamSample *>(&streamSample), pts, ccFormat, array_ref<const uint8_t>(ccDataBytes, ccDataBytes + __ccDataBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().OnSampleParsed(streamID, streamType, *reinterpret_cast<const Windows::Media::Core::MediaStreamSample *>(&streamSample), pts, ccFormat, array_view<const uint8_t>(ccDataBytes, ccDataBytes + __ccDataBytesSize));
             return S_OK;
         }
         catch (...)
@@ -939,11 +1005,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier
         }
     }
 
-    HRESULT __stdcall abi_OnBeginSetupDecryptor(abi_arg_in<Windows::Media::Core::IMediaStreamDescriptor> descriptor, GUID keyID, uint32_t __proBytesSize, abi_arg_in<uint8_t> * proBytes) noexcept override
+    HRESULT __stdcall abi_OnBeginSetupDecryptor(impl::abi_arg_in<Windows::Media::Core::IMediaStreamDescriptor> descriptor, GUID keyID, uint32_t __proBytesSize, impl::abi_arg_in<uint8_t> * proBytes) noexcept override
     {
         try
         {
-            this->shim().OnBeginSetupDecryptor(*reinterpret_cast<const Windows::Media::Core::IMediaStreamDescriptor *>(&descriptor), keyID, array_ref<const uint8_t>(proBytes, proBytes + __proBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().OnBeginSetupDecryptor(*reinterpret_cast<const Windows::Media::Core::IMediaStreamDescriptor *>(&descriptor), keyID, array_view<const uint8_t>(proBytes, proBytes + __proBytesSize));
             return S_OK;
         }
         catch (...)
@@ -956,11 +1023,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDStreamParserNotifier
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::INDTCPMessengerFactory> : produce_base<D, Windows::Media::Protection::PlayReady::INDTCPMessengerFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<hstring> remoteHostName, uint32_t remoteHostPort, abi_arg_out<Windows::Media::Protection::PlayReady::INDMessenger> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<hstring> remoteHostName, uint32_t remoteHostPort, impl::abi_arg_out<Windows::Media::Protection::PlayReady::INDMessenger> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const hstring *>(&remoteHostName), remoteHostPort));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const hstring *>(&remoteHostName), remoteHostPort));
             return S_OK;
         }
         catch (...)
@@ -978,7 +1046,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
     {
         try
         {
-            *type = detach(this->shim().CertificateType());
+            typename D::abi_guard guard(this->shim());
+            *type = detach_abi(this->shim().CertificateType());
             return S_OK;
         }
         catch (...)
@@ -991,7 +1060,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
     {
         try
         {
-            *identifier = detach(this->shim().PlatformIdentifier());
+            typename D::abi_guard guard(this->shim());
+            *identifier = detach_abi(this->shim().PlatformIdentifier());
             return S_OK;
         }
         catch (...)
@@ -1000,11 +1070,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_SupportedFeatures(uint32_t * __featureSetsSize, abi_arg_out<Windows::Media::Protection::PlayReady::NDCertificateFeature> * featureSets) noexcept override
+    HRESULT __stdcall get_SupportedFeatures(uint32_t * __featureSetsSize, impl::abi_arg_out<Windows::Media::Protection::PlayReady::NDCertificateFeature> * featureSets) noexcept override
     {
         try
         {
-            std::tie(*__featureSetsSize, *featureSets) = detach(this->shim().SupportedFeatures());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__featureSetsSize, *featureSets) = detach_abi(this->shim().SupportedFeatures());
             return S_OK;
         }
         catch (...)
@@ -1019,7 +1090,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
     {
         try
         {
-            *level = detach(this->shim().SecurityLevel());
+            typename D::abi_guard guard(this->shim());
+            *level = detach_abi(this->shim().SecurityLevel());
             return S_OK;
         }
         catch (...)
@@ -1032,7 +1104,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
     {
         try
         {
-            *securityVersion = detach(this->shim().SecurityVersion());
+            typename D::abi_guard guard(this->shim());
+            *securityVersion = detach_abi(this->shim().SecurityVersion());
             return S_OK;
         }
         catch (...)
@@ -1041,11 +1114,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ExpirationDate(abi_arg_out<Windows::Foundation::DateTime> expirationDate) noexcept override
+    HRESULT __stdcall get_ExpirationDate(impl::abi_arg_out<Windows::Foundation::DateTime> expirationDate) noexcept override
     {
         try
         {
-            *expirationDate = detach(this->shim().ExpirationDate());
+            typename D::abi_guard guard(this->shim());
+            *expirationDate = detach_abi(this->shim().ExpirationDate());
             return S_OK;
         }
         catch (...)
@@ -1054,11 +1128,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ClientID(uint32_t * __clientIDBytesSize, abi_arg_out<uint8_t> * clientIDBytes) noexcept override
+    HRESULT __stdcall get_ClientID(uint32_t * __clientIDBytesSize, impl::abi_arg_out<uint8_t> * clientIDBytes) noexcept override
     {
         try
         {
-            std::tie(*__clientIDBytesSize, *clientIDBytes) = detach(this->shim().ClientID());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__clientIDBytesSize, *clientIDBytes) = detach_abi(this->shim().ClientID());
             return S_OK;
         }
         catch (...)
@@ -1069,11 +1144,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ModelDigest(uint32_t * __modelDigestBytesSize, abi_arg_out<uint8_t> * modelDigestBytes) noexcept override
+    HRESULT __stdcall get_ModelDigest(uint32_t * __modelDigestBytesSize, impl::abi_arg_out<uint8_t> * modelDigestBytes) noexcept override
     {
         try
         {
-            std::tie(*__modelDigestBytesSize, *modelDigestBytes) = detach(this->shim().ModelDigest());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__modelDigestBytesSize, *modelDigestBytes) = detach_abi(this->shim().ModelDigest());
             return S_OK;
         }
         catch (...)
@@ -1084,11 +1160,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ModelManufacturerName(abi_arg_out<hstring> modelManufacturerName) noexcept override
+    HRESULT __stdcall get_ModelManufacturerName(impl::abi_arg_out<hstring> modelManufacturerName) noexcept override
     {
         try
         {
-            *modelManufacturerName = detach(this->shim().ModelManufacturerName());
+            typename D::abi_guard guard(this->shim());
+            *modelManufacturerName = detach_abi(this->shim().ModelManufacturerName());
             return S_OK;
         }
         catch (...)
@@ -1098,11 +1175,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ModelName(abi_arg_out<hstring> modelName) noexcept override
+    HRESULT __stdcall get_ModelName(impl::abi_arg_out<hstring> modelName) noexcept override
     {
         try
         {
-            *modelName = detach(this->shim().ModelName());
+            typename D::abi_guard guard(this->shim());
+            *modelName = detach_abi(this->shim().ModelName());
             return S_OK;
         }
         catch (...)
@@ -1112,11 +1190,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::INDTransmitterPropertie
         }
     }
 
-    HRESULT __stdcall get_ModelNumber(abi_arg_out<hstring> modelNumber) noexcept override
+    HRESULT __stdcall get_ModelNumber(impl::abi_arg_out<hstring> modelNumber) noexcept override
     {
         try
         {
-            *modelNumber = detach(this->shim().ModelNumber());
+            typename D::abi_guard guard(this->shim());
+            *modelNumber = detach_abi(this->shim().ModelNumber());
             return S_OK;
         }
         catch (...)
@@ -1134,7 +1213,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
     {
         try
         {
-            *value = detach(this->shim().KeyId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().KeyId());
             return S_OK;
         }
         catch (...)
@@ -1143,25 +1223,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall get_KeyIdString(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KeyIdString(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().KeyIdString());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_LicenseAcquisitionUrl(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().LicenseAcquisitionUrl());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().KeyIdString());
             return S_OK;
         }
         catch (...)
@@ -1171,11 +1238,27 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall get_LicenseAcquisitionUserInterfaceUrl(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_LicenseAcquisitionUrl(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LicenseAcquisitionUserInterfaceUrl());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LicenseAcquisitionUrl());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall get_LicenseAcquisitionUserInterfaceUrl(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LicenseAcquisitionUserInterfaceUrl());
             return S_OK;
         }
         catch (...)
@@ -1189,7 +1272,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
     {
         try
         {
-            *value = detach(this->shim().DomainServiceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainServiceId());
             return S_OK;
         }
         catch (...)
@@ -1202,7 +1286,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
     {
         try
         {
-            *value = detach(this->shim().EncryptionType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EncryptionType());
             return S_OK;
         }
         catch (...)
@@ -1211,11 +1296,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall get_CustomAttributes(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CustomAttributes(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CustomAttributes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CustomAttributes());
             return S_OK;
         }
         catch (...)
@@ -1229,7 +1315,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
     {
         try
         {
-            *value = detach(this->shim().DecryptorSetup());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DecryptorSetup());
             return S_OK;
         }
         catch (...)
@@ -1238,11 +1325,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall abi_GetSerializedHeader(uint32_t * __headerBytesSize, abi_arg_out<uint8_t> * headerBytes) noexcept override
+    HRESULT __stdcall abi_GetSerializedHeader(uint32_t * __headerBytesSize, impl::abi_arg_out<uint8_t> * headerBytes) noexcept override
     {
         try
         {
-            std::tie(*__headerBytesSize, *headerBytes) = detach(this->shim().GetSerializedHeader());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__headerBytesSize, *headerBytes) = detach_abi(this->shim().GetSerializedHeader());
             return S_OK;
         }
         catch (...)
@@ -1253,11 +1341,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall get_HeaderWithEmbeddedUpdates(abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
+    HRESULT __stdcall get_HeaderWithEmbeddedUpdates(impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HeaderWithEmbeddedUpdates());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HeaderWithEmbeddedUpdates());
             return S_OK;
         }
         catch (...)
@@ -1271,11 +1360,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader2> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader2>
 {
-    HRESULT __stdcall get_KeyIds(uint32_t * __contentKeyIdsSize, abi_arg_out<GUID> * contentKeyIds) noexcept override
+    HRESULT __stdcall get_KeyIds(uint32_t * __contentKeyIdsSize, impl::abi_arg_out<GUID> * contentKeyIds) noexcept override
     {
         try
         {
-            std::tie(*__contentKeyIdsSize, *contentKeyIds) = detach(this->shim().KeyIds());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__contentKeyIdsSize, *contentKeyIds) = detach_abi(this->shim().KeyIds());
             return S_OK;
         }
         catch (...)
@@ -1286,11 +1376,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall get_KeyIdStrings(uint32_t * __contentKeyIdStringsSize, abi_arg_out<hstring> * contentKeyIdStrings) noexcept override
+    HRESULT __stdcall get_KeyIdStrings(uint32_t * __contentKeyIdStringsSize, impl::abi_arg_out<hstring> * contentKeyIdStrings) noexcept override
     {
         try
         {
-            std::tie(*__contentKeyIdStringsSize, *contentKeyIdStrings) = detach(this->shim().KeyIdStrings());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__contentKeyIdStringsSize, *contentKeyIdStrings) = detach_abi(this->shim().KeyIdStrings());
             return S_OK;
         }
         catch (...)
@@ -1305,11 +1396,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceFromWindowsMediaDrmHeader(uint32_t __headerBytesSize, abi_arg_in<uint8_t> * headerBytes, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, abi_arg_in<hstring> customAttributes, GUID domainServiceId, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceFromWindowsMediaDrmHeader(uint32_t __headerBytesSize, impl::abi_arg_in<uint8_t> * headerBytes, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, impl::abi_arg_in<hstring> customAttributes, GUID domainServiceId, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceFromWindowsMediaDrmHeader(array_ref<const uint8_t>(headerBytes, headerBytes + __headerBytesSize), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceFromWindowsMediaDrmHeader(array_view<const uint8_t>(headerBytes, headerBytes + __headerBytesSize), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
             return S_OK;
         }
         catch (...)
@@ -1319,11 +1411,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall abi_CreateInstanceFromComponents(GUID contentKeyId, abi_arg_in<hstring> contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, abi_arg_in<hstring> customAttributes, GUID domainServiceId, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceFromComponents(GUID contentKeyId, impl::abi_arg_in<hstring> contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, impl::abi_arg_in<hstring> customAttributes, GUID domainServiceId, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceFromComponents(contentKeyId, *reinterpret_cast<const hstring *>(&contentKeyIdString), contentEncryptionAlgorithm, *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceFromComponents(contentKeyId, *reinterpret_cast<const hstring *>(&contentKeyIdString), contentEncryptionAlgorithm, *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
             return S_OK;
         }
         catch (...)
@@ -1333,11 +1426,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
         }
     }
 
-    HRESULT __stdcall abi_CreateInstanceFromPlayReadyHeader(uint32_t __headerBytesSize, abi_arg_in<uint8_t> * headerBytes, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceFromPlayReadyHeader(uint32_t __headerBytesSize, impl::abi_arg_in<uint8_t> * headerBytes, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceFromPlayReadyHeader(array_ref<const uint8_t>(headerBytes, headerBytes + __headerBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceFromPlayReadyHeader(array_view<const uint8_t>(headerBytes, headerBytes + __headerBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -1351,11 +1445,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory2> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory2>
 {
-    HRESULT __stdcall abi_CreateInstanceFromComponents2(uint32_t dwFlags, uint32_t __contentKeyIdsSize, abi_arg_in<GUID> * contentKeyIds, uint32_t __contentKeyIdStringsSize, abi_arg_in<hstring> * contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, abi_arg_in<hstring> customAttributes, GUID domainServiceId, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceFromComponents2(uint32_t dwFlags, uint32_t __contentKeyIdsSize, impl::abi_arg_in<GUID> * contentKeyIds, uint32_t __contentKeyIdStringsSize, impl::abi_arg_in<hstring> * contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUrl, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> licenseAcquisitionUserInterfaceUrl, impl::abi_arg_in<hstring> customAttributes, GUID domainServiceId, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceFromComponents2(dwFlags, array_ref<const GUID>(contentKeyIds, contentKeyIds + __contentKeyIdsSize), *reinterpret_cast<const hstring *>(&contentKeyIdStrings), contentEncryptionAlgorithm, *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceFromComponents2(dwFlags, array_view<const GUID>(contentKeyIds, contentKeyIds + __contentKeyIdsSize), *reinterpret_cast<const hstring *>(&contentKeyIdStrings), contentEncryptionAlgorithm, *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUrl), *reinterpret_cast<const Windows::Foundation::Uri *>(&licenseAcquisitionUserInterfaceUrl), *reinterpret_cast<const hstring *>(&customAttributes), domainServiceId));
             return S_OK;
         }
         catch (...)
@@ -1370,11 +1465,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentHeader
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyContentResolver> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyContentResolver>
 {
-    HRESULT __stdcall abi_ServiceRequest(abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest> serviceRequest) noexcept override
+    HRESULT __stdcall abi_ServiceRequest(impl::abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest> serviceRequest) noexcept override
     {
         try
         {
-            *serviceRequest = detach(this->shim().ServiceRequest(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader)));
+            typename D::abi_guard guard(this->shim());
+            *serviceRequest = detach_abi(this->shim().ServiceRequest(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader)));
             return S_OK;
         }
         catch (...)
@@ -1392,7 +1488,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
     {
         try
         {
-            *value = detach(this->shim().AccountId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AccountId());
             return S_OK;
         }
         catch (...)
@@ -1405,7 +1502,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
     {
         try
         {
-            *value = detach(this->shim().ServiceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ServiceId());
             return S_OK;
         }
         catch (...)
@@ -1418,7 +1516,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
     {
         try
         {
-            *value = detach(this->shim().Revision());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Revision());
             return S_OK;
         }
         catch (...)
@@ -1427,11 +1526,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
         }
     }
 
-    HRESULT __stdcall get_FriendlyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FriendlyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FriendlyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FriendlyName());
             return S_OK;
         }
         catch (...)
@@ -1441,11 +1541,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
         }
     }
 
-    HRESULT __stdcall get_DomainJoinUrl(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_DomainJoinUrl(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DomainJoinUrl());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainJoinUrl());
             return S_OK;
         }
         catch (...)
@@ -1459,11 +1560,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomain> : pro
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainIterableFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainIterableFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(GUID domainAccountId, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyDomain>> domainIterable) noexcept override
+    HRESULT __stdcall abi_CreateInstance(GUID domainAccountId, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyDomain>> domainIterable) noexcept override
     {
         try
         {
-            *domainIterable = detach(this->shim().CreateInstance(domainAccountId));
+            typename D::abi_guard guard(this->shim());
+            *domainIterable = detach_abi(this->shim().CreateInstance(domainAccountId));
             return S_OK;
         }
         catch (...)
@@ -1481,7 +1583,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
     {
         try
         {
-            *value = detach(this->shim().DomainAccountId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainAccountId());
             return S_OK;
         }
         catch (...)
@@ -1494,6 +1597,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainAccountId(value);
             return S_OK;
         }
@@ -1503,11 +1607,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
         }
     }
 
-    HRESULT __stdcall get_DomainFriendlyName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DomainFriendlyName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DomainFriendlyName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainFriendlyName());
             return S_OK;
         }
         catch (...)
@@ -1517,10 +1622,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
         }
     }
 
-    HRESULT __stdcall put_DomainFriendlyName(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DomainFriendlyName(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainFriendlyName(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -1534,7 +1640,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
     {
         try
         {
-            *value = detach(this->shim().DomainServiceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainServiceId());
             return S_OK;
         }
         catch (...)
@@ -1547,6 +1654,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinSer
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainServiceId(value);
             return S_OK;
         }
@@ -1564,7 +1672,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveSe
     {
         try
         {
-            *value = detach(this->shim().DomainAccountId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainAccountId());
             return S_OK;
         }
         catch (...)
@@ -1577,6 +1686,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveSe
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainAccountId(value);
             return S_OK;
         }
@@ -1590,7 +1700,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveSe
     {
         try
         {
-            *value = detach(this->shim().DomainServiceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainServiceId());
             return S_OK;
         }
         catch (...)
@@ -1603,6 +1714,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveSe
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainServiceId(value);
             return S_OK;
         }
@@ -1616,11 +1728,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveSe
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyITADataGenerator> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyITADataGenerator>
 {
-    HRESULT __stdcall abi_GenerateData(GUID guidCPSystemId, uint32_t countOfStreams, abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration, Windows::Media::Protection::PlayReady::PlayReadyITADataFormat format, uint32_t * __dataBytesSize, abi_arg_out<uint8_t> * dataBytes) noexcept override
+    HRESULT __stdcall abi_GenerateData(GUID guidCPSystemId, uint32_t countOfStreams, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration, Windows::Media::Protection::PlayReady::PlayReadyITADataFormat format, uint32_t * __dataBytesSize, impl::abi_arg_out<uint8_t> * dataBytes) noexcept override
     {
         try
         {
-            std::tie(*__dataBytesSize, *dataBytes) = detach(this->shim().GenerateData(guidCPSystemId, countOfStreams, *reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration), format));
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__dataBytesSize, *dataBytes) = detach_abi(this->shim().GenerateData(guidCPSystemId, countOfStreams, *reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration), format));
             return S_OK;
         }
         catch (...)
@@ -1643,7 +1756,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *value = detach(this->shim().FullyEvaluated());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FullyEvaluated());
             return S_OK;
         }
         catch (...)
@@ -1656,7 +1770,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *value = detach(this->shim().UsableForPlay());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UsableForPlay());
             return S_OK;
         }
         catch (...)
@@ -1665,11 +1780,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
         }
     }
 
-    HRESULT __stdcall get_ExpirationDate(abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationDate(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ExpirationDate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExpirationDate());
             return S_OK;
         }
         catch (...)
@@ -1683,7 +1799,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *value = detach(this->shim().ExpireAfterFirstPlay());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ExpireAfterFirstPlay());
             return S_OK;
         }
         catch (...)
@@ -1696,7 +1813,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *value = detach(this->shim().DomainAccountID());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainAccountID());
             return S_OK;
         }
         catch (...)
@@ -1709,7 +1827,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *value = detach(this->shim().ChainDepth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChainDepth());
             return S_OK;
         }
         catch (...)
@@ -1722,7 +1841,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
     {
         try
         {
-            *kid = detach(this->shim().GetKIDAtChainDepth(chainDepth));
+            typename D::abi_guard guard(this->shim());
+            *kid = detach_abi(this->shim().GetKIDAtChainDepth(chainDepth));
             return S_OK;
         }
         catch (...)
@@ -1735,11 +1855,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicense> : pr
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest>
 {
-    HRESULT __stdcall get_ContentHeader(abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
+    HRESULT __stdcall get_ContentHeader(impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContentHeader());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContentHeader());
             return S_OK;
         }
         catch (...)
@@ -1749,10 +1870,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquis
         }
     }
 
-    HRESULT __stdcall put_ContentHeader(abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
+    HRESULT __stdcall put_ContentHeader(impl::abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ContentHeader(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&value));
             return S_OK;
         }
@@ -1766,7 +1888,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquis
     {
         try
         {
-            *value = detach(this->shim().DomainServiceId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainServiceId());
             return S_OK;
         }
         catch (...)
@@ -1779,6 +1902,7 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquis
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DomainServiceId(value);
             return S_OK;
         }
@@ -1796,7 +1920,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquis
     {
         try
         {
-            *value = detach(this->shim().SessionId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SessionId());
             return S_OK;
         }
         catch (...)
@@ -1809,11 +1934,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquis
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseIterableFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseIterableFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, bool fullyEvaluated, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyLicense>> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, bool fullyEvaluated, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadyLicense>> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader), fullyEvaluated));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader), fullyEvaluated));
             return S_OK;
         }
         catch (...)
@@ -1827,11 +1953,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseIterab
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseManagement> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseManagement>
 {
-    HRESULT __stdcall abi_DeleteLicenses(abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteLicenses(impl::abi_arg_in<Windows::Media::Protection::PlayReady::IPlayReadyContentHeader> contentHeader, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteLicenses(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteLicenses(*reinterpret_cast<const Windows::Media::Protection::PlayReady::PlayReadyContentHeader *>(&contentHeader)));
             return S_OK;
         }
         catch (...)
@@ -1845,11 +1972,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseManage
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession>
 {
-    HRESULT __stdcall abi_CreateLAServiceRequest(abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest> serviceRequest) noexcept override
+    HRESULT __stdcall abi_CreateLAServiceRequest(impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest> serviceRequest) noexcept override
     {
         try
         {
-            *serviceRequest = detach(this->shim().CreateLAServiceRequest());
+            typename D::abi_guard guard(this->shim());
+            *serviceRequest = detach_abi(this->shim().CreateLAServiceRequest());
             return S_OK;
         }
         catch (...)
@@ -1859,10 +1987,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessio
         }
     }
 
-    HRESULT __stdcall abi_ConfigureMediaProtectionManager(abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> mpm) noexcept override
+    HRESULT __stdcall abi_ConfigureMediaProtectionManager(impl::abi_arg_in<Windows::Media::Protection::IMediaProtectionManager> mpm) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ConfigureMediaProtectionManager(*reinterpret_cast<const Windows::Media::Protection::MediaProtectionManager *>(&mpm));
             return S_OK;
         }
@@ -1876,11 +2005,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessio
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessionFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessionFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> configuration, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::Collections::IPropertySet *>(&configuration)));
             return S_OK;
         }
         catch (...)
@@ -1894,11 +2024,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessio
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyMeteringReportServiceRequest> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyMeteringReportServiceRequest>
 {
-    HRESULT __stdcall get_MeteringCertificate(uint32_t * __meteringCertBytesSize, abi_arg_out<uint8_t> * meteringCertBytes) noexcept override
+    HRESULT __stdcall get_MeteringCertificate(uint32_t * __meteringCertBytesSize, impl::abi_arg_out<uint8_t> * meteringCertBytes) noexcept override
     {
         try
         {
-            std::tie(*__meteringCertBytesSize, *meteringCertBytes) = detach(this->shim().MeteringCertificate());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__meteringCertBytesSize, *meteringCertBytes) = detach_abi(this->shim().MeteringCertificate());
             return S_OK;
         }
         catch (...)
@@ -1909,11 +2040,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyMeteringRepor
         }
     }
 
-    HRESULT __stdcall put_MeteringCertificate(uint32_t __meteringCertBytesSize, abi_arg_in<uint8_t> * meteringCertBytes) noexcept override
+    HRESULT __stdcall put_MeteringCertificate(uint32_t __meteringCertBytesSize, impl::abi_arg_in<uint8_t> * meteringCertBytes) noexcept override
     {
         try
         {
-            this->shim().MeteringCertificate(array_ref<const uint8_t>(meteringCertBytes, meteringCertBytes + __meteringCertBytesSize));
+            typename D::abi_guard guard(this->shim());
+            this->shim().MeteringCertificate(array_view<const uint8_t>(meteringCertBytes, meteringCertBytes + __meteringCertBytesSize));
             return S_OK;
         }
         catch (...)
@@ -1930,11 +2062,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyRevocationSer
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopIterableFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopIterableFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, abi_arg_in<uint8_t> * publisherCertBytes, abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest>> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, impl::abi_arg_in<uint8_t> * publisherCertBytes, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest>> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(array_ref<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(array_view<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -1952,7 +2085,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
     {
         try
         {
-            *value = detach(this->shim().SessionID());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SessionID());
             return S_OK;
         }
         catch (...)
@@ -1961,11 +2095,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
         }
     }
 
-    HRESULT __stdcall get_StartTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_StartTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().StartTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().StartTime());
             return S_OK;
         }
         catch (...)
@@ -1974,11 +2109,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
         }
     }
 
-    HRESULT __stdcall get_UpdateTime(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_UpdateTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().UpdateTime());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().UpdateTime());
             return S_OK;
         }
         catch (...)
@@ -1991,7 +2127,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
     {
         try
         {
-            *value = detach(this->shim().Stopped());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Stopped());
             return S_OK;
         }
         catch (...)
@@ -2000,11 +2137,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
         }
     }
 
-    HRESULT __stdcall get_PublisherCertificate(uint32_t * __publisherCertBytesSize, abi_arg_out<uint8_t> * publisherCertBytes) noexcept override
+    HRESULT __stdcall get_PublisherCertificate(uint32_t * __publisherCertBytesSize, impl::abi_arg_out<uint8_t> * publisherCertBytes) noexcept override
     {
         try
         {
-            std::tie(*__publisherCertBytesSize, *publisherCertBytes) = detach(this->shim().PublisherCertificate());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__publisherCertBytesSize, *publisherCertBytes) = detach_abi(this->shim().PublisherCertificate());
             return S_OK;
         }
         catch (...)
@@ -2019,11 +2157,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequestFactory> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequestFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, abi_arg_in<uint8_t> * publisherCertBytes, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstance(uint32_t __publisherCertBytesSize, impl::abi_arg_in<uint8_t> * publisherCertBytes, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstance(array_ref<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstance(array_view<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -2033,11 +2172,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
         }
     }
 
-    HRESULT __stdcall abi_CreateInstanceFromSessionID(GUID sessionID, uint32_t __publisherCertBytesSize, abi_arg_in<uint8_t> * publisherCertBytes, abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest> instance) noexcept override
+    HRESULT __stdcall abi_CreateInstanceFromSessionID(GUID sessionID, uint32_t __publisherCertBytesSize, impl::abi_arg_in<uint8_t> * publisherCertBytes, impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest> instance) noexcept override
     {
         try
         {
-            *instance = detach(this->shim().CreateInstanceFromSessionID(sessionID, array_ref<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *instance = detach_abi(this->shim().CreateInstanceFromSessionID(sessionID, array_view<const uint8_t>(publisherCertBytes, publisherCertBytes + __publisherCertBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -2051,11 +2191,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySecureStopSer
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest>
 {
-    HRESULT __stdcall get_Uri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_Uri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Uri());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Uri());
             return S_OK;
         }
         catch (...)
@@ -2065,10 +2206,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall put_Uri(abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_Uri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Uri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
             return S_OK;
         }
@@ -2078,11 +2220,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall get_ResponseCustomData(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ResponseCustomData(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ResponseCustomData());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ResponseCustomData());
             return S_OK;
         }
         catch (...)
@@ -2092,11 +2235,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall get_ChallengeCustomData(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ChallengeCustomData(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ChallengeCustomData());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChallengeCustomData());
             return S_OK;
         }
         catch (...)
@@ -2106,10 +2250,11 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall put_ChallengeCustomData(abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ChallengeCustomData(impl::abi_arg_in<hstring> value) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().ChallengeCustomData(*reinterpret_cast<const hstring *>(&value));
             return S_OK;
         }
@@ -2119,11 +2264,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall abi_BeginServiceRequest(abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall abi_BeginServiceRequest(impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
     {
         try
         {
-            *action = detach(this->shim().BeginServiceRequest());
+            typename D::abi_guard guard(this->shim());
+            *action = detach_abi(this->shim().BeginServiceRequest());
             return S_OK;
         }
         catch (...)
@@ -2133,11 +2279,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall abi_NextServiceRequest(abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest> serviceRequest) noexcept override
+    HRESULT __stdcall abi_NextServiceRequest(impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest> serviceRequest) noexcept override
     {
         try
         {
-            *serviceRequest = detach(this->shim().NextServiceRequest());
+            typename D::abi_guard guard(this->shim());
+            *serviceRequest = detach_abi(this->shim().NextServiceRequest());
             return S_OK;
         }
         catch (...)
@@ -2147,11 +2294,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall abi_GenerateManualEnablingChallenge(abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySoapMessage> challengeMessage) noexcept override
+    HRESULT __stdcall abi_GenerateManualEnablingChallenge(impl::abi_arg_out<Windows::Media::Protection::PlayReady::IPlayReadySoapMessage> challengeMessage) noexcept override
     {
         try
         {
-            *challengeMessage = detach(this->shim().GenerateManualEnablingChallenge());
+            typename D::abi_guard guard(this->shim());
+            *challengeMessage = detach_abi(this->shim().GenerateManualEnablingChallenge());
             return S_OK;
         }
         catch (...)
@@ -2161,11 +2309,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
         }
     }
 
-    HRESULT __stdcall abi_ProcessManualEnablingResponse(uint32_t __responseBytesSize, abi_arg_in<uint8_t> * responseBytes, HRESULT * result) noexcept override
+    HRESULT __stdcall abi_ProcessManualEnablingResponse(uint32_t __responseBytesSize, impl::abi_arg_in<uint8_t> * responseBytes, HRESULT * result) noexcept override
     {
         try
         {
-            *result = detach(this->shim().ProcessManualEnablingResponse(array_ref<const uint8_t>(responseBytes, responseBytes + __responseBytesSize)));
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().ProcessManualEnablingResponse(array_view<const uint8_t>(responseBytes, responseBytes + __responseBytesSize)));
             return S_OK;
         }
         catch (...)
@@ -2178,11 +2327,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyServiceReques
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySoapMessage> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadySoapMessage>
 {
-    HRESULT __stdcall abi_GetMessageBody(uint32_t * __messageBodyBytesSize, abi_arg_out<uint8_t> * messageBodyBytes) noexcept override
+    HRESULT __stdcall abi_GetMessageBody(uint32_t * __messageBodyBytesSize, impl::abi_arg_out<uint8_t> * messageBodyBytes) noexcept override
     {
         try
         {
-            std::tie(*__messageBodyBytesSize, *messageBodyBytes) = detach(this->shim().GetMessageBody());
+            typename D::abi_guard guard(this->shim());
+            std::tie(*__messageBodyBytesSize, *messageBodyBytes) = detach_abi(this->shim().GetMessageBody());
             return S_OK;
         }
         catch (...)
@@ -2193,11 +2343,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySoapMessage> 
         }
     }
 
-    HRESULT __stdcall get_MessageHeaders(abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_MessageHeaders(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MessageHeaders());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MessageHeaders());
             return S_OK;
         }
         catch (...)
@@ -2207,11 +2358,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadySoapMessage> 
         }
     }
 
-    HRESULT __stdcall get_Uri(abi_arg_out<Windows::Foundation::IUriRuntimeClass> messageUri) noexcept override
+    HRESULT __stdcall get_Uri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> messageUri) noexcept override
     {
         try
         {
-            *messageUri = detach(this->shim().Uri());
+            typename D::abi_guard guard(this->shim());
+            *messageUri = detach_abi(this->shim().Uri());
             return S_OK;
         }
         catch (...)
@@ -2229,7 +2381,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().DomainJoinServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainJoinServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2242,7 +2395,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().DomainLeaveServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DomainLeaveServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2255,7 +2409,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().IndividualizationServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IndividualizationServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2268,7 +2423,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().LicenseAcquirerServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LicenseAcquirerServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2281,7 +2437,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().MeteringReportServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MeteringReportServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2294,7 +2451,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().RevocationServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RevocationServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2307,7 +2465,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().MediaProtectionSystemId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaProtectionSystemId());
             return S_OK;
         }
         catch (...)
@@ -2320,7 +2479,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics> : pr
     {
         try
         {
-            *value = detach(this->shim().PlayReadySecurityVersion());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PlayReadySecurityVersion());
             return S_OK;
         }
         catch (...)
@@ -2337,7 +2497,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics2> : p
     {
         try
         {
-            *value = detach(this->shim().PlayReadyCertificateSecurityLevel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PlayReadyCertificateSecurityLevel());
             return S_OK;
         }
         catch (...)
@@ -2354,7 +2515,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics3> : p
     {
         try
         {
-            *value = detach(this->shim().SecureStopServiceRequestType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SecureStopServiceRequestType());
             return S_OK;
         }
         catch (...)
@@ -2367,7 +2529,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics3> : p
     {
         try
         {
-            *value = detach(this->shim().CheckSupportedHardware(hwdrmFeature));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CheckSupportedHardware(hwdrmFeature));
             return S_OK;
         }
         catch (...)
@@ -2380,11 +2543,12 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics3> : p
 template <typename D>
 struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics4> : produce_base<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics4>
 {
-    HRESULT __stdcall get_InputTrustAuthorityToCreate(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InputTrustAuthorityToCreate(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().InputTrustAuthorityToCreate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().InputTrustAuthorityToCreate());
             return S_OK;
         }
         catch (...)
@@ -2398,7 +2562,8 @@ struct produce<D, Windows::Media::Protection::PlayReady::IPlayReadyStatics4> : p
     {
         try
         {
-            *value = detach(this->shim().ProtectionSystemId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ProtectionSystemId());
             return S_OK;
         }
         catch (...)
@@ -2415,749 +2580,749 @@ namespace Windows::Media::Protection::PlayReady {
 template <typename D> GUID impl_IPlayReadyContentHeader<D>::KeyId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_KeyId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_KeyId(&value));
     return value;
 }
 
 template <typename D> hstring impl_IPlayReadyContentHeader<D>::KeyIdString() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_KeyIdString(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_KeyIdString(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IPlayReadyContentHeader<D>::LicenseAcquisitionUrl() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_LicenseAcquisitionUrl(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_LicenseAcquisitionUrl(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IPlayReadyContentHeader<D>::LicenseAcquisitionUserInterfaceUrl() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_LicenseAcquisitionUserInterfaceUrl(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_LicenseAcquisitionUserInterfaceUrl(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyContentHeader<D>::DomainServiceId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_DomainServiceId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_DomainServiceId(&value));
     return value;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm impl_IPlayReadyContentHeader<D>::EncryptionType() const
 {
     Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm value {};
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_EncryptionType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_EncryptionType(&value));
     return value;
 }
 
 template <typename D> hstring impl_IPlayReadyContentHeader<D>::CustomAttributes() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_CustomAttributes(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_CustomAttributes(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyDecryptorSetup impl_IPlayReadyContentHeader<D>::DecryptorSetup() const
 {
     Windows::Media::Protection::PlayReady::PlayReadyDecryptorSetup value {};
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_DecryptorSetup(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_DecryptorSetup(&value));
     return value;
 }
 
 template <typename D> com_array<uint8_t> impl_IPlayReadyContentHeader<D>::GetSerializedHeader() const
 {
     com_array<uint8_t> headerBytes {};
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->abi_GetSerializedHeader(put_size(headerBytes), put(headerBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->abi_GetSerializedHeader(impl::put_size_abi(headerBytes), put_abi(headerBytes)));
     return headerBytes;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeader<D>::HeaderWithEmbeddedUpdates() const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader value { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeader &>(static_cast<const D &>(*this))->get_HeaderWithEmbeddedUpdates(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader)->get_HeaderWithEmbeddedUpdates(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromWindowsMediaDrmHeader(array_ref<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromWindowsMediaDrmHeader(array_view<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeaderFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceFromWindowsMediaDrmHeader(headerBytes.size(), get(headerBytes), get(licenseAcquisitionUrl), get(licenseAcquisitionUserInterfaceUrl), get(customAttributes), domainServiceId, put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeaderFactory)->abi_CreateInstanceFromWindowsMediaDrmHeader(headerBytes.size(), get_abi(headerBytes), get_abi(licenseAcquisitionUrl), get_abi(licenseAcquisitionUserInterfaceUrl), get_abi(customAttributes), domainServiceId, put_abi(instance)));
     return instance;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromComponents(GUID contentKeyId, hstring_ref contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromComponents(GUID contentKeyId, hstring_view contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeaderFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceFromComponents(contentKeyId, get(contentKeyIdString), contentEncryptionAlgorithm, get(licenseAcquisitionUrl), get(licenseAcquisitionUserInterfaceUrl), get(customAttributes), domainServiceId, put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeaderFactory)->abi_CreateInstanceFromComponents(contentKeyId, get_abi(contentKeyIdString), contentEncryptionAlgorithm, get_abi(licenseAcquisitionUrl), get_abi(licenseAcquisitionUserInterfaceUrl), get_abi(customAttributes), domainServiceId, put_abi(instance)));
     return instance;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromPlayReadyHeader(array_ref<const uint8_t> headerBytes) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory<D>::CreateInstanceFromPlayReadyHeader(array_view<const uint8_t> headerBytes) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeaderFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceFromPlayReadyHeader(headerBytes.size(), get(headerBytes), put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeaderFactory)->abi_CreateInstanceFromPlayReadyHeader(headerBytes.size(), get_abi(headerBytes), put_abi(instance)));
     return instance;
 }
 
 template <typename D> com_array<GUID> impl_IPlayReadyContentHeader2<D>::KeyIds() const
 {
     com_array<GUID> contentKeyIds {};
-    check_hresult(static_cast<const IPlayReadyContentHeader2 &>(static_cast<const D &>(*this))->get_KeyIds(put_size(contentKeyIds), put(contentKeyIds)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader2)->get_KeyIds(impl::put_size_abi(contentKeyIds), put_abi(contentKeyIds)));
     return contentKeyIds;
 }
 
 template <typename D> com_array<hstring> impl_IPlayReadyContentHeader2<D>::KeyIdStrings() const
 {
     com_array<hstring> contentKeyIdStrings;
-    check_hresult(static_cast<const IPlayReadyContentHeader2 &>(static_cast<const D &>(*this))->get_KeyIdStrings(put_size(contentKeyIdStrings), put(contentKeyIdStrings)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeader2)->get_KeyIdStrings(impl::put_size_abi(contentKeyIdStrings), put_abi(contentKeyIdStrings)));
     return contentKeyIdStrings;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory2<D>::CreateInstanceFromComponents2(uint32_t dwFlags, array_ref<const GUID> contentKeyIds, array_ref<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyContentHeaderFactory2<D>::CreateInstanceFromComponents2(uint32_t dwFlags, array_view<const GUID> contentKeyIds, array_view<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyContentHeaderFactory2 &>(static_cast<const D &>(*this))->abi_CreateInstanceFromComponents2(dwFlags, contentKeyIds.size(), get(contentKeyIds), contentKeyIdStrings.size(), get(contentKeyIdStrings), contentEncryptionAlgorithm, get(licenseAcquisitionUrl), get(licenseAcquisitionUserInterfaceUrl), get(customAttributes), domainServiceId, put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentHeaderFactory2)->abi_CreateInstanceFromComponents2(dwFlags, contentKeyIds.size(), get_abi(contentKeyIds), contentKeyIdStrings.size(), get_abi(contentKeyIdStrings), contentEncryptionAlgorithm, get_abi(licenseAcquisitionUrl), get_abi(licenseAcquisitionUserInterfaceUrl), get_abi(customAttributes), domainServiceId, put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest impl_IPlayReadyContentResolver<D>::ServiceRequest(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader) const
 {
     Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest serviceRequest;
-    check_hresult(static_cast<const IPlayReadyContentResolver &>(static_cast<const D &>(*this))->abi_ServiceRequest(get(contentHeader), put(serviceRequest)));
+    check_hresult(WINRT_SHIM(IPlayReadyContentResolver)->abi_ServiceRequest(get_abi(contentHeader), put_abi(serviceRequest)));
     return serviceRequest;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IPlayReadyLicenseManagement<D>::DeleteLicenses(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPlayReadyLicenseManagement &>(static_cast<const D &>(*this))->abi_DeleteLicenses(get(contentHeader), put(operation)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseManagement)->abi_DeleteLicenses(get_abi(contentHeader), put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_IPlayReadyLicense<D>::FullyEvaluated() const
 {
     bool value {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_FullyEvaluated(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_FullyEvaluated(&value));
     return value;
 }
 
 template <typename D> bool impl_IPlayReadyLicense<D>::UsableForPlay() const
 {
     bool value {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_UsableForPlay(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_UsableForPlay(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IPlayReadyLicense<D>::ExpirationDate() const
 {
     Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_ExpirationDate(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_ExpirationDate(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_IPlayReadyLicense<D>::ExpireAfterFirstPlay() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_ExpireAfterFirstPlay(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_ExpireAfterFirstPlay(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyLicense<D>::DomainAccountID() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_DomainAccountID(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_DomainAccountID(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPlayReadyLicense<D>::ChainDepth() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->get_ChainDepth(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->get_ChainDepth(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyLicense<D>::GetKIDAtChainDepth(uint32_t chainDepth) const
 {
     GUID kid {};
-    check_hresult(static_cast<const IPlayReadyLicense &>(static_cast<const D &>(*this))->abi_GetKIDAtChainDepth(chainDepth, &kid));
+    check_hresult(WINRT_SHIM(IPlayReadyLicense)->abi_GetKIDAtChainDepth(chainDepth, &kid));
     return kid;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyLicenseIterable impl_IPlayReadyLicenseIterableFactory<D>::CreateInstance(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & contentHeader, bool fullyEvaluated) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyLicenseIterable instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyLicenseIterableFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(contentHeader), fullyEvaluated, put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseIterableFactory)->abi_CreateInstance(get_abi(contentHeader), fullyEvaluated, put_abi(instance)));
     return instance;
 }
 
 template <typename D> GUID impl_IPlayReadyDomain<D>::AccountId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomain &>(static_cast<const D &>(*this))->get_AccountId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomain)->get_AccountId(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyDomain<D>::ServiceId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomain &>(static_cast<const D &>(*this))->get_ServiceId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomain)->get_ServiceId(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPlayReadyDomain<D>::Revision() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPlayReadyDomain &>(static_cast<const D &>(*this))->get_Revision(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomain)->get_Revision(&value));
     return value;
 }
 
 template <typename D> hstring impl_IPlayReadyDomain<D>::FriendlyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyDomain &>(static_cast<const D &>(*this))->get_FriendlyName(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyDomain)->get_FriendlyName(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IPlayReadyDomain<D>::DomainJoinUrl() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IPlayReadyDomain &>(static_cast<const D &>(*this))->get_DomainJoinUrl(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyDomain)->get_DomainJoinUrl(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyDomainIterable impl_IPlayReadyDomainIterableFactory<D>::CreateInstance(GUID domainAccountId) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyDomainIterable domainIterable { nullptr };
-    check_hresult(static_cast<const IPlayReadyDomainIterableFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(domainAccountId, put(domainIterable)));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainIterableFactory)->abi_CreateInstance(domainAccountId, put_abi(domainIterable)));
     return domainIterable;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::DomainJoinServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_DomainJoinServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_DomainJoinServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::DomainLeaveServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_DomainLeaveServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_DomainLeaveServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::IndividualizationServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_IndividualizationServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_IndividualizationServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::LicenseAcquirerServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_LicenseAcquirerServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_LicenseAcquirerServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::MeteringReportServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_MeteringReportServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_MeteringReportServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::RevocationServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_RevocationServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_RevocationServiceRequestType(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics<D>::MediaProtectionSystemId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_MediaProtectionSystemId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_MediaProtectionSystemId(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPlayReadyStatics<D>::PlayReadySecurityVersion() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPlayReadyStatics &>(static_cast<const D &>(*this))->get_PlayReadySecurityVersion(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics)->get_PlayReadySecurityVersion(&value));
     return value;
 }
 
 template <typename D> uint32_t impl_IPlayReadyStatics2<D>::PlayReadyCertificateSecurityLevel() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IPlayReadyStatics2 &>(static_cast<const D &>(*this))->get_PlayReadyCertificateSecurityLevel(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics2)->get_PlayReadyCertificateSecurityLevel(&value));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics3<D>::SecureStopServiceRequestType() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics3 &>(static_cast<const D &>(*this))->get_SecureStopServiceRequestType(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics3)->get_SecureStopServiceRequestType(&value));
     return value;
 }
 
 template <typename D> bool impl_IPlayReadyStatics3<D>::CheckSupportedHardware(Windows::Media::Protection::PlayReady::PlayReadyHardwareDRMFeatures hwdrmFeature) const
 {
     bool value {};
-    check_hresult(static_cast<const IPlayReadyStatics3 &>(static_cast<const D &>(*this))->abi_CheckSupportedHardware(hwdrmFeature, &value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics3)->abi_CheckSupportedHardware(hwdrmFeature, &value));
     return value;
 }
 
 template <typename D> hstring impl_IPlayReadyStatics4<D>::InputTrustAuthorityToCreate() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyStatics4 &>(static_cast<const D &>(*this))->get_InputTrustAuthorityToCreate(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics4)->get_InputTrustAuthorityToCreate(put_abi(value)));
     return value;
 }
 
 template <typename D> GUID impl_IPlayReadyStatics4<D>::ProtectionSystemId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyStatics4 &>(static_cast<const D &>(*this))->get_ProtectionSystemId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyStatics4)->get_ProtectionSystemId(&value));
     return value;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest impl_IPlayReadySecureStopServiceRequestFactory<D>::CreateInstance(array_ref<const uint8_t> publisherCertBytes) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest impl_IPlayReadySecureStopServiceRequestFactory<D>::CreateInstance(array_view<const uint8_t> publisherCertBytes) const
 {
     Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest instance { nullptr };
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequestFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(publisherCertBytes.size(), get(publisherCertBytes), put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequestFactory)->abi_CreateInstance(publisherCertBytes.size(), get_abi(publisherCertBytes), put_abi(instance)));
     return instance;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest impl_IPlayReadySecureStopServiceRequestFactory<D>::CreateInstanceFromSessionID(GUID sessionID, array_ref<const uint8_t> publisherCertBytes) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest impl_IPlayReadySecureStopServiceRequestFactory<D>::CreateInstanceFromSessionID(GUID sessionID, array_view<const uint8_t> publisherCertBytes) const
 {
     Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest instance { nullptr };
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequestFactory &>(static_cast<const D &>(*this))->abi_CreateInstanceFromSessionID(sessionID, publisherCertBytes.size(), get(publisherCertBytes), put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequestFactory)->abi_CreateInstanceFromSessionID(sessionID, publisherCertBytes.size(), get_abi(publisherCertBytes), put_abi(instance)));
     return instance;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable impl_IPlayReadySecureStopIterableFactory<D>::CreateInstance(array_ref<const uint8_t> publisherCertBytes) const
+template <typename D> Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable impl_IPlayReadySecureStopIterableFactory<D>::CreateInstance(array_view<const uint8_t> publisherCertBytes) const
 {
     Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable instance { nullptr };
-    check_hresult(static_cast<const IPlayReadySecureStopIterableFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(publisherCertBytes.size(), get(publisherCertBytes), put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopIterableFactory)->abi_CreateInstance(publisherCertBytes.size(), get_abi(publisherCertBytes), put_abi(instance)));
     return instance;
 }
 
 template <typename D> com_array<uint8_t> impl_IPlayReadySoapMessage<D>::GetMessageBody() const
 {
     com_array<uint8_t> messageBodyBytes {};
-    check_hresult(static_cast<const IPlayReadySoapMessage &>(static_cast<const D &>(*this))->abi_GetMessageBody(put_size(messageBodyBytes), put(messageBodyBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadySoapMessage)->abi_GetMessageBody(impl::put_size_abi(messageBodyBytes), put_abi(messageBodyBytes)));
     return messageBodyBytes;
 }
 
 template <typename D> Windows::Foundation::Collections::IPropertySet impl_IPlayReadySoapMessage<D>::MessageHeaders() const
 {
     Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(static_cast<const IPlayReadySoapMessage &>(static_cast<const D &>(*this))->get_MessageHeaders(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadySoapMessage)->get_MessageHeaders(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IPlayReadySoapMessage<D>::Uri() const
 {
     Windows::Foundation::Uri messageUri { nullptr };
-    check_hresult(static_cast<const IPlayReadySoapMessage &>(static_cast<const D &>(*this))->get_Uri(put(messageUri)));
+    check_hresult(WINRT_SHIM(IPlayReadySoapMessage)->get_Uri(put_abi(messageUri)));
     return messageUri;
 }
 
 template <typename D> com_array<uint8_t> impl_IPlayReadyITADataGenerator<D>::GenerateData(GUID guidCPSystemId, uint32_t countOfStreams, const Windows::Foundation::Collections::IPropertySet & configuration, Windows::Media::Protection::PlayReady::PlayReadyITADataFormat format) const
 {
     com_array<uint8_t> dataBytes {};
-    check_hresult(static_cast<const IPlayReadyITADataGenerator &>(static_cast<const D &>(*this))->abi_GenerateData(guidCPSystemId, countOfStreams, get(configuration), format, put_size(dataBytes), put(dataBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadyITADataGenerator)->abi_GenerateData(guidCPSystemId, countOfStreams, get_abi(configuration), format, impl::put_size_abi(dataBytes), put_abi(dataBytes)));
     return dataBytes;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest impl_IPlayReadyLicenseSession<D>::CreateLAServiceRequest() const
 {
     Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest serviceRequest;
-    check_hresult(static_cast<const IPlayReadyLicenseSession &>(static_cast<const D &>(*this))->abi_CreateLAServiceRequest(put(serviceRequest)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseSession)->abi_CreateLAServiceRequest(put_abi(serviceRequest)));
     return serviceRequest;
 }
 
 template <typename D> void impl_IPlayReadyLicenseSession<D>::ConfigureMediaProtectionManager(const Windows::Media::Protection::MediaProtectionManager & mpm) const
 {
-    check_hresult(static_cast<const IPlayReadyLicenseSession &>(static_cast<const D &>(*this))->abi_ConfigureMediaProtectionManager(get(mpm)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseSession)->abi_ConfigureMediaProtectionManager(get_abi(mpm)));
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyLicenseSession impl_IPlayReadyLicenseSessionFactory<D>::CreateInstance(const Windows::Foundation::Collections::IPropertySet & configuration) const
 {
     Windows::Media::Protection::PlayReady::PlayReadyLicenseSession instance { nullptr };
-    check_hresult(static_cast<const IPlayReadyLicenseSessionFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(configuration), put(instance)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseSessionFactory)->abi_CreateInstance(get_abi(configuration), put_abi(instance)));
     return instance;
 }
 
-template <typename D> void impl_INDDownloadEngine<D>::Open(const Windows::Foundation::Uri & uri, array_ref<const uint8_t> sessionIDBytes) const
+template <typename D> void impl_INDDownloadEngine<D>::Open(const Windows::Foundation::Uri & uri, array_view<const uint8_t> sessionIDBytes) const
 {
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->abi_Open(get(uri), sessionIDBytes.size(), get(sessionIDBytes)));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->abi_Open(get_abi(uri), sessionIDBytes.size(), get_abi(sessionIDBytes)));
 }
 
 template <typename D> void impl_INDDownloadEngine<D>::Pause() const
 {
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->abi_Pause());
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->abi_Pause());
 }
 
 template <typename D> void impl_INDDownloadEngine<D>::Resume() const
 {
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->abi_Resume());
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->abi_Resume());
 }
 
 template <typename D> void impl_INDDownloadEngine<D>::Close() const
 {
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->abi_Close());
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->abi_Close());
 }
 
 template <typename D> void impl_INDDownloadEngine<D>::Seek(const Windows::Foundation::TimeSpan & startPosition) const
 {
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->abi_Seek(get(startPosition)));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->abi_Seek(get_abi(startPosition)));
 }
 
 template <typename D> bool impl_INDDownloadEngine<D>::CanSeek() const
 {
     bool canSeek {};
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->get_CanSeek(&canSeek));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->get_CanSeek(&canSeek));
     return canSeek;
 }
 
 template <typename D> uint32_t impl_INDDownloadEngine<D>::BufferFullMinThresholdInSamples() const
 {
     uint32_t bufferFullMinThreshold {};
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->get_BufferFullMinThresholdInSamples(&bufferFullMinThreshold));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->get_BufferFullMinThresholdInSamples(&bufferFullMinThreshold));
     return bufferFullMinThreshold;
 }
 
 template <typename D> uint32_t impl_INDDownloadEngine<D>::BufferFullMaxThresholdInSamples() const
 {
     uint32_t bufferFullMaxThreshold {};
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->get_BufferFullMaxThresholdInSamples(&bufferFullMaxThreshold));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->get_BufferFullMaxThresholdInSamples(&bufferFullMaxThreshold));
     return bufferFullMaxThreshold;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDDownloadEngineNotifier impl_INDDownloadEngine<D>::Notifier() const
 {
     Windows::Media::Protection::PlayReady::NDDownloadEngineNotifier instance { nullptr };
-    check_hresult(static_cast<const INDDownloadEngine &>(static_cast<const D &>(*this))->get_Notifier(put(instance)));
+    check_hresult(WINRT_SHIM(INDDownloadEngine)->get_Notifier(put_abi(instance)));
     return instance;
 }
 
 template <typename D> void impl_INDDownloadEngineNotifier<D>::OnStreamOpened() const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnStreamOpened());
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnStreamOpened());
 }
 
-template <typename D> void impl_INDDownloadEngineNotifier<D>::OnPlayReadyObjectReceived(array_ref<const uint8_t> dataBytes) const
+template <typename D> void impl_INDDownloadEngineNotifier<D>::OnPlayReadyObjectReceived(array_view<const uint8_t> dataBytes) const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnPlayReadyObjectReceived(dataBytes.size(), get(dataBytes)));
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnPlayReadyObjectReceived(dataBytes.size(), get_abi(dataBytes)));
 }
 
 template <typename D> void impl_INDDownloadEngineNotifier<D>::OnContentIDReceived(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnContentIDReceived(get(licenseFetchDescriptor)));
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnContentIDReceived(get_abi(licenseFetchDescriptor)));
 }
 
-template <typename D> void impl_INDDownloadEngineNotifier<D>::OnDataReceived(array_ref<const uint8_t> dataBytes, uint32_t bytesReceived) const
+template <typename D> void impl_INDDownloadEngineNotifier<D>::OnDataReceived(array_view<const uint8_t> dataBytes, uint32_t bytesReceived) const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnDataReceived(dataBytes.size(), get(dataBytes), bytesReceived));
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnDataReceived(dataBytes.size(), get_abi(dataBytes), bytesReceived));
 }
 
 template <typename D> void impl_INDDownloadEngineNotifier<D>::OnEndOfStream() const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnEndOfStream());
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnEndOfStream());
 }
 
 template <typename D> void impl_INDDownloadEngineNotifier<D>::OnNetworkError() const
 {
-    check_hresult(static_cast<const INDDownloadEngineNotifier &>(static_cast<const D &>(*this))->abi_OnNetworkError());
+    check_hresult(WINRT_SHIM(INDDownloadEngineNotifier)->abi_OnNetworkError());
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDContentIDType impl_INDLicenseFetchDescriptor<D>::ContentIDType() const
 {
     Windows::Media::Protection::PlayReady::NDContentIDType contentIDType {};
-    check_hresult(static_cast<const INDLicenseFetchDescriptor &>(static_cast<const D &>(*this))->get_ContentIDType(&contentIDType));
+    check_hresult(WINRT_SHIM(INDLicenseFetchDescriptor)->get_ContentIDType(&contentIDType));
     return contentIDType;
 }
 
 template <typename D> com_array<uint8_t> impl_INDLicenseFetchDescriptor<D>::ContentID() const
 {
     com_array<uint8_t> contentIDBytes {};
-    check_hresult(static_cast<const INDLicenseFetchDescriptor &>(static_cast<const D &>(*this))->get_ContentID(put_size(contentIDBytes), put(contentIDBytes)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchDescriptor)->get_ContentID(impl::put_size_abi(contentIDBytes), put_abi(contentIDBytes)));
     return contentIDBytes;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::INDCustomData impl_INDLicenseFetchDescriptor<D>::LicenseFetchChallengeCustomData() const
 {
     Windows::Media::Protection::PlayReady::INDCustomData licenseFetchChallengeCustomData;
-    check_hresult(static_cast<const INDLicenseFetchDescriptor &>(static_cast<const D &>(*this))->get_LicenseFetchChallengeCustomData(put(licenseFetchChallengeCustomData)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchDescriptor)->get_LicenseFetchChallengeCustomData(put_abi(licenseFetchChallengeCustomData)));
     return licenseFetchChallengeCustomData;
 }
 
 template <typename D> void impl_INDLicenseFetchDescriptor<D>::LicenseFetchChallengeCustomData(const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) const
 {
-    check_hresult(static_cast<const INDLicenseFetchDescriptor &>(static_cast<const D &>(*this))->put_LicenseFetchChallengeCustomData(get(licenseFetchChallengeCustomData)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchDescriptor)->put_LicenseFetchChallengeCustomData(get_abi(licenseFetchChallengeCustomData)));
 }
 
 template <typename D> com_array<uint8_t> impl_INDCustomData<D>::CustomDataTypeID() const
 {
     com_array<uint8_t> customDataTypeIDBytes {};
-    check_hresult(static_cast<const INDCustomData &>(static_cast<const D &>(*this))->get_CustomDataTypeID(put_size(customDataTypeIDBytes), put(customDataTypeIDBytes)));
+    check_hresult(WINRT_SHIM(INDCustomData)->get_CustomDataTypeID(impl::put_size_abi(customDataTypeIDBytes), put_abi(customDataTypeIDBytes)));
     return customDataTypeIDBytes;
 }
 
 template <typename D> com_array<uint8_t> impl_INDCustomData<D>::CustomData() const
 {
     com_array<uint8_t> customDataBytes {};
-    check_hresult(static_cast<const INDCustomData &>(static_cast<const D &>(*this))->get_CustomData(put_size(customDataBytes), put(customDataBytes)));
+    check_hresult(WINRT_SHIM(INDCustomData)->get_CustomData(impl::put_size_abi(customDataBytes), put_abi(customDataBytes)));
     return customDataBytes;
 }
 
-template <typename D> void impl_INDStreamParser<D>::ParseData(array_ref<const uint8_t> dataBytes) const
+template <typename D> void impl_INDStreamParser<D>::ParseData(array_view<const uint8_t> dataBytes) const
 {
-    check_hresult(static_cast<const INDStreamParser &>(static_cast<const D &>(*this))->abi_ParseData(dataBytes.size(), get(dataBytes)));
+    check_hresult(WINRT_SHIM(INDStreamParser)->abi_ParseData(dataBytes.size(), get_abi(dataBytes)));
 }
 
 template <typename D> uint32_t impl_INDStreamParser<D>::GetStreamInformation(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, Windows::Media::Protection::PlayReady::NDMediaStreamType & streamType) const
 {
     uint32_t streamID {};
-    check_hresult(static_cast<const INDStreamParser &>(static_cast<const D &>(*this))->abi_GetStreamInformation(get(descriptor), &streamType, &streamID));
+    check_hresult(WINRT_SHIM(INDStreamParser)->abi_GetStreamInformation(get_abi(descriptor), &streamType, &streamID));
     return streamID;
 }
 
 template <typename D> void impl_INDStreamParser<D>::BeginOfStream() const
 {
-    check_hresult(static_cast<const INDStreamParser &>(static_cast<const D &>(*this))->abi_BeginOfStream());
+    check_hresult(WINRT_SHIM(INDStreamParser)->abi_BeginOfStream());
 }
 
 template <typename D> void impl_INDStreamParser<D>::EndOfStream() const
 {
-    check_hresult(static_cast<const INDStreamParser &>(static_cast<const D &>(*this))->abi_EndOfStream());
+    check_hresult(WINRT_SHIM(INDStreamParser)->abi_EndOfStream());
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDStreamParserNotifier impl_INDStreamParser<D>::Notifier() const
 {
     Windows::Media::Protection::PlayReady::NDStreamParserNotifier instance { nullptr };
-    check_hresult(static_cast<const INDStreamParser &>(static_cast<const D &>(*this))->get_Notifier(put(instance)));
+    check_hresult(WINRT_SHIM(INDStreamParser)->get_Notifier(put_abi(instance)));
     return instance;
 }
 
 template <typename D> void impl_INDStreamParserNotifier<D>::OnContentIDReceived(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const
 {
-    check_hresult(static_cast<const INDStreamParserNotifier &>(static_cast<const D &>(*this))->abi_OnContentIDReceived(get(licenseFetchDescriptor)));
+    check_hresult(WINRT_SHIM(INDStreamParserNotifier)->abi_OnContentIDReceived(get_abi(licenseFetchDescriptor)));
 }
 
 template <typename D> void impl_INDStreamParserNotifier<D>::OnMediaStreamDescriptorCreated(const Windows::Foundation::Collections::IVector<Windows::Media::Core::AudioStreamDescriptor> & audioStreamDescriptors, const Windows::Foundation::Collections::IVector<Windows::Media::Core::VideoStreamDescriptor> & videoStreamDescriptors) const
 {
-    check_hresult(static_cast<const INDStreamParserNotifier &>(static_cast<const D &>(*this))->abi_OnMediaStreamDescriptorCreated(get(audioStreamDescriptors), get(videoStreamDescriptors)));
+    check_hresult(WINRT_SHIM(INDStreamParserNotifier)->abi_OnMediaStreamDescriptorCreated(get_abi(audioStreamDescriptors), get_abi(videoStreamDescriptors)));
 }
 
-template <typename D> void impl_INDStreamParserNotifier<D>::OnSampleParsed(uint32_t streamID, Windows::Media::Protection::PlayReady::NDMediaStreamType streamType, const Windows::Media::Core::MediaStreamSample & streamSample, int64_t pts, Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccFormat, array_ref<const uint8_t> ccDataBytes) const
+template <typename D> void impl_INDStreamParserNotifier<D>::OnSampleParsed(uint32_t streamID, Windows::Media::Protection::PlayReady::NDMediaStreamType streamType, const Windows::Media::Core::MediaStreamSample & streamSample, int64_t pts, Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccFormat, array_view<const uint8_t> ccDataBytes) const
 {
-    check_hresult(static_cast<const INDStreamParserNotifier &>(static_cast<const D &>(*this))->abi_OnSampleParsed(streamID, streamType, get(streamSample), pts, ccFormat, ccDataBytes.size(), get(ccDataBytes)));
+    check_hresult(WINRT_SHIM(INDStreamParserNotifier)->abi_OnSampleParsed(streamID, streamType, get_abi(streamSample), pts, ccFormat, ccDataBytes.size(), get_abi(ccDataBytes)));
 }
 
-template <typename D> void impl_INDStreamParserNotifier<D>::OnBeginSetupDecryptor(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, GUID keyID, array_ref<const uint8_t> proBytes) const
+template <typename D> void impl_INDStreamParserNotifier<D>::OnBeginSetupDecryptor(const Windows::Media::Core::IMediaStreamDescriptor & descriptor, GUID keyID, array_view<const uint8_t> proBytes) const
 {
-    check_hresult(static_cast<const INDStreamParserNotifier &>(static_cast<const D &>(*this))->abi_OnBeginSetupDecryptor(get(descriptor), keyID, proBytes.size(), get(proBytes)));
+    check_hresult(WINRT_SHIM(INDStreamParserNotifier)->abi_OnBeginSetupDecryptor(get_abi(descriptor), keyID, proBytes.size(), get_abi(proBytes)));
 }
 
 template <typename D> com_array<uint8_t> impl_INDSendResult<D>::Response() const
 {
     com_array<uint8_t> responseDataBytes {};
-    check_hresult(static_cast<const INDSendResult &>(static_cast<const D &>(*this))->get_Response(put_size(responseDataBytes), put(responseDataBytes)));
+    check_hresult(WINRT_SHIM(INDSendResult)->get_Response(impl::put_size_abi(responseDataBytes), put_abi(responseDataBytes)));
     return responseDataBytes;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendRegistrationRequestAsync(array_ref<const uint8_t> sessionIDBytes, array_ref<const uint8_t> challengeDataBytes) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendRegistrationRequestAsync(array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> result;
-    check_hresult(static_cast<const INDMessenger &>(static_cast<const D &>(*this))->abi_SendRegistrationRequestAsync(sessionIDBytes.size(), get(sessionIDBytes), challengeDataBytes.size(), get(challengeDataBytes), put(result)));
+    check_hresult(WINRT_SHIM(INDMessenger)->abi_SendRegistrationRequestAsync(sessionIDBytes.size(), get_abi(sessionIDBytes), challengeDataBytes.size(), get_abi(challengeDataBytes), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendProximityDetectionStartAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_ref<const uint8_t> transmitterChannelBytes, array_ref<const uint8_t> sessionIDBytes, array_ref<const uint8_t> challengeDataBytes) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendProximityDetectionStartAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_view<const uint8_t> transmitterChannelBytes, array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> result;
-    check_hresult(static_cast<const INDMessenger &>(static_cast<const D &>(*this))->abi_SendProximityDetectionStartAsync(pdType, transmitterChannelBytes.size(), get(transmitterChannelBytes), sessionIDBytes.size(), get(sessionIDBytes), challengeDataBytes.size(), get(challengeDataBytes), put(result)));
+    check_hresult(WINRT_SHIM(INDMessenger)->abi_SendProximityDetectionStartAsync(pdType, transmitterChannelBytes.size(), get_abi(transmitterChannelBytes), sessionIDBytes.size(), get_abi(sessionIDBytes), challengeDataBytes.size(), get_abi(challengeDataBytes), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendProximityDetectionResponseAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_ref<const uint8_t> transmitterChannelBytes, array_ref<const uint8_t> sessionIDBytes, array_ref<const uint8_t> responseDataBytes) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendProximityDetectionResponseAsync(Windows::Media::Protection::PlayReady::NDProximityDetectionType pdType, array_view<const uint8_t> transmitterChannelBytes, array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> responseDataBytes) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> result;
-    check_hresult(static_cast<const INDMessenger &>(static_cast<const D &>(*this))->abi_SendProximityDetectionResponseAsync(pdType, transmitterChannelBytes.size(), get(transmitterChannelBytes), sessionIDBytes.size(), get(sessionIDBytes), responseDataBytes.size(), get(responseDataBytes), put(result)));
+    check_hresult(WINRT_SHIM(INDMessenger)->abi_SendProximityDetectionResponseAsync(pdType, transmitterChannelBytes.size(), get_abi(transmitterChannelBytes), sessionIDBytes.size(), get_abi(sessionIDBytes), responseDataBytes.size(), get_abi(responseDataBytes), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendLicenseFetchRequestAsync(array_ref<const uint8_t> sessionIDBytes, array_ref<const uint8_t> challengeDataBytes) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> impl_INDMessenger<D>::SendLicenseFetchRequestAsync(array_view<const uint8_t> sessionIDBytes, array_view<const uint8_t> challengeDataBytes) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDSendResult> result;
-    check_hresult(static_cast<const INDMessenger &>(static_cast<const D &>(*this))->abi_SendLicenseFetchRequestAsync(sessionIDBytes.size(), get(sessionIDBytes), challengeDataBytes.size(), get(challengeDataBytes), put(result)));
+    check_hresult(WINRT_SHIM(INDMessenger)->abi_SendLicenseFetchRequestAsync(sessionIDBytes.size(), get_abi(sessionIDBytes), challengeDataBytes.size(), get_abi(challengeDataBytes), put_abi(result)));
     return result;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::NDTCPMessenger impl_INDTCPMessengerFactory<D>::CreateInstance(hstring_ref remoteHostName, uint32_t remoteHostPort) const
+template <typename D> Windows::Media::Protection::PlayReady::NDTCPMessenger impl_INDTCPMessengerFactory<D>::CreateInstance(hstring_view remoteHostName, uint32_t remoteHostPort) const
 {
     Windows::Media::Protection::PlayReady::NDTCPMessenger instance { nullptr };
-    check_hresult(static_cast<const INDTCPMessengerFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(remoteHostName), remoteHostPort, put(instance)));
+    check_hresult(WINRT_SHIM(INDTCPMessengerFactory)->abi_CreateInstance(get_abi(remoteHostName), remoteHostPort, put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDCertificateType impl_INDTransmitterProperties<D>::CertificateType() const
 {
     Windows::Media::Protection::PlayReady::NDCertificateType type {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_CertificateType(&type));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_CertificateType(&type));
     return type;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDCertificatePlatformID impl_INDTransmitterProperties<D>::PlatformIdentifier() const
 {
     Windows::Media::Protection::PlayReady::NDCertificatePlatformID identifier {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_PlatformIdentifier(&identifier));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_PlatformIdentifier(&identifier));
     return identifier;
 }
 
 template <typename D> com_array<Windows::Media::Protection::PlayReady::NDCertificateFeature> impl_INDTransmitterProperties<D>::SupportedFeatures() const
 {
     com_array<Windows::Media::Protection::PlayReady::NDCertificateFeature> featureSets {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_SupportedFeatures(put_size(featureSets), put(featureSets)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_SupportedFeatures(impl::put_size_abi(featureSets), put_abi(featureSets)));
     return featureSets;
 }
 
 template <typename D> uint32_t impl_INDTransmitterProperties<D>::SecurityLevel() const
 {
     uint32_t level {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_SecurityLevel(&level));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_SecurityLevel(&level));
     return level;
 }
 
 template <typename D> uint32_t impl_INDTransmitterProperties<D>::SecurityVersion() const
 {
     uint32_t securityVersion {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_SecurityVersion(&securityVersion));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_SecurityVersion(&securityVersion));
     return securityVersion;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_INDTransmitterProperties<D>::ExpirationDate() const
 {
     Windows::Foundation::DateTime expirationDate {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ExpirationDate(put(expirationDate)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ExpirationDate(put_abi(expirationDate)));
     return expirationDate;
 }
 
 template <typename D> com_array<uint8_t> impl_INDTransmitterProperties<D>::ClientID() const
 {
     com_array<uint8_t> clientIDBytes {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ClientID(put_size(clientIDBytes), put(clientIDBytes)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ClientID(impl::put_size_abi(clientIDBytes), put_abi(clientIDBytes)));
     return clientIDBytes;
 }
 
 template <typename D> com_array<uint8_t> impl_INDTransmitterProperties<D>::ModelDigest() const
 {
     com_array<uint8_t> modelDigestBytes {};
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ModelDigest(put_size(modelDigestBytes), put(modelDigestBytes)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ModelDigest(impl::put_size_abi(modelDigestBytes), put_abi(modelDigestBytes)));
     return modelDigestBytes;
 }
 
 template <typename D> hstring impl_INDTransmitterProperties<D>::ModelManufacturerName() const
 {
     hstring modelManufacturerName;
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ModelManufacturerName(put(modelManufacturerName)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ModelManufacturerName(put_abi(modelManufacturerName)));
     return modelManufacturerName;
 }
 
 template <typename D> hstring impl_INDTransmitterProperties<D>::ModelName() const
 {
     hstring modelName;
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ModelName(put(modelName)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ModelName(put_abi(modelName)));
     return modelName;
 }
 
 template <typename D> hstring impl_INDTransmitterProperties<D>::ModelNumber() const
 {
     hstring modelNumber;
-    check_hresult(static_cast<const INDTransmitterProperties &>(static_cast<const D &>(*this))->get_ModelNumber(put(modelNumber)));
+    check_hresult(WINRT_SHIM(INDTransmitterProperties)->get_ModelNumber(put_abi(modelNumber)));
     return modelNumber;
 }
 
 template <typename D> Windows::Media::Core::MediaStreamSource impl_INDStartResult<D>::MediaStreamSource() const
 {
     Windows::Media::Core::MediaStreamSource mediaStreamSource { nullptr };
-    check_hresult(static_cast<const INDStartResult &>(static_cast<const D &>(*this))->get_MediaStreamSource(put(mediaStreamSource)));
+    check_hresult(WINRT_SHIM(INDStartResult)->get_MediaStreamSource(put_abi(mediaStreamSource)));
     return mediaStreamSource;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::INDCustomData impl_INDLicenseFetchResult<D>::ResponseCustomData() const
 {
     Windows::Media::Protection::PlayReady::INDCustomData customData;
-    check_hresult(static_cast<const INDLicenseFetchResult &>(static_cast<const D &>(*this))->get_ResponseCustomData(put(customData)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchResult)->get_ResponseCustomData(put_abi(customData)));
     return customData;
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor impl_INDLicenseFetchDescriptorFactory<D>::CreateInstance(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_ref<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) const
+template <typename D> Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor impl_INDLicenseFetchDescriptorFactory<D>::CreateInstance(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_view<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) const
 {
     Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor instance { nullptr };
-    check_hresult(static_cast<const INDLicenseFetchDescriptorFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(contentIDType, contentIDBytes.size(), get(contentIDBytes), get(licenseFetchChallengeCustomData), put(instance)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchDescriptorFactory)->abi_CreateInstance(contentIDType, contentIDBytes.size(), get_abi(contentIDBytes), get_abi(licenseFetchChallengeCustomData), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::INDCustomData impl_INDRegistrationCompletedEventArgs<D>::ResponseCustomData() const
 {
     Windows::Media::Protection::PlayReady::INDCustomData customData;
-    check_hresult(static_cast<const INDRegistrationCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResponseCustomData(put(customData)));
+    check_hresult(WINRT_SHIM(INDRegistrationCompletedEventArgs)->get_ResponseCustomData(put_abi(customData)));
     return customData;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::INDTransmitterProperties impl_INDRegistrationCompletedEventArgs<D>::TransmitterProperties() const
 {
     Windows::Media::Protection::PlayReady::INDTransmitterProperties transmitterProperties;
-    check_hresult(static_cast<const INDRegistrationCompletedEventArgs &>(static_cast<const D &>(*this))->get_TransmitterProperties(put(transmitterProperties)));
+    check_hresult(WINRT_SHIM(INDRegistrationCompletedEventArgs)->get_TransmitterProperties(put_abi(transmitterProperties)));
     return transmitterProperties;
 }
 
 template <typename D> bool impl_INDRegistrationCompletedEventArgs<D>::TransmitterCertificateAccepted() const
 {
     bool acceptpt {};
-    check_hresult(static_cast<const INDRegistrationCompletedEventArgs &>(static_cast<const D &>(*this))->get_TransmitterCertificateAccepted(&acceptpt));
+    check_hresult(WINRT_SHIM(INDRegistrationCompletedEventArgs)->get_TransmitterCertificateAccepted(&acceptpt));
     return acceptpt;
 }
 
 template <typename D> void impl_INDRegistrationCompletedEventArgs<D>::TransmitterCertificateAccepted(bool accept) const
 {
-    check_hresult(static_cast<const INDRegistrationCompletedEventArgs &>(static_cast<const D &>(*this))->put_TransmitterCertificateAccepted(accept));
+    check_hresult(WINRT_SHIM(INDRegistrationCompletedEventArgs)->put_TransmitterCertificateAccepted(accept));
 }
 
-template <typename D> Windows::Media::Protection::PlayReady::NDCustomData impl_INDCustomDataFactory<D>::CreateInstance(array_ref<const uint8_t> customDataTypeIDBytes, array_ref<const uint8_t> customDataBytes) const
+template <typename D> Windows::Media::Protection::PlayReady::NDCustomData impl_INDCustomDataFactory<D>::CreateInstance(array_view<const uint8_t> customDataTypeIDBytes, array_view<const uint8_t> customDataBytes) const
 {
     Windows::Media::Protection::PlayReady::NDCustomData instance { nullptr };
-    check_hresult(static_cast<const INDCustomDataFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(customDataTypeIDBytes.size(), get(customDataTypeIDBytes), customDataBytes.size(), get(customDataBytes), put(instance)));
+    check_hresult(WINRT_SHIM(INDCustomDataFactory)->abi_CreateInstance(customDataTypeIDBytes.size(), get_abi(customDataTypeIDBytes), customDataBytes.size(), get_abi(customDataBytes), put_abi(instance)));
     return instance;
 }
 
 template <typename D> uint32_t impl_INDProximityDetectionCompletedEventArgs<D>::ProximityDetectionRetryCount() const
 {
     uint32_t retryCount {};
-    check_hresult(static_cast<const INDProximityDetectionCompletedEventArgs &>(static_cast<const D &>(*this))->get_ProximityDetectionRetryCount(&retryCount));
+    check_hresult(WINRT_SHIM(INDProximityDetectionCompletedEventArgs)->get_ProximityDetectionRetryCount(&retryCount));
     return retryCount;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::INDCustomData impl_INDLicenseFetchCompletedEventArgs<D>::ResponseCustomData() const
 {
     Windows::Media::Protection::PlayReady::INDCustomData customData;
-    check_hresult(static_cast<const INDLicenseFetchCompletedEventArgs &>(static_cast<const D &>(*this))->get_ResponseCustomData(put(customData)));
+    check_hresult(WINRT_SHIM(INDLicenseFetchCompletedEventArgs)->get_ResponseCustomData(put_abi(customData)));
     return customData;
 }
 
 template <typename D> event_token impl_INDClient<D>::RegistrationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->add_RegistrationCompleted(get(handler), &token));
+    check_hresult(WINRT_SHIM(INDClient)->add_RegistrationCompleted(get_abi(handler), &token));
     return token;
 }
 
@@ -3168,13 +3333,13 @@ template <typename D> event_revoker<INDClient> impl_INDClient<D>::RegistrationCo
 
 template <typename D> void impl_INDClient<D>::RegistrationCompleted(event_token token) const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->remove_RegistrationCompleted(token));
+    check_hresult(WINRT_SHIM(INDClient)->remove_RegistrationCompleted(token));
 }
 
 template <typename D> event_token impl_INDClient<D>::ProximityDetectionCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->add_ProximityDetectionCompleted(get(handler), &token));
+    check_hresult(WINRT_SHIM(INDClient)->add_ProximityDetectionCompleted(get_abi(handler), &token));
     return token;
 }
 
@@ -3185,13 +3350,13 @@ template <typename D> event_revoker<INDClient> impl_INDClient<D>::ProximityDetec
 
 template <typename D> void impl_INDClient<D>::ProximityDetectionCompleted(event_token token) const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->remove_ProximityDetectionCompleted(token));
+    check_hresult(WINRT_SHIM(INDClient)->remove_ProximityDetectionCompleted(token));
 }
 
 template <typename D> event_token impl_INDClient<D>::LicenseFetchCompleted(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->add_LicenseFetchCompleted(get(handler), &token));
+    check_hresult(WINRT_SHIM(INDClient)->add_LicenseFetchCompleted(get_abi(handler), &token));
     return token;
 }
 
@@ -3202,30 +3367,30 @@ template <typename D> event_revoker<INDClient> impl_INDClient<D>::LicenseFetchCo
 
 template <typename D> void impl_INDClient<D>::LicenseFetchCompleted(event_token token) const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->remove_LicenseFetchCompleted(token));
+    check_hresult(WINRT_SHIM(INDClient)->remove_LicenseFetchCompleted(token));
 }
 
-template <typename D> event_token impl_INDClient<D>::ReRegistrationNeeded(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_INDClient<D>::ReRegistrationNeeded(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->add_ReRegistrationNeeded(get(handler), &token));
+    check_hresult(WINRT_SHIM(INDClient)->add_ReRegistrationNeeded(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<INDClient> impl_INDClient<D>::ReRegistrationNeeded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<INDClient> impl_INDClient<D>::ReRegistrationNeeded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, INDClient>(this, &ABI::Windows::Media::Protection::PlayReady::INDClient::remove_ReRegistrationNeeded, ReRegistrationNeeded(handler));
 }
 
 template <typename D> void impl_INDClient<D>::ReRegistrationNeeded(event_token token) const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->remove_ReRegistrationNeeded(token));
+    check_hresult(WINRT_SHIM(INDClient)->remove_ReRegistrationNeeded(token));
 }
 
 template <typename D> event_token impl_INDClient<D>::ClosedCaptionDataReceived(const Windows::Foundation::TypedEventHandler<Windows::Media::Protection::PlayReady::NDClient, Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->add_ClosedCaptionDataReceived(get(handler), &token));
+    check_hresult(WINRT_SHIM(INDClient)->add_ClosedCaptionDataReceived(get_abi(handler), &token));
     return token;
 }
 
@@ -3236,264 +3401,264 @@ template <typename D> event_revoker<INDClient> impl_INDClient<D>::ClosedCaptionD
 
 template <typename D> void impl_INDClient<D>::ClosedCaptionDataReceived(event_token token) const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->remove_ClosedCaptionDataReceived(token));
+    check_hresult(WINRT_SHIM(INDClient)->remove_ClosedCaptionDataReceived(token));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDStartResult> impl_INDClient<D>::StartAsync(const Windows::Foundation::Uri & contentUrl, uint32_t startAsyncOptions, const Windows::Media::Protection::PlayReady::INDCustomData & registrationCustomData, const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDStartResult> result;
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->abi_StartAsync(get(contentUrl), startAsyncOptions, get(registrationCustomData), get(licenseFetchDescriptor), put(result)));
+    check_hresult(WINRT_SHIM(INDClient)->abi_StartAsync(get_abi(contentUrl), startAsyncOptions, get_abi(registrationCustomData), get_abi(licenseFetchDescriptor), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDLicenseFetchResult> impl_INDClient<D>::LicenseFetchAsync(const Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & licenseFetchDescriptor) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Media::Protection::PlayReady::INDLicenseFetchResult> result;
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->abi_LicenseFetchAsync(get(licenseFetchDescriptor), put(result)));
+    check_hresult(WINRT_SHIM(INDClient)->abi_LicenseFetchAsync(get_abi(licenseFetchDescriptor), put_abi(result)));
     return result;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_INDClient<D>::ReRegistrationAsync(const Windows::Media::Protection::PlayReady::INDCustomData & registrationCustomData) const
 {
     Windows::Foundation::IAsyncAction result;
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->abi_ReRegistrationAsync(get(registrationCustomData), put(result)));
+    check_hresult(WINRT_SHIM(INDClient)->abi_ReRegistrationAsync(get_abi(registrationCustomData), put_abi(result)));
     return result;
 }
 
 template <typename D> void impl_INDClient<D>::Close() const
 {
-    check_hresult(static_cast<const INDClient &>(static_cast<const D &>(*this))->abi_Close());
+    check_hresult(WINRT_SHIM(INDClient)->abi_Close());
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDClosedCaptionFormat impl_INDClosedCaptionDataReceivedEventArgs<D>::ClosedCaptionDataFormat() const
 {
     Windows::Media::Protection::PlayReady::NDClosedCaptionFormat ccForamt {};
-    check_hresult(static_cast<const INDClosedCaptionDataReceivedEventArgs &>(static_cast<const D &>(*this))->get_ClosedCaptionDataFormat(&ccForamt));
+    check_hresult(WINRT_SHIM(INDClosedCaptionDataReceivedEventArgs)->get_ClosedCaptionDataFormat(&ccForamt));
     return ccForamt;
 }
 
 template <typename D> int64_t impl_INDClosedCaptionDataReceivedEventArgs<D>::PresentationTimestamp() const
 {
     int64_t presentationTimestamp {};
-    check_hresult(static_cast<const INDClosedCaptionDataReceivedEventArgs &>(static_cast<const D &>(*this))->get_PresentationTimestamp(&presentationTimestamp));
+    check_hresult(WINRT_SHIM(INDClosedCaptionDataReceivedEventArgs)->get_PresentationTimestamp(&presentationTimestamp));
     return presentationTimestamp;
 }
 
 template <typename D> com_array<uint8_t> impl_INDClosedCaptionDataReceivedEventArgs<D>::ClosedCaptionData() const
 {
     com_array<uint8_t> ccDataBytes {};
-    check_hresult(static_cast<const INDClosedCaptionDataReceivedEventArgs &>(static_cast<const D &>(*this))->get_ClosedCaptionData(put_size(ccDataBytes), put(ccDataBytes)));
+    check_hresult(WINRT_SHIM(INDClosedCaptionDataReceivedEventArgs)->get_ClosedCaptionData(impl::put_size_abi(ccDataBytes), put_abi(ccDataBytes)));
     return ccDataBytes;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::NDClient impl_INDClientFactory<D>::CreateInstance(const Windows::Media::Protection::PlayReady::INDDownloadEngine & downloadEngine, const Windows::Media::Protection::PlayReady::INDStreamParser & streamParser, const Windows::Media::Protection::PlayReady::INDMessenger & pMessenger) const
 {
     Windows::Media::Protection::PlayReady::NDClient instance { nullptr };
-    check_hresult(static_cast<const INDClientFactory &>(static_cast<const D &>(*this))->abi_CreateInstance(get(downloadEngine), get(streamParser), get(pMessenger), put(instance)));
+    check_hresult(WINRT_SHIM(INDClientFactory)->abi_CreateInstance(get_abi(downloadEngine), get_abi(streamParser), get_abi(pMessenger), put_abi(instance)));
     return instance;
 }
 
 template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_INDStorageFileHelper<D>::GetFileURLs(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::Collections::IVector<hstring> fileURLs;
-    check_hresult(static_cast<const INDStorageFileHelper &>(static_cast<const D &>(*this))->abi_GetFileURLs(get(file), put(fileURLs)));
+    check_hresult(WINRT_SHIM(INDStorageFileHelper)->abi_GetFileURLs(get_abi(file), put_abi(fileURLs)));
     return fileURLs;
 }
 
 template <typename D> Windows::Foundation::Uri impl_IPlayReadyServiceRequest<D>::Uri() const
 {
     Windows::Foundation::Uri value { nullptr };
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->get_Uri(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->get_Uri(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyServiceRequest<D>::Uri(const Windows::Foundation::Uri & value) const
 {
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->put_Uri(get(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->put_Uri(get_abi(value)));
 }
 
 template <typename D> hstring impl_IPlayReadyServiceRequest<D>::ResponseCustomData() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->get_ResponseCustomData(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->get_ResponseCustomData(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IPlayReadyServiceRequest<D>::ChallengeCustomData() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->get_ChallengeCustomData(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->get_ChallengeCustomData(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPlayReadyServiceRequest<D>::ChallengeCustomData(hstring_ref value) const
+template <typename D> void impl_IPlayReadyServiceRequest<D>::ChallengeCustomData(hstring_view value) const
 {
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->put_ChallengeCustomData(get(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->put_ChallengeCustomData(get_abi(value)));
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IPlayReadyServiceRequest<D>::BeginServiceRequest() const
 {
     Windows::Foundation::IAsyncAction action;
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->abi_BeginServiceRequest(put(action)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->abi_BeginServiceRequest(put_abi(action)));
     return action;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest impl_IPlayReadyServiceRequest<D>::NextServiceRequest() const
 {
     Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest serviceRequest;
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->abi_NextServiceRequest(put(serviceRequest)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->abi_NextServiceRequest(put_abi(serviceRequest)));
     return serviceRequest;
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadySoapMessage impl_IPlayReadyServiceRequest<D>::GenerateManualEnablingChallenge() const
 {
     Windows::Media::Protection::PlayReady::PlayReadySoapMessage challengeMessage { nullptr };
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->abi_GenerateManualEnablingChallenge(put(challengeMessage)));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->abi_GenerateManualEnablingChallenge(put_abi(challengeMessage)));
     return challengeMessage;
 }
 
-template <typename D> HRESULT impl_IPlayReadyServiceRequest<D>::ProcessManualEnablingResponse(array_ref<const uint8_t> responseBytes) const
+template <typename D> HRESULT impl_IPlayReadyServiceRequest<D>::ProcessManualEnablingResponse(array_view<const uint8_t> responseBytes) const
 {
     HRESULT result {};
-    check_hresult(static_cast<const IPlayReadyServiceRequest &>(static_cast<const D &>(*this))->abi_ProcessManualEnablingResponse(responseBytes.size(), get(responseBytes), &result));
+    check_hresult(WINRT_SHIM(IPlayReadyServiceRequest)->abi_ProcessManualEnablingResponse(responseBytes.size(), get_abi(responseBytes), &result));
     return result;
 }
 
 template <typename D> GUID impl_IPlayReadyDomainJoinServiceRequest<D>::DomainAccountId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->get_DomainAccountId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->get_DomainAccountId(&value));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyDomainJoinServiceRequest<D>::DomainAccountId(GUID value) const
 {
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->put_DomainAccountId(value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->put_DomainAccountId(value));
 }
 
 template <typename D> hstring impl_IPlayReadyDomainJoinServiceRequest<D>::DomainFriendlyName() const
 {
     hstring value;
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->get_DomainFriendlyName(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->get_DomainFriendlyName(put_abi(value)));
     return value;
 }
 
-template <typename D> void impl_IPlayReadyDomainJoinServiceRequest<D>::DomainFriendlyName(hstring_ref value) const
+template <typename D> void impl_IPlayReadyDomainJoinServiceRequest<D>::DomainFriendlyName(hstring_view value) const
 {
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->put_DomainFriendlyName(get(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->put_DomainFriendlyName(get_abi(value)));
 }
 
 template <typename D> GUID impl_IPlayReadyDomainJoinServiceRequest<D>::DomainServiceId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->get_DomainServiceId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->get_DomainServiceId(&value));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyDomainJoinServiceRequest<D>::DomainServiceId(GUID value) const
 {
-    check_hresult(static_cast<const IPlayReadyDomainJoinServiceRequest &>(static_cast<const D &>(*this))->put_DomainServiceId(value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainJoinServiceRequest)->put_DomainServiceId(value));
 }
 
 template <typename D> GUID impl_IPlayReadyDomainLeaveServiceRequest<D>::DomainAccountId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomainLeaveServiceRequest &>(static_cast<const D &>(*this))->get_DomainAccountId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainLeaveServiceRequest)->get_DomainAccountId(&value));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyDomainLeaveServiceRequest<D>::DomainAccountId(GUID value) const
 {
-    check_hresult(static_cast<const IPlayReadyDomainLeaveServiceRequest &>(static_cast<const D &>(*this))->put_DomainAccountId(value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainLeaveServiceRequest)->put_DomainAccountId(value));
 }
 
 template <typename D> GUID impl_IPlayReadyDomainLeaveServiceRequest<D>::DomainServiceId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyDomainLeaveServiceRequest &>(static_cast<const D &>(*this))->get_DomainServiceId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainLeaveServiceRequest)->get_DomainServiceId(&value));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyDomainLeaveServiceRequest<D>::DomainServiceId(GUID value) const
 {
-    check_hresult(static_cast<const IPlayReadyDomainLeaveServiceRequest &>(static_cast<const D &>(*this))->put_DomainServiceId(value));
+    check_hresult(WINRT_SHIM(IPlayReadyDomainLeaveServiceRequest)->put_DomainServiceId(value));
 }
 
 template <typename D> Windows::Media::Protection::PlayReady::PlayReadyContentHeader impl_IPlayReadyLicenseAcquisitionServiceRequest<D>::ContentHeader() const
 {
     Windows::Media::Protection::PlayReady::PlayReadyContentHeader value { nullptr };
-    check_hresult(static_cast<const IPlayReadyLicenseAcquisitionServiceRequest &>(static_cast<const D &>(*this))->get_ContentHeader(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseAcquisitionServiceRequest)->get_ContentHeader(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyLicenseAcquisitionServiceRequest<D>::ContentHeader(const Windows::Media::Protection::PlayReady::PlayReadyContentHeader & value) const
 {
-    check_hresult(static_cast<const IPlayReadyLicenseAcquisitionServiceRequest &>(static_cast<const D &>(*this))->put_ContentHeader(get(value)));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseAcquisitionServiceRequest)->put_ContentHeader(get_abi(value)));
 }
 
 template <typename D> GUID impl_IPlayReadyLicenseAcquisitionServiceRequest<D>::DomainServiceId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyLicenseAcquisitionServiceRequest &>(static_cast<const D &>(*this))->get_DomainServiceId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseAcquisitionServiceRequest)->get_DomainServiceId(&value));
     return value;
 }
 
 template <typename D> void impl_IPlayReadyLicenseAcquisitionServiceRequest<D>::DomainServiceId(GUID value) const
 {
-    check_hresult(static_cast<const IPlayReadyLicenseAcquisitionServiceRequest &>(static_cast<const D &>(*this))->put_DomainServiceId(value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseAcquisitionServiceRequest)->put_DomainServiceId(value));
 }
 
 template <typename D> GUID impl_IPlayReadyLicenseAcquisitionServiceRequest2<D>::SessionId() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadyLicenseAcquisitionServiceRequest2 &>(static_cast<const D &>(*this))->get_SessionId(&value));
+    check_hresult(WINRT_SHIM(IPlayReadyLicenseAcquisitionServiceRequest2)->get_SessionId(&value));
     return value;
 }
 
 template <typename D> com_array<uint8_t> impl_IPlayReadyMeteringReportServiceRequest<D>::MeteringCertificate() const
 {
     com_array<uint8_t> meteringCertBytes {};
-    check_hresult(static_cast<const IPlayReadyMeteringReportServiceRequest &>(static_cast<const D &>(*this))->get_MeteringCertificate(put_size(meteringCertBytes), put(meteringCertBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadyMeteringReportServiceRequest)->get_MeteringCertificate(impl::put_size_abi(meteringCertBytes), put_abi(meteringCertBytes)));
     return meteringCertBytes;
 }
 
-template <typename D> void impl_IPlayReadyMeteringReportServiceRequest<D>::MeteringCertificate(array_ref<const uint8_t> meteringCertBytes) const
+template <typename D> void impl_IPlayReadyMeteringReportServiceRequest<D>::MeteringCertificate(array_view<const uint8_t> meteringCertBytes) const
 {
-    check_hresult(static_cast<const IPlayReadyMeteringReportServiceRequest &>(static_cast<const D &>(*this))->put_MeteringCertificate(meteringCertBytes.size(), get(meteringCertBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadyMeteringReportServiceRequest)->put_MeteringCertificate(meteringCertBytes.size(), get_abi(meteringCertBytes)));
 }
 
 template <typename D> GUID impl_IPlayReadySecureStopServiceRequest<D>::SessionID() const
 {
     GUID value {};
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequest &>(static_cast<const D &>(*this))->get_SessionID(&value));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequest)->get_SessionID(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IPlayReadySecureStopServiceRequest<D>::StartTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequest &>(static_cast<const D &>(*this))->get_StartTime(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequest)->get_StartTime(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IPlayReadySecureStopServiceRequest<D>::UpdateTime() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequest &>(static_cast<const D &>(*this))->get_UpdateTime(put(value)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequest)->get_UpdateTime(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IPlayReadySecureStopServiceRequest<D>::Stopped() const
 {
     bool value {};
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequest &>(static_cast<const D &>(*this))->get_Stopped(&value));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequest)->get_Stopped(&value));
     return value;
 }
 
 template <typename D> com_array<uint8_t> impl_IPlayReadySecureStopServiceRequest<D>::PublisherCertificate() const
 {
     com_array<uint8_t> publisherCertBytes {};
-    check_hresult(static_cast<const IPlayReadySecureStopServiceRequest &>(static_cast<const D &>(*this))->get_PublisherCertificate(put_size(publisherCertBytes), put(publisherCertBytes)));
+    check_hresult(WINRT_SHIM(IPlayReadySecureStopServiceRequest)->get_PublisherCertificate(impl::put_size_abi(publisherCertBytes), put_abi(publisherCertBytes)));
     return publisherCertBytes;
 }
 
@@ -3501,7 +3666,7 @@ inline NDClient::NDClient(const Windows::Media::Protection::PlayReady::INDDownlo
     NDClient(get_activation_factory<NDClient, INDClientFactory>().CreateInstance(downloadEngine, streamParser, pMessenger))
 {}
 
-inline NDCustomData::NDCustomData(array_ref<const uint8_t> customDataTypeIDBytes, array_ref<const uint8_t> customDataBytes) :
+inline NDCustomData::NDCustomData(array_view<const uint8_t> customDataTypeIDBytes, array_view<const uint8_t> customDataBytes) :
     NDCustomData(get_activation_factory<NDCustomData, INDCustomDataFactory>().CreateInstance(customDataTypeIDBytes, customDataBytes))
 {}
 
@@ -3509,7 +3674,7 @@ inline NDDownloadEngineNotifier::NDDownloadEngineNotifier() :
     NDDownloadEngineNotifier(activate_instance<NDDownloadEngineNotifier>())
 {}
 
-inline NDLicenseFetchDescriptor::NDLicenseFetchDescriptor(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_ref<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) :
+inline NDLicenseFetchDescriptor::NDLicenseFetchDescriptor(Windows::Media::Protection::PlayReady::NDContentIDType contentIDType, array_view<const uint8_t> contentIDBytes, const Windows::Media::Protection::PlayReady::INDCustomData & licenseFetchChallengeCustomData) :
     NDLicenseFetchDescriptor(get_activation_factory<NDLicenseFetchDescriptor, INDLicenseFetchDescriptorFactory>().CreateInstance(contentIDType, contentIDBytes, licenseFetchChallengeCustomData))
 {}
 
@@ -3521,23 +3686,23 @@ inline NDStreamParserNotifier::NDStreamParserNotifier() :
     NDStreamParserNotifier(activate_instance<NDStreamParserNotifier>())
 {}
 
-inline NDTCPMessenger::NDTCPMessenger(hstring_ref remoteHostName, uint32_t remoteHostPort) :
+inline NDTCPMessenger::NDTCPMessenger(hstring_view remoteHostName, uint32_t remoteHostPort) :
     NDTCPMessenger(get_activation_factory<NDTCPMessenger, INDTCPMessengerFactory>().CreateInstance(remoteHostName, remoteHostPort))
 {}
 
-inline PlayReadyContentHeader::PlayReadyContentHeader(array_ref<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) :
+inline PlayReadyContentHeader::PlayReadyContentHeader(array_view<const uint8_t> headerBytes, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) :
     PlayReadyContentHeader(get_activation_factory<PlayReadyContentHeader, IPlayReadyContentHeaderFactory>().CreateInstanceFromWindowsMediaDrmHeader(headerBytes, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId))
 {}
 
-inline PlayReadyContentHeader::PlayReadyContentHeader(GUID contentKeyId, hstring_ref contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) :
+inline PlayReadyContentHeader::PlayReadyContentHeader(GUID contentKeyId, hstring_view contentKeyIdString, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) :
     PlayReadyContentHeader(get_activation_factory<PlayReadyContentHeader, IPlayReadyContentHeaderFactory>().CreateInstanceFromComponents(contentKeyId, contentKeyIdString, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId))
 {}
 
-inline PlayReadyContentHeader::PlayReadyContentHeader(array_ref<const uint8_t> headerBytes) :
+inline PlayReadyContentHeader::PlayReadyContentHeader(array_view<const uint8_t> headerBytes) :
     PlayReadyContentHeader(get_activation_factory<PlayReadyContentHeader, IPlayReadyContentHeaderFactory>().CreateInstanceFromPlayReadyHeader(headerBytes))
 {}
 
-inline PlayReadyContentHeader::PlayReadyContentHeader(uint32_t dwFlags, array_ref<const GUID> contentKeyIds, array_ref<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_ref customAttributes, GUID domainServiceId) :
+inline PlayReadyContentHeader::PlayReadyContentHeader(uint32_t dwFlags, array_view<const GUID> contentKeyIds, array_view<const hstring> contentKeyIdStrings, Windows::Media::Protection::PlayReady::PlayReadyEncryptionAlgorithm contentEncryptionAlgorithm, const Windows::Foundation::Uri & licenseAcquisitionUrl, const Windows::Foundation::Uri & licenseAcquisitionUserInterfaceUrl, hstring_view customAttributes, GUID domainServiceId) :
     PlayReadyContentHeader(get_activation_factory<PlayReadyContentHeader, IPlayReadyContentHeaderFactory2>().CreateInstanceFromComponents2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId))
 {}
 
@@ -3595,15 +3760,15 @@ inline PlayReadyRevocationServiceRequest::PlayReadyRevocationServiceRequest() :
     PlayReadyRevocationServiceRequest(activate_instance<PlayReadyRevocationServiceRequest>())
 {}
 
-inline PlayReadySecureStopIterable::PlayReadySecureStopIterable(array_ref<const uint8_t> publisherCertBytes) :
+inline PlayReadySecureStopIterable::PlayReadySecureStopIterable(array_view<const uint8_t> publisherCertBytes) :
     PlayReadySecureStopIterable(get_activation_factory<PlayReadySecureStopIterable, IPlayReadySecureStopIterableFactory>().CreateInstance(publisherCertBytes))
 {}
 
-inline PlayReadySecureStopServiceRequest::PlayReadySecureStopServiceRequest(array_ref<const uint8_t> publisherCertBytes) :
+inline PlayReadySecureStopServiceRequest::PlayReadySecureStopServiceRequest(array_view<const uint8_t> publisherCertBytes) :
     PlayReadySecureStopServiceRequest(get_activation_factory<PlayReadySecureStopServiceRequest, IPlayReadySecureStopServiceRequestFactory>().CreateInstance(publisherCertBytes))
 {}
 
-inline PlayReadySecureStopServiceRequest::PlayReadySecureStopServiceRequest(GUID sessionID, array_ref<const uint8_t> publisherCertBytes) :
+inline PlayReadySecureStopServiceRequest::PlayReadySecureStopServiceRequest(GUID sessionID, array_view<const uint8_t> publisherCertBytes) :
     PlayReadySecureStopServiceRequest(get_activation_factory<PlayReadySecureStopServiceRequest, IPlayReadySecureStopServiceRequestFactory>().CreateInstanceFromSessionID(sessionID, publisherCertBytes))
 {}
 
@@ -3675,3 +3840,689 @@ inline GUID PlayReadyStatics::ProtectionSystemId()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDClient>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDClient & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDClientFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDClientFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDClosedCaptionDataReceivedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDCustomData>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDCustomData & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDCustomDataFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDCustomDataFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDDownloadEngine>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDDownloadEngine & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDDownloadEngineNotifier>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDDownloadEngineNotifier & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchCompletedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptorFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchDescriptorFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchResult>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDLicenseFetchResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDMessenger>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDMessenger & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDProximityDetectionCompletedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDRegistrationCompletedEventArgs & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDSendResult>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDSendResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDStartResult>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDStartResult & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDStorageFileHelper>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDStorageFileHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDStreamParser>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDStreamParser & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDStreamParserNotifier>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDStreamParserNotifier & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDTCPMessengerFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDTCPMessengerFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::INDTransmitterProperties>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::INDTransmitterProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeader>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeader2>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeader2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory2>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentHeaderFactory2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentResolver>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyContentResolver & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomain>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomain & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainIterableFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainIterableFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainJoinServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyDomainLeaveServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyITADataGenerator>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyITADataGenerator & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyIndividualizationServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyIndividualizationServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicense>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicense & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest2>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseAcquisitionServiceRequest2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseIterableFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseIterableFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseManagement>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseManagement & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseSession & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessionFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyLicenseSessionFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyMeteringReportServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyMeteringReportServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyRevocationServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyRevocationServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopIterableFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopIterableFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequestFactory>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadySecureStopServiceRequestFactory & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadySoapMessage>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadySoapMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics2>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics3>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics4>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::IPlayReadyStatics4 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDClient>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDClient & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDCustomData>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDCustomData & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDDownloadEngineNotifier>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDDownloadEngineNotifier & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDLicenseFetchDescriptor & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDStorageFileHelper>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDStorageFileHelper & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDStreamParserNotifier>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDStreamParserNotifier & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::NDTCPMessenger>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::NDTCPMessenger & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyContentHeader>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyContentHeader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyDomain>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyDomain & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainIterable>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainIterable & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainIterator>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainIterator & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainJoinServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainJoinServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainLeaveServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyDomainLeaveServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyITADataGenerator>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyITADataGenerator & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyIndividualizationServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyIndividualizationServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyLicense>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyLicense & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseAcquisitionServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseAcquisitionServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseIterable>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseIterable & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseIterator>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseIterator & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseSession>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyLicenseSession & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyMeteringReportServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyMeteringReportServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadyRevocationServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadyRevocationServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopIterable & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopIterator>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopIterator & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadySecureStopServiceRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Media::Protection::PlayReady::PlayReadySoapMessage>
+{
+    size_t operator()(const winrt::Windows::Media::Protection::PlayReady::PlayReadySoapMessage & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

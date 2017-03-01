@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -29,6 +29,16 @@ struct IEasComplianceResults2;
 struct EasClientDeviceInformation;
 struct EasClientSecurityPolicy;
 struct EasComplianceResults;
+
+}
+
+namespace Windows::Security::ExchangeActiveSyncProvisioning {
+
+template <typename T> struct impl_IEasClientDeviceInformation;
+template <typename T> struct impl_IEasClientDeviceInformation2;
+template <typename T> struct impl_IEasClientSecurityPolicy;
+template <typename T> struct impl_IEasComplianceResults;
+template <typename T> struct impl_IEasComplianceResults2;
 
 }
 
@@ -133,17 +143,17 @@ enum class EasRequireEncryptionResult
     Compliant = 1,
     CanBeCompliant = 2,
     NotProvisionedOnAllVolumes = 3,
-    DeFixedDataNotSupported = 4,
+    DeFixedDataNotSupported [[deprecated("DeFixedDataNotSupported may be altered or unavailable for releases after Windows 8.1. Instead, use FixedDataNotSupported.")]] = 4,
     FixedDataNotSupported = 4,
-    DeHardwareNotCompliant = 5,
+    DeHardwareNotCompliant [[deprecated("DeHardwareNotCompliant may be altered or unavailable for releases after Windows 8.1. Instead, use HardwareNotCompliant.")]] = 5,
     HardwareNotCompliant = 5,
-    DeWinReNotConfigured = 6,
+    DeWinReNotConfigured [[deprecated("DeWinReNotConfigured may be altered or unavailable for releases after Windows 8.1. Instead, use LockNotConfigured.")]] = 6,
     LockNotConfigured = 6,
-    DeProtectionSuspended = 7,
+    DeProtectionSuspended [[deprecated("DeProtectionSuspended may be altered or unavailable for releases after Windows 8.1. Instead, use ProtectionSuspended.")]] = 7,
     ProtectionSuspended = 7,
-    DeOsVolumeNotProtected = 8,
+    DeOsVolumeNotProtected [[deprecated("DeOsVolumeNotProtected may be altered or unavailable for releases after Windows 8.1. Instead, use OsVolumeNotProtected.")]] = 8,
     OsVolumeNotProtected = 8,
-    DeProtectionNotYetEnabled = 9,
+    DeProtectionNotYetEnabled [[deprecated("DeProtectionNotYetEnabled may be altered or unavailable for releases after Windows 8.1. Instead, use ProtectionNotYetEnabled.")]] = 9,
     ProtectionNotYetEnabled = 9,
     NoFeatureLicense = 10,
     OsNotProtected = 11,

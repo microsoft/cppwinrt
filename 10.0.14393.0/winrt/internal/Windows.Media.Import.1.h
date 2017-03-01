@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -34,7 +34,7 @@ using PhotoImportProgress = ABI::Windows::Media::Import::PhotoImportProgress;
 
 namespace ABI::Windows::Media::Import {
 
-struct __declspec(uuid("f4e112f8-843d-428a-a1a6-81510292b0ae")) __declspec(novtable) IPhotoImportDeleteImportedItemsFromSourceResult : Windows::IInspectable
+struct __declspec(uuid("f4e112f8-843d-428a-a1a6-81510292b0ae")) __declspec(novtable) IPhotoImportDeleteImportedItemsFromSourceResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Session(Windows::Media::Import::IPhotoImportSession ** value) = 0;
     virtual HRESULT __stdcall get_HasSucceeded(bool * value) = 0;
@@ -51,7 +51,7 @@ struct __declspec(uuid("f4e112f8-843d-428a-a1a6-81510292b0ae")) __declspec(novta
     virtual HRESULT __stdcall get_TotalSizeInBytes(uint64_t * value) = 0;
 };
 
-struct __declspec(uuid("3915e647-6c78-492b-844e-8fe5e8f6bfb9")) __declspec(novtable) IPhotoImportFindItemsResult : Windows::IInspectable
+struct __declspec(uuid("3915e647-6c78-492b-844e-8fe5e8f6bfb9")) __declspec(novtable) IPhotoImportFindItemsResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Session(Windows::Media::Import::IPhotoImportSession ** value) = 0;
     virtual HRESULT __stdcall get_HasSucceeded(bool * value) = 0;
@@ -88,12 +88,12 @@ struct __declspec(uuid("3915e647-6c78-492b-844e-8fe5e8f6bfb9")) __declspec(novta
     virtual HRESULT __stdcall remove_ItemImported(event_token token) = 0;
 };
 
-struct __declspec(uuid("fbdd6a3b-ecf9-406a-815e-5015625b0a88")) __declspec(novtable) IPhotoImportFindItemsResult2 : Windows::IInspectable
+struct __declspec(uuid("fbdd6a3b-ecf9-406a-815e-5015625b0a88")) __declspec(novtable) IPhotoImportFindItemsResult2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_AddItemsInDateRangeToSelection(Windows::Foundation::DateTime rangeStart, Windows::Foundation::TimeSpan rangeLength) = 0;
 };
 
-struct __declspec(uuid("e4d4f478-d419-4443-a84e-f06a850c0b00")) __declspec(novtable) IPhotoImportImportItemsResult : Windows::IInspectable
+struct __declspec(uuid("e4d4f478-d419-4443-a84e-f06a850c0b00")) __declspec(novtable) IPhotoImportImportItemsResult : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Session(Windows::Media::Import::IPhotoImportSession ** value) = 0;
     virtual HRESULT __stdcall get_HasSucceeded(bool * value) = 0;
@@ -111,7 +111,7 @@ struct __declspec(uuid("e4d4f478-d419-4443-a84e-f06a850c0b00")) __declspec(novta
     virtual HRESULT __stdcall abi_DeleteImportedItemsFromSourceAsync(Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportDeleteImportedItemsFromSourceResult, double> ** result) = 0;
 };
 
-struct __declspec(uuid("a9d07e76-9bfc-43b8-b356-633b6a988c9e")) __declspec(novtable) IPhotoImportItem : Windows::IInspectable
+struct __declspec(uuid("a9d07e76-9bfc-43b8-b356-633b6a988c9e")) __declspec(novtable) IPhotoImportItem : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_ItemKey(uint64_t * value) = 0;
@@ -128,19 +128,19 @@ struct __declspec(uuid("a9d07e76-9bfc-43b8-b356-633b6a988c9e")) __declspec(novta
     virtual HRESULT __stdcall get_DeletedFileNames(Windows::Foundation::Collections::IVectorView<hstring> ** value) = 0;
 };
 
-struct __declspec(uuid("42cb2fdd-7d68-47b5-bc7c-ceb73e0c77dc")) __declspec(novtable) IPhotoImportItemImportedEventArgs : Windows::IInspectable
+struct __declspec(uuid("42cb2fdd-7d68-47b5-bc7c-ceb73e0c77dc")) __declspec(novtable) IPhotoImportItemImportedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_ImportedItem(Windows::Media::Import::IPhotoImportItem ** value) = 0;
 };
 
-struct __declspec(uuid("2771903d-a046-4f06-9b9c-bfd662e83287")) __declspec(novtable) IPhotoImportManagerStatics : Windows::IInspectable
+struct __declspec(uuid("2771903d-a046-4f06-9b9c-bfd662e83287")) __declspec(novtable) IPhotoImportManagerStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_IsSupportedAsync(Windows::Foundation::IAsyncOperation<bool> ** operation) = 0;
     virtual HRESULT __stdcall abi_FindAllSourcesAsync(Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportSource>> ** operation) = 0;
     virtual HRESULT __stdcall abi_GetPendingOperations(Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportOperation> ** result) = 0;
 };
 
-struct __declspec(uuid("d9f797e4-a09a-4ee4-a4b1-20940277a5be")) __declspec(novtable) IPhotoImportOperation : Windows::IInspectable
+struct __declspec(uuid("d9f797e4-a09a-4ee4-a4b1-20940277a5be")) __declspec(novtable) IPhotoImportOperation : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Stage(winrt::Windows::Media::Import::PhotoImportStage * value) = 0;
     virtual HRESULT __stdcall get_Session(Windows::Media::Import::IPhotoImportSession ** value) = 0;
@@ -149,12 +149,12 @@ struct __declspec(uuid("d9f797e4-a09a-4ee4-a4b1-20940277a5be")) __declspec(novta
     virtual HRESULT __stdcall get_ContinueDeletingImportedItemsFromSourceAsync(Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportDeleteImportedItemsFromSourceResult, double> ** operation) = 0;
 };
 
-struct __declspec(uuid("10461782-fa9d-4c30-8bc9-4d64911572d5")) __declspec(novtable) IPhotoImportSelectionChangedEventArgs : Windows::IInspectable
+struct __declspec(uuid("10461782-fa9d-4c30-8bc9-4d64911572d5")) __declspec(novtable) IPhotoImportSelectionChangedEventArgs : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_IsSelectionEmpty(bool * value) = 0;
 };
 
-struct __declspec(uuid("aa63916e-ecdb-4efe-94c6-5f5cafe34cfb")) __declspec(novtable) IPhotoImportSession : Windows::IInspectable
+struct __declspec(uuid("aa63916e-ecdb-4efe-94c6-5f5cafe34cfb")) __declspec(novtable) IPhotoImportSession : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Source(Windows::Media::Import::IPhotoImportSource ** value) = 0;
     virtual HRESULT __stdcall get_SessionId(GUID * value) = 0;
@@ -169,7 +169,7 @@ struct __declspec(uuid("aa63916e-ecdb-4efe-94c6-5f5cafe34cfb")) __declspec(novta
     virtual HRESULT __stdcall abi_FindItemsAsync(winrt::Windows::Media::Import::PhotoImportContentTypeFilter contentTypeFilter, winrt::Windows::Media::Import::PhotoImportItemSelectionMode itemSelectionMode, Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportFindItemsResult, uint32_t> ** operation) = 0;
 };
 
-struct __declspec(uuid("2a526710-3ec6-469d-a375-2b9f4785391e")) __declspec(novtable) IPhotoImportSession2 : Windows::IInspectable
+struct __declspec(uuid("2a526710-3ec6-469d-a375-2b9f4785391e")) __declspec(novtable) IPhotoImportSession2 : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall put_SubfolderDateFormat(winrt::Windows::Media::Import::PhotoImportSubfolderDateFormat value) = 0;
     virtual HRESULT __stdcall get_SubfolderDateFormat(winrt::Windows::Media::Import::PhotoImportSubfolderDateFormat * value) = 0;
@@ -177,14 +177,14 @@ struct __declspec(uuid("2a526710-3ec6-469d-a375-2b9f4785391e")) __declspec(novta
     virtual HRESULT __stdcall get_RememberDeselectedItems(bool * value) = 0;
 };
 
-struct __declspec(uuid("46d7d757-f802-44c7-9c98-7a71f4bc1486")) __declspec(novtable) IPhotoImportSidecar : Windows::IInspectable
+struct __declspec(uuid("46d7d757-f802-44c7-9c98-7a71f4bc1486")) __declspec(novtable) IPhotoImportSidecar : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_SizeInBytes(uint64_t * value) = 0;
     virtual HRESULT __stdcall get_Date(Windows::Foundation::DateTime * value) = 0;
 };
 
-struct __declspec(uuid("1f8ea35e-145b-4cd6-87f1-54965a982fef")) __declspec(novtable) IPhotoImportSource : Windows::IInspectable
+struct __declspec(uuid("1f8ea35e-145b-4cd6-87f1-54965a982fef")) __declspec(novtable) IPhotoImportSource : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Id(hstring * value) = 0;
     virtual HRESULT __stdcall get_DisplayName(hstring * value) = 0;
@@ -205,13 +205,13 @@ struct __declspec(uuid("1f8ea35e-145b-4cd6-87f1-54965a982fef")) __declspec(novta
     virtual HRESULT __stdcall abi_CreateImportSession(Windows::Media::Import::IPhotoImportSession ** result) = 0;
 };
 
-struct __declspec(uuid("0528e586-32d8-467c-8cee-23a1b2f43e85")) __declspec(novtable) IPhotoImportSourceStatics : Windows::IInspectable
+struct __declspec(uuid("0528e586-32d8-467c-8cee-23a1b2f43e85")) __declspec(novtable) IPhotoImportSourceStatics : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_FromIdAsync(hstring sourceId, Windows::Foundation::IAsyncOperation<Windows::Media::Import::PhotoImportSource> ** operation) = 0;
     virtual HRESULT __stdcall abi_FromFolderAsync(Windows::Storage::IStorageFolder * sourceRootFolder, Windows::Foundation::IAsyncOperation<Windows::Media::Import::PhotoImportSource> ** operation) = 0;
 };
 
-struct __declspec(uuid("f2b9b093-fc85-487f-87c2-58d675d05b07")) __declspec(novtable) IPhotoImportStorageMedium : Windows::IInspectable
+struct __declspec(uuid("f2b9b093-fc85-487f-87c2-58d675d05b07")) __declspec(novtable) IPhotoImportStorageMedium : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_Description(hstring * value) = 0;
@@ -223,7 +223,7 @@ struct __declspec(uuid("f2b9b093-fc85-487f-87c2-58d675d05b07")) __declspec(novta
     virtual HRESULT __stdcall abi_Refresh() = 0;
 };
 
-struct __declspec(uuid("623c0289-321a-41d8-9166-8c62a333276c")) __declspec(novtable) IPhotoImportVideoSegment : Windows::IInspectable
+struct __declspec(uuid("623c0289-321a-41d8-9166-8c62a333276c")) __declspec(novtable) IPhotoImportVideoSegment : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall get_Name(hstring * value) = 0;
     virtual HRESULT __stdcall get_SizeInBytes(uint64_t * value) = 0;
@@ -253,22 +253,223 @@ template <> struct traits<Windows::Media::Import::PhotoImportVideoSegment> { usi
 
 namespace Windows::Media::Import {
 
-template <typename T> struct impl_IPhotoImportDeleteImportedItemsFromSourceResult;
-template <typename T> struct impl_IPhotoImportFindItemsResult;
-template <typename T> struct impl_IPhotoImportFindItemsResult2;
-template <typename T> struct impl_IPhotoImportImportItemsResult;
-template <typename T> struct impl_IPhotoImportItem;
-template <typename T> struct impl_IPhotoImportItemImportedEventArgs;
-template <typename T> struct impl_IPhotoImportManagerStatics;
-template <typename T> struct impl_IPhotoImportOperation;
-template <typename T> struct impl_IPhotoImportSelectionChangedEventArgs;
-template <typename T> struct impl_IPhotoImportSession;
-template <typename T> struct impl_IPhotoImportSession2;
-template <typename T> struct impl_IPhotoImportSidecar;
-template <typename T> struct impl_IPhotoImportSource;
-template <typename T> struct impl_IPhotoImportSourceStatics;
-template <typename T> struct impl_IPhotoImportStorageMedium;
-template <typename T> struct impl_IPhotoImportVideoSegment;
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportDeleteImportedItemsFromSourceResult
+{
+    Windows::Media::Import::PhotoImportSession Session() const;
+    bool HasSucceeded() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportItem> DeletedItems() const;
+    uint32_t PhotosCount() const;
+    uint64_t PhotosSizeInBytes() const;
+    uint32_t VideosCount() const;
+    uint64_t VideosSizeInBytes() const;
+    uint32_t SidecarsCount() const;
+    uint64_t SidecarsSizeInBytes() const;
+    uint32_t SiblingsCount() const;
+    uint64_t SiblingsSizeInBytes() const;
+    uint32_t TotalCount() const;
+    uint64_t TotalSizeInBytes() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportFindItemsResult
+{
+    Windows::Media::Import::PhotoImportSession Session() const;
+    bool HasSucceeded() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportItem> FoundItems() const;
+    uint32_t PhotosCount() const;
+    uint64_t PhotosSizeInBytes() const;
+    uint32_t VideosCount() const;
+    uint64_t VideosSizeInBytes() const;
+    uint32_t SidecarsCount() const;
+    uint64_t SidecarsSizeInBytes() const;
+    uint32_t SiblingsCount() const;
+    uint64_t SiblingsSizeInBytes() const;
+    uint32_t TotalCount() const;
+    uint64_t TotalSizeInBytes() const;
+    void SelectAll() const;
+    void SelectNone() const;
+    Windows::Foundation::IAsyncAction SelectNewAsync() const;
+    void SetImportMode(Windows::Media::Import::PhotoImportImportMode value) const;
+    Windows::Media::Import::PhotoImportImportMode ImportMode() const;
+    uint32_t SelectedPhotosCount() const;
+    uint64_t SelectedPhotosSizeInBytes() const;
+    uint32_t SelectedVideosCount() const;
+    uint64_t SelectedVideosSizeInBytes() const;
+    uint32_t SelectedSidecarsCount() const;
+    uint64_t SelectedSidecarsSizeInBytes() const;
+    uint32_t SelectedSiblingsCount() const;
+    uint64_t SelectedSiblingsSizeInBytes() const;
+    uint32_t SelectedTotalCount() const;
+    uint64_t SelectedTotalSizeInBytes() const;
+    event_token SelectionChanged(const Windows::Foundation::TypedEventHandler<Windows::Media::Import::PhotoImportFindItemsResult, Windows::Media::Import::PhotoImportSelectionChangedEventArgs> & value) const;
+    using SelectionChanged_revoker = event_revoker<IPhotoImportFindItemsResult>;
+    SelectionChanged_revoker SelectionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Import::PhotoImportFindItemsResult, Windows::Media::Import::PhotoImportSelectionChangedEventArgs> & value) const;
+    void SelectionChanged(event_token token) const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportImportItemsResult, Windows::Media::Import::PhotoImportProgress> ImportItemsAsync() const;
+    event_token ItemImported(const Windows::Foundation::TypedEventHandler<Windows::Media::Import::PhotoImportFindItemsResult, Windows::Media::Import::PhotoImportItemImportedEventArgs> & value) const;
+    using ItemImported_revoker = event_revoker<IPhotoImportFindItemsResult>;
+    ItemImported_revoker ItemImported(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Media::Import::PhotoImportFindItemsResult, Windows::Media::Import::PhotoImportItemImportedEventArgs> & value) const;
+    void ItemImported(event_token token) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportFindItemsResult2
+{
+    void AddItemsInDateRangeToSelection(const Windows::Foundation::DateTime & rangeStart, const Windows::Foundation::TimeSpan & rangeLength) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportImportItemsResult
+{
+    Windows::Media::Import::PhotoImportSession Session() const;
+    bool HasSucceeded() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportItem> ImportedItems() const;
+    uint32_t PhotosCount() const;
+    uint64_t PhotosSizeInBytes() const;
+    uint32_t VideosCount() const;
+    uint64_t VideosSizeInBytes() const;
+    uint32_t SidecarsCount() const;
+    uint64_t SidecarsSizeInBytes() const;
+    uint32_t SiblingsCount() const;
+    uint64_t SiblingsSizeInBytes() const;
+    uint32_t TotalCount() const;
+    uint64_t TotalSizeInBytes() const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportDeleteImportedItemsFromSourceResult, double> DeleteImportedItemsFromSourceAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportItem
+{
+    hstring Name() const;
+    uint64_t ItemKey() const;
+    Windows::Media::Import::PhotoImportContentType ContentType() const;
+    uint64_t SizeInBytes() const;
+    Windows::Foundation::DateTime Date() const;
+    Windows::Media::Import::PhotoImportSidecar Sibling() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportSidecar> Sidecars() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportVideoSegment> VideoSegments() const;
+    bool IsSelected() const;
+    void IsSelected(bool value) const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
+    Windows::Foundation::Collections::IVectorView<hstring> ImportedFileNames() const;
+    Windows::Foundation::Collections::IVectorView<hstring> DeletedFileNames() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportItemImportedEventArgs
+{
+    Windows::Media::Import::PhotoImportItem ImportedItem() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportManagerStatics
+{
+    Windows::Foundation::IAsyncOperation<bool> IsSupportedAsync() const;
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportSource>> FindAllSourcesAsync() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportOperation> GetPendingOperations() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportOperation
+{
+    Windows::Media::Import::PhotoImportStage Stage() const;
+    Windows::Media::Import::PhotoImportSession Session() const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportFindItemsResult, uint32_t> ContinueFindingItemsAsync() const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportImportItemsResult, Windows::Media::Import::PhotoImportProgress> ContinueImportingItemsAsync() const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportDeleteImportedItemsFromSourceResult, double> ContinueDeletingImportedItemsFromSourceAsync() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSelectionChangedEventArgs
+{
+    bool IsSelectionEmpty() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSession
+{
+    Windows::Media::Import::PhotoImportSource Source() const;
+    GUID SessionId() const;
+    void DestinationFolder(const Windows::Storage::IStorageFolder & value) const;
+    Windows::Storage::IStorageFolder DestinationFolder() const;
+    void AppendSessionDateToDestinationFolder(bool value) const;
+    bool AppendSessionDateToDestinationFolder() const;
+    void SubfolderCreationMode(Windows::Media::Import::PhotoImportSubfolderCreationMode value) const;
+    Windows::Media::Import::PhotoImportSubfolderCreationMode SubfolderCreationMode() const;
+    void DestinationFileNamePrefix(hstring_view value) const;
+    hstring DestinationFileNamePrefix() const;
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Media::Import::PhotoImportFindItemsResult, uint32_t> FindItemsAsync(Windows::Media::Import::PhotoImportContentTypeFilter contentTypeFilter, Windows::Media::Import::PhotoImportItemSelectionMode itemSelectionMode) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSession2
+{
+    void SubfolderDateFormat(Windows::Media::Import::PhotoImportSubfolderDateFormat value) const;
+    Windows::Media::Import::PhotoImportSubfolderDateFormat SubfolderDateFormat() const;
+    void RememberDeselectedItems(bool value) const;
+    bool RememberDeselectedItems() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSidecar
+{
+    hstring Name() const;
+    uint64_t SizeInBytes() const;
+    Windows::Foundation::DateTime Date() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSource
+{
+    hstring Id() const;
+    hstring DisplayName() const;
+    hstring Description() const;
+    hstring Manufacturer() const;
+    hstring Model() const;
+    hstring SerialNumber() const;
+    hstring ConnectionProtocol() const;
+    Windows::Media::Import::PhotoImportConnectionTransport ConnectionTransport() const;
+    Windows::Media::Import::PhotoImportSourceType Type() const;
+    Windows::Media::Import::PhotoImportPowerSource PowerSource() const;
+    Windows::Foundation::IReference<uint32_t> BatteryLevelPercent() const;
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> DateTime() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportStorageMedium> StorageMedia() const;
+    Windows::Foundation::IReference<bool> IsLocked() const;
+    bool IsMassStorage() const;
+    Windows::Storage::Streams::IRandomAccessStreamReference Thumbnail() const;
+    Windows::Media::Import::PhotoImportSession CreateImportSession() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportSourceStatics
+{
+    Windows::Foundation::IAsyncOperation<Windows::Media::Import::PhotoImportSource> FromIdAsync(hstring_view sourceId) const;
+    Windows::Foundation::IAsyncOperation<Windows::Media::Import::PhotoImportSource> FromFolderAsync(const Windows::Storage::IStorageFolder & sourceRootFolder) const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportStorageMedium
+{
+    hstring Name() const;
+    hstring Description() const;
+    hstring SerialNumber() const;
+    Windows::Media::Import::PhotoImportStorageMediumType StorageMediumType() const;
+    Windows::Media::Import::PhotoImportAccessMode SupportedAccessMode() const;
+    uint64_t CapacityInBytes() const;
+    uint64_t AvailableSpaceInBytes() const;
+    void Refresh() const;
+};
+
+template <typename D>
+struct WINRT_EBO impl_IPhotoImportVideoSegment
+{
+    hstring Name() const;
+    uint64_t SizeInBytes() const;
+    Windows::Foundation::DateTime Date() const;
+    Windows::Media::Import::PhotoImportSidecar Sibling() const;
+    Windows::Foundation::Collections::IVectorView<Windows::Media::Import::PhotoImportSidecar> Sidecars() const;
+};
 
 }
 

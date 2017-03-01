@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -9,14 +9,29 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
 #ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
 #define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::IInspectable> : impl_IKeyValuePair<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+#define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::IInspectable> : impl_IMapView<hstring, Windows::IInspectable> {};
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -51,7 +66,7 @@ template <> struct __declspec(uuid("af8f929d-8058-5c38-a3d8-30aa7a08b588")) __de
 
 #ifndef WINRT_GENERIC_2ee2b4c9_b696_5ecc_b29b_f1e0ef5fe1f7
 #define WINRT_GENERIC_2ee2b4c9_b696_5ecc_b29b_f1e0ef5fe1f7
-template <> struct __declspec(uuid("2ee2b4c9-b696-5ecc-b29b-f1e0ef5fe1f7")) __declspec(novtable) TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> : impl_TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> {};
+template <> struct __declspec(uuid("2ee2b4c9-b696-5ecc-b29b-f1e0ef5fe1f7")) __declspec(novtable) TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_22b0fb93_30e6_501a_bd3b_9fa3063e9c16
@@ -72,6 +87,11 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 #define WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_51ded63f_e60f_5205_b778_680d5e39b5fc
+#define WINRT_GENERIC_51ded63f_e60f_5205_b778_680d5e39b5fc
+template <> struct __declspec(uuid("51ded63f-e60f-5205-b778-680d5e39b5fc")) __declspec(novtable) IVector<Windows::Devices::Enumeration::Pnp::PnpObject> : impl_IVector<Windows::Devices::Enumeration::Pnp::PnpObject> {};
 #endif
 
 #ifndef WINRT_GENERIC_6bb6d2f1_b5fb_57f0_8251_f20cde5a6871
@@ -101,12 +121,12 @@ namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
 #define WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204
-template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("fe2f3d47-5d47-5499-8374-430c7cda0204")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 #ifndef WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
 #define WINRT_GENERIC_5db5fa32_707c_5849_a06b_91c8eb9d10e8
-template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::IInspectable>> {};
+template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __declspec(novtable) IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> : impl_IIterator<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Foundation::IInspectable>> {};
 #endif
 
 
@@ -114,91 +134,32 @@ template <> struct __declspec(uuid("5db5fa32-707c-5849-a06b-91c8eb9d10e8")) __de
 
 namespace Windows::Devices::Enumeration::Pnp {
 
-template <typename D>
-struct WINRT_EBO impl_IPnpObject
-{
-    Windows::Devices::Enumeration::Pnp::PnpObjectType Type() const;
-    hstring Id() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> Properties() const;
-    void Update(const Windows::Devices::Enumeration::Pnp::PnpObjectUpdate & updateInfo) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPnpObjectStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::Pnp::PnpObject> CreateFromIdAsync(Windows::Devices::Enumeration::Pnp::PnpObjectType type, hstring_ref id, const Windows::Foundation::Collections::IIterable<hstring> & requestedProperties) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::Pnp::PnpObjectCollection> FindAllAsync(Windows::Devices::Enumeration::Pnp::PnpObjectType type, const Windows::Foundation::Collections::IIterable<hstring> & requestedProperties) const;
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Enumeration::Pnp::PnpObjectCollection> FindAllAsync(Windows::Devices::Enumeration::Pnp::PnpObjectType type, const Windows::Foundation::Collections::IIterable<hstring> & requestedProperties, hstring_ref aqsFilter) const;
-    Windows::Devices::Enumeration::Pnp::PnpObjectWatcher CreateWatcher(Windows::Devices::Enumeration::Pnp::PnpObjectType type, const Windows::Foundation::Collections::IIterable<hstring> & requestedProperties) const;
-    Windows::Devices::Enumeration::Pnp::PnpObjectWatcher CreateWatcher(Windows::Devices::Enumeration::Pnp::PnpObjectType type, const Windows::Foundation::Collections::IIterable<hstring> & requestedProperties, hstring_ref aqsFilter) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPnpObjectUpdate
-{
-    Windows::Devices::Enumeration::Pnp::PnpObjectType Type() const;
-    hstring Id() const;
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> Properties() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IPnpObjectWatcher
-{
-    event_token Added(const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObject> & handler) const;
-    using Added_revoker = event_revoker<IPnpObjectWatcher>;
-    Added_revoker Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObject> & handler) const;
-    void Added(event_token token) const;
-    event_token Updated(const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObjectUpdate> & handler) const;
-    using Updated_revoker = event_revoker<IPnpObjectWatcher>;
-    Updated_revoker Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObjectUpdate> & handler) const;
-    void Updated(event_token token) const;
-    event_token Removed(const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObjectUpdate> & handler) const;
-    using Removed_revoker = event_revoker<IPnpObjectWatcher>;
-    Removed_revoker Removed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::Devices::Enumeration::Pnp::PnpObjectUpdate> & handler) const;
-    void Removed(event_token token) const;
-    event_token EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> & handler) const;
-    using EnumerationCompleted_revoker = event_revoker<IPnpObjectWatcher>;
-    EnumerationCompleted_revoker EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> & handler) const;
-    void EnumerationCompleted(event_token token) const;
-    event_token Stopped(const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> & handler) const;
-    using Stopped_revoker = event_revoker<IPnpObjectWatcher>;
-    Stopped_revoker Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Enumeration::Pnp::PnpObjectWatcher, Windows::IInspectable> & handler) const;
-    void Stopped(event_token token) const;
-    Windows::Devices::Enumeration::DeviceWatcherStatus Status() const;
-    void Start() const;
-    void Stop() const;
-};
-
 struct IPnpObject :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPnpObject>
 {
     IPnpObject(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPnpObject>(m_ptr); }
 };
 
 struct IPnpObjectStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPnpObjectStatics>
 {
     IPnpObjectStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPnpObjectStatics>(m_ptr); }
 };
 
 struct IPnpObjectUpdate :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPnpObjectUpdate>
 {
     IPnpObjectUpdate(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPnpObjectUpdate>(m_ptr); }
 };
 
 struct IPnpObjectWatcher :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IPnpObjectWatcher>
 {
     IPnpObjectWatcher(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IPnpObjectWatcher>(m_ptr); }
 };
 
 }

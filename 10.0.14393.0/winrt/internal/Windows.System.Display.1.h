@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -10,7 +10,7 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::System::Display {
 
-struct __declspec(uuid("e5732044-f49f-4b60-8dd4-5e7e3a632ac0")) __declspec(novtable) IDisplayRequest : Windows::IInspectable
+struct __declspec(uuid("e5732044-f49f-4b60-8dd4-5e7e3a632ac0")) __declspec(novtable) IDisplayRequest : Windows::Foundation::IInspectable
 {
     virtual HRESULT __stdcall abi_RequestActive() = 0;
     virtual HRESULT __stdcall abi_RequestRelease() = 0;
@@ -26,7 +26,12 @@ template <> struct traits<Windows::System::Display::DisplayRequest> { using defa
 
 namespace Windows::System::Display {
 
-template <typename T> struct impl_IDisplayRequest;
+template <typename D>
+struct WINRT_EBO impl_IDisplayRequest
+{
+    void RequestActive() const;
+    void RequestRelease() const;
+};
 
 }
 

@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.System.3.h"
@@ -32,7 +35,7 @@ template <typename O, typename M> ApplicationDataSetVersionHandler::ApplicationD
 
 inline void ApplicationDataSetVersionHandler::operator()(const Windows::Storage::SetVersionRequest & setVersionRequest) const
 {
-    check_hresult((*this)->abi_Invoke(get(setVersionRequest)));
+    check_hresult((*(abi<ApplicationDataSetVersionHandler> **)this)->abi_Invoke(get_abi(setVersionRequest)));
 }
 
 template <typename L> StreamedFileDataRequestedHandler::StreamedFileDataRequestedHandler(L lambda) :
@@ -49,7 +52,7 @@ template <typename O, typename M> StreamedFileDataRequestedHandler::StreamedFile
 
 inline void StreamedFileDataRequestedHandler::operator()(const Windows::Storage::StreamedFileDataRequest & stream) const
 {
-    check_hresult((*this)->abi_Invoke(get(stream)));
+    check_hresult((*(abi<StreamedFileDataRequestedHandler> **)this)->abi_Invoke(get_abi(stream)));
 }
 
 }
@@ -63,7 +66,8 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().Version());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Version());
             return S_OK;
         }
         catch (...)
@@ -72,11 +76,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_SetVersionAsync(uint32_t desiredVersion, abi_arg_in<Windows::Storage::ApplicationDataSetVersionHandler> handler, abi_arg_out<Windows::Foundation::IAsyncAction> setVersionOperation) noexcept override
+    HRESULT __stdcall abi_SetVersionAsync(uint32_t desiredVersion, impl::abi_arg_in<Windows::Storage::ApplicationDataSetVersionHandler> handler, impl::abi_arg_out<Windows::Foundation::IAsyncAction> setVersionOperation) noexcept override
     {
         try
         {
-            *setVersionOperation = detach(this->shim().SetVersionAsync(desiredVersion, *reinterpret_cast<const Windows::Storage::ApplicationDataSetVersionHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *setVersionOperation = detach_abi(this->shim().SetVersionAsync(desiredVersion, *reinterpret_cast<const Windows::Storage::ApplicationDataSetVersionHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -86,11 +91,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_ClearAllAsync(abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
+    HRESULT __stdcall abi_ClearAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
     {
         try
         {
-            *clearOperation = detach(this->shim().ClearAsync());
+            typename D::abi_guard guard(this->shim());
+            *clearOperation = detach_abi(this->shim().ClearAsync());
             return S_OK;
         }
         catch (...)
@@ -100,11 +106,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_ClearAsync(Windows::Storage::ApplicationDataLocality locality, abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
+    HRESULT __stdcall abi_ClearAsync(Windows::Storage::ApplicationDataLocality locality, impl::abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
     {
         try
         {
-            *clearOperation = detach(this->shim().ClearAsync(locality));
+            typename D::abi_guard guard(this->shim());
+            *clearOperation = detach_abi(this->shim().ClearAsync(locality));
             return S_OK;
         }
         catch (...)
@@ -114,11 +121,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_LocalSettings(abi_arg_out<Windows::Storage::IApplicationDataContainer> value) noexcept override
+    HRESULT __stdcall get_LocalSettings(impl::abi_arg_out<Windows::Storage::IApplicationDataContainer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalSettings());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalSettings());
             return S_OK;
         }
         catch (...)
@@ -128,11 +136,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_RoamingSettings(abi_arg_out<Windows::Storage::IApplicationDataContainer> value) noexcept override
+    HRESULT __stdcall get_RoamingSettings(impl::abi_arg_out<Windows::Storage::IApplicationDataContainer> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RoamingSettings());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RoamingSettings());
             return S_OK;
         }
         catch (...)
@@ -142,11 +151,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_LocalFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_LocalFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalFolder());
             return S_OK;
         }
         catch (...)
@@ -156,11 +166,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_RoamingFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_RoamingFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RoamingFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RoamingFolder());
             return S_OK;
         }
         catch (...)
@@ -170,11 +181,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_TemporaryFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_TemporaryFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TemporaryFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TemporaryFolder());
             return S_OK;
         }
         catch (...)
@@ -184,11 +196,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall add_DataChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_DataChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().DataChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().DataChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -201,6 +214,7 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DataChanged(token);
             return S_OK;
         }
@@ -214,6 +228,7 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().SignalDataChanged();
             return S_OK;
         }
@@ -227,7 +242,8 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
     {
         try
         {
-            *value = detach(this->shim().RoamingStorageQuota());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RoamingStorageQuota());
             return S_OK;
         }
         catch (...)
@@ -240,11 +256,12 @@ struct produce<D, Windows::Storage::IApplicationData> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Storage::IApplicationData2> : produce_base<D, Windows::Storage::IApplicationData2>
 {
-    HRESULT __stdcall get_LocalCacheFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_LocalCacheFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LocalCacheFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LocalCacheFolder());
             return S_OK;
         }
         catch (...)
@@ -258,11 +275,12 @@ struct produce<D, Windows::Storage::IApplicationData2> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::Storage::IApplicationData3> : produce_base<D, Windows::Storage::IApplicationData3>
 {
-    HRESULT __stdcall abi_GetPublisherCacheFolder(abi_arg_in<hstring> folderName, abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall abi_GetPublisherCacheFolder(impl::abi_arg_in<hstring> folderName, impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetPublisherCacheFolder(*reinterpret_cast<const hstring *>(&folderName)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetPublisherCacheFolder(*reinterpret_cast<const hstring *>(&folderName)));
             return S_OK;
         }
         catch (...)
@@ -272,11 +290,12 @@ struct produce<D, Windows::Storage::IApplicationData3> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall abi_ClearPublisherCacheFolderAsync(abi_arg_in<hstring> folderName, abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
+    HRESULT __stdcall abi_ClearPublisherCacheFolderAsync(impl::abi_arg_in<hstring> folderName, impl::abi_arg_out<Windows::Foundation::IAsyncAction> clearOperation) noexcept override
     {
         try
         {
-            *clearOperation = detach(this->shim().ClearPublisherCacheFolderAsync(*reinterpret_cast<const hstring *>(&folderName)));
+            typename D::abi_guard guard(this->shim());
+            *clearOperation = detach_abi(this->shim().ClearPublisherCacheFolderAsync(*reinterpret_cast<const hstring *>(&folderName)));
             return S_OK;
         }
         catch (...)
@@ -286,11 +305,12 @@ struct produce<D, Windows::Storage::IApplicationData3> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_SharedLocalFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_SharedLocalFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SharedLocalFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SharedLocalFolder());
             return S_OK;
         }
         catch (...)
@@ -304,11 +324,12 @@ struct produce<D, Windows::Storage::IApplicationData3> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D, Windows::Storage::IApplicationDataContainer>
 {
-    HRESULT __stdcall get_Name(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Name());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Name());
             return S_OK;
         }
         catch (...)
@@ -322,7 +343,8 @@ struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D,
     {
         try
         {
-            *value = detach(this->shim().Locality());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Locality());
             return S_OK;
         }
         catch (...)
@@ -331,25 +353,12 @@ struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_Values(abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_Values(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Values());
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall get_Containers(abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::ApplicationDataContainer>> value) noexcept override
-    {
-        try
-        {
-            *value = detach(this->shim().Containers());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Values());
             return S_OK;
         }
         catch (...)
@@ -359,11 +368,27 @@ struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_CreateContainer(abi_arg_in<hstring> name, Windows::Storage::ApplicationDataCreateDisposition disposition, abi_arg_out<Windows::Storage::IApplicationDataContainer> container) noexcept override
+    HRESULT __stdcall get_Containers(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::ApplicationDataContainer>> value) noexcept override
     {
         try
         {
-            *container = detach(this->shim().CreateContainer(*reinterpret_cast<const hstring *>(&name), disposition));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Containers());
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall abi_CreateContainer(impl::abi_arg_in<hstring> name, Windows::Storage::ApplicationDataCreateDisposition disposition, impl::abi_arg_out<Windows::Storage::IApplicationDataContainer> container) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *container = detach_abi(this->shim().CreateContainer(*reinterpret_cast<const hstring *>(&name), disposition));
             return S_OK;
         }
         catch (...)
@@ -373,10 +398,11 @@ struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_DeleteContainer(abi_arg_in<hstring> name) noexcept override
+    HRESULT __stdcall abi_DeleteContainer(impl::abi_arg_in<hstring> name) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DeleteContainer(*reinterpret_cast<const hstring *>(&name));
             return S_OK;
         }
@@ -390,11 +416,12 @@ struct produce<D, Windows::Storage::IApplicationDataContainer> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::IApplicationDataStatics> : produce_base<D, Windows::Storage::IApplicationDataStatics>
 {
-    HRESULT __stdcall get_Current(abi_arg_out<Windows::Storage::IApplicationData> value) noexcept override
+    HRESULT __stdcall get_Current(impl::abi_arg_out<Windows::Storage::IApplicationData> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Current());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Current());
             return S_OK;
         }
         catch (...)
@@ -408,11 +435,12 @@ struct produce<D, Windows::Storage::IApplicationDataStatics> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::IApplicationDataStatics2> : produce_base<D, Windows::Storage::IApplicationDataStatics2>
 {
-    HRESULT __stdcall abi_GetForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::ApplicationData>> getForUserOperation) noexcept override
+    HRESULT __stdcall abi_GetForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::ApplicationData>> getForUserOperation) noexcept override
     {
         try
         {
-            *getForUserOperation = detach(this->shim().GetForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user)));
+            typename D::abi_guard guard(this->shim());
+            *getForUserOperation = detach_abi(this->shim().GetForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user)));
             return S_OK;
         }
         catch (...)
@@ -426,10 +454,11 @@ struct produce<D, Windows::Storage::IApplicationDataStatics2> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Storage::ICachedFileManagerStatics> : produce_base<D, Windows::Storage::ICachedFileManagerStatics>
 {
-    HRESULT __stdcall abi_DeferUpdates(abi_arg_in<Windows::Storage::IStorageFile> file) noexcept override
+    HRESULT __stdcall abi_DeferUpdates(impl::abi_arg_in<Windows::Storage::IStorageFile> file) noexcept override
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DeferUpdates(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file));
             return S_OK;
         }
@@ -439,11 +468,12 @@ struct produce<D, Windows::Storage::ICachedFileManagerStatics> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_CompleteUpdatesAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::FileUpdateStatus>> operation) noexcept override
+    HRESULT __stdcall abi_CompleteUpdatesAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::FileUpdateStatus>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CompleteUpdatesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CompleteUpdatesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -457,11 +487,12 @@ struct produce<D, Windows::Storage::ICachedFileManagerStatics> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::IDownloadsFolderStatics> : produce_base<D, Windows::Storage::IDownloadsFolderStatics>
 {
-    HRESULT __stdcall abi_CreateFileAsync(abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileAsync(impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -471,11 +502,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderAsync(abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderAsync(impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -485,11 +517,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_CreateFileWithCollisionOptionAsync(abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileWithCollisionOptionAsync(impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
             return S_OK;
         }
         catch (...)
@@ -499,11 +532,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderWithCollisionOptionAsync(abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderWithCollisionOptionAsync(impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
             return S_OK;
         }
         catch (...)
@@ -517,11 +551,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::IDownloadsFolderStatics2> : produce_base<D, Windows::Storage::IDownloadsFolderStatics2>
 {
-    HRESULT __stdcall abi_CreateFileForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -531,11 +566,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics2> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderForUserAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -545,11 +581,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics2> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_CreateFileForUserWithCollisionOptionAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileForUserWithCollisionOptionAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName), option));
             return S_OK;
         }
         catch (...)
@@ -559,11 +596,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics2> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderForUserWithCollisionOptionAsync(abi_arg_in<Windows::System::IUser> user, abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderForUserWithCollisionOptionAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&desiredName), option));
             return S_OK;
         }
         catch (...)
@@ -577,11 +615,12 @@ struct produce<D, Windows::Storage::IDownloadsFolderStatics2> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::Storage::IFileIOStatics>
 {
-    HRESULT __stdcall abi_ReadTextAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
+    HRESULT __stdcall abi_ReadTextAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().ReadTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().ReadTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -591,11 +630,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadTextWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
+    HRESULT __stdcall abi_ReadTextWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().ReadTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().ReadTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), encoding));
             return S_OK;
         }
         catch (...)
@@ -605,11 +645,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteTextAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<hstring> contents, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_WriteTextAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> contents, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().WriteTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().WriteTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents)));
             return S_OK;
         }
         catch (...)
@@ -619,11 +660,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteTextWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_WriteTextWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().WriteTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().WriteTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents), encoding));
             return S_OK;
         }
         catch (...)
@@ -633,11 +675,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendTextAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<hstring> contents, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_AppendTextAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> contents, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().AppendTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().AppendTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents)));
             return S_OK;
         }
         catch (...)
@@ -647,11 +690,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendTextWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_AppendTextWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().AppendTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().AppendTextAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const hstring *>(&contents), encoding));
             return S_OK;
         }
         catch (...)
@@ -661,11 +705,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadLinesAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
+    HRESULT __stdcall abi_ReadLinesAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
     {
         try
         {
-            *linesOperation = detach(this->shim().ReadLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *linesOperation = detach_abi(this->shim().ReadLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -675,11 +720,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadLinesWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
+    HRESULT __stdcall abi_ReadLinesWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
     {
         try
         {
-            *linesOperation = detach(this->shim().ReadLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), encoding));
+            typename D::abi_guard guard(this->shim());
+            *linesOperation = detach_abi(this->shim().ReadLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), encoding));
             return S_OK;
         }
         catch (...)
@@ -689,11 +735,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteLinesAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteLinesAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
             return S_OK;
         }
         catch (...)
@@ -703,11 +750,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteLinesWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteLinesWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
             return S_OK;
         }
         catch (...)
@@ -717,11 +765,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendLinesAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AppendLinesAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AppendLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AppendLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
             return S_OK;
         }
         catch (...)
@@ -731,11 +780,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendLinesWithEncodingAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AppendLinesWithEncodingAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AppendLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AppendLinesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
             return S_OK;
         }
         catch (...)
@@ -745,11 +795,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadBufferAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> operation) noexcept override
+    HRESULT __stdcall abi_ReadBufferAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReadBufferAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReadBufferAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
             return S_OK;
         }
         catch (...)
@@ -759,11 +810,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteBufferAsync(abi_arg_in<Windows::Storage::IStorageFile> file, abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteBufferAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteBufferAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteBufferAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
             return S_OK;
         }
         catch (...)
@@ -773,11 +825,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteBytesAsync(abi_arg_in<Windows::Storage::IStorageFile> file, uint32_t __bufferSize, abi_arg_in<uint8_t> * buffer, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteBytesAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, uint32_t __bufferSize, impl::abi_arg_in<uint8_t> * buffer, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteBytesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), array_ref<const uint8_t>(buffer, buffer + __bufferSize)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteBytesAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), array_view<const uint8_t>(buffer, buffer + __bufferSize)));
             return S_OK;
         }
         catch (...)
@@ -791,11 +844,12 @@ struct produce<D, Windows::Storage::IFileIOStatics> : produce_base<D, Windows::S
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersCameraRollStatics> : produce_base<D, Windows::Storage::IKnownFoldersCameraRollStatics>
 {
-    HRESULT __stdcall get_CameraRoll(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_CameraRoll(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CameraRoll());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CameraRoll());
             return S_OK;
         }
         catch (...)
@@ -809,11 +863,12 @@ struct produce<D, Windows::Storage::IKnownFoldersCameraRollStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersPlaylistsStatics> : produce_base<D, Windows::Storage::IKnownFoldersPlaylistsStatics>
 {
-    HRESULT __stdcall get_Playlists(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_Playlists(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Playlists());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Playlists());
             return S_OK;
         }
         catch (...)
@@ -827,11 +882,12 @@ struct produce<D, Windows::Storage::IKnownFoldersPlaylistsStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersSavedPicturesStatics> : produce_base<D, Windows::Storage::IKnownFoldersSavedPicturesStatics>
 {
-    HRESULT __stdcall get_SavedPictures(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_SavedPictures(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SavedPictures());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SavedPictures());
             return S_OK;
         }
         catch (...)
@@ -845,11 +901,12 @@ struct produce<D, Windows::Storage::IKnownFoldersSavedPicturesStatics> : produce
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Windows::Storage::IKnownFoldersStatics>
 {
-    HRESULT __stdcall get_MusicLibrary(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_MusicLibrary(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MusicLibrary());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MusicLibrary());
             return S_OK;
         }
         catch (...)
@@ -859,11 +916,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_PicturesLibrary(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_PicturesLibrary(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PicturesLibrary());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PicturesLibrary());
             return S_OK;
         }
         catch (...)
@@ -873,11 +931,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_VideosLibrary(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_VideosLibrary(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VideosLibrary());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VideosLibrary());
             return S_OK;
         }
         catch (...)
@@ -887,11 +946,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_DocumentsLibrary(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_DocumentsLibrary(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DocumentsLibrary());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DocumentsLibrary());
             return S_OK;
         }
         catch (...)
@@ -901,11 +961,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_HomeGroup(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_HomeGroup(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HomeGroup());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HomeGroup());
             return S_OK;
         }
         catch (...)
@@ -915,11 +976,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_RemovableDevices(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_RemovableDevices(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RemovableDevices());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RemovableDevices());
             return S_OK;
         }
         catch (...)
@@ -929,11 +991,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_MediaServerDevices(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_MediaServerDevices(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().MediaServerDevices());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().MediaServerDevices());
             return S_OK;
         }
         catch (...)
@@ -947,11 +1010,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersStatics2> : produce_base<D, Windows::Storage::IKnownFoldersStatics2>
 {
-    HRESULT __stdcall get_Objects3D(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_Objects3D(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Objects3D());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Objects3D());
             return S_OK;
         }
         catch (...)
@@ -961,11 +1025,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_AppCaptures(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_AppCaptures(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AppCaptures());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AppCaptures());
             return S_OK;
         }
         catch (...)
@@ -975,11 +1040,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_RecordedCalls(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_RecordedCalls(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().RecordedCalls());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().RecordedCalls());
             return S_OK;
         }
         catch (...)
@@ -993,11 +1059,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics2> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::IKnownFoldersStatics3> : produce_base<D, Windows::Storage::IKnownFoldersStatics3>
 {
-    HRESULT __stdcall abi_GetFolderForUserAsync(abi_arg_in<Windows::System::IUser> user, Windows::Storage::KnownFolderId folderId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_GetFolderForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, Windows::Storage::KnownFolderId folderId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), folderId));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFolderForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), folderId));
             return S_OK;
         }
         catch (...)
@@ -1011,11 +1078,12 @@ struct produce<D, Windows::Storage::IKnownFoldersStatics3> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::Storage::IPathIOStatics>
 {
-    HRESULT __stdcall abi_ReadTextAsync(abi_arg_in<hstring> absolutePath, abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
+    HRESULT __stdcall abi_ReadTextAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().ReadTextAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().ReadTextAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
             return S_OK;
         }
         catch (...)
@@ -1025,11 +1093,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadTextWithEncodingAsync(abi_arg_in<hstring> absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
+    HRESULT __stdcall abi_ReadTextWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<hstring>> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().ReadTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().ReadTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), encoding));
             return S_OK;
         }
         catch (...)
@@ -1039,11 +1108,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteTextAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<hstring> contents, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_WriteTextAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<hstring> contents, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().WriteTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().WriteTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents)));
             return S_OK;
         }
         catch (...)
@@ -1053,11 +1123,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteTextWithEncodingAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_WriteTextWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().WriteTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().WriteTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents), encoding));
             return S_OK;
         }
         catch (...)
@@ -1067,11 +1138,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendTextAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<hstring> contents, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_AppendTextAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<hstring> contents, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().AppendTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents)));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().AppendTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents)));
             return S_OK;
         }
         catch (...)
@@ -1081,11 +1153,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendTextWithEncodingAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
+    HRESULT __stdcall abi_AppendTextWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<hstring> contents, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> textOperation) noexcept override
     {
         try
         {
-            *textOperation = detach(this->shim().AppendTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents), encoding));
+            typename D::abi_guard guard(this->shim());
+            *textOperation = detach_abi(this->shim().AppendTextAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const hstring *>(&contents), encoding));
             return S_OK;
         }
         catch (...)
@@ -1095,11 +1168,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadLinesAsync(abi_arg_in<hstring> absolutePath, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
+    HRESULT __stdcall abi_ReadLinesAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
     {
         try
         {
-            *linesOperation = detach(this->shim().ReadLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
+            typename D::abi_guard guard(this->shim());
+            *linesOperation = detach_abi(this->shim().ReadLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
             return S_OK;
         }
         catch (...)
@@ -1109,11 +1183,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadLinesWithEncodingAsync(abi_arg_in<hstring> absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
+    HRESULT __stdcall abi_ReadLinesWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>>> linesOperation) noexcept override
     {
         try
         {
-            *linesOperation = detach(this->shim().ReadLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), encoding));
+            typename D::abi_guard guard(this->shim());
+            *linesOperation = detach_abi(this->shim().ReadLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), encoding));
             return S_OK;
         }
         catch (...)
@@ -1123,11 +1198,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteLinesAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteLinesAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
             return S_OK;
         }
         catch (...)
@@ -1137,11 +1213,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteLinesWithEncodingAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteLinesWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
             return S_OK;
         }
         catch (...)
@@ -1151,11 +1228,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendLinesAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AppendLinesAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AppendLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AppendLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines)));
             return S_OK;
         }
         catch (...)
@@ -1165,11 +1243,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_AppendLinesWithEncodingAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AppendLinesWithEncodingAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> lines, Windows::Storage::Streams::UnicodeEncoding encoding, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AppendLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AppendLinesAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&lines), encoding));
             return S_OK;
         }
         catch (...)
@@ -1179,11 +1258,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_ReadBufferAsync(abi_arg_in<hstring> absolutePath, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> operation) noexcept override
+    HRESULT __stdcall abi_ReadBufferAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReadBufferAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReadBufferAsync(*reinterpret_cast<const hstring *>(&absolutePath)));
             return S_OK;
         }
         catch (...)
@@ -1193,11 +1273,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteBufferAsync(abi_arg_in<hstring> absolutePath, abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteBufferAsync(impl::abi_arg_in<hstring> absolutePath, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> buffer, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteBufferAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteBufferAsync(*reinterpret_cast<const hstring *>(&absolutePath), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&buffer)));
             return S_OK;
         }
         catch (...)
@@ -1207,11 +1288,12 @@ struct produce<D, Windows::Storage::IPathIOStatics> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_WriteBytesAsync(abi_arg_in<hstring> absolutePath, uint32_t __bufferSize, abi_arg_in<uint8_t> * buffer, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_WriteBytesAsync(impl::abi_arg_in<hstring> absolutePath, uint32_t __bufferSize, impl::abi_arg_in<uint8_t> * buffer, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().WriteBytesAsync(*reinterpret_cast<const hstring *>(&absolutePath), array_ref<const uint8_t>(buffer, buffer + __bufferSize)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().WriteBytesAsync(*reinterpret_cast<const hstring *>(&absolutePath), array_view<const uint8_t>(buffer, buffer + __bufferSize)));
             return S_OK;
         }
         catch (...)
@@ -1229,6 +1311,7 @@ struct produce<D, Windows::Storage::ISetVersionDeferral> : produce_base<D, Windo
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Complete();
             return S_OK;
         }
@@ -1246,7 +1329,8 @@ struct produce<D, Windows::Storage::ISetVersionRequest> : produce_base<D, Window
     {
         try
         {
-            *currentVersion = detach(this->shim().CurrentVersion());
+            typename D::abi_guard guard(this->shim());
+            *currentVersion = detach_abi(this->shim().CurrentVersion());
             return S_OK;
         }
         catch (...)
@@ -1259,7 +1343,8 @@ struct produce<D, Windows::Storage::ISetVersionRequest> : produce_base<D, Window
     {
         try
         {
-            *desiredVersion = detach(this->shim().DesiredVersion());
+            typename D::abi_guard guard(this->shim());
+            *desiredVersion = detach_abi(this->shim().DesiredVersion());
             return S_OK;
         }
         catch (...)
@@ -1268,11 +1353,12 @@ struct produce<D, Windows::Storage::ISetVersionRequest> : produce_base<D, Window
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(abi_arg_out<Windows::Storage::ISetVersionDeferral> deferral) noexcept override
+    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Storage::ISetVersionDeferral> deferral) noexcept override
     {
         try
         {
-            *deferral = detach(this->shim().GetDeferral());
+            typename D::abi_guard guard(this->shim());
+            *deferral = detach_abi(this->shim().GetDeferral());
             return S_OK;
         }
         catch (...)
@@ -1286,11 +1372,12 @@ struct produce<D, Windows::Storage::ISetVersionRequest> : produce_base<D, Window
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Storage::IStorageFile>
 {
-    HRESULT __stdcall get_FileType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FileType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FileType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FileType());
             return S_OK;
         }
         catch (...)
@@ -1300,11 +1387,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall get_ContentType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ContentType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ContentType());
             return S_OK;
         }
         catch (...)
@@ -1314,11 +1402,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_OpenAsync(Windows::Storage::FileAccessMode accessMode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> operation) noexcept override
+    HRESULT __stdcall abi_OpenAsync(Windows::Storage::FileAccessMode accessMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenAsync(accessMode));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenAsync(accessMode));
             return S_OK;
         }
         catch (...)
@@ -1328,11 +1417,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_OpenTransactedWriteAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction>> operation) noexcept override
+    HRESULT __stdcall abi_OpenTransactedWriteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenTransactedWriteAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenTransactedWriteAsync());
             return S_OK;
         }
         catch (...)
@@ -1342,11 +1432,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_CopyOverloadDefaultNameAndOptions(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CopyOverloadDefaultNameAndOptions(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder)));
             return S_OK;
         }
         catch (...)
@@ -1356,11 +1447,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_CopyOverloadDefaultOptions(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_in<hstring> desiredNewName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CopyOverloadDefaultOptions(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_in<hstring> desiredNewName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName)));
             return S_OK;
         }
         catch (...)
@@ -1370,11 +1462,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_CopyOverload(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_in<hstring> desiredNewName, Windows::Storage::NameCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CopyOverload(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_in<hstring> desiredNewName, Windows::Storage::NameCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName), option));
             return S_OK;
         }
         catch (...)
@@ -1384,11 +1477,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_CopyAndReplaceAsync(abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_CopyAndReplaceAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CopyAndReplaceAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CopyAndReplaceAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace)));
             return S_OK;
         }
         catch (...)
@@ -1398,11 +1492,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_MoveOverloadDefaultNameAndOptions(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_MoveOverloadDefaultNameAndOptions(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder)));
             return S_OK;
         }
         catch (...)
@@ -1412,11 +1507,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_MoveOverloadDefaultOptions(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_in<hstring> desiredNewName, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_MoveOverloadDefaultOptions(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_in<hstring> desiredNewName, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName)));
             return S_OK;
         }
         catch (...)
@@ -1426,11 +1522,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_MoveOverload(abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, abi_arg_in<hstring> desiredNewName, Windows::Storage::NameCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_MoveOverload(impl::abi_arg_in<Windows::Storage::IStorageFolder> destinationFolder, impl::abi_arg_in<hstring> desiredNewName, Windows::Storage::NameCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().MoveAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&destinationFolder), *reinterpret_cast<const hstring *>(&desiredNewName), option));
             return S_OK;
         }
         catch (...)
@@ -1440,11 +1537,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_MoveAndReplaceAsync(abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_MoveAndReplaceAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().MoveAndReplaceAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().MoveAndReplaceAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace)));
             return S_OK;
         }
         catch (...)
@@ -1458,11 +1556,12 @@ struct produce<D, Windows::Storage::IStorageFile> : produce_base<D, Windows::Sto
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFile2> : produce_base<D, Windows::Storage::IStorageFile2>
 {
-    HRESULT __stdcall abi_OpenWithOptionsAsync(Windows::Storage::FileAccessMode accessMode, Windows::Storage::StorageOpenOptions options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> operation) noexcept override
+    HRESULT __stdcall abi_OpenWithOptionsAsync(Windows::Storage::FileAccessMode accessMode, Windows::Storage::StorageOpenOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenAsync(accessMode, options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenAsync(accessMode, options));
             return S_OK;
         }
         catch (...)
@@ -1472,11 +1571,12 @@ struct produce<D, Windows::Storage::IStorageFile2> : produce_base<D, Windows::St
         }
     }
 
-    HRESULT __stdcall abi_OpenTransactedWriteWithOptionsAsync(Windows::Storage::StorageOpenOptions options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction>> operation) noexcept override
+    HRESULT __stdcall abi_OpenTransactedWriteWithOptionsAsync(Windows::Storage::StorageOpenOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().OpenTransactedWriteAsync(options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().OpenTransactedWriteAsync(options));
             return S_OK;
         }
         catch (...)
@@ -1494,7 +1594,8 @@ struct produce<D, Windows::Storage::IStorageFilePropertiesWithAvailability> : pr
     {
         try
         {
-            *value = detach(this->shim().IsAvailable());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsAvailable());
             return S_OK;
         }
         catch (...)
@@ -1507,11 +1608,12 @@ struct produce<D, Windows::Storage::IStorageFilePropertiesWithAvailability> : pr
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windows::Storage::IStorageFileStatics>
 {
-    HRESULT __stdcall abi_GetFileFromPathAsync(abi_arg_in<hstring> path, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_GetFileFromPathAsync(impl::abi_arg_in<hstring> path, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFileFromPathAsync(*reinterpret_cast<const hstring *>(&path)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFileFromPathAsync(*reinterpret_cast<const hstring *>(&path)));
             return S_OK;
         }
         catch (...)
@@ -1521,11 +1623,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_GetFileFromApplicationUriAsync(abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_GetFileFromApplicationUriAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFileFromApplicationUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFileFromApplicationUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -1535,11 +1638,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_CreateStreamedFileAsync(abi_arg_in<hstring> displayNameWithExtension, abi_arg_in<Windows::Storage::StreamedFileDataRequestedHandler> dataRequested, abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateStreamedFileAsync(impl::abi_arg_in<hstring> displayNameWithExtension, impl::abi_arg_in<Windows::Storage::StreamedFileDataRequestedHandler> dataRequested, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateStreamedFileAsync(*reinterpret_cast<const hstring *>(&displayNameWithExtension), *reinterpret_cast<const Windows::Storage::StreamedFileDataRequestedHandler *>(&dataRequested), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateStreamedFileAsync(*reinterpret_cast<const hstring *>(&displayNameWithExtension), *reinterpret_cast<const Windows::Storage::StreamedFileDataRequestedHandler *>(&dataRequested), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
             return S_OK;
         }
         catch (...)
@@ -1549,11 +1653,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_ReplaceWithStreamedFileAsync(abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, abi_arg_in<Windows::Storage::StreamedFileDataRequestedHandler> dataRequested, abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_ReplaceWithStreamedFileAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, impl::abi_arg_in<Windows::Storage::StreamedFileDataRequestedHandler> dataRequested, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReplaceWithStreamedFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace), *reinterpret_cast<const Windows::Storage::StreamedFileDataRequestedHandler *>(&dataRequested), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReplaceWithStreamedFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace), *reinterpret_cast<const Windows::Storage::StreamedFileDataRequestedHandler *>(&dataRequested), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
             return S_OK;
         }
         catch (...)
@@ -1563,11 +1668,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_CreateStreamedFileFromUriAsync(abi_arg_in<hstring> displayNameWithExtension, abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateStreamedFileFromUriAsync(impl::abi_arg_in<hstring> displayNameWithExtension, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateStreamedFileFromUriAsync(*reinterpret_cast<const hstring *>(&displayNameWithExtension), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateStreamedFileFromUriAsync(*reinterpret_cast<const hstring *>(&displayNameWithExtension), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
             return S_OK;
         }
         catch (...)
@@ -1577,11 +1683,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_ReplaceWithStreamedFileFromUriAsync(abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_ReplaceWithStreamedFileFromUriAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> fileToReplace, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> thumbnail, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReplaceWithStreamedFileFromUriAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReplaceWithStreamedFileFromUriAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&fileToReplace), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&thumbnail)));
             return S_OK;
         }
         catch (...)
@@ -1595,11 +1702,12 @@ struct produce<D, Windows::Storage::IStorageFileStatics> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::Storage::IStorageFolder>
 {
-    HRESULT __stdcall abi_CreateFileAsyncOverloadDefaultOptions(abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileAsyncOverloadDefaultOptions(impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -1609,11 +1717,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_CreateFileAsync(abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFileAsync(impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName), options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFileAsync(*reinterpret_cast<const hstring *>(&desiredName), options));
             return S_OK;
         }
         catch (...)
@@ -1623,11 +1732,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderAsyncOverloadDefaultOptions(abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderAsyncOverloadDefaultOptions(impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -1637,11 +1747,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderAsync(abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_CreateFolderAsync(impl::abi_arg_in<hstring> desiredName, Windows::Storage::CreationCollisionOption options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName), options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&desiredName), options));
             return S_OK;
         }
         catch (...)
@@ -1651,11 +1762,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetFileAsync(abi_arg_in<hstring> name, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
+    HRESULT __stdcall abi_GetFileAsync(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFileAsync(*reinterpret_cast<const hstring *>(&name)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFileAsync(*reinterpret_cast<const hstring *>(&name)));
             return S_OK;
         }
         catch (...)
@@ -1665,11 +1777,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetFolderAsync(abi_arg_in<hstring> name, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_GetFolderAsync(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFolderAsync(*reinterpret_cast<const hstring *>(&name)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFolderAsync(*reinterpret_cast<const hstring *>(&name)));
             return S_OK;
         }
         catch (...)
@@ -1679,11 +1792,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetItemAsync(abi_arg_in<hstring> name, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemAsync(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemAsync(*reinterpret_cast<const hstring *>(&name)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemAsync(*reinterpret_cast<const hstring *>(&name)));
             return S_OK;
         }
         catch (...)
@@ -1693,11 +1807,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsyncOverloadDefaultOptionsStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFilesAsyncOverloadDefaultOptionsStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFilesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFilesAsync());
             return S_OK;
         }
         catch (...)
@@ -1707,11 +1822,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsyncOverloadDefaultOptionsStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
+    HRESULT __stdcall abi_GetFoldersAsyncOverloadDefaultOptionsStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFoldersAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFoldersAsync());
             return S_OK;
         }
         catch (...)
@@ -1721,11 +1837,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
         }
     }
 
-    HRESULT __stdcall abi_GetItemsAsyncOverloadDefaultStartAndCount(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
+    HRESULT __stdcall abi_GetItemsAsyncOverloadDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetItemsAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetItemsAsync());
             return S_OK;
         }
         catch (...)
@@ -1739,11 +1856,12 @@ struct produce<D, Windows::Storage::IStorageFolder> : produce_base<D, Windows::S
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFolder2> : produce_base<D, Windows::Storage::IStorageFolder2>
 {
-    HRESULT __stdcall abi_TryGetItemAsync(abi_arg_in<hstring> name, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
+    HRESULT __stdcall abi_TryGetItemAsync(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().TryGetItemAsync(*reinterpret_cast<const hstring *>(&name)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().TryGetItemAsync(*reinterpret_cast<const hstring *>(&name)));
             return S_OK;
         }
         catch (...)
@@ -1757,11 +1875,12 @@ struct produce<D, Windows::Storage::IStorageFolder2> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Storage::IStorageFolderStatics> : produce_base<D, Windows::Storage::IStorageFolderStatics>
 {
-    HRESULT __stdcall abi_GetFolderFromPathAsync(abi_arg_in<hstring> path, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_GetFolderFromPathAsync(impl::abi_arg_in<hstring> path, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetFolderFromPathAsync(*reinterpret_cast<const hstring *>(&path)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetFolderFromPathAsync(*reinterpret_cast<const hstring *>(&path)));
             return S_OK;
         }
         catch (...)
@@ -1775,11 +1894,12 @@ struct produce<D, Windows::Storage::IStorageFolderStatics> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Storage::IStorageItem>
 {
-    HRESULT __stdcall abi_RenameAsyncOverloadDefaultOptions(abi_arg_in<hstring> desiredName, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_RenameAsyncOverloadDefaultOptions(impl::abi_arg_in<hstring> desiredName, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RenameAsync(*reinterpret_cast<const hstring *>(&desiredName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RenameAsync(*reinterpret_cast<const hstring *>(&desiredName)));
             return S_OK;
         }
         catch (...)
@@ -1789,11 +1909,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_RenameAsync(abi_arg_in<hstring> desiredName, Windows::Storage::NameCollisionOption option, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_RenameAsync(impl::abi_arg_in<hstring> desiredName, Windows::Storage::NameCollisionOption option, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RenameAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RenameAsync(*reinterpret_cast<const hstring *>(&desiredName), option));
             return S_OK;
         }
         catch (...)
@@ -1803,11 +1924,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsyncOverloadDefaultOptions(abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteAsyncOverloadDefaultOptions(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteAsync());
             return S_OK;
         }
         catch (...)
@@ -1817,11 +1939,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(Windows::Storage::StorageDeleteOption option, abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_DeleteAsync(Windows::Storage::StorageDeleteOption option, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().DeleteAsync(option));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().DeleteAsync(option));
             return S_OK;
         }
         catch (...)
@@ -1831,11 +1954,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall abi_GetBasicPropertiesAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::BasicProperties>> operation) noexcept override
+    HRESULT __stdcall abi_GetBasicPropertiesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::BasicProperties>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetBasicPropertiesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetBasicPropertiesAsync());
             return S_OK;
         }
         catch (...)
@@ -1845,11 +1969,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall get_Name(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Name());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Name());
             return S_OK;
         }
         catch (...)
@@ -1859,11 +1984,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall get_Path(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Path(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Path());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Path());
             return S_OK;
         }
         catch (...)
@@ -1877,7 +2003,8 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
     {
         try
         {
-            *value = detach(this->shim().Attributes());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Attributes());
             return S_OK;
         }
         catch (...)
@@ -1886,11 +2013,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
         }
     }
 
-    HRESULT __stdcall get_DateCreated(abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_DateCreated(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DateCreated());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DateCreated());
             return S_OK;
         }
         catch (...)
@@ -1903,7 +2031,8 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
     {
         try
         {
-            *value = detach(this->shim().IsOfType(type));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsOfType(type));
             return S_OK;
         }
         catch (...)
@@ -1916,11 +2045,12 @@ struct produce<D, Windows::Storage::IStorageItem> : produce_base<D, Windows::Sto
 template <typename D>
 struct produce<D, Windows::Storage::IStorageItem2> : produce_base<D, Windows::Storage::IStorageItem2>
 {
-    HRESULT __stdcall abi_GetParentAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_GetParentAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetParentAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetParentAsync());
             return S_OK;
         }
         catch (...)
@@ -1930,11 +2060,12 @@ struct produce<D, Windows::Storage::IStorageItem2> : produce_base<D, Windows::St
         }
     }
 
-    HRESULT __stdcall abi_IsEqual(abi_arg_in<Windows::Storage::IStorageItem> item, bool * value) noexcept override
+    HRESULT __stdcall abi_IsEqual(impl::abi_arg_in<Windows::Storage::IStorageItem> item, bool * value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().IsEqual(*reinterpret_cast<const Windows::Storage::IStorageItem *>(&item)));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsEqual(*reinterpret_cast<const Windows::Storage::IStorageItem *>(&item)));
             return S_OK;
         }
         catch (...)
@@ -1947,11 +2078,12 @@ struct produce<D, Windows::Storage::IStorageItem2> : produce_base<D, Windows::St
 template <typename D>
 struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Windows::Storage::IStorageItemProperties>
 {
-    HRESULT __stdcall abi_GetThumbnailAsyncOverloadDefaultSizeDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetThumbnailAsyncOverloadDefaultSizeDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetThumbnailAsync(mode));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetThumbnailAsync(mode));
             return S_OK;
         }
         catch (...)
@@ -1961,11 +2093,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetThumbnailAsyncOverloadDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetThumbnailAsyncOverloadDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetThumbnailAsync(mode, requestedSize));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetThumbnailAsync(mode, requestedSize));
             return S_OK;
         }
         catch (...)
@@ -1975,11 +2108,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetThumbnailAsync(mode, requestedSize, options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetThumbnailAsync(mode, requestedSize, options));
             return S_OK;
         }
         catch (...)
@@ -1989,11 +2123,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -2003,11 +2138,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DisplayType(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayType(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayType());
             return S_OK;
         }
         catch (...)
@@ -2017,11 +2153,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_FolderRelativeId(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FolderRelativeId(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FolderRelativeId());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FolderRelativeId());
             return S_OK;
         }
         catch (...)
@@ -2031,11 +2168,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Storage::FileProperties::IStorageItemContentProperties> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Storage::FileProperties::IStorageItemContentProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -2049,11 +2187,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::IStorageItemProperties2> : produce_base<D, Windows::Storage::IStorageItemProperties2>
 {
-    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetScaledImageAsThumbnailAsync(mode));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetScaledImageAsThumbnailAsync(mode));
             return S_OK;
         }
         catch (...)
@@ -2063,11 +2202,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetScaledImageAsThumbnailAsync(mode, requestedSize));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetScaledImageAsThumbnailAsync(mode, requestedSize));
             return S_OK;
         }
         catch (...)
@@ -2077,11 +2217,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
+    HRESULT __stdcall abi_GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetScaledImageAsThumbnailAsync(mode, requestedSize, options));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetScaledImageAsThumbnailAsync(mode, requestedSize, options));
             return S_OK;
         }
         catch (...)
@@ -2095,11 +2236,12 @@ struct produce<D, Windows::Storage::IStorageItemProperties2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::IStorageItemPropertiesWithProvider> : produce_base<D, Windows::Storage::IStorageItemPropertiesWithProvider>
 {
-    HRESULT __stdcall get_Provider(abi_arg_out<Windows::Storage::IStorageProvider> value) noexcept override
+    HRESULT __stdcall get_Provider(impl::abi_arg_out<Windows::Storage::IStorageProvider> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Provider());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Provider());
             return S_OK;
         }
         catch (...)
@@ -2113,11 +2255,12 @@ struct produce<D, Windows::Storage::IStorageItemPropertiesWithProvider> : produc
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::Storage::IStorageLibrary>
 {
-    HRESULT __stdcall abi_RequestAddFolderAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
+    HRESULT __stdcall abi_RequestAddFolderAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RequestAddFolderAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RequestAddFolderAsync());
             return S_OK;
         }
         catch (...)
@@ -2127,11 +2270,12 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_RequestRemoveFolderAsync(abi_arg_in<Windows::Storage::IStorageFolder> folder, abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_RequestRemoveFolderAsync(impl::abi_arg_in<Windows::Storage::IStorageFolder> folder, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().RequestRemoveFolderAsync(*reinterpret_cast<const Windows::Storage::StorageFolder *>(&folder)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().RequestRemoveFolderAsync(*reinterpret_cast<const Windows::Storage::StorageFolder *>(&folder)));
             return S_OK;
         }
         catch (...)
@@ -2141,11 +2285,12 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Folders(abi_arg_out<Windows::Foundation::Collections::IObservableVector<Windows::Storage::StorageFolder>> value) noexcept override
+    HRESULT __stdcall get_Folders(impl::abi_arg_out<Windows::Foundation::Collections::IObservableVector<Windows::Storage::StorageFolder>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Folders());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Folders());
             return S_OK;
         }
         catch (...)
@@ -2155,11 +2300,12 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_SaveFolder(abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
+    HRESULT __stdcall get_SaveFolder(impl::abi_arg_out<Windows::Storage::IStorageFolder> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SaveFolder());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SaveFolder());
             return S_OK;
         }
         catch (...)
@@ -2169,11 +2315,12 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall add_DefinitionChanged(abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable>> handler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_DefinitionChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable>> handler, event_token * eventCookie) noexcept override
     {
         try
         {
-            *eventCookie = detach(this->shim().DefinitionChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *eventCookie = detach_abi(this->shim().DefinitionChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable> *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2186,6 +2333,7 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().DefinitionChanged(eventCookie);
             return S_OK;
         }
@@ -2199,11 +2347,12 @@ struct produce<D, Windows::Storage::IStorageLibrary> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibrary2> : produce_base<D, Windows::Storage::IStorageLibrary2>
 {
-    HRESULT __stdcall get_ChangeTracker(abi_arg_out<Windows::Storage::IStorageLibraryChangeTracker> value) noexcept override
+    HRESULT __stdcall get_ChangeTracker(impl::abi_arg_out<Windows::Storage::IStorageLibraryChangeTracker> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ChangeTracker());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChangeTracker());
             return S_OK;
         }
         catch (...)
@@ -2221,7 +2370,8 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().ChangeType());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ChangeType());
             return S_OK;
         }
         catch (...)
@@ -2230,11 +2380,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_Path(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Path(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Path());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Path());
             return S_OK;
         }
         catch (...)
@@ -2244,11 +2395,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_PreviousPath(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PreviousPath(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PreviousPath());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PreviousPath());
             return S_OK;
         }
         catch (...)
@@ -2262,7 +2414,8 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
     {
         try
         {
-            *value = detach(this->shim().IsOfType(type));
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().IsOfType(type));
             return S_OK;
         }
         catch (...)
@@ -2271,11 +2424,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_GetStorageItemAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
+    HRESULT __stdcall abi_GetStorageItemAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetStorageItemAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetStorageItemAsync());
             return S_OK;
         }
         catch (...)
@@ -2289,11 +2443,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChange> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibraryChangeReader> : produce_base<D, Windows::Storage::IStorageLibraryChangeReader>
 {
-    HRESULT __stdcall abi_ReadBatchAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageLibraryChange>>> operation) noexcept override
+    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageLibraryChange>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().ReadBatchAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().ReadBatchAsync());
             return S_OK;
         }
         catch (...)
@@ -2303,11 +2458,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChangeReader> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_AcceptChangesAsync(abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_AcceptChangesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().AcceptChangesAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().AcceptChangesAsync());
             return S_OK;
         }
         catch (...)
@@ -2321,11 +2477,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChangeReader> : produce_base<
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibraryChangeTracker> : produce_base<D, Windows::Storage::IStorageLibraryChangeTracker>
 {
-    HRESULT __stdcall abi_GetChangeReader(abi_arg_out<Windows::Storage::IStorageLibraryChangeReader> value) noexcept override
+    HRESULT __stdcall abi_GetChangeReader(impl::abi_arg_out<Windows::Storage::IStorageLibraryChangeReader> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GetChangeReader());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GetChangeReader());
             return S_OK;
         }
         catch (...)
@@ -2339,6 +2496,7 @@ struct produce<D, Windows::Storage::IStorageLibraryChangeTracker> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Enable();
             return S_OK;
         }
@@ -2352,6 +2510,7 @@ struct produce<D, Windows::Storage::IStorageLibraryChangeTracker> : produce_base
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().Reset();
             return S_OK;
         }
@@ -2365,11 +2524,12 @@ struct produce<D, Windows::Storage::IStorageLibraryChangeTracker> : produce_base
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibraryStatics> : produce_base<D, Windows::Storage::IStorageLibraryStatics>
 {
-    HRESULT __stdcall abi_GetLibraryAsync(Windows::Storage::KnownLibraryId libraryId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary>> operation) noexcept override
+    HRESULT __stdcall abi_GetLibraryAsync(Windows::Storage::KnownLibraryId libraryId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetLibraryAsync(libraryId));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetLibraryAsync(libraryId));
             return S_OK;
         }
         catch (...)
@@ -2383,11 +2543,12 @@ struct produce<D, Windows::Storage::IStorageLibraryStatics> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::IStorageLibraryStatics2> : produce_base<D, Windows::Storage::IStorageLibraryStatics2>
 {
-    HRESULT __stdcall abi_GetLibraryForUserAsync(abi_arg_in<Windows::System::IUser> user, Windows::Storage::KnownLibraryId libraryId, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary>> operation) noexcept override
+    HRESULT __stdcall abi_GetLibraryForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, Windows::Storage::KnownLibraryId libraryId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().GetLibraryForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), libraryId));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().GetLibraryForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), libraryId));
             return S_OK;
         }
         catch (...)
@@ -2401,11 +2562,12 @@ struct produce<D, Windows::Storage::IStorageLibraryStatics2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Storage::IStorageProvider> : produce_base<D, Windows::Storage::IStorageProvider>
 {
-    HRESULT __stdcall get_Id(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Id());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Id());
             return S_OK;
         }
         catch (...)
@@ -2415,11 +2577,12 @@ struct produce<D, Windows::Storage::IStorageProvider> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_DisplayName(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayName());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayName());
             return S_OK;
         }
         catch (...)
@@ -2433,11 +2596,12 @@ struct produce<D, Windows::Storage::IStorageProvider> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Storage::IStorageStreamTransaction> : produce_base<D, Windows::Storage::IStorageStreamTransaction>
 {
-    HRESULT __stdcall get_Stream(abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall get_Stream(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Stream());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Stream());
             return S_OK;
         }
         catch (...)
@@ -2447,11 +2611,12 @@ struct produce<D, Windows::Storage::IStorageStreamTransaction> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_CommitAsync(abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall abi_CommitAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().CommitAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().CommitAsync());
             return S_OK;
         }
         catch (...)
@@ -2469,6 +2634,7 @@ struct produce<D, Windows::Storage::IStreamedFileDataRequest> : produce_base<D, 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().FailAndClose(failureMode);
             return S_OK;
         }
@@ -2482,11 +2648,12 @@ struct produce<D, Windows::Storage::IStreamedFileDataRequest> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Storage::ISystemAudioProperties> : produce_base<D, Windows::Storage::ISystemAudioProperties>
 {
-    HRESULT __stdcall get_EncodingBitrate(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EncodingBitrate(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().EncodingBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().EncodingBitrate());
             return S_OK;
         }
         catch (...)
@@ -2500,11 +2667,12 @@ struct produce<D, Windows::Storage::ISystemAudioProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::ISystemGPSProperties> : produce_base<D, Windows::Storage::ISystemGPSProperties>
 {
-    HRESULT __stdcall get_LatitudeDecimal(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LatitudeDecimal(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LatitudeDecimal());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LatitudeDecimal());
             return S_OK;
         }
         catch (...)
@@ -2514,11 +2682,12 @@ struct produce<D, Windows::Storage::ISystemGPSProperties> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_LongitudeDecimal(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LongitudeDecimal(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().LongitudeDecimal());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().LongitudeDecimal());
             return S_OK;
         }
         catch (...)
@@ -2532,11 +2701,12 @@ struct produce<D, Windows::Storage::ISystemGPSProperties> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Storage::ISystemImageProperties> : produce_base<D, Windows::Storage::ISystemImageProperties>
 {
-    HRESULT __stdcall get_HorizontalSize(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HorizontalSize(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().HorizontalSize());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().HorizontalSize());
             return S_OK;
         }
         catch (...)
@@ -2546,11 +2716,12 @@ struct produce<D, Windows::Storage::ISystemImageProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_VerticalSize(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VerticalSize(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().VerticalSize());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().VerticalSize());
             return S_OK;
         }
         catch (...)
@@ -2564,11 +2735,12 @@ struct produce<D, Windows::Storage::ISystemImageProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Windows::Storage::ISystemMediaProperties>
 {
-    HRESULT __stdcall get_Duration(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Duration(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Duration());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Duration());
             return S_OK;
         }
         catch (...)
@@ -2578,11 +2750,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Producer(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Producer(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Producer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Producer());
             return S_OK;
         }
         catch (...)
@@ -2592,11 +2765,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Publisher(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Publisher(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Publisher());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Publisher());
             return S_OK;
         }
         catch (...)
@@ -2606,11 +2780,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_SubTitle(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SubTitle(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().SubTitle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SubTitle());
             return S_OK;
         }
         catch (...)
@@ -2620,11 +2795,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Writer(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Writer(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Writer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Writer());
             return S_OK;
         }
         catch (...)
@@ -2634,11 +2810,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Year(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Year(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Year());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Year());
             return S_OK;
         }
         catch (...)
@@ -2652,11 +2829,12 @@ struct produce<D, Windows::Storage::ISystemMediaProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Windows::Storage::ISystemMusicProperties>
 {
-    HRESULT __stdcall get_AlbumArtist(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlbumArtist(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AlbumArtist());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlbumArtist());
             return S_OK;
         }
         catch (...)
@@ -2666,11 +2844,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_AlbumTitle(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlbumTitle(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().AlbumTitle());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().AlbumTitle());
             return S_OK;
         }
         catch (...)
@@ -2680,11 +2859,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Artist(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Artist(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Artist());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Artist());
             return S_OK;
         }
         catch (...)
@@ -2694,11 +2874,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Composer(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Composer(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Composer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Composer());
             return S_OK;
         }
         catch (...)
@@ -2708,11 +2889,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Conductor(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Conductor(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Conductor());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Conductor());
             return S_OK;
         }
         catch (...)
@@ -2722,11 +2904,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DisplayArtist(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayArtist(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayArtist());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayArtist());
             return S_OK;
         }
         catch (...)
@@ -2736,11 +2919,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Genre(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Genre(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Genre());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Genre());
             return S_OK;
         }
         catch (...)
@@ -2750,11 +2934,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_TrackNumber(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TrackNumber(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TrackNumber());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TrackNumber());
             return S_OK;
         }
         catch (...)
@@ -2768,11 +2953,12 @@ struct produce<D, Windows::Storage::ISystemMusicProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Windows::Storage::ISystemPhotoProperties>
 {
-    HRESULT __stdcall get_CameraManufacturer(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CameraManufacturer(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CameraManufacturer());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CameraManufacturer());
             return S_OK;
         }
         catch (...)
@@ -2782,11 +2968,12 @@ struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CameraModel(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CameraModel(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().CameraModel());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().CameraModel());
             return S_OK;
         }
         catch (...)
@@ -2796,11 +2983,12 @@ struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DateTaken(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DateTaken(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DateTaken());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DateTaken());
             return S_OK;
         }
         catch (...)
@@ -2810,11 +2998,12 @@ struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Orientation(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Orientation(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Orientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Orientation());
             return S_OK;
         }
         catch (...)
@@ -2824,11 +3013,12 @@ struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_PeopleNames(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PeopleNames(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().PeopleNames());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().PeopleNames());
             return S_OK;
         }
         catch (...)
@@ -2842,11 +3032,12 @@ struct produce<D, Windows::Storage::ISystemPhotoProperties> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows::Storage::ISystemProperties>
 {
-    HRESULT __stdcall get_Author(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Author(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Author());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Author());
             return S_OK;
         }
         catch (...)
@@ -2856,11 +3047,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Comment(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Comment(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Comment());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Comment());
             return S_OK;
         }
         catch (...)
@@ -2870,11 +3062,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_ItemNameDisplay(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ItemNameDisplay(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().ItemNameDisplay());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().ItemNameDisplay());
             return S_OK;
         }
         catch (...)
@@ -2884,11 +3077,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Keywords(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Keywords(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Keywords());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Keywords());
             return S_OK;
         }
         catch (...)
@@ -2898,11 +3092,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Rating(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rating(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Rating());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Rating());
             return S_OK;
         }
         catch (...)
@@ -2912,11 +3107,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Title(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Title());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Title());
             return S_OK;
         }
         catch (...)
@@ -2926,11 +3122,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Audio(abi_arg_out<Windows::Storage::ISystemAudioProperties> value) noexcept override
+    HRESULT __stdcall get_Audio(impl::abi_arg_out<Windows::Storage::ISystemAudioProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Audio());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Audio());
             return S_OK;
         }
         catch (...)
@@ -2940,11 +3137,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_GPS(abi_arg_out<Windows::Storage::ISystemGPSProperties> value) noexcept override
+    HRESULT __stdcall get_GPS(impl::abi_arg_out<Windows::Storage::ISystemGPSProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().GPS());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().GPS());
             return S_OK;
         }
         catch (...)
@@ -2954,11 +3152,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Media(abi_arg_out<Windows::Storage::ISystemMediaProperties> value) noexcept override
+    HRESULT __stdcall get_Media(impl::abi_arg_out<Windows::Storage::ISystemMediaProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Media());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Media());
             return S_OK;
         }
         catch (...)
@@ -2968,11 +3167,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Music(abi_arg_out<Windows::Storage::ISystemMusicProperties> value) noexcept override
+    HRESULT __stdcall get_Music(impl::abi_arg_out<Windows::Storage::ISystemMusicProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Music());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Music());
             return S_OK;
         }
         catch (...)
@@ -2982,11 +3182,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Photo(abi_arg_out<Windows::Storage::ISystemPhotoProperties> value) noexcept override
+    HRESULT __stdcall get_Photo(impl::abi_arg_out<Windows::Storage::ISystemPhotoProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Photo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Photo());
             return S_OK;
         }
         catch (...)
@@ -2996,11 +3197,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Video(abi_arg_out<Windows::Storage::ISystemVideoProperties> value) noexcept override
+    HRESULT __stdcall get_Video(impl::abi_arg_out<Windows::Storage::ISystemVideoProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Video());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Video());
             return S_OK;
         }
         catch (...)
@@ -3010,11 +3212,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_Image(abi_arg_out<Windows::Storage::ISystemImageProperties> value) noexcept override
+    HRESULT __stdcall get_Image(impl::abi_arg_out<Windows::Storage::ISystemImageProperties> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Image());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Image());
             return S_OK;
         }
         catch (...)
@@ -3028,11 +3231,12 @@ struct produce<D, Windows::Storage::ISystemProperties> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::Storage::ISystemVideoProperties> : produce_base<D, Windows::Storage::ISystemVideoProperties>
 {
-    HRESULT __stdcall get_Director(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Director(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Director());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Director());
             return S_OK;
         }
         catch (...)
@@ -3042,11 +3246,12 @@ struct produce<D, Windows::Storage::ISystemVideoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_FrameHeight(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FrameHeight(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameHeight());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameHeight());
             return S_OK;
         }
         catch (...)
@@ -3056,11 +3261,12 @@ struct produce<D, Windows::Storage::ISystemVideoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_FrameWidth(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FrameWidth(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().FrameWidth());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().FrameWidth());
             return S_OK;
         }
         catch (...)
@@ -3070,11 +3276,12 @@ struct produce<D, Windows::Storage::ISystemVideoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Orientation(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Orientation(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Orientation());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Orientation());
             return S_OK;
         }
         catch (...)
@@ -3084,11 +3291,12 @@ struct produce<D, Windows::Storage::ISystemVideoProperties> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_TotalBitrate(abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TotalBitrate(impl::abi_arg_out<hstring> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().TotalBitrate());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().TotalBitrate());
             return S_OK;
         }
         catch (...)
@@ -3106,1428 +3314,1428 @@ namespace Windows::Storage {
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> impl_IStorageLibraryStatics<D>::GetLibraryAsync(Windows::Storage::KnownLibraryId libraryId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> operation;
-    check_hresult(static_cast<const IStorageLibraryStatics &>(static_cast<const D &>(*this))->abi_GetLibraryAsync(libraryId, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibraryStatics)->abi_GetLibraryAsync(libraryId, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> impl_IStorageLibraryStatics2<D>::GetLibraryForUserAsync(const Windows::System::User & user, Windows::Storage::KnownLibraryId libraryId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageLibrary> operation;
-    check_hresult(static_cast<const IStorageLibraryStatics2 &>(static_cast<const D &>(*this))->abi_GetLibraryForUserAsync(get(user), libraryId, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibraryStatics2)->abi_GetLibraryForUserAsync(get_abi(user), libraryId, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageLibrary<D>::RequestAddFolderAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->abi_RequestAddFolderAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->abi_RequestAddFolderAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IStorageLibrary<D>::RequestRemoveFolderAsync(const Windows::Storage::StorageFolder & folder) const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->abi_RequestRemoveFolderAsync(get(folder), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->abi_RequestRemoveFolderAsync(get_abi(folder), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::Collections::IObservableVector<Windows::Storage::StorageFolder> impl_IStorageLibrary<D>::Folders() const
 {
     Windows::Foundation::Collections::IObservableVector<Windows::Storage::StorageFolder> value;
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->get_Folders(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->get_Folders(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IStorageLibrary<D>::SaveFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->get_SaveFolder(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->get_SaveFolder(put_abi(value)));
     return value;
 }
 
-template <typename D> event_token impl_IStorageLibrary<D>::DefinitionChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IStorageLibrary<D>::DefinitionChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable> & handler) const
 {
     event_token eventCookie {};
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->add_DefinitionChanged(get(handler), &eventCookie));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->add_DefinitionChanged(get_abi(handler), &eventCookie));
     return eventCookie;
 }
 
-template <typename D> event_revoker<IStorageLibrary> impl_IStorageLibrary<D>::DefinitionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IStorageLibrary> impl_IStorageLibrary<D>::DefinitionChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::StorageLibrary, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IStorageLibrary>(this, &ABI::Windows::Storage::IStorageLibrary::remove_DefinitionChanged, DefinitionChanged(handler));
 }
 
 template <typename D> void impl_IStorageLibrary<D>::DefinitionChanged(event_token eventCookie) const
 {
-    check_hresult(static_cast<const IStorageLibrary &>(static_cast<const D &>(*this))->remove_DefinitionChanged(eventCookie));
+    check_hresult(WINRT_SHIM(IStorageLibrary)->remove_DefinitionChanged(eventCookie));
 }
 
 template <typename D> Windows::Storage::StorageLibraryChangeTracker impl_IStorageLibrary2<D>::ChangeTracker() const
 {
     Windows::Storage::StorageLibraryChangeTracker value { nullptr };
-    check_hresult(static_cast<const IStorageLibrary2 &>(static_cast<const D &>(*this))->get_ChangeTracker(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibrary2)->get_ChangeTracker(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::MusicLibrary() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_MusicLibrary(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_MusicLibrary(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::PicturesLibrary() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_PicturesLibrary(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_PicturesLibrary(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::VideosLibrary() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_VideosLibrary(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_VideosLibrary(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::DocumentsLibrary() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_DocumentsLibrary(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_DocumentsLibrary(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::HomeGroup() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_HomeGroup(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_HomeGroup(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::RemovableDevices() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_RemovableDevices(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_RemovableDevices(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics<D>::MediaServerDevices() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics &>(static_cast<const D &>(*this))->get_MediaServerDevices(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics)->get_MediaServerDevices(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics2<D>::Objects3D() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics2 &>(static_cast<const D &>(*this))->get_Objects3D(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics2)->get_Objects3D(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics2<D>::AppCaptures() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics2 &>(static_cast<const D &>(*this))->get_AppCaptures(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics2)->get_AppCaptures(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersStatics2<D>::RecordedCalls() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersStatics2 &>(static_cast<const D &>(*this))->get_RecordedCalls(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics2)->get_RecordedCalls(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IKnownFoldersStatics3<D>::GetFolderForUserAsync(const Windows::System::User & user, Windows::Storage::KnownFolderId folderId) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IKnownFoldersStatics3 &>(static_cast<const D &>(*this))->abi_GetFolderForUserAsync(get(user), folderId, put(operation)));
+    check_hresult(WINRT_SHIM(IKnownFoldersStatics3)->abi_GetFolderForUserAsync(get_abi(user), folderId, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersPlaylistsStatics<D>::Playlists() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersPlaylistsStatics &>(static_cast<const D &>(*this))->get_Playlists(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersPlaylistsStatics)->get_Playlists(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersCameraRollStatics<D>::CameraRoll() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersCameraRollStatics &>(static_cast<const D &>(*this))->get_CameraRoll(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersCameraRollStatics)->get_CameraRoll(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IKnownFoldersSavedPicturesStatics<D>::SavedPictures() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IKnownFoldersSavedPicturesStatics &>(static_cast<const D &>(*this))->get_SavedPictures(put(value)));
+    check_hresult(WINRT_SHIM(IKnownFoldersSavedPicturesStatics)->get_SavedPictures(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics<D>::CreateFileAsync(hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics<D>::CreateFileAsync(hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics &>(static_cast<const D &>(*this))->abi_CreateFileAsync(get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics)->abi_CreateFileAsync(get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics<D>::CreateFolderAsync(hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics<D>::CreateFolderAsync(hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics &>(static_cast<const D &>(*this))->abi_CreateFolderAsync(get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics)->abi_CreateFolderAsync(get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics<D>::CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics<D>::CreateFileAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics &>(static_cast<const D &>(*this))->abi_CreateFileWithCollisionOptionAsync(get(desiredName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics)->abi_CreateFileWithCollisionOptionAsync(get_abi(desiredName), option, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics<D>::CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics<D>::CreateFolderAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics &>(static_cast<const D &>(*this))->abi_CreateFolderWithCollisionOptionAsync(get(desiredName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics)->abi_CreateFolderWithCollisionOptionAsync(get_abi(desiredName), option, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics2<D>::CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics2<D>::CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics2 &>(static_cast<const D &>(*this))->abi_CreateFileForUserAsync(get(user), get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics2)->abi_CreateFileForUserAsync(get_abi(user), get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics2<D>::CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics2<D>::CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics2 &>(static_cast<const D &>(*this))->abi_CreateFolderForUserAsync(get(user), get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics2)->abi_CreateFolderForUserAsync(get_abi(user), get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics2<D>::CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IDownloadsFolderStatics2<D>::CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics2 &>(static_cast<const D &>(*this))->abi_CreateFileForUserWithCollisionOptionAsync(get(user), get(desiredName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics2)->abi_CreateFileForUserWithCollisionOptionAsync(get_abi(user), get_abi(desiredName), option, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics2<D>::CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IDownloadsFolderStatics2<D>::CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IDownloadsFolderStatics2 &>(static_cast<const D &>(*this))->abi_CreateFolderForUserWithCollisionOptionAsync(get(user), get(desiredName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IDownloadsFolderStatics2)->abi_CreateFolderForUserWithCollisionOptionAsync(get_abi(user), get_abi(desiredName), option, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageLibraryChangeType impl_IStorageLibraryChange<D>::ChangeType() const
 {
     Windows::Storage::StorageLibraryChangeType value {};
-    check_hresult(static_cast<const IStorageLibraryChange &>(static_cast<const D &>(*this))->get_ChangeType(&value));
+    check_hresult(WINRT_SHIM(IStorageLibraryChange)->get_ChangeType(&value));
     return value;
 }
 
 template <typename D> hstring impl_IStorageLibraryChange<D>::Path() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageLibraryChange &>(static_cast<const D &>(*this))->get_Path(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChange)->get_Path(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageLibraryChange<D>::PreviousPath() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageLibraryChange &>(static_cast<const D &>(*this))->get_PreviousPath(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChange)->get_PreviousPath(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IStorageLibraryChange<D>::IsOfType(Windows::Storage::StorageItemTypes type) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageLibraryChange &>(static_cast<const D &>(*this))->abi_IsOfType(type, &value));
+    check_hresult(WINRT_SHIM(IStorageLibraryChange)->abi_IsOfType(type, &value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> impl_IStorageLibraryChange<D>::GetStorageItemAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> operation;
-    check_hresult(static_cast<const IStorageLibraryChange &>(static_cast<const D &>(*this))->abi_GetStorageItemAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChange)->abi_GetStorageItemAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::RenameAsync(hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::RenameAsync(hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_RenameAsyncOverloadDefaultOptions(get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_RenameAsyncOverloadDefaultOptions(get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::RenameAsync(hstring_ref desiredName, Windows::Storage::NameCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::RenameAsync(hstring_view desiredName, Windows::Storage::NameCollisionOption option) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_RenameAsync(get(desiredName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_RenameAsync(get_abi(desiredName), option, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::DeleteAsync() const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_DeleteAsyncOverloadDefaultOptions(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_DeleteAsyncOverloadDefaultOptions(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageItem<D>::DeleteAsync(Windows::Storage::StorageDeleteOption option) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_DeleteAsync(option, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_DeleteAsync(option, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::BasicProperties> impl_IStorageItem<D>::GetBasicPropertiesAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::BasicProperties> operation;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_GetBasicPropertiesAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_GetBasicPropertiesAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_IStorageItem<D>::Name() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->get_Name(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItem)->get_Name(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageItem<D>::Path() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->get_Path(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItem)->get_Path(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::FileAttributes impl_IStorageItem<D>::Attributes() const
 {
     Windows::Storage::FileAttributes value {};
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->get_Attributes(&value));
+    check_hresult(WINRT_SHIM(IStorageItem)->get_Attributes(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::DateTime impl_IStorageItem<D>::DateCreated() const
 {
     Windows::Foundation::DateTime value {};
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->get_DateCreated(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItem)->get_DateCreated(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IStorageItem<D>::IsOfType(Windows::Storage::StorageItemTypes type) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageItem &>(static_cast<const D &>(*this))->abi_IsOfType(type, &value));
+    check_hresult(WINRT_SHIM(IStorageItem)->abi_IsOfType(type, &value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageLibraryChange>> impl_IStorageLibraryChangeReader<D>::ReadBatchAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageLibraryChange>> operation;
-    check_hresult(static_cast<const IStorageLibraryChangeReader &>(static_cast<const D &>(*this))->abi_ReadBatchAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChangeReader)->abi_ReadBatchAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageLibraryChangeReader<D>::AcceptChangesAsync() const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageLibraryChangeReader &>(static_cast<const D &>(*this))->abi_AcceptChangesAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChangeReader)->abi_AcceptChangesAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageLibraryChangeReader impl_IStorageLibraryChangeTracker<D>::GetChangeReader() const
 {
     Windows::Storage::StorageLibraryChangeReader value { nullptr };
-    check_hresult(static_cast<const IStorageLibraryChangeTracker &>(static_cast<const D &>(*this))->abi_GetChangeReader(put(value)));
+    check_hresult(WINRT_SHIM(IStorageLibraryChangeTracker)->abi_GetChangeReader(put_abi(value)));
     return value;
 }
 
 template <typename D> void impl_IStorageLibraryChangeTracker<D>::Enable() const
 {
-    check_hresult(static_cast<const IStorageLibraryChangeTracker &>(static_cast<const D &>(*this))->abi_Enable());
+    check_hresult(WINRT_SHIM(IStorageLibraryChangeTracker)->abi_Enable());
 }
 
 template <typename D> void impl_IStorageLibraryChangeTracker<D>::Reset() const
 {
-    check_hresult(static_cast<const IStorageLibraryChangeTracker &>(static_cast<const D &>(*this))->abi_Reset());
+    check_hresult(WINRT_SHIM(IStorageLibraryChangeTracker)->abi_Reset());
 }
 
 template <typename D> void impl_IStreamedFileDataRequest<D>::FailAndClose(Windows::Storage::StreamedFileFailureMode failureMode) const
 {
-    check_hresult(static_cast<const IStreamedFileDataRequest &>(static_cast<const D &>(*this))->abi_FailAndClose(failureMode));
+    check_hresult(WINRT_SHIM(IStreamedFileDataRequest)->abi_FailAndClose(failureMode));
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::GetFileFromPathAsync(hstring_ref path) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::GetFileFromPathAsync(hstring_view path) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_GetFileFromPathAsync(get(path), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_GetFileFromPathAsync(get_abi(path), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::GetFileFromApplicationUriAsync(const Windows::Foundation::Uri & uri) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_GetFileFromApplicationUriAsync(get(uri), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_GetFileFromApplicationUriAsync(get_abi(uri), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::CreateStreamedFileAsync(hstring_ref displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::CreateStreamedFileAsync(hstring_view displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_CreateStreamedFileAsync(get(displayNameWithExtension), get(dataRequested), get(thumbnail), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_CreateStreamedFileAsync(get_abi(displayNameWithExtension), get_abi(dataRequested), get_abi(thumbnail), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::ReplaceWithStreamedFileAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_ReplaceWithStreamedFileAsync(get(fileToReplace), get(dataRequested), get(thumbnail), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_ReplaceWithStreamedFileAsync(get_abi(fileToReplace), get_abi(dataRequested), get_abi(thumbnail), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::CreateStreamedFileFromUriAsync(hstring_ref displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::CreateStreamedFileFromUriAsync(hstring_view displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_CreateStreamedFileFromUriAsync(get(displayNameWithExtension), get(uri), get(thumbnail), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_CreateStreamedFileFromUriAsync(get_abi(displayNameWithExtension), get_abi(uri), get_abi(thumbnail), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFileStatics<D>::ReplaceWithStreamedFileFromUriAsync(const Windows::Storage::IStorageFile & fileToReplace, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFileStatics &>(static_cast<const D &>(*this))->abi_ReplaceWithStreamedFileFromUriAsync(get(fileToReplace), get(uri), get(thumbnail), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFileStatics)->abi_ReplaceWithStreamedFileFromUriAsync(get_abi(fileToReplace), get_abi(uri), get_abi(thumbnail), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::CreateFileAsync(hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::CreateFileAsync(hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_CreateFileAsyncOverloadDefaultOptions(get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_CreateFileAsyncOverloadDefaultOptions(get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption options) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::CreateFileAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_CreateFileAsync(get(desiredName), options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_CreateFileAsync(get_abi(desiredName), options, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::CreateFolderAsync(hstring_ref desiredName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::CreateFolderAsync(hstring_view desiredName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_CreateFolderAsyncOverloadDefaultOptions(get(desiredName), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_CreateFolderAsyncOverloadDefaultOptions(get_abi(desiredName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption options) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::CreateFolderAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_CreateFolderAsync(get(desiredName), options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_CreateFolderAsync(get_abi(desiredName), options, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::GetFileAsync(hstring_ref name) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFolder<D>::GetFileAsync(hstring_view name) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetFileAsync(get(name), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetFileAsync(get_abi(name), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::GetFolderAsync(hstring_ref name) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolder<D>::GetFolderAsync(hstring_view name) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetFolderAsync(get(name), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetFolderAsync(get_abi(name), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> impl_IStorageFolder<D>::GetItemAsync(hstring_ref name) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> impl_IStorageFolder<D>::GetItemAsync(hstring_view name) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetItemAsync(get(name), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetItemAsync(get_abi(name), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IStorageFolder<D>::GetFilesAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetFilesAsyncOverloadDefaultOptionsStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetFilesAsyncOverloadDefaultOptionsStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> impl_IStorageFolder<D>::GetFoldersAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFolder>> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetFoldersAsyncOverloadDefaultOptionsStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetFoldersAsyncOverloadDefaultOptionsStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> impl_IStorageFolder<D>::GetItemsAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::IStorageItem>> operation;
-    check_hresult(static_cast<const IStorageFolder &>(static_cast<const D &>(*this))->abi_GetItemsAsyncOverloadDefaultStartAndCount(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder)->abi_GetItemsAsyncOverloadDefaultStartAndCount(put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_IStorageFile<D>::FileType() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->get_FileType(put(value)));
+    check_hresult(WINRT_SHIM(IStorageFile)->get_FileType(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageFile<D>::ContentType() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->get_ContentType(put(value)));
+    check_hresult(WINRT_SHIM(IStorageFile)->get_ContentType(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> impl_IStorageFile<D>::OpenAsync(Windows::Storage::FileAccessMode accessMode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_OpenAsync(accessMode, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_OpenAsync(accessMode, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> impl_IStorageFile<D>::OpenTransactedWriteAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_OpenTransactedWriteAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_OpenTransactedWriteAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFile<D>::CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_CopyOverloadDefaultNameAndOptions(get(destinationFolder), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_CopyOverloadDefaultNameAndOptions(get_abi(destinationFolder), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFile<D>::CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFile<D>::CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_view desiredNewName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_CopyOverloadDefaultOptions(get(destinationFolder), get(desiredNewName), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_CopyOverloadDefaultOptions(get_abi(destinationFolder), get_abi(desiredNewName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFile<D>::CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName, Windows::Storage::NameCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IStorageFile<D>::CopyAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_view desiredNewName, Windows::Storage::NameCollisionOption option) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_CopyOverload(get(destinationFolder), get(desiredNewName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_CopyOverload(get_abi(destinationFolder), get_abi(desiredNewName), option, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::CopyAndReplaceAsync(const Windows::Storage::IStorageFile & fileToReplace) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_CopyAndReplaceAsync(get(fileToReplace), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_CopyAndReplaceAsync(get_abi(fileToReplace), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_MoveOverloadDefaultNameAndOptions(get(destinationFolder), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_MoveOverloadDefaultNameAndOptions(get_abi(destinationFolder), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_view desiredNewName) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_MoveOverloadDefaultOptions(get(destinationFolder), get(desiredNewName), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_MoveOverloadDefaultOptions(get_abi(destinationFolder), get_abi(desiredNewName), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_ref desiredNewName, Windows::Storage::NameCollisionOption option) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAsync(const Windows::Storage::IStorageFolder & destinationFolder, hstring_view desiredNewName, Windows::Storage::NameCollisionOption option) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_MoveOverload(get(destinationFolder), get(desiredNewName), option, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_MoveOverload(get_abi(destinationFolder), get_abi(desiredNewName), option, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageFile<D>::MoveAndReplaceAsync(const Windows::Storage::IStorageFile & fileToReplace) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageFile &>(static_cast<const D &>(*this))->abi_MoveAndReplaceAsync(get(fileToReplace), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile)->abi_MoveAndReplaceAsync(get_abi(fileToReplace), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolderStatics<D>::GetFolderFromPathAsync(hstring_ref path) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageFolderStatics<D>::GetFolderFromPathAsync(hstring_view path) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageFolderStatics &>(static_cast<const D &>(*this))->abi_GetFolderFromPathAsync(get(path), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolderStatics)->abi_GetFolderFromPathAsync(get_abi(path), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IStorageItem2<D>::GetParentAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> operation;
-    check_hresult(static_cast<const IStorageItem2 &>(static_cast<const D &>(*this))->abi_GetParentAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItem2)->abi_GetParentAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> bool impl_IStorageItem2<D>::IsEqual(const Windows::Storage::IStorageItem & item) const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageItem2 &>(static_cast<const D &>(*this))->abi_IsEqual(get(item), &value));
+    check_hresult(WINRT_SHIM(IStorageItem2)->abi_IsEqual(get_abi(item), &value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties<D>::GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->abi_GetThumbnailAsyncOverloadDefaultSizeDefaultOptions(mode, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->abi_GetThumbnailAsyncOverloadDefaultSizeDefaultOptions(mode, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties<D>::GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->abi_GetThumbnailAsyncOverloadDefaultOptions(mode, requestedSize, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->abi_GetThumbnailAsyncOverloadDefaultOptions(mode, requestedSize, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties<D>::GetThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->abi_GetThumbnailAsync(mode, requestedSize, options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->abi_GetThumbnailAsync(mode, requestedSize, options, put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_IStorageItemProperties<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->get_DisplayName(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageItemProperties<D>::DisplayType() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->get_DisplayType(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->get_DisplayType(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageItemProperties<D>::FolderRelativeId() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->get_FolderRelativeId(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->get_FolderRelativeId(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::FileProperties::StorageItemContentProperties impl_IStorageItemProperties<D>::Properties() const
 {
     Windows::Storage::FileProperties::StorageItemContentProperties value { nullptr };
-    check_hresult(static_cast<const IStorageItemProperties &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties2<D>::GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties2 &>(static_cast<const D &>(*this))->abi_GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions(mode, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties2)->abi_GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions(mode, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties2<D>::GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties2 &>(static_cast<const D &>(*this))->abi_GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(mode, requestedSize, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties2)->abi_GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(mode, requestedSize, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> impl_IStorageItemProperties2<D>::GetScaledImageAsThumbnailAsync(Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedSize, Windows::Storage::FileProperties::ThumbnailOptions options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::FileProperties::StorageItemThumbnail> operation;
-    check_hresult(static_cast<const IStorageItemProperties2 &>(static_cast<const D &>(*this))->abi_GetScaledImageAsThumbnailAsync(mode, requestedSize, options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageItemProperties2)->abi_GetScaledImageAsThumbnailAsync(mode, requestedSize, options, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::StorageProvider impl_IStorageItemPropertiesWithProvider<D>::Provider() const
 {
     Windows::Storage::StorageProvider value { nullptr };
-    check_hresult(static_cast<const IStorageItemPropertiesWithProvider &>(static_cast<const D &>(*this))->get_Provider(put(value)));
+    check_hresult(WINRT_SHIM(IStorageItemPropertiesWithProvider)->get_Provider(put_abi(value)));
     return value;
 }
 
 template <typename D> bool impl_IStorageFilePropertiesWithAvailability<D>::IsAvailable() const
 {
     bool value {};
-    check_hresult(static_cast<const IStorageFilePropertiesWithAvailability &>(static_cast<const D &>(*this))->get_IsAvailable(&value));
+    check_hresult(WINRT_SHIM(IStorageFilePropertiesWithAvailability)->get_IsAvailable(&value));
     return value;
 }
 
 template <typename D> hstring impl_IStorageProvider<D>::Id() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageProvider &>(static_cast<const D &>(*this))->get_Id(put(value)));
+    check_hresult(WINRT_SHIM(IStorageProvider)->get_Id(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_IStorageProvider<D>::DisplayName() const
 {
     hstring value;
-    check_hresult(static_cast<const IStorageProvider &>(static_cast<const D &>(*this))->get_DisplayName(put(value)));
+    check_hresult(WINRT_SHIM(IStorageProvider)->get_DisplayName(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> impl_IStorageFolder2<D>::TryGetItemAsync(hstring_ref name) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> impl_IStorageFolder2<D>::TryGetItemAsync(hstring_view name) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::IStorageItem> operation;
-    check_hresult(static_cast<const IStorageFolder2 &>(static_cast<const D &>(*this))->abi_TryGetItemAsync(get(name), put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFolder2)->abi_TryGetItemAsync(get_abi(name), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> impl_IStorageFile2<D>::OpenAsync(Windows::Storage::FileAccessMode accessMode, Windows::Storage::StorageOpenOptions options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> operation;
-    check_hresult(static_cast<const IStorageFile2 &>(static_cast<const D &>(*this))->abi_OpenWithOptionsAsync(accessMode, options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile2)->abi_OpenWithOptionsAsync(accessMode, options, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> impl_IStorageFile2<D>::OpenTransactedWriteAsync(Windows::Storage::StorageOpenOptions options) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::StorageStreamTransaction> operation;
-    check_hresult(static_cast<const IStorageFile2 &>(static_cast<const D &>(*this))->abi_OpenTransactedWriteWithOptionsAsync(options, put(operation)));
+    check_hresult(WINRT_SHIM(IStorageFile2)->abi_OpenTransactedWriteWithOptionsAsync(options, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IFileIOStatics<D>::ReadTextAsync(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::IAsyncOperation<hstring> textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_ReadTextAsync(get(file), put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_ReadTextAsync(get_abi(file), put_abi(textOperation)));
     return textOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IFileIOStatics<D>::ReadTextAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncOperation<hstring> textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_ReadTextWithEncodingAsync(get(file), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_ReadTextWithEncodingAsync(get_abi(file), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteTextAsync(get(file), get(contents), put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteTextAsync(get_abi(file), get_abi(contents), put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteTextWithEncodingAsync(get(file), get(contents), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteTextWithEncodingAsync(get_abi(file), get_abi(contents), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_AppendTextAsync(get(file), get(contents), put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_AppendTextAsync(get_abi(file), get_abi(contents), put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_AppendTextWithEncodingAsync(get(file), get(contents), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_AppendTextWithEncodingAsync(get_abi(file), get_abi(contents), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IFileIOStatics<D>::ReadLinesAsync(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> linesOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_ReadLinesAsync(get(file), put(linesOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_ReadLinesAsync(get_abi(file), put_abi(linesOperation)));
     return linesOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IFileIOStatics<D>::ReadLinesAsync(const Windows::Storage::IStorageFile & file, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> linesOperation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_ReadLinesWithEncodingAsync(get(file), encoding, put(linesOperation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_ReadLinesWithEncodingAsync(get_abi(file), encoding, put_abi(linesOperation)));
     return linesOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteLinesAsync(get(file), get(lines), put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteLinesAsync(get_abi(file), get_abi(lines), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteLinesWithEncodingAsync(get(file), get(lines), encoding, put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteLinesWithEncodingAsync(get_abi(file), get_abi(lines), encoding, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_AppendLinesAsync(get(file), get(lines), put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_AppendLinesAsync(get_abi(file), get_abi(lines), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_AppendLinesWithEncodingAsync(get(file), get(lines), encoding, put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_AppendLinesWithEncodingAsync(get_abi(file), get_abi(lines), encoding, put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_IFileIOStatics<D>::ReadBufferAsync(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_ReadBufferAsync(get(file), put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_ReadBufferAsync(get_abi(file), put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteBufferAsync(const Windows::Storage::IStorageFile & file, const Windows::Storage::Streams::IBuffer & buffer) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteBufferAsync(get(file), get(buffer), put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteBufferAsync(get_abi(file), get_abi(buffer), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_ref<const uint8_t> buffer) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IFileIOStatics<D>::WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_view<const uint8_t> buffer) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IFileIOStatics &>(static_cast<const D &>(*this))->abi_WriteBytesAsync(get(file), buffer.size(), get(buffer), put(operation)));
+    check_hresult(WINRT_SHIM(IFileIOStatics)->abi_WriteBytesAsync(get_abi(file), buffer.size(), get_abi(buffer), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IPathIOStatics<D>::ReadTextAsync(hstring_ref absolutePath) const
+template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IPathIOStatics<D>::ReadTextAsync(hstring_view absolutePath) const
 {
     Windows::Foundation::IAsyncOperation<hstring> textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_ReadTextAsync(get(absolutePath), put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_ReadTextAsync(get_abi(absolutePath), put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IPathIOStatics<D>::ReadTextAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncOperation<hstring> impl_IPathIOStatics<D>::ReadTextAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncOperation<hstring> textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_ReadTextWithEncodingAsync(get(absolutePath), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_ReadTextWithEncodingAsync(get_abi(absolutePath), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteTextAsync(hstring_ref absolutePath, hstring_ref contents) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteTextAsync(hstring_view absolutePath, hstring_view contents) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteTextAsync(get(absolutePath), get(contents), put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteTextAsync(get_abi(absolutePath), get_abi(contents), put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteTextWithEncodingAsync(get(absolutePath), get(contents), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteTextWithEncodingAsync(get_abi(absolutePath), get_abi(contents), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendTextAsync(hstring_ref absolutePath, hstring_ref contents) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendTextAsync(hstring_view absolutePath, hstring_view contents) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_AppendTextAsync(get(absolutePath), get(contents), put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_AppendTextAsync(get_abi(absolutePath), get_abi(contents), put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction textOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_AppendTextWithEncodingAsync(get(absolutePath), get(contents), encoding, put(textOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_AppendTextWithEncodingAsync(get_abi(absolutePath), get_abi(contents), encoding, put_abi(textOperation)));
     return textOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IPathIOStatics<D>::ReadLinesAsync(hstring_ref absolutePath) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IPathIOStatics<D>::ReadLinesAsync(hstring_view absolutePath) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> linesOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_ReadLinesAsync(get(absolutePath), put(linesOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_ReadLinesAsync(get_abi(absolutePath), put_abi(linesOperation)));
     return linesOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IPathIOStatics<D>::ReadLinesAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> impl_IPathIOStatics<D>::ReadLinesAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> linesOperation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_ReadLinesWithEncodingAsync(get(absolutePath), encoding, put(linesOperation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_ReadLinesWithEncodingAsync(get_abi(absolutePath), encoding, put_abi(linesOperation)));
     return linesOperation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteLinesAsync(get(absolutePath), get(lines), put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteLinesAsync(get_abi(absolutePath), get_abi(lines), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteLinesWithEncodingAsync(get(absolutePath), get(lines), encoding, put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteLinesWithEncodingAsync(get_abi(absolutePath), get_abi(lines), encoding, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_AppendLinesAsync(get(absolutePath), get(lines), put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_AppendLinesAsync(get_abi(absolutePath), get_abi(lines), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_AppendLinesWithEncodingAsync(get(absolutePath), get(lines), encoding, put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_AppendLinesWithEncodingAsync(get_abi(absolutePath), get_abi(lines), encoding, put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_IPathIOStatics<D>::ReadBufferAsync(hstring_ref absolutePath) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_IPathIOStatics<D>::ReadBufferAsync(hstring_view absolutePath) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_ReadBufferAsync(get(absolutePath), put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_ReadBufferAsync(get_abi(absolutePath), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteBufferAsync(hstring_ref absolutePath, const Windows::Storage::Streams::IBuffer & buffer) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteBufferAsync(hstring_view absolutePath, const Windows::Storage::Streams::IBuffer & buffer) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteBufferAsync(get(absolutePath), get(buffer), put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteBufferAsync(get_abi(absolutePath), get_abi(buffer), put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteBytesAsync(hstring_ref absolutePath, array_ref<const uint8_t> buffer) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IPathIOStatics<D>::WriteBytesAsync(hstring_view absolutePath, array_view<const uint8_t> buffer) const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IPathIOStatics &>(static_cast<const D &>(*this))->abi_WriteBytesAsync(get(absolutePath), buffer.size(), get(buffer), put(operation)));
+    check_hresult(WINRT_SHIM(IPathIOStatics)->abi_WriteBytesAsync(get_abi(absolutePath), buffer.size(), get_abi(buffer), put_abi(operation)));
     return operation;
 }
 
 template <typename D> void impl_ICachedFileManagerStatics<D>::DeferUpdates(const Windows::Storage::IStorageFile & file) const
 {
-    check_hresult(static_cast<const ICachedFileManagerStatics &>(static_cast<const D &>(*this))->abi_DeferUpdates(get(file)));
+    check_hresult(WINRT_SHIM(ICachedFileManagerStatics)->abi_DeferUpdates(get_abi(file)));
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::FileUpdateStatus> impl_ICachedFileManagerStatics<D>::CompleteUpdatesAsync(const Windows::Storage::IStorageFile & file) const
 {
     Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::FileUpdateStatus> operation;
-    check_hresult(static_cast<const ICachedFileManagerStatics &>(static_cast<const D &>(*this))->abi_CompleteUpdatesAsync(get(file), put(operation)));
+    check_hresult(WINRT_SHIM(ICachedFileManagerStatics)->abi_CompleteUpdatesAsync(get_abi(file), put_abi(operation)));
     return operation;
 }
 
 template <typename D> hstring impl_ISystemAudioProperties<D>::EncodingBitrate() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemAudioProperties &>(static_cast<const D &>(*this))->get_EncodingBitrate(put(value)));
+    check_hresult(WINRT_SHIM(ISystemAudioProperties)->get_EncodingBitrate(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemGPSProperties<D>::LatitudeDecimal() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemGPSProperties &>(static_cast<const D &>(*this))->get_LatitudeDecimal(put(value)));
+    check_hresult(WINRT_SHIM(ISystemGPSProperties)->get_LatitudeDecimal(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemGPSProperties<D>::LongitudeDecimal() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemGPSProperties &>(static_cast<const D &>(*this))->get_LongitudeDecimal(put(value)));
+    check_hresult(WINRT_SHIM(ISystemGPSProperties)->get_LongitudeDecimal(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemImageProperties<D>::HorizontalSize() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemImageProperties &>(static_cast<const D &>(*this))->get_HorizontalSize(put(value)));
+    check_hresult(WINRT_SHIM(ISystemImageProperties)->get_HorizontalSize(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemImageProperties<D>::VerticalSize() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemImageProperties &>(static_cast<const D &>(*this))->get_VerticalSize(put(value)));
+    check_hresult(WINRT_SHIM(ISystemImageProperties)->get_VerticalSize(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::Duration() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_Duration(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_Duration(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::Producer() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_Producer(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_Producer(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::Publisher() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_Publisher(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_Publisher(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::SubTitle() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_SubTitle(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_SubTitle(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::Writer() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_Writer(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_Writer(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMediaProperties<D>::Year() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMediaProperties &>(static_cast<const D &>(*this))->get_Year(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMediaProperties)->get_Year(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::AlbumArtist() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_AlbumArtist(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_AlbumArtist(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::AlbumTitle() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_AlbumTitle(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_AlbumTitle(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::Artist() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_Artist(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_Artist(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::Composer() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_Composer(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_Composer(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::Conductor() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_Conductor(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_Conductor(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::DisplayArtist() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_DisplayArtist(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_DisplayArtist(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::Genre() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_Genre(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_Genre(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemMusicProperties<D>::TrackNumber() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemMusicProperties &>(static_cast<const D &>(*this))->get_TrackNumber(put(value)));
+    check_hresult(WINRT_SHIM(ISystemMusicProperties)->get_TrackNumber(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemPhotoProperties<D>::CameraManufacturer() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemPhotoProperties &>(static_cast<const D &>(*this))->get_CameraManufacturer(put(value)));
+    check_hresult(WINRT_SHIM(ISystemPhotoProperties)->get_CameraManufacturer(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemPhotoProperties<D>::CameraModel() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemPhotoProperties &>(static_cast<const D &>(*this))->get_CameraModel(put(value)));
+    check_hresult(WINRT_SHIM(ISystemPhotoProperties)->get_CameraModel(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemPhotoProperties<D>::DateTaken() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemPhotoProperties &>(static_cast<const D &>(*this))->get_DateTaken(put(value)));
+    check_hresult(WINRT_SHIM(ISystemPhotoProperties)->get_DateTaken(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemPhotoProperties<D>::Orientation() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemPhotoProperties &>(static_cast<const D &>(*this))->get_Orientation(put(value)));
+    check_hresult(WINRT_SHIM(ISystemPhotoProperties)->get_Orientation(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemPhotoProperties<D>::PeopleNames() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemPhotoProperties &>(static_cast<const D &>(*this))->get_PeopleNames(put(value)));
+    check_hresult(WINRT_SHIM(ISystemPhotoProperties)->get_PeopleNames(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemVideoProperties<D>::Director() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemVideoProperties &>(static_cast<const D &>(*this))->get_Director(put(value)));
+    check_hresult(WINRT_SHIM(ISystemVideoProperties)->get_Director(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemVideoProperties<D>::FrameHeight() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemVideoProperties &>(static_cast<const D &>(*this))->get_FrameHeight(put(value)));
+    check_hresult(WINRT_SHIM(ISystemVideoProperties)->get_FrameHeight(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemVideoProperties<D>::FrameWidth() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemVideoProperties &>(static_cast<const D &>(*this))->get_FrameWidth(put(value)));
+    check_hresult(WINRT_SHIM(ISystemVideoProperties)->get_FrameWidth(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemVideoProperties<D>::Orientation() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemVideoProperties &>(static_cast<const D &>(*this))->get_Orientation(put(value)));
+    check_hresult(WINRT_SHIM(ISystemVideoProperties)->get_Orientation(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemVideoProperties<D>::TotalBitrate() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemVideoProperties &>(static_cast<const D &>(*this))->get_TotalBitrate(put(value)));
+    check_hresult(WINRT_SHIM(ISystemVideoProperties)->get_TotalBitrate(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::Author() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Author(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Author(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::Comment() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Comment(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Comment(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::ItemNameDisplay() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_ItemNameDisplay(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_ItemNameDisplay(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::Keywords() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Keywords(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Keywords(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::Rating() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Rating(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Rating(put_abi(value)));
     return value;
 }
 
 template <typename D> hstring impl_ISystemProperties<D>::Title() const
 {
     hstring value;
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Title(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Title(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemAudioProperties impl_ISystemProperties<D>::Audio() const
 {
     Windows::Storage::SystemAudioProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Audio(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Audio(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemGPSProperties impl_ISystemProperties<D>::GPS() const
 {
     Windows::Storage::SystemGPSProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_GPS(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_GPS(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemMediaProperties impl_ISystemProperties<D>::Media() const
 {
     Windows::Storage::SystemMediaProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Media(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Media(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemMusicProperties impl_ISystemProperties<D>::Music() const
 {
     Windows::Storage::SystemMusicProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Music(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Music(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemPhotoProperties impl_ISystemProperties<D>::Photo() const
 {
     Windows::Storage::SystemPhotoProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Photo(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Photo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemVideoProperties impl_ISystemProperties<D>::Video() const
 {
     Windows::Storage::SystemVideoProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Video(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Video(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::SystemImageProperties impl_ISystemProperties<D>::Image() const
 {
     Windows::Storage::SystemImageProperties value { nullptr };
-    check_hresult(static_cast<const ISystemProperties &>(static_cast<const D &>(*this))->get_Image(put(value)));
+    check_hresult(WINRT_SHIM(ISystemProperties)->get_Image(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::Streams::IRandomAccessStream impl_IStorageStreamTransaction<D>::Stream() const
 {
     Windows::Storage::Streams::IRandomAccessStream value;
-    check_hresult(static_cast<const IStorageStreamTransaction &>(static_cast<const D &>(*this))->get_Stream(put(value)));
+    check_hresult(WINRT_SHIM(IStorageStreamTransaction)->get_Stream(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IStorageStreamTransaction<D>::CommitAsync() const
 {
     Windows::Foundation::IAsyncAction operation;
-    check_hresult(static_cast<const IStorageStreamTransaction &>(static_cast<const D &>(*this))->abi_CommitAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IStorageStreamTransaction)->abi_CommitAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Storage::ApplicationData impl_IApplicationDataStatics<D>::Current() const
 {
     Windows::Storage::ApplicationData value { nullptr };
-    check_hresult(static_cast<const IApplicationDataStatics &>(static_cast<const D &>(*this))->get_Current(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationDataStatics)->get_Current(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::ApplicationData> impl_IApplicationDataStatics2<D>::GetForUserAsync(const Windows::System::User & user) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Storage::ApplicationData> getForUserOperation;
-    check_hresult(static_cast<const IApplicationDataStatics2 &>(static_cast<const D &>(*this))->abi_GetForUserAsync(get(user), put(getForUserOperation)));
+    check_hresult(WINRT_SHIM(IApplicationDataStatics2)->abi_GetForUserAsync(get_abi(user), put_abi(getForUserOperation)));
     return getForUserOperation;
 }
 
 template <typename D> uint32_t impl_IApplicationData<D>::Version() const
 {
     uint32_t value {};
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_Version(&value));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_Version(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationData<D>::SetVersionAsync(uint32_t desiredVersion, const Windows::Storage::ApplicationDataSetVersionHandler & handler) const
 {
     Windows::Foundation::IAsyncAction setVersionOperation;
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->abi_SetVersionAsync(desiredVersion, get(handler), put(setVersionOperation)));
+    check_hresult(WINRT_SHIM(IApplicationData)->abi_SetVersionAsync(desiredVersion, get_abi(handler), put_abi(setVersionOperation)));
     return setVersionOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationData<D>::ClearAsync() const
 {
     Windows::Foundation::IAsyncAction clearOperation;
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->abi_ClearAllAsync(put(clearOperation)));
+    check_hresult(WINRT_SHIM(IApplicationData)->abi_ClearAllAsync(put_abi(clearOperation)));
     return clearOperation;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationData<D>::ClearAsync(Windows::Storage::ApplicationDataLocality locality) const
 {
     Windows::Foundation::IAsyncAction clearOperation;
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->abi_ClearAsync(locality, put(clearOperation)));
+    check_hresult(WINRT_SHIM(IApplicationData)->abi_ClearAsync(locality, put_abi(clearOperation)));
     return clearOperation;
 }
 
 template <typename D> Windows::Storage::ApplicationDataContainer impl_IApplicationData<D>::LocalSettings() const
 {
     Windows::Storage::ApplicationDataContainer value { nullptr };
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_LocalSettings(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_LocalSettings(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::ApplicationDataContainer impl_IApplicationData<D>::RoamingSettings() const
 {
     Windows::Storage::ApplicationDataContainer value { nullptr };
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_RoamingSettings(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_RoamingSettings(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IApplicationData<D>::LocalFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_LocalFolder(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_LocalFolder(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IApplicationData<D>::RoamingFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_RoamingFolder(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_RoamingFolder(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IApplicationData<D>::TemporaryFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_TemporaryFolder(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_TemporaryFolder(put_abi(value)));
     return value;
 }
 
-template <typename D> event_token impl_IApplicationData<D>::DataChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> & handler) const
+template <typename D> event_token impl_IApplicationData<D>::DataChanged(const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->add_DataChanged(get(handler), &token));
+    check_hresult(WINRT_SHIM(IApplicationData)->add_DataChanged(get_abi(handler), &token));
     return token;
 }
 
-template <typename D> event_revoker<IApplicationData> impl_IApplicationData<D>::DataChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::IInspectable> & handler) const
+template <typename D> event_revoker<IApplicationData> impl_IApplicationData<D>::DataChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::ApplicationData, Windows::Foundation::IInspectable> & handler) const
 {
     return impl::make_event_revoker<D, IApplicationData>(this, &ABI::Windows::Storage::IApplicationData::remove_DataChanged, DataChanged(handler));
 }
 
 template <typename D> void impl_IApplicationData<D>::DataChanged(event_token token) const
 {
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->remove_DataChanged(token));
+    check_hresult(WINRT_SHIM(IApplicationData)->remove_DataChanged(token));
 }
 
 template <typename D> void impl_IApplicationData<D>::SignalDataChanged() const
 {
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->abi_SignalDataChanged());
+    check_hresult(WINRT_SHIM(IApplicationData)->abi_SignalDataChanged());
 }
 
 template <typename D> uint64_t impl_IApplicationData<D>::RoamingStorageQuota() const
 {
     uint64_t value {};
-    check_hresult(static_cast<const IApplicationData &>(static_cast<const D &>(*this))->get_RoamingStorageQuota(&value));
+    check_hresult(WINRT_SHIM(IApplicationData)->get_RoamingStorageQuota(&value));
     return value;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IApplicationData2<D>::LocalCacheFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData2 &>(static_cast<const D &>(*this))->get_LocalCacheFolder(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData2)->get_LocalCacheFolder(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Storage::StorageFolder impl_IApplicationData3<D>::GetPublisherCacheFolder(hstring_ref folderName) const
+template <typename D> Windows::Storage::StorageFolder impl_IApplicationData3<D>::GetPublisherCacheFolder(hstring_view folderName) const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData3 &>(static_cast<const D &>(*this))->abi_GetPublisherCacheFolder(get(folderName), put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData3)->abi_GetPublisherCacheFolder(get_abi(folderName), put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationData3<D>::ClearPublisherCacheFolderAsync(hstring_ref folderName) const
+template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationData3<D>::ClearPublisherCacheFolderAsync(hstring_view folderName) const
 {
     Windows::Foundation::IAsyncAction clearOperation;
-    check_hresult(static_cast<const IApplicationData3 &>(static_cast<const D &>(*this))->abi_ClearPublisherCacheFolderAsync(get(folderName), put(clearOperation)));
+    check_hresult(WINRT_SHIM(IApplicationData3)->abi_ClearPublisherCacheFolderAsync(get_abi(folderName), put_abi(clearOperation)));
     return clearOperation;
 }
 
 template <typename D> Windows::Storage::StorageFolder impl_IApplicationData3<D>::SharedLocalFolder() const
 {
     Windows::Storage::StorageFolder value { nullptr };
-    check_hresult(static_cast<const IApplicationData3 &>(static_cast<const D &>(*this))->get_SharedLocalFolder(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationData3)->get_SharedLocalFolder(put_abi(value)));
     return value;
 }
 
 template <typename D> uint32_t impl_ISetVersionRequest<D>::CurrentVersion() const
 {
     uint32_t currentVersion {};
-    check_hresult(static_cast<const ISetVersionRequest &>(static_cast<const D &>(*this))->get_CurrentVersion(&currentVersion));
+    check_hresult(WINRT_SHIM(ISetVersionRequest)->get_CurrentVersion(&currentVersion));
     return currentVersion;
 }
 
 template <typename D> uint32_t impl_ISetVersionRequest<D>::DesiredVersion() const
 {
     uint32_t desiredVersion {};
-    check_hresult(static_cast<const ISetVersionRequest &>(static_cast<const D &>(*this))->get_DesiredVersion(&desiredVersion));
+    check_hresult(WINRT_SHIM(ISetVersionRequest)->get_DesiredVersion(&desiredVersion));
     return desiredVersion;
 }
 
 template <typename D> Windows::Storage::SetVersionDeferral impl_ISetVersionRequest<D>::GetDeferral() const
 {
     Windows::Storage::SetVersionDeferral deferral { nullptr };
-    check_hresult(static_cast<const ISetVersionRequest &>(static_cast<const D &>(*this))->abi_GetDeferral(put(deferral)));
+    check_hresult(WINRT_SHIM(ISetVersionRequest)->abi_GetDeferral(put_abi(deferral)));
     return deferral;
 }
 
 template <typename D> void impl_ISetVersionDeferral<D>::Complete() const
 {
-    check_hresult(static_cast<const ISetVersionDeferral &>(static_cast<const D &>(*this))->abi_Complete());
+    check_hresult(WINRT_SHIM(ISetVersionDeferral)->abi_Complete());
 }
 
 template <typename D> hstring impl_IApplicationDataContainer<D>::Name() const
 {
     hstring value;
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->get_Name(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->get_Name(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Storage::ApplicationDataLocality impl_IApplicationDataContainer<D>::Locality() const
 {
     Windows::Storage::ApplicationDataLocality value {};
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->get_Locality(&value));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->get_Locality(&value));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IPropertySet impl_IApplicationDataContainer<D>::Values() const
 {
     Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->get_Values(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->get_Values(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::ApplicationDataContainer> impl_IApplicationDataContainer<D>::Containers() const
 {
     Windows::Foundation::Collections::IMapView<hstring, Windows::Storage::ApplicationDataContainer> value;
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->get_Containers(put(value)));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->get_Containers(put_abi(value)));
     return value;
 }
 
-template <typename D> Windows::Storage::ApplicationDataContainer impl_IApplicationDataContainer<D>::CreateContainer(hstring_ref name, Windows::Storage::ApplicationDataCreateDisposition disposition) const
+template <typename D> Windows::Storage::ApplicationDataContainer impl_IApplicationDataContainer<D>::CreateContainer(hstring_view name, Windows::Storage::ApplicationDataCreateDisposition disposition) const
 {
     Windows::Storage::ApplicationDataContainer container { nullptr };
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->abi_CreateContainer(get(name), disposition, put(container)));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->abi_CreateContainer(get_abi(name), disposition, put_abi(container)));
     return container;
 }
 
-template <typename D> void impl_IApplicationDataContainer<D>::DeleteContainer(hstring_ref name) const
+template <typename D> void impl_IApplicationDataContainer<D>::DeleteContainer(hstring_view name) const
 {
-    check_hresult(static_cast<const IApplicationDataContainer &>(static_cast<const D &>(*this))->abi_DeleteContainer(get(name)));
+    check_hresult(WINRT_SHIM(IApplicationDataContainer)->abi_DeleteContainer(get_abi(name)));
 }
 
 inline Windows::Storage::ApplicationData ApplicationData::Current()
@@ -4554,42 +4762,42 @@ inline Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Provider::F
     return get_activation_factory<CachedFileManager, ICachedFileManagerStatics>().CompleteUpdatesAsync(file);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileAsync(hstring_ref desiredName)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileAsync(hstring_view desiredName)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics>().CreateFileAsync(desiredName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderAsync(hstring_ref desiredName)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderAsync(hstring_view desiredName)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics>().CreateFolderAsync(desiredName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics>().CreateFileAsync(desiredName, option);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderAsync(hstring_ref desiredName, Windows::Storage::CreationCollisionOption option)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderAsync(hstring_view desiredName, Windows::Storage::CreationCollisionOption option)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics>().CreateFolderAsync(desiredName, option);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics2>().CreateFileForUserAsync(user, desiredName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics2>().CreateFolderForUserAsync(user, desiredName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> DownloadsFolder::CreateFileForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics2>().CreateFileForUserAsync(user, desiredName, option);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderForUserAsync(const Windows::System::User & user, hstring_ref desiredName, Windows::Storage::CreationCollisionOption option)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> DownloadsFolder::CreateFolderForUserAsync(const Windows::System::User & user, hstring_view desiredName, Windows::Storage::CreationCollisionOption option)
 {
     return get_activation_factory<DownloadsFolder, IDownloadsFolderStatics2>().CreateFolderForUserAsync(user, desiredName, option);
 }
@@ -4604,22 +4812,22 @@ inline Windows::Foundation::IAsyncOperation<hstring> FileIO::ReadTextAsync(const
     return get_activation_factory<FileIO, IFileIOStatics>().ReadTextAsync(file, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents)
+inline Windows::Foundation::IAsyncAction FileIO::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().WriteTextAsync(file, contents);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction FileIO::WriteTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().WriteTextAsync(file, contents, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents)
+inline Windows::Foundation::IAsyncAction FileIO::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().AppendTextAsync(file, contents);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction FileIO::AppendTextAsync(const Windows::Storage::IStorageFile & file, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().AppendTextAsync(file, contents, encoding);
 }
@@ -4634,22 +4842,22 @@ inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IV
     return get_activation_factory<FileIO, IFileIOStatics>().ReadLinesAsync(file, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines)
+inline Windows::Foundation::IAsyncAction FileIO::WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().WriteLinesAsync(file, lines);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::WriteLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction FileIO::WriteLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().WriteLinesAsync(file, lines, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines)
+inline Windows::Foundation::IAsyncAction FileIO::AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().AppendLinesAsync(file, lines);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::AppendLinesAsync(const Windows::Storage::IStorageFile & file, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction FileIO::AppendLinesAsync(const Windows::Storage::IStorageFile & file, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().AppendLinesAsync(file, lines, encoding);
 }
@@ -4664,7 +4872,7 @@ inline Windows::Foundation::IAsyncAction FileIO::WriteBufferAsync(const Windows:
     return get_activation_factory<FileIO, IFileIOStatics>().WriteBufferAsync(file, buffer);
 }
 
-inline Windows::Foundation::IAsyncAction FileIO::WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_ref<const uint8_t> buffer)
+inline Windows::Foundation::IAsyncAction FileIO::WriteBytesAsync(const Windows::Storage::IStorageFile & file, array_view<const uint8_t> buffer)
 {
     return get_activation_factory<FileIO, IFileIOStatics>().WriteBytesAsync(file, buffer);
 }
@@ -4739,82 +4947,82 @@ inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> Kno
     return get_activation_factory<KnownFolders, IKnownFoldersStatics3>().GetFolderForUserAsync(user, folderId);
 }
 
-inline Windows::Foundation::IAsyncOperation<hstring> PathIO::ReadTextAsync(hstring_ref absolutePath)
+inline Windows::Foundation::IAsyncOperation<hstring> PathIO::ReadTextAsync(hstring_view absolutePath)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().ReadTextAsync(absolutePath);
 }
 
-inline Windows::Foundation::IAsyncOperation<hstring> PathIO::ReadTextAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncOperation<hstring> PathIO::ReadTextAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().ReadTextAsync(absolutePath, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteTextAsync(hstring_ref absolutePath, hstring_ref contents)
+inline Windows::Foundation::IAsyncAction PathIO::WriteTextAsync(hstring_view absolutePath, hstring_view contents)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteTextAsync(absolutePath, contents);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction PathIO::WriteTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteTextAsync(absolutePath, contents, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::AppendTextAsync(hstring_ref absolutePath, hstring_ref contents)
+inline Windows::Foundation::IAsyncAction PathIO::AppendTextAsync(hstring_view absolutePath, hstring_view contents)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().AppendTextAsync(absolutePath, contents);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::AppendTextAsync(hstring_ref absolutePath, hstring_ref contents, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction PathIO::AppendTextAsync(hstring_view absolutePath, hstring_view contents, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().AppendTextAsync(absolutePath, contents, encoding);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> PathIO::ReadLinesAsync(hstring_ref absolutePath)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> PathIO::ReadLinesAsync(hstring_view absolutePath)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().ReadLinesAsync(absolutePath);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> PathIO::ReadLinesAsync(hstring_ref absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<hstring>> PathIO::ReadLinesAsync(hstring_view absolutePath, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().ReadLinesAsync(absolutePath, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines)
+inline Windows::Foundation::IAsyncAction PathIO::WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteLinesAsync(absolutePath, lines);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction PathIO::WriteLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteLinesAsync(absolutePath, lines, encoding);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines)
+inline Windows::Foundation::IAsyncAction PathIO::AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().AppendLinesAsync(absolutePath, lines);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::AppendLinesAsync(hstring_ref absolutePath, const Windows::Foundation::Collections::IIterable<hstring> & lines, Windows::Storage::Streams::UnicodeEncoding encoding)
+inline Windows::Foundation::IAsyncAction PathIO::AppendLinesAsync(hstring_view absolutePath, iterable<hstring> lines, Windows::Storage::Streams::UnicodeEncoding encoding)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().AppendLinesAsync(absolutePath, lines, encoding);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> PathIO::ReadBufferAsync(hstring_ref absolutePath)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> PathIO::ReadBufferAsync(hstring_view absolutePath)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().ReadBufferAsync(absolutePath);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteBufferAsync(hstring_ref absolutePath, const Windows::Storage::Streams::IBuffer & buffer)
+inline Windows::Foundation::IAsyncAction PathIO::WriteBufferAsync(hstring_view absolutePath, const Windows::Storage::Streams::IBuffer & buffer)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteBufferAsync(absolutePath, buffer);
 }
 
-inline Windows::Foundation::IAsyncAction PathIO::WriteBytesAsync(hstring_ref absolutePath, array_ref<const uint8_t> buffer)
+inline Windows::Foundation::IAsyncAction PathIO::WriteBytesAsync(hstring_view absolutePath, array_view<const uint8_t> buffer)
 {
     return get_activation_factory<PathIO, IPathIOStatics>().WriteBytesAsync(absolutePath, buffer);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::GetFileFromPathAsync(hstring_ref path)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::GetFileFromPathAsync(hstring_view path)
 {
     return get_activation_factory<StorageFile, IStorageFileStatics>().GetFileFromPathAsync(path);
 }
@@ -4824,7 +5032,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> Stora
     return get_activation_factory<StorageFile, IStorageFileStatics>().GetFileFromApplicationUriAsync(uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::CreateStreamedFileAsync(hstring_ref displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::CreateStreamedFileAsync(hstring_view displayNameWithExtension, const Windows::Storage::StreamedFileDataRequestedHandler & dataRequested, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail)
 {
     return get_activation_factory<StorageFile, IStorageFileStatics>().CreateStreamedFileAsync(displayNameWithExtension, dataRequested, thumbnail);
 }
@@ -4834,7 +5042,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> Stora
     return get_activation_factory<StorageFile, IStorageFileStatics>().ReplaceWithStreamedFileAsync(fileToReplace, dataRequested, thumbnail);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::CreateStreamedFileFromUriAsync(hstring_ref displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> StorageFile::CreateStreamedFileFromUriAsync(hstring_view displayNameWithExtension, const Windows::Foundation::Uri & uri, const Windows::Storage::Streams::IRandomAccessStreamReference & thumbnail)
 {
     return get_activation_factory<StorageFile, IStorageFileStatics>().CreateStreamedFileFromUriAsync(displayNameWithExtension, uri, thumbnail);
 }
@@ -4844,7 +5052,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> Stora
     return get_activation_factory<StorageFile, IStorageFileStatics>().ReplaceWithStreamedFileFromUriAsync(fileToReplace, uri, thumbnail);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> StorageFolder::GetFolderFromPathAsync(hstring_ref path)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> StorageFolder::GetFolderFromPathAsync(hstring_view path)
 {
     return get_activation_factory<StorageFolder, IStorageFolderStatics>().GetFolderFromPathAsync(path);
 }
@@ -4927,3 +5135,644 @@ inline Windows::Storage::SystemImageProperties SystemProperties::Image()
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationData>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationData & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationData2>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationData2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationData3>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationData3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationDataContainer>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationDataContainer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationDataStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationDataStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IApplicationDataStatics2>
+{
+    size_t operator()(const winrt::Windows::Storage::IApplicationDataStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ICachedFileManagerStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::ICachedFileManagerStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IDownloadsFolderStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IDownloadsFolderStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IDownloadsFolderStatics2>
+{
+    size_t operator()(const winrt::Windows::Storage::IDownloadsFolderStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IFileIOStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IFileIOStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersCameraRollStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersCameraRollStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersPlaylistsStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersPlaylistsStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersSavedPicturesStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersSavedPicturesStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersStatics2>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IKnownFoldersStatics3>
+{
+    size_t operator()(const winrt::Windows::Storage::IKnownFoldersStatics3 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IPathIOStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IPathIOStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISetVersionDeferral>
+{
+    size_t operator()(const winrt::Windows::Storage::ISetVersionDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISetVersionRequest>
+{
+    size_t operator()(const winrt::Windows::Storage::ISetVersionRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFile>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFile & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFile2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFile2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFilePropertiesWithAvailability>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFilePropertiesWithAvailability & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFileStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFileStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFolder>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFolder & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFolder2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFolder2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageFolderStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageFolderStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageItem>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageItem & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageItem2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageItem2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageItemProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageItemProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageItemProperties2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageItemProperties2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageItemPropertiesWithProvider>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageItemPropertiesWithProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibrary>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibrary & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibrary2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibrary2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibraryChange>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibraryChange & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibraryChangeReader>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibraryChangeReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibraryChangeTracker>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibraryChangeTracker & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibraryStatics>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibraryStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageLibraryStatics2>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageLibraryStatics2 & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageProvider>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStorageStreamTransaction>
+{
+    size_t operator()(const winrt::Windows::Storage::IStorageStreamTransaction & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::IStreamedFileDataRequest>
+{
+    size_t operator()(const winrt::Windows::Storage::IStreamedFileDataRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemAudioProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemAudioProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemGPSProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemGPSProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemImageProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemImageProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemMediaProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemMediaProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemMusicProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemMusicProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemPhotoProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemPhotoProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ISystemVideoProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::ISystemVideoProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ApplicationData>
+{
+    size_t operator()(const winrt::Windows::Storage::ApplicationData & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ApplicationDataCompositeValue>
+{
+    size_t operator()(const winrt::Windows::Storage::ApplicationDataCompositeValue & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ApplicationDataContainer>
+{
+    size_t operator()(const winrt::Windows::Storage::ApplicationDataContainer & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::ApplicationDataContainerSettings>
+{
+    size_t operator()(const winrt::Windows::Storage::ApplicationDataContainerSettings & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SetVersionDeferral>
+{
+    size_t operator()(const winrt::Windows::Storage::SetVersionDeferral & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SetVersionRequest>
+{
+    size_t operator()(const winrt::Windows::Storage::SetVersionRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageFile>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageFile & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageFolder>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageFolder & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageLibrary>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageLibrary & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageLibraryChange>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageLibraryChange & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageLibraryChangeReader>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageLibraryChangeReader & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageLibraryChangeTracker>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageLibraryChangeTracker & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageProvider>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageProvider & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StorageStreamTransaction>
+{
+    size_t operator()(const winrt::Windows::Storage::StorageStreamTransaction & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::StreamedFileDataRequest>
+{
+    size_t operator()(const winrt::Windows::Storage::StreamedFileDataRequest & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemAudioProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemAudioProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemGPSProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemGPSProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemImageProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemImageProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemMediaProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemMediaProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemMusicProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemMusicProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemPhotoProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemPhotoProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Storage::SystemVideoProperties>
+{
+    size_t operator()(const winrt::Windows::Storage::SystemVideoProperties & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

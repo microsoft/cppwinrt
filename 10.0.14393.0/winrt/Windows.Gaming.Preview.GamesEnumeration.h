@@ -1,7 +1,10 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+
+#include "base.h"
+WINRT_WARNING_PUSH
 
 #include "internal/Windows.ApplicationModel.3.h"
 #include "internal/Windows.Foundation.3.h"
@@ -26,7 +29,7 @@ template <typename O, typename M> GameListChangedEventHandler::GameListChangedEv
 
 inline void GameListChangedEventHandler::operator()(const Windows::Gaming::Preview::GamesEnumeration::GameListEntry & game) const
 {
-    check_hresult((*this)->abi_Invoke(get(game)));
+    check_hresult((*(abi<GameListChangedEventHandler> **)this)->abi_Invoke(get_abi(game)));
 }
 
 template <typename L> GameListRemovedEventHandler::GameListRemovedEventHandler(L lambda) :
@@ -41,9 +44,9 @@ template <typename O, typename M> GameListRemovedEventHandler::GameListRemovedEv
     GameListRemovedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
 {}
 
-inline void GameListRemovedEventHandler::operator()(hstring_ref identifier) const
+inline void GameListRemovedEventHandler::operator()(hstring_view identifier) const
 {
-    check_hresult((*this)->abi_Invoke(get(identifier)));
+    check_hresult((*(abi<GameListRemovedEventHandler> **)this)->abi_Invoke(get_abi(identifier)));
 }
 
 }
@@ -53,11 +56,12 @@ namespace impl {
 template <typename D>
 struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : produce_base<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry>
 {
-    HRESULT __stdcall get_DisplayInfo(abi_arg_out<Windows::ApplicationModel::IAppDisplayInfo> value) noexcept override
+    HRESULT __stdcall get_DisplayInfo(impl::abi_arg_out<Windows::ApplicationModel::IAppDisplayInfo> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().DisplayInfo());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().DisplayInfo());
             return S_OK;
         }
         catch (...)
@@ -67,11 +71,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : 
         }
     }
 
-    HRESULT __stdcall abi_LaunchAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall abi_LaunchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().LaunchAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().LaunchAsync());
             return S_OK;
         }
         catch (...)
@@ -85,7 +90,8 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : 
     {
         try
         {
-            *value = detach(this->shim().Category());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Category());
             return S_OK;
         }
         catch (...)
@@ -94,11 +100,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : 
         }
     }
 
-    HRESULT __stdcall get_Properties(abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> value) noexcept override
     {
         try
         {
-            *value = detach(this->shim().Properties());
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().Properties());
             return S_OK;
         }
         catch (...)
@@ -108,11 +115,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : 
         }
     }
 
-    HRESULT __stdcall abi_SetCategoryAsync(Windows::Gaming::Preview::GamesEnumeration::GameListCategory value, abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall abi_SetCategoryAsync(Windows::Gaming::Preview::GamesEnumeration::GameListCategory value, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
     {
         try
         {
-            *action = detach(this->shim().SetCategoryAsync(value));
+            typename D::abi_guard guard(this->shim());
+            *action = detach_abi(this->shim().SetCategoryAsync(value));
             return S_OK;
         }
         catch (...)
@@ -126,11 +134,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListEntry> : 
 template <typename D>
 struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> : produce_base<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics>
 {
-    HRESULT __stdcall abi_FindAllAsync(abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>>> operation) noexcept override
+    HRESULT __stdcall abi_FindAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FindAllAsync());
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FindAllAsync());
             return S_OK;
         }
         catch (...)
@@ -140,11 +149,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
         }
     }
 
-    HRESULT __stdcall abi_FindAllAsyncPackageFamilyName(abi_arg_in<hstring> packageFamilyName, abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>>> operation) noexcept override
+    HRESULT __stdcall abi_FindAllAsyncPackageFamilyName(impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>>> operation) noexcept override
     {
         try
         {
-            *operation = detach(this->shim().FindAllAsync(*reinterpret_cast<const hstring *>(&packageFamilyName)));
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().FindAllAsync(*reinterpret_cast<const hstring *>(&packageFamilyName)));
             return S_OK;
         }
         catch (...)
@@ -154,11 +164,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
         }
     }
 
-    HRESULT __stdcall add_GameAdded(abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_GameAdded(impl::abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().GameAdded(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().GameAdded(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -171,6 +182,7 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GameAdded(token);
             return S_OK;
         }
@@ -180,11 +192,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
         }
     }
 
-    HRESULT __stdcall add_GameRemoved(abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListRemovedEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_GameRemoved(impl::abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListRemovedEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().GameRemoved(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListRemovedEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().GameRemoved(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListRemovedEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -197,6 +210,7 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GameRemoved(token);
             return S_OK;
         }
@@ -206,11 +220,12 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
         }
     }
 
-    HRESULT __stdcall add_GameUpdated(abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_GameUpdated(impl::abi_arg_in<Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler> handler, event_token * token) noexcept override
     {
         try
         {
-            *token = detach(this->shim().GameUpdated(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler *>(&handler)));
+            typename D::abi_guard guard(this->shim());
+            *token = detach_abi(this->shim().GameUpdated(*reinterpret_cast<const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler *>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -223,6 +238,7 @@ struct produce<D, Windows::Gaming::Preview::GamesEnumeration::IGameListStatics> 
     {
         try
         {
+            typename D::abi_guard guard(this->shim());
             this->shim().GameUpdated(token);
             return S_OK;
         }
@@ -240,56 +256,56 @@ namespace Windows::Gaming::Preview::GamesEnumeration {
 template <typename D> Windows::ApplicationModel::AppDisplayInfo impl_IGameListEntry<D>::DisplayInfo() const
 {
     Windows::ApplicationModel::AppDisplayInfo value { nullptr };
-    check_hresult(static_cast<const IGameListEntry &>(static_cast<const D &>(*this))->get_DisplayInfo(put(value)));
+    check_hresult(WINRT_SHIM(IGameListEntry)->get_DisplayInfo(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IGameListEntry<D>::LaunchAsync() const
 {
     Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(static_cast<const IGameListEntry &>(static_cast<const D &>(*this))->abi_LaunchAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IGameListEntry)->abi_LaunchAsync(put_abi(operation)));
     return operation;
 }
 
 template <typename D> Windows::Gaming::Preview::GamesEnumeration::GameListCategory impl_IGameListEntry<D>::Category() const
 {
     Windows::Gaming::Preview::GamesEnumeration::GameListCategory value {};
-    check_hresult(static_cast<const IGameListEntry &>(static_cast<const D &>(*this))->get_Category(&value));
+    check_hresult(WINRT_SHIM(IGameListEntry)->get_Category(&value));
     return value;
 }
 
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> impl_IGameListEntry<D>::Properties() const
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IGameListEntry<D>::Properties() const
 {
-    Windows::Foundation::Collections::IMapView<hstring, Windows::IInspectable> value;
-    check_hresult(static_cast<const IGameListEntry &>(static_cast<const D &>(*this))->get_Properties(put(value)));
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IGameListEntry)->get_Properties(put_abi(value)));
     return value;
 }
 
 template <typename D> Windows::Foundation::IAsyncAction impl_IGameListEntry<D>::SetCategoryAsync(Windows::Gaming::Preview::GamesEnumeration::GameListCategory value) const
 {
     Windows::Foundation::IAsyncAction action;
-    check_hresult(static_cast<const IGameListEntry &>(static_cast<const D &>(*this))->abi_SetCategoryAsync(value, put(action)));
+    check_hresult(WINRT_SHIM(IGameListEntry)->abi_SetCategoryAsync(value, put_abi(action)));
     return action;
 }
 
 template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> impl_IGameListStatics<D>::FindAllAsync() const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> operation;
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->abi_FindAllAsync(put(operation)));
+    check_hresult(WINRT_SHIM(IGameListStatics)->abi_FindAllAsync(put_abi(operation)));
     return operation;
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> impl_IGameListStatics<D>::FindAllAsync(hstring_ref packageFamilyName) const
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> impl_IGameListStatics<D>::FindAllAsync(hstring_view packageFamilyName) const
 {
     Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> operation;
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->abi_FindAllAsyncPackageFamilyName(get(packageFamilyName), put(operation)));
+    check_hresult(WINRT_SHIM(IGameListStatics)->abi_FindAllAsyncPackageFamilyName(get_abi(packageFamilyName), put_abi(operation)));
     return operation;
 }
 
 template <typename D> event_token impl_IGameListStatics<D>::GameAdded(const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->add_GameAdded(get(handler), &token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->add_GameAdded(get_abi(handler), &token));
     return token;
 }
 
@@ -300,13 +316,13 @@ template <typename D> event_revoker<IGameListStatics> impl_IGameListStatics<D>::
 
 template <typename D> void impl_IGameListStatics<D>::GameAdded(event_token token) const
 {
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->remove_GameAdded(token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->remove_GameAdded(token));
 }
 
 template <typename D> event_token impl_IGameListStatics<D>::GameRemoved(const Windows::Gaming::Preview::GamesEnumeration::GameListRemovedEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->add_GameRemoved(get(handler), &token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->add_GameRemoved(get_abi(handler), &token));
     return token;
 }
 
@@ -317,13 +333,13 @@ template <typename D> event_revoker<IGameListStatics> impl_IGameListStatics<D>::
 
 template <typename D> void impl_IGameListStatics<D>::GameRemoved(event_token token) const
 {
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->remove_GameRemoved(token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->remove_GameRemoved(token));
 }
 
 template <typename D> event_token impl_IGameListStatics<D>::GameUpdated(const Windows::Gaming::Preview::GamesEnumeration::GameListChangedEventHandler & handler) const
 {
     event_token token {};
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->add_GameUpdated(get(handler), &token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->add_GameUpdated(get_abi(handler), &token));
     return token;
 }
 
@@ -334,7 +350,7 @@ template <typename D> event_revoker<IGameListStatics> impl_IGameListStatics<D>::
 
 template <typename D> void impl_IGameListStatics<D>::GameUpdated(event_token token) const
 {
-    check_hresult(static_cast<const IGameListStatics &>(static_cast<const D &>(*this))->remove_GameUpdated(token));
+    check_hresult(WINRT_SHIM(IGameListStatics)->remove_GameUpdated(token));
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> GameList::FindAllAsync()
@@ -342,7 +358,7 @@ inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IV
     return get_activation_factory<GameList, IGameListStatics>().FindAllAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> GameList::FindAllAsync(hstring_ref packageFamilyName)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Gaming::Preview::GamesEnumeration::GameListEntry>> GameList::FindAllAsync(hstring_view packageFamilyName)
 {
     return get_activation_factory<GameList, IGameListStatics>().FindAllAsync(packageFamilyName);
 }
@@ -398,3 +414,32 @@ inline void GameList::GameUpdated(event_token token)
 }
 
 }
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Preview::GamesEnumeration::IGameListEntry>
+{
+    size_t operator()(const winrt::Windows::Gaming::Preview::GamesEnumeration::IGameListEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Preview::GamesEnumeration::IGameListStatics>
+{
+    size_t operator()(const winrt::Windows::Gaming::Preview::GamesEnumeration::IGameListStatics & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+template<>
+struct std::hash<winrt::Windows::Gaming::Preview::GamesEnumeration::GameListEntry>
+{
+    size_t operator()(const winrt::Windows::Gaming::Preview::GamesEnumeration::GameListEntry & value) const noexcept
+    {
+        return winrt::impl::hash_unknown(value);
+    }
+};
+
+WINRT_WARNING_POP

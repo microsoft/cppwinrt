@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -33,13 +33,13 @@ struct WINRT_EBO ResourceContext :
 {
     ResourceContext(std::nullptr_t) noexcept {}
     ResourceContext();
-    static Windows::ApplicationModel::Resources::Core::ResourceContext CreateMatchingContext(const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Resources::Core::ResourceQualifier> & result);
+    [[deprecated("CreateMatchingContext may be altered or unavailable for releases after Windows 8.1. Instead, use ResourceContext.GetForCurrentView.OverrideToMatch.")]] static Windows::ApplicationModel::Resources::Core::ResourceContext CreateMatchingContext(iterable<Windows::ApplicationModel::Resources::Core::ResourceQualifier> result);
     static Windows::ApplicationModel::Resources::Core::ResourceContext GetForCurrentView();
-    static void SetGlobalQualifierValue(hstring_ref key, hstring_ref value);
+    static void SetGlobalQualifierValue(hstring_view key, hstring_view value);
     static void ResetGlobalQualifierValues();
-    static void ResetGlobalQualifierValues(const Windows::Foundation::Collections::IIterable<hstring> & qualifierNames);
+    static void ResetGlobalQualifierValues(iterable<hstring> qualifierNames);
     static Windows::ApplicationModel::Resources::Core::ResourceContext GetForViewIndependentUse();
-    static void SetGlobalQualifierValue(hstring_ref key, hstring_ref value, Windows::ApplicationModel::Resources::Core::ResourceQualifierPersistence persistence);
+    static void SetGlobalQualifierValue(hstring_view key, hstring_view value, Windows::ApplicationModel::Resources::Core::ResourceQualifierPersistence persistence);
 };
 
 struct WINRT_EBO ResourceContextLanguagesVectorView :
@@ -54,7 +54,7 @@ struct WINRT_EBO ResourceManager :
 {
     ResourceManager(std::nullptr_t) noexcept {}
     static Windows::ApplicationModel::Resources::Core::ResourceManager Current();
-    static bool IsResourceReference(hstring_ref resourceReference);
+    static bool IsResourceReference(hstring_view resourceReference);
 };
 
 struct WINRT_EBO ResourceMap :

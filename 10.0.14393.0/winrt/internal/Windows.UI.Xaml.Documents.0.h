@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -125,6 +125,49 @@ struct TextElement;
 struct TextPointer;
 struct Typography;
 struct Underline;
+
+}
+
+namespace Windows::UI::Xaml::Documents {
+
+template <typename T> struct impl_IBlock;
+template <typename T> struct impl_IBlockFactory;
+template <typename T> struct impl_IBlockStatics;
+template <typename T> struct impl_IBold;
+template <typename T> struct impl_IGlyphs;
+template <typename T> struct impl_IGlyphs2;
+template <typename T> struct impl_IGlyphsStatics;
+template <typename T> struct impl_IGlyphsStatics2;
+template <typename T> struct impl_IHyperlink;
+template <typename T> struct impl_IHyperlink2;
+template <typename T> struct impl_IHyperlink3;
+template <typename T> struct impl_IHyperlinkClickEventArgs;
+template <typename T> struct impl_IHyperlinkStatics;
+template <typename T> struct impl_IHyperlinkStatics2;
+template <typename T> struct impl_IHyperlinkStatics3;
+template <typename T> struct impl_IInline;
+template <typename T> struct impl_IInlineFactory;
+template <typename T> struct impl_IInlineUIContainer;
+template <typename T> struct impl_IItalic;
+template <typename T> struct impl_ILineBreak;
+template <typename T> struct impl_IParagraph;
+template <typename T> struct impl_IParagraphStatics;
+template <typename T> struct impl_IRun;
+template <typename T> struct impl_IRunStatics;
+template <typename T> struct impl_ISpan;
+template <typename T> struct impl_ISpanFactory;
+template <typename T> struct impl_ITextElement;
+template <typename T> struct impl_ITextElement2;
+template <typename T> struct impl_ITextElement3;
+template <typename T> struct impl_ITextElementFactory;
+template <typename T> struct impl_ITextElementOverrides;
+template <typename T> struct impl_ITextElementStatics;
+template <typename T> struct impl_ITextElementStatics2;
+template <typename T> struct impl_ITextElementStatics3;
+template <typename T> struct impl_ITextPointer;
+template <typename T> struct impl_ITypography;
+template <typename T> struct impl_ITypographyStatics;
+template <typename T> struct impl_IUnderline;
 
 }
 

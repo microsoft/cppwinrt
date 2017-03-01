@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -87,6 +87,32 @@ struct ThreadNetworkContext;
 
 namespace Windows::Security::EnterpriseData {
 
+template <typename T> struct impl_IBufferProtectUnprotectResult;
+template <typename T> struct impl_IDataProtectionInfo;
+template <typename T> struct impl_IDataProtectionManagerStatics;
+template <typename T> struct impl_IFileProtectionInfo;
+template <typename T> struct impl_IFileProtectionManagerStatics;
+template <typename T> struct impl_IFileProtectionManagerStatics2;
+template <typename T> struct impl_IFileRevocationManagerStatics;
+template <typename T> struct impl_IProtectedAccessResumedEventArgs;
+template <typename T> struct impl_IProtectedAccessSuspendingEventArgs;
+template <typename T> struct impl_IProtectedContainerExportResult;
+template <typename T> struct impl_IProtectedContainerImportResult;
+template <typename T> struct impl_IProtectedContentRevokedEventArgs;
+template <typename T> struct impl_IProtectedFileCreateResult;
+template <typename T> struct impl_IProtectionPolicyAuditInfo;
+template <typename T> struct impl_IProtectionPolicyAuditInfoFactory;
+template <typename T> struct impl_IProtectionPolicyManager;
+template <typename T> struct impl_IProtectionPolicyManager2;
+template <typename T> struct impl_IProtectionPolicyManagerStatics;
+template <typename T> struct impl_IProtectionPolicyManagerStatics2;
+template <typename T> struct impl_IProtectionPolicyManagerStatics3;
+template <typename T> struct impl_IThreadNetworkContext;
+
+}
+
+namespace Windows::Security::EnterpriseData {
+
 enum class DataProtectionStatus
 {
     ProtectedToOtherIdentity = 0,
@@ -107,13 +133,13 @@ enum class EnforcementLevel
 
 enum class FileProtectionStatus
 {
-    Undetermined = 0,
+    Undetermined [[deprecated("Undetermined might be unavailable after Windows 10. Instead, use Unknown.")]] = 0,
     Unknown = 0,
     Unprotected = 1,
     Revoked = 2,
     Protected = 3,
-    ProtectedByOtherUser = 4,
-    ProtectedToOtherEnterprise = 5,
+    ProtectedByOtherUser [[deprecated("ProtectedByOtherUser might be unavailable after Windows 10. Instead, use ProtectedToOtherIdentity.")]] = 4,
+    ProtectedToOtherEnterprise [[deprecated("ProtectedToOtherEnterprise might be unavailable after Windows 10. Instead, use ProtectedToOtherIdentity.")]] = 5,
     NotProtectable = 6,
     ProtectedToOtherIdentity = 7,
     LicenseExpired = 8,

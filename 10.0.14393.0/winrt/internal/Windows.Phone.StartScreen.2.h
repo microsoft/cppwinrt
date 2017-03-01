@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -24,58 +24,25 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 
 namespace Windows::Phone::StartScreen {
 
-template <typename D>
-struct WINRT_EBO impl_IDualSimTile
-{
-    void DisplayName(hstring_ref value) const;
-    hstring DisplayName() const;
-    bool IsPinnedToStart() const;
-    Windows::Foundation::IAsyncOperation<bool> CreateAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> UpdateAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> DeleteAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IDualSimTileStatics
-{
-    Windows::Phone::StartScreen::DualSimTile GetTileForSim2() const;
-    Windows::Foundation::IAsyncOperation<bool> UpdateDisplayNameForSim1Async(hstring_ref name) const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim1() const;
-    Windows::UI::Notifications::TileUpdater CreateTileUpdaterForSim2() const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSim1() const;
-    Windows::UI::Notifications::BadgeUpdater CreateBadgeUpdaterForSim2() const;
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSim1() const;
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSim2() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IToastNotificationManagerStatics3
-{
-    Windows::UI::Notifications::ToastNotifier CreateToastNotifierForSecondaryTile(hstring_ref tileId) const;
-};
-
 struct IDualSimTile :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDualSimTile>
 {
     IDualSimTile(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDualSimTile>(m_ptr); }
 };
 
 struct IDualSimTileStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IDualSimTileStatics>
 {
     IDualSimTileStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IDualSimTileStatics>(m_ptr); }
 };
 
 struct IToastNotificationManagerStatics3 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IToastNotificationManagerStatics3>
 {
     IToastNotificationManagerStatics3(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IToastNotificationManagerStatics3>(m_ptr); }
 };
 
 }

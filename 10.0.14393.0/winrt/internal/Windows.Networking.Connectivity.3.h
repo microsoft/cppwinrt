@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_NetworkStatusChangedEventHandler : implements<
 {
     impl_NetworkStatusChangedEventHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::IInspectable> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Foundation::IInspectable> sender) noexcept override
     {
         try
         {
-            (*this)(*reinterpret_cast<const Windows::IInspectable *>(&sender));
+            (*this)(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&sender));
             return S_OK;
         }
         catch (...)
@@ -98,7 +98,7 @@ struct WINRT_EBO DataPlanUsage :
     DataPlanUsage(std::nullptr_t) noexcept {}
 };
 
-struct WINRT_EBO DataUsage :
+struct [[deprecated("DataUsage may be altered or unavailable for releases after Windows 8.1. Instead, use NetworkUsage.")]] WINRT_EBO DataUsage :
     Windows::Networking::Connectivity::IDataUsage
 {
     DataUsage(std::nullptr_t) noexcept {}
@@ -136,7 +136,7 @@ struct NetworkInformation
     static Windows::Foundation::Collections::IVectorView<Windows::Networking::Connectivity::LanIdentifier> GetLanIdentifiers();
     static Windows::Foundation::Collections::IVectorView<Windows::Networking::HostName> GetHostNames();
     static Windows::Foundation::IAsyncOperation<Windows::Networking::Connectivity::ProxyConfiguration> GetProxyConfigurationAsync(const Windows::Foundation::Uri & uri);
-    static Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair> GetSortedEndpointPairs(const Windows::Foundation::Collections::IIterable<Windows::Networking::EndpointPair> & destinationList, Windows::Networking::HostNameSortOptions sortOptions);
+    static Windows::Foundation::Collections::IVectorView<Windows::Networking::EndpointPair> GetSortedEndpointPairs(iterable<Windows::Networking::EndpointPair> destinationList, Windows::Networking::HostNameSortOptions sortOptions);
     static event_token NetworkStatusChanged(const Windows::Networking::Connectivity::NetworkStatusChangedEventHandler & networkStatusHandler);
     using NetworkStatusChanged_revoker = factory_event_revoker<INetworkInformationStatics>;
     static NetworkStatusChanged_revoker NetworkStatusChanged(auto_revoke_t, const Windows::Networking::Connectivity::NetworkStatusChangedEventHandler & networkStatusHandler);

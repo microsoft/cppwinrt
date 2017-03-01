@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -13,11 +13,11 @@ template <typename H> struct impl_PerceptionStartFaceAuthenticationHandler : imp
 {
     impl_PerceptionStartFaceAuthenticationHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> sender, bool * result) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> sender, bool * result) noexcept override
     {
         try
         {
-            *result = detach((*this)(*reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup *>(&sender)));
+            *result = detach_abi((*this)(*reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup *>(&sender)));
             return S_OK;
         }
         catch (...)
@@ -31,7 +31,7 @@ template <typename H> struct impl_PerceptionStopFaceAuthenticationHandler : impl
 {
     impl_PerceptionStopFaceAuthenticationHandler(H && handler) : H(std::forward<H>(handler)) {}
 
-    HRESULT __stdcall abi_Invoke(abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> sender) noexcept override
+    HRESULT __stdcall abi_Invoke(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> sender) noexcept override
     {
         try
         {
@@ -61,28 +61,28 @@ struct WINRT_EBO PerceptionControlGroup :
     Windows::Devices::Perception::Provider::IPerceptionControlGroup
 {
     PerceptionControlGroup(std::nullptr_t) noexcept {}
-    PerceptionControlGroup(const Windows::Foundation::Collections::IIterable<hstring> & ids);
+    PerceptionControlGroup(iterable<hstring> ids);
 };
 
 struct WINRT_EBO PerceptionCorrelation :
     Windows::Devices::Perception::Provider::IPerceptionCorrelation
 {
     PerceptionCorrelation(std::nullptr_t) noexcept {}
-    PerceptionCorrelation(hstring_ref targetId, const Windows::Foundation::Numerics::float3 & position, const Windows::Foundation::Numerics::quaternion & orientation);
+    PerceptionCorrelation(hstring_view targetId, const Windows::Foundation::Numerics::float3 & position, const Windows::Foundation::Numerics::quaternion & orientation);
 };
 
 struct WINRT_EBO PerceptionCorrelationGroup :
     Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup
 {
     PerceptionCorrelationGroup(std::nullptr_t) noexcept {}
-    PerceptionCorrelationGroup(const Windows::Foundation::Collections::IIterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> & relativeLocations);
+    PerceptionCorrelationGroup(iterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> relativeLocations);
 };
 
 struct WINRT_EBO PerceptionFaceAuthenticationGroup :
     Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup
 {
     PerceptionFaceAuthenticationGroup(std::nullptr_t) noexcept {}
-    PerceptionFaceAuthenticationGroup(const Windows::Foundation::Collections::IIterable<hstring> & ids, const Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler & startHandler, const Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler & stopHandler);
+    PerceptionFaceAuthenticationGroup(iterable<hstring> ids, const Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler & startHandler, const Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler & stopHandler);
 };
 
 struct WINRT_EBO PerceptionFrame :

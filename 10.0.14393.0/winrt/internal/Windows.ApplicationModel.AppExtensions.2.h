@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -79,6 +79,11 @@ template <> struct __declspec(uuid("c211026e-9e63-5452-ba54-3a07d6a96874")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_76157168_b2a7_5300_9c96_23673c4fd2fd
+#define WINRT_GENERIC_76157168_b2a7_5300_9c96_23673c4fd2fd
+template <> struct __declspec(uuid("76157168-b2a7-5300-9c96-23673c4fd2fd")) __declspec(novtable) IVector<Windows::ApplicationModel::AppExtensions::AppExtension> : impl_IVector<Windows::ApplicationModel::AppExtensions::AppExtension> {};
+#endif
+
 #ifndef WINRT_GENERIC_8e80ca83_3cd3_5f9c_83e4_84347ca5498c
 #define WINRT_GENERIC_8e80ca83_3cd3_5f9c_83e4_84347ca5498c
 template <> struct __declspec(uuid("8e80ca83-3cd3-5f9c-83e4-84347ca5498c")) __declspec(novtable) IIterator<Windows::ApplicationModel::AppExtensions::AppExtension> : impl_IIterator<Windows::ApplicationModel::AppExtensions::AppExtension> {};
@@ -114,150 +119,60 @@ template <> struct __declspec(uuid("cbd3ea3b-1275-5688-8610-0ab1f83442fc")) __de
 
 namespace Windows::ApplicationModel::AppExtensions {
 
-template <typename D>
-struct WINRT_EBO impl_IAppExtension
-{
-    hstring Id() const;
-    hstring DisplayName() const;
-    hstring Description() const;
-    Windows::ApplicationModel::Package Package() const;
-    Windows::ApplicationModel::AppInfo AppInfo() const;
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> GetExtensionPropertiesAsync() const;
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> GetPublicFolderAsync() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionCatalog
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension>> FindAllAsync() const;
-    Windows::Foundation::IAsyncOperation<bool> RequestRemovePackageAsync(hstring_ref packageFullName) const;
-    event_token PackageInstalled(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs> & handler) const;
-    using PackageInstalled_revoker = event_revoker<IAppExtensionCatalog>;
-    PackageInstalled_revoker PackageInstalled(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageInstalledEventArgs> & handler) const;
-    void PackageInstalled(event_token token) const;
-    event_token PackageUpdating(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs> & handler) const;
-    using PackageUpdating_revoker = event_revoker<IAppExtensionCatalog>;
-    PackageUpdating_revoker PackageUpdating(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatingEventArgs> & handler) const;
-    void PackageUpdating(event_token token) const;
-    event_token PackageUpdated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs> & handler) const;
-    using PackageUpdated_revoker = event_revoker<IAppExtensionCatalog>;
-    PackageUpdated_revoker PackageUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUpdatedEventArgs> & handler) const;
-    void PackageUpdated(event_token token) const;
-    event_token PackageUninstalling(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs> & handler) const;
-    using PackageUninstalling_revoker = event_revoker<IAppExtensionCatalog>;
-    PackageUninstalling_revoker PackageUninstalling(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageUninstallingEventArgs> & handler) const;
-    void PackageUninstalling(event_token token) const;
-    event_token PackageStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs> & handler) const;
-    using PackageStatusChanged_revoker = event_revoker<IAppExtensionCatalog>;
-    PackageStatusChanged_revoker PackageStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::AppExtensions::AppExtensionCatalog, Windows::ApplicationModel::AppExtensions::AppExtensionPackageStatusChangedEventArgs> & handler) const;
-    void PackageStatusChanged(event_token token) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionCatalogStatics
-{
-    Windows::ApplicationModel::AppExtensions::AppExtensionCatalog Open(hstring_ref appExtensionName) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionPackageInstalledEventArgs
-{
-    hstring AppExtensionName() const;
-    Windows::ApplicationModel::Package Package() const;
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> Extensions() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionPackageStatusChangedEventArgs
-{
-    hstring AppExtensionName() const;
-    Windows::ApplicationModel::Package Package() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionPackageUninstallingEventArgs
-{
-    hstring AppExtensionName() const;
-    Windows::ApplicationModel::Package Package() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionPackageUpdatedEventArgs
-{
-    hstring AppExtensionName() const;
-    Windows::ApplicationModel::Package Package() const;
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppExtensions::AppExtension> Extensions() const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IAppExtensionPackageUpdatingEventArgs
-{
-    hstring AppExtensionName() const;
-    Windows::ApplicationModel::Package Package() const;
-};
-
 struct IAppExtension :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtension>
 {
     IAppExtension(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtension>(m_ptr); }
 };
 
 struct IAppExtensionCatalog :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionCatalog>
 {
     IAppExtensionCatalog(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionCatalog>(m_ptr); }
 };
 
 struct IAppExtensionCatalogStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionCatalogStatics>
 {
     IAppExtensionCatalogStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionCatalogStatics>(m_ptr); }
 };
 
 struct IAppExtensionPackageInstalledEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionPackageInstalledEventArgs>
 {
     IAppExtensionPackageInstalledEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionPackageInstalledEventArgs>(m_ptr); }
 };
 
 struct IAppExtensionPackageStatusChangedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionPackageStatusChangedEventArgs>
 {
     IAppExtensionPackageStatusChangedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionPackageStatusChangedEventArgs>(m_ptr); }
 };
 
 struct IAppExtensionPackageUninstallingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionPackageUninstallingEventArgs>
 {
     IAppExtensionPackageUninstallingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionPackageUninstallingEventArgs>(m_ptr); }
 };
 
 struct IAppExtensionPackageUpdatedEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionPackageUpdatedEventArgs>
 {
     IAppExtensionPackageUpdatedEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionPackageUpdatedEventArgs>(m_ptr); }
 };
 
 struct IAppExtensionPackageUpdatingEventArgs :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IAppExtensionPackageUpdatingEventArgs>
 {
     IAppExtensionPackageUpdatingEventArgs(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IAppExtensionPackageUpdatingEventArgs>(m_ptr); }
 };
 
 }

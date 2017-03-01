@@ -1,18 +1,23 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
 
 WINRT_EXPORT namespace winrt {
 
+namespace Windows::Media::Protection::PlayReady {
+
+
+}
+
 namespace Windows::Media::Render {
 
 enum class AudioRenderCategory
 {
     Other = 0,
-    ForegroundOnlyMedia = 1,
-    BackgroundCapableMedia = 2,
+    ForegroundOnlyMedia [[deprecated("ForegroundOnlyMedia is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 1,
+    BackgroundCapableMedia [[deprecated("BackgroundCapableMedia is deprecated and might not work on all platforms. For more info, see MSDN.")]] = 2,
     Communications = 3,
     Alerts = 4,
     SoundEffects = 5,

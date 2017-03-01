@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -57,6 +57,20 @@ struct MouseDevice;
 struct MouseEventArgs;
 struct PointerDevice;
 struct TouchCapabilities;
+
+}
+
+namespace Windows::Devices::Input {
+
+template <typename T> struct impl_IKeyboardCapabilities;
+template <typename T> struct impl_IMouseCapabilities;
+template <typename T> struct impl_IMouseDevice;
+template <typename T> struct impl_IMouseDeviceStatics;
+template <typename T> struct impl_IMouseEventArgs;
+template <typename T> struct impl_IPointerDevice;
+template <typename T> struct impl_IPointerDevice2;
+template <typename T> struct impl_IPointerDeviceStatics;
+template <typename T> struct impl_ITouchCapabilities;
 
 }
 

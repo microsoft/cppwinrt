@@ -1,5 +1,5 @@
-// C++ for the Windows Runtime v1.0.161012.5
-// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
+// C++ for the Windows Runtime v1.0.170301.3
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
 
@@ -36,7 +36,7 @@ namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_3c619943_a672_57ee_ad32_f6d97a6f4217
 #define WINRT_GENERIC_3c619943_a672_57ee_ad32_f6d97a6f4217
-template <> struct __declspec(uuid("3c619943-a672-57ee-ad32-f6d97a6f4217")) __declspec(novtable) TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::IInspectable> : impl_TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::IInspectable> {};
+template <> struct __declspec(uuid("3c619943-a672-57ee-ad32-f6d97a6f4217")) __declspec(novtable) TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_587c5f4f_7c55_5f74_b26a_f80e3bc6d4f2
@@ -58,6 +58,11 @@ template <> struct __declspec(uuid("88b0349f-503d-5786-a267-55bb37a8a1b1")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_50277fb0_2340_50c6_9dd9_206e0dd33d6a
+#define WINRT_GENERIC_50277fb0_2340_50c6_9dd9_206e0dd33d6a
+template <> struct __declspec(uuid("50277fb0-2340-50c6-9dd9-206e0dd33d6a")) __declspec(novtable) IVector<Windows::ApplicationModel::Wallet::WalletItem> : impl_IVector<Windows::ApplicationModel::Wallet::WalletItem> {};
+#endif
 
 #ifndef WINRT_GENERIC_e3ceb002_c2dd_5e63_913c_d7d577561e73
 #define WINRT_GENERIC_e3ceb002_c2dd_5e63_913c_d7d577561e73
@@ -94,53 +99,25 @@ template <> struct __declspec(uuid("9302d49e-dda3-5971-b48a-dfdf02c572af")) __de
 
 namespace Windows::ApplicationModel::Wallet::System {
 
-template <typename D>
-struct WINRT_EBO impl_IWalletItemSystemStore
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Wallet::WalletItem>> GetItemsAsync() const;
-    Windows::Foundation::IAsyncAction DeleteAsync(const Windows::ApplicationModel::Wallet::WalletItem & item) const;
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Wallet::WalletItem> ImportItemAsync(const Windows::Storage::Streams::IRandomAccessStreamReference & stream) const;
-    Windows::ApplicationModel::Wallet::System::WalletItemAppAssociation GetAppStatusForItem(const Windows::ApplicationModel::Wallet::WalletItem & item) const;
-    Windows::Foundation::IAsyncOperation<bool> LaunchAppForItemAsync(const Windows::ApplicationModel::Wallet::WalletItem & item) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWalletItemSystemStore2
-{
-    event_token ItemsChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::IInspectable> & handler) const;
-    using ItemsChanged_revoker = event_revoker<IWalletItemSystemStore2>;
-    ItemsChanged_revoker ItemsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore, Windows::IInspectable> & handler) const;
-    void ItemsChanged(event_token cookie) const;
-};
-
-template <typename D>
-struct WINRT_EBO impl_IWalletManagerSystemStatics
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Wallet::System::WalletItemSystemStore> RequestStoreAsync() const;
-};
-
 struct IWalletItemSystemStore :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWalletItemSystemStore>
 {
     IWalletItemSystemStore(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWalletItemSystemStore>(m_ptr); }
 };
 
 struct IWalletItemSystemStore2 :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWalletItemSystemStore2>
 {
     IWalletItemSystemStore2(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWalletItemSystemStore2>(m_ptr); }
 };
 
 struct IWalletManagerSystemStatics :
-    Windows::IInspectable,
+    Windows::Foundation::IInspectable,
     impl::consume<IWalletManagerSystemStatics>
 {
     IWalletManagerSystemStatics(std::nullptr_t = nullptr) noexcept {}
-    auto operator->() const noexcept { return ptr<IWalletManagerSystemStatics>(m_ptr); }
 };
 
 }
