@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,8 +6,8 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
-#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
+#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Graphics.Imaging.3.h"
 #include "internal/Windows.Graphics.DirectX.Direct3D11.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
@@ -2892,6 +2892,265 @@ struct produce<D, Windows::Media::IVideoFrameFactory> : produce_base<D, Windows:
 
 namespace Windows::Media {
 
+template <typename D> event_token impl_IMediaControl<D>::SoundLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_SoundLevelChanged(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::SoundLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_SoundLevelChanged, SoundLevelChanged(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::SoundLevelChanged(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_SoundLevelChanged(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::PlayPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_PlayPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PlayPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PlayPressed, PlayPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::PlayPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_PlayPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::PausePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_PausePressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PausePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PausePressed, PausePressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::PausePressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_PausePressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::StopPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_StopPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::StopPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_StopPressed, StopPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::StopPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_StopPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::PlayPauseTogglePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_PlayPauseTogglePressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PlayPauseTogglePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PlayPauseTogglePressed, PlayPauseTogglePressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::PlayPauseTogglePressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_PlayPauseTogglePressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::RecordPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_RecordPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::RecordPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_RecordPressed, RecordPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::RecordPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_RecordPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::NextTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_NextTrackPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::NextTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_NextTrackPressed, NextTrackPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::NextTrackPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_NextTrackPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::PreviousTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_PreviousTrackPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PreviousTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PreviousTrackPressed, PreviousTrackPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::PreviousTrackPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_PreviousTrackPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::FastForwardPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_FastForwardPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::FastForwardPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_FastForwardPressed, FastForwardPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::FastForwardPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_FastForwardPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::RewindPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_RewindPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::RewindPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_RewindPressed, RewindPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::RewindPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_RewindPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::ChannelUpPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_ChannelUpPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::ChannelUpPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_ChannelUpPressed, ChannelUpPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::ChannelUpPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_ChannelUpPressed(cookie));
+}
+
+template <typename D> event_token impl_IMediaControl<D>::ChannelDownPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(IMediaControl)->add_ChannelDownPressed(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::ChannelDownPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_ChannelDownPressed, ChannelDownPressed(handler));
+}
+
+template <typename D> void impl_IMediaControl<D>::ChannelDownPressed(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->remove_ChannelDownPressed(cookie));
+}
+
+template <typename D> Windows::Media::SoundLevel impl_IMediaControl<D>::SoundLevel() const
+{
+    Windows::Media::SoundLevel value {};
+    check_hresult(WINRT_SHIM(IMediaControl)->get_SoundLevel(&value));
+    return value;
+}
+
+template <typename D> void impl_IMediaControl<D>::TrackName(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->put_TrackName(get_abi(value)));
+}
+
+template <typename D> hstring impl_IMediaControl<D>::TrackName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMediaControl)->get_TrackName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IMediaControl<D>::ArtistName(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->put_ArtistName(get_abi(value)));
+}
+
+template <typename D> hstring impl_IMediaControl<D>::ArtistName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMediaControl)->get_ArtistName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IMediaControl<D>::IsPlaying(bool value) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->put_IsPlaying(value));
+}
+
+template <typename D> bool impl_IMediaControl<D>::IsPlaying() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IMediaControl)->get_IsPlaying(&value));
+    return value;
+}
+
+template <typename D> void impl_IMediaControl<D>::AlbumArt(const Windows::Foundation::Uri & value) const
+{
+    check_hresult(WINRT_SHIM(IMediaControl)->put_AlbumArt(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Uri impl_IMediaControl<D>::AlbumArt() const
+{
+    Windows::Foundation::Uri value { nullptr };
+    check_hresult(WINRT_SHIM(IMediaControl)->get_AlbumArt(put_abi(value)));
+    return value;
+}
+
 template <typename D> Windows::Foundation::Collections::ValueSet impl_IMediaProcessingTriggerDetails<D>::Arguments() const
 {
     Windows::Foundation::Collections::ValueSet value { nullptr };
@@ -3908,265 +4167,6 @@ template <typename D> hstring impl_IVideoEffectsStatics<D>::VideoStabilization()
 {
     hstring value;
     check_hresult(WINRT_SHIM(IVideoEffectsStatics)->get_VideoStabilization(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IMediaControl<D>::SoundLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_SoundLevelChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::SoundLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_SoundLevelChanged, SoundLevelChanged(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::SoundLevelChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_SoundLevelChanged(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::PlayPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_PlayPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PlayPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PlayPressed, PlayPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::PlayPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_PlayPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::PausePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_PausePressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PausePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PausePressed, PausePressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::PausePressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_PausePressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::StopPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_StopPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::StopPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_StopPressed, StopPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::StopPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_StopPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::PlayPauseTogglePressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_PlayPauseTogglePressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PlayPauseTogglePressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PlayPauseTogglePressed, PlayPauseTogglePressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::PlayPauseTogglePressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_PlayPauseTogglePressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::RecordPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_RecordPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::RecordPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_RecordPressed, RecordPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::RecordPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_RecordPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::NextTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_NextTrackPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::NextTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_NextTrackPressed, NextTrackPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::NextTrackPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_NextTrackPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::PreviousTrackPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_PreviousTrackPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::PreviousTrackPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_PreviousTrackPressed, PreviousTrackPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::PreviousTrackPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_PreviousTrackPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::FastForwardPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_FastForwardPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::FastForwardPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_FastForwardPressed, FastForwardPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::FastForwardPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_FastForwardPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::RewindPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_RewindPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::RewindPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_RewindPressed, RewindPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::RewindPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_RewindPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::ChannelUpPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_ChannelUpPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::ChannelUpPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_ChannelUpPressed, ChannelUpPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::ChannelUpPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_ChannelUpPressed(cookie));
-}
-
-template <typename D> event_token impl_IMediaControl<D>::ChannelDownPressed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IMediaControl)->add_ChannelDownPressed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IMediaControl> impl_IMediaControl<D>::ChannelDownPressed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMediaControl>(this, &ABI::Windows::Media::IMediaControl::remove_ChannelDownPressed, ChannelDownPressed(handler));
-}
-
-template <typename D> void impl_IMediaControl<D>::ChannelDownPressed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->remove_ChannelDownPressed(cookie));
-}
-
-template <typename D> Windows::Media::SoundLevel impl_IMediaControl<D>::SoundLevel() const
-{
-    Windows::Media::SoundLevel value {};
-    check_hresult(WINRT_SHIM(IMediaControl)->get_SoundLevel(&value));
-    return value;
-}
-
-template <typename D> void impl_IMediaControl<D>::TrackName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->put_TrackName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IMediaControl<D>::TrackName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMediaControl)->get_TrackName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMediaControl<D>::ArtistName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->put_ArtistName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IMediaControl<D>::ArtistName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMediaControl)->get_ArtistName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMediaControl<D>::IsPlaying(bool value) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->put_IsPlaying(value));
-}
-
-template <typename D> bool impl_IMediaControl<D>::IsPlaying() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IMediaControl)->get_IsPlaying(&value));
-    return value;
-}
-
-template <typename D> void impl_IMediaControl<D>::AlbumArt(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(IMediaControl)->put_AlbumArt(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Uri impl_IMediaControl<D>::AlbumArt() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IMediaControl)->get_AlbumArt(put_abi(value)));
     return value;
 }
 

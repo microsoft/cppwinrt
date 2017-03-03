@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -49,9 +49,9 @@ template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
+#ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
+#define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
+template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
 #endif
 
 #ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
@@ -59,9 +59,9 @@ template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __de
 template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
 #endif
 
-#ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
-#define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
-template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
+#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
 #endif
 
 

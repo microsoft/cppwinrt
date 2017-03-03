@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -3426,7 +3426,95 @@ namespace impl
     {};
 
     template <bool Agile>
-    struct weak_ref : ABI::Windows::Foundation::IWeakReference
+    struct free_threaded_marshaler
+    {
+        void * find_marshal() noexcept
+        {
+            WINRT_ASSERT(false);
+            return nullptr;
+        }
+    };
+
+    template <>
+    struct free_threaded_marshaler<true> : IMarshal
+    {
+        void * find_marshal() noexcept
+        {
+            return static_cast<IMarshal *>(this);
+        }
+
+        HRESULT __stdcall GetUnmarshalClass(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, CLSID* pCid) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->GetUnmarshalClass(riid, pv, dwDestContext, pvDestContext, mshlflags, pCid);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+        HRESULT __stdcall GetMarshalSizeMax(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, DWORD* pSize) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->GetMarshalSizeMax(riid, pv, dwDestContext, pvDestContext, mshlflags, pSize);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+        HRESULT __stdcall MarshalInterface(IStream* pStm, REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->MarshalInterface(pStm, riid, pv, dwDestContext, pvDestContext, mshlflags);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+        HRESULT __stdcall UnmarshalInterface(IStream* pStm, REFIID riid, void** ppv) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->UnmarshalInterface(pStm, riid, ppv);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+        HRESULT __stdcall ReleaseMarshalData(IStream* pStm) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->ReleaseMarshalData(pStm);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+        HRESULT __stdcall DisconnectObject(DWORD dwReserved) noexcept final
+        {
+            if (com_ptr<IMarshal> marshal = get_marshaler())
+            {
+                return marshal->DisconnectObject(dwReserved);
+            }
+
+            return E_OUTOFMEMORY;
+        }
+
+    private:
+
+        static com_ptr<IMarshal> get_marshaler() noexcept
+        {
+            com_ptr<::IUnknown> unknown;
+            CoCreateFreeThreadedMarshaler(nullptr, put_abi(unknown));
+            return unknown ? unknown.try_as<IMarshal>() : nullptr;
+        }
+    };
+
+    template <bool Agile>
+    struct weak_ref : ABI::Windows::Foundation::IWeakReference, free_threaded_marshaler<Agile>
     {
         weak_ref(::IUnknown * object, const uint32_t strong) :
             m_object(object),
@@ -3440,30 +3528,17 @@ namespace impl
             if (id == __uuidof(ABI::Windows::Foundation::IWeakReference) || id == __uuidof(::IUnknown))
             {
                 *object = static_cast<ABI::Windows::Foundation::IWeakReference *>(this);
-                m_weak.fetch_add(1, std::memory_order_relaxed);
+                AddRef();
                 return S_OK;
             }
 
             if (Agile)
             {
-                if (id == __uuidof(IAgileObject))
+                if (id == __uuidof(IAgileObject) || id == __uuidof(IMarshal))
                 {
-                    *object = static_cast< ::IUnknown *>(this);
-                    m_weak.fetch_add(1, std::memory_order_relaxed);
+                    *object = this->find_marshal();
+                    AddRef();
                     return S_OK;
-                }
-
-                if (id == __uuidof(IMarshal))
-                {
-                    com_ptr< ::IUnknown> marshaler;
-                    const HRESULT hr = CoCreateFreeThreadedMarshaler(this, put_abi(marshaler));
-
-                    if (hr != S_OK)
-                    {
-                        return hr;
-                    }
-
-                    return marshaler->QueryInterface(id, object);
                 }
             }
 
@@ -3582,10 +3657,13 @@ namespace impl
         std::atomic<uint32_t> m_strong{ 1 };
         std::atomic<uint32_t> m_weak{ 1 };
     };
+
+    template <typename ... I>
+    using is_agile = impl::negation<impl::disjunction<std::is_same<non_agile, I> ...>>;
 }
 
 template <typename D, typename ... I>
-struct implements : impl::producer<D, impl::uncloak_t<I>> ...
+struct implements : impl::producer<D, impl::uncloak_t<I>> ..., impl::free_threaded_marshaler<impl::is_agile<I ...>::value>
 {
     using first_interface = typename impl::first_interface<impl::uncloak_t<I> ...>::type;
     using IInspectable = Windows::Foundation::IInspectable;
@@ -3695,7 +3773,7 @@ private:
     void abi_enter() noexcept {}
     void abi_exit() noexcept {}
 
-    using is_agile = impl::negation<impl::disjunction<std::is_same<non_agile, I> ...>>;
+    using is_agile = impl::is_agile<I ...>;
     using is_factory = impl::disjunction<std::is_same<ABI::Windows::Foundation::IActivationFactory, abi<I>> ...>;
     using is_inspectable = impl::disjunction<std::is_base_of<ABI::Windows::Foundation::IInspectable, abi<I>> ...>;
     using is_weak_ref_source = impl::conjunction<is_inspectable, impl::negation<is_factory>, impl::negation<impl::disjunction<std::is_same<no_weak_ref, I> ...>>>;
@@ -3735,24 +3813,11 @@ private:
 
         if (is_agile::value)
         {
-            if (id == __uuidof(IAgileObject))
+            if (id == __uuidof(IAgileObject) || id == __uuidof(IMarshal))
             {
-                *object = get_unknown();
+                *object = this->find_marshal();
                 AddRef();
                 return S_OK;
-            }
-
-            if (id == __uuidof(IMarshal))
-            {
-                com_ptr< ::IUnknown> marshaler;
-                const HRESULT hr = CoCreateFreeThreadedMarshaler(get_unknown(), put_abi(marshaler));
-
-                if (hr != S_OK)
-                {
-                    return hr;
-                }
-
-                return marshaler->QueryInterface(id, object);
             }
         }
 
@@ -3998,6 +4063,11 @@ struct overrides : implements<D, R ...>
         }
 
         return result;
+    }
+
+    explicit operator bool() const noexcept
+    {
+        return m_inner.operator bool();
     }
 
 protected:
@@ -7430,17 +7500,13 @@ namespace Windows::Foundation
 
 namespace impl
 {
-#ifdef _DEBUG
-    static bool is_sta() noexcept
+    inline bool is_sta() noexcept
     {
         APTTYPE aptType;
         APTTYPEQUALIFIER aptTypeQualifier;
-        check_hresult(CoGetApartmentType(&aptType, &aptTypeQualifier));
-        return ((aptType == APTTYPE_STA) || (aptType == APTTYPE_MAINSTA));
+        return SUCCEEDED(CoGetApartmentType(&aptType, &aptTypeQualifier)) &&
+            ((aptType == APTTYPE_STA) || (aptType == APTTYPE_MAINSTA));
     }
-#else
-#define is_sta __noop
-#endif
 
     template <typename Async>
     void blocking_suspend(const Async & async)

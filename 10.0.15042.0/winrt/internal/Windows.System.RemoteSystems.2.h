@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -30,14 +30,14 @@ template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __de
 template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
 #endif
 
-#ifndef WINRT_GENERIC_f4706ab1_55a3_5270_afb2_732988fe8227
-#define WINRT_GENERIC_f4706ab1_55a3_5270_afb2_732988fe8227
-template <> struct __declspec(uuid("f4706ab1-55a3-5270-afb2-732988fe8227")) __declspec(novtable) IVectorView<Windows::Networking::HostName> : impl_IVectorView<Windows::Networking::HostName> {};
-#endif
-
 #ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
 #define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
 template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_f4706ab1_55a3_5270_afb2_732988fe8227
+#define WINRT_GENERIC_f4706ab1_55a3_5270_afb2_732988fe8227
+template <> struct __declspec(uuid("f4706ab1-55a3-5270-afb2-732988fe8227")) __declspec(novtable) IVectorView<Windows::Networking::HostName> : impl_IVectorView<Windows::Networking::HostName> {};
 #endif
 
 

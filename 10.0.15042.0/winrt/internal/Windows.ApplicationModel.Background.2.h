@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_a55a747d_59f6_5cb6_b439_c8aad670905c
+#define WINRT_GENERIC_a55a747d_59f6_5cb6_b439_c8aad670905c
+template <> struct __declspec(uuid("a55a747d-59f6-5cb6-b439-c8aad670905c")) __declspec(novtable) IAsyncOperation<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> : impl_IAsyncOperation<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> {};
+#endif
 
 #ifndef WINRT_GENERIC_7b44e581_cfa9_5763_bed7_6a65739f0dbf
 #define WINRT_GENERIC_7b44e581_cfa9_5763_bed7_6a65739f0dbf
@@ -104,9 +109,9 @@ template <> struct __declspec(uuid("fc7a0488-2803-505c-9e62-9200afe416c6")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_a55a747d_59f6_5cb6_b439_c8aad670905c
-#define WINRT_GENERIC_a55a747d_59f6_5cb6_b439_c8aad670905c
-template <> struct __declspec(uuid("a55a747d-59f6-5cb6-b439-c8aad670905c")) __declspec(novtable) IAsyncOperation<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> : impl_IAsyncOperation<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> {};
+#ifndef WINRT_GENERIC_84108017_a8e7_5449_b713_df48503a953e
+#define WINRT_GENERIC_84108017_a8e7_5449_b713_df48503a953e
+template <> struct __declspec(uuid("84108017-a8e7-5449-b713-df48503a953e")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> {};
 #endif
 
 #ifndef WINRT_GENERIC_26dd26e3_3f47_5709_b2f2_d6d0ad3288f0
@@ -208,21 +213,6 @@ template <> struct __declspec(uuid("40524281-a7c6-50b1-b6f5-0baa95d902c2")) __de
 #define WINRT_GENERIC_2a04cdfa_5dfd_5178_8731_ade998e4a7f6
 template <> struct __declspec(uuid("2a04cdfa-5dfd-5178-8731-ade998e4a7f6")) __declspec(novtable) IIterable<winrt::Windows::Devices::Sensors::ActivityType> : impl_IIterable<winrt::Windows::Devices::Sensors::ActivityType> {};
 #endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_84108017_a8e7_5449_b713_df48503a953e
-#define WINRT_GENERIC_84108017_a8e7_5449_b713_df48503a953e
-template <> struct __declspec(uuid("84108017-a8e7-5449-b713-df48503a953e")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::ApplicationModel::Background::AlarmAccessStatus> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_2001aea5_1a86_517e_8be5_11d7fb5935b2
 #define WINRT_GENERIC_2001aea5_1a86_517e_8be5_11d7fb5935b2

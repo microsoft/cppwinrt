@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -12,24 +12,24 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_ab8e5d11_b0c1_5a21_95ae_f16bf3a37624
-#define WINRT_GENERIC_ab8e5d11_b0c1_5a21_95ae_f16bf3a37624
-template <> struct __declspec(uuid("ab8e5d11-b0c1-5a21-95ae-f16bf3a37624")) __declspec(novtable) IReference<Windows::UI::Color> : impl_IReference<Windows::UI::Color> {};
-#endif
-
-#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
-#endif
-
 #ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 #define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
 #endif
 
+#ifndef WINRT_GENERIC_ab8e5d11_b0c1_5a21_95ae_f16bf3a37624
+#define WINRT_GENERIC_ab8e5d11_b0c1_5a21_95ae_f16bf3a37624
+template <> struct __declspec(uuid("ab8e5d11-b0c1-5a21-95ae-f16bf3a37624")) __declspec(novtable) IReference<Windows::UI::Color> : impl_IReference<Windows::UI::Color> {};
+#endif
+
 #ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 #define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
+#endif
+
+#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
 #endif
 
 

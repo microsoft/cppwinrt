@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -10,8 +10,8 @@
 #include "Windows.UI.0.h"
 #include "Windows.UI.Core.0.h"
 #include "Windows.UI.Popups.0.h"
-#include "Windows.Foundation.1.h"
 #include "Windows.UI.1.h"
+#include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
 

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -14,11 +14,6 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __declspec(novtable) IAsyncOperation<bool> : impl_IAsyncOperation<bool> {};
 #endif
 
-#ifndef WINRT_GENERIC_86c4f619_67b6_51c7_b30d_d8cf13625327
-#define WINRT_GENERIC_86c4f619_67b6_51c7_b30d_d8cf13625327
-template <> struct __declspec(uuid("86c4f619-67b6-51c7-b30d-d8cf13625327")) __declspec(novtable) TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> {};
-#endif
-
 #ifndef WINRT_GENERIC_430ecece_1418_5d19_81b2_5ddb381603cc
 #define WINRT_GENERIC_430ecece_1418_5d19_81b2_5ddb381603cc
 template <> struct __declspec(uuid("430ecece-1418-5d19-81b2-5ddb381603cc")) __declspec(novtable) IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> : impl_IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> {};
@@ -27,6 +22,11 @@ template <> struct __declspec(uuid("430ecece-1418-5d19-81b2-5ddb381603cc")) __de
 #ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 #define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
+#endif
+
+#ifndef WINRT_GENERIC_86c4f619_67b6_51c7_b30d_d8cf13625327
+#define WINRT_GENERIC_86c4f619_67b6_51c7_b30d_d8cf13625327
+template <> struct __declspec(uuid("86c4f619-67b6-51c7-b30d-d8cf13625327")) __declspec(novtable) TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Graphics::Display::DisplayInformation, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_a460214e_6620_521d_9cb9_a0a0f732ce90

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -7,8 +7,8 @@
 WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
+#include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.Devices.Sms.3.h"
 #include "Windows.Devices.h"
 #include "Windows.Foundation.Collections.h"
@@ -2660,6 +2660,322 @@ struct produce<D, Windows::Devices::Sms::ISmsWapMessage> : produce_base<D, Windo
 
 namespace Windows::Devices::Sms {
 
+template <typename D> uint32_t impl_ISmsMessage<D>::Id() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsMessage)->get_Id(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsMessage<D>::MessageClass() const
+{
+    Windows::Devices::Sms::SmsMessageClass value {};
+    check_hresult(WINRT_SHIM(ISmsMessage)->get_MessageClass(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsDataFormat impl_ISmsBinaryMessage<D>::Format() const
+{
+    Windows::Devices::Sms::SmsDataFormat value {};
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->get_Format(&value));
+    return value;
+}
+
+template <typename D> void impl_ISmsBinaryMessage<D>::Format(Windows::Devices::Sms::SmsDataFormat value) const
+{
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->put_Format(value));
+}
+
+template <typename D> com_array<uint8_t> impl_ISmsBinaryMessage<D>::GetData() const
+{
+    com_array<uint8_t> value {};
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_GetData(impl::put_size_abi(value), put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ISmsBinaryMessage<D>::SetData(array_view<const uint8_t> value) const
+{
+    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_SetData(value.size(), get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::DateTime impl_ISmsTextMessage<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value {};
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t impl_ISmsTextMessage<D>::PartReferenceId() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartReferenceId(&value));
+    return value;
+}
+
+template <typename D> uint32_t impl_ISmsTextMessage<D>::PartNumber() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartNumber(&value));
+    return value;
+}
+
+template <typename D> uint32_t impl_ISmsTextMessage<D>::PartCount() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartCount(&value));
+    return value;
+}
+
+template <typename D> hstring impl_ISmsTextMessage<D>::To() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_To(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ISmsTextMessage<D>::To(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_To(get_abi(value)));
+}
+
+template <typename D> hstring impl_ISmsTextMessage<D>::From() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_From(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ISmsTextMessage<D>::From(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_From(get_abi(value)));
+}
+
+template <typename D> hstring impl_ISmsTextMessage<D>::Body() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Body(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ISmsTextMessage<D>::Body(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Body(get_abi(value)));
+}
+
+template <typename D> Windows::Devices::Sms::SmsEncoding impl_ISmsTextMessage<D>::Encoding() const
+{
+    Windows::Devices::Sms::SmsEncoding value {};
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Encoding(&value));
+    return value;
+}
+
+template <typename D> void impl_ISmsTextMessage<D>::Encoding(Windows::Devices::Sms::SmsEncoding value) const
+{
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Encoding(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> impl_ISmsTextMessage<D>::ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> messages;
+    check_hresult(WINRT_SHIM(ISmsTextMessage)->abi_ToBinaryMessages(format, put_abi(messages)));
+    return messages;
+}
+
+template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryMessage(const Windows::Devices::Sms::SmsBinaryMessage & binaryMessage) const
+{
+    Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
+    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryMessage(get_abi(binaryMessage), put_abi(textMessage)));
+    return textMessage;
+}
+
+template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_view<const uint8_t> value) const
+{
+    Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
+    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryData(format, value.size(), get_abi(value), put_abi(textMessage)));
+    return textMessage;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessageAsync(uint32_t messageId) const
+{
+    Windows::Foundation::IAsyncAction asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessageAsync(messageId, put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
+{
+    Windows::Foundation::IAsyncAction asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessagesAsync(messageFilter, put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> impl_ISmsDeviceMessageStore<D>::GetMessageAsync(uint32_t messageId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessageAsync(messageId, put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> impl_ISmsDeviceMessageStore<D>::GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessagesAsync(messageFilter, put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> uint32_t impl_ISmsDeviceMessageStore<D>::MaxMessages() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->get_MaxMessages(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsMessageReceivedEventArgs<D>::TextMessage() const
+{
+    Windows::Devices::Sms::SmsTextMessage value { nullptr };
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_TextMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsMessageReceivedEventArgs<D>::BinaryMessage() const
+{
+    Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
+    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_BinaryMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_ISmsDeviceStatics<D>::GetDeviceSelector() const
+{
+    hstring phstrDeviceClassSelector;
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDeviceSelector(put_abi(phstrDeviceClassSelector)));
+    return phstrDeviceClassSelector;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::FromIdAsync(hstring_view deviceId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::GetDefaultAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDefaultAsync(put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics2<D>::FromNetworkAccountIdAsync(hstring_view networkAccountId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
+    check_hresult(WINRT_SHIM(ISmsDeviceStatics2)->abi_FromNetworkAccountIdAsync(get_abi(networkAccountId), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Devices::Sms::SendSmsMessageOperation impl_ISmsDevice<D>::SendMessageAsync(const Windows::Devices::Sms::ISmsMessage & message) const
+{
+    Windows::Devices::Sms::SendSmsMessageOperation asyncInfo { nullptr };
+    check_hresult(WINRT_SHIM(ISmsDevice)->abi_SendMessageAsync(get_abi(message), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Devices::Sms::SmsEncodedLength impl_ISmsDevice<D>::CalculateLength(const Windows::Devices::Sms::SmsTextMessage & message) const
+{
+    Windows::Devices::Sms::SmsEncodedLength encodedLength {};
+    check_hresult(WINRT_SHIM(ISmsDevice)->abi_CalculateLength(get_abi(message), put_abi(encodedLength)));
+    return encodedLength;
+}
+
+template <typename D> hstring impl_ISmsDevice<D>::AccountPhoneNumber() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_AccountPhoneNumber(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsDevice<D>::CellularClass() const
+{
+    Windows::Devices::Sms::CellularClass value {};
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_CellularClass(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsDeviceMessageStore impl_ISmsDevice<D>::MessageStore() const
+{
+    Windows::Devices::Sms::SmsDeviceMessageStore value { nullptr };
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_MessageStore(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsDeviceStatus impl_ISmsDevice<D>::DeviceStatus() const
+{
+    Windows::Devices::Sms::SmsDeviceStatus value {};
+    check_hresult(WINRT_SHIM(ISmsDevice)->get_DeviceStatus(&value));
+    return value;
+}
+
+template <typename D> event_token impl_ISmsDevice<D>::SmsMessageReceived(const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const
+{
+    event_token eventCookie {};
+    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsMessageReceived(get_abi(eventHandler), &eventCookie));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsMessageReceived(auto_revoke_t, const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const
+{
+    return impl::make_event_revoker<D, ISmsDevice>(this, &ABI::Windows::Devices::Sms::ISmsDevice::remove_SmsMessageReceived, SmsMessageReceived(eventHandler));
+}
+
+template <typename D> void impl_ISmsDevice<D>::SmsMessageReceived(event_token eventCookie) const
+{
+    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsMessageReceived(eventCookie));
+}
+
+template <typename D> event_token impl_ISmsDevice<D>::SmsDeviceStatusChanged(const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const
+{
+    event_token eventCookie {};
+    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsDeviceStatusChanged(get_abi(eventHandler), &eventCookie));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsDeviceStatusChanged(auto_revoke_t, const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const
+{
+    return impl::make_event_revoker<D, ISmsDevice>(this, &ABI::Windows::Devices::Sms::ISmsDevice::remove_SmsDeviceStatusChanged, SmsDeviceStatusChanged(eventHandler));
+}
+
+template <typename D> void impl_ISmsDevice<D>::SmsDeviceStatusChanged(event_token eventCookie) const
+{
+    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsDeviceStatusChanged(eventCookie));
+}
+
+template <typename D> hstring impl_ISmsReceivedEventDetails<D>::DeviceId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t impl_ISmsReceivedEventDetails<D>::MessageIndex() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_MessageIndex(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsReceivedEventDetails2<D>::MessageClass() const
+{
+    Windows::Devices::Sms::SmsMessageClass value {};
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_MessageClass(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsReceivedEventDetails2<D>::BinaryMessage() const
+{
+    Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
+    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_BinaryMessage(put_abi(value)));
+    return value;
+}
+
 template <typename D> Windows::Devices::Sms::SmsMessageType impl_ISmsMessageBase<D>::MessageType() const
 {
     Windows::Devices::Sms::SmsMessageType value {};
@@ -3504,322 +3820,6 @@ template <typename D> event_revoker<ISmsMessageRegistration> impl_ISmsMessageReg
 template <typename D> void impl_ISmsMessageRegistration<D>::MessageReceived(event_token eventCookie) const
 {
     check_hresult(WINRT_SHIM(ISmsMessageRegistration)->remove_MessageReceived(eventCookie));
-}
-
-template <typename D> uint32_t impl_ISmsMessage<D>::Id() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsMessage)->get_Id(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsMessage<D>::MessageClass() const
-{
-    Windows::Devices::Sms::SmsMessageClass value {};
-    check_hresult(WINRT_SHIM(ISmsMessage)->get_MessageClass(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsDataFormat impl_ISmsBinaryMessage<D>::Format() const
-{
-    Windows::Devices::Sms::SmsDataFormat value {};
-    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->get_Format(&value));
-    return value;
-}
-
-template <typename D> void impl_ISmsBinaryMessage<D>::Format(Windows::Devices::Sms::SmsDataFormat value) const
-{
-    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->put_Format(value));
-}
-
-template <typename D> com_array<uint8_t> impl_ISmsBinaryMessage<D>::GetData() const
-{
-    com_array<uint8_t> value {};
-    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_GetData(impl::put_size_abi(value), put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISmsBinaryMessage<D>::SetData(array_view<const uint8_t> value) const
-{
-    check_hresult(WINRT_SHIM(ISmsBinaryMessage)->abi_SetData(value.size(), get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ISmsTextMessage<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ISmsTextMessage<D>::PartReferenceId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartReferenceId(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_ISmsTextMessage<D>::PartNumber() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartNumber(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_ISmsTextMessage<D>::PartCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_PartCount(&value));
-    return value;
-}
-
-template <typename D> hstring impl_ISmsTextMessage<D>::To() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_To(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISmsTextMessage<D>::To(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_To(get_abi(value)));
-}
-
-template <typename D> hstring impl_ISmsTextMessage<D>::From() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_From(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISmsTextMessage<D>::From(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_From(get_abi(value)));
-}
-
-template <typename D> hstring impl_ISmsTextMessage<D>::Body() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Body(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISmsTextMessage<D>::Body(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Body(get_abi(value)));
-}
-
-template <typename D> Windows::Devices::Sms::SmsEncoding impl_ISmsTextMessage<D>::Encoding() const
-{
-    Windows::Devices::Sms::SmsEncoding value {};
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->get_Encoding(&value));
-    return value;
-}
-
-template <typename D> void impl_ISmsTextMessage<D>::Encoding(Windows::Devices::Sms::SmsEncoding value) const
-{
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->put_Encoding(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> impl_ISmsTextMessage<D>::ToBinaryMessages(Windows::Devices::Sms::SmsDataFormat format) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> messages;
-    check_hresult(WINRT_SHIM(ISmsTextMessage)->abi_ToBinaryMessages(format, put_abi(messages)));
-    return messages;
-}
-
-template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryMessage(const Windows::Devices::Sms::SmsBinaryMessage & binaryMessage) const
-{
-    Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
-    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryMessage(get_abi(binaryMessage), put_abi(textMessage)));
-    return textMessage;
-}
-
-template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsTextMessageStatics<D>::FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_view<const uint8_t> value) const
-{
-    Windows::Devices::Sms::SmsTextMessage textMessage { nullptr };
-    check_hresult(WINRT_SHIM(ISmsTextMessageStatics)->abi_FromBinaryData(format, value.size(), get_abi(value), put_abi(textMessage)));
-    return textMessage;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessageAsync(uint32_t messageId) const
-{
-    Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessageAsync(messageId, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISmsDeviceMessageStore<D>::DeleteMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
-{
-    Windows::Foundation::IAsyncAction asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_DeleteMessagesAsync(messageFilter, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> impl_ISmsDeviceMessageStore<D>::GetMessageAsync(uint32_t messageId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage> asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessageAsync(messageId, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> impl_ISmsDeviceMessageStore<D>::GetMessagesAsync(Windows::Devices::Sms::SmsMessageFilter messageFilter) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t> asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->abi_GetMessagesAsync(messageFilter, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> uint32_t impl_ISmsDeviceMessageStore<D>::MaxMessages() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsDeviceMessageStore)->get_MaxMessages(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsTextMessage impl_ISmsMessageReceivedEventArgs<D>::TextMessage() const
-{
-    Windows::Devices::Sms::SmsTextMessage value { nullptr };
-    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_TextMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsMessageReceivedEventArgs<D>::BinaryMessage() const
-{
-    Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
-    check_hresult(WINRT_SHIM(ISmsMessageReceivedEventArgs)->get_BinaryMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISmsDeviceStatics<D>::GetDeviceSelector() const
-{
-    hstring phstrDeviceClassSelector;
-    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDeviceSelector(put_abi(phstrDeviceClassSelector)));
-    return phstrDeviceClassSelector;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::FromIdAsync(hstring_view deviceId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics<D>::GetDefaultAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceStatics)->abi_GetDefaultAsync(put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> impl_ISmsDeviceStatics2<D>::FromNetworkAccountIdAsync(hstring_view networkAccountId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> asyncInfo;
-    check_hresult(WINRT_SHIM(ISmsDeviceStatics2)->abi_FromNetworkAccountIdAsync(get_abi(networkAccountId), put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Devices::Sms::SendSmsMessageOperation impl_ISmsDevice<D>::SendMessageAsync(const Windows::Devices::Sms::ISmsMessage & message) const
-{
-    Windows::Devices::Sms::SendSmsMessageOperation asyncInfo { nullptr };
-    check_hresult(WINRT_SHIM(ISmsDevice)->abi_SendMessageAsync(get_abi(message), put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Devices::Sms::SmsEncodedLength impl_ISmsDevice<D>::CalculateLength(const Windows::Devices::Sms::SmsTextMessage & message) const
-{
-    Windows::Devices::Sms::SmsEncodedLength encodedLength {};
-    check_hresult(WINRT_SHIM(ISmsDevice)->abi_CalculateLength(get_abi(message), put_abi(encodedLength)));
-    return encodedLength;
-}
-
-template <typename D> hstring impl_ISmsDevice<D>::AccountPhoneNumber() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISmsDevice)->get_AccountPhoneNumber(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::CellularClass impl_ISmsDevice<D>::CellularClass() const
-{
-    Windows::Devices::Sms::CellularClass value {};
-    check_hresult(WINRT_SHIM(ISmsDevice)->get_CellularClass(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsDeviceMessageStore impl_ISmsDevice<D>::MessageStore() const
-{
-    Windows::Devices::Sms::SmsDeviceMessageStore value { nullptr };
-    check_hresult(WINRT_SHIM(ISmsDevice)->get_MessageStore(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsDeviceStatus impl_ISmsDevice<D>::DeviceStatus() const
-{
-    Windows::Devices::Sms::SmsDeviceStatus value {};
-    check_hresult(WINRT_SHIM(ISmsDevice)->get_DeviceStatus(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ISmsDevice<D>::SmsMessageReceived(const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsMessageReceived(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsMessageReceived(auto_revoke_t, const Windows::Devices::Sms::SmsMessageReceivedEventHandler & eventHandler) const
-{
-    return impl::make_event_revoker<D, ISmsDevice>(this, &ABI::Windows::Devices::Sms::ISmsDevice::remove_SmsMessageReceived, SmsMessageReceived(eventHandler));
-}
-
-template <typename D> void impl_ISmsDevice<D>::SmsMessageReceived(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsMessageReceived(eventCookie));
-}
-
-template <typename D> event_token impl_ISmsDevice<D>::SmsDeviceStatusChanged(const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(ISmsDevice)->add_SmsDeviceStatusChanged(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<ISmsDevice> impl_ISmsDevice<D>::SmsDeviceStatusChanged(auto_revoke_t, const Windows::Devices::Sms::SmsDeviceStatusChangedEventHandler & eventHandler) const
-{
-    return impl::make_event_revoker<D, ISmsDevice>(this, &ABI::Windows::Devices::Sms::ISmsDevice::remove_SmsDeviceStatusChanged, SmsDeviceStatusChanged(eventHandler));
-}
-
-template <typename D> void impl_ISmsDevice<D>::SmsDeviceStatusChanged(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(ISmsDevice)->remove_SmsDeviceStatusChanged(eventCookie));
-}
-
-template <typename D> hstring impl_ISmsReceivedEventDetails<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ISmsReceivedEventDetails<D>::MessageIndex() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails)->get_MessageIndex(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsMessageClass impl_ISmsReceivedEventDetails2<D>::MessageClass() const
-{
-    Windows::Devices::Sms::SmsMessageClass value {};
-    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_MessageClass(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::SmsBinaryMessage impl_ISmsReceivedEventDetails2<D>::BinaryMessage() const
-{
-    Windows::Devices::Sms::SmsBinaryMessage value { nullptr };
-    check_hresult(WINRT_SHIM(ISmsReceivedEventDetails2)->get_BinaryMessage(put_abi(value)));
-    return value;
 }
 
 inline SmsAppMessage::SmsAppMessage() :

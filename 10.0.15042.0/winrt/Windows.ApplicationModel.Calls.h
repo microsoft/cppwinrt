@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -7,10 +7,10 @@
 WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.System.3.h"
 #include "internal/Windows.ApplicationModel.Contacts.3.h"
 #include "internal/Windows.UI.3.h"
+#include "internal/Windows.Foundation.Collections.3.h"
+#include "internal/Windows.System.3.h"
 #include "internal/Windows.ApplicationModel.Calls.3.h"
 #include "Windows.ApplicationModel.h"
 
@@ -2747,6 +2747,573 @@ struct produce<D, Windows::ApplicationModel::Calls::IVoipPhoneCall> : produce_ba
 
 namespace Windows::ApplicationModel::Calls {
 
+template <typename D> hstring impl_IPhoneVoicemail<D>::Number() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_Number(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t impl_IPhoneVoicemail<D>::MessageCount() const
+{
+    int32_t value {};
+    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_MessageCount(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneVoicemailType impl_IPhoneVoicemail<D>::Type() const
+{
+    Windows::ApplicationModel::Calls::PhoneVoicemailType value {};
+    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_Type(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IPhoneVoicemail<D>::DialVoicemailAsync() const
+{
+    Windows::Foundation::IAsyncAction result;
+    check_hresult(WINRT_SHIM(IPhoneVoicemail)->abi_DialVoicemailAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring impl_IPhoneDialOptions<D>::Number() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Number(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::Number(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Number(get_abi(value)));
+}
+
+template <typename D> hstring impl_IPhoneDialOptions<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::DisplayName(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IPhoneDialOptions<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::Contact(const Windows::ApplicationModel::Contacts::Contact & value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Contact(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactPhone impl_IPhoneDialOptions<D>::ContactPhone() const
+{
+    Windows::ApplicationModel::Contacts::ContactPhone value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_ContactPhone(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::ContactPhone(const Windows::ApplicationModel::Contacts::ContactPhone & value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_ContactPhone(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneCallMedia impl_IPhoneDialOptions<D>::Media() const
+{
+    Windows::ApplicationModel::Calls::PhoneCallMedia value {};
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Media(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::Media(Windows::ApplicationModel::Calls::PhoneCallMedia value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Media(value));
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint impl_IPhoneDialOptions<D>::AudioEndpoint() const
+{
+    Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint value {};
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_AudioEndpoint(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneDialOptions<D>::AudioEndpoint(Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_AudioEndpoint(value));
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneSimState impl_IPhoneLineCellularDetails<D>::SimState() const
+{
+    Windows::ApplicationModel::Calls::PhoneSimState value {};
+    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_SimState(&value));
+    return value;
+}
+
+template <typename D> int32_t impl_IPhoneLineCellularDetails<D>::SimSlotIndex() const
+{
+    int32_t value {};
+    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_SimSlotIndex(&value));
+    return value;
+}
+
+template <typename D> bool impl_IPhoneLineCellularDetails<D>::IsModemOn() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_IsModemOn(&value));
+    return value;
+}
+
+template <typename D> int32_t impl_IPhoneLineCellularDetails<D>::RegistrationRejectCode() const
+{
+    int32_t value {};
+    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_RegistrationRejectCode(&value));
+    return value;
+}
+
+template <typename D> hstring impl_IPhoneLineCellularDetails<D>::GetNetworkOperatorDisplayText(Windows::ApplicationModel::Calls::PhoneLineNetworkOperatorDisplayTextLocation location) const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->abi_GetNetworkOperatorDisplayText(location, put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token impl_IPhoneLine<D>::LineChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLine, Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->add_LineChanged(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLine> impl_IPhoneLine<D>::LineChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLine, Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLine>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLine::remove_LineChanged, LineChanged(handler));
+}
+
+template <typename D> void impl_IPhoneLine<D>::LineChanged(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLine)->remove_LineChanged(token));
+}
+
+template <typename D> GUID impl_IPhoneLine<D>::Id() const
+{
+    GUID value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_Id(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Color impl_IPhoneLine<D>::DisplayColor() const
+{
+    Windows::UI::Color value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_DisplayColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneNetworkState impl_IPhoneLine<D>::NetworkState() const
+{
+    Windows::ApplicationModel::Calls::PhoneNetworkState value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_NetworkState(&value));
+    return value;
+}
+
+template <typename D> hstring impl_IPhoneLine<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneVoicemail impl_IPhoneLine<D>::Voicemail() const
+{
+    Windows::ApplicationModel::Calls::PhoneVoicemail value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_Voicemail(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IPhoneLine<D>::NetworkName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_NetworkName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneLineCellularDetails impl_IPhoneLine<D>::CellularDetails() const
+{
+    Windows::ApplicationModel::Calls::PhoneLineCellularDetails value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_CellularDetails(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneLineTransport impl_IPhoneLine<D>::Transport() const
+{
+    Windows::ApplicationModel::Calls::PhoneLineTransport value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_Transport(&value));
+    return value;
+}
+
+template <typename D> bool impl_IPhoneLine<D>::CanDial() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_CanDial(&value));
+    return value;
+}
+
+template <typename D> bool impl_IPhoneLine<D>::SupportsTile() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_SupportsTile(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities impl_IPhoneLine<D>::VideoCallingCapabilities() const
+{
+    Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_VideoCallingCapabilities(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneLineConfiguration impl_IPhoneLine<D>::LineConfiguration() const
+{
+    Windows::ApplicationModel::Calls::PhoneLineConfiguration value { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneLine)->get_LineConfiguration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneLine<D>::IsImmediateDialNumberAsync(hstring_view number) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result;
+    check_hresult(WINRT_SHIM(IPhoneLine)->abi_IsImmediateDialNumberAsync(get_abi(number), put_abi(result)));
+    return result;
+}
+
+template <typename D> void impl_IPhoneLine<D>::Dial(hstring_view number, hstring_view displayName) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLine)->abi_Dial(get_abi(number), get_abi(displayName)));
+}
+
+template <typename D> void impl_IPhoneLine<D>::DialWithOptions(const Windows::ApplicationModel::Calls::PhoneDialOptions & options) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLine)->abi_DialWithOptions(get_abi(options)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneCallStore<D>::IsEmergencyPhoneNumberAsync(hstring_view number) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result;
+    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_IsEmergencyPhoneNumberAsync(get_abi(number), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<GUID> impl_IPhoneCallStore<D>::GetDefaultLineAsync() const
+{
+    Windows::Foundation::IAsyncOperation<GUID> result;
+    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_GetDefaultLineAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneLineWatcher impl_IPhoneCallStore<D>::RequestLineWatcher() const
+{
+    Windows::ApplicationModel::Calls::PhoneLineWatcher result { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_RequestLineWatcher(put_abi(result)));
+    return result;
+}
+
+template <typename D> bool impl_IPhoneLineConfiguration<D>::IsVideoCallingEnabled() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneLineConfiguration)->get_IsVideoCallingEnabled(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IPhoneLineConfiguration<D>::ExtendedProperties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IPhoneLineConfiguration)->get_ExtendedProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneLine> impl_IPhoneLineStatics<D>::FromIdAsync(GUID lineId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneLine> result;
+    check_hresult(WINRT_SHIM(IPhoneLineStatics)->abi_FromIdAsync(lineId, put_abi(result)));
+    return result;
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->abi_Start());
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->abi_Stop());
+}
+
+template <typename D> event_token impl_IPhoneLineWatcher<D>::LineAdded(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineAdded(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineAdded, LineAdded(handler));
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::LineAdded(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineAdded(token));
+}
+
+template <typename D> event_token impl_IPhoneLineWatcher<D>::LineRemoved(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineRemoved(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineRemoved, LineRemoved(handler));
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::LineRemoved(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineRemoved(token));
+}
+
+template <typename D> event_token impl_IPhoneLineWatcher<D>::LineUpdated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineUpdated(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineUpdated, LineUpdated(handler));
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::LineUpdated(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineUpdated(token));
+}
+
+template <typename D> event_token impl_IPhoneLineWatcher<D>::EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_EnumerationCompleted(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_EnumerationCompleted, EnumerationCompleted(handler));
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::EnumerationCompleted(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_EnumerationCompleted(token));
+}
+
+template <typename D> event_token impl_IPhoneLineWatcher<D>::Stopped(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_Stopped(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_Stopped, Stopped(handler));
+}
+
+template <typename D> void impl_IPhoneLineWatcher<D>::Stopped(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_Stopped(token));
+}
+
+template <typename D> Windows::ApplicationModel::Calls::PhoneLineWatcherStatus impl_IPhoneLineWatcher<D>::Status() const
+{
+    Windows::ApplicationModel::Calls::PhoneLineWatcherStatus status {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->get_Status(&status));
+    return status;
+}
+
+template <typename D> GUID impl_IPhoneLineWatcherEventArgs<D>::LineId() const
+{
+    GUID value {};
+    check_hresult(WINRT_SHIM(IPhoneLineWatcherEventArgs)->get_LineId(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneCallManagerStatics<D>::ShowPhoneCallUI(hstring_view phoneNumber, hstring_view displayName) const
+{
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics)->abi_ShowPhoneCallUI(get_abi(phoneNumber), get_abi(displayName)));
+}
+
+template <typename D> event_token impl_IPhoneCallManagerStatics2<D>::CallStateChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->add_CallStateChanged(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPhoneCallManagerStatics2> impl_IPhoneCallManagerStatics2<D>::CallStateChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IPhoneCallManagerStatics2>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneCallManagerStatics2::remove_CallStateChanged, CallStateChanged(handler));
+}
+
+template <typename D> void impl_IPhoneCallManagerStatics2<D>::CallStateChanged(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->remove_CallStateChanged(token));
+}
+
+template <typename D> bool impl_IPhoneCallManagerStatics2<D>::IsCallActive() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->get_IsCallActive(&value));
+    return value;
+}
+
+template <typename D> bool impl_IPhoneCallManagerStatics2<D>::IsCallIncoming() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->get_IsCallIncoming(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneCallManagerStatics2<D>::ShowPhoneCallSettingsUI() const
+{
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->abi_ShowPhoneCallSettingsUI());
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallStore> impl_IPhoneCallManagerStatics2<D>::RequestStoreAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallStore> result;
+    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->abi_RequestStoreAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> bool impl_IPhoneCallVideoCapabilities<D>::IsVideoCallingCapable() const
+{
+    bool pValue {};
+    check_hresult(WINRT_SHIM(IPhoneCallVideoCapabilities)->get_IsVideoCallingCapable(&pValue));
+    return pValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> impl_IPhoneCallVideoCapabilitiesManagerStatics<D>::GetCapabilitiesAsync(hstring_view phoneNumber) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> result;
+    check_hresult(WINRT_SHIM(IPhoneCallVideoCapabilitiesManagerStatics)->abi_GetCapabilitiesAsync(get_abi(phoneNumber), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool impl_IPhoneCallBlockingStatics<D>::BlockUnknownNumbers() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->get_BlockUnknownNumbers(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneCallBlockingStatics<D>::BlockUnknownNumbers(bool value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->put_BlockUnknownNumbers(value));
+}
+
+template <typename D> bool impl_IPhoneCallBlockingStatics<D>::BlockPrivateNumbers() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->get_BlockPrivateNumbers(&value));
+    return value;
+}
+
+template <typename D> void impl_IPhoneCallBlockingStatics<D>::BlockPrivateNumbers(bool value) const
+{
+    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->put_BlockPrivateNumbers(value));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneCallBlockingStatics<D>::SetCallBlockingListAsync(iterable<hstring> phoneNumberList) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result;
+    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->abi_SetCallBlockingListAsync(get_abi(phoneNumberList), put_abi(result)));
+    return result;
+}
+
+template <typename D> void impl_ILockScreenCallEndCallDeferral<D>::Complete() const
+{
+    check_hresult(WINRT_SHIM(ILockScreenCallEndCallDeferral)->abi_Complete());
+}
+
+template <typename D> Windows::ApplicationModel::Calls::LockScreenCallEndCallDeferral impl_ILockScreenCallEndRequestedEventArgs<D>::GetDeferral() const
+{
+    Windows::ApplicationModel::Calls::LockScreenCallEndCallDeferral value { nullptr };
+    check_hresult(WINRT_SHIM(ILockScreenCallEndRequestedEventArgs)->abi_GetDeferral(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime impl_ILockScreenCallEndRequestedEventArgs<D>::Deadline() const
+{
+    Windows::Foundation::DateTime value {};
+    check_hresult(WINRT_SHIM(ILockScreenCallEndRequestedEventArgs)->get_Deadline(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ILockScreenCallUI<D>::Dismiss() const
+{
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->abi_Dismiss());
+}
+
+template <typename D> event_token impl_ILockScreenCallUI<D>::EndRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::ApplicationModel::Calls::LockScreenCallEndRequestedEventArgs> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->add_EndRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ILockScreenCallUI> impl_ILockScreenCallUI<D>::EndRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::ApplicationModel::Calls::LockScreenCallEndRequestedEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, ILockScreenCallUI>(this, &ABI::Windows::ApplicationModel::Calls::ILockScreenCallUI::remove_EndRequested, EndRequested(handler));
+}
+
+template <typename D> void impl_ILockScreenCallUI<D>::EndRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->remove_EndRequested(token));
+}
+
+template <typename D> event_token impl_ILockScreenCallUI<D>::Closed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->add_Closed(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ILockScreenCallUI> impl_ILockScreenCallUI<D>::Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, ILockScreenCallUI>(this, &ABI::Windows::ApplicationModel::Calls::ILockScreenCallUI::remove_Closed, Closed(handler));
+}
+
+template <typename D> void impl_ILockScreenCallUI<D>::Closed(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->remove_Closed(token));
+}
+
+template <typename D> hstring impl_ILockScreenCallUI<D>::CallTitle() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->get_CallTitle(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_ILockScreenCallUI<D>::CallTitle(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(ILockScreenCallUI)->put_CallTitle(get_abi(value)));
+}
+
 template <typename D> Windows::ApplicationModel::Calls::VoipPhoneCallState impl_ICallStateChangeEventArgs<D>::State() const
 {
     Windows::ApplicationModel::Calls::VoipPhoneCallState value {};
@@ -3392,573 +3959,6 @@ template <typename D> Windows::System::User impl_IPhoneCallHistoryManagerForUser
     Windows::System::User value { nullptr };
     check_hresult(WINRT_SHIM(IPhoneCallHistoryManagerForUser)->get_User(put_abi(value)));
     return value;
-}
-
-template <typename D> hstring impl_IPhoneVoicemail<D>::Number() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_Number(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IPhoneVoicemail<D>::MessageCount() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_MessageCount(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneVoicemailType impl_IPhoneVoicemail<D>::Type() const
-{
-    Windows::ApplicationModel::Calls::PhoneVoicemailType value {};
-    check_hresult(WINRT_SHIM(IPhoneVoicemail)->get_Type(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IPhoneVoicemail<D>::DialVoicemailAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IPhoneVoicemail)->abi_DialVoicemailAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IPhoneDialOptions<D>::Number() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Number(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::Number(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Number(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPhoneDialOptions<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IPhoneDialOptions<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::Contact(const Windows::ApplicationModel::Contacts::Contact & value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Contact(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactPhone impl_IPhoneDialOptions<D>::ContactPhone() const
-{
-    Windows::ApplicationModel::Contacts::ContactPhone value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_ContactPhone(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::ContactPhone(const Windows::ApplicationModel::Contacts::ContactPhone & value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_ContactPhone(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneCallMedia impl_IPhoneDialOptions<D>::Media() const
-{
-    Windows::ApplicationModel::Calls::PhoneCallMedia value {};
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_Media(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::Media(Windows::ApplicationModel::Calls::PhoneCallMedia value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_Media(value));
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint impl_IPhoneDialOptions<D>::AudioEndpoint() const
-{
-    Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint value {};
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->get_AudioEndpoint(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneDialOptions<D>::AudioEndpoint(Windows::ApplicationModel::Calls::PhoneAudioRoutingEndpoint value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneDialOptions)->put_AudioEndpoint(value));
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneSimState impl_IPhoneLineCellularDetails<D>::SimState() const
-{
-    Windows::ApplicationModel::Calls::PhoneSimState value {};
-    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_SimState(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IPhoneLineCellularDetails<D>::SimSlotIndex() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_SimSlotIndex(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPhoneLineCellularDetails<D>::IsModemOn() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_IsModemOn(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IPhoneLineCellularDetails<D>::RegistrationRejectCode() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->get_RegistrationRejectCode(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IPhoneLineCellularDetails<D>::GetNetworkOperatorDisplayText(Windows::ApplicationModel::Calls::PhoneLineNetworkOperatorDisplayTextLocation location) const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneLineCellularDetails)->abi_GetNetworkOperatorDisplayText(location, put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IPhoneLine<D>::LineChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLine, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->add_LineChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLine> impl_IPhoneLine<D>::LineChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLine, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLine>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLine::remove_LineChanged, LineChanged(handler));
-}
-
-template <typename D> void impl_IPhoneLine<D>::LineChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLine)->remove_LineChanged(token));
-}
-
-template <typename D> GUID impl_IPhoneLine<D>::Id() const
-{
-    GUID value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_Id(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Color impl_IPhoneLine<D>::DisplayColor() const
-{
-    Windows::UI::Color value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_DisplayColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneNetworkState impl_IPhoneLine<D>::NetworkState() const
-{
-    Windows::ApplicationModel::Calls::PhoneNetworkState value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_NetworkState(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IPhoneLine<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneVoicemail impl_IPhoneLine<D>::Voicemail() const
-{
-    Windows::ApplicationModel::Calls::PhoneVoicemail value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_Voicemail(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPhoneLine<D>::NetworkName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_NetworkName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneLineCellularDetails impl_IPhoneLine<D>::CellularDetails() const
-{
-    Windows::ApplicationModel::Calls::PhoneLineCellularDetails value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_CellularDetails(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneLineTransport impl_IPhoneLine<D>::Transport() const
-{
-    Windows::ApplicationModel::Calls::PhoneLineTransport value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_Transport(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPhoneLine<D>::CanDial() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_CanDial(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPhoneLine<D>::SupportsTile() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_SupportsTile(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities impl_IPhoneLine<D>::VideoCallingCapabilities() const
-{
-    Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_VideoCallingCapabilities(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneLineConfiguration impl_IPhoneLine<D>::LineConfiguration() const
-{
-    Windows::ApplicationModel::Calls::PhoneLineConfiguration value { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneLine)->get_LineConfiguration(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneLine<D>::IsImmediateDialNumberAsync(hstring_view number) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IPhoneLine)->abi_IsImmediateDialNumberAsync(get_abi(number), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IPhoneLine<D>::Dial(hstring_view number, hstring_view displayName) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLine)->abi_Dial(get_abi(number), get_abi(displayName)));
-}
-
-template <typename D> void impl_IPhoneLine<D>::DialWithOptions(const Windows::ApplicationModel::Calls::PhoneDialOptions & options) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLine)->abi_DialWithOptions(get_abi(options)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneCallStore<D>::IsEmergencyPhoneNumberAsync(hstring_view number) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_IsEmergencyPhoneNumberAsync(get_abi(number), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<GUID> impl_IPhoneCallStore<D>::GetDefaultLineAsync() const
-{
-    Windows::Foundation::IAsyncOperation<GUID> result;
-    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_GetDefaultLineAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneLineWatcher impl_IPhoneCallStore<D>::RequestLineWatcher() const
-{
-    Windows::ApplicationModel::Calls::PhoneLineWatcher result { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneCallStore)->abi_RequestLineWatcher(put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IPhoneLineConfiguration<D>::IsVideoCallingEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneLineConfiguration)->get_IsVideoCallingEnabled(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IPhoneLineConfiguration<D>::ExtendedProperties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IPhoneLineConfiguration)->get_ExtendedProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneLine> impl_IPhoneLineStatics<D>::FromIdAsync(GUID lineId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneLine> result;
-    check_hresult(WINRT_SHIM(IPhoneLineStatics)->abi_FromIdAsync(lineId, put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->abi_Start());
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->abi_Stop());
-}
-
-template <typename D> event_token impl_IPhoneLineWatcher<D>::LineAdded(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineAdded(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineAdded(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineAdded, LineAdded(handler));
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::LineAdded(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineAdded(token));
-}
-
-template <typename D> event_token impl_IPhoneLineWatcher<D>::LineRemoved(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineRemoved(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineRemoved(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineRemoved, LineRemoved(handler));
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::LineRemoved(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineRemoved(token));
-}
-
-template <typename D> event_token impl_IPhoneLineWatcher<D>::LineUpdated(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_LineUpdated(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::LineUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::ApplicationModel::Calls::PhoneLineWatcherEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_LineUpdated, LineUpdated(handler));
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::LineUpdated(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_LineUpdated(token));
-}
-
-template <typename D> event_token impl_IPhoneLineWatcher<D>::EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_EnumerationCompleted(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_EnumerationCompleted, EnumerationCompleted(handler));
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::EnumerationCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_EnumerationCompleted(token));
-}
-
-template <typename D> event_token impl_IPhoneLineWatcher<D>::Stopped(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->add_Stopped(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneLineWatcher> impl_IPhoneLineWatcher<D>::Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::PhoneLineWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneLineWatcher>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneLineWatcher::remove_Stopped, Stopped(handler));
-}
-
-template <typename D> void impl_IPhoneLineWatcher<D>::Stopped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->remove_Stopped(token));
-}
-
-template <typename D> Windows::ApplicationModel::Calls::PhoneLineWatcherStatus impl_IPhoneLineWatcher<D>::Status() const
-{
-    Windows::ApplicationModel::Calls::PhoneLineWatcherStatus status {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcher)->get_Status(&status));
-    return status;
-}
-
-template <typename D> GUID impl_IPhoneLineWatcherEventArgs<D>::LineId() const
-{
-    GUID value {};
-    check_hresult(WINRT_SHIM(IPhoneLineWatcherEventArgs)->get_LineId(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneCallManagerStatics<D>::ShowPhoneCallUI(hstring_view phoneNumber, hstring_view displayName) const
-{
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics)->abi_ShowPhoneCallUI(get_abi(phoneNumber), get_abi(displayName)));
-}
-
-template <typename D> event_token impl_IPhoneCallManagerStatics2<D>::CallStateChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->add_CallStateChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPhoneCallManagerStatics2> impl_IPhoneCallManagerStatics2<D>::CallStateChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPhoneCallManagerStatics2>(this, &ABI::Windows::ApplicationModel::Calls::IPhoneCallManagerStatics2::remove_CallStateChanged, CallStateChanged(handler));
-}
-
-template <typename D> void impl_IPhoneCallManagerStatics2<D>::CallStateChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->remove_CallStateChanged(token));
-}
-
-template <typename D> bool impl_IPhoneCallManagerStatics2<D>::IsCallActive() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->get_IsCallActive(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPhoneCallManagerStatics2<D>::IsCallIncoming() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->get_IsCallIncoming(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneCallManagerStatics2<D>::ShowPhoneCallSettingsUI() const
-{
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->abi_ShowPhoneCallSettingsUI());
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallStore> impl_IPhoneCallManagerStatics2<D>::RequestStoreAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallStore> result;
-    check_hresult(WINRT_SHIM(IPhoneCallManagerStatics2)->abi_RequestStoreAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IPhoneCallVideoCapabilities<D>::IsVideoCallingCapable() const
-{
-    bool pValue {};
-    check_hresult(WINRT_SHIM(IPhoneCallVideoCapabilities)->get_IsVideoCallingCapable(&pValue));
-    return pValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> impl_IPhoneCallVideoCapabilitiesManagerStatics<D>::GetCapabilitiesAsync(hstring_view phoneNumber) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Calls::PhoneCallVideoCapabilities> result;
-    check_hresult(WINRT_SHIM(IPhoneCallVideoCapabilitiesManagerStatics)->abi_GetCapabilitiesAsync(get_abi(phoneNumber), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IPhoneCallBlockingStatics<D>::BlockUnknownNumbers() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->get_BlockUnknownNumbers(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneCallBlockingStatics<D>::BlockUnknownNumbers(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->put_BlockUnknownNumbers(value));
-}
-
-template <typename D> bool impl_IPhoneCallBlockingStatics<D>::BlockPrivateNumbers() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->get_BlockPrivateNumbers(&value));
-    return value;
-}
-
-template <typename D> void impl_IPhoneCallBlockingStatics<D>::BlockPrivateNumbers(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->put_BlockPrivateNumbers(value));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPhoneCallBlockingStatics<D>::SetCallBlockingListAsync(iterable<hstring> phoneNumberList) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IPhoneCallBlockingStatics)->abi_SetCallBlockingListAsync(get_abi(phoneNumberList), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_ILockScreenCallEndCallDeferral<D>::Complete() const
-{
-    check_hresult(WINRT_SHIM(ILockScreenCallEndCallDeferral)->abi_Complete());
-}
-
-template <typename D> Windows::ApplicationModel::Calls::LockScreenCallEndCallDeferral impl_ILockScreenCallEndRequestedEventArgs<D>::GetDeferral() const
-{
-    Windows::ApplicationModel::Calls::LockScreenCallEndCallDeferral value { nullptr };
-    check_hresult(WINRT_SHIM(ILockScreenCallEndRequestedEventArgs)->abi_GetDeferral(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ILockScreenCallEndRequestedEventArgs<D>::Deadline() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ILockScreenCallEndRequestedEventArgs)->get_Deadline(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILockScreenCallUI<D>::Dismiss() const
-{
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->abi_Dismiss());
-}
-
-template <typename D> event_token impl_ILockScreenCallUI<D>::EndRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::ApplicationModel::Calls::LockScreenCallEndRequestedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->add_EndRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ILockScreenCallUI> impl_ILockScreenCallUI<D>::EndRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::ApplicationModel::Calls::LockScreenCallEndRequestedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ILockScreenCallUI>(this, &ABI::Windows::ApplicationModel::Calls::ILockScreenCallUI::remove_EndRequested, EndRequested(handler));
-}
-
-template <typename D> void impl_ILockScreenCallUI<D>::EndRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->remove_EndRequested(token));
-}
-
-template <typename D> event_token impl_ILockScreenCallUI<D>::Closed(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->add_Closed(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ILockScreenCallUI> impl_ILockScreenCallUI<D>::Closed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Calls::LockScreenCallUI, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, ILockScreenCallUI>(this, &ABI::Windows::ApplicationModel::Calls::ILockScreenCallUI::remove_Closed, Closed(handler));
-}
-
-template <typename D> void impl_ILockScreenCallUI<D>::Closed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->remove_Closed(token));
-}
-
-template <typename D> hstring impl_ILockScreenCallUI<D>::CallTitle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->get_CallTitle(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILockScreenCallUI<D>::CallTitle(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ILockScreenCallUI)->put_CallTitle(get_abi(value)));
 }
 
 inline bool PhoneCallBlocking::BlockUnknownNumbers()

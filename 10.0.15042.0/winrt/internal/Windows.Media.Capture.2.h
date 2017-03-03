@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -11,29 +11,19 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_ef60385f_be78_584b_aaef_7829ada2b0de
-#define WINRT_GENERIC_ef60385f_be78_584b_aaef_7829ada2b0de
-template <> struct __declspec(uuid("ef60385f-be78-584b-aaef-7829ada2b0de")) __declspec(novtable) IAsyncOperation<uint32_t> : impl_IAsyncOperation<uint32_t> {};
-#endif
-
 #ifndef WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
 #define WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
 template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) __declspec(novtable) IReference<uint32_t> : impl_IReference<uint32_t> {};
 #endif
 
-#ifndef WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
-#define WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
-template <> struct __declspec(uuid("3c00fd60-2950-5939-a21a-2d12c5a01b8a")) __declspec(novtable) IReference<bool> : impl_IReference<bool> {};
+#ifndef WINRT_GENERIC_83dc154d_bb6f_598e_a887_41ba1801f019
+#define WINRT_GENERIC_83dc154d_bb6f_598e_a887_41ba1801f019
+template <> struct __declspec(uuid("83dc154d-bb6f-598e-a887-41ba1801f019")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::ScreenCapture, Windows::Media::Capture::SourceSuspensionChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::ScreenCapture, Windows::Media::Capture::SourceSuspensionChangedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
-template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
-#endif
-
-#ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
-#define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
-template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
+#ifndef WINRT_GENERIC_ef60385f_be78_584b_aaef_7829ada2b0de
+#define WINRT_GENERIC_ef60385f_be78_584b_aaef_7829ada2b0de
+template <> struct __declspec(uuid("ef60385f-be78-584b-aaef-7829ada2b0de")) __declspec(novtable) IAsyncOperation<uint32_t> : impl_IAsyncOperation<uint32_t> {};
 #endif
 
 #ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
@@ -41,9 +31,144 @@ template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __de
 template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
 #endif
 
+#ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
+#define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
+template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_e2672c1a_a3d9_56f3_8a77_20d30873ce87
+#define WINRT_GENERIC_e2672c1a_a3d9_56f3_8a77_20d30873ce87
+template <> struct __declspec(uuid("e2672c1a-a3d9-56f3-8a77-20d30873ce87")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceSignInInfo, Windows::Media::Capture::AppBroadcastSignInStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceSignInInfo, Windows::Media::Capture::AppBroadcastSignInStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_0c110cb8_b08a_5c07_b295_229049a46c22
+#define WINRT_GENERIC_0c110cb8_b08a_5c07_b295_229049a46c22
+template <> struct __declspec(uuid("0c110cb8-b08a-5c07-b295-229049a46c22")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_73c8ec4b_f104_5536_b8b4_4d9aad61c9b4
+#define WINRT_GENERIC_73c8ec4b_f104_5536_b8b4_4d9aad61c9b4
+template <> struct __declspec(uuid("73c8ec4b-f104-5536-b8b4-4d9aad61c9b4")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_633c91ca_4fde_5160_9209_3fd3a403a917
+#define WINRT_GENERIC_633c91ca_4fde_5160_9209_3fd3a403a917
+template <> struct __declspec(uuid("633c91ca-4fde-5160-9209-3fd3a403a917")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundService, Windows::Media::Capture::AppBroadcastHeartbeatRequestedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundService, Windows::Media::Capture::AppBroadcastHeartbeatRequestedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_66d1378b_0e04_5801_8bdd_feb1081bbecb
+#define WINRT_GENERIC_66d1378b_0e04_5801_8bdd_feb1081bbecb
+template <> struct __declspec(uuid("66d1378b-0e04-5801-8bdd-feb1081bbecb")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastStreamReader, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastStreamReader, Windows::Foundation::IInspectable> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_05afee04_1168_5677_a05e_9854b46b319b
+#define WINRT_GENERIC_05afee04_1168_5677_a05e_9854b46b319b
+template <> struct __declspec(uuid("05afee04-1168-5677-a05e-9854b46b319b")) __declspec(novtable) IVectorView<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IVectorView<Windows::Media::Capture::AppBroadcastPlugIn> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_16a22a27_61c2_56c2_93e5_18d6681ceeb4
+#define WINRT_GENERIC_16a22a27_61c2_56c2_93e5_18d6681ceeb4
+template <> struct __declspec(uuid("16a22a27-61c2-56c2-93e5-18d6681ceeb4")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastViewerCountChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastViewerCountChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_f64d996a_3859_5174_97b1_e33d56dfca3a
+#define WINRT_GENERIC_f64d996a_3859_5174_97b1_e33d56dfca3a
+template <> struct __declspec(uuid("f64d996a-3859-5174-97b1-e33d56dfca3a")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastMicrophoneCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastMicrophoneCaptureStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_b59aa695_b324_5b43_815b_8ffda6013816
+#define WINRT_GENERIC_b59aa695_b324_5b43_815b_8ffda6013816
+template <> struct __declspec(uuid("b59aa695-b324-5b43-815b-8ffda6013816")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastCameraCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastCameraCaptureStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_373d850e_045b_52a5_92da_c22f924b79fb
+#define WINRT_GENERIC_373d850e_045b_52a5_92da_c22f924b79fb
+template <> struct __declspec(uuid("373d850e-045b-52a5-92da-c22f924b79fb")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastPlugInStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastPlugInStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_2545fbd2_3fb6_5004_a475_56c059f3d75a
+#define WINRT_GENERIC_2545fbd2_3fb6_5004_a475_56c059f3d75a
+template <> struct __declspec(uuid("2545fbd2-3fb6-5004-a475-56c059f3d75a")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_a9b0513c_d638_5c5f_8051_791d7aa2d566
+#define WINRT_GENERIC_a9b0513c_d638_5c5f_8051_791d7aa2d566
+template <> struct __declspec(uuid("a9b0513c-d638-5c5f-8051-791d7aa2d566")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_41d8b8e1_dce7_5ebc_940f_de7dd2a62ab5
+#define WINRT_GENERIC_41d8b8e1_dce7_5ebc_940f_de7dd2a62ab5
+template <> struct __declspec(uuid("41d8b8e1-dce7-5ebc-940f-de7dd2a62ab5")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastPreview, Windows::Media::Capture::AppBroadcastPreviewStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastPreview, Windows::Media::Capture::AppBroadcastPreviewStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_7918f32c_187f_5f0f_b80e_6fcaaa5e14b9
+#define WINRT_GENERIC_7918f32c_187f_5f0f_b80e_6fcaaa5e14b9
+template <> struct __declspec(uuid("7918f32c-187f-5f0f-b80e-6fcaaa5e14b9")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastPreviewStreamReader, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastPreviewStreamReader, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_0b28a1a3_372e_50e9_a613_37b97cfd7a68
+#define WINRT_GENERIC_0b28a1a3_372e_50e9_a613_37b97cfd7a68
+template <> struct __declspec(uuid("0b28a1a3-372e-50e9-a613-37b97cfd7a68")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Media::Capture::AppCaptureMicrophoneCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Media::Capture::AppCaptureMicrophoneCaptureStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_b74ae481_777b_5bc9_83da_562d905a43f1
+#define WINRT_GENERIC_b74ae481_777b_5bc9_83da_562d905a43f1
+template <> struct __declspec(uuid("b74ae481-777b-5bc9-83da-562d905a43f1")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+#define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
+template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
+#endif
+
+#ifndef WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
+#define WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
+template <> struct __declspec(uuid("3c00fd60-2950-5939-a21a-2d12c5a01b8a")) __declspec(novtable) IReference<bool> : impl_IReference<bool> {};
+#endif
+
+#ifndef WINRT_GENERIC_227cbf02_2dfb_5425_85b1_0d62ce5d1243
+#define WINRT_GENERIC_227cbf02_2dfb_5425_85b1_0d62ce5d1243
+template <> struct __declspec(uuid("227cbf02-2dfb-5425-85b1-0d62ce5d1243")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureRecordingStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureRecordingStateChangedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_ab6419b5_9917_5275_9876_9e46b9abada7
+#define WINRT_GENERIC_ab6419b5_9917_5275_9876_9e46b9abada7
+template <> struct __declspec(uuid("ab6419b5-9917-5275-9876-9e46b9abada7")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureDurationGeneratedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureDurationGeneratedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_f00f69e5_9ee6_5119_9c39_f279f9ffd908
+#define WINRT_GENERIC_f00f69e5_9ee6_5119_9c39_f279f9ffd908
+template <> struct __declspec(uuid("f00f69e5-9ee6-5119-9c39-f279f9ffd908")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureFileGeneratedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureFileGeneratedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_2f85b809_7d8b_5be4_9a69_81386d874c7f
+#define WINRT_GENERIC_2f85b809_7d8b_5be4_9a69_81386d874c7f
+template <> struct __declspec(uuid("2f85b809-7d8b-5be4-9a69-81386d874c7f")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::GameBarServicesManager, Windows::Media::Capture::GameBarServicesManagerGameBarServicesCreatedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::GameBarServicesManager, Windows::Media::Capture::GameBarServicesManagerGameBarServicesCreatedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_0dab4f7e_bfec_59e1_82cf_ebf64b1db4f3
+#define WINRT_GENERIC_0dab4f7e_bfec_59e1_82cf_ebf64b1db4f3
+template <> struct __declspec(uuid("0dab4f7e-bfec-59e1-82cf-ebf64b1db4f3")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::GameBarServices, Windows::Media::Capture::GameBarServicesCommandEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::GameBarServices, Windows::Media::Capture::GameBarServicesCommandEventArgs> {};
+#endif
+
 #ifndef WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 #define WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 template <> struct __declspec(uuid("5e52f8ce-aced-5a42-95b4-f674dd84885e")) __declspec(novtable) IAsyncOperation<Windows::Storage::StorageFile> : impl_IAsyncOperation<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
+#define WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
+template <> struct __declspec(uuid("719cc2ba-3e76-5def-9f1a-38d85a145ea8")) __declspec(novtable) IReference<float> : impl_IReference<float> {};
 #endif
 
 #ifndef WINRT_GENERIC_f5cb24b5_ff00_58df_b460_17bbf2cd64d3
@@ -206,11 +331,6 @@ template <> struct __declspec(uuid("80423f11-054f-5eac-afd3-63b6ce15e77b")) __de
 template <> struct __declspec(uuid("b98aab3a-fe80-5b27-88c3-e77ff585a96b")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::LowLagPhotoSequenceCapture, Windows::Media::Capture::PhotoCapturedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::LowLagPhotoSequenceCapture, Windows::Media::Capture::PhotoCapturedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
-#define WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
-template <> struct __declspec(uuid("719cc2ba-3e76-5def-9f1a-38d85a145ea8")) __declspec(novtable) IReference<float> : impl_IReference<float> {};
-#endif
-
 #ifndef WINRT_GENERIC_e20596aa_0bbe_5203_be6b_6b71ff5b0843
 #define WINRT_GENERIC_e20596aa_0bbe_5203_be6b_6b71ff5b0843
 template <> struct __declspec(uuid("e20596aa-0bbe-5203-be6b-6b71ff5b0843")) __declspec(novtable) IReference<winrt::Windows::Media::Devices::CaptureSceneMode> : impl_IReference<winrt::Windows::Media::Devices::CaptureSceneMode> {};
@@ -226,34 +346,9 @@ template <> struct __declspec(uuid("58820185-5da0-5faa-86da-9bd9f03974fa")) __de
 template <> struct __declspec(uuid("79c7838a-39e2-5287-ac3b-b118db251002")) __declspec(novtable) IReference<Windows::Media::Capture::WhiteBalanceGain> : impl_IReference<Windows::Media::Capture::WhiteBalanceGain> {};
 #endif
 
-#ifndef WINRT_GENERIC_83dc154d_bb6f_598e_a887_41ba1801f019
-#define WINRT_GENERIC_83dc154d_bb6f_598e_a887_41ba1801f019
-template <> struct __declspec(uuid("83dc154d-bb6f-598e-a887-41ba1801f019")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::ScreenCapture, Windows::Media::Capture::SourceSuspensionChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::ScreenCapture, Windows::Media::Capture::SourceSuspensionChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_e2672c1a_a3d9_56f3_8a77_20d30873ce87
-#define WINRT_GENERIC_e2672c1a_a3d9_56f3_8a77_20d30873ce87
-template <> struct __declspec(uuid("e2672c1a-a3d9-56f3-8a77-20d30873ce87")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceSignInInfo, Windows::Media::Capture::AppBroadcastSignInStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceSignInInfo, Windows::Media::Capture::AppBroadcastSignInStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_0c110cb8_b08a_5c07_b295_229049a46c22
-#define WINRT_GENERIC_0c110cb8_b08a_5c07_b295_229049a46c22
-template <> struct __declspec(uuid("0c110cb8-b08a-5c07-b295-229049a46c22")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_73c8ec4b_f104_5536_b8b4_4d9aad61c9b4
-#define WINRT_GENERIC_73c8ec4b_f104_5536_b8b4_4d9aad61c9b4
-template <> struct __declspec(uuid("73c8ec4b-f104-5536-b8b4-4d9aad61c9b4")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundServiceStreamInfo, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_633c91ca_4fde_5160_9209_3fd3a403a917
-#define WINRT_GENERIC_633c91ca_4fde_5160_9209_3fd3a403a917
-template <> struct __declspec(uuid("633c91ca-4fde-5160-9209-3fd3a403a917")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundService, Windows::Media::Capture::AppBroadcastHeartbeatRequestedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastBackgroundService, Windows::Media::Capture::AppBroadcastHeartbeatRequestedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_66d1378b_0e04_5801_8bdd_feb1081bbecb
-#define WINRT_GENERIC_66d1378b_0e04_5801_8bdd_feb1081bbecb
-template <> struct __declspec(uuid("66d1378b-0e04-5801-8bdd-feb1081bbecb")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastStreamReader, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastStreamReader, Windows::Foundation::IInspectable> {};
+#ifndef WINRT_GENERIC_9343b6e7_e3d2_5e4a_ab2d_2bce4919a6a4
+#define WINRT_GENERIC_9343b6e7_e3d2_5e4a_ab2d_2bce4919a6a4
+template <> struct __declspec(uuid("9343b6e7-e3d2-5e4a-ab2d-2bce4919a6a4")) __declspec(novtable) AsyncOperationCompletedHandler<uint32_t> : impl_AsyncOperationCompletedHandler<uint32_t> {};
 #endif
 
 
@@ -261,95 +356,25 @@ template <> struct __declspec(uuid("66d1378b-0e04-5801-8bdd-feb1081bbecb")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_05afee04_1168_5677_a05e_9854b46b319b
-#define WINRT_GENERIC_05afee04_1168_5677_a05e_9854b46b319b
-template <> struct __declspec(uuid("05afee04-1168-5677-a05e-9854b46b319b")) __declspec(novtable) IVectorView<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IVectorView<Windows::Media::Capture::AppBroadcastPlugIn> {};
+#ifndef WINRT_GENERIC_d05da08f_b7aa_58c3_bfaf_4c1e372444d4
+#define WINRT_GENERIC_d05da08f_b7aa_58c3_bfaf_4c1e372444d4
+template <> struct __declspec(uuid("d05da08f-b7aa-58c3-bfaf-4c1e372444d4")) __declspec(novtable) IVector<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IVector<Windows::Media::Capture::AppBroadcastPlugIn> {};
+#endif
+
+#ifndef WINRT_GENERIC_cf667b1a_3bb9_57ce_a38b_1e81471f8cf8
+#define WINRT_GENERIC_cf667b1a_3bb9_57ce_a38b_1e81471f8cf8
+template <> struct __declspec(uuid("cf667b1a-3bb9-57ce-a38b-1e81471f8cf8")) __declspec(novtable) IIterator<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IIterator<Windows::Media::Capture::AppBroadcastPlugIn> {};
+#endif
+
+#ifndef WINRT_GENERIC_c531c5b0_0223_5c9e_a8fb_20f52ea58d75
+#define WINRT_GENERIC_c531c5b0_0223_5c9e_a8fb_20f52ea58d75
+template <> struct __declspec(uuid("c531c5b0-0223-5c9e-a8fb-20f52ea58d75")) __declspec(novtable) IIterable<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IIterable<Windows::Media::Capture::AppBroadcastPlugIn> {};
 #endif
 
 
 }
 
 namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_16a22a27_61c2_56c2_93e5_18d6681ceeb4
-#define WINRT_GENERIC_16a22a27_61c2_56c2_93e5_18d6681ceeb4
-template <> struct __declspec(uuid("16a22a27-61c2-56c2-93e5-18d6681ceeb4")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastViewerCountChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastViewerCountChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_f64d996a_3859_5174_97b1_e33d56dfca3a
-#define WINRT_GENERIC_f64d996a_3859_5174_97b1_e33d56dfca3a
-template <> struct __declspec(uuid("f64d996a-3859-5174-97b1-e33d56dfca3a")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastMicrophoneCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastMicrophoneCaptureStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_b59aa695_b324_5b43_815b_8ffda6013816
-#define WINRT_GENERIC_b59aa695_b324_5b43_815b_8ffda6013816
-template <> struct __declspec(uuid("b59aa695-b324-5b43-815b-8ffda6013816")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastCameraCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastCameraCaptureStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_373d850e_045b_52a5_92da_c22f924b79fb
-#define WINRT_GENERIC_373d850e_045b_52a5_92da_c22f924b79fb
-template <> struct __declspec(uuid("373d850e-045b-52a5-92da-c22f924b79fb")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastPlugInStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastPlugInStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_2545fbd2_3fb6_5004_a475_56c059f3d75a
-#define WINRT_GENERIC_2545fbd2_3fb6_5004_a475_56c059f3d75a
-template <> struct __declspec(uuid("2545fbd2-3fb6-5004-a475-56c059f3d75a")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Media::Capture::AppBroadcastStreamStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_a9b0513c_d638_5c5f_8051_791d7aa2d566
-#define WINRT_GENERIC_a9b0513c_d638_5c5f_8051_791d7aa2d566
-template <> struct __declspec(uuid("a9b0513c-d638-5c5f-8051-791d7aa2d566")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastState, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_41d8b8e1_dce7_5ebc_940f_de7dd2a62ab5
-#define WINRT_GENERIC_41d8b8e1_dce7_5ebc_940f_de7dd2a62ab5
-template <> struct __declspec(uuid("41d8b8e1-dce7-5ebc-940f-de7dd2a62ab5")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastPreview, Windows::Media::Capture::AppBroadcastPreviewStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastPreview, Windows::Media::Capture::AppBroadcastPreviewStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_7918f32c_187f_5f0f_b80e_6fcaaa5e14b9
-#define WINRT_GENERIC_7918f32c_187f_5f0f_b80e_6fcaaa5e14b9
-template <> struct __declspec(uuid("7918f32c-187f-5f0f-b80e-6fcaaa5e14b9")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppBroadcastPreviewStreamReader, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppBroadcastPreviewStreamReader, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_0b28a1a3_372e_50e9_a613_37b97cfd7a68
-#define WINRT_GENERIC_0b28a1a3_372e_50e9_a613_37b97cfd7a68
-template <> struct __declspec(uuid("0b28a1a3-372e-50e9-a613-37b97cfd7a68")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Media::Capture::AppCaptureMicrophoneCaptureStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Media::Capture::AppCaptureMicrophoneCaptureStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_b74ae481_777b_5bc9_83da_562d905a43f1
-#define WINRT_GENERIC_b74ae481_777b_5bc9_83da_562d905a43f1
-template <> struct __declspec(uuid("b74ae481-777b-5bc9-83da-562d905a43f1")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureState, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_227cbf02_2dfb_5425_85b1_0d62ce5d1243
-#define WINRT_GENERIC_227cbf02_2dfb_5425_85b1_0d62ce5d1243
-template <> struct __declspec(uuid("227cbf02-2dfb-5425-85b1-0d62ce5d1243")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureRecordingStateChangedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureRecordingStateChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_ab6419b5_9917_5275_9876_9e46b9abada7
-#define WINRT_GENERIC_ab6419b5_9917_5275_9876_9e46b9abada7
-template <> struct __declspec(uuid("ab6419b5-9917-5275-9876-9e46b9abada7")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureDurationGeneratedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureDurationGeneratedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_f00f69e5_9ee6_5119_9c39_f279f9ffd908
-#define WINRT_GENERIC_f00f69e5_9ee6_5119_9c39_f279f9ffd908
-template <> struct __declspec(uuid("f00f69e5-9ee6-5119-9c39-f279f9ffd908")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureFileGeneratedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::AppCaptureRecordOperation, Windows::Media::Capture::AppCaptureFileGeneratedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_2f85b809_7d8b_5be4_9a69_81386d874c7f
-#define WINRT_GENERIC_2f85b809_7d8b_5be4_9a69_81386d874c7f
-template <> struct __declspec(uuid("2f85b809-7d8b-5be4-9a69-81386d874c7f")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::GameBarServicesManager, Windows::Media::Capture::GameBarServicesManagerGameBarServicesCreatedEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::GameBarServicesManager, Windows::Media::Capture::GameBarServicesManagerGameBarServicesCreatedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_0dab4f7e_bfec_59e1_82cf_ebf64b1db4f3
-#define WINRT_GENERIC_0dab4f7e_bfec_59e1_82cf_ebf64b1db4f3
-template <> struct __declspec(uuid("0dab4f7e-bfec-59e1-82cf-ebf64b1db4f3")) __declspec(novtable) TypedEventHandler<Windows::Media::Capture::GameBarServices, Windows::Media::Capture::GameBarServicesCommandEventArgs> : impl_TypedEventHandler<Windows::Media::Capture::GameBarServices, Windows::Media::Capture::GameBarServicesCommandEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_9343b6e7_e3d2_5e4a_ab2d_2bce4919a6a4
-#define WINRT_GENERIC_9343b6e7_e3d2_5e4a_ab2d_2bce4919a6a4
-template <> struct __declspec(uuid("9343b6e7-e3d2-5e4a-ab2d-2bce4919a6a4")) __declspec(novtable) AsyncOperationCompletedHandler<uint32_t> : impl_AsyncOperationCompletedHandler<uint32_t> {};
-#endif
 
 #ifndef WINRT_GENERIC_e521c894_2c26_5946_9e61_2b5e188d01ed
 #define WINRT_GENERIC_e521c894_2c26_5946_9e61_2b5e188d01ed
@@ -510,21 +535,6 @@ template <> struct __declspec(uuid("edf3452c-d918-5c95-8e3a-245044dd70df")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_d05da08f_b7aa_58c3_bfaf_4c1e372444d4
-#define WINRT_GENERIC_d05da08f_b7aa_58c3_bfaf_4c1e372444d4
-template <> struct __declspec(uuid("d05da08f-b7aa-58c3-bfaf-4c1e372444d4")) __declspec(novtable) IVector<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IVector<Windows::Media::Capture::AppBroadcastPlugIn> {};
-#endif
-
-#ifndef WINRT_GENERIC_cf667b1a_3bb9_57ce_a38b_1e81471f8cf8
-#define WINRT_GENERIC_cf667b1a_3bb9_57ce_a38b_1e81471f8cf8
-template <> struct __declspec(uuid("cf667b1a-3bb9-57ce-a38b-1e81471f8cf8")) __declspec(novtable) IIterator<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IIterator<Windows::Media::Capture::AppBroadcastPlugIn> {};
-#endif
-
-#ifndef WINRT_GENERIC_c531c5b0_0223_5c9e_a8fb_20f52ea58d75
-#define WINRT_GENERIC_c531c5b0_0223_5c9e_a8fb_20f52ea58d75
-template <> struct __declspec(uuid("c531c5b0-0223-5c9e-a8fb-20f52ea58d75")) __declspec(novtable) IIterable<Windows::Media::Capture::AppBroadcastPlugIn> : impl_IIterable<Windows::Media::Capture::AppBroadcastPlugIn> {};
-#endif
 
 #ifndef WINRT_GENERIC_d8ec36b7_64eb_5675_ad81_62233e483e17
 #define WINRT_GENERIC_d8ec36b7_64eb_5675_ad81_62233e483e17

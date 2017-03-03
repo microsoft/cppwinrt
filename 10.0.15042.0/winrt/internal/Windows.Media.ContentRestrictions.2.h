@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -12,6 +12,11 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_cdb5efb3_5788_509d_9be1_71ccb8a3362a
 #define WINRT_GENERIC_cdb5efb3_5788_509d_9be1_71ccb8a3362a
 template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __declspec(novtable) IAsyncOperation<bool> : impl_IAsyncOperation<bool> {};
+#endif
+
+#ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
+#define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
+template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -53,11 +58,6 @@ template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __de
 }
 
 namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
-#define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
-template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
-#endif
 
 #ifndef WINRT_GENERIC_ae3399b2_c7d5_5f1b_9fb9_f8bd81e9f9be
 #define WINRT_GENERIC_ae3399b2_c7d5_5f1b_9fb9_f8bd81e9f9be

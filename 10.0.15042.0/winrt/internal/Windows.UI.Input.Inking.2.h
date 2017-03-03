@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -13,26 +13,6 @@ namespace ABI::Windows::Foundation::Collections {
 #define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __declspec(novtable) IIterable<hstring> : impl_IIterable<hstring> {};
 #endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_eccb574a_c684_5572_a679_6b0842cfb57f
-#define WINRT_GENERIC_eccb574a_c684_5572_a679_6b0842cfb57f
-template <> struct __declspec(uuid("eccb574a-c684-5572-a679-6b0842cfb57f")) __declspec(novtable) IAsyncOperationWithProgress<uint32_t, uint32_t> : impl_IAsyncOperationWithProgress<uint32_t, uint32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -52,6 +32,16 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
 #define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
 template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
+#endif
+
+#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
+#endif
+
+#ifndef WINRT_GENERIC_eccb574a_c684_5572_a679_6b0842cfb57f
+#define WINRT_GENERIC_eccb574a_c684_5572_a679_6b0842cfb57f
+template <> struct __declspec(uuid("eccb574a-c684-5572-a679-6b0842cfb57f")) __declspec(novtable) IAsyncOperationWithProgress<uint32_t, uint32_t> : impl_IAsyncOperationWithProgress<uint32_t, uint32_t> {};
 #endif
 
 

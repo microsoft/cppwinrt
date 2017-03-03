@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
 #define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
@@ -33,11 +38,6 @@ template <> struct __declspec(uuid("684165be-0011-56d6-bebf-430016d51b7a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
-#endif
 
 #ifndef WINRT_GENERIC_2828a982_d849_5fc9_84ce_f9a4b3b4d341
 #define WINRT_GENERIC_2828a982_d849_5fc9_84ce_f9a4b3b4d341

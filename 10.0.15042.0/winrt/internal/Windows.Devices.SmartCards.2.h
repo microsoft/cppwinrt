@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -15,95 +15,10 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __declspec(novtable) IAsyncOperation<bool> : impl_IAsyncOperation<bool> {};
 #endif
 
-#ifndef WINRT_GENERIC_036a830d_bbca_5cb9_977f_b29ea3042149
-#define WINRT_GENERIC_036a830d_bbca_5cb9_977f_b29ea3042149
-template <> struct __declspec(uuid("036a830d-bbca-5cb9-977f-b29ea3042149")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardReader> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardReader> {};
-#endif
-
-#ifndef WINRT_GENERIC_5ae402fa_1f22_5570_a0c8_b2320adedb81
-#define WINRT_GENERIC_5ae402fa_1f22_5570_a0c8_b2320adedb81
-template <> struct __declspec(uuid("5ae402fa-1f22-5570-a0c8-b2320adedb81")) __declspec(novtable) IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> : impl_IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_4bee6991_3508_5f03_a2f4_90a5ddb26bd8
-#define WINRT_GENERIC_4bee6991_3508_5f03_a2f4_90a5ddb26bd8
-template <> struct __declspec(uuid("4bee6991-3508-5f03-a2f4-90a5ddb26bd8")) __declspec(novtable) IVectorView<Windows::Devices::SmartCards::SmartCard> : impl_IVectorView<Windows::Devices::SmartCards::SmartCard> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_d36f2db9_5674_5f74_9f69_3cdc4559999f
-#define WINRT_GENERIC_d36f2db9_5674_5f74_9f69_3cdc4559999f
-template <> struct __declspec(uuid("d36f2db9-5674-5f74-9f69-3cdc4559999f")) __declspec(novtable) TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardAddedEventArgs> : impl_TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardAddedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_69da07c6_b266_5a1c_937c_d82b4a8232c6
-#define WINRT_GENERIC_69da07c6_b266_5a1c_937c_d82b4a8232c6
-template <> struct __declspec(uuid("69da07c6-b266-5a1c-937c-d82b4a8232c6")) __declspec(novtable) TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardRemovedEventArgs> : impl_TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardRemovedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_e2223376_8cf6_51bd_9907_1344aa665e5d
-#define WINRT_GENERIC_e2223376_8cf6_51bd_9907_1344aa665e5d
-template <> struct __declspec(uuid("e2223376-8cf6-51bd-9907-1344aa665e5d")) __declspec(novtable) IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardStatus> : impl_IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardStatus> {};
-#endif
-
-#ifndef WINRT_GENERIC_3bee8834_b9a7_5a80_a746_5ef097227878
-#define WINRT_GENERIC_3bee8834_b9a7_5a80_a746_5ef097227878
-template <> struct __declspec(uuid("3bee8834-b9a7-5a80-a746-5ef097227878")) __declspec(novtable) IAsyncOperation<Windows::Storage::Streams::IBuffer> : impl_IAsyncOperation<Windows::Storage::Streams::IBuffer> {};
-#endif
-
-#ifndef WINRT_GENERIC_6184fc80_b752_5ce8_a136_f57174bb9309
-#define WINRT_GENERIC_6184fc80_b752_5ce8_a136_f57174bb9309
-template <> struct __declspec(uuid("6184fc80-b752-5ce8-a136-f57174bb9309")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardProvisioning> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardProvisioning> {};
-#endif
-
 #ifndef WINRT_GENERIC_6607bc41_294b_5975_9c3f_4b49836d0916
 #define WINRT_GENERIC_6607bc41_294b_5975_9c3f_4b49836d0916
 template <> struct __declspec(uuid("6607bc41-294b-5975-9c3f-4b49836d0916")) __declspec(novtable) IAsyncOperation<GUID> : impl_IAsyncOperation<GUID> {};
 #endif
-
-#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_1c650663_3f68_599b_b9d4_c350f13ee4e4
-#define WINRT_GENERIC_1c650663_3f68_599b_b9d4_c350f13ee4e4
-template <> struct __declspec(uuid("1c650663-3f68-599b-b9d4-c350f13ee4e4")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardChallengeContext> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardChallengeContext> {};
-#endif
-
-#ifndef WINRT_GENERIC_779bbc5b_a75c_5988_978f_34dbc629d576
-#define WINRT_GENERIC_779bbc5b_a75c_5988_978f_34dbc629d576
-template <> struct __declspec(uuid("779bbc5b-a75c-5988-978f-34dbc629d576")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardConnection> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardConnection> {};
-#endif
-
-#ifndef WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
-#define WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
-template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) __declspec(novtable) IReference<uint32_t> : impl_IReference<uint32_t> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_fd944562_11d6_5eab_bd72_701993b68fac
-#define WINRT_GENERIC_fd944562_11d6_5eab_bd72_701993b68fac
-template <> struct __declspec(uuid("fd944562-11d6-5eab-bd72-701993b68fac")) __declspec(novtable) IVectorView<Windows::Storage::Streams::IBuffer> : impl_IVectorView<Windows::Storage::Streams::IBuffer> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_1dd898f0_c825_5bf3_9564_4708932f955f
 #define WINRT_GENERIC_1dd898f0_c825_5bf3_9564_4708932f955f
@@ -138,6 +53,11 @@ template <> struct __declspec(uuid("146f9403-42f4-59a2-a85a-8294af3e3e78")) __de
 #ifndef WINRT_GENERIC_cb9840cb_cc46_5c37_ab00_dd23d77b263b
 #define WINRT_GENERIC_cb9840cb_cc46_5c37_ab00_dd23d77b263b
 template <> struct __declspec(uuid("cb9840cb-cc46-5c37-ab00-dd23d77b263b")) __declspec(novtable) TypedEventHandler<Windows::Devices::SmartCards::SmartCardEmulator, Windows::Devices::SmartCards::SmartCardEmulatorConnectionDeactivatedEventArgs> : impl_TypedEventHandler<Windows::Devices::SmartCards::SmartCardEmulator, Windows::Devices::SmartCards::SmartCardEmulatorConnectionDeactivatedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
+#define WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
+template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) __declspec(novtable) IReference<uint32_t> : impl_IReference<uint32_t> {};
 #endif
 
 
@@ -275,19 +195,19 @@ template <> struct __declspec(uuid("2cab81a8-3c29-50d1-9761-5f3927c96dca")) __de
 template <> struct __declspec(uuid("001a0095-2adc-54c2-8594-3a36ba16fd86")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> {};
 #endif
 
-#ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
-#define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
-template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __declspec(novtable) AsyncOperationCompletedHandler<bool> : impl_AsyncOperationCompletedHandler<bool> {};
+#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
 #endif
 
-#ifndef WINRT_GENERIC_20d3244d_375a_5f7d_8944_164fdfed4239
-#define WINRT_GENERIC_20d3244d_375a_5f7d_8944_164fdfed4239
-template <> struct __declspec(uuid("20d3244d-375a-5f7d-8944-164fdfed4239")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardReader> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardReader> {};
+#ifndef WINRT_GENERIC_036a830d_bbca_5cb9_977f_b29ea3042149
+#define WINRT_GENERIC_036a830d_bbca_5cb9_977f_b29ea3042149
+template <> struct __declspec(uuid("036a830d-bbca-5cb9-977f-b29ea3042149")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardReader> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardReader> {};
 #endif
 
-#ifndef WINRT_GENERIC_3d7e6ea9_e739_555c_9c02_07396c5321f5
-#define WINRT_GENERIC_3d7e6ea9_e739_555c_9c02_07396c5321f5
-template <> struct __declspec(uuid("3d7e6ea9-e739-555c-9c02-07396c5321f5")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> {};
+#ifndef WINRT_GENERIC_5ae402fa_1f22_5570_a0c8_b2320adedb81
+#define WINRT_GENERIC_5ae402fa_1f22_5570_a0c8_b2320adedb81
+template <> struct __declspec(uuid("5ae402fa-1f22-5570-a0c8-b2320adedb81")) __declspec(novtable) IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> : impl_IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> {};
 #endif
 
 
@@ -295,19 +215,9 @@ template <> struct __declspec(uuid("3d7e6ea9-e739-555c-9c02-07396c5321f5")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_ad813bf2_e608_5876_8f5f_bf672f49313f
-#define WINRT_GENERIC_ad813bf2_e608_5876_8f5f_bf672f49313f
-template <> struct __declspec(uuid("ad813bf2-e608-5876-8f5f-bf672f49313f")) __declspec(novtable) IVector<Windows::Devices::SmartCards::SmartCard> : impl_IVector<Windows::Devices::SmartCards::SmartCard> {};
-#endif
-
-#ifndef WINRT_GENERIC_86b29903_916e_5817_bc96_df324475e31a
-#define WINRT_GENERIC_86b29903_916e_5817_bc96_df324475e31a
-template <> struct __declspec(uuid("86b29903-916e-5817-bc96-df324475e31a")) __declspec(novtable) IIterator<Windows::Devices::SmartCards::SmartCard> : impl_IIterator<Windows::Devices::SmartCards::SmartCard> {};
-#endif
-
-#ifndef WINRT_GENERIC_a32c5202_d113_535f_880e_50f3e5121ef8
-#define WINRT_GENERIC_a32c5202_d113_535f_880e_50f3e5121ef8
-template <> struct __declspec(uuid("a32c5202-d113-535f-880e-50f3e5121ef8")) __declspec(novtable) IIterable<Windows::Devices::SmartCards::SmartCard> : impl_IIterable<Windows::Devices::SmartCards::SmartCard> {};
+#ifndef WINRT_GENERIC_4bee6991_3508_5f03_a2f4_90a5ddb26bd8
+#define WINRT_GENERIC_4bee6991_3508_5f03_a2f4_90a5ddb26bd8
+template <> struct __declspec(uuid("4bee6991-3508-5f03-a2f4-90a5ddb26bd8")) __declspec(novtable) IVectorView<Windows::Devices::SmartCards::SmartCard> : impl_IVectorView<Windows::Devices::SmartCards::SmartCard> {};
 #endif
 
 
@@ -315,60 +225,65 @@ template <> struct __declspec(uuid("a32c5202-d113-535f-880e-50f3e5121ef8")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_bdaf4a41_3b4a_56b0_aeec_fee71cc7f328
-#define WINRT_GENERIC_bdaf4a41_3b4a_56b0_aeec_fee71cc7f328
-template <> struct __declspec(uuid("bdaf4a41-3b4a-56b0-aeec-fee71cc7f328")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardStatus> {};
+#ifndef WINRT_GENERIC_d36f2db9_5674_5f74_9f69_3cdc4559999f
+#define WINRT_GENERIC_d36f2db9_5674_5f74_9f69_3cdc4559999f
+template <> struct __declspec(uuid("d36f2db9-5674-5f74-9f69-3cdc4559999f")) __declspec(novtable) TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardAddedEventArgs> : impl_TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardAddedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_51c3d2fd_b8a1_5620_b746_7ee6d533aca3
-#define WINRT_GENERIC_51c3d2fd_b8a1_5620_b746_7ee6d533aca3
-template <> struct __declspec(uuid("51c3d2fd-b8a1-5620-b746-7ee6d533aca3")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::Streams::IBuffer> : impl_AsyncOperationCompletedHandler<Windows::Storage::Streams::IBuffer> {};
+#ifndef WINRT_GENERIC_69da07c6_b266_5a1c_937c_d82b4a8232c6
+#define WINRT_GENERIC_69da07c6_b266_5a1c_937c_d82b4a8232c6
+template <> struct __declspec(uuid("69da07c6-b266-5a1c-937c-d82b4a8232c6")) __declspec(novtable) TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardRemovedEventArgs> : impl_TypedEventHandler<Windows::Devices::SmartCards::SmartCardReader, Windows::Devices::SmartCards::CardRemovedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_7a2e58dc_22ee_5cb8_83cc_a7a61b9dcd2c
-#define WINRT_GENERIC_7a2e58dc_22ee_5cb8_83cc_a7a61b9dcd2c
-template <> struct __declspec(uuid("7a2e58dc-22ee-5cb8-83cc-a7a61b9dcd2c")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardProvisioning> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardProvisioning> {};
+#ifndef WINRT_GENERIC_e2223376_8cf6_51bd_9907_1344aa665e5d
+#define WINRT_GENERIC_e2223376_8cf6_51bd_9907_1344aa665e5d
+template <> struct __declspec(uuid("e2223376-8cf6-51bd-9907-1344aa665e5d")) __declspec(novtable) IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardStatus> : impl_IAsyncOperation<winrt::Windows::Devices::SmartCards::SmartCardStatus> {};
+#endif
+
+#ifndef WINRT_GENERIC_3bee8834_b9a7_5a80_a746_5ef097227878
+#define WINRT_GENERIC_3bee8834_b9a7_5a80_a746_5ef097227878
+template <> struct __declspec(uuid("3bee8834-b9a7-5a80-a746-5ef097227878")) __declspec(novtable) IAsyncOperation<Windows::Storage::Streams::IBuffer> : impl_IAsyncOperation<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+#ifndef WINRT_GENERIC_6184fc80_b752_5ce8_a136_f57174bb9309
+#define WINRT_GENERIC_6184fc80_b752_5ce8_a136_f57174bb9309
+template <> struct __declspec(uuid("6184fc80-b752-5ce8-a136-f57174bb9309")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardProvisioning> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardProvisioning> {};
+#endif
+
+#ifndef WINRT_GENERIC_1c650663_3f68_599b_b9d4_c350f13ee4e4
+#define WINRT_GENERIC_1c650663_3f68_599b_b9d4_c350f13ee4e4
+template <> struct __declspec(uuid("1c650663-3f68-599b-b9d4-c350f13ee4e4")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardChallengeContext> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardChallengeContext> {};
+#endif
+
+#ifndef WINRT_GENERIC_779bbc5b_a75c_5988_978f_34dbc629d576
+#define WINRT_GENERIC_779bbc5b_a75c_5988_978f_34dbc629d576
+template <> struct __declspec(uuid("779bbc5b-a75c-5988-978f-34dbc629d576")) __declspec(novtable) IAsyncOperation<Windows::Devices::SmartCards::SmartCardConnection> : impl_IAsyncOperation<Windows::Devices::SmartCards::SmartCardConnection> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_fd944562_11d6_5eab_bd72_701993b68fac
+#define WINRT_GENERIC_fd944562_11d6_5eab_bd72_701993b68fac
+template <> struct __declspec(uuid("fd944562-11d6-5eab-bd72-701993b68fac")) __declspec(novtable) IVectorView<Windows::Storage::Streams::IBuffer> : impl_IVectorView<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
+#define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
+template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __declspec(novtable) AsyncOperationCompletedHandler<bool> : impl_AsyncOperationCompletedHandler<bool> {};
 #endif
 
 #ifndef WINRT_GENERIC_5233899b_ba7e_504f_bb83_ceebac62decf
 #define WINRT_GENERIC_5233899b_ba7e_504f_bb83_ceebac62decf
 template <> struct __declspec(uuid("5233899b-ba7e-504f-bb83-ceebac62decf")) __declspec(novtable) AsyncOperationCompletedHandler<GUID> : impl_AsyncOperationCompletedHandler<GUID> {};
 #endif
-
-#ifndef WINRT_GENERIC_b79a741f_7fb5_50ae_9e99_911201ec3d41
-#define WINRT_GENERIC_b79a741f_7fb5_50ae_9e99_911201ec3d41
-template <> struct __declspec(uuid("b79a741f-7fb5-50ae-9e99-911201ec3d41")) __declspec(novtable) AsyncOperationCompletedHandler<hstring> : impl_AsyncOperationCompletedHandler<hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_96b172f6_dedb_5f3e_af90_7b0f10219352
-#define WINRT_GENERIC_96b172f6_dedb_5f3e_af90_7b0f10219352
-template <> struct __declspec(uuid("96b172f6-dedb-5f3e-af90-7b0f10219352")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardChallengeContext> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardChallengeContext> {};
-#endif
-
-#ifndef WINRT_GENERIC_c71f00e6_af26_5e5c_913d_0efeb7d08ef7
-#define WINRT_GENERIC_c71f00e6_af26_5e5c_913d_0efeb7d08ef7
-template <> struct __declspec(uuid("c71f00e6-af26-5e5c-913d-0efeb7d08ef7")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardConnection> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardConnection> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
-#define WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
-template <> struct __declspec(uuid("afee38e0-f882-5f10-9655-1fc98cc8cce5")) __declspec(novtable) IIterator<Windows::Storage::Streams::IBuffer> : impl_IIterator<Windows::Storage::Streams::IBuffer> {};
-#endif
-
-#ifndef WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
-#define WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
-template <> struct __declspec(uuid("902972bf-a984-5443-b1c5-2f04a99e1fca")) __declspec(novtable) IIterable<Windows::Storage::Streams::IBuffer> : impl_IIterable<Windows::Storage::Streams::IBuffer> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_4982e406_052c_5782_a57d_54f9f44f8412
 #define WINRT_GENERIC_4982e406_052c_5782_a57d_54f9f44f8412
@@ -404,6 +319,26 @@ namespace ABI::Windows::Foundation {
 #define WINRT_GENERIC_371045fb_4994_5413_89be_ba4e97ad82a0
 template <> struct __declspec(uuid("371045fb-4994-5413-89be-ba4e97ad82a0")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
+#define WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
+template <> struct __declspec(uuid("afee38e0-f882-5f10-9655-1fc98cc8cce5")) __declspec(novtable) IIterator<Windows::Storage::Streams::IBuffer> : impl_IIterator<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+#ifndef WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
+#define WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
+template <> struct __declspec(uuid("902972bf-a984-5443-b1c5-2f04a99e1fca")) __declspec(novtable) IIterable<Windows::Storage::Streams::IBuffer> : impl_IIterable<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_9528f94b_047b_5e2a_8fc0_7017f5daddff
 #define WINRT_GENERIC_9528f94b_047b_5e2a_8fc0_7017f5daddff
@@ -625,9 +560,69 @@ template <> struct __declspec(uuid("cd50ac04-e836-5525-9edb-066d6205a2a7")) __de
 template <> struct __declspec(uuid("45cffa0a-b354-50c3-8f24-3dd4f1677fbe")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult> {};
 #endif
 
-#ifndef WINRT_GENERIC_3b2691b2_fc5e_59ff_8c6f_e6dd29a967fc
-#define WINRT_GENERIC_3b2691b2_fc5e_59ff_8c6f_e6dd29a967fc
-template <> struct __declspec(uuid("3b2691b2-fc5e-59ff-8c6f-e6dd29a967fc")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> : impl_IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> {};
+#ifndef WINRT_GENERIC_b79a741f_7fb5_50ae_9e99_911201ec3d41
+#define WINRT_GENERIC_b79a741f_7fb5_50ae_9e99_911201ec3d41
+template <> struct __declspec(uuid("b79a741f-7fb5-50ae-9e99-911201ec3d41")) __declspec(novtable) AsyncOperationCompletedHandler<hstring> : impl_AsyncOperationCompletedHandler<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_20d3244d_375a_5f7d_8944_164fdfed4239
+#define WINRT_GENERIC_20d3244d_375a_5f7d_8944_164fdfed4239
+template <> struct __declspec(uuid("20d3244d-375a-5f7d-8944-164fdfed4239")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardReader> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardReader> {};
+#endif
+
+#ifndef WINRT_GENERIC_3d7e6ea9_e739_555c_9c02_07396c5321f5
+#define WINRT_GENERIC_3d7e6ea9_e739_555c_9c02_07396c5321f5
+template <> struct __declspec(uuid("3d7e6ea9-e739-555c-9c02-07396c5321f5")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardReaderStatus> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_ad813bf2_e608_5876_8f5f_bf672f49313f
+#define WINRT_GENERIC_ad813bf2_e608_5876_8f5f_bf672f49313f
+template <> struct __declspec(uuid("ad813bf2-e608-5876-8f5f-bf672f49313f")) __declspec(novtable) IVector<Windows::Devices::SmartCards::SmartCard> : impl_IVector<Windows::Devices::SmartCards::SmartCard> {};
+#endif
+
+#ifndef WINRT_GENERIC_86b29903_916e_5817_bc96_df324475e31a
+#define WINRT_GENERIC_86b29903_916e_5817_bc96_df324475e31a
+template <> struct __declspec(uuid("86b29903-916e-5817-bc96-df324475e31a")) __declspec(novtable) IIterator<Windows::Devices::SmartCards::SmartCard> : impl_IIterator<Windows::Devices::SmartCards::SmartCard> {};
+#endif
+
+#ifndef WINRT_GENERIC_a32c5202_d113_535f_880e_50f3e5121ef8
+#define WINRT_GENERIC_a32c5202_d113_535f_880e_50f3e5121ef8
+template <> struct __declspec(uuid("a32c5202-d113-535f-880e-50f3e5121ef8")) __declspec(novtable) IIterable<Windows::Devices::SmartCards::SmartCard> : impl_IIterable<Windows::Devices::SmartCards::SmartCard> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_bdaf4a41_3b4a_56b0_aeec_fee71cc7f328
+#define WINRT_GENERIC_bdaf4a41_3b4a_56b0_aeec_fee71cc7f328
+template <> struct __declspec(uuid("bdaf4a41-3b4a-56b0-aeec-fee71cc7f328")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardStatus> : impl_AsyncOperationCompletedHandler<winrt::Windows::Devices::SmartCards::SmartCardStatus> {};
+#endif
+
+#ifndef WINRT_GENERIC_51c3d2fd_b8a1_5620_b746_7ee6d533aca3
+#define WINRT_GENERIC_51c3d2fd_b8a1_5620_b746_7ee6d533aca3
+template <> struct __declspec(uuid("51c3d2fd-b8a1-5620-b746-7ee6d533aca3")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::Streams::IBuffer> : impl_AsyncOperationCompletedHandler<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+#ifndef WINRT_GENERIC_7a2e58dc_22ee_5cb8_83cc_a7a61b9dcd2c
+#define WINRT_GENERIC_7a2e58dc_22ee_5cb8_83cc_a7a61b9dcd2c
+template <> struct __declspec(uuid("7a2e58dc-22ee-5cb8-83cc-a7a61b9dcd2c")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardProvisioning> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardProvisioning> {};
+#endif
+
+#ifndef WINRT_GENERIC_96b172f6_dedb_5f3e_af90_7b0f10219352
+#define WINRT_GENERIC_96b172f6_dedb_5f3e_af90_7b0f10219352
+template <> struct __declspec(uuid("96b172f6-dedb-5f3e-af90-7b0f10219352")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardChallengeContext> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardChallengeContext> {};
+#endif
+
+#ifndef WINRT_GENERIC_c71f00e6_af26_5e5c_913d_0efeb7d08ef7
+#define WINRT_GENERIC_c71f00e6_af26_5e5c_913d_0efeb7d08ef7
+template <> struct __declspec(uuid("c71f00e6-af26-5e5c-913d-0efeb7d08ef7")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardConnection> : impl_AsyncOperationCompletedHandler<Windows::Devices::SmartCards::SmartCardConnection> {};
 #endif
 
 #ifndef WINRT_GENERIC_045e34b9_f153_5920_99de_ed912ea38b1a
@@ -635,14 +630,19 @@ template <> struct __declspec(uuid("3b2691b2-fc5e-59ff-8c6f-e6dd29a967fc")) __de
 template <> struct __declspec(uuid("045e34b9-f153-5920-99de-ed912ea38b1a")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration>> : impl_IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration>> {};
 #endif
 
-#ifndef WINRT_GENERIC_bfea3fad_411e_5721_88f5_92c9b9fbbe14
-#define WINRT_GENERIC_bfea3fad_411e_5721_88f5_92c9b9fbbe14
-template <> struct __declspec(uuid("bfea3fad-411e-5721-88f5-92c9b9fbbe14")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> {};
+#ifndef WINRT_GENERIC_3b2691b2_fc5e_59ff_8c6f_e6dd29a967fc
+#define WINRT_GENERIC_3b2691b2_fc5e_59ff_8c6f_e6dd29a967fc
+template <> struct __declspec(uuid("3b2691b2-fc5e-59ff-8c6f-e6dd29a967fc")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> : impl_IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> {};
 #endif
 
 #ifndef WINRT_GENERIC_dddeb324_2853_5e3c_a4d9_1ca8c577c02e
 #define WINRT_GENERIC_dddeb324_2853_5e3c_a4d9_1ca8c577c02e
 template <> struct __declspec(uuid("dddeb324-2853-5e3c-a4d9-1ca8c577c02e")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration>> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCardAppletIdGroupRegistration>> {};
+#endif
+
+#ifndef WINRT_GENERIC_bfea3fad_411e_5721_88f5_92c9b9fbbe14
+#define WINRT_GENERIC_bfea3fad_411e_5721_88f5_92c9b9fbbe14
+template <> struct __declspec(uuid("bfea3fad-411e-5721-88f5-92c9b9fbbe14")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Collections::IVectorView<Windows::Devices::SmartCards::SmartCard>> {};
 #endif
 
 

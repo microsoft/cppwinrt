@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -113,6 +113,13 @@ struct produce<D, Windows::Management::Workplace::IWorkplaceSettingsStatics> : p
 
 namespace Windows::Management::Workplace {
 
+template <typename D> bool impl_IWorkplaceSettingsStatics<D>::IsMicrosoftAccountOptional() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IWorkplaceSettingsStatics)->get_IsMicrosoftAccountOptional(&value));
+    return value;
+}
+
 template <typename D> bool impl_IMdmAllowPolicyStatics<D>::IsBrowserAllowed() const
 {
     bool value {};
@@ -145,13 +152,6 @@ template <typename D> Windows::Management::Workplace::MessagingSyncPolicy impl_I
 {
     Windows::Management::Workplace::MessagingSyncPolicy value {};
     check_hresult(WINRT_SHIM(IMdmPolicyStatics2)->abi_GetMessagingSyncPolicy(&value));
-    return value;
-}
-
-template <typename D> bool impl_IWorkplaceSettingsStatics<D>::IsMicrosoftAccountOptional() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IWorkplaceSettingsStatics)->get_IsMicrosoftAccountOptional(&value));
     return value;
 }
 

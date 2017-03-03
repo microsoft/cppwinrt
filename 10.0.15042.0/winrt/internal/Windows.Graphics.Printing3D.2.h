@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -19,16 +19,6 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
-#endif
-
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 #define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __declspec(novtable) IIterable<hstring> : impl_IIterable<hstring> {};
@@ -37,11 +27,6 @@ template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __de
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
-#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
-template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
 #endif
 
 
@@ -59,6 +44,26 @@ template <> struct __declspec(uuid("430ecece-1418-5d19-81b2-5ddb381603cc")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
+#endif
+
 #ifndef WINRT_GENERIC_e5ce1a07_8d33_5007_ba64_7d2508ccf85c
 #define WINRT_GENERIC_e5ce1a07_8d33_5007_ba64_7d2508ccf85c
 template <> struct __declspec(uuid("e5ce1a07-8d33-5007-ba64-7d2508ccf85c")) __declspec(novtable) IVectorView<uint32_t> : impl_IVectorView<uint32_t> {};
@@ -67,11 +72,6 @@ template <> struct __declspec(uuid("e5ce1a07-8d33-5007-ba64-7d2508ccf85c")) __de
 #ifndef WINRT_GENERIC_421d4b91_b13b_5f37_ae54_b5249bd80539
 #define WINRT_GENERIC_421d4b91_b13b_5f37_ae54_b5249bd80539
 template <> struct __declspec(uuid("421d4b91-b13b-5f37-ae54-b5249bd80539")) __declspec(novtable) IIterable<uint32_t> : impl_IIterable<uint32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_f452d23c_bf05_5f3e_88e7_d17a6716b911

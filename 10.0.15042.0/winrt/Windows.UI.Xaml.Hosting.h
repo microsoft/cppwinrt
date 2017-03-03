@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -7,10 +7,10 @@
 WINRT_WARNING_PUSH
 
 #include "internal/Windows.UI.Xaml.3.h"
-#include "internal/Windows.UI.Composition.3.h"
-#include "internal/Windows.UI.Xaml.Controls.3.h"
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.UI.Xaml.Controls.Primitives.3.h"
+#include "internal/Windows.UI.Composition.3.h"
+#include "internal/Windows.UI.Xaml.Controls.3.h"
 #include "internal/Windows.UI.Xaml.Hosting.3.h"
 #include "Windows.UI.Xaml.h"
 
@@ -432,54 +432,6 @@ struct produce<D, Windows::UI::Xaml::Hosting::IXamlUIPresenterStatics2> : produc
 
 namespace Windows::UI::Xaml::Hosting {
 
-template <typename D> Windows::UI::Composition::Visual impl_IElementCompositionPreviewStatics<D>::GetElementVisual(const Windows::UI::Xaml::UIElement & element) const
-{
-    Windows::UI::Composition::Visual result { nullptr };
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetElementVisual(get_abi(element), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Composition::Visual impl_IElementCompositionPreviewStatics<D>::GetElementChildVisual(const Windows::UI::Xaml::UIElement & element) const
-{
-    Windows::UI::Composition::Visual result { nullptr };
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetElementChildVisual(get_abi(element), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IElementCompositionPreviewStatics<D>::SetElementChildVisual(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::Visual & visual) const
-{
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_SetElementChildVisual(get_abi(element), get_abi(visual)));
-}
-
-template <typename D> Windows::UI::Composition::CompositionPropertySet impl_IElementCompositionPreviewStatics<D>::GetScrollViewerManipulationPropertySet(const Windows::UI::Xaml::Controls::ScrollViewer & scrollViewer) const
-{
-    Windows::UI::Composition::CompositionPropertySet result { nullptr };
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetScrollViewerManipulationPropertySet(get_abi(scrollViewer), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetImplicitShowAnimation(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::ICompositionAnimationBase & animation) const
-{
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetImplicitShowAnimation(get_abi(element), get_abi(animation)));
-}
-
-template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetImplicitHideAnimation(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::ICompositionAnimationBase & animation) const
-{
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetImplicitHideAnimation(get_abi(element), get_abi(animation)));
-}
-
-template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetIsTranslationEnabled(const Windows::UI::Xaml::UIElement & element, bool value) const
-{
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetIsTranslationEnabled(get_abi(element), value));
-}
-
-template <typename D> Windows::UI::Composition::CompositionPropertySet impl_IElementCompositionPreviewStatics2<D>::GetPointerPositionPropertySet(const Windows::UI::Xaml::UIElement & targetElement) const
-{
-    Windows::UI::Composition::CompositionPropertySet result { nullptr };
-    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_GetPointerPositionPropertySet(get_abi(targetElement), put_abi(result)));
-    return result;
-}
-
 template <typename D> hstring impl_IXamlUIPresenterHost<D>::ResolveFileResource(hstring_view path) const
 {
     hstring returnValue;
@@ -586,6 +538,54 @@ template <typename D> Windows::Foundation::Rect impl_IXamlUIPresenterStatics2<D>
     Windows::Foundation::Rect returnValue {};
     check_hresult(WINRT_SHIM(IXamlUIPresenterStatics2)->abi_GetFlyoutPlacement(get_abi(placementTargetBounds), get_abi(controlSize), get_abi(minControlSize), get_abi(containerRect), targetPreferredPlacement, allowFallbacks, &chosenPlacement, put_abi(returnValue)));
     return returnValue;
+}
+
+template <typename D> Windows::UI::Composition::Visual impl_IElementCompositionPreviewStatics<D>::GetElementVisual(const Windows::UI::Xaml::UIElement & element) const
+{
+    Windows::UI::Composition::Visual result { nullptr };
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetElementVisual(get_abi(element), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Composition::Visual impl_IElementCompositionPreviewStatics<D>::GetElementChildVisual(const Windows::UI::Xaml::UIElement & element) const
+{
+    Windows::UI::Composition::Visual result { nullptr };
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetElementChildVisual(get_abi(element), put_abi(result)));
+    return result;
+}
+
+template <typename D> void impl_IElementCompositionPreviewStatics<D>::SetElementChildVisual(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::Visual & visual) const
+{
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_SetElementChildVisual(get_abi(element), get_abi(visual)));
+}
+
+template <typename D> Windows::UI::Composition::CompositionPropertySet impl_IElementCompositionPreviewStatics<D>::GetScrollViewerManipulationPropertySet(const Windows::UI::Xaml::Controls::ScrollViewer & scrollViewer) const
+{
+    Windows::UI::Composition::CompositionPropertySet result { nullptr };
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics)->abi_GetScrollViewerManipulationPropertySet(get_abi(scrollViewer), put_abi(result)));
+    return result;
+}
+
+template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetImplicitShowAnimation(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::ICompositionAnimationBase & animation) const
+{
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetImplicitShowAnimation(get_abi(element), get_abi(animation)));
+}
+
+template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetImplicitHideAnimation(const Windows::UI::Xaml::UIElement & element, const Windows::UI::Composition::ICompositionAnimationBase & animation) const
+{
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetImplicitHideAnimation(get_abi(element), get_abi(animation)));
+}
+
+template <typename D> void impl_IElementCompositionPreviewStatics2<D>::SetIsTranslationEnabled(const Windows::UI::Xaml::UIElement & element, bool value) const
+{
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_SetIsTranslationEnabled(get_abi(element), value));
+}
+
+template <typename D> Windows::UI::Composition::CompositionPropertySet impl_IElementCompositionPreviewStatics2<D>::GetPointerPositionPropertySet(const Windows::UI::Xaml::UIElement & targetElement) const
+{
+    Windows::UI::Composition::CompositionPropertySet result { nullptr };
+    check_hresult(WINRT_SHIM(IElementCompositionPreviewStatics2)->abi_GetPointerPositionPropertySet(get_abi(targetElement), put_abi(result)));
+    return result;
 }
 
 inline Windows::UI::Composition::Visual ElementCompositionPreview::GetElementVisual(const Windows::UI::Xaml::UIElement & element)

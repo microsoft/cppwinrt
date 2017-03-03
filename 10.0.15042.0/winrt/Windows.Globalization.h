@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -5364,6 +5364,41 @@ struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D,
 
 namespace Windows::Globalization {
 
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
+    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWords(get_abi(input), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input, bool monoRuby) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
+    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWordsWithMonoRubyOption(get_abi(input), monoRuby, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring impl_IJapanesePhoneme<D>::DisplayText() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_DisplayText(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IJapanesePhoneme<D>::YomiText() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_YomiText(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool impl_IJapanesePhoneme<D>::IsPhraseStart() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_IsPhraseStart(&value));
+    return value;
+}
+
 template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Gregorian() const
 {
     hstring value;
@@ -7753,41 +7788,6 @@ template <typename D> Windows::Foundation::Collections::IVectorView<hstring> imp
 {
     Windows::Foundation::Collections::IVectorView<hstring> value;
     check_hresult(WINRT_SHIM(IApplicationLanguagesStatics)->get_ManifestLanguages(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
-    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWords(get_abi(input), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input, bool monoRuby) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
-    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWordsWithMonoRubyOption(get_abi(input), monoRuby, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IJapanesePhoneme<D>::DisplayText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_DisplayText(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IJapanesePhoneme<D>::YomiText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_YomiText(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IJapanesePhoneme<D>::IsPhraseStart() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_IsPhraseStart(&value));
     return value;
 }
 

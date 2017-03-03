@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -179,6 +179,39 @@ struct produce<D, Windows::Services::Cortana::ICortanaSettingsStatics> : produce
 
 namespace Windows::Services::Cortana {
 
+template <typename D> bool impl_ICortanaSettings<D>::HasUserConsentToVoiceActivation() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ICortanaSettings)->get_HasUserConsentToVoiceActivation(&value));
+    return value;
+}
+
+template <typename D> bool impl_ICortanaSettings<D>::IsVoiceActivationEnabled() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ICortanaSettings)->get_IsVoiceActivationEnabled(&value));
+    return value;
+}
+
+template <typename D> void impl_ICortanaSettings<D>::IsVoiceActivationEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(ICortanaSettings)->put_IsVoiceActivationEnabled(value));
+}
+
+template <typename D> bool impl_ICortanaSettingsStatics<D>::IsSupported() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ICortanaSettingsStatics)->abi_IsSupported(&value));
+    return value;
+}
+
+template <typename D> Windows::Services::Cortana::CortanaSettings impl_ICortanaSettingsStatics<D>::GetDefault() const
+{
+    Windows::Services::Cortana::CortanaSettings result { nullptr };
+    check_hresult(WINRT_SHIM(ICortanaSettingsStatics)->abi_GetDefault(put_abi(result)));
+    return result;
+}
+
 template <typename D> bool impl_ICortanaPermissionsManager<D>::IsSupported() const
 {
     bool result {};
@@ -211,39 +244,6 @@ template <typename D> Windows::Services::Cortana::CortanaPermissionsManager impl
 {
     Windows::Services::Cortana::CortanaPermissionsManager result { nullptr };
     check_hresult(WINRT_SHIM(ICortanaPermissionsManagerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_ICortanaSettings<D>::HasUserConsentToVoiceActivation() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICortanaSettings)->get_HasUserConsentToVoiceActivation(&value));
-    return value;
-}
-
-template <typename D> bool impl_ICortanaSettings<D>::IsVoiceActivationEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICortanaSettings)->get_IsVoiceActivationEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_ICortanaSettings<D>::IsVoiceActivationEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(ICortanaSettings)->put_IsVoiceActivationEnabled(value));
-}
-
-template <typename D> bool impl_ICortanaSettingsStatics<D>::IsSupported() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICortanaSettingsStatics)->abi_IsSupported(&value));
-    return value;
-}
-
-template <typename D> Windows::Services::Cortana::CortanaSettings impl_ICortanaSettingsStatics<D>::GetDefault() const
-{
-    Windows::Services::Cortana::CortanaSettings result { nullptr };
-    check_hresult(WINRT_SHIM(ICortanaSettingsStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -9,14 +9,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_4d4aa646_767f_5645_af5c_546464d3ec09
-#define WINRT_GENERIC_4d4aa646_767f_5645_af5c_546464d3ec09
-template <> struct __declspec(uuid("4d4aa646-767f-5645-af5c-546464d3ec09")) __declspec(novtable) TypedEventHandler<Windows::Devices::Power::Battery, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::Power::Battery, Windows::Foundation::IInspectable> {};
-#endif
-
 #ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
 #define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
 template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_4d4aa646_767f_5645_af5c_546464d3ec09
+#define WINRT_GENERIC_4d4aa646_767f_5645_af5c_546464d3ec09
+template <> struct __declspec(uuid("4d4aa646-767f-5645-af5c-546464d3ec09")) __declspec(novtable) TypedEventHandler<Windows::Devices::Power::Battery, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Devices::Power::Battery, Windows::Foundation::IInspectable> {};
 #endif
 
 #ifndef WINRT_GENERIC_daa3d556_1529_56d2_a5f8_bfb6c22a3dfe

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -294,6 +294,63 @@ struct produce<D, Windows::Gaming::UI::IGameChatOverlayStatics> : produce_base<D
 
 namespace Windows::Gaming::UI {
 
+template <typename D> event_token impl_IGameChatOverlayMessageSource<D>::MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Gaming::UI::GameChatOverlayMessageSource, Windows::Gaming::UI::GameChatMessageReceivedEventArgs> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->add_MessageReceived(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IGameChatOverlayMessageSource> impl_IGameChatOverlayMessageSource<D>::MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Gaming::UI::GameChatOverlayMessageSource, Windows::Gaming::UI::GameChatMessageReceivedEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, IGameChatOverlayMessageSource>(this, &ABI::Windows::Gaming::UI::IGameChatOverlayMessageSource::remove_MessageReceived, MessageReceived(handler));
+}
+
+template <typename D> void impl_IGameChatOverlayMessageSource<D>::MessageReceived(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->remove_MessageReceived(token));
+}
+
+template <typename D> void impl_IGameChatOverlayMessageSource<D>::SetDelayBeforeClosingAfterMessageReceived(const Windows::Foundation::TimeSpan & value) const
+{
+    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->abi_SetDelayBeforeClosingAfterMessageReceived(get_abi(value)));
+}
+
+template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::AppId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_AppId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::AppDisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_AppDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::SenderName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_SenderName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::Message() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_Message(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Gaming::UI::GameChatMessageOrigin impl_IGameChatMessageReceivedEventArgs<D>::Origin() const
+{
+    Windows::Gaming::UI::GameChatMessageOrigin value {};
+    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_Origin(&value));
+    return value;
+}
+
 template <typename D> event_token impl_IGameBarStatics<D>::VisibilityChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
 {
     event_token token {};
@@ -364,63 +421,6 @@ template <typename D> void impl_IGameChatOverlay<D>::DesiredPosition(Windows::Ga
 template <typename D> void impl_IGameChatOverlay<D>::AddMessage(hstring_view sender, hstring_view message, Windows::Gaming::UI::GameChatMessageOrigin origin) const
 {
     check_hresult(WINRT_SHIM(IGameChatOverlay)->abi_AddMessage(get_abi(sender), get_abi(message), origin));
-}
-
-template <typename D> event_token impl_IGameChatOverlayMessageSource<D>::MessageReceived(const Windows::Foundation::TypedEventHandler<Windows::Gaming::UI::GameChatOverlayMessageSource, Windows::Gaming::UI::GameChatMessageReceivedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->add_MessageReceived(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IGameChatOverlayMessageSource> impl_IGameChatOverlayMessageSource<D>::MessageReceived(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Gaming::UI::GameChatOverlayMessageSource, Windows::Gaming::UI::GameChatMessageReceivedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IGameChatOverlayMessageSource>(this, &ABI::Windows::Gaming::UI::IGameChatOverlayMessageSource::remove_MessageReceived, MessageReceived(handler));
-}
-
-template <typename D> void impl_IGameChatOverlayMessageSource<D>::MessageReceived(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->remove_MessageReceived(token));
-}
-
-template <typename D> void impl_IGameChatOverlayMessageSource<D>::SetDelayBeforeClosingAfterMessageReceived(const Windows::Foundation::TimeSpan & value) const
-{
-    check_hresult(WINRT_SHIM(IGameChatOverlayMessageSource)->abi_SetDelayBeforeClosingAfterMessageReceived(get_abi(value)));
-}
-
-template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::AppId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_AppId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::AppDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_AppDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::SenderName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_SenderName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGameChatMessageReceivedEventArgs<D>::Message() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_Message(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Gaming::UI::GameChatMessageOrigin impl_IGameChatMessageReceivedEventArgs<D>::Origin() const
-{
-    Windows::Gaming::UI::GameChatMessageOrigin value {};
-    check_hresult(WINRT_SHIM(IGameChatMessageReceivedEventArgs)->get_Origin(&value));
-    return value;
 }
 
 inline event_token GameBar::VisibilityChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)

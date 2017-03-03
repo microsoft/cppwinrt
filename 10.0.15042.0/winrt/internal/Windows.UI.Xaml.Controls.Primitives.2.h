@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -14,14 +14,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
-#define WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
-template <> struct __declspec(uuid("3c00fd60-2950-5939-a21a-2d12c5a01b8a")) __declspec(novtable) IReference<bool> : impl_IReference<bool> {};
-#endif
-
 #ifndef WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 #define WINRT_GENERIC_c50898f6_c536_5f47_8583_8b2c2438a13b
 template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __declspec(novtable) EventHandler<Windows::Foundation::IInspectable> : impl_EventHandler<Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
+#define WINRT_GENERIC_3c00fd60_2950_5939_a21a_2d12c5a01b8a
+template <> struct __declspec(uuid("3c00fd60-2950-5939-a21a-2d12c5a01b8a")) __declspec(novtable) IReference<bool> : impl_IReference<bool> {};
 #endif
 
 

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -12,11 +12,6 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
 #define WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
 template <> struct __declspec(uuid("80646519-5e2a-595d-a8cd-2a24b4067f1b")) __declspec(novtable) IVectorView<Windows::Storage::StorageFile> : impl_IVectorView<Windows::Storage::StorageFile> {};
-#endif
-
-#ifndef WINRT_GENERIC_9ac00304_83ea_5688_87b6_ae38aab65d0b
-#define WINRT_GENERIC_9ac00304_83ea_5688_87b6_ae38aab65d0b
-template <> struct __declspec(uuid("9ac00304-83ea-5688-87b6-ae38aab65d0b")) __declspec(novtable) IIterable<Windows::Storage::StorageFile> : impl_IIterable<Windows::Storage::StorageFile> {};
 #endif
 
 
@@ -47,6 +42,11 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
 #define WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
 template <> struct __declspec(uuid("fcbc8b8b-6103-5b4e-ba00-4bc2cedb6a35")) __declspec(novtable) IVector<Windows::Storage::StorageFile> : impl_IVector<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_9ac00304_83ea_5688_87b6_ae38aab65d0b
+#define WINRT_GENERIC_9ac00304_83ea_5688_87b6_ae38aab65d0b
+template <> struct __declspec(uuid("9ac00304-83ea-5688-87b6-ae38aab65d0b")) __declspec(novtable) IIterable<Windows::Storage::StorageFile> : impl_IIterable<Windows::Storage::StorageFile> {};
 #endif
 
 #ifndef WINRT_GENERIC_43e29f53_0298_55aa_a6c8_4edd323d9598

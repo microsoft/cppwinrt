@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,12 +6,12 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
-#include "internal/Windows.System.3.h"
 #include "internal/Windows.Storage.3.h"
 #include "internal/Windows.Foundation.3.h"
+#include "internal/Windows.Storage.Streams.3.h"
+#include "internal/Windows.System.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Globalization.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.System.UserProfile.3.h"
 #include "Windows.System.h"
 #include "Windows.Foundation.Collections.h"
@@ -668,139 +668,6 @@ struct produce<D, Windows::System::UserProfile::IUserProfilePersonalizationSetti
 
 namespace Windows::System::UserProfile {
 
-template <typename D> hstring impl_IAdvertisingManagerStatics<D>::AdvertisingId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAdvertisingManagerStatics)->get_AdvertisingId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAdvertisingManagerForUser<D>::AdvertisingId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAdvertisingManagerForUser)->get_AdvertisingId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IAdvertisingManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IAdvertisingManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserProfile::AdvertisingManagerForUser impl_IAdvertisingManagerStatics2<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::System::UserProfile::AdvertisingManagerForUser value { nullptr };
-    check_hresult(WINRT_SHIM(IAdvertisingManagerStatics2)->abi_GetForUser(get_abi(user), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserProfile::DiagnosticsSettings impl_IDiagnosticsSettingsStatics<D>::GetDefault() const
-{
-    Windows::System::UserProfile::DiagnosticsSettings value { nullptr };
-    check_hresult(WINRT_SHIM(IDiagnosticsSettingsStatics)->abi_GetDefault(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserProfile::DiagnosticsSettings impl_IDiagnosticsSettingsStatics<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::System::UserProfile::DiagnosticsSettings value { nullptr };
-    check_hresult(WINRT_SHIM(IDiagnosticsSettingsStatics)->abi_GetForUser(get_abi(user), put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IDiagnosticsSettings<D>::CanUseDiagnosticsToTailorExperiences() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IDiagnosticsSettings)->get_CanUseDiagnosticsToTailorExperiences(&value));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IDiagnosticsSettings<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IDiagnosticsSettings)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IUserProfilePersonalizationSettings<D>::TrySetLockScreenImageAsync(const Windows::Storage::StorageFile & imageFile) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettings)->abi_TrySetLockScreenImageAsync(get_abi(imageFile), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IUserProfilePersonalizationSettings<D>::TrySetWallpaperImageAsync(const Windows::Storage::StorageFile & imageFile) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettings)->abi_TrySetWallpaperImageAsync(get_abi(imageFile), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::System::UserProfile::UserProfilePersonalizationSettings impl_IUserProfilePersonalizationSettingsStatics<D>::Current() const
-{
-    Windows::System::UserProfile::UserProfilePersonalizationSettings value { nullptr };
-    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettingsStatics)->get_Current(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IUserProfilePersonalizationSettingsStatics<D>::IsSupported() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettingsStatics)->abi_IsSupported(&result));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Calendars() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Calendars(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Clocks() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Clocks(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Currencies() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Currencies(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Languages() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Languages(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGlobalizationPreferencesStatics<D>::HomeGeographicRegion() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_HomeGeographicRegion(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Globalization::DayOfWeek impl_IGlobalizationPreferencesStatics<D>::WeekStartsOn() const
-{
-    Windows::Globalization::DayOfWeek value {};
-    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_WeekStartsOn(&value));
-    return value;
-}
-
-template <typename D> Windows::System::UserProfile::FirstSignInSettings impl_IFirstSignInSettingsStatics<D>::GetDefault() const
-{
-    Windows::System::UserProfile::FirstSignInSettings result { nullptr };
-    check_hresult(WINRT_SHIM(IFirstSignInSettingsStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
 template <typename D> bool impl_IUserInformationStatics<D>::AccountPictureChangeEnabled() const
 {
     bool value {};
@@ -948,6 +815,139 @@ template <typename D> bool impl_ILockScreenImageFeedStatics<D>::TryRemoveImageFe
 {
     bool result {};
     check_hresult(WINRT_SHIM(ILockScreenImageFeedStatics)->abi_TryRemoveImageFeed(&result));
+    return result;
+}
+
+template <typename D> hstring impl_IAdvertisingManagerStatics<D>::AdvertisingId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IAdvertisingManagerStatics)->get_AdvertisingId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IAdvertisingManagerForUser<D>::AdvertisingId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IAdvertisingManagerForUser)->get_AdvertisingId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User impl_IAdvertisingManagerForUser<D>::User() const
+{
+    Windows::System::User value { nullptr };
+    check_hresult(WINRT_SHIM(IAdvertisingManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserProfile::AdvertisingManagerForUser impl_IAdvertisingManagerStatics2<D>::GetForUser(const Windows::System::User & user) const
+{
+    Windows::System::UserProfile::AdvertisingManagerForUser value { nullptr };
+    check_hresult(WINRT_SHIM(IAdvertisingManagerStatics2)->abi_GetForUser(get_abi(user), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserProfile::DiagnosticsSettings impl_IDiagnosticsSettingsStatics<D>::GetDefault() const
+{
+    Windows::System::UserProfile::DiagnosticsSettings value { nullptr };
+    check_hresult(WINRT_SHIM(IDiagnosticsSettingsStatics)->abi_GetDefault(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserProfile::DiagnosticsSettings impl_IDiagnosticsSettingsStatics<D>::GetForUser(const Windows::System::User & user) const
+{
+    Windows::System::UserProfile::DiagnosticsSettings value { nullptr };
+    check_hresult(WINRT_SHIM(IDiagnosticsSettingsStatics)->abi_GetForUser(get_abi(user), put_abi(value)));
+    return value;
+}
+
+template <typename D> bool impl_IDiagnosticsSettings<D>::CanUseDiagnosticsToTailorExperiences() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IDiagnosticsSettings)->get_CanUseDiagnosticsToTailorExperiences(&value));
+    return value;
+}
+
+template <typename D> Windows::System::User impl_IDiagnosticsSettings<D>::User() const
+{
+    Windows::System::User value { nullptr };
+    check_hresult(WINRT_SHIM(IDiagnosticsSettings)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IUserProfilePersonalizationSettings<D>::TrySetLockScreenImageAsync(const Windows::Storage::StorageFile & imageFile) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation;
+    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettings)->abi_TrySetLockScreenImageAsync(get_abi(imageFile), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IUserProfilePersonalizationSettings<D>::TrySetWallpaperImageAsync(const Windows::Storage::StorageFile & imageFile) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation;
+    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettings)->abi_TrySetWallpaperImageAsync(get_abi(imageFile), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::System::UserProfile::UserProfilePersonalizationSettings impl_IUserProfilePersonalizationSettingsStatics<D>::Current() const
+{
+    Windows::System::UserProfile::UserProfilePersonalizationSettings value { nullptr };
+    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettingsStatics)->get_Current(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool impl_IUserProfilePersonalizationSettingsStatics<D>::IsSupported() const
+{
+    bool result {};
+    check_hresult(WINRT_SHIM(IUserProfilePersonalizationSettingsStatics)->abi_IsSupported(&result));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Calendars() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value;
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Calendars(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Clocks() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value;
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Clocks(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Currencies() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value;
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Currencies(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGlobalizationPreferencesStatics<D>::Languages() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value;
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_Languages(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IGlobalizationPreferencesStatics<D>::HomeGeographicRegion() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_HomeGeographicRegion(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Globalization::DayOfWeek impl_IGlobalizationPreferencesStatics<D>::WeekStartsOn() const
+{
+    Windows::Globalization::DayOfWeek value {};
+    check_hresult(WINRT_SHIM(IGlobalizationPreferencesStatics)->get_WeekStartsOn(&value));
+    return value;
+}
+
+template <typename D> Windows::System::UserProfile::FirstSignInSettings impl_IFirstSignInSettingsStatics<D>::GetDefault() const
+{
+    Windows::System::UserProfile::FirstSignInSettings result { nullptr };
+    check_hresult(WINRT_SHIM(IFirstSignInSettingsStatics)->abi_GetDefault(put_abi(result)));
     return result;
 }
 

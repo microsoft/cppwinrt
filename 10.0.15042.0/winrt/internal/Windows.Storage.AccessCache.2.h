@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -9,14 +9,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_6be9e7d7_e83a_5cbc_802c_1768960b52c3
-#define WINRT_GENERIC_6be9e7d7_e83a_5cbc_802c_1768960b52c3
-template <> struct __declspec(uuid("6be9e7d7-e83a-5cbc-802c-1768960b52c3")) __declspec(novtable) IAsyncOperation<Windows::Storage::StorageFolder> : impl_IAsyncOperation<Windows::Storage::StorageFolder> {};
-#endif
-
 #ifndef WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 #define WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 template <> struct __declspec(uuid("5e52f8ce-aced-5a42-95b4-f674dd84885e")) __declspec(novtable) IAsyncOperation<Windows::Storage::StorageFile> : impl_IAsyncOperation<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_6be9e7d7_e83a_5cbc_802c_1768960b52c3
+#define WINRT_GENERIC_6be9e7d7_e83a_5cbc_802c_1768960b52c3
+template <> struct __declspec(uuid("6be9e7d7-e83a-5cbc-802c-1768960b52c3")) __declspec(novtable) IAsyncOperation<Windows::Storage::StorageFolder> : impl_IAsyncOperation<Windows::Storage::StorageFolder> {};
 #endif
 
 #ifndef WINRT_GENERIC_5fc9c137_ebb7_5e6c_9cba_686f2ec2b0bb
@@ -49,14 +49,14 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("029dace8-98d1-5bf7-b780-9717e95027ff")) __declspec(novtable) TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> : impl_TypedEventHandler<Windows::Storage::AccessCache::StorageItemMostRecentlyUsedList, Windows::Storage::AccessCache::ItemRemovedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_c211026e_9e63_5452_ba54_3a07d6a96874
-#define WINRT_GENERIC_c211026e_9e63_5452_ba54_3a07d6a96874
-template <> struct __declspec(uuid("c211026e-9e63-5452-ba54-3a07d6a96874")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::StorageFolder> : impl_AsyncOperationCompletedHandler<Windows::Storage::StorageFolder> {};
-#endif
-
 #ifndef WINRT_GENERIC_e521c894_2c26_5946_9e61_2b5e188d01ed
 #define WINRT_GENERIC_e521c894_2c26_5946_9e61_2b5e188d01ed
 template <> struct __declspec(uuid("e521c894-2c26-5946-9e61-2b5e188d01ed")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::StorageFile> : impl_AsyncOperationCompletedHandler<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_c211026e_9e63_5452_ba54_3a07d6a96874
+#define WINRT_GENERIC_c211026e_9e63_5452_ba54_3a07d6a96874
+template <> struct __declspec(uuid("c211026e-9e63-5452-ba54-3a07d6a96874")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::StorageFolder> : impl_AsyncOperationCompletedHandler<Windows::Storage::StorageFolder> {};
 #endif
 
 #ifndef WINRT_GENERIC_92c3102f_a327_5318_a6c1_76f6b2a0abfb

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -7,8 +7,8 @@
 WINRT_WARNING_PUSH
 
 #include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Devices.Geolocation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
+#include "internal/Windows.Devices.Geolocation.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.UI.Xaml.3.h"
 #include "internal/Windows.UI.3.h"
@@ -6487,6 +6487,261 @@ struct produce<D, Windows::UI::Xaml::Controls::Maps::IStreetsidePanoramaStatics>
 
 namespace Windows::UI::Xaml::Controls::Maps {
 
+template <typename D> event_token impl_IMapControlDataHelper<D>::BusinessLandmarkClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_BusinessLandmarkClick(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::BusinessLandmarkClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_BusinessLandmarkClick, BusinessLandmarkClick(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper<D>::BusinessLandmarkClick(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_BusinessLandmarkClick(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper<D>::TransitFeatureClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_TransitFeatureClick(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::TransitFeatureClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_TransitFeatureClick, TransitFeatureClick(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper<D>::TransitFeatureClick(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_TransitFeatureClick(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_BusinessLandmarkRightTapped(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_BusinessLandmarkRightTapped, BusinessLandmarkRightTapped(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_BusinessLandmarkRightTapped(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_TransitFeatureRightTapped(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_TransitFeatureRightTapped, TransitFeatureRightTapped(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_TransitFeatureRightTapped(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_BusinessLandmarkPointerEntered(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_BusinessLandmarkPointerEntered, BusinessLandmarkPointerEntered(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_BusinessLandmarkPointerEntered(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_TransitFeaturePointerEntered(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_TransitFeaturePointerEntered, TransitFeaturePointerEntered(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_TransitFeaturePointerEntered(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_BusinessLandmarkPointerExited(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_BusinessLandmarkPointerExited, BusinessLandmarkPointerExited(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_BusinessLandmarkPointerExited(token));
+}
+
+template <typename D> event_token impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_TransitFeaturePointerExited(get_abi(value), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const
+{
+    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_TransitFeaturePointerExited, TransitFeaturePointerExited(value));
+}
+
+template <typename D> void impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_TransitFeaturePointerExited(token));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Maps::MapControlDataHelper impl_IMapControlDataHelperFactory<D>::CreateInstance(const Windows::UI::Xaml::Controls::Maps::MapControl & map) const
+{
+    Windows::UI::Xaml::Controls::Maps::MapControlDataHelper instance { nullptr };
+    check_hresult(WINRT_SHIM(IMapControlDataHelperFactory)->abi_CreateInstance(get_abi(map), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkClickEventArgs<D>::LocalLocations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
+    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkClickEventArgs)->get_LocalLocations(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IMapControlTransitFeatureClickEventArgs<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeatureClickEventArgs<D>::Location() const
+{
+    Windows::Devices::Geolocation::Geopoint value { nullptr };
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeatureClickEventArgs<D>::TransitProperties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_TransitProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkRightTappedEventArgs<D>::LocalLocations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
+    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkRightTappedEventArgs)->get_LocalLocations(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IMapControlTransitFeatureRightTappedEventArgs<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeatureRightTappedEventArgs<D>::Location() const
+{
+    Windows::Devices::Geolocation::Geopoint value { nullptr };
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeatureRightTappedEventArgs<D>::TransitProperties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_TransitProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkPointerEnteredEventArgs<D>::LocalLocations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
+    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkPointerEnteredEventArgs)->get_LocalLocations(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::Location() const
+{
+    Windows::Devices::Geolocation::Geopoint value { nullptr };
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::TransitProperties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_TransitProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkPointerExitedEventArgs<D>::LocalLocations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
+    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkPointerExitedEventArgs)->get_LocalLocations(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::DisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::Location() const
+{
+    Windows::Devices::Geolocation::Geopoint value { nullptr };
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::TransitProperties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
+    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_TransitProperties(put_abi(value)));
+    return value;
+}
+
 template <typename D> Windows::UI::Xaml::Controls::Maps::MapCamera impl_IMapActualCameraChangedEventArgs<D>::Camera() const
 {
     Windows::UI::Xaml::Controls::Maps::MapCamera value { nullptr };
@@ -9094,261 +9349,6 @@ template <typename D> Windows::UI::Xaml::DependencyProperty impl_IMapControlStat
 {
     Windows::UI::Xaml::DependencyProperty value { nullptr };
     check_hresult(WINRT_SHIM(IMapControlStatics5)->get_ViewPaddingProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IMapControlDataHelper<D>::BusinessLandmarkClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_BusinessLandmarkClick(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::BusinessLandmarkClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_BusinessLandmarkClick, BusinessLandmarkClick(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper<D>::BusinessLandmarkClick(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_BusinessLandmarkClick(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper<D>::TransitFeatureClick(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_TransitFeatureClick(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::TransitFeatureClick(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_TransitFeatureClick, TransitFeatureClick(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper<D>::TransitFeatureClick(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_TransitFeatureClick(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_BusinessLandmarkRightTapped(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_BusinessLandmarkRightTapped, BusinessLandmarkRightTapped(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper<D>::BusinessLandmarkRightTapped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_BusinessLandmarkRightTapped(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->add_TransitFeatureRightTapped(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper> impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper::remove_TransitFeatureRightTapped, TransitFeatureRightTapped(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper<D>::TransitFeatureRightTapped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper)->remove_TransitFeatureRightTapped(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_BusinessLandmarkPointerEntered(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_BusinessLandmarkPointerEntered, BusinessLandmarkPointerEntered(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerEntered(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_BusinessLandmarkPointerEntered(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_TransitFeaturePointerEntered(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_TransitFeaturePointerEntered, TransitFeaturePointerEntered(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper2<D>::TransitFeaturePointerEntered(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_TransitFeaturePointerEntered(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_BusinessLandmarkPointerExited(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_BusinessLandmarkPointerExited, BusinessLandmarkPointerExited(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper2<D>::BusinessLandmarkPointerExited(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_BusinessLandmarkPointerExited(token));
-}
-
-template <typename D> event_token impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->add_TransitFeaturePointerExited(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMapControlDataHelper2> impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IMapControlDataHelper2>(this, &ABI::Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2::remove_TransitFeaturePointerExited, TransitFeaturePointerExited(value));
-}
-
-template <typename D> void impl_IMapControlDataHelper2<D>::TransitFeaturePointerExited(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMapControlDataHelper2)->remove_TransitFeaturePointerExited(token));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Maps::MapControlDataHelper impl_IMapControlDataHelperFactory<D>::CreateInstance(const Windows::UI::Xaml::Controls::Maps::MapControl & map) const
-{
-    Windows::UI::Xaml::Controls::Maps::MapControlDataHelper instance { nullptr };
-    check_hresult(WINRT_SHIM(IMapControlDataHelperFactory)->abi_CreateInstance(get_abi(map), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkClickEventArgs<D>::LocalLocations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
-    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkClickEventArgs)->get_LocalLocations(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMapControlTransitFeatureClickEventArgs<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeatureClickEventArgs<D>::Location() const
-{
-    Windows::Devices::Geolocation::Geopoint value { nullptr };
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeatureClickEventArgs<D>::TransitProperties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureClickEventArgs)->get_TransitProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkRightTappedEventArgs<D>::LocalLocations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
-    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkRightTappedEventArgs)->get_LocalLocations(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMapControlTransitFeatureRightTappedEventArgs<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeatureRightTappedEventArgs<D>::Location() const
-{
-    Windows::Devices::Geolocation::Geopoint value { nullptr };
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeatureRightTappedEventArgs<D>::TransitProperties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeatureRightTappedEventArgs)->get_TransitProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkPointerEnteredEventArgs<D>::LocalLocations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
-    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkPointerEnteredEventArgs)->get_LocalLocations(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::Location() const
-{
-    Windows::Devices::Geolocation::Geopoint value { nullptr };
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeaturePointerEnteredEventArgs<D>::TransitProperties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerEnteredEventArgs)->get_TransitProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> impl_IMapControlBusinessLandmarkPointerExitedEventArgs<D>::LocalLocations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> value;
-    check_hresult(WINRT_SHIM(IMapControlBusinessLandmarkPointerExitedEventArgs)->get_LocalLocations(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geopoint impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::Location() const
-{
-    Windows::Devices::Geolocation::Geopoint value { nullptr };
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IMapControlTransitFeaturePointerExitedEventArgs<D>::TransitProperties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IMapControlTransitFeaturePointerExitedEventArgs)->get_TransitProperties(put_abi(value)));
     return value;
 }
 

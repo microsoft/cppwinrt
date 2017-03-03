@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -22,16 +22,6 @@ template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __de
 #ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
 #define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
 template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_6c26b7be_5f01_5a60_9dd7_fd17be3a9dd6
-#define WINRT_GENERIC_6c26b7be_5f01_5a60_9dd7_fd17be3a9dd6
-template <> struct __declspec(uuid("6c26b7be-5f01-5a60-9dd7-fd17be3a9dd6")) __declspec(novtable) IVector<Windows::Storage::StorageFolder> : impl_IVector<Windows::Storage::StorageFolder> {};
-#endif
-
-#ifndef WINRT_GENERIC_e20debc6_dc4e_542e_a2e7_a24d19c8dd62
-#define WINRT_GENERIC_e20debc6_dc4e_542e_a2e7_a24d19c8dd62
-template <> struct __declspec(uuid("e20debc6-dc4e-542e-a2e7-a24d19c8dd62")) __declspec(novtable) IVectorView<Windows::Storage::StorageFolder> : impl_IVectorView<Windows::Storage::StorageFolder> {};
 #endif
 
 
@@ -68,6 +58,16 @@ template <> struct __declspec(uuid("ec31e5d4-3b8c-5757-96bf-14096be946cd")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_6c26b7be_5f01_5a60_9dd7_fd17be3a9dd6
+#define WINRT_GENERIC_6c26b7be_5f01_5a60_9dd7_fd17be3a9dd6
+template <> struct __declspec(uuid("6c26b7be-5f01-5a60-9dd7-fd17be3a9dd6")) __declspec(novtable) IVector<Windows::Storage::StorageFolder> : impl_IVector<Windows::Storage::StorageFolder> {};
+#endif
+
+#ifndef WINRT_GENERIC_e20debc6_dc4e_542e_a2e7_a24d19c8dd62
+#define WINRT_GENERIC_e20debc6_dc4e_542e_a2e7_a24d19c8dd62
+template <> struct __declspec(uuid("e20debc6-dc4e-542e-a2e7-a24d19c8dd62")) __declspec(novtable) IVectorView<Windows::Storage::StorageFolder> : impl_IVectorView<Windows::Storage::StorageFolder> {};
+#endif
 
 #ifndef WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 #define WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236

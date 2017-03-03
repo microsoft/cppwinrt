@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -10,14 +10,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_2bf27008_2eb4_5675_b1cd_e9906cc5ce64
-#define WINRT_GENERIC_2bf27008_2eb4_5675_b1cd_e9906cc5ce64
-template <> struct __declspec(uuid("2bf27008-2eb4-5675-b1cd-e9906cc5ce64")) __declspec(novtable) EventHandler<Windows::Foundation::Diagnostics::TracingStatusChangedEventArgs> : impl_EventHandler<Windows::Foundation::Diagnostics::TracingStatusChangedEventArgs> {};
-#endif
-
 #ifndef WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 #define WINRT_GENERIC_5e52f8ce_aced_5a42_95b4_f674dd84885e
 template <> struct __declspec(uuid("5e52f8ce-aced-5a42-95b4-f674dd84885e")) __declspec(novtable) IAsyncOperation<Windows::Storage::StorageFile> : impl_IAsyncOperation<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_2bf27008_2eb4_5675_b1cd_e9906cc5ce64
+#define WINRT_GENERIC_2bf27008_2eb4_5675_b1cd_e9906cc5ce64
+template <> struct __declspec(uuid("2bf27008-2eb4-5675-b1cd-e9906cc5ce64")) __declspec(novtable) EventHandler<Windows::Foundation::Diagnostics::TracingStatusChangedEventArgs> : impl_EventHandler<Windows::Foundation::Diagnostics::TracingStatusChangedEventArgs> {};
 #endif
 
 #ifndef WINRT_GENERIC_9b05106d_77e0_5c24_82b0_9b2dc8f79671

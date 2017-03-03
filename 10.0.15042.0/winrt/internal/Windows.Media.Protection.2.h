@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -7,6 +7,16 @@
 #include "Windows.Foundation.1.h"
 
 WINRT_EXPORT namespace winrt {
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_595dcc09_9ad3_5094_800a_0883cce1ef01
+#define WINRT_GENERIC_595dcc09_9ad3_5094_800a_0883cce1ef01
+template <> struct __declspec(uuid("595dcc09-9ad3-5094-800a-0883cce1ef01")) __declspec(novtable) IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
+#endif
+
+
+}
 
 namespace ABI::Windows::Foundation::Collections {
 
@@ -35,9 +45,14 @@ template <> struct __declspec(uuid("5061ee0f-899a-569c-a0a3-c2566eb88142")) __de
 template <> struct __declspec(uuid("f82ae043-54fb-5366-a607-19b68e6bab8c")) __declspec(novtable) TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> : impl_TypedEventHandler<Windows::Media::Protection::HdcpSession, Windows::Foundation::IInspectable> {};
 #endif
 
-#ifndef WINRT_GENERIC_595dcc09_9ad3_5094_800a_0883cce1ef01
-#define WINRT_GENERIC_595dcc09_9ad3_5094_800a_0883cce1ef01
-template <> struct __declspec(uuid("595dcc09-9ad3-5094-800a-0883cce1ef01")) __declspec(novtable) IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
+#ifndef WINRT_GENERIC_b9da4aa0_26e0_5d69_a0c8_05716a406235
+#define WINRT_GENERIC_b9da4aa0_26e0_5d69_a0c8_05716a406235
+template <> struct __declspec(uuid("b9da4aa0-26e0-5d69-a0c8-05716a406235")) __declspec(novtable) AsyncOperationProgressHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_AsyncOperationProgressHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_ec067827_67d9_59a6_a57b_3e7ca12b89c1
+#define WINRT_GENERIC_ec067827_67d9_59a6_a57b_3e7ca12b89c1
+template <> struct __declspec(uuid("ec067827-67d9-59a6-a57b-3e7ca12b89c1")) __declspec(novtable) AsyncOperationWithProgressCompletedHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_AsyncOperationWithProgressCompletedHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
 #endif
 
 
@@ -68,16 +83,6 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_19344a58_a5c1_5168_803e_632771628143
 #define WINRT_GENERIC_19344a58_a5c1_5168_803e_632771628143
 template <> struct __declspec(uuid("19344a58-a5c1-5168-803e-632771628143")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::Media::Protection::HdcpSetProtectionResult> : impl_AsyncOperationCompletedHandler<winrt::Windows::Media::Protection::HdcpSetProtectionResult> {};
-#endif
-
-#ifndef WINRT_GENERIC_b9da4aa0_26e0_5d69_a0c8_05716a406235
-#define WINRT_GENERIC_b9da4aa0_26e0_5d69_a0c8_05716a406235
-template <> struct __declspec(uuid("b9da4aa0-26e0-5d69-a0c8-05716a406235")) __declspec(novtable) AsyncOperationProgressHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_AsyncOperationProgressHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_ec067827_67d9_59a6_a57b_3e7ca12b89c1
-#define WINRT_GENERIC_ec067827_67d9_59a6_a57b_3e7ca12b89c1
-template <> struct __declspec(uuid("ec067827-67d9-59a6-a57b-3e7ca12b89c1")) __declspec(novtable) AsyncOperationWithProgressCompletedHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> : impl_AsyncOperationWithProgressCompletedHandler<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> {};
 #endif
 
 

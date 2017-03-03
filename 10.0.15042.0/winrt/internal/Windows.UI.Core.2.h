@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -15,14 +15,9 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __declspec(novtable) IAsyncOperation<bool> : impl_IAsyncOperation<bool> {};
 #endif
 
-#ifndef WINRT_GENERIC_ca821060_002b_526d_8122_982630d7cdbe
-#define WINRT_GENERIC_ca821060_002b_526d_8122_982630d7cdbe
-template <> struct __declspec(uuid("ca821060-002b-526d-8122-982630d7cdbe")) __declspec(novtable) EventHandler<Windows::UI::Core::BackRequestedEventArgs> : impl_EventHandler<Windows::UI::Core::BackRequestedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_fbfb37c6_b3b7_587d_a992_2538fa5cd8e8
-#define WINRT_GENERIC_fbfb37c6_b3b7_587d_a992_2538fa5cd8e8
-template <> struct __declspec(uuid("fbfb37c6-b3b7-587d-a992-2538fa5cd8e8")) __declspec(novtable) TypedEventHandler<Windows::UI::Core::SystemNavigationManager, Windows::UI::Core::SystemNavigationCloseRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::Core::SystemNavigationManager, Windows::UI::Core::SystemNavigationCloseRequestedEventArgs> {};
+#ifndef WINRT_GENERIC_b32d6422_78b2_5e00_84a8_6e3167aaabde
+#define WINRT_GENERIC_b32d6422_78b2_5e00_84a8_6e3167aaabde
+template <> struct __declspec(uuid("b32d6422-78b2-5e00-84a8-6e3167aaabde")) __declspec(novtable) TypedEventHandler<Windows::UI::Core::CoreWindow, Windows::UI::Core::CoreWindowPopupShowingEventArgs> : impl_TypedEventHandler<Windows::UI::Core::CoreWindow, Windows::UI::Core::CoreWindowPopupShowingEventArgs> {};
 #endif
 
 
@@ -43,6 +38,16 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_b8770535_6a4b_52b1_b578_f3cdc5007a1f
 #define WINRT_GENERIC_b8770535_6a4b_52b1_b578_f3cdc5007a1f
 template <> struct __declspec(uuid("b8770535-6a4b-52b1-b578-f3cdc5007a1f")) __declspec(novtable) IAsyncOperation<Windows::UI::Popups::IUICommand> : impl_IAsyncOperation<Windows::UI::Popups::IUICommand> {};
+#endif
+
+#ifndef WINRT_GENERIC_ca821060_002b_526d_8122_982630d7cdbe
+#define WINRT_GENERIC_ca821060_002b_526d_8122_982630d7cdbe
+template <> struct __declspec(uuid("ca821060-002b-526d-8122-982630d7cdbe")) __declspec(novtable) EventHandler<Windows::UI::Core::BackRequestedEventArgs> : impl_EventHandler<Windows::UI::Core::BackRequestedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_fbfb37c6_b3b7_587d_a992_2538fa5cd8e8
+#define WINRT_GENERIC_fbfb37c6_b3b7_587d_a992_2538fa5cd8e8
+template <> struct __declspec(uuid("fbfb37c6-b3b7-587d-a992-2538fa5cd8e8")) __declspec(novtable) TypedEventHandler<Windows::UI::Core::SystemNavigationManager, Windows::UI::Core::SystemNavigationCloseRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::Core::SystemNavigationManager, Windows::UI::Core::SystemNavigationCloseRequestedEventArgs> {};
 #endif
 
 
@@ -163,11 +168,6 @@ template <> struct __declspec(uuid("e2c62d42-0577-5112-9e59-eae159bf39e9")) __de
 #ifndef WINRT_GENERIC_29742d27_177d_54c3_b974_616fc45a2b0c
 #define WINRT_GENERIC_29742d27_177d_54c3_b974_616fc45a2b0c
 template <> struct __declspec(uuid("29742d27-177d-54c3-b974-616fc45a2b0c")) __declspec(novtable) TypedEventHandler<Windows::UI::Core::ICorePointerRedirector, Windows::UI::Core::PointerEventArgs> : impl_TypedEventHandler<Windows::UI::Core::ICorePointerRedirector, Windows::UI::Core::PointerEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_b32d6422_78b2_5e00_84a8_6e3167aaabde
-#define WINRT_GENERIC_b32d6422_78b2_5e00_84a8_6e3167aaabde
-template <> struct __declspec(uuid("b32d6422-78b2-5e00-84a8-6e3167aaabde")) __declspec(novtable) TypedEventHandler<Windows::UI::Core::CoreWindow, Windows::UI::Core::CoreWindowPopupShowingEventArgs> : impl_TypedEventHandler<Windows::UI::Core::CoreWindow, Windows::UI::Core::CoreWindowPopupShowingEventArgs> {};
 #endif
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a

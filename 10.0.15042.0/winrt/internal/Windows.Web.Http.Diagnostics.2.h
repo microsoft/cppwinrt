@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,16 +6,6 @@
 #include "Windows.Web.Http.Diagnostics.1.h"
 
 WINRT_EXPORT namespace winrt {
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
-#endif
-
-
-}
 
 namespace ABI::Windows::Foundation::Collections {
 
@@ -28,6 +18,11 @@ template <> struct __declspec(uuid("e9af27d3-80e8-5aff-a7e5-1b221787f096")) __de
 }
 
 namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
+#endif
 
 #ifndef WINRT_GENERIC_f8e10321_47bd_526a_a9b2_3bf12f725f8b
 #define WINRT_GENERIC_f8e10321_47bd_526a_a9b2_3bf12f725f8b

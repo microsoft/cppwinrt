@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -14,6 +14,21 @@ namespace ABI::Windows::Foundation {
 #define WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
 template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) __declspec(novtable) IReference<uint32_t> : impl_IReference<uint32_t> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_308fe894_cc06_5007_bc85_cbe94ac1a70c
+#define WINRT_GENERIC_308fe894_cc06_5007_bc85_cbe94ac1a70c
+template <> struct __declspec(uuid("308fe894-cc06-5007-bc85-cbe94ac1a70c")) __declspec(novtable) IVector<Windows::Storage::Streams::IBuffer> : impl_IVector<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
 #define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
@@ -110,9 +125,14 @@ template <> struct __declspec(uuid("6ec9e41b-6709-5647-9918-a1270110fc4e")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_308fe894_cc06_5007_bc85_cbe94ac1a70c
-#define WINRT_GENERIC_308fe894_cc06_5007_bc85_cbe94ac1a70c
-template <> struct __declspec(uuid("308fe894-cc06-5007-bc85-cbe94ac1a70c")) __declspec(novtable) IVector<Windows::Storage::Streams::IBuffer> : impl_IVector<Windows::Storage::Streams::IBuffer> {};
+#ifndef WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
+#define WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
+template <> struct __declspec(uuid("afee38e0-f882-5f10-9655-1fc98cc8cce5")) __declspec(novtable) IIterator<Windows::Storage::Streams::IBuffer> : impl_IIterator<Windows::Storage::Streams::IBuffer> {};
+#endif
+
+#ifndef WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
+#define WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
+template <> struct __declspec(uuid("902972bf-a984-5443-b1c5-2f04a99e1fca")) __declspec(novtable) IIterable<Windows::Storage::Streams::IBuffer> : impl_IIterable<Windows::Storage::Streams::IBuffer> {};
 #endif
 
 
@@ -139,16 +159,6 @@ template <> struct __declspec(uuid("b2e8cdd1-66aa-5892-85a3-8f0b165e43fc")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
-#define WINRT_GENERIC_afee38e0_f882_5f10_9655_1fc98cc8cce5
-template <> struct __declspec(uuid("afee38e0-f882-5f10-9655-1fc98cc8cce5")) __declspec(novtable) IIterator<Windows::Storage::Streams::IBuffer> : impl_IIterator<Windows::Storage::Streams::IBuffer> {};
-#endif
-
-#ifndef WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
-#define WINRT_GENERIC_902972bf_a984_5443_b1c5_2f04a99e1fca
-template <> struct __declspec(uuid("902972bf-a984-5443-b1c5-2f04a99e1fca")) __declspec(novtable) IIterable<Windows::Storage::Streams::IBuffer> : impl_IIterable<Windows::Storage::Streams::IBuffer> {};
-#endif
 
 #ifndef WINRT_GENERIC_75f127ec_2256_5b20_8b38_8ac3f3d11819
 #define WINRT_GENERIC_75f127ec_2256_5b20_8b38_8ac3f3d11819

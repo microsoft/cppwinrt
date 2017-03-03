@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,6 +8,11 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
+template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
 
 #ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
 #define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
@@ -33,21 +38,6 @@ template <> struct __declspec(uuid("3bee8834-b9a7-5a80-a746-5ef097227878")) __de
 #define WINRT_GENERIC_81ca789b_98df_5c6a_9531_966238e3e7ae
 template <> struct __declspec(uuid("81ca789b-98df-5c6a-9531-966238e3e7ae")) __declspec(novtable) IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> : impl_IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> {};
 #endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-#define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
-template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_acd76b54_297f_5a18_9143_20a309e2dfd3
 #define WINRT_GENERIC_acd76b54_297f_5a18_9143_20a309e2dfd3

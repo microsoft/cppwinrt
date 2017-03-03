@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -18,6 +18,11 @@ template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __de
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_121115fd_3858_5888_8626_b69ded969bd6
+#define WINRT_GENERIC_121115fd_3858_5888_8626_b69ded969bd6
+template <> struct __declspec(uuid("121115fd-3858-5888-8626-b69ded969bd6")) __declspec(novtable) IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
 #endif
 
 #ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
@@ -95,14 +100,19 @@ template <> struct __declspec(uuid("dcf2525a-42c0-501d-9fcb-471fae060396")) __de
 template <> struct __declspec(uuid("48409a10-61b6-5db1-a69d-8abc46ac608a")) __declspec(novtable) IIterable<Windows::Globalization::Language> : impl_IIterable<Windows::Globalization::Language> {};
 #endif
 
-#ifndef WINRT_GENERIC_121115fd_3858_5888_8626_b69ded969bd6
-#define WINRT_GENERIC_121115fd_3858_5888_8626_b69ded969bd6
-template <> struct __declspec(uuid("121115fd-3858-5888-8626-b69ded969bd6")) __declspec(novtable) IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
-#endif
-
 #ifndef WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 #define WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_2bda6840_c39e_5534_8099_22004ab33fc2
+#define WINRT_GENERIC_2bda6840_c39e_5534_8099_22004ab33fc2
+template <> struct __declspec(uuid("2bda6840-c39e-5534-8099-22004ab33fc2")) __declspec(novtable) IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
+#endif
+
+#ifndef WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
+#define WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
+template <> struct __declspec(uuid("49aec24b-4678-5ce4-879d-b22ba71d3140")) __declspec(novtable) IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
 #endif
 
 #ifndef WINRT_GENERIC_30e99ae6_f414_5243_8db2_aab38ea3f1f1
@@ -160,29 +170,9 @@ template <> struct __declspec(uuid("c2195c7d-dcc2-5c6d-9162-c8df66528762")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_2bda6840_c39e_5534_8099_22004ab33fc2
-#define WINRT_GENERIC_2bda6840_c39e_5534_8099_22004ab33fc2
-template <> struct __declspec(uuid("2bda6840-c39e-5534-8099-22004ab33fc2")) __declspec(novtable) IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
-#endif
-
-#ifndef WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
-#define WINRT_GENERIC_49aec24b_4678_5ce4_879d_b22ba71d3140
-template <> struct __declspec(uuid("49aec24b-4678-5ce4-879d-b22ba71d3140")) __declspec(novtable) IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> : impl_IMap<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> {};
-#endif
-
 #ifndef WINRT_GENERIC_2843d34f_d3e5_5fca_9fdc_b568dd5c1e64
 #define WINRT_GENERIC_2843d34f_d3e5_5fca_9fdc_b568dd5c1e64
 template <> struct __declspec(uuid("2843d34f-d3e5-5fca-9fdc-b568dd5c1e64")) __declspec(novtable) IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
-#endif
-
-#ifndef WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
-#define WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
-template <> struct __declspec(uuid("bcde03ad-ea71-5077-a961-1c0ecff57202")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
-#endif
-
-#ifndef WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
-#define WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
-template <> struct __declspec(uuid("b63397c9-5d89-530b-becf-2b843a15c4e4")) __declspec(novtable) IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
 #endif
 
 #ifndef WINRT_GENERIC_d19b13f3_9058_53bd_8d53_3ee1ea84389b
@@ -193,6 +183,16 @@ template <> struct __declspec(uuid("d19b13f3-9058-53bd-8d53-3ee1ea84389b")) __de
 #ifndef WINRT_GENERIC_86e4878a_45de_5203_be77_81c04c9b44e6
 #define WINRT_GENERIC_86e4878a_45de_5203_be77_81c04c9b44e6
 template <> struct __declspec(uuid("86e4878a-45de-5203-be77-81c04c9b44e6")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet>> {};
+#endif
+
+#ifndef WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
+#define WINRT_GENERIC_bcde03ad_ea71_5077_a961_1c0ecff57202
+template <> struct __declspec(uuid("bcde03ad-ea71-5077-a961-1c0ecff57202")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IKeyValuePair<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
+#endif
+
+#ifndef WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+#define WINRT_GENERIC_b63397c9_5d89_530b_becf_2b843a15c4e4
+template <> struct __declspec(uuid("b63397c9-5d89-530b-becf-2b843a15c4e4")) __declspec(novtable) IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> : impl_IMap<hstring, Windows::Foundation::Collections::IVectorView<hstring>> {};
 #endif
 
 #ifndef WINRT_GENERIC_643b6d83_457e_5a43_800f_b0449f91d96b

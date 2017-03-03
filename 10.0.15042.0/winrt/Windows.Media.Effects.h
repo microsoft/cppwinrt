@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -1072,6 +1072,18 @@ struct produce<D, Windows::Media::Effects::IVideoTransformEffectDefinition> : pr
 
 namespace Windows::Media::Effects {
 
+template <typename D> double impl_ISlowMotionEffectDefinition<D>::TimeStretchRate() const
+{
+    double value {};
+    check_hresult(WINRT_SHIM(ISlowMotionEffectDefinition)->get_TimeStretchRate(&value));
+    return value;
+}
+
+template <typename D> void impl_ISlowMotionEffectDefinition<D>::TimeStretchRate(double value) const
+{
+    check_hresult(WINRT_SHIM(ISlowMotionEffectDefinition)->put_TimeStretchRate(value));
+}
+
 template <typename D> hstring impl_IVideoCompositorDefinition<D>::ActivatableClassId() const
 {
     hstring value;
@@ -1493,18 +1505,6 @@ template <typename D> Windows::Media::Transcoding::MediaVideoProcessingAlgorithm
     Windows::Media::Transcoding::MediaVideoProcessingAlgorithm value {};
     check_hresult(WINRT_SHIM(IVideoTransformEffectDefinition)->get_ProcessingAlgorithm(&value));
     return value;
-}
-
-template <typename D> double impl_ISlowMotionEffectDefinition<D>::TimeStretchRate() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ISlowMotionEffectDefinition)->get_TimeStretchRate(&value));
-    return value;
-}
-
-template <typename D> void impl_ISlowMotionEffectDefinition<D>::TimeStretchRate(double value) const
-{
-    check_hresult(WINRT_SHIM(ISlowMotionEffectDefinition)->put_TimeStretchRate(value));
 }
 
 inline AudioEffectDefinition::AudioEffectDefinition(hstring_view activatableClassId) :

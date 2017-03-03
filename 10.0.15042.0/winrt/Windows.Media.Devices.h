@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -4315,6 +4315,177 @@ struct produce<D, Windows::Media::Devices::IZoomSettings> : produce_base<D, Wind
 
 namespace Windows::Media::Devices {
 
+template <typename D> void impl_IDialRequestedEventArgs<D>::Handled() const
+{
+    check_hresult(WINRT_SHIM(IDialRequestedEventArgs)->abi_Handled());
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_IDialRequestedEventArgs<D>::Contact() const
+{
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(IDialRequestedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IRedialRequestedEventArgs<D>::Handled() const
+{
+    check_hresult(WINRT_SHIM(IRedialRequestedEventArgs)->abi_Handled());
+}
+
+template <typename D> Windows::Media::Devices::TelephonyKey impl_IKeypadPressedEventArgs<D>::TelephonyKey() const
+{
+    Windows::Media::Devices::TelephonyKey telephonyKey {};
+    check_hresult(WINRT_SHIM(IKeypadPressedEventArgs)->get_TelephonyKey(&telephonyKey));
+    return telephonyKey;
+}
+
+template <typename D> uint64_t impl_ICallControl<D>::IndicateNewIncomingCall(bool enableRinger, hstring_view callerId) const
+{
+    uint64_t callToken {};
+    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateNewIncomingCall(enableRinger, get_abi(callerId), &callToken));
+    return callToken;
+}
+
+template <typename D> uint64_t impl_ICallControl<D>::IndicateNewOutgoingCall() const
+{
+    uint64_t callToken {};
+    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateNewOutgoingCall(&callToken));
+    return callToken;
+}
+
+template <typename D> void impl_ICallControl<D>::IndicateActiveCall(uint64_t callToken) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateActiveCall(callToken));
+}
+
+template <typename D> void impl_ICallControl<D>::EndCall(uint64_t callToken) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->abi_EndCall(callToken));
+}
+
+template <typename D> bool impl_ICallControl<D>::HasRinger() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ICallControl)->get_HasRinger(&value));
+    return value;
+}
+
+template <typename D> event_token impl_ICallControl<D>::AnswerRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_AnswerRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::AnswerRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_AnswerRequested, AnswerRequested(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::AnswerRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_AnswerRequested(token));
+}
+
+template <typename D> event_token impl_ICallControl<D>::HangUpRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_HangUpRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::HangUpRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_HangUpRequested, HangUpRequested(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::HangUpRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_HangUpRequested(token));
+}
+
+template <typename D> event_token impl_ICallControl<D>::DialRequested(const Windows::Media::Devices::DialRequestedEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_DialRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::DialRequested(auto_revoke_t, const Windows::Media::Devices::DialRequestedEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_DialRequested, DialRequested(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::DialRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_DialRequested(token));
+}
+
+template <typename D> event_token impl_ICallControl<D>::RedialRequested(const Windows::Media::Devices::RedialRequestedEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_RedialRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::RedialRequested(auto_revoke_t, const Windows::Media::Devices::RedialRequestedEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_RedialRequested, RedialRequested(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::RedialRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_RedialRequested(token));
+}
+
+template <typename D> event_token impl_ICallControl<D>::KeypadPressed(const Windows::Media::Devices::KeypadPressedEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_KeypadPressed(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::KeypadPressed(auto_revoke_t, const Windows::Media::Devices::KeypadPressedEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_KeypadPressed, KeypadPressed(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::KeypadPressed(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_KeypadPressed(token));
+}
+
+template <typename D> event_token impl_ICallControl<D>::AudioTransferRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(ICallControl)->add_AudioTransferRequested(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::AudioTransferRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
+{
+    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_AudioTransferRequested, AudioTransferRequested(handler));
+}
+
+template <typename D> void impl_ICallControl<D>::AudioTransferRequested(event_token token) const
+{
+    check_hresult(WINRT_SHIM(ICallControl)->remove_AudioTransferRequested(token));
+}
+
+template <typename D> Windows::Media::Devices::CallControl impl_ICallControlStatics<D>::GetDefault() const
+{
+    Windows::Media::Devices::CallControl callControl { nullptr };
+    check_hresult(WINRT_SHIM(ICallControlStatics)->abi_GetDefault(put_abi(callControl)));
+    return callControl;
+}
+
+template <typename D> Windows::Media::Devices::CallControl impl_ICallControlStatics<D>::FromId(hstring_view deviceId) const
+{
+    Windows::Media::Devices::CallControl callControl { nullptr };
+    check_hresult(WINRT_SHIM(ICallControlStatics)->abi_FromId(get_abi(deviceId), put_abi(callControl)));
+    return callControl;
+}
+
 template <typename D> hstring impl_IDefaultAudioDeviceChangedEventArgs<D>::Id() const
 {
     hstring value;
@@ -6038,177 +6209,6 @@ template <typename D> Windows::Media::MediaProperties::MediaPixelFormat impl_IPh
 template <typename D> void impl_IPhotoConfirmationControl<D>::PixelFormat(Windows::Media::MediaProperties::MediaPixelFormat format) const
 {
     check_hresult(WINRT_SHIM(IPhotoConfirmationControl)->put_PixelFormat(format));
-}
-
-template <typename D> void impl_IDialRequestedEventArgs<D>::Handled() const
-{
-    check_hresult(WINRT_SHIM(IDialRequestedEventArgs)->abi_Handled());
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IDialRequestedEventArgs<D>::Contact() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IDialRequestedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IRedialRequestedEventArgs<D>::Handled() const
-{
-    check_hresult(WINRT_SHIM(IRedialRequestedEventArgs)->abi_Handled());
-}
-
-template <typename D> Windows::Media::Devices::TelephonyKey impl_IKeypadPressedEventArgs<D>::TelephonyKey() const
-{
-    Windows::Media::Devices::TelephonyKey telephonyKey {};
-    check_hresult(WINRT_SHIM(IKeypadPressedEventArgs)->get_TelephonyKey(&telephonyKey));
-    return telephonyKey;
-}
-
-template <typename D> uint64_t impl_ICallControl<D>::IndicateNewIncomingCall(bool enableRinger, hstring_view callerId) const
-{
-    uint64_t callToken {};
-    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateNewIncomingCall(enableRinger, get_abi(callerId), &callToken));
-    return callToken;
-}
-
-template <typename D> uint64_t impl_ICallControl<D>::IndicateNewOutgoingCall() const
-{
-    uint64_t callToken {};
-    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateNewOutgoingCall(&callToken));
-    return callToken;
-}
-
-template <typename D> void impl_ICallControl<D>::IndicateActiveCall(uint64_t callToken) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->abi_IndicateActiveCall(callToken));
-}
-
-template <typename D> void impl_ICallControl<D>::EndCall(uint64_t callToken) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->abi_EndCall(callToken));
-}
-
-template <typename D> bool impl_ICallControl<D>::HasRinger() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICallControl)->get_HasRinger(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ICallControl<D>::AnswerRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_AnswerRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::AnswerRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_AnswerRequested, AnswerRequested(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::AnswerRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_AnswerRequested(token));
-}
-
-template <typename D> event_token impl_ICallControl<D>::HangUpRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_HangUpRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::HangUpRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_HangUpRequested, HangUpRequested(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::HangUpRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_HangUpRequested(token));
-}
-
-template <typename D> event_token impl_ICallControl<D>::DialRequested(const Windows::Media::Devices::DialRequestedEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_DialRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::DialRequested(auto_revoke_t, const Windows::Media::Devices::DialRequestedEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_DialRequested, DialRequested(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::DialRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_DialRequested(token));
-}
-
-template <typename D> event_token impl_ICallControl<D>::RedialRequested(const Windows::Media::Devices::RedialRequestedEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_RedialRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::RedialRequested(auto_revoke_t, const Windows::Media::Devices::RedialRequestedEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_RedialRequested, RedialRequested(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::RedialRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_RedialRequested(token));
-}
-
-template <typename D> event_token impl_ICallControl<D>::KeypadPressed(const Windows::Media::Devices::KeypadPressedEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_KeypadPressed(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::KeypadPressed(auto_revoke_t, const Windows::Media::Devices::KeypadPressedEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_KeypadPressed, KeypadPressed(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::KeypadPressed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_KeypadPressed(token));
-}
-
-template <typename D> event_token impl_ICallControl<D>::AudioTransferRequested(const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICallControl)->add_AudioTransferRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICallControl> impl_ICallControl<D>::AudioTransferRequested(auto_revoke_t, const Windows::Media::Devices::CallControlEventHandler & handler) const
-{
-    return impl::make_event_revoker<D, ICallControl>(this, &ABI::Windows::Media::Devices::ICallControl::remove_AudioTransferRequested, AudioTransferRequested(handler));
-}
-
-template <typename D> void impl_ICallControl<D>::AudioTransferRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICallControl)->remove_AudioTransferRequested(token));
-}
-
-template <typename D> Windows::Media::Devices::CallControl impl_ICallControlStatics<D>::GetDefault() const
-{
-    Windows::Media::Devices::CallControl callControl { nullptr };
-    check_hresult(WINRT_SHIM(ICallControlStatics)->abi_GetDefault(put_abi(callControl)));
-    return callControl;
-}
-
-template <typename D> Windows::Media::Devices::CallControl impl_ICallControlStatics<D>::FromId(hstring_view deviceId) const
-{
-    Windows::Media::Devices::CallControl callControl { nullptr };
-    check_hresult(WINRT_SHIM(ICallControlStatics)->abi_FromId(get_abi(deviceId), put_abi(callControl)));
-    return callControl;
 }
 
 inline AdvancedPhotoCaptureSettings::AdvancedPhotoCaptureSettings() :

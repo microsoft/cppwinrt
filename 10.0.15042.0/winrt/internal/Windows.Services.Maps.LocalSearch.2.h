@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,11 +8,6 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
-#define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
-template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
-#endif
 
 #ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 #define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
@@ -37,6 +32,11 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_08e69b32_f420_5280_a721_075b4fd03d94
 #define WINRT_GENERIC_08e69b32_f420_5280_a721_075b4fd03d94
 template <> struct __declspec(uuid("08e69b32-f420-5280-a721-075b4fd03d94")) __declspec(novtable) IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> : impl_IAsyncOperation<Windows::Services::Maps::LocalSearch::LocalLocationFinderResult> {};
+#endif
+
+#ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
+#define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
+template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
 #endif
 
 

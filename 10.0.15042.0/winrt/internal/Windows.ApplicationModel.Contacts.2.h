@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -13,11 +13,6 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_cdb5efb3_5788_509d_9be1_71ccb8a3362a
 #define WINRT_GENERIC_cdb5efb3_5788_509d_9be1_71ccb8a3362a
 template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __declspec(novtable) IAsyncOperation<bool> : impl_IAsyncOperation<bool> {};
-#endif
-
-#ifndef WINRT_GENERIC_c4a57c5e_32b0_55b3_ad13_ce1c23041ed6
-#define WINRT_GENERIC_c4a57c5e_32b0_55b3_ad13_ce1c23041ed6
-template <> struct __declspec(uuid("c4a57c5e-32b0-55b3-ad13-ce1c23041ed6")) __declspec(novtable) IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> : impl_IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> {};
 #endif
 
 
@@ -68,6 +63,11 @@ template <> struct __declspec(uuid("ab8e5d11-b0c1-5a21-95ae-f16bf3a37624")) __de
 #ifndef WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
 #define WINRT_GENERIC_548cefbd_bc8a_5fa0_8df2_957440fc8bf4
 template <> struct __declspec(uuid("548cefbd-bc8a-5fa0-8df2-957440fc8bf4")) __declspec(novtable) IReference<int32_t> : impl_IReference<int32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_c4a57c5e_32b0_55b3_ad13_ce1c23041ed6
+#define WINRT_GENERIC_c4a57c5e_32b0_55b3_ad13_ce1c23041ed6
+template <> struct __declspec(uuid("c4a57c5e-32b0-55b3-ad13-ce1c23041ed6")) __declspec(novtable) IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> : impl_IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> {};
 #endif
 
 #ifndef WINRT_GENERIC_235e0791_9a3e_5723_87f0_44ffb786c9e1
@@ -325,11 +325,6 @@ template <> struct __declspec(uuid("4357954b-bce6-5456-a511-fe8904e8090b")) __de
 template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __declspec(novtable) AsyncOperationCompletedHandler<bool> : impl_AsyncOperationCompletedHandler<bool> {};
 #endif
 
-#ifndef WINRT_GENERIC_3dddecf4_1d39_58e8_83b1_dbed541c7f35
-#define WINRT_GENERIC_3dddecf4_1d39_58e8_83b1_dbed541c7f35
-template <> struct __declspec(uuid("3dddecf4-1d39-58e8-83b1-dbed541c7f35")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::Streams::IRandomAccessStreamWithContentType> : impl_AsyncOperationCompletedHandler<Windows::Storage::Streams::IRandomAccessStreamWithContentType> {};
-#endif
-
 
 }
 
@@ -344,6 +339,11 @@ template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __de
 }
 
 namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_3dddecf4_1d39_58e8_83b1_dbed541c7f35
+#define WINRT_GENERIC_3dddecf4_1d39_58e8_83b1_dbed541c7f35
+template <> struct __declspec(uuid("3dddecf4-1d39-58e8-83b1-dbed541c7f35")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Storage::Streams::IRandomAccessStreamWithContentType> : impl_AsyncOperationCompletedHandler<Windows::Storage::Streams::IRandomAccessStreamWithContentType> {};
+#endif
 
 #ifndef WINRT_GENERIC_d123e7f2_0b5b_590a_b234_a121ac1e0bab
 #define WINRT_GENERIC_d123e7f2_0b5b_590a_b234_a121ac1e0bab

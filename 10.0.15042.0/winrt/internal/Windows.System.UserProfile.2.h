@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -19,44 +19,9 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-#define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
-#define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
-template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __declspec(novtable) IIterable<hstring> : impl_IIterable<hstring> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
-#define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
-template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
-#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
-template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
+#ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
+#define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
+template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -74,9 +39,24 @@ template <> struct __declspec(uuid("c50898f6-c536-5f47-8583-8b2c2438a13b")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-#define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
-template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
+#ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
+#define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
+template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __declspec(novtable) IIterable<hstring> : impl_IIterable<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+#define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
+template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) __declspec(novtable) IVectorView<hstring> : impl_IVectorView<hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+#define WINRT_GENERIC_98b9acc1_4b56_532e_ac73_03d5291cca90
+template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __declspec(novtable) IVector<hstring> : impl_IVector<hstring> {};
 #endif
 
 
@@ -84,9 +64,9 @@ template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_641cb9dd_a28d_59e2_b8db_a227eda6cf2e
-#define WINRT_GENERIC_641cb9dd_a28d_59e2_b8db_a227eda6cf2e
-template <> struct __declspec(uuid("641cb9dd-a28d-59e2-b8db-a227eda6cf2e")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Uri> : impl_IAsyncOperation<Windows::Foundation::Uri> {};
+#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_6809e406_6d3b_5164_8f32_b845b0781405
@@ -94,10 +74,30 @@ template <> struct __declspec(uuid("641cb9dd-a28d-59e2-b8db-a227eda6cf2e")) __de
 template <> struct __declspec(uuid("6809e406-6d3b-5164-8f32-b845b0781405")) __declspec(novtable) IAsyncOperation<winrt::Windows::System::UserProfile::SetAccountPictureResult> : impl_IAsyncOperation<winrt::Windows::System::UserProfile::SetAccountPictureResult> {};
 #endif
 
+#ifndef WINRT_GENERIC_641cb9dd_a28d_59e2_b8db_a227eda6cf2e
+#define WINRT_GENERIC_641cb9dd_a28d_59e2_b8db_a227eda6cf2e
+template <> struct __declspec(uuid("641cb9dd-a28d-59e2-b8db-a227eda6cf2e")) __declspec(novtable) IAsyncOperation<Windows::Foundation::Uri> : impl_IAsyncOperation<Windows::Foundation::Uri> {};
+#endif
+
 #ifndef WINRT_GENERIC_5361bfc9_0740_544a_9797_1ffe5e73c54e
 #define WINRT_GENERIC_5361bfc9_0740_544a_9797_1ffe5e73c54e
 template <> struct __declspec(uuid("5361bfc9-0740-544a-9797-1ffe5e73c54e")) __declspec(novtable) IAsyncOperation<winrt::Windows::System::UserProfile::SetImageFeedResult> : impl_IAsyncOperation<winrt::Windows::System::UserProfile::SetImageFeedResult> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
+#define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 #define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -124,14 +124,14 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("b79a741f-7fb5-50ae-9e99-911201ec3d41")) __declspec(novtable) AsyncOperationCompletedHandler<hstring> : impl_AsyncOperationCompletedHandler<hstring> {};
 #endif
 
-#ifndef WINRT_GENERIC_ad46f1cc_2bb0_585c_9885_03c2780d4d58
-#define WINRT_GENERIC_ad46f1cc_2bb0_585c_9885_03c2780d4d58
-template <> struct __declspec(uuid("ad46f1cc-2bb0-585c-9885-03c2780d4d58")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Uri> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Uri> {};
-#endif
-
 #ifndef WINRT_GENERIC_603f3e31_7a51_518c_9280_c188ea4213d8
 #define WINRT_GENERIC_603f3e31_7a51_518c_9280_c188ea4213d8
 template <> struct __declspec(uuid("603f3e31-7a51-518c-9280-c188ea4213d8")) __declspec(novtable) AsyncOperationCompletedHandler<winrt::Windows::System::UserProfile::SetAccountPictureResult> : impl_AsyncOperationCompletedHandler<winrt::Windows::System::UserProfile::SetAccountPictureResult> {};
+#endif
+
+#ifndef WINRT_GENERIC_ad46f1cc_2bb0_585c_9885_03c2780d4d58
+#define WINRT_GENERIC_ad46f1cc_2bb0_585c_9885_03c2780d4d58
+template <> struct __declspec(uuid("ad46f1cc-2bb0-585c-9885-03c2780d4d58")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Foundation::Uri> : impl_AsyncOperationCompletedHandler<Windows::Foundation::Uri> {};
 #endif
 
 #ifndef WINRT_GENERIC_f214731a_1305_5b44_932c_af9a1e4d78c9

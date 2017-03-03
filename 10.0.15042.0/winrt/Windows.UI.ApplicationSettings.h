@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,10 +6,10 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.UI.Popups.3.h"
 #include "internal/Windows.Security.Credentials.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.UI.ApplicationSettings.3.h"
 #include "Windows.UI.h"
 #include "Windows.UI.Popups.h"
@@ -663,6 +663,56 @@ struct produce<D, Windows::UI::ApplicationSettings::IWebAccountProviderCommandFa
 
 namespace Windows::UI::ApplicationSettings {
 
+template <typename D> Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> impl_ISettingsPaneCommandsRequest<D>::ApplicationCommands() const
+{
+    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> value;
+    check_hresult(WINRT_SHIM(ISettingsPaneCommandsRequest)->get_ApplicationCommands(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest impl_ISettingsPaneCommandsRequestedEventArgs<D>::Request() const
+{
+    Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest request { nullptr };
+    check_hresult(WINRT_SHIM(ISettingsPaneCommandsRequestedEventArgs)->get_Request(put_abi(request)));
+    return request;
+}
+
+template <typename D> Windows::UI::ApplicationSettings::SettingsPane impl_ISettingsPaneStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::ApplicationSettings::SettingsPane current { nullptr };
+    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->abi_GetForCurrentView(put_abi(current)));
+    return current;
+}
+
+template <typename D> void impl_ISettingsPaneStatics<D>::Show() const
+{
+    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->abi_Show());
+}
+
+template <typename D> Windows::UI::ApplicationSettings::SettingsEdgeLocation impl_ISettingsPaneStatics<D>::Edge() const
+{
+    Windows::UI::ApplicationSettings::SettingsEdgeLocation value {};
+    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->get_Edge(&value));
+    return value;
+}
+
+template <typename D> event_token impl_ISettingsPane<D>::CommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const
+{
+    event_token cookie {};
+    check_hresult(WINRT_SHIM(ISettingsPane)->add_CommandsRequested(get_abi(handler), &cookie));
+    return cookie;
+}
+
+template <typename D> event_revoker<ISettingsPane> impl_ISettingsPane<D>::CommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const
+{
+    return impl::make_event_revoker<D, ISettingsPane>(this, &ABI::Windows::UI::ApplicationSettings::ISettingsPane::remove_CommandsRequested, CommandsRequested(handler));
+}
+
+template <typename D> void impl_ISettingsPane<D>::CommandsRequested(event_token cookie) const
+{
+    check_hresult(WINRT_SHIM(ISettingsPane)->remove_CommandsRequested(cookie));
+}
+
 template <typename D> Windows::UI::ApplicationSettings::SettingsCommand impl_ISettingsCommandFactory<D>::CreateSettingsCommand(const Windows::Foundation::IInspectable & settingsCommandId, hstring_view label, const Windows::UI::Popups::UICommandInvokedHandler & handler) const
 {
     Windows::UI::ApplicationSettings::SettingsCommand instance { nullptr };
@@ -854,56 +904,6 @@ template <typename D> event_revoker<IAccountsSettingsPane> impl_IAccountsSetting
 template <typename D> void impl_IAccountsSettingsPane<D>::AccountCommandsRequested(event_token cookie) const
 {
     check_hresult(WINRT_SHIM(IAccountsSettingsPane)->remove_AccountCommandsRequested(cookie));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> impl_ISettingsPaneCommandsRequest<D>::ApplicationCommands() const
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::ApplicationSettings::SettingsCommand> value;
-    check_hresult(WINRT_SHIM(ISettingsPaneCommandsRequest)->get_ApplicationCommands(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest impl_ISettingsPaneCommandsRequestedEventArgs<D>::Request() const
-{
-    Windows::UI::ApplicationSettings::SettingsPaneCommandsRequest request { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsPaneCommandsRequestedEventArgs)->get_Request(put_abi(request)));
-    return request;
-}
-
-template <typename D> Windows::UI::ApplicationSettings::SettingsPane impl_ISettingsPaneStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::ApplicationSettings::SettingsPane current { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->abi_GetForCurrentView(put_abi(current)));
-    return current;
-}
-
-template <typename D> void impl_ISettingsPaneStatics<D>::Show() const
-{
-    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->abi_Show());
-}
-
-template <typename D> Windows::UI::ApplicationSettings::SettingsEdgeLocation impl_ISettingsPaneStatics<D>::Edge() const
-{
-    Windows::UI::ApplicationSettings::SettingsEdgeLocation value {};
-    check_hresult(WINRT_SHIM(ISettingsPaneStatics)->get_Edge(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ISettingsPane<D>::CommandsRequested(const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(ISettingsPane)->add_CommandsRequested(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<ISettingsPane> impl_ISettingsPane<D>::CommandsRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ISettingsPane>(this, &ABI::Windows::UI::ApplicationSettings::ISettingsPane::remove_CommandsRequested, CommandsRequested(handler));
-}
-
-template <typename D> void impl_ISettingsPane<D>::CommandsRequested(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(ISettingsPane)->remove_CommandsRequested(cookie));
 }
 
 inline Windows::UI::ApplicationSettings::AccountsSettingsPane AccountsSettingsPane::GetForCurrentView()

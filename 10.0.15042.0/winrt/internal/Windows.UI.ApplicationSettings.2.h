@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,6 +8,26 @@
 #include "Windows.UI.Popups.2.h"
 
 WINRT_EXPORT namespace winrt {
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_10bd9cdd_3767_5e96_9022_f00f9cbd6241
+#define WINRT_GENERIC_10bd9cdd_3767_5e96_9022_f00f9cbd6241
+template <> struct __declspec(uuid("10bd9cdd-3767-5e96-9022-f00f9cbd6241")) __declspec(novtable) IVector<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IVector<Windows::UI::ApplicationSettings::SettingsCommand> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_f39a56a2_7db1_5c48_9e13_7dc485a4a99e
+#define WINRT_GENERIC_f39a56a2_7db1_5c48_9e13_7dc485a4a99e
+template <> struct __declspec(uuid("f39a56a2-7db1-5c48-9e13-7dc485a4a99e")) __declspec(novtable) TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> {};
+#endif
+
+
+}
 
 namespace ABI::Windows::Foundation::Collections {
 
@@ -26,11 +46,6 @@ template <> struct __declspec(uuid("64e864c8-7fef-5df5-a624-50b577f48554")) __de
 template <> struct __declspec(uuid("b6af1cb5-f60e-5b08-b312-2eb51135cfc6")) __declspec(novtable) IVector<Windows::UI::ApplicationSettings::CredentialCommand> : impl_IVector<Windows::UI::ApplicationSettings::CredentialCommand> {};
 #endif
 
-#ifndef WINRT_GENERIC_10bd9cdd_3767_5e96_9022_f00f9cbd6241
-#define WINRT_GENERIC_10bd9cdd_3767_5e96_9022_f00f9cbd6241
-template <> struct __declspec(uuid("10bd9cdd-3767-5e96-9022-f00f9cbd6241")) __declspec(novtable) IVector<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IVector<Windows::UI::ApplicationSettings::SettingsCommand> {};
-#endif
-
 
 }
 
@@ -41,15 +56,25 @@ namespace ABI::Windows::Foundation {
 template <> struct __declspec(uuid("69b8847e-7d72-5a15-bc1c-4ca39c93b162")) __declspec(novtable) TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::ApplicationSettings::AccountsSettingsPane, Windows::UI::ApplicationSettings::AccountsSettingsPaneCommandsRequestedEventArgs> {};
 #endif
 
-#ifndef WINRT_GENERIC_f39a56a2_7db1_5c48_9e13_7dc485a4a99e
-#define WINRT_GENERIC_f39a56a2_7db1_5c48_9e13_7dc485a4a99e
-template <> struct __declspec(uuid("f39a56a2-7db1-5c48-9e13-7dc485a4a99e")) __declspec(novtable) TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::ApplicationSettings::SettingsPane, Windows::UI::ApplicationSettings::SettingsPaneCommandsRequestedEventArgs> {};
-#endif
-
 
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_2f071c24_4a58_5a00_a294_c7162e98c2a0
+#define WINRT_GENERIC_2f071c24_4a58_5a00_a294_c7162e98c2a0
+template <> struct __declspec(uuid("2f071c24-4a58-5a00-a294-c7162e98c2a0")) __declspec(novtable) IIterator<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IIterator<Windows::UI::ApplicationSettings::SettingsCommand> {};
+#endif
+
+#ifndef WINRT_GENERIC_6308e7e8_cb85_5339_a3e9_9a7500d19c68
+#define WINRT_GENERIC_6308e7e8_cb85_5339_a3e9_9a7500d19c68
+template <> struct __declspec(uuid("6308e7e8-cb85-5339-a3e9-9a7500d19c68")) __declspec(novtable) IIterable<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IIterable<Windows::UI::ApplicationSettings::SettingsCommand> {};
+#endif
+
+#ifndef WINRT_GENERIC_67b64d17_4245_5d7c_bfb4_6b68dd525877
+#define WINRT_GENERIC_67b64d17_4245_5d7c_bfb4_6b68dd525877
+template <> struct __declspec(uuid("67b64d17-4245-5d7c-bfb4-6b68dd525877")) __declspec(novtable) IVectorView<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IVectorView<Windows::UI::ApplicationSettings::SettingsCommand> {};
+#endif
 
 #ifndef WINRT_GENERIC_82d7cd74_8e33_5f06_92fc_915138aacbde
 #define WINRT_GENERIC_82d7cd74_8e33_5f06_92fc_915138aacbde
@@ -94,21 +119,6 @@ template <> struct __declspec(uuid("883ed18d-4dbb-58f2-8fd2-e4b018509553")) __de
 #ifndef WINRT_GENERIC_95cc1bba_c279_5ee5_a524_78012b7fe17e
 #define WINRT_GENERIC_95cc1bba_c279_5ee5_a524_78012b7fe17e
 template <> struct __declspec(uuid("95cc1bba-c279-5ee5-a524-78012b7fe17e")) __declspec(novtable) IVectorView<Windows::UI::ApplicationSettings::CredentialCommand> : impl_IVectorView<Windows::UI::ApplicationSettings::CredentialCommand> {};
-#endif
-
-#ifndef WINRT_GENERIC_2f071c24_4a58_5a00_a294_c7162e98c2a0
-#define WINRT_GENERIC_2f071c24_4a58_5a00_a294_c7162e98c2a0
-template <> struct __declspec(uuid("2f071c24-4a58-5a00-a294-c7162e98c2a0")) __declspec(novtable) IIterator<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IIterator<Windows::UI::ApplicationSettings::SettingsCommand> {};
-#endif
-
-#ifndef WINRT_GENERIC_6308e7e8_cb85_5339_a3e9_9a7500d19c68
-#define WINRT_GENERIC_6308e7e8_cb85_5339_a3e9_9a7500d19c68
-template <> struct __declspec(uuid("6308e7e8-cb85-5339-a3e9-9a7500d19c68")) __declspec(novtable) IIterable<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IIterable<Windows::UI::ApplicationSettings::SettingsCommand> {};
-#endif
-
-#ifndef WINRT_GENERIC_67b64d17_4245_5d7c_bfb4_6b68dd525877
-#define WINRT_GENERIC_67b64d17_4245_5d7c_bfb4_6b68dd525877
-template <> struct __declspec(uuid("67b64d17-4245-5d7c-bfb4-6b68dd525877")) __declspec(novtable) IVectorView<Windows::UI::ApplicationSettings::SettingsCommand> : impl_IVectorView<Windows::UI::ApplicationSettings::SettingsCommand> {};
 #endif
 
 

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,6 +6,7 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.ApplicationModel.3.h"
@@ -14,7 +15,6 @@ WINRT_WARNING_PUSH
 #include "internal/Windows.UI.ViewManagement.3.h"
 #include "internal/Windows.Storage.3.h"
 #include "internal/Windows.System.RemoteSystems.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.System.3.h"
 
 WINRT_EXPORT namespace winrt {
@@ -2504,6 +2504,128 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
 
 namespace Windows::System {
 
+template <typename D> Windows::Storage::Streams::IInputStream impl_IProcessLauncherOptions<D>::StandardInput() const
+{
+    Windows::Storage::Streams::IInputStream value;
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardInput(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IProcessLauncherOptions<D>::StandardInput(const Windows::Storage::Streams::IInputStream & value) const
+{
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardInput(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardOutput() const
+{
+    Windows::Storage::Streams::IOutputStream value;
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardOutput(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IProcessLauncherOptions<D>::StandardOutput(const Windows::Storage::Streams::IOutputStream & value) const
+{
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardOutput(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardError() const
+{
+    Windows::Storage::Streams::IOutputStream value;
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardError(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IProcessLauncherOptions<D>::StandardError(const Windows::Storage::Streams::IOutputStream & value) const
+{
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardError(get_abi(value)));
+}
+
+template <typename D> hstring impl_IProcessLauncherOptions<D>::WorkingDirectory() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_WorkingDirectory(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IProcessLauncherOptions<D>::WorkingDirectory(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_WorkingDirectory(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
+    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsync(get_abi(fileName), get_abi(args), put_abi(asyncOperationResult)));
+    return asyncOperationResult;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args, const Windows::System::ProcessLauncherOptions & options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
+    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsyncWithOptions(get_abi(fileName), get_abi(args), get_abi(options), put_abi(asyncOperationResult)));
+    return asyncOperationResult;
+}
+
+template <typename D> uint32_t impl_IProcessLauncherResult<D>::ExitCode() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(IProcessLauncherResult)->get_ExitCode(&value));
+    return value;
+}
+
+template <typename D> void impl_IShutdownManagerStatics<D>::BeginShutdown(Windows::System::ShutdownKind shutdownKind, const Windows::Foundation::TimeSpan & timeout) const
+{
+    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_BeginShutdown(shutdownKind, get_abi(timeout)));
+}
+
+template <typename D> void impl_IShutdownManagerStatics<D>::CancelShutdown() const
+{
+    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_CancelShutdown());
+}
+
+template <typename D> bool impl_IShutdownManagerStatics2<D>::IsPowerStateSupported(Windows::System::PowerState powerState) const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_IsPowerStateSupported(powerState, &value));
+    return value;
+}
+
+template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState) const
+{
+    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerState(powerState));
+}
+
+template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState, const Windows::Foundation::TimeSpan & wakeUpAfter) const
+{
+    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerStateWithTimeSpan(powerState, get_abi(wakeUpAfter)));
+}
+
+template <typename D> hstring impl_ITimeZoneSettingsStatics<D>::CurrentTimeZoneDisplayName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CurrentTimeZoneDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ITimeZoneSettingsStatics<D>::SupportedTimeZoneDisplayNames() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value;
+    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_SupportedTimeZoneDisplayNames(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool impl_ITimeZoneSettingsStatics<D>::CanChangeTimeZone() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CanChangeTimeZone(&value));
+    return value;
+}
+
+template <typename D> void impl_ITimeZoneSettingsStatics<D>::ChangeTimeZoneByDisplayName(hstring_view timeZoneDisplayName) const
+{
+    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->abi_ChangeTimeZoneByDisplayName(get_abi(timeZoneDisplayName)));
+}
+
 template <typename D> hstring impl_IUser<D>::NonRoamableId() const
 {
     hstring value;
@@ -3473,128 +3595,6 @@ template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Syste
     Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> operation;
     check_hresult(WINRT_SHIM(IRemoteLauncherStatics)->abi_LaunchUriWithDataAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
     return operation;
-}
-
-template <typename D> Windows::Storage::Streams::IInputStream impl_IProcessLauncherOptions<D>::StandardInput() const
-{
-    Windows::Storage::Streams::IInputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardInput(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardInput(const Windows::Storage::Streams::IInputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardInput(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardOutput() const
-{
-    Windows::Storage::Streams::IOutputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardOutput(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardOutput(const Windows::Storage::Streams::IOutputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardOutput(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardError() const
-{
-    Windows::Storage::Streams::IOutputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardError(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardError(const Windows::Storage::Streams::IOutputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardError(get_abi(value)));
-}
-
-template <typename D> hstring impl_IProcessLauncherOptions<D>::WorkingDirectory() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_WorkingDirectory(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::WorkingDirectory(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_WorkingDirectory(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
-    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsync(get_abi(fileName), get_abi(args), put_abi(asyncOperationResult)));
-    return asyncOperationResult;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args, const Windows::System::ProcessLauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
-    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsyncWithOptions(get_abi(fileName), get_abi(args), get_abi(options), put_abi(asyncOperationResult)));
-    return asyncOperationResult;
-}
-
-template <typename D> uint32_t impl_IProcessLauncherResult<D>::ExitCode() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IProcessLauncherResult)->get_ExitCode(&value));
-    return value;
-}
-
-template <typename D> void impl_IShutdownManagerStatics<D>::BeginShutdown(Windows::System::ShutdownKind shutdownKind, const Windows::Foundation::TimeSpan & timeout) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_BeginShutdown(shutdownKind, get_abi(timeout)));
-}
-
-template <typename D> void impl_IShutdownManagerStatics<D>::CancelShutdown() const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_CancelShutdown());
-}
-
-template <typename D> bool impl_IShutdownManagerStatics2<D>::IsPowerStateSupported(Windows::System::PowerState powerState) const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_IsPowerStateSupported(powerState, &value));
-    return value;
-}
-
-template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerState(powerState));
-}
-
-template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState, const Windows::Foundation::TimeSpan & wakeUpAfter) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerStateWithTimeSpan(powerState, get_abi(wakeUpAfter)));
-}
-
-template <typename D> hstring impl_ITimeZoneSettingsStatics<D>::CurrentTimeZoneDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CurrentTimeZoneDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ITimeZoneSettingsStatics<D>::SupportedTimeZoneDisplayNames() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_SupportedTimeZoneDisplayNames(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ITimeZoneSettingsStatics<D>::CanChangeTimeZone() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CanChangeTimeZone(&value));
-    return value;
-}
-
-template <typename D> void impl_ITimeZoneSettingsStatics<D>::ChangeTimeZoneByDisplayName(hstring_view timeZoneDisplayName) const
-{
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->abi_ChangeTimeZoneByDisplayName(get_abi(timeZoneDisplayName)));
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> AppDiagnosticInfo::RequestInfoAsync()

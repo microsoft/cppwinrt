@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,9 +6,13 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
-#include "internal/Windows.ApplicationModel.Background.3.h"
-#include "internal/Windows.ApplicationModel.Contacts.3.h"
+#include "internal/Windows.ApplicationModel.Wallet.3.h"
+#include "internal/Windows.Devices.Printers.Extensions.3.h"
 #include "internal/Windows.Foundation.3.h"
+#include "internal/Windows.ApplicationModel.Calls.3.h"
+#include "internal/Windows.ApplicationModel.Contacts.Provider.3.h"
+#include "internal/Windows.ApplicationModel.Contacts.3.h"
+#include "internal/Windows.ApplicationModel.Background.3.h"
 #include "internal/Windows.ApplicationModel.Appointments.AppointmentsProvider.3.h"
 #include "internal/Windows.ApplicationModel.UserDataAccounts.Provider.3.h"
 #include "internal/Windows.System.3.h"
@@ -24,10 +28,6 @@ WINRT_WARNING_PUSH
 #include "internal/Windows.Security.Authentication.Web.Provider.3.h"
 #include "internal/Windows.Devices.Enumeration.3.h"
 #include "internal/Windows.Media.SpeechRecognition.3.h"
-#include "internal/Windows.ApplicationModel.Wallet.3.h"
-#include "internal/Windows.Devices.Printers.Extensions.3.h"
-#include "internal/Windows.ApplicationModel.Calls.3.h"
-#include "internal/Windows.ApplicationModel.Contacts.Provider.3.h"
 #include "internal/Windows.ApplicationModel.Activation.3.h"
 #include "Windows.ApplicationModel.h"
 
@@ -1574,6 +1574,188 @@ struct produce<D, Windows::ApplicationModel::Activation::IWebAuthenticationBroke
 
 namespace Windows::ApplicationModel::Activation {
 
+template <typename D> hstring impl_IWalletActionActivatedEventArgs<D>::ItemId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ItemId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Wallet::WalletActionKind impl_IWalletActionActivatedEventArgs<D>::ActionKind() const
+{
+    Windows::ApplicationModel::Wallet::WalletActionKind value {};
+    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ActionKind(&value));
+    return value;
+}
+
+template <typename D> hstring impl_IWalletActionActivatedEventArgs<D>::ActionId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ActionId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfiguration impl_IPrintTaskSettingsActivatedEventArgs<D>::Configuration() const
+{
+    Windows::Devices::Printers::Extensions::PrintTaskConfiguration value { nullptr };
+    check_hresult(WINRT_SHIM(IPrintTaskSettingsActivatedEventArgs)->get_Configuration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Printers::Extensions::Print3DWorkflow impl_IPrint3DWorkflowActivatedEventArgs<D>::Workflow() const
+{
+    Windows::Devices::Printers::Extensions::Print3DWorkflow value { nullptr };
+    check_hresult(WINRT_SHIM(IPrint3DWorkflowActivatedEventArgs)->get_Workflow(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_IPrintWorkflowForegroundTaskActivatedEventArgs<D>::PrintWorkflowSession() const
+{
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(IPrintWorkflowForegroundTaskActivatedEventArgs)->get_PrintWorkflowSession(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Calls::LockScreenCallUI impl_ILockScreenCallActivatedEventArgs<D>::CallUI() const
+{
+    Windows::ApplicationModel::Calls::LockScreenCallUI value { nullptr };
+    check_hresult(WINRT_SHIM(ILockScreenCallActivatedEventArgs)->get_CallUI(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_ICameraSettingsActivatedEventArgs<D>::VideoDeviceController() const
+{
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(ICameraSettingsActivatedEventArgs)->get_VideoDeviceController(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_ICameraSettingsActivatedEventArgs<D>::VideoDeviceExtension() const
+{
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(ICameraSettingsActivatedEventArgs)->get_VideoDeviceExtension(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Provider::ContactPickerUI impl_IContactPickerActivatedEventArgs<D>::ContactPickerUI() const
+{
+    Windows::ApplicationModel::Contacts::Provider::ContactPickerUI value { nullptr };
+    check_hresult(WINRT_SHIM(IContactPickerActivatedEventArgs)->get_ContactPickerUI(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactActivatedEventArgs<D>::Verb() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactActivatedEventArgs)->get_Verb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactCallActivatedEventArgs<D>::ServiceId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_ServiceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactCallActivatedEventArgs<D>::ServiceUserId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactCallActivatedEventArgs<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactMessageActivatedEventArgs<D>::ServiceId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_ServiceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactMessageActivatedEventArgs<D>::ServiceUserId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactMessageActivatedEventArgs<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactAddress impl_IContactMapActivatedEventArgs<D>::Address() const
+{
+    Windows::ApplicationModel::Contacts::ContactAddress value { nullptr };
+    check_hresult(WINRT_SHIM(IContactMapActivatedEventArgs)->get_Address(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactMapActivatedEventArgs<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IContactMapActivatedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactPostActivatedEventArgs<D>::ServiceId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_ServiceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactPostActivatedEventArgs<D>::ServiceUserId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactPostActivatedEventArgs<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactVideoCallActivatedEventArgs<D>::ServiceId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_ServiceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactVideoCallActivatedEventArgs<D>::ServiceUserId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactVideoCallActivatedEventArgs<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value { nullptr };
+    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IContactsProviderActivatedEventArgs<D>::Verb() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IContactsProviderActivatedEventArgs)->get_Verb(put_abi(value)));
+    return value;
+}
+
 template <typename D> Windows::ApplicationModel::Background::IBackgroundTaskInstance impl_IBackgroundActivatedEventArgs<D>::TaskInstance() const
 {
     Windows::ApplicationModel::Background::IBackgroundTaskInstance value;
@@ -2001,188 +2183,6 @@ template <typename D> Windows::Media::SpeechRecognition::SpeechRecognitionResult
 {
     Windows::Media::SpeechRecognition::SpeechRecognitionResult value { nullptr };
     check_hresult(WINRT_SHIM(IVoiceCommandActivatedEventArgs)->get_Result(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IWalletActionActivatedEventArgs<D>::ItemId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ItemId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Wallet::WalletActionKind impl_IWalletActionActivatedEventArgs<D>::ActionKind() const
-{
-    Windows::ApplicationModel::Wallet::WalletActionKind value {};
-    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ActionKind(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IWalletActionActivatedEventArgs<D>::ActionId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IWalletActionActivatedEventArgs)->get_ActionId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfiguration impl_IPrintTaskSettingsActivatedEventArgs<D>::Configuration() const
-{
-    Windows::Devices::Printers::Extensions::PrintTaskConfiguration value { nullptr };
-    check_hresult(WINRT_SHIM(IPrintTaskSettingsActivatedEventArgs)->get_Configuration(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Printers::Extensions::Print3DWorkflow impl_IPrint3DWorkflowActivatedEventArgs<D>::Workflow() const
-{
-    Windows::Devices::Printers::Extensions::Print3DWorkflow value { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DWorkflowActivatedEventArgs)->get_Workflow(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IPrintWorkflowForegroundTaskActivatedEventArgs<D>::PrintWorkflowSession() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IPrintWorkflowForegroundTaskActivatedEventArgs)->get_PrintWorkflowSession(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Calls::LockScreenCallUI impl_ILockScreenCallActivatedEventArgs<D>::CallUI() const
-{
-    Windows::ApplicationModel::Calls::LockScreenCallUI value { nullptr };
-    check_hresult(WINRT_SHIM(ILockScreenCallActivatedEventArgs)->get_CallUI(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ICameraSettingsActivatedEventArgs<D>::VideoDeviceController() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ICameraSettingsActivatedEventArgs)->get_VideoDeviceController(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ICameraSettingsActivatedEventArgs<D>::VideoDeviceExtension() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ICameraSettingsActivatedEventArgs)->get_VideoDeviceExtension(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Provider::ContactPickerUI impl_IContactPickerActivatedEventArgs<D>::ContactPickerUI() const
-{
-    Windows::ApplicationModel::Contacts::Provider::ContactPickerUI value { nullptr };
-    check_hresult(WINRT_SHIM(IContactPickerActivatedEventArgs)->get_ContactPickerUI(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactActivatedEventArgs<D>::Verb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactActivatedEventArgs)->get_Verb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactCallActivatedEventArgs<D>::ServiceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_ServiceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactCallActivatedEventArgs<D>::ServiceUserId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactCallActivatedEventArgs<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactCallActivatedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactMessageActivatedEventArgs<D>::ServiceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_ServiceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactMessageActivatedEventArgs<D>::ServiceUserId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactMessageActivatedEventArgs<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactMessageActivatedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactAddress impl_IContactMapActivatedEventArgs<D>::Address() const
-{
-    Windows::ApplicationModel::Contacts::ContactAddress value { nullptr };
-    check_hresult(WINRT_SHIM(IContactMapActivatedEventArgs)->get_Address(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactMapActivatedEventArgs<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactMapActivatedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactPostActivatedEventArgs<D>::ServiceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_ServiceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactPostActivatedEventArgs<D>::ServiceUserId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactPostActivatedEventArgs<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactPostActivatedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactVideoCallActivatedEventArgs<D>::ServiceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_ServiceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactVideoCallActivatedEventArgs<D>::ServiceUserId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_ServiceUserId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactVideoCallActivatedEventArgs<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactVideoCallActivatedEventArgs)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactsProviderActivatedEventArgs<D>::Verb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactsProviderActivatedEventArgs)->get_Verb(put_abi(value)));
     return value;
 }
 

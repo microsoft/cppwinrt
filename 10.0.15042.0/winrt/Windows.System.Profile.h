@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,10 +6,10 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.System.3.h"
 #include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.System.Profile.3.h"
 #include "Windows.System.h"
 
@@ -705,142 +705,6 @@ struct produce<D, Windows::System::Profile::ISystemIdentificationStatics> : prod
 
 namespace Windows::System::Profile {
 
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISystemIdentificationInfo<D>::Id() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationSource impl_ISystemIdentificationInfo<D>::Source() const
-{
-    Windows::System::Profile::SystemIdentificationSource value {};
-    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Source(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForPublisher() const
-{
-    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
-    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForPublisher(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForUser(const Windows::System::User & user) const
-{
-    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
-    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::Profile::AnalyticsVersionInfo impl_IAnalyticsInfoStatics<D>::VersionInfo() const
-{
-    Windows::System::Profile::AnalyticsVersionInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_VersionInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsInfoStatics<D>::DeviceForm() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_DeviceForm(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamily() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamily(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamilyVersion() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamilyVersion(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEducationSettingsStatics<D>::IsEducationEnvironment() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEducationSettingsStatics)->get_IsEducationEnvironment(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::PlatformDataCollectionLevel impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevel() const
-{
-    Windows::System::Profile::PlatformDataCollectionLevel value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->get_CollectionLevel(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->add_CollectionLevelChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPlatformDiagnosticsAndUsageDataSettingsStatics> impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPlatformDiagnosticsAndUsageDataSettingsStatics>(this, &ABI::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics::remove_CollectionLevelChanged, CollectionLevelChanged(handler));
-}
-
-template <typename D> void impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->remove_CollectionLevelChanged(token));
-}
-
-template <typename D> bool impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->abi_CanCollectDiagnostics(level, &result));
-    return result;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Id() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Signature() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Signature(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Certificate() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Certificate(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::HardwareToken impl_IHardwareIdentificationStatics<D>::GetPackageSpecificToken(const Windows::Storage::Streams::IBuffer & nonce) const
-{
-    Windows::System::Profile::HardwareToken packageSpecificHardwareToken { nullptr };
-    check_hresult(WINRT_SHIM(IHardwareIdentificationStatics)->abi_GetPackageSpecificToken(get_abi(nonce), put_abi(packageSpecificHardwareToken)));
-    return packageSpecificHardwareToken;
-}
-
-template <typename D> bool impl_ISharedModeSettingsStatics<D>::IsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics)->get_IsEnabled(&value));
-    return value;
-}
-
-template <typename D> bool impl_ISharedModeSettingsStatics2<D>::ShouldAvoidLocalStorage() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics2)->get_ShouldAvoidLocalStorage(&value));
-    return value;
-}
-
 template <typename D> bool impl_IRetailInfoStatics<D>::IsDemoModeEnabled() const
 {
     bool value {};
@@ -1006,6 +870,142 @@ template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::Windows
 {
     hstring value;
     check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_WindowsEdition(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer impl_ISystemIdentificationInfo<D>::Id() const
+{
+    Windows::Storage::Streams::IBuffer value;
+    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationSource impl_ISystemIdentificationInfo<D>::Source() const
+{
+    Windows::System::Profile::SystemIdentificationSource value {};
+    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Source(&value));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForPublisher() const
+{
+    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
+    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForPublisher(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForUser(const Windows::System::User & user) const
+{
+    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
+    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::Profile::AnalyticsVersionInfo impl_IAnalyticsInfoStatics<D>::VersionInfo() const
+{
+    Windows::System::Profile::AnalyticsVersionInfo value { nullptr };
+    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_VersionInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IAnalyticsInfoStatics<D>::DeviceForm() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_DeviceForm(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamily() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamily(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamilyVersion() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamilyVersion(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool impl_IEducationSettingsStatics<D>::IsEducationEnvironment() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IEducationSettingsStatics)->get_IsEducationEnvironment(&value));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::PlatformDataCollectionLevel impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevel() const
+{
+    Windows::System::Profile::PlatformDataCollectionLevel value {};
+    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->get_CollectionLevel(&value));
+    return value;
+}
+
+template <typename D> event_token impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->add_CollectionLevelChanged(get_abi(handler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IPlatformDiagnosticsAndUsageDataSettingsStatics> impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
+{
+    return impl::make_event_revoker<D, IPlatformDiagnosticsAndUsageDataSettingsStatics>(this, &ABI::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics::remove_CollectionLevelChanged, CollectionLevelChanged(handler));
+}
+
+template <typename D> void impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->remove_CollectionLevelChanged(token));
+}
+
+template <typename D> bool impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level) const
+{
+    bool result {};
+    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->abi_CanCollectDiagnostics(level, &result));
+    return result;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Id() const
+{
+    Windows::Storage::Streams::IBuffer value;
+    check_hresult(WINRT_SHIM(IHardwareToken)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Signature() const
+{
+    Windows::Storage::Streams::IBuffer value;
+    check_hresult(WINRT_SHIM(IHardwareToken)->get_Signature(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Certificate() const
+{
+    Windows::Storage::Streams::IBuffer value;
+    check_hresult(WINRT_SHIM(IHardwareToken)->get_Certificate(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::HardwareToken impl_IHardwareIdentificationStatics<D>::GetPackageSpecificToken(const Windows::Storage::Streams::IBuffer & nonce) const
+{
+    Windows::System::Profile::HardwareToken packageSpecificHardwareToken { nullptr };
+    check_hresult(WINRT_SHIM(IHardwareIdentificationStatics)->abi_GetPackageSpecificToken(get_abi(nonce), put_abi(packageSpecificHardwareToken)));
+    return packageSpecificHardwareToken;
+}
+
+template <typename D> bool impl_ISharedModeSettingsStatics<D>::IsEnabled() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics)->get_IsEnabled(&value));
+    return value;
+}
+
+template <typename D> bool impl_ISharedModeSettingsStatics2<D>::ShouldAvoidLocalStorage() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics2)->get_ShouldAvoidLocalStorage(&value));
     return value;
 }
 

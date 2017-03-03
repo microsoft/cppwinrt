@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -10,14 +10,14 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_b62d7f11_c7b1_5bf0_a347_3366252db4ce
-#define WINRT_GENERIC_b62d7f11_c7b1_5bf0_a347_3366252db4ce
-template <> struct __declspec(uuid("b62d7f11-c7b1-5bf0-a347-3366252db4ce")) __declspec(novtable) TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> : impl_TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> {};
-#endif
-
 #ifndef WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
 #define WINRT_GENERIC_719cc2ba_3e76_5def_9f1a_38d85a145ea8
 template <> struct __declspec(uuid("719cc2ba-3e76-5def-9f1a-38d85a145ea8")) __declspec(novtable) IReference<float> : impl_IReference<float> {};
+#endif
+
+#ifndef WINRT_GENERIC_b62d7f11_c7b1_5bf0_a347_3366252db4ce
+#define WINRT_GENERIC_b62d7f11_c7b1_5bf0_a347_3366252db4ce
+template <> struct __declspec(uuid("b62d7f11-c7b1-5bf0-a347-3366252db4ce")) __declspec(novtable) TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> : impl_TypedEventHandler<Windows::UI::Input::EdgeGesture, Windows::UI::Input::EdgeGestureEventArgs> {};
 #endif
 
 

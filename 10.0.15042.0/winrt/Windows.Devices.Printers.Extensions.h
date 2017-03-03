@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -431,6 +431,92 @@ struct produce<D, Windows::Devices::Printers::Extensions::IPrintTaskConfiguratio
 
 namespace Windows::Devices::Printers::Extensions {
 
+template <typename D> void impl_IPrintTaskConfigurationSaveRequestedDeferral<D>::Complete() const
+{
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequestedDeferral)->abi_Complete());
+}
+
+template <typename D> void impl_IPrintTaskConfigurationSaveRequest<D>::Cancel() const
+{
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_Cancel());
+}
+
+template <typename D> void impl_IPrintTaskConfigurationSaveRequest<D>::Save(const Windows::Foundation::IInspectable & printerExtensionContext) const
+{
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_Save(get_abi(printerExtensionContext)));
+}
+
+template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedDeferral impl_IPrintTaskConfigurationSaveRequest<D>::GetDeferral() const
+{
+    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedDeferral deferral { nullptr };
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_GetDeferral(put_abi(deferral)));
+    return deferral;
+}
+
+template <typename D> Windows::Foundation::DateTime impl_IPrintTaskConfigurationSaveRequest<D>::Deadline() const
+{
+    Windows::Foundation::DateTime value {};
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->get_Deadline(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequest impl_IPrintTaskConfigurationSaveRequestedEventArgs<D>::Request() const
+{
+    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequest context { nullptr };
+    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequestedEventArgs)->get_Request(put_abi(context)));
+    return context;
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_IPrintTaskConfiguration<D>::PrinterExtensionContext() const
+{
+    Windows::Foundation::IInspectable context;
+    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->get_PrinterExtensionContext(put_abi(context)));
+    return context;
+}
+
+template <typename D> event_token impl_IPrintTaskConfiguration<D>::SaveRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const
+{
+    event_token eventCookie {};
+    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->add_SaveRequested(get_abi(eventHandler), &eventCookie));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<IPrintTaskConfiguration> impl_IPrintTaskConfiguration<D>::SaveRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const
+{
+    return impl::make_event_revoker<D, IPrintTaskConfiguration>(this, &ABI::Windows::Devices::Printers::Extensions::IPrintTaskConfiguration::remove_SaveRequested, SaveRequested(eventHandler));
+}
+
+template <typename D> void impl_IPrintTaskConfiguration<D>::SaveRequested(event_token eventCookie) const
+{
+    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->remove_SaveRequested(eventCookie));
+}
+
+template <typename D> hstring impl_IPrintNotificationEventDetails<D>::PrinterName() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->get_PrinterName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IPrintNotificationEventDetails<D>::EventData() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->get_EventData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IPrintNotificationEventDetails<D>::EventData(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->put_EventData(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_IPrintExtensionContextStatic<D>::FromDeviceId(hstring_view deviceId) const
+{
+    Windows::Foundation::IInspectable context;
+    check_hresult(WINRT_SHIM(IPrintExtensionContextStatic)->abi_FromDeviceId(get_abi(deviceId), put_abi(context)));
+    return context;
+}
+
 template <typename D> Windows::Devices::Printers::Extensions::Print3DWorkflowStatus impl_IPrint3DWorkflowPrintRequestedEventArgs<D>::Status() const
 {
     Windows::Devices::Printers::Extensions::Print3DWorkflowStatus value {};
@@ -518,92 +604,6 @@ template <typename D> event_revoker<IPrint3DWorkflow2> impl_IPrint3DWorkflow2<D>
 template <typename D> void impl_IPrint3DWorkflow2<D>::PrinterChanged(event_token eventCookie) const
 {
     check_hresult(WINRT_SHIM(IPrint3DWorkflow2)->remove_PrinterChanged(eventCookie));
-}
-
-template <typename D> void impl_IPrintTaskConfigurationSaveRequestedDeferral<D>::Complete() const
-{
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequestedDeferral)->abi_Complete());
-}
-
-template <typename D> void impl_IPrintTaskConfigurationSaveRequest<D>::Cancel() const
-{
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_Cancel());
-}
-
-template <typename D> void impl_IPrintTaskConfigurationSaveRequest<D>::Save(const Windows::Foundation::IInspectable & printerExtensionContext) const
-{
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_Save(get_abi(printerExtensionContext)));
-}
-
-template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedDeferral impl_IPrintTaskConfigurationSaveRequest<D>::GetDeferral() const
-{
-    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedDeferral deferral { nullptr };
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->abi_GetDeferral(put_abi(deferral)));
-    return deferral;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IPrintTaskConfigurationSaveRequest<D>::Deadline() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequest)->get_Deadline(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequest impl_IPrintTaskConfigurationSaveRequestedEventArgs<D>::Request() const
-{
-    Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequest context { nullptr };
-    check_hresult(WINRT_SHIM(IPrintTaskConfigurationSaveRequestedEventArgs)->get_Request(put_abi(context)));
-    return context;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IPrintTaskConfiguration<D>::PrinterExtensionContext() const
-{
-    Windows::Foundation::IInspectable context;
-    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->get_PrinterExtensionContext(put_abi(context)));
-    return context;
-}
-
-template <typename D> event_token impl_IPrintTaskConfiguration<D>::SaveRequested(const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->add_SaveRequested(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IPrintTaskConfiguration> impl_IPrintTaskConfiguration<D>::SaveRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IPrintTaskConfiguration>(this, &ABI::Windows::Devices::Printers::Extensions::IPrintTaskConfiguration::remove_SaveRequested, SaveRequested(eventHandler));
-}
-
-template <typename D> void impl_IPrintTaskConfiguration<D>::SaveRequested(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IPrintTaskConfiguration)->remove_SaveRequested(eventCookie));
-}
-
-template <typename D> hstring impl_IPrintNotificationEventDetails<D>::PrinterName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->get_PrinterName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPrintNotificationEventDetails<D>::EventData() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->get_EventData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrintNotificationEventDetails<D>::EventData(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrintNotificationEventDetails)->put_EventData(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IPrintExtensionContextStatic<D>::FromDeviceId(hstring_view deviceId) const
-{
-    Windows::Foundation::IInspectable context;
-    check_hresult(WINRT_SHIM(IPrintExtensionContextStatic)->abi_FromDeviceId(get_abi(deviceId), put_abi(context)));
-    return context;
 }
 
 inline Windows::Foundation::IInspectable PrintExtensionContext::FromDeviceId(hstring_view deviceId)

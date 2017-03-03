@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -23,29 +23,14 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
-template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-#define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
-template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
-#endif
-
-#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
-#endif
-
 #ifndef WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 #define WINRT_GENERIC_bb78502a_f79d_54fa_92c9_90c5039fdf7e
 template <> struct __declspec(uuid("bb78502a-f79d-54fa-92c9-90c5039fdf7e")) __declspec(novtable) IMapView<hstring, Windows::Foundation::IInspectable> : impl_IMapView<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+#define WINRT_GENERIC_1b0d3570_0877_5ec2_8a2c_3b9539506aca
+template <> struct __declspec(uuid("1b0d3570-0877-5ec2-8a2c-3b9539506aca")) __declspec(novtable) IMap<hstring, Windows::Foundation::IInspectable> : impl_IMap<hstring, Windows::Foundation::IInspectable> {};
 #endif
 
 
@@ -63,9 +48,79 @@ template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
+#ifndef WINRT_GENERIC_619192f2_4f9d_5629_ab01_b18512503d73
+#define WINRT_GENERIC_619192f2_4f9d_5629_ab01_b18512503d73
+template <> struct __declspec(uuid("619192f2-4f9d-5629-ab01-b18512503d73")) __declspec(novtable) IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_3a9d75c2_a41b_5708_8c1b_8e7c26e857d0
+#define WINRT_GENERIC_3a9d75c2_a41b_5708_8c1b_8e7c26e857d0
+template <> struct __declspec(uuid("3a9d75c2-a41b-5708-8c1b-8e7c26e857d0")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_3ec75af0_1679_53ff_bb0c_376b8c441980
+#define WINRT_GENERIC_3ec75af0_1679_53ff_bb0c_376b8c441980
+template <> struct __declspec(uuid("3ec75af0-1679-53ff-bb0c-376b8c441980")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_e3634a54_05ed_5e39_9d8a_03857f0ba0e7
+#define WINRT_GENERIC_e3634a54_05ed_5e39_9d8a_03857f0ba0e7
+template <> struct __declspec(uuid("e3634a54-05ed-5e39-9d8a-03857f0ba0e7")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_a18b47d7_6326_5fc1_8a40_88af91bb0589
+#define WINRT_GENERIC_a18b47d7_6326_5fc1_8a40_88af91bb0589
+template <> struct __declspec(uuid("a18b47d7-6326-5fc1-8a40-88af91bb0589")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_fd7dabea_0014_5a30_9a59_bd4126a2ffb7
+#define WINRT_GENERIC_fd7dabea_0014_5a30_9a59_bd4126a2ffb7
+template <> struct __declspec(uuid("fd7dabea-0014-5a30-9a59-bd4126a2ffb7")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_166ea60b_ab70_580c_bb70_2f79ee214cea
+#define WINRT_GENERIC_166ea60b_ab70_580c_bb70_2f79ee214cea
+template <> struct __declspec(uuid("166ea60b-ab70-580c-bb70-2f79ee214cea")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_c4574b81_a192_5810_b0d9_cc99230fdcdc
+#define WINRT_GENERIC_c4574b81_a192_5810_b0d9_cc99230fdcdc
+template <> struct __declspec(uuid("c4574b81-a192-5810-b0d9-cc99230fdcdc")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> {};
+#endif
+
+#ifndef WINRT_GENERIC_7553fcf8_a4c2_5cc1_9a3c_f0b36b756068
+#define WINRT_GENERIC_7553fcf8_a4c2_5cc1_9a3c_f0b36b756068
+template <> struct __declspec(uuid("7553fcf8-a4c2-5cc1-9a3c-f0b36b756068")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
 #ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
 #define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
 template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
+#define WINRT_GENERIC_09335560_6c6b_5a26_9348_97b781132b20
+template <> struct __declspec(uuid("09335560-6c6b-5a26-9348-97b781132b20")) __declspec(novtable) IKeyValuePair<hstring, Windows::Foundation::IInspectable> : impl_IKeyValuePair<hstring, Windows::Foundation::IInspectable> {};
+#endif
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_e7617fc9_2cc7_5bd1_bc5a_f47260834ed8
@@ -223,61 +278,6 @@ template <> struct __declspec(uuid("efc52f2d-ad6b-59af-a0f0-2253d434414f")) __de
 template <> struct __declspec(uuid("e5239641-ba1f-5d89-aae1-c7b499a47b0c")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapContextRequestedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapContextRequestedEventArgs> {};
 #endif
 
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_619192f2_4f9d_5629_ab01_b18512503d73
-#define WINRT_GENERIC_619192f2_4f9d_5629_ab01_b18512503d73
-template <> struct __declspec(uuid("619192f2-4f9d-5629-ab01-b18512503d73")) __declspec(novtable) IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IVectorView<Windows::Services::Maps::LocalSearch::LocalLocation> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_3a9d75c2_a41b_5708_8c1b_8e7c26e857d0
-#define WINRT_GENERIC_3a9d75c2_a41b_5708_8c1b_8e7c26e857d0
-template <> struct __declspec(uuid("3a9d75c2-a41b-5708-8c1b-8e7c26e857d0")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkClickEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_3ec75af0_1679_53ff_bb0c_376b8c441980
-#define WINRT_GENERIC_3ec75af0_1679_53ff_bb0c_376b8c441980
-template <> struct __declspec(uuid("3ec75af0-1679-53ff-bb0c-376b8c441980")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureClickEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_e3634a54_05ed_5e39_9d8a_03857f0ba0e7
-#define WINRT_GENERIC_e3634a54_05ed_5e39_9d8a_03857f0ba0e7
-template <> struct __declspec(uuid("e3634a54-05ed-5e39-9d8a-03857f0ba0e7")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkRightTappedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_a18b47d7_6326_5fc1_8a40_88af91bb0589
-#define WINRT_GENERIC_a18b47d7_6326_5fc1_8a40_88af91bb0589
-template <> struct __declspec(uuid("a18b47d7-6326-5fc1-8a40-88af91bb0589")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeatureRightTappedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_fd7dabea_0014_5a30_9a59_bd4126a2ffb7
-#define WINRT_GENERIC_fd7dabea_0014_5a30_9a59_bd4126a2ffb7
-template <> struct __declspec(uuid("fd7dabea-0014-5a30-9a59-bd4126a2ffb7")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerEnteredEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_166ea60b_ab70_580c_bb70_2f79ee214cea
-#define WINRT_GENERIC_166ea60b_ab70_580c_bb70_2f79ee214cea
-template <> struct __declspec(uuid("166ea60b-ab70-580c-bb70-2f79ee214cea")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerEnteredEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_c4574b81_a192_5810_b0d9_cc99230fdcdc
-#define WINRT_GENERIC_c4574b81_a192_5810_b0d9_cc99230fdcdc
-template <> struct __declspec(uuid("c4574b81-a192-5810-b0d9-cc99230fdcdc")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlBusinessLandmarkPointerExitedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_7553fcf8_a4c2_5cc1_9a3c_f0b36b756068
-#define WINRT_GENERIC_7553fcf8_a4c2_5cc1_9a3c_f0b36b756068
-template <> struct __declspec(uuid("7553fcf8-a4c2-5cc1-9a3c-f0b36b756068")) __declspec(novtable) TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> : impl_TypedEventHandler<Windows::UI::Xaml::Controls::Maps::MapControl, Windows::UI::Xaml::Controls::Maps::MapControlTransitFeaturePointerExitedEventArgs> {};
-#endif
-
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 #define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __declspec(novtable) AsyncOperationCompletedHandler<bool> : impl_AsyncOperationCompletedHandler<bool> {};
@@ -287,6 +287,21 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
+#define WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
+template <> struct __declspec(uuid("81dd786b-c7ba-5aa7-82d4-f7c0377302e0")) __declspec(novtable) IVector<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IVector<Windows::Services::Maps::LocalSearch::LocalLocation> {};
+#endif
+
+#ifndef WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
+#define WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
+template <> struct __declspec(uuid("a23c2e87-a8e7-568f-96a1-69e98f86b9d3")) __declspec(novtable) IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> {};
+#endif
+
+#ifndef WINRT_GENERIC_5474eefb_60f4_58ac_89e2_6e83f79fa76c
+#define WINRT_GENERIC_5474eefb_60f4_58ac_89e2_6e83f79fa76c
+template <> struct __declspec(uuid("5474eefb-60f4-58ac-89e2-6e83f79fa76c")) __declspec(novtable) IIterable<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IIterable<Windows::Services::Maps::LocalSearch::LocalLocation> {};
+#endif
 
 #ifndef WINRT_GENERIC_7f3bcfac_925d_5d3d_a7e7_e456b9f88e1d
 #define WINRT_GENERIC_7f3bcfac_925d_5d3d_a7e7_e456b9f88e1d
@@ -396,21 +411,6 @@ template <> struct __declspec(uuid("6d8a73f7-abd7-56c4-99a7-06c1fa77dcd2")) __de
 #ifndef WINRT_GENERIC_de7aa182_8e17_5565_9a9d_94a4ff25364a
 #define WINRT_GENERIC_de7aa182_8e17_5565_9a9d_94a4ff25364a
 template <> struct __declspec(uuid("de7aa182-8e17-5565-9a9d-94a4ff25364a")) __declspec(novtable) IVectorView<Windows::UI::Xaml::Controls::Maps::MapTileSource> : impl_IVectorView<Windows::UI::Xaml::Controls::Maps::MapTileSource> {};
-#endif
-
-#ifndef WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
-#define WINRT_GENERIC_81dd786b_c7ba_5aa7_82d4_f7c0377302e0
-template <> struct __declspec(uuid("81dd786b-c7ba-5aa7-82d4-f7c0377302e0")) __declspec(novtable) IVector<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IVector<Windows::Services::Maps::LocalSearch::LocalLocation> {};
-#endif
-
-#ifndef WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
-#define WINRT_GENERIC_a23c2e87_a8e7_568f_96a1_69e98f86b9d3
-template <> struct __declspec(uuid("a23c2e87-a8e7-568f-96a1-69e98f86b9d3")) __declspec(novtable) IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IIterator<Windows::Services::Maps::LocalSearch::LocalLocation> {};
-#endif
-
-#ifndef WINRT_GENERIC_5474eefb_60f4_58ac_89e2_6e83f79fa76c
-#define WINRT_GENERIC_5474eefb_60f4_58ac_89e2_6e83f79fa76c
-template <> struct __declspec(uuid("5474eefb-60f4-58ac-89e2-6e83f79fa76c")) __declspec(novtable) IIterable<Windows::Services::Maps::LocalSearch::LocalLocation> : impl_IIterable<Windows::Services::Maps::LocalSearch::LocalLocation> {};
 #endif
 
 #ifndef WINRT_GENERIC_fe2f3d47_5d47_5499_8374_430c7cda0204

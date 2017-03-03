@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,15 +6,15 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Foundation.3.h"
+#include "internal/Windows.ApplicationModel.Background.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.Networking.3.h"
-#include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Networking.Connectivity.3.h"
 #include "internal/Windows.Security.Cryptography.Certificates.3.h"
 #include "internal/Windows.Security.Credentials.3.h"
 #include "internal/Windows.Web.3.h"
-#include "internal/Windows.ApplicationModel.Background.3.h"
 #include "internal/Windows.Networking.Sockets.3.h"
 #include "Windows.Networking.h"
 #include "Windows.ApplicationModel.Background.h"
@@ -3029,6 +3029,124 @@ struct produce<D, Windows::Networking::Sockets::IWebSocketServerCustomValidation
 
 namespace Windows::Networking::Sockets {
 
+template <typename D> hstring impl_IControlChannelTrigger<D>::ControlChannelTriggerId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_ControlChannelTriggerId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t impl_IControlChannelTrigger<D>::ServerKeepAliveIntervalInMinutes() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_ServerKeepAliveIntervalInMinutes(&value));
+    return value;
+}
+
+template <typename D> void impl_IControlChannelTrigger<D>::ServerKeepAliveIntervalInMinutes(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->put_ServerKeepAliveIntervalInMinutes(value));
+}
+
+template <typename D> uint32_t impl_IControlChannelTrigger<D>::CurrentKeepAliveIntervalInMinutes() const
+{
+    uint32_t value {};
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_CurrentKeepAliveIntervalInMinutes(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable impl_IControlChannelTrigger<D>::TransportObject() const
+{
+    Windows::Foundation::IInspectable value;
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_TransportObject(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Background::IBackgroundTrigger impl_IControlChannelTrigger<D>::KeepAliveTrigger() const
+{
+    Windows::ApplicationModel::Background::IBackgroundTrigger trigger;
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_KeepAliveTrigger(put_abi(trigger)));
+    return trigger;
+}
+
+template <typename D> Windows::ApplicationModel::Background::IBackgroundTrigger impl_IControlChannelTrigger<D>::PushNotificationTrigger() const
+{
+    Windows::ApplicationModel::Background::IBackgroundTrigger trigger;
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_PushNotificationTrigger(put_abi(trigger)));
+    return trigger;
+}
+
+template <typename D> void impl_IControlChannelTrigger<D>::UsingTransport(const Windows::Foundation::IInspectable & transport) const
+{
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_UsingTransport(get_abi(transport)));
+}
+
+template <typename D> Windows::Networking::Sockets::ControlChannelTriggerStatus impl_IControlChannelTrigger<D>::WaitForPushEnabled() const
+{
+    Windows::Networking::Sockets::ControlChannelTriggerStatus channelTriggerStatus {};
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_WaitForPushEnabled(&channelTriggerStatus));
+    return channelTriggerStatus;
+}
+
+template <typename D> void impl_IControlChannelTrigger<D>::DecreaseNetworkKeepAliveInterval() const
+{
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_DecreaseNetworkKeepAliveInterval());
+}
+
+template <typename D> void impl_IControlChannelTrigger<D>::FlushTransport() const
+{
+    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_FlushTransport());
+}
+
+template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerFactory<D>::CreateControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes) const
+{
+    Windows::Networking::Sockets::ControlChannelTrigger notificationChannel { nullptr };
+    check_hresult(WINRT_SHIM(IControlChannelTriggerFactory)->abi_CreateControlChannelTrigger(get_abi(channelId), serverKeepAliveIntervalInMinutes, put_abi(notificationChannel)));
+    return notificationChannel;
+}
+
+template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerFactory<D>::CreateControlChannelTriggerEx(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType) const
+{
+    Windows::Networking::Sockets::ControlChannelTrigger notificationChannel { nullptr };
+    check_hresult(WINRT_SHIM(IControlChannelTriggerFactory)->abi_CreateControlChannelTriggerEx(get_abi(channelId), serverKeepAliveIntervalInMinutes, resourceRequestType, put_abi(notificationChannel)));
+    return notificationChannel;
+}
+
+template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerEventDetails<D>::ControlChannelTrigger() const
+{
+    Windows::Networking::Sockets::ControlChannelTrigger value { nullptr };
+    check_hresult(WINRT_SHIM(IControlChannelTriggerEventDetails)->get_ControlChannelTrigger(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Networking::Sockets::ControlChannelTriggerResetReason impl_IControlChannelTriggerResetEventDetails<D>::ResetReason() const
+{
+    Windows::Networking::Sockets::ControlChannelTriggerResetReason value {};
+    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_ResetReason(&value));
+    return value;
+}
+
+template <typename D> bool impl_IControlChannelTriggerResetEventDetails<D>::HardwareSlotReset() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_HardwareSlotReset(&value));
+    return value;
+}
+
+template <typename D> bool impl_IControlChannelTriggerResetEventDetails<D>::SoftwareSlotReset() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_SoftwareSlotReset(&value));
+    return value;
+}
+
+template <typename D> bool impl_IControlChannelTrigger2<D>::IsWakeFromLowPowerSupported() const
+{
+    bool value {};
+    check_hresult(WINRT_SHIM(IControlChannelTrigger2)->get_IsWakeFromLowPowerSupported(&value));
+    return value;
+}
+
 template <typename D> GUID impl_ISocketActivityInformation<D>::TaskId() const
 {
     GUID value {};
@@ -4188,124 +4306,6 @@ template <typename D> Windows::Web::WebErrorStatus impl_IWebSocketErrorStatics<D
     Windows::Web::WebErrorStatus status {};
     check_hresult(WINRT_SHIM(IWebSocketErrorStatics)->abi_GetStatus(hresult, &status));
     return status;
-}
-
-template <typename D> hstring impl_IControlChannelTrigger<D>::ControlChannelTriggerId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_ControlChannelTriggerId(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IControlChannelTrigger<D>::ServerKeepAliveIntervalInMinutes() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_ServerKeepAliveIntervalInMinutes(&value));
-    return value;
-}
-
-template <typename D> void impl_IControlChannelTrigger<D>::ServerKeepAliveIntervalInMinutes(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->put_ServerKeepAliveIntervalInMinutes(value));
-}
-
-template <typename D> uint32_t impl_IControlChannelTrigger<D>::CurrentKeepAliveIntervalInMinutes() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_CurrentKeepAliveIntervalInMinutes(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IControlChannelTrigger<D>::TransportObject() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_TransportObject(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Background::IBackgroundTrigger impl_IControlChannelTrigger<D>::KeepAliveTrigger() const
-{
-    Windows::ApplicationModel::Background::IBackgroundTrigger trigger;
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_KeepAliveTrigger(put_abi(trigger)));
-    return trigger;
-}
-
-template <typename D> Windows::ApplicationModel::Background::IBackgroundTrigger impl_IControlChannelTrigger<D>::PushNotificationTrigger() const
-{
-    Windows::ApplicationModel::Background::IBackgroundTrigger trigger;
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->get_PushNotificationTrigger(put_abi(trigger)));
-    return trigger;
-}
-
-template <typename D> void impl_IControlChannelTrigger<D>::UsingTransport(const Windows::Foundation::IInspectable & transport) const
-{
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_UsingTransport(get_abi(transport)));
-}
-
-template <typename D> Windows::Networking::Sockets::ControlChannelTriggerStatus impl_IControlChannelTrigger<D>::WaitForPushEnabled() const
-{
-    Windows::Networking::Sockets::ControlChannelTriggerStatus channelTriggerStatus {};
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_WaitForPushEnabled(&channelTriggerStatus));
-    return channelTriggerStatus;
-}
-
-template <typename D> void impl_IControlChannelTrigger<D>::DecreaseNetworkKeepAliveInterval() const
-{
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_DecreaseNetworkKeepAliveInterval());
-}
-
-template <typename D> void impl_IControlChannelTrigger<D>::FlushTransport() const
-{
-    check_hresult(WINRT_SHIM(IControlChannelTrigger)->abi_FlushTransport());
-}
-
-template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerFactory<D>::CreateControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes) const
-{
-    Windows::Networking::Sockets::ControlChannelTrigger notificationChannel { nullptr };
-    check_hresult(WINRT_SHIM(IControlChannelTriggerFactory)->abi_CreateControlChannelTrigger(get_abi(channelId), serverKeepAliveIntervalInMinutes, put_abi(notificationChannel)));
-    return notificationChannel;
-}
-
-template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerFactory<D>::CreateControlChannelTriggerEx(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes, Windows::Networking::Sockets::ControlChannelTriggerResourceType resourceRequestType) const
-{
-    Windows::Networking::Sockets::ControlChannelTrigger notificationChannel { nullptr };
-    check_hresult(WINRT_SHIM(IControlChannelTriggerFactory)->abi_CreateControlChannelTriggerEx(get_abi(channelId), serverKeepAliveIntervalInMinutes, resourceRequestType, put_abi(notificationChannel)));
-    return notificationChannel;
-}
-
-template <typename D> Windows::Networking::Sockets::ControlChannelTrigger impl_IControlChannelTriggerEventDetails<D>::ControlChannelTrigger() const
-{
-    Windows::Networking::Sockets::ControlChannelTrigger value { nullptr };
-    check_hresult(WINRT_SHIM(IControlChannelTriggerEventDetails)->get_ControlChannelTrigger(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Networking::Sockets::ControlChannelTriggerResetReason impl_IControlChannelTriggerResetEventDetails<D>::ResetReason() const
-{
-    Windows::Networking::Sockets::ControlChannelTriggerResetReason value {};
-    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_ResetReason(&value));
-    return value;
-}
-
-template <typename D> bool impl_IControlChannelTriggerResetEventDetails<D>::HardwareSlotReset() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_HardwareSlotReset(&value));
-    return value;
-}
-
-template <typename D> bool impl_IControlChannelTriggerResetEventDetails<D>::SoftwareSlotReset() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IControlChannelTriggerResetEventDetails)->get_SoftwareSlotReset(&value));
-    return value;
-}
-
-template <typename D> bool impl_IControlChannelTrigger2<D>::IsWakeFromLowPowerSupported() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IControlChannelTrigger2)->get_IsWakeFromLowPowerSupported(&value));
-    return value;
 }
 
 inline ControlChannelTrigger::ControlChannelTrigger(hstring_view channelId, uint32_t serverKeepAliveIntervalInMinutes) :

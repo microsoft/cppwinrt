@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -8,21 +8,6 @@
 WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_8d720cdf_3934_5d3f_9a55_40e8063b086a
-#define WINRT_GENERIC_8d720cdf_3934_5d3f_9a55_40e8063b086a
-template <> struct __declspec(uuid("8d720cdf-3934-5d3f-9a55-40e8063b086a")) __declspec(novtable) IVectorView<int32_t> : impl_IVectorView<int32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
-template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
-#endif
-
-#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
-template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
-#endif
 
 #ifndef WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 #define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
@@ -57,6 +42,61 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
 #define WINRT_GENERIC_ac7f26f2_feb7_5b2a_8ac4_345bc62caede
 template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) __declspec(novtable) IMapView<hstring, hstring> : impl_IMapView<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_6ea176ea_99ea_5c79_876a_f4c437b83df6
+#define WINRT_GENERIC_6ea176ea_99ea_5c79_876a_f4c437b83df6
+template <> struct __declspec(uuid("6ea176ea-99ea-5c79-876a-f4c437b83df6")) __declspec(novtable) IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> : impl_IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_abf9b459_48c3_5eac_9749_4c6db4d507e6
+#define WINRT_GENERIC_abf9b459_48c3_5eac_9749_4c6db4d507e6
+template <> struct __declspec(uuid("abf9b459-48c3-5eac-9749-4c6db4d507e6")) __declspec(novtable) IAsyncOperation<Windows::Devices::Sms::ISmsMessage> : impl_IAsyncOperation<Windows::Devices::Sms::ISmsMessage> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_d3acc5b1_6f85_507e_b40a_6950749b426f
+#define WINRT_GENERIC_d3acc5b1_6f85_507e_b40a_6950749b426f
+template <> struct __declspec(uuid("d3acc5b1-6f85-507e-b40a-6950749b426f")) __declspec(novtable) IVectorView<Windows::Devices::Sms::ISmsMessage> : impl_IVectorView<Windows::Devices::Sms::ISmsMessage> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_ab710de1_fcbb_5bd6_9f2f_285fa9fb44e8
+#define WINRT_GENERIC_ab710de1_fcbb_5bd6_9f2f_285fa9fb44e8
+template <> struct __declspec(uuid("ab710de1-fcbb-5bd6-9f2f-285fa9fb44e8")) __declspec(novtable) IAsyncOperation<Windows::Devices::Sms::SmsDevice> : impl_IAsyncOperation<Windows::Devices::Sms::SmsDevice> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_8d720cdf_3934_5d3f_9a55_40e8063b086a
+#define WINRT_GENERIC_8d720cdf_3934_5d3f_9a55_40e8063b086a
+template <> struct __declspec(uuid("8d720cdf-3934-5d3f-9a55-40e8063b086a")) __declspec(novtable) IVectorView<int32_t> : impl_IVectorView<int32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+#define WINRT_GENERIC_f6d1f700_49c2_52ae_8154_826f9908773c
+template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) __declspec(novtable) IMap<hstring, hstring> : impl_IMap<hstring, hstring> {};
+#endif
+
+#ifndef WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+#define WINRT_GENERIC_60310303_49c5_52e6_abc6_a9b36eccc716
+template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) __declspec(novtable) IKeyValuePair<hstring, hstring> : impl_IKeyValuePair<hstring, hstring> {};
 #endif
 
 
@@ -114,119 +154,9 @@ template <> struct __declspec(uuid("33f985c7-dcfa-531f-9cce-ee5e6c26b1e6")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_6ea176ea_99ea_5c79_876a_f4c437b83df6
-#define WINRT_GENERIC_6ea176ea_99ea_5c79_876a_f4c437b83df6
-template <> struct __declspec(uuid("6ea176ea-99ea-5c79-876a-f4c437b83df6")) __declspec(novtable) IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> : impl_IVectorView<Windows::Devices::Sms::ISmsBinaryMessage> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_abf9b459_48c3_5eac_9749_4c6db4d507e6
-#define WINRT_GENERIC_abf9b459_48c3_5eac_9749_4c6db4d507e6
-template <> struct __declspec(uuid("abf9b459-48c3-5eac-9749-4c6db4d507e6")) __declspec(novtable) IAsyncOperation<Windows::Devices::Sms::ISmsMessage> : impl_IAsyncOperation<Windows::Devices::Sms::ISmsMessage> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_d3acc5b1_6f85_507e_b40a_6950749b426f
-#define WINRT_GENERIC_d3acc5b1_6f85_507e_b40a_6950749b426f
-template <> struct __declspec(uuid("d3acc5b1-6f85-507e-b40a-6950749b426f")) __declspec(novtable) IVectorView<Windows::Devices::Sms::ISmsMessage> : impl_IVectorView<Windows::Devices::Sms::ISmsMessage> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_ab710de1_fcbb_5bd6_9f2f_285fa9fb44e8
-#define WINRT_GENERIC_ab710de1_fcbb_5bd6_9f2f_285fa9fb44e8
-template <> struct __declspec(uuid("ab710de1-fcbb-5bd6-9f2f-285fa9fb44e8")) __declspec(novtable) IAsyncOperation<Windows::Devices::Sms::SmsDevice> : impl_IAsyncOperation<Windows::Devices::Sms::SmsDevice> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_bfea7f78_50c2_5f1d_a6ea_9e978d2699ff
-#define WINRT_GENERIC_bfea7f78_50c2_5f1d_a6ea_9e978d2699ff
-template <> struct __declspec(uuid("bfea7f78-50c2-5f1d-a6ea-9e978d2699ff")) __declspec(novtable) IIterator<int32_t> : impl_IIterator<int32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_81a643fb_f51c_5565_83c4_f96425777b66
-#define WINRT_GENERIC_81a643fb_f51c_5565_83c4_f96425777b66
-template <> struct __declspec(uuid("81a643fb-f51c-5565-83c4-f96425777b66")) __declspec(novtable) IIterable<int32_t> : impl_IIterable<int32_t> {};
-#endif
-
 #ifndef WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 #define WINRT_GENERIC_8c304ebb_6615_50a4_8829_879ecd443236
 template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) __declspec(novtable) IIterator<hstring> : impl_IIterator<hstring> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_c7d5c6fe_9206_5eb1_abc1_c1bc21804eeb
-#define WINRT_GENERIC_c7d5c6fe_9206_5eb1_abc1_c1bc21804eeb
-template <> struct __declspec(uuid("c7d5c6fe-9206-5eb1-abc1-c1bc21804eeb")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::Sms::SmsSendMessageResult> : impl_AsyncOperationCompletedHandler<Windows::Devices::Sms::SmsSendMessageResult> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_6448ddea_c1cd_5143_a422_5fe4f008cc92
-#define WINRT_GENERIC_6448ddea_c1cd_5143_a422_5fe4f008cc92
-template <> struct __declspec(uuid("6448ddea-c1cd-5143-a422-5fe4f008cc92")) __declspec(novtable) IIterator<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IIterator<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
-#endif
-
-#ifndef WINRT_GENERIC_12276b75_173e_514b_98f0_8a7927a9206c
-#define WINRT_GENERIC_12276b75_173e_514b_98f0_8a7927a9206c
-template <> struct __declspec(uuid("12276b75-173e-514b-98f0-8a7927a9206c")) __declspec(novtable) IIterable<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IIterable<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
-#endif
-
-#ifndef WINRT_GENERIC_4063e791_da2d_5e4c_9113_5b6ba0a7c595
-#define WINRT_GENERIC_4063e791_da2d_5e4c_9113_5b6ba0a7c595
-template <> struct __declspec(uuid("4063e791-da2d-5e4c-9113-5b6ba0a7c595")) __declspec(novtable) IVectorView<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IVectorView<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
-#endif
-
-#ifndef WINRT_GENERIC_fec7cae6_97f5_5a19_b32a_d8f0ba276f34
-#define WINRT_GENERIC_fec7cae6_97f5_5a19_b32a_d8f0ba276f34
-template <> struct __declspec(uuid("fec7cae6-97f5-5a19-b32a-d8f0ba276f34")) __declspec(novtable) IIterator<Windows::Devices::Sms::SmsFilterRule> : impl_IIterator<Windows::Devices::Sms::SmsFilterRule> {};
-#endif
-
-#ifndef WINRT_GENERIC_03ed8267_9c90_5260_8bc0_6c3e3306c964
-#define WINRT_GENERIC_03ed8267_9c90_5260_8bc0_6c3e3306c964
-template <> struct __declspec(uuid("03ed8267-9c90-5260-8bc0-6c3e3306c964")) __declspec(novtable) IIterable<Windows::Devices::Sms::SmsFilterRule> : impl_IIterable<Windows::Devices::Sms::SmsFilterRule> {};
-#endif
-
-#ifndef WINRT_GENERIC_f3ed4299_de36_5d82_993f_35fc677d8b72
-#define WINRT_GENERIC_f3ed4299_de36_5d82_993f_35fc677d8b72
-template <> struct __declspec(uuid("f3ed4299-de36-5d82-993f-35fc677d8b72")) __declspec(novtable) IVectorView<Windows::Devices::Sms::SmsFilterRule> : impl_IVectorView<Windows::Devices::Sms::SmsFilterRule> {};
-#endif
-
-#ifndef WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
-#define WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
-template <> struct __declspec(uuid("d14f6ec4-d2e2-5b57-ba0d-cb0bfac3ef13")) __declspec(novtable) IVector<Windows::Devices::Sms::SmsMessageRegistration> : impl_IVector<Windows::Devices::Sms::SmsMessageRegistration> {};
-#endif
-
-#ifndef WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
-#define WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
-template <> struct __declspec(uuid("ee1a0675-f3c9-5c12-93e0-f2b01bdce611")) __declspec(novtable) IIterator<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterator<Windows::Devices::Sms::SmsMessageRegistration> {};
-#endif
-
-#ifndef WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
-#define WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
-template <> struct __declspec(uuid("f836fa0a-770d-5e8f-8664-01c43f959eea")) __declspec(novtable) IIterable<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterable<Windows::Devices::Sms::SmsMessageRegistration> {};
 #endif
 
 #ifndef WINRT_GENERIC_d9904edc_5391_51f8_9bd8_db81e5763766
@@ -289,9 +219,74 @@ template <> struct __declspec(uuid("44aa5484-43d0-5893-a4ee-7db00113ae60")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
-#define WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
-template <> struct __declspec(uuid("e9bdaaf0-cbf6-5c72-be90-29cbf3a1319b")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> {};
+#ifndef WINRT_GENERIC_bfea7f78_50c2_5f1d_a6ea_9e978d2699ff
+#define WINRT_GENERIC_bfea7f78_50c2_5f1d_a6ea_9e978d2699ff
+template <> struct __declspec(uuid("bfea7f78-50c2-5f1d-a6ea-9e978d2699ff")) __declspec(novtable) IIterator<int32_t> : impl_IIterator<int32_t> {};
+#endif
+
+#ifndef WINRT_GENERIC_81a643fb_f51c_5565_83c4_f96425777b66
+#define WINRT_GENERIC_81a643fb_f51c_5565_83c4_f96425777b66
+template <> struct __declspec(uuid("81a643fb-f51c-5565-83c4-f96425777b66")) __declspec(novtable) IIterable<int32_t> : impl_IIterable<int32_t> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_c7d5c6fe_9206_5eb1_abc1_c1bc21804eeb
+#define WINRT_GENERIC_c7d5c6fe_9206_5eb1_abc1_c1bc21804eeb
+template <> struct __declspec(uuid("c7d5c6fe-9206-5eb1-abc1-c1bc21804eeb")) __declspec(novtable) AsyncOperationCompletedHandler<Windows::Devices::Sms::SmsSendMessageResult> : impl_AsyncOperationCompletedHandler<Windows::Devices::Sms::SmsSendMessageResult> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_6448ddea_c1cd_5143_a422_5fe4f008cc92
+#define WINRT_GENERIC_6448ddea_c1cd_5143_a422_5fe4f008cc92
+template <> struct __declspec(uuid("6448ddea-c1cd-5143-a422-5fe4f008cc92")) __declspec(novtable) IIterator<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IIterator<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
+#endif
+
+#ifndef WINRT_GENERIC_12276b75_173e_514b_98f0_8a7927a9206c
+#define WINRT_GENERIC_12276b75_173e_514b_98f0_8a7927a9206c
+template <> struct __declspec(uuid("12276b75-173e-514b-98f0-8a7927a9206c")) __declspec(novtable) IIterable<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IIterable<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
+#endif
+
+#ifndef WINRT_GENERIC_4063e791_da2d_5e4c_9113_5b6ba0a7c595
+#define WINRT_GENERIC_4063e791_da2d_5e4c_9113_5b6ba0a7c595
+template <> struct __declspec(uuid("4063e791-da2d-5e4c-9113-5b6ba0a7c595")) __declspec(novtable) IVectorView<winrt::Windows::Devices::Sms::SmsBroadcastType> : impl_IVectorView<winrt::Windows::Devices::Sms::SmsBroadcastType> {};
+#endif
+
+#ifndef WINRT_GENERIC_fec7cae6_97f5_5a19_b32a_d8f0ba276f34
+#define WINRT_GENERIC_fec7cae6_97f5_5a19_b32a_d8f0ba276f34
+template <> struct __declspec(uuid("fec7cae6-97f5-5a19-b32a-d8f0ba276f34")) __declspec(novtable) IIterator<Windows::Devices::Sms::SmsFilterRule> : impl_IIterator<Windows::Devices::Sms::SmsFilterRule> {};
+#endif
+
+#ifndef WINRT_GENERIC_03ed8267_9c90_5260_8bc0_6c3e3306c964
+#define WINRT_GENERIC_03ed8267_9c90_5260_8bc0_6c3e3306c964
+template <> struct __declspec(uuid("03ed8267-9c90-5260-8bc0-6c3e3306c964")) __declspec(novtable) IIterable<Windows::Devices::Sms::SmsFilterRule> : impl_IIterable<Windows::Devices::Sms::SmsFilterRule> {};
+#endif
+
+#ifndef WINRT_GENERIC_f3ed4299_de36_5d82_993f_35fc677d8b72
+#define WINRT_GENERIC_f3ed4299_de36_5d82_993f_35fc677d8b72
+template <> struct __declspec(uuid("f3ed4299-de36-5d82-993f-35fc677d8b72")) __declspec(novtable) IVectorView<Windows::Devices::Sms::SmsFilterRule> : impl_IVectorView<Windows::Devices::Sms::SmsFilterRule> {};
+#endif
+
+#ifndef WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
+#define WINRT_GENERIC_d14f6ec4_d2e2_5b57_ba0d_cb0bfac3ef13
+template <> struct __declspec(uuid("d14f6ec4-d2e2-5b57-ba0d-cb0bfac3ef13")) __declspec(novtable) IVector<Windows::Devices::Sms::SmsMessageRegistration> : impl_IVector<Windows::Devices::Sms::SmsMessageRegistration> {};
+#endif
+
+#ifndef WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
+#define WINRT_GENERIC_ee1a0675_f3c9_5c12_93e0_f2b01bdce611
+template <> struct __declspec(uuid("ee1a0675-f3c9-5c12-93e0-f2b01bdce611")) __declspec(novtable) IIterator<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterator<Windows::Devices::Sms::SmsMessageRegistration> {};
+#endif
+
+#ifndef WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
+#define WINRT_GENERIC_f836fa0a_770d_5e8f_8664_01c43f959eea
+template <> struct __declspec(uuid("f836fa0a-770d-5e8f-8664-01c43f959eea")) __declspec(novtable) IIterable<Windows::Devices::Sms::SmsMessageRegistration> : impl_IIterable<Windows::Devices::Sms::SmsMessageRegistration> {};
 #endif
 
 
@@ -308,6 +303,11 @@ template <> struct __declspec(uuid("12f85589-415d-5b5d-b0d0-fda3b0295adc")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
+#define WINRT_GENERIC_e9bdaaf0_cbf6_5c72_be90_29cbf3a1319b
+template <> struct __declspec(uuid("e9bdaaf0-cbf6-5c72-be90-29cbf3a1319b")) __declspec(novtable) IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> : impl_IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> {};
+#endif
 
 #ifndef WINRT_GENERIC_05eb86f1_7140_5517_b88d_cbaebe57e6b1
 #define WINRT_GENERIC_05eb86f1_7140_5517_b88d_cbaebe57e6b1

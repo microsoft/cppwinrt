@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -29,19 +29,9 @@ template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
-template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
-#endif
-
 #ifndef WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
 #define WINRT_GENERIC_513ef3af_e784_5325_a91e_97c2b8111cf3
 template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) __declspec(novtable) IReference<uint32_t> : impl_IReference<uint32_t> {};
-#endif
-
-#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
-template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
 #endif
 
 
@@ -64,14 +54,24 @@ template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) __de
 
 namespace ABI::Windows::Foundation {
 
-#ifndef WINRT_GENERIC_63798415_4d1f_5fc7_8729_79a282bceca4
-#define WINRT_GENERIC_63798415_4d1f_5fc7_8729_79a282bceca4
-template <> struct __declspec(uuid("63798415-4d1f-5fc7-8729-79a282bceca4")) __declspec(novtable) IAsyncOperation<Windows::ApplicationModel::Appointments::AppointmentStore> : impl_IAsyncOperation<Windows::ApplicationModel::Appointments::AppointmentStore> {};
+#ifndef WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+#define WINRT_GENERIC_3e1fe603_f897_5263_b328_0806426b8a79
+template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) __declspec(novtable) IAsyncOperation<hstring> : impl_IAsyncOperation<hstring> {};
 #endif
 
 #ifndef WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
 #define WINRT_GENERIC_604d0c4c_91de_5c2a_935f_362f13eaf800
 template <> struct __declspec(uuid("604d0c4c-91de-5c2a-935f-362f13eaf800")) __declspec(novtable) IReference<Windows::Foundation::TimeSpan> : impl_IReference<Windows::Foundation::TimeSpan> {};
+#endif
+
+#ifndef WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+#define WINRT_GENERIC_5541d8a7_497c_5aa4_86fc_7713adbf2a2c
+template <> struct __declspec(uuid("5541d8a7-497c-5aa4-86fc-7713adbf2a2c")) __declspec(novtable) IReference<Windows::Foundation::DateTime> : impl_IReference<Windows::Foundation::DateTime> {};
+#endif
+
+#ifndef WINRT_GENERIC_63798415_4d1f_5fc7_8729_79a282bceca4
+#define WINRT_GENERIC_63798415_4d1f_5fc7_8729_79a282bceca4
+template <> struct __declspec(uuid("63798415-4d1f-5fc7-8729-79a282bceca4")) __declspec(novtable) IAsyncOperation<Windows::ApplicationModel::Appointments::AppointmentStore> : impl_IAsyncOperation<Windows::ApplicationModel::Appointments::AppointmentStore> {};
 #endif
 
 

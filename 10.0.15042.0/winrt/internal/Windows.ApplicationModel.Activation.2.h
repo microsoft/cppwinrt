@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,6 +6,26 @@
 #include "Windows.ApplicationModel.Activation.1.h"
 
 WINRT_EXPORT namespace winrt {
+
+namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_bb8b8418_65d1_544b_b083_6d172f568c73
+#define WINRT_GENERIC_bb8b8418_65d1_544b_b083_6d172f568c73
+template <> struct __declspec(uuid("bb8b8418-65d1-544b-b083-6d172f568c73")) __declspec(novtable) IIterable<Windows::Storage::IStorageItem> : impl_IIterable<Windows::Storage::IStorageItem> {};
+#endif
+
+#ifndef WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
+#define WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
+template <> struct __declspec(uuid("80646519-5e2a-595d-a8cd-2a24b4067f1b")) __declspec(novtable) IVectorView<Windows::Storage::StorageFile> : impl_IVectorView<Windows::Storage::StorageFile> {};
+#endif
+
+#ifndef WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
+#define WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
+template <> struct __declspec(uuid("fcbc8b8b-6103-5b4e-ba00-4bc2cedb6a35")) __declspec(novtable) IVector<Windows::Storage::StorageFile> : impl_IVector<Windows::Storage::StorageFile> {};
+#endif
+
+
+}
 
 namespace ABI::Windows::Foundation {
 
@@ -22,16 +42,6 @@ namespace ABI::Windows::Foundation::Collections {
 #ifndef WINRT_GENERIC_85575a41_06cb_58d0_b98a_7c8f06e6e9d7
 #define WINRT_GENERIC_85575a41_06cb_58d0_b98a_7c8f06e6e9d7
 template <> struct __declspec(uuid("85575a41-06cb-58d0-b98a-7c8f06e6e9d7")) __declspec(novtable) IVectorView<Windows::Storage::IStorageItem> : impl_IVectorView<Windows::Storage::IStorageItem> {};
-#endif
-
-#ifndef WINRT_GENERIC_bb8b8418_65d1_544b_b083_6d172f568c73
-#define WINRT_GENERIC_bb8b8418_65d1_544b_b083_6d172f568c73
-template <> struct __declspec(uuid("bb8b8418-65d1-544b-b083-6d172f568c73")) __declspec(novtable) IIterable<Windows::Storage::IStorageItem> : impl_IIterable<Windows::Storage::IStorageItem> {};
-#endif
-
-#ifndef WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
-#define WINRT_GENERIC_80646519_5e2a_595d_a8cd_2a24b4067f1b
-template <> struct __declspec(uuid("80646519-5e2a-595d-a8cd-2a24b4067f1b")) __declspec(novtable) IVectorView<Windows::Storage::StorageFile> : impl_IVectorView<Windows::Storage::StorageFile> {};
 #endif
 
 #ifndef WINRT_GENERIC_9ac00304_83ea_5688_87b6_ae38aab65d0b
@@ -62,11 +72,6 @@ template <> struct __declspec(uuid("2b23baa9-1d54-5440-bd32-86ed70f15c9e")) __de
 #ifndef WINRT_GENERIC_802508e2_9c2c_5b91_89a8_39bcf7223344
 #define WINRT_GENERIC_802508e2_9c2c_5b91_89a8_39bcf7223344
 template <> struct __declspec(uuid("802508e2-9c2c-5b91-89a8-39bcf7223344")) __declspec(novtable) IVector<Windows::Storage::IStorageItem> : impl_IVector<Windows::Storage::IStorageItem> {};
-#endif
-
-#ifndef WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
-#define WINRT_GENERIC_fcbc8b8b_6103_5b4e_ba00_4bc2cedb6a35
-template <> struct __declspec(uuid("fcbc8b8b-6103-5b4e-ba00-4bc2cedb6a35")) __declspec(novtable) IVector<Windows::Storage::StorageFile> : impl_IVector<Windows::Storage::StorageFile> {};
 #endif
 
 #ifndef WINRT_GENERIC_05b487c2_3830_5d3c_98da_25fa11542dbd

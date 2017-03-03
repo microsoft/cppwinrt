@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -2553,6 +2553,149 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferencesStatics> : pr
 
 namespace Windows::UI::ViewManagement {
 
+template <typename D> Windows::UI::ViewManagement::StatusBar impl_IStatusBarStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::ViewManagement::StatusBar value { nullptr };
+    check_hresult(WINRT_SHIM(IStatusBarStatics)->abi_GetForCurrentView(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::ShowAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue;
+    check_hresult(WINRT_SHIM(IStatusBar)->abi_ShowAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::HideAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue;
+    check_hresult(WINRT_SHIM(IStatusBar)->abi_HideAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> double impl_IStatusBar<D>::BackgroundOpacity() const
+{
+    double value {};
+    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundOpacity(&value));
+    return value;
+}
+
+template <typename D> void impl_IStatusBar<D>::BackgroundOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundOpacity(value));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::ForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value;
+    check_hresult(WINRT_SHIM(IStatusBar)->get_ForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IStatusBar<D>::ForegroundColor(const optional<Windows::UI::Color> & value) const
+{
+    check_hresult(WINRT_SHIM(IStatusBar)->put_ForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::BackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value;
+    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IStatusBar<D>::BackgroundColor(const optional<Windows::UI::Color> & value) const
+{
+    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::StatusBarProgressIndicator impl_IStatusBar<D>::ProgressIndicator() const
+{
+    Windows::UI::ViewManagement::StatusBarProgressIndicator value { nullptr };
+    check_hresult(WINRT_SHIM(IStatusBar)->get_ProgressIndicator(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Rect impl_IStatusBar<D>::OccludedRect() const
+{
+    Windows::Foundation::Rect value {};
+    check_hresult(WINRT_SHIM(IStatusBar)->get_OccludedRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token impl_IStatusBar<D>::Showing(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IStatusBar)->add_Showing(get_abi(eventHandler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Showing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
+{
+    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Showing, Showing(eventHandler));
+}
+
+template <typename D> void impl_IStatusBar<D>::Showing(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IStatusBar)->remove_Showing(token));
+}
+
+template <typename D> event_token impl_IStatusBar<D>::Hiding(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
+{
+    event_token token {};
+    check_hresult(WINRT_SHIM(IStatusBar)->add_Hiding(get_abi(eventHandler), &token));
+    return token;
+}
+
+template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Hiding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
+{
+    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Hiding, Hiding(eventHandler));
+}
+
+template <typename D> void impl_IStatusBar<D>::Hiding(event_token token) const
+{
+    check_hresult(WINRT_SHIM(IStatusBar)->remove_Hiding(token));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::ShowAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue;
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_ShowAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::HideAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue;
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_HideAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> hstring impl_IStatusBarProgressIndicator<D>::Text() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IStatusBarProgressIndicator<D>::Text(hstring_view value) const
+{
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_Text(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<double> impl_IStatusBarProgressIndicator<D>::ProgressValue() const
+{
+    Windows::Foundation::IReference<double> value;
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_ProgressValue(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_IStatusBarProgressIndicator<D>::ProgressValue(const optional<double> & value) const
+{
+    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_ProgressValue(get_abi(value)));
+}
+
 template <typename D> Windows::UI::ViewManagement::ViewSizePreference impl_IViewModePreferences<D>::ViewSizePreference() const
 {
     Windows::UI::ViewManagement::ViewSizePreference value {};
@@ -3535,149 +3678,6 @@ template <typename D> bool impl_IApplicationViewScalingStatics<D>::TrySetDisable
     bool success {};
     check_hresult(WINRT_SHIM(IApplicationViewScalingStatics)->abi_TrySetDisableLayoutScaling(disableLayoutScaling, &success));
     return success;
-}
-
-template <typename D> Windows::UI::ViewManagement::StatusBar impl_IStatusBarStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::ViewManagement::StatusBar value { nullptr };
-    check_hresult(WINRT_SHIM(IStatusBarStatics)->abi_GetForCurrentView(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::ShowAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBar)->abi_ShowAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::HideAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBar)->abi_HideAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> double impl_IStatusBar<D>::BackgroundOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::BackgroundOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundOpacity(value));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::ForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IStatusBar)->get_ForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::ForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_ForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::BackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::BackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::UI::ViewManagement::StatusBarProgressIndicator impl_IStatusBar<D>::ProgressIndicator() const
-{
-    Windows::UI::ViewManagement::StatusBarProgressIndicator value { nullptr };
-    check_hresult(WINRT_SHIM(IStatusBar)->get_ProgressIndicator(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Rect impl_IStatusBar<D>::OccludedRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IStatusBar)->get_OccludedRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IStatusBar<D>::Showing(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IStatusBar)->add_Showing(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Showing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Showing, Showing(eventHandler));
-}
-
-template <typename D> void impl_IStatusBar<D>::Showing(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->remove_Showing(token));
-}
-
-template <typename D> event_token impl_IStatusBar<D>::Hiding(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IStatusBar)->add_Hiding(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Hiding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Hiding, Hiding(eventHandler));
-}
-
-template <typename D> void impl_IStatusBar<D>::Hiding(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->remove_Hiding(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::ShowAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_ShowAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::HideAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_HideAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> hstring impl_IStatusBarProgressIndicator<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBarProgressIndicator<D>::Text(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_Text(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<double> impl_IStatusBarProgressIndicator<D>::ProgressValue() const
-{
-    Windows::Foundation::IReference<double> value;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_ProgressValue(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBarProgressIndicator<D>::ProgressValue(const optional<double> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_ProgressValue(get_abi(value)));
 }
 
 inline AccessibilitySettings::AccessibilitySettings() :

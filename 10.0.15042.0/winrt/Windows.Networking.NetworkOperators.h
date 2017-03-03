@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,9 +6,9 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
-#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Devices.Sms.3.h"
+#include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Networking.Connectivity.3.h"
 #include "internal/Windows.Storage.Streams.3.h"
 #include "internal/Windows.Data.Xml.Dom.3.h"
@@ -3438,6 +3438,60 @@ struct produce<D, Windows::Networking::NetworkOperators::IUssdSessionStatics> : 
 
 namespace Windows::Networking::NetworkOperators {
 
+template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IFdnAccessManagerStatics<D>::RequestUnlockAsync(hstring_view contactListId) const
+{
+    Windows::Foundation::IAsyncOperation<bool> returnValue;
+    check_hresult(WINRT_SHIM(IFdnAccessManagerStatics)->abi_RequestUnlockAsync(get_abi(contactListId), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Networking::NetworkOperators::NetworkOperatorEventMessageType impl_INetworkOperatorNotificationEventDetails<D>::NotificationType() const
+{
+    Windows::Networking::NetworkOperators::NetworkOperatorEventMessageType value {};
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_NotificationType(&value));
+    return value;
+}
+
+template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::NetworkAccountId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_NetworkAccountId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint8_t impl_INetworkOperatorNotificationEventDetails<D>::EncodingType() const
+{
+    uint8_t value {};
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_EncodingType(&value));
+    return value;
+}
+
+template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::Message() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_Message(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::RuleId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_RuleId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sms::ISmsMessage impl_INetworkOperatorNotificationEventDetails<D>::SmsMessage() const
+{
+    Windows::Devices::Sms::ISmsMessage value;
+    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_SmsMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> void impl_INetworkOperatorTetheringEntitlementCheck<D>::AuthorizeTethering(bool allow, hstring_view entitlementFailureReason) const
+{
+    check_hresult(WINRT_SHIM(INetworkOperatorTetheringEntitlementCheck)->abi_AuthorizeTethering(allow, get_abi(entitlementFailureReason)));
+}
+
 template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IMobileBroadbandAccountStatics<D>::AvailableNetworkAccountIds() const
 {
     Windows::Foundation::Collections::IVectorView<hstring> ppAccountIds;
@@ -4876,60 +4930,6 @@ template <typename D> Windows::Networking::NetworkOperators::UssdSession impl_IU
     Windows::Networking::NetworkOperators::UssdSession ussdSession { nullptr };
     check_hresult(WINRT_SHIM(IUssdSessionStatics)->abi_CreateFromNetworkInterfaceId(get_abi(networkInterfaceId), put_abi(ussdSession)));
     return ussdSession;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IFdnAccessManagerStatics<D>::RequestUnlockAsync(hstring_view contactListId) const
-{
-    Windows::Foundation::IAsyncOperation<bool> returnValue;
-    check_hresult(WINRT_SHIM(IFdnAccessManagerStatics)->abi_RequestUnlockAsync(get_abi(contactListId), put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Networking::NetworkOperators::NetworkOperatorEventMessageType impl_INetworkOperatorNotificationEventDetails<D>::NotificationType() const
-{
-    Windows::Networking::NetworkOperators::NetworkOperatorEventMessageType value {};
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_NotificationType(&value));
-    return value;
-}
-
-template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::NetworkAccountId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_NetworkAccountId(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint8_t impl_INetworkOperatorNotificationEventDetails<D>::EncodingType() const
-{
-    uint8_t value {};
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_EncodingType(&value));
-    return value;
-}
-
-template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::Message() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_Message(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INetworkOperatorNotificationEventDetails<D>::RuleId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_RuleId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sms::ISmsMessage impl_INetworkOperatorNotificationEventDetails<D>::SmsMessage() const
-{
-    Windows::Devices::Sms::ISmsMessage value;
-    check_hresult(WINRT_SHIM(INetworkOperatorNotificationEventDetails)->get_SmsMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INetworkOperatorTetheringEntitlementCheck<D>::AuthorizeTethering(bool allow, hstring_view entitlementFailureReason) const
-{
-    check_hresult(WINRT_SHIM(INetworkOperatorTetheringEntitlementCheck)->abi_AuthorizeTethering(allow, get_abi(entitlementFailureReason)));
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> FdnAccessManager::RequestUnlockAsync(hstring_view contactListId)

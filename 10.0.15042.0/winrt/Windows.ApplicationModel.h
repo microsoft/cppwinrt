@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -1970,6 +1970,79 @@ struct produce<D, Windows::ApplicationModel::ISuspendingOperation> : produce_bas
 
 namespace Windows::ApplicationModel {
 
+template <typename D> void impl_ICameraApplicationManagerStatics<D>::ShowInstalledApplicationsUI() const
+{
+    check_hresult(WINRT_SHIM(ICameraApplicationManagerStatics)->abi_ShowInstalledApplicationsUI());
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForCurrentAppAsync() const
+{
+    Windows::Foundation::IAsyncAction asyncAction;
+    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForCurrentAppAsync(put_abi(asyncAction)));
+    return asyncAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForCurrentAppAsync(hstring_view parameterGroupId) const
+{
+    Windows::Foundation::IAsyncAction asyncAction;
+    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForCurrentAppWithParametersAsync(get_abi(parameterGroupId), put_abi(asyncAction)));
+    return asyncAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId) const
+{
+    Windows::Foundation::IAsyncAction asyncAction;
+    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForAppAsync(get_abi(fullTrustPackageRelativeAppId), put_abi(asyncAction)));
+    return asyncAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId, hstring_view parameterGroupId) const
+{
+    Windows::Foundation::IAsyncAction asyncAction;
+    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForAppWithParametersAsync(get_abi(fullTrustPackageRelativeAppId), get_abi(parameterGroupId), put_abi(asyncAction)));
+    return asyncAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::StartupTaskState> impl_IStartupTask<D>::RequestEnableAsync() const
+{
+    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::StartupTaskState> operation;
+    check_hresult(WINRT_SHIM(IStartupTask)->abi_RequestEnableAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void impl_IStartupTask<D>::Disable() const
+{
+    check_hresult(WINRT_SHIM(IStartupTask)->abi_Disable());
+}
+
+template <typename D> Windows::ApplicationModel::StartupTaskState impl_IStartupTask<D>::State() const
+{
+    Windows::ApplicationModel::StartupTaskState value {};
+    check_hresult(WINRT_SHIM(IStartupTask)->get_State(&value));
+    return value;
+}
+
+template <typename D> hstring impl_IStartupTask<D>::TaskId() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IStartupTask)->get_TaskId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> impl_IStartupTaskStatics<D>::GetForCurrentPackageAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> operation;
+    check_hresult(WINRT_SHIM(IStartupTaskStatics)->abi_GetForCurrentPackageAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> impl_IStartupTaskStatics<D>::GetAsync(hstring_view taskId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> operation;
+    check_hresult(WINRT_SHIM(IStartupTaskStatics)->abi_GetAsync(get_abi(taskId), put_abi(operation)));
+    return operation;
+}
+
 template <typename D> hstring impl_IAppDisplayInfo<D>::DisplayName() const
 {
     hstring value;
@@ -2780,79 +2853,6 @@ template <typename D> Windows::Foundation::Deferral impl_IEnteredBackgroundEvent
     Windows::Foundation::Deferral value { nullptr };
     check_hresult(WINRT_SHIM(IEnteredBackgroundEventArgs)->abi_GetDeferral(put_abi(value)));
     return value;
-}
-
-template <typename D> void impl_ICameraApplicationManagerStatics<D>::ShowInstalledApplicationsUI() const
-{
-    check_hresult(WINRT_SHIM(ICameraApplicationManagerStatics)->abi_ShowInstalledApplicationsUI());
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForCurrentAppAsync() const
-{
-    Windows::Foundation::IAsyncAction asyncAction;
-    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForCurrentAppAsync(put_abi(asyncAction)));
-    return asyncAction;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForCurrentAppAsync(hstring_view parameterGroupId) const
-{
-    Windows::Foundation::IAsyncAction asyncAction;
-    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForCurrentAppWithParametersAsync(get_abi(parameterGroupId), put_abi(asyncAction)));
-    return asyncAction;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId) const
-{
-    Windows::Foundation::IAsyncAction asyncAction;
-    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForAppAsync(get_abi(fullTrustPackageRelativeAppId), put_abi(asyncAction)));
-    return asyncAction;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IFullTrustProcessLauncherStatics<D>::LaunchFullTrustProcessForAppAsync(hstring_view fullTrustPackageRelativeAppId, hstring_view parameterGroupId) const
-{
-    Windows::Foundation::IAsyncAction asyncAction;
-    check_hresult(WINRT_SHIM(IFullTrustProcessLauncherStatics)->abi_LaunchFullTrustProcessForAppWithParametersAsync(get_abi(fullTrustPackageRelativeAppId), get_abi(parameterGroupId), put_abi(asyncAction)));
-    return asyncAction;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::StartupTaskState> impl_IStartupTask<D>::RequestEnableAsync() const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::StartupTaskState> operation;
-    check_hresult(WINRT_SHIM(IStartupTask)->abi_RequestEnableAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> void impl_IStartupTask<D>::Disable() const
-{
-    check_hresult(WINRT_SHIM(IStartupTask)->abi_Disable());
-}
-
-template <typename D> Windows::ApplicationModel::StartupTaskState impl_IStartupTask<D>::State() const
-{
-    Windows::ApplicationModel::StartupTaskState value {};
-    check_hresult(WINRT_SHIM(IStartupTask)->get_State(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IStartupTask<D>::TaskId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IStartupTask)->get_TaskId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> impl_IStartupTaskStatics<D>::GetForCurrentPackageAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::StartupTask>> operation;
-    check_hresult(WINRT_SHIM(IStartupTaskStatics)->abi_GetForCurrentPackageAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> impl_IStartupTaskStatics<D>::GetAsync(hstring_view taskId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::StartupTask> operation;
-    check_hresult(WINRT_SHIM(IStartupTaskStatics)->abi_GetAsync(get_abi(taskId), put_abi(operation)));
-    return operation;
 }
 
 inline void CameraApplicationManager::ShowInstalledApplicationsUI()

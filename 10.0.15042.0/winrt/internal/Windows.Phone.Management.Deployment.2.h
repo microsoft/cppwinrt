@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -19,14 +19,39 @@ template <> struct __declspec(uuid("cdb5efb3-5788-509d-9be1-71ccb8a3362a")) __de
 
 namespace ABI::Windows::Foundation::Collections {
 
-#ifndef WINRT_GENERIC_b0d63b78_78ad_5e31_b6d8_e32a0e16c447
-#define WINRT_GENERIC_b0d63b78_78ad_5e31_b6d8_e32a0e16c447
-template <> struct __declspec(uuid("b0d63b78-78ad-5e31-b6d8-e32a0e16c447")) __declspec(novtable) IIterable<Windows::Foundation::Uri> : impl_IIterable<Windows::Foundation::Uri> {};
+#ifndef WINRT_GENERIC_303665fe_c4b1_5efe_956c_47bc585892c0
+#define WINRT_GENERIC_303665fe_c4b1_5efe_956c_47bc585892c0
+template <> struct __declspec(uuid("303665fe-c4b1-5efe-956c-47bc585892c0")) __declspec(novtable) IVectorView<Windows::Phone::Management::Deployment::Enterprise> : impl_IVectorView<Windows::Phone::Management::Deployment::Enterprise> {};
 #endif
+
+
+}
+
+namespace ABI::Windows::Foundation {
+
+#ifndef WINRT_GENERIC_eb8eb40a_3f5c_5a3f_89d1_4a1b6e1a892e
+#define WINRT_GENERIC_eb8eb40a_3f5c_5a3f_89d1_4a1b6e1a892e
+template <> struct __declspec(uuid("eb8eb40a-3f5c-5a3f-89d1-4a1b6e1a892e")) __declspec(novtable) IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> : impl_IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> {};
+#endif
+
+#ifndef WINRT_GENERIC_2b09fc25_8741_5113_8089_89df9fbb2639
+#define WINRT_GENERIC_2b09fc25_8741_5113_8089_89df9fbb2639
+template <> struct __declspec(uuid("2b09fc25-8741-5113-8089-89df9fbb2639")) __declspec(novtable) IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> : impl_IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> {};
+#endif
+
+
+}
+
+namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_69ad6aa7_0c49_5f27_a5eb_ef4d59467b6d
 #define WINRT_GENERIC_69ad6aa7_0c49_5f27_a5eb_ef4d59467b6d
 template <> struct __declspec(uuid("69ad6aa7-0c49-5f27-a5eb-ef4d59467b6d")) __declspec(novtable) IIterable<Windows::ApplicationModel::Package> : impl_IIterable<Windows::ApplicationModel::Package> {};
+#endif
+
+#ifndef WINRT_GENERIC_b0d63b78_78ad_5e31_b6d8_e32a0e16c447
+#define WINRT_GENERIC_b0d63b78_78ad_5e31_b6d8_e32a0e16c447
+template <> struct __declspec(uuid("b0d63b78-78ad-5e31-b6d8-e32a0e16c447")) __declspec(novtable) IIterable<Windows::Foundation::Uri> : impl_IIterable<Windows::Foundation::Uri> {};
 #endif
 
 #ifndef WINRT_GENERIC_d1bb509e_6989_5c69_b1ff_d1702fe8aca3
@@ -49,25 +74,10 @@ template <> struct __declspec(uuid("4b8385bd-a2cd-5ff1-bf74-7ea580423e50")) __de
 template <> struct __declspec(uuid("0d82bd8d-fe62-5d67-a7b9-7886dd75bc4e")) __declspec(novtable) IVector<Windows::Foundation::Uri> : impl_IVector<Windows::Foundation::Uri> {};
 #endif
 
-#ifndef WINRT_GENERIC_303665fe_c4b1_5efe_956c_47bc585892c0
-#define WINRT_GENERIC_303665fe_c4b1_5efe_956c_47bc585892c0
-template <> struct __declspec(uuid("303665fe-c4b1-5efe-956c-47bc585892c0")) __declspec(novtable) IVectorView<Windows::Phone::Management::Deployment::Enterprise> : impl_IVectorView<Windows::Phone::Management::Deployment::Enterprise> {};
-#endif
-
 
 }
 
 namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_eb8eb40a_3f5c_5a3f_89d1_4a1b6e1a892e
-#define WINRT_GENERIC_eb8eb40a_3f5c_5a3f_89d1_4a1b6e1a892e
-template <> struct __declspec(uuid("eb8eb40a-3f5c-5a3f-89d1-4a1b6e1a892e")) __declspec(novtable) IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> : impl_IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> {};
-#endif
-
-#ifndef WINRT_GENERIC_2b09fc25_8741_5113_8089_89df9fbb2639
-#define WINRT_GENERIC_2b09fc25_8741_5113_8089_89df9fbb2639
-template <> struct __declspec(uuid("2b09fc25-8741-5113-8089-89df9fbb2639")) __declspec(novtable) IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> : impl_IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> {};
-#endif
 
 #ifndef WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
 #define WINRT_GENERIC_c1d3d1a2_ae17_5a5f_b5a2_bdcc8844889a
@@ -78,16 +88,6 @@ template <> struct __declspec(uuid("c1d3d1a2-ae17-5a5f-b5a2-bdcc8844889a")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
-
-#ifndef WINRT_GENERIC_1c157d0f_5efe_5cec_bbd6_0c6ce9af07a5
-#define WINRT_GENERIC_1c157d0f_5efe_5cec_bbd6_0c6ce9af07a5
-template <> struct __declspec(uuid("1c157d0f-5efe-5cec-bbd6-0c6ce9af07a5")) __declspec(novtable) IIterator<Windows::Foundation::Uri> : impl_IIterator<Windows::Foundation::Uri> {};
-#endif
-
-#ifndef WINRT_GENERIC_0217f069_025c_5ee6_a87f_e782e3b623ae
-#define WINRT_GENERIC_0217f069_025c_5ee6_a87f_e782e3b623ae
-template <> struct __declspec(uuid("0217f069-025c-5ee6-a87f-e782e3b623ae")) __declspec(novtable) IIterator<Windows::ApplicationModel::Package> : impl_IIterator<Windows::ApplicationModel::Package> {};
-#endif
 
 #ifndef WINRT_GENERIC_9b59f83c_1878_5613_8f5d_04ffa635960d
 #define WINRT_GENERIC_9b59f83c_1878_5613_8f5d_04ffa635960d
@@ -128,6 +128,16 @@ template <> struct __declspec(uuid("a4957016-544c-5f79-b163-c695b592e043")) __de
 }
 
 namespace ABI::Windows::Foundation::Collections {
+
+#ifndef WINRT_GENERIC_0217f069_025c_5ee6_a87f_e782e3b623ae
+#define WINRT_GENERIC_0217f069_025c_5ee6_a87f_e782e3b623ae
+template <> struct __declspec(uuid("0217f069-025c-5ee6-a87f-e782e3b623ae")) __declspec(novtable) IIterator<Windows::ApplicationModel::Package> : impl_IIterator<Windows::ApplicationModel::Package> {};
+#endif
+
+#ifndef WINRT_GENERIC_1c157d0f_5efe_5cec_bbd6_0c6ce9af07a5
+#define WINRT_GENERIC_1c157d0f_5efe_5cec_bbd6_0c6ce9af07a5
+template <> struct __declspec(uuid("1c157d0f-5efe-5cec-bbd6-0c6ce9af07a5")) __declspec(novtable) IIterator<Windows::Foundation::Uri> : impl_IIterator<Windows::Foundation::Uri> {};
+#endif
 
 #ifndef WINRT_GENERIC_e87c7f91_269c_5f90_9f56_3b42bbf585dc
 #define WINRT_GENERIC_e87c7f91_269c_5f90_9f56_3b42bbf585dc

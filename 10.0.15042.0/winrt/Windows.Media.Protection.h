@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,9 +6,9 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
 #include "internal/Windows.Media.Playback.3.h"
-#include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Media.Protection.3.h"
 #include "Windows.Media.h"
 #include "Windows.Foundation.h"
@@ -564,6 +564,13 @@ struct produce<D, Windows::Media::Protection::IServiceRequestedEventArgs2> : pro
 
 namespace Windows::Media::Protection {
 
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> impl_IComponentRenewalStatics<D>::RenewSystemComponentsAsync(const Windows::Media::Protection::RevocationAndRenewalInformation & information) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> operation;
+    check_hresult(WINRT_SHIM(IComponentRenewalStatics)->abi_RenewSystemComponentsAsync(get_abi(information), put_abi(operation)));
+    return operation;
+}
+
 template <typename D> event_token impl_IMediaProtectionManager<D>::ServiceRequested(const Windows::Media::Protection::ServiceRequestedEventHandler & handler) const
 {
     event_token cookie {};
@@ -775,13 +782,6 @@ template <typename D> event_revoker<IHdcpSession> impl_IHdcpSession<D>::Protecti
 template <typename D> void impl_IHdcpSession<D>::ProtectionChanged(event_token token) const
 {
     check_hresult(WINRT_SHIM(IHdcpSession)->remove_ProtectionChanged(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> impl_IComponentRenewalStatics<D>::RenewSystemComponentsAsync(const Windows::Media::Protection::RevocationAndRenewalInformation & information) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> operation;
-    check_hresult(WINRT_SHIM(IComponentRenewalStatics)->abi_RenewSystemComponentsAsync(get_abi(information), put_abi(operation)));
-    return operation;
 }
 
 inline Windows::Foundation::IAsyncOperationWithProgress<winrt::Windows::Media::Protection::RenewalStatus, uint32_t> ComponentRenewal::RenewSystemComponentsAsync(const Windows::Media::Protection::RevocationAndRenewalInformation & information)

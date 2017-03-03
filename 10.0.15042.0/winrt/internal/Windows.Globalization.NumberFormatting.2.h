@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -13,21 +13,6 @@ namespace ABI::Windows::Foundation::Collections {
 #define WINRT_GENERIC_e2fcc7c1_3bfc_5a0b_b2b0_72e769d1cb7e
 template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) __declspec(novtable) IIterable<hstring> : impl_IIterable<hstring> {};
 #endif
-
-
-}
-
-namespace ABI::Windows::Foundation {
-
-#ifndef WINRT_GENERIC_6755e376_53bb_568b_a11d_17239868309e
-#define WINRT_GENERIC_6755e376_53bb_568b_a11d_17239868309e
-template <> struct __declspec(uuid("6755e376-53bb-568b-a11d-17239868309e")) __declspec(novtable) IReference<uint64_t> : impl_IReference<uint64_t> {};
-#endif
-
-
-}
-
-namespace ABI::Windows::Foundation::Collections {
 
 #ifndef WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
 #define WINRT_GENERIC_2f13c006_a03a_5f69_b090_75a43e33423e
@@ -47,6 +32,11 @@ namespace ABI::Windows::Foundation {
 #ifndef WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 #define WINRT_GENERIC_2f2d6c29_5473_5f3e_92e7_96572bb990e2
 template <> struct __declspec(uuid("2f2d6c29-5473-5f3e-92e7-96572bb990e2")) __declspec(novtable) IReference<double> : impl_IReference<double> {};
+#endif
+
+#ifndef WINRT_GENERIC_6755e376_53bb_568b_a11d_17239868309e
+#define WINRT_GENERIC_6755e376_53bb_568b_a11d_17239868309e
+template <> struct __declspec(uuid("6755e376-53bb-568b-a11d-17239868309e")) __declspec(novtable) IReference<uint64_t> : impl_IReference<uint64_t> {};
 #endif
 
 #ifndef WINRT_GENERIC_4dda9e24_e69f_5c6a_a0a6_93427365af2a

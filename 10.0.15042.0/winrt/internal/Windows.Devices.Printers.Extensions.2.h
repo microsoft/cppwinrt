@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -9,6 +9,11 @@ WINRT_EXPORT namespace winrt {
 
 namespace ABI::Windows::Foundation {
 
+#ifndef WINRT_GENERIC_0363f57a_b7a2_5e20_a156_253423e7ee40
+#define WINRT_GENERIC_0363f57a_b7a2_5e20_a156_253423e7ee40
+template <> struct __declspec(uuid("0363f57a-b7a2-5e20-a156-253423e7ee40")) __declspec(novtable) TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> : impl_TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> {};
+#endif
+
 #ifndef WINRT_GENERIC_5f4c6603_5512_59aa_8d96_b1389d8b5796
 #define WINRT_GENERIC_5f4c6603_5512_59aa_8d96_b1389d8b5796
 template <> struct __declspec(uuid("5f4c6603-5512-59aa-8d96-b1389d8b5796")) __declspec(novtable) TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrintRequestedEventArgs> : impl_TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrintRequestedEventArgs> {};
@@ -17,11 +22,6 @@ template <> struct __declspec(uuid("5f4c6603-5512-59aa-8d96-b1389d8b5796")) __de
 #ifndef WINRT_GENERIC_b4b5ddc2_1a74_5905_9fc5_ddaae9a3ab93
 #define WINRT_GENERIC_b4b5ddc2_1a74_5905_9fc5_ddaae9a3ab93
 template <> struct __declspec(uuid("b4b5ddc2-1a74-5905-9fc5-ddaae9a3ab93")) __declspec(novtable) TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrinterChangedEventArgs> : impl_TypedEventHandler<Windows::Devices::Printers::Extensions::Print3DWorkflow, Windows::Devices::Printers::Extensions::Print3DWorkflowPrinterChangedEventArgs> {};
-#endif
-
-#ifndef WINRT_GENERIC_0363f57a_b7a2_5e20_a156_253423e7ee40
-#define WINRT_GENERIC_0363f57a_b7a2_5e20_a156_253423e7ee40
-template <> struct __declspec(uuid("0363f57a-b7a2-5e20-a156-253423e7ee40")) __declspec(novtable) TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> : impl_TypedEventHandler<Windows::Devices::Printers::Extensions::PrintTaskConfiguration, Windows::Devices::Printers::Extensions::PrintTaskConfigurationSaveRequestedEventArgs> {};
 #endif
 
 

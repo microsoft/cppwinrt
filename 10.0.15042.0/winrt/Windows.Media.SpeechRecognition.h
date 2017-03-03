@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -6,9 +6,9 @@
 #include "base.h"
 WINRT_WARNING_PUSH
 
+#include "internal/Windows.Storage.3.h"
 #include "internal/Windows.Foundation.3.h"
 #include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Storage.3.h"
 #include "internal/Windows.Globalization.3.h"
 #include "internal/Windows.Media.SpeechRecognition.3.h"
 #include "Windows.Media.h"
@@ -1378,6 +1378,41 @@ struct produce<D, Windows::Media::SpeechRecognition::IVoiceCommandSet> : produce
 
 namespace Windows::Media::SpeechRecognition {
 
+template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandManager<D>::InstallCommandSetsFromStorageFileAsync(const Windows::Storage::StorageFile & file) const
+{
+    Windows::Foundation::IAsyncAction installAction;
+    check_hresult(WINRT_SHIM(IVoiceCommandManager)->abi_InstallCommandSetsFromStorageFileAsync(get_abi(file), put_abi(installAction)));
+    return installAction;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> impl_IVoiceCommandManager<D>::InstalledCommandSets() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> voiceCommandSets;
+    check_hresult(WINRT_SHIM(IVoiceCommandManager)->get_InstalledCommandSets(put_abi(voiceCommandSets)));
+    return voiceCommandSets;
+}
+
+template <typename D> hstring impl_IVoiceCommandSet<D>::Language() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IVoiceCommandSet)->get_Language(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring impl_IVoiceCommandSet<D>::Name() const
+{
+    hstring value;
+    check_hresult(WINRT_SHIM(IVoiceCommandSet)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandSet<D>::SetPhraseListAsync(hstring_view phraseListName, iterable<hstring> phraseList) const
+{
+    Windows::Foundation::IAsyncAction updateAction;
+    check_hresult(WINRT_SHIM(IVoiceCommandSet)->abi_SetPhraseListAsync(get_abi(phraseListName), get_abi(phraseList), put_abi(updateAction)));
+    return updateAction;
+}
+
 template <typename D> Windows::Media::SpeechRecognition::SpeechRecognitionResultStatus impl_ISpeechRecognitionCompilationResult<D>::Status() const
 {
     Windows::Media::SpeechRecognition::SpeechRecognitionResultStatus value {};
@@ -1934,41 +1969,6 @@ template <typename D> Windows::Media::SpeechRecognition::SpeechRecognitionResult
     Windows::Media::SpeechRecognition::SpeechRecognitionResult value { nullptr };
     check_hresult(WINRT_SHIM(ISpeechContinuousRecognitionResultGeneratedEventArgs)->get_Result(put_abi(value)));
     return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandManager<D>::InstallCommandSetsFromStorageFileAsync(const Windows::Storage::StorageFile & file) const
-{
-    Windows::Foundation::IAsyncAction installAction;
-    check_hresult(WINRT_SHIM(IVoiceCommandManager)->abi_InstallCommandSetsFromStorageFileAsync(get_abi(file), put_abi(installAction)));
-    return installAction;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> impl_IVoiceCommandManager<D>::InstalledCommandSets() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Media::SpeechRecognition::VoiceCommandSet> voiceCommandSets;
-    check_hresult(WINRT_SHIM(IVoiceCommandManager)->get_InstalledCommandSets(put_abi(voiceCommandSets)));
-    return voiceCommandSets;
-}
-
-template <typename D> hstring impl_IVoiceCommandSet<D>::Language() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandSet)->get_Language(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IVoiceCommandSet<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandSet)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandSet<D>::SetPhraseListAsync(hstring_view phraseListName, iterable<hstring> phraseList) const
-{
-    Windows::Foundation::IAsyncAction updateAction;
-    check_hresult(WINRT_SHIM(IVoiceCommandSet)->abi_SetPhraseListAsync(get_abi(phraseListName), get_abi(phraseList), put_abi(updateAction)));
-    return updateAction;
 }
 
 inline SpeechRecognitionGrammarFileConstraint::SpeechRecognitionGrammarFileConstraint(const Windows::Storage::StorageFile & file) :

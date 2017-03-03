@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.private
+// C++ for the Windows Runtime vv1.0.170303.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -169,7 +169,7 @@ struct WINRT_EBO MapControlBusinessLandmarkRightTappedEventArgs :
 struct WINRT_EBO MapControlDataHelper :
     Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper,
     impl::bases<MapControlDataHelper, Windows::UI::Xaml::DependencyObject>,
-    impl::require<MapControlDataHelper, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2>
+    impl::require<MapControlDataHelper, Windows::UI::Xaml::Controls::Maps::IMapControlDataHelper2, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2>
 {
     MapControlDataHelper(std::nullptr_t) noexcept {}
     MapControlDataHelper(const Windows::UI::Xaml::Controls::Maps::MapControl & map);
