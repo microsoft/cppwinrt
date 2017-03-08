@@ -123,6 +123,10 @@ Expect a good amount of feedback as part of any pull request: not only which bra
 
 The best way to get in touch with the team regarding feature ideas, developer designs and communicating about bug fixes is to use the Issues system built in to GitHub.
 
+# Code of Conduct
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 # License
 
 Copyright (c) Microsoft Corporation. All rights reserved.
