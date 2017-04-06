@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once

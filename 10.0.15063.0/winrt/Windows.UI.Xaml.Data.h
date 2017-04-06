@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -393,7 +393,7 @@ struct produce<D, Windows::UI::Xaml::Data::IBindingBaseFactory> : produce_base<D
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -473,7 +473,7 @@ struct produce<D, Windows::UI::Xaml::Data::IBindingFactory> : produce_base<D, Wi
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1028,7 +1028,7 @@ struct produce<D, Windows::UI::Xaml::Data::ICurrentChangingEventArgsFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1044,7 +1044,7 @@ struct produce<D, Windows::UI::Xaml::Data::ICurrentChangingEventArgsFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateWithCancelableParameter(isCancelable, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateWithCancelableParameter(isCancelable, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1292,7 +1292,7 @@ struct produce<D, Windows::UI::Xaml::Data::IItemIndexRangeFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(firstIndex, length, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(firstIndex, length, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1381,7 +1381,7 @@ struct produce<D, Windows::UI::Xaml::Data::IPropertyChangedEventArgsFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const hstring *>(&name), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const hstring *>(&name), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1433,7 +1433,7 @@ struct produce<D, Windows::UI::Xaml::Data::IRelativeSourceFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)

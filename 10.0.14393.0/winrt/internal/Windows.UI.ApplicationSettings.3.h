@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -105,7 +105,7 @@ struct WINRT_EBO SettingsCommand :
     static Windows::UI::ApplicationSettings::SettingsCommand AccountsCommand();
 };
 
-struct [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPane :
+struct WINRT_EBO SettingsPane :
     Windows::UI::ApplicationSettings::ISettingsPane
 {
     SettingsPane(std::nullptr_t) noexcept {}
@@ -113,18 +113,21 @@ struct [[deprecated("SettingsPane is deprecated and might not work on all platfo
     [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] static void Show();
     [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] static Windows::UI::ApplicationSettings::SettingsEdgeLocation Edge();
 };
+struct [[deprecated("SettingsPane is deprecated and might not work on all platforms. For more info, see MSDN.")]] SettingsPane;
 
-struct [[deprecated("SettingsPaneCommandsRequest is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPaneCommandsRequest :
+struct WINRT_EBO SettingsPaneCommandsRequest :
     Windows::UI::ApplicationSettings::ISettingsPaneCommandsRequest
 {
     SettingsPaneCommandsRequest(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SettingsPaneCommandsRequest is deprecated and might not work on all platforms. For more info, see MSDN.")]] SettingsPaneCommandsRequest;
 
-struct [[deprecated("SettingsPaneCommandsRequestedEventArgs is deprecated and might not work on all platforms. For more info, see MSDN.")]] WINRT_EBO SettingsPaneCommandsRequestedEventArgs :
+struct WINRT_EBO SettingsPaneCommandsRequestedEventArgs :
     Windows::UI::ApplicationSettings::ISettingsPaneCommandsRequestedEventArgs
 {
     SettingsPaneCommandsRequestedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SettingsPaneCommandsRequestedEventArgs is deprecated and might not work on all platforms. For more info, see MSDN.")]] SettingsPaneCommandsRequestedEventArgs;
 
 struct WINRT_EBO WebAccountCommand :
     Windows::UI::ApplicationSettings::IWebAccountCommand

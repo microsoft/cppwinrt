@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -35,7 +35,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IAppBarAutomationPeerFac
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -59,7 +59,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IAppBarButtonAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBarButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBarButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -83,7 +83,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IAppBarToggleButtonAutom
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBarToggleButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::AppBarToggleButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1015,7 +1015,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IAutomationPeerFactory> 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1786,7 +1786,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IButtonAutomationPeerFac
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Button *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Button *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1810,7 +1810,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IButtonBaseAutomationPee
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ButtonBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ButtonBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1834,7 +1834,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ICaptureElementAutomatio
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::CaptureElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::CaptureElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1858,7 +1858,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ICheckBoxAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::CheckBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::CheckBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1882,7 +1882,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IComboBoxAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ComboBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ComboBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1906,7 +1906,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IComboBoxItemAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ComboBoxItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ComboBoxItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1930,7 +1930,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IComboBoxItemDataAutomat
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ComboBoxAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ComboBoxAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1954,7 +1954,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IDatePickerAutomationPee
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::DatePicker *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::DatePicker *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1982,7 +1982,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IFlipViewAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlipView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlipView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2006,7 +2006,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IFlipViewItemAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlipViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlipViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2030,7 +2030,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IFlipViewItemDataAutomat
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::FlipViewAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::FlipViewAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2054,7 +2054,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IFlyoutPresenterAutomati
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlyoutPresenter *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::FlyoutPresenter *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2093,7 +2093,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IFrameworkElementAutomat
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2151,7 +2151,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IGridViewAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2175,7 +2175,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IGridViewHeaderItemAutom
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridViewHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridViewHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2199,7 +2199,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IGridViewItemAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GridViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2223,7 +2223,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IGridViewItemDataAutomat
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::GridViewAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::GridViewAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2247,7 +2247,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IGroupItemAutomationPeer
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GroupItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::GroupItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2271,7 +2271,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IHubAutomationPeerFactor
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Hub *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Hub *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2295,7 +2295,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IHubSectionAutomationPee
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::HubSection *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::HubSection *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2319,7 +2319,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IHyperlinkButtonAutomati
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::HyperlinkButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::HyperlinkButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2343,7 +2343,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IImageAutomationPeerFact
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Image *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Image *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2401,7 +2401,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IItemAutomationPeerFacto
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ItemsControlAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ItemsControlAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2444,7 +2444,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IItemsControlAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ItemsControl *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ItemsControl *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2487,7 +2487,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListBoxAutomationPeerFa
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2511,7 +2511,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListBoxItemAutomationPe
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListBoxItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListBoxItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2535,7 +2535,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListBoxItemDataAutomati
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ListBoxAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ListBoxAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2563,7 +2563,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListView *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2587,7 +2587,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewBaseAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2611,7 +2611,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewBaseHeaderItemA
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewBaseHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewBaseHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2635,7 +2635,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewHeaderItemAutom
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewHeaderItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2659,7 +2659,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewItemAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ListViewItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2683,7 +2683,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IListViewItemDataAutomat
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ListViewBaseAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::ListViewBaseAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2723,7 +2723,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IMediaElementAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2747,7 +2747,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IMediaPlayerElementAutom
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaPlayerElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaPlayerElement *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2771,7 +2771,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IMediaTransportControlsA
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaTransportControls *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MediaTransportControls *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2795,7 +2795,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IMenuFlyoutItemAutomatio
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MenuFlyoutItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MenuFlyoutItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2819,7 +2819,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IMenuFlyoutPresenterAuto
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MenuFlyoutPresenter *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::MenuFlyoutPresenter *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2843,7 +2843,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IPasswordBoxAutomationPe
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::PasswordBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::PasswordBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2940,7 +2940,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IProgressBarAutomationPe
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ProgressBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ProgressBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2964,7 +2964,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IProgressRingAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ProgressRing *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ProgressRing *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2988,7 +2988,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRadioButtonAutomationPe
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RadioButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RadioButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3012,7 +3012,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRangeBaseAutomationPeer
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RangeBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RangeBase *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3036,7 +3036,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRepeatButtonAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RepeatButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RepeatButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3060,7 +3060,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRichEditBoxAutomationPe
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichEditBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichEditBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3084,7 +3084,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRichTextBlockAutomation
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichTextBlock *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichTextBlock *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3108,7 +3108,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IRichTextBlockOverflowAu
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichTextBlockOverflow *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::RichTextBlockOverflow *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3132,7 +3132,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IScrollBarAutomationPeer
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ScrollBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ScrollBar *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3156,7 +3156,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IScrollViewerAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ScrollViewer *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ScrollViewer *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3180,7 +3180,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISearchBoxAutomationPeer
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SearchBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SearchBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3204,7 +3204,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISelectorAutomationPeerF
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::Selector *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::Selector *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3228,7 +3228,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISelectorItemAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::SelectorAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithParentAndItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&item), *reinterpret_cast<const Windows::UI::Xaml::Automation::Peers::SelectorAutomationPeer *>(&parent), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3252,7 +3252,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISemanticZoomAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SemanticZoom *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SemanticZoom *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3276,7 +3276,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISettingsFlyoutAutomatio
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SettingsFlyout *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::SettingsFlyout *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3300,7 +3300,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ISliderAutomationPeerFac
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Slider *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Slider *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3324,7 +3324,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ITextBlockAutomationPeer
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TextBlock *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TextBlock *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3348,7 +3348,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ITextBoxAutomationPeerFa
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TextBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TextBox *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3372,7 +3372,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IThumbAutomationPeerFact
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::Thumb *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::Thumb *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3396,7 +3396,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::ITimePickerAutomationPee
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TimePicker *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::TimePicker *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3424,7 +3424,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IToggleButtonAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ToggleButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ToggleButton *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3448,7 +3448,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IToggleMenuFlyoutItemAut
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ToggleMenuFlyoutItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ToggleMenuFlyoutItem *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3472,7 +3472,7 @@ struct produce<D, Windows::UI::Xaml::Automation::Peers::IToggleSwitchAutomationP
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ToggleSwitch *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithOwner(*reinterpret_cast<const Windows::UI::Xaml::Controls::ToggleSwitch *>(&owner), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)

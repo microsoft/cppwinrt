@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -685,7 +685,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IAppBarButtonFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -803,7 +803,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IAppBarFactory> : produce_base<D,
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -891,7 +891,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IAppBarSeparatorFactory> : produc
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1130,7 +1130,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IAppBarToggleButtonFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2050,7 +2050,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IBitmapIconFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2410,7 +2410,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IButtonFactory> : produce_base<D,
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -3148,7 +3148,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICalendarDatePickerFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -5078,7 +5078,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICalendarViewDayItemFactory> : pr
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -5132,7 +5132,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICalendarViewFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -5977,7 +5977,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICanvasFactory> : produce_base<D,
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -6229,7 +6229,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICheckBoxFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -6986,7 +6986,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IComboBoxFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -7010,7 +7010,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IComboBoxItemFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -7474,7 +7474,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICommandBarFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -7498,7 +7498,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ICommandBarOverflowPresenterFacto
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -7891,7 +7891,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IContentControlFactory> : produce
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -8906,7 +8906,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IContentDialogFactory> : produce_
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -9932,7 +9932,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IContentPresenterFactory> : produ
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -11417,7 +11417,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IControlFactory> : produce_base<D
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -12480,7 +12480,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IDataTemplateSelectorFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -13004,7 +13004,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IDatePickerFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14016,7 +14016,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFlipViewFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14040,7 +14040,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFlipViewItemFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14141,7 +14141,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFlyoutFactory> : produce_base<D,
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14165,7 +14165,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFlyoutPresenterFactory> : produc
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14469,7 +14469,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFontIconFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -14989,7 +14989,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IFrameFactory> : produce_base<D, 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15288,7 +15288,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGridFactory> : produce_base<D, W
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15552,7 +15552,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGridViewFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15576,7 +15576,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGridViewHeaderItemFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15615,7 +15615,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGridViewItemFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15639,7 +15639,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGroupItemFactory> : produce_base
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15869,7 +15869,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGroupStyleFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -15908,7 +15908,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IGroupStyleSelectorFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -16180,7 +16180,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IHubFactory> : produce_base<D, Wi
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -16319,7 +16319,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IHubSectionFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -16564,7 +16564,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IHyperlinkButtonFactory> : produc
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -16940,7 +16940,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkCanvasFactory> : produce_base
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17385,7 +17385,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarBallpointPenButtonFact
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17486,7 +17486,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarCustomPenButtonFactory
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17540,7 +17540,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarCustomPenFactory> : pr
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17583,7 +17583,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarCustomToggleButtonFact
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17636,7 +17636,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarCustomToolButtonFactor
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17711,7 +17711,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarEraserButtonFactory> :
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17750,7 +17750,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17886,7 +17886,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarFlyoutItemFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -17944,7 +17944,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarHighlighterButtonFacto
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -18343,7 +18343,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarPenConfigurationContro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -18386,7 +18386,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarPencilButtonFactory> :
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -18425,7 +18425,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarRulerButtonFactory> : 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -18725,7 +18725,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IInkToolbarStencilButtonFactory> 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -19610,7 +19610,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IItemsControlFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -21186,7 +21186,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListBoxFactory> : produce_base<D
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -21210,7 +21210,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListBoxItemFactory> : produce_ba
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -22567,7 +22567,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListViewBaseFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -22930,7 +22930,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListViewFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -22954,7 +22954,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListViewHeaderItemFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -22993,7 +22993,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IListViewItemFactory> : produce_b
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -25198,7 +25198,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMediaPlayerElementFactory> : pro
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -25416,7 +25416,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMediaPlayerPresenterFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -26193,7 +26193,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMediaTransportControlsFactory> :
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -26699,7 +26699,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMenuFlyoutFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -26879,7 +26879,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMenuFlyoutItemFactory> : produce
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -26990,7 +26990,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMenuFlyoutPresenterFactory> : pr
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -27014,7 +27014,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IMenuFlyoutSeparatorFactory> : pr
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -27333,7 +27333,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IPageFactory> : produce_base<D, W
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -27539,7 +27539,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IPanelFactory> : produce_base<D, 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -28286,7 +28286,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IPathIconFactory> : produce_base<
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -28967,7 +28967,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IPivotFactory> : produce_base<D, 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -29053,7 +29053,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IPivotItemFactory> : produce_base
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -29430,7 +29430,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IProgressBarFactory> : produce_ba
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -29598,7 +29598,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IRadioButtonFactory> : produce_ba
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -29754,7 +29754,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IRelativePanelFactory> : produce_
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -31348,7 +31348,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IRichEditBoxFactory> : produce_ba
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -36239,7 +36239,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISearchBoxFactory> : produce_base
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -36634,7 +36634,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISelectionChangedEventArgsFactory
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithRemovedItemsAndAddedItems(*reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> *>(&removedItems), *reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> *>(&addedItems), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithRemovedItemsAndAddedItems(*reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> *>(&removedItems), *reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> *>(&addedItems), *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -37492,7 +37492,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISettingsFlyoutFactory> : produce
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -37895,7 +37895,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISliderFactory> : produce_base<D,
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -38422,7 +38422,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISplitViewFactory> : produce_base
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -38809,7 +38809,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IStackPanelFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -38946,7 +38946,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IStyleSelectorFactory> : produce_
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -39008,7 +39008,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISwapChainBackgroundPanelFactory>
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -39103,7 +39103,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ISwapChainPanelFactory> : produce
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -41413,7 +41413,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ITextBoxFactory> : produce_base<D
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -42112,7 +42112,7 @@ struct produce<D, Windows::UI::Xaml::Controls::ITimePickerFactory> : produce_bas
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -42479,7 +42479,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IToggleMenuFlyoutItemFactory> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -43152,7 +43152,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IToolTipFactory> : produce_base<D
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -43441,7 +43441,7 @@ struct produce<D, Windows::UI::Xaml::Controls::IUserControlFactory> : produce_ba
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)

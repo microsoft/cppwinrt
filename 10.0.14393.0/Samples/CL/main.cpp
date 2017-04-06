@@ -6,5 +6,5 @@ using namespace winrt;
 
 int main()
 {
-    initialize();
+    init_apartment();
 }

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -165,7 +165,7 @@ struct produce<D, Windows::Networking::Vpn::IVpnChannel> : produce_base<D, Windo
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RequestVpnPacketBuffer(type, *vpnPacketBuffer);
+            this->shim().RequestVpnPacketBuffer(type, *reinterpret_cast<Windows::Networking::Vpn::VpnPacketBuffer *>(vpnPacketBuffer));
             return S_OK;
         }
         catch (...)
@@ -2380,7 +2380,7 @@ struct produce<D, Windows::Networking::Vpn::IVpnPlugIn> : produce_base<D, Window
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().GetKeepAlivePayload(*reinterpret_cast<const Windows::Networking::Vpn::VpnChannel *>(&channel), *keepAlivePacket);
+            this->shim().GetKeepAlivePayload(*reinterpret_cast<const Windows::Networking::Vpn::VpnChannel *>(&channel), *reinterpret_cast<Windows::Networking::Vpn::VpnPacketBuffer *>(keepAlivePacket));
             return S_OK;
         }
         catch (...)

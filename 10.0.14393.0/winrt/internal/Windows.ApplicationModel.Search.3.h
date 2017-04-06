@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -16,19 +16,21 @@ struct WINRT_EBO LocalContentSuggestionSettings :
     LocalContentSuggestionSettings();
 };
 
-struct [[deprecated("SearchPane may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPane :
+struct WINRT_EBO SearchPane :
     Windows::ApplicationModel::Search::ISearchPane
 {
     SearchPane(std::nullptr_t) noexcept {}
     [[deprecated("ISearchPaneStatics may be altered or unavailable for releases after Windows 10.")]] static Windows::ApplicationModel::Search::SearchPane GetForCurrentView();
     [[deprecated("ISearchPaneStaticsWithHideThisApplication may be altered or unavailable for releases after Windows 10.")]] static void HideThisApplication();
 };
+struct [[deprecated("ISearchPaneStaticsWithHideThisApplication may be altered or unavailable for releases after Windows 10.")]] SearchPane;
 
-struct [[deprecated("SearchPaneQueryChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneQueryChangedEventArgs :
+struct WINRT_EBO SearchPaneQueryChangedEventArgs :
     Windows::ApplicationModel::Search::ISearchPaneQueryChangedEventArgs
 {
     SearchPaneQueryChangedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneQueryChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] SearchPaneQueryChangedEventArgs;
 
 struct WINRT_EBO SearchPaneQueryLinguisticDetails :
     Windows::ApplicationModel::Search::ISearchPaneQueryLinguisticDetails
@@ -36,42 +38,48 @@ struct WINRT_EBO SearchPaneQueryLinguisticDetails :
     SearchPaneQueryLinguisticDetails(std::nullptr_t) noexcept {}
 };
 
-struct [[deprecated("SearchPaneQuerySubmittedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneQuerySubmittedEventArgs :
+struct WINRT_EBO SearchPaneQuerySubmittedEventArgs :
     Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgs,
     impl::require<SearchPaneQuerySubmittedEventArgs, Windows::ApplicationModel::Search::ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails>
 {
     SearchPaneQuerySubmittedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneQuerySubmittedEventArgs may be altered or unavailable for releases after Windows 10.")]] SearchPaneQuerySubmittedEventArgs;
 
-struct [[deprecated("SearchPaneResultSuggestionChosenEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneResultSuggestionChosenEventArgs :
+struct WINRT_EBO SearchPaneResultSuggestionChosenEventArgs :
     Windows::ApplicationModel::Search::ISearchPaneResultSuggestionChosenEventArgs
 {
     SearchPaneResultSuggestionChosenEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneResultSuggestionChosenEventArgs may be altered or unavailable for releases after Windows 10.")]] SearchPaneResultSuggestionChosenEventArgs;
 
-struct [[deprecated("SearchPaneSuggestionsRequest may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneSuggestionsRequest :
+struct WINRT_EBO SearchPaneSuggestionsRequest :
     Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequest
 {
     SearchPaneSuggestionsRequest(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneSuggestionsRequest may be altered or unavailable for releases after Windows 10.")]] SearchPaneSuggestionsRequest;
 
-struct [[deprecated("SearchPaneSuggestionsRequestDeferral may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneSuggestionsRequestDeferral :
+struct WINRT_EBO SearchPaneSuggestionsRequestDeferral :
     Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestDeferral
 {
     SearchPaneSuggestionsRequestDeferral(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneSuggestionsRequestDeferral may be altered or unavailable for releases after Windows 10.")]] SearchPaneSuggestionsRequestDeferral;
 
-struct [[deprecated("SearchPaneSuggestionsRequestedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneSuggestionsRequestedEventArgs :
+struct WINRT_EBO SearchPaneSuggestionsRequestedEventArgs :
     Windows::ApplicationModel::Search::ISearchPaneSuggestionsRequestedEventArgs
 {
     SearchPaneSuggestionsRequestedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneSuggestionsRequestedEventArgs may be altered or unavailable for releases after Windows 10.")]] SearchPaneSuggestionsRequestedEventArgs;
 
-struct [[deprecated("SearchPaneVisibilityChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SearchPaneVisibilityChangedEventArgs :
+struct WINRT_EBO SearchPaneVisibilityChangedEventArgs :
     Windows::ApplicationModel::Search::ISearchPaneVisibilityChangedEventArgs
 {
     SearchPaneVisibilityChangedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SearchPaneVisibilityChangedEventArgs may be altered or unavailable for releases after Windows 10.")]] SearchPaneVisibilityChangedEventArgs;
 
 struct WINRT_EBO SearchQueryLinguisticDetails :
     Windows::ApplicationModel::Search::ISearchQueryLinguisticDetails

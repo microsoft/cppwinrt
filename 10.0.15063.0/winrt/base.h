@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -550,8 +550,7 @@ namespace impl
     using abi_default_interface = ABI::default_interface<abi<T>>;
 }
 
-template<HRESULT ... ValuesToIgnore>
-__forceinline void check_hresult(HRESULT result);
+void check_hresult(HRESULT result);
 
 namespace Windows::Foundation
 {
@@ -1777,10 +1776,13 @@ namespace impl
     impl::throw_hresult(HRESULT_FROM_WIN32(GetLastError()));
 }
 
-template<HRESULT... ValuesToIgnore>
 __forceinline void check_hresult(const HRESULT result)
 {
-    if (!impl::sequence_contains<HRESULT, S_OK, ValuesToIgnore...>(result))
+#ifdef WINRT_STRICT_HRESULT
+    if (result != S_OK)
+#else
+    if (result < 0)
+#endif
     {
         impl::throw_hresult(result);
     }
@@ -4168,7 +4170,12 @@ enum class apartment_type
 
 inline void init_apartment(const apartment_type type = apartment_type::multi_threaded)
 {
-    check_hresult<S_FALSE>(WINRT_RoInitialize(static_cast<uint32_t>(type)));
+    HRESULT const result = WINRT_RoInitialize(static_cast<uint32_t>(type));
+
+    if (result < 0)
+    {
+        impl::throw_hresult(result);
+    }
 }
 
 inline void uninit_apartment() noexcept

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -49,41 +49,47 @@ template <typename H> struct impl_SmsMessageReceivedEventHandler : implements<im
 
 namespace Windows::Devices::Sms {
 
-struct [[deprecated("DeleteSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO DeleteSmsMessageOperation :
+struct WINRT_EBO DeleteSmsMessageOperation :
     Windows::Foundation::IAsyncAction
 {
     DeleteSmsMessageOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("DeleteSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] DeleteSmsMessageOperation;
 
-struct [[deprecated("DeleteSmsMessagesOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO DeleteSmsMessagesOperation :
+struct WINRT_EBO DeleteSmsMessagesOperation :
     Windows::Foundation::IAsyncAction
 {
     DeleteSmsMessagesOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("DeleteSmsMessagesOperation may be altered or unavailable for releases after Windows 10.")]] DeleteSmsMessagesOperation;
 
-struct [[deprecated("GetSmsDeviceOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO GetSmsDeviceOperation :
+struct WINRT_EBO GetSmsDeviceOperation :
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice>
 {
     GetSmsDeviceOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("GetSmsDeviceOperation may be altered or unavailable for releases after Windows 10.")]] GetSmsDeviceOperation;
 
-struct [[deprecated("GetSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO GetSmsMessageOperation :
+struct WINRT_EBO GetSmsMessageOperation :
     Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::ISmsMessage>
 {
     GetSmsMessageOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("GetSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] GetSmsMessageOperation;
 
-struct [[deprecated("GetSmsMessagesOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO GetSmsMessagesOperation :
+struct WINRT_EBO GetSmsMessagesOperation :
     Windows::Foundation::IAsyncOperationWithProgress<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sms::ISmsMessage>, int32_t>
 {
     GetSmsMessagesOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("GetSmsMessagesOperation may be altered or unavailable for releases after Windows 10.")]] GetSmsMessagesOperation;
 
-struct [[deprecated("SendSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SendSmsMessageOperation :
+struct WINRT_EBO SendSmsMessageOperation :
     Windows::Foundation::IAsyncAction
 {
     SendSmsMessageOperation(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SendSmsMessageOperation may be altered or unavailable for releases after Windows 10.")]] SendSmsMessageOperation;
 
 struct WINRT_EBO SmsAppMessage :
     Windows::Devices::Sms::ISmsAppMessage
@@ -92,12 +98,13 @@ struct WINRT_EBO SmsAppMessage :
     SmsAppMessage();
 };
 
-struct [[deprecated("SmsBinaryMessage may be altered or unavailable for releases after Windows 10. Instead, use SmsAppMessage.")]] WINRT_EBO SmsBinaryMessage :
+struct WINRT_EBO SmsBinaryMessage :
     Windows::Devices::Sms::ISmsBinaryMessage
 {
     SmsBinaryMessage(std::nullptr_t) noexcept {}
     SmsBinaryMessage();
 };
+struct [[deprecated("SmsBinaryMessage may be altered or unavailable for releases after Windows 10. Instead, use SmsAppMessage.")]] SmsBinaryMessage;
 
 struct WINRT_EBO SmsBroadcastMessage :
     Windows::Devices::Sms::ISmsBroadcastMessage
@@ -105,7 +112,7 @@ struct WINRT_EBO SmsBroadcastMessage :
     SmsBroadcastMessage(std::nullptr_t) noexcept {}
 };
 
-struct [[deprecated("SmsDevice may be altered or unavailable for releases after Windows 10. Instead, use SmsDevice2.")]] WINRT_EBO SmsDevice :
+struct WINRT_EBO SmsDevice :
     Windows::Devices::Sms::ISmsDevice
 {
     SmsDevice(std::nullptr_t) noexcept {}
@@ -114,6 +121,7 @@ struct [[deprecated("SmsDevice may be altered or unavailable for releases after 
     [[deprecated("ISmsDeviceStatics may be altered or unavailable for releases after Windows 10.")]] static Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> GetDefaultAsync();
     [[deprecated("ISmsDeviceStatics2 may be altered or unavailable for releases after Windows 10.")]] static Windows::Foundation::IAsyncOperation<Windows::Devices::Sms::SmsDevice> FromNetworkAccountIdAsync(hstring_view networkAccountId);
 };
+struct [[deprecated("ISmsDeviceStatics2 may be altered or unavailable for releases after Windows 10.")]] SmsDevice;
 
 struct WINRT_EBO SmsDevice2 :
     Windows::Devices::Sms::ISmsDevice2
@@ -125,11 +133,12 @@ struct WINRT_EBO SmsDevice2 :
     static Windows::Devices::Sms::SmsDevice2 FromParentId(hstring_view parentDeviceId);
 };
 
-struct [[deprecated("SmsDeviceMessageStore may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SmsDeviceMessageStore :
+struct WINRT_EBO SmsDeviceMessageStore :
     Windows::Devices::Sms::ISmsDeviceMessageStore
 {
     SmsDeviceMessageStore(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SmsDeviceMessageStore may be altered or unavailable for releases after Windows 10.")]] SmsDeviceMessageStore;
 
 struct WINRT_EBO SmsFilterRule :
     Windows::Devices::Sms::ISmsFilterRule
@@ -145,11 +154,12 @@ struct WINRT_EBO SmsFilterRules :
     SmsFilterRules(Windows::Devices::Sms::SmsFilterActionType actionType);
 };
 
-struct [[deprecated("SmsMessageReceivedEventArgs may be altered or unavailable for releases after Windows 10.")]] WINRT_EBO SmsMessageReceivedEventArgs :
+struct WINRT_EBO SmsMessageReceivedEventArgs :
     Windows::Devices::Sms::ISmsMessageReceivedEventArgs
 {
     SmsMessageReceivedEventArgs(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SmsMessageReceivedEventArgs may be altered or unavailable for releases after Windows 10.")]] SmsMessageReceivedEventArgs;
 
 struct WINRT_EBO SmsMessageReceivedTriggerDetails :
     Windows::Devices::Sms::ISmsMessageReceivedTriggerDetails
@@ -165,12 +175,13 @@ struct WINRT_EBO SmsMessageRegistration :
     static Windows::Devices::Sms::SmsMessageRegistration Register(hstring_view id, const Windows::Devices::Sms::SmsFilterRules & filterRules);
 };
 
-struct [[deprecated("SmsReceivedEventDetails may be altered or unavailable for releases after Windows 10. Instead, use SmsMessageReceivedTriggerDetails.")]] WINRT_EBO SmsReceivedEventDetails :
+struct WINRT_EBO SmsReceivedEventDetails :
     Windows::Devices::Sms::ISmsReceivedEventDetails,
     impl::require<SmsReceivedEventDetails, Windows::Devices::Sms::ISmsReceivedEventDetails2>
 {
     SmsReceivedEventDetails(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("SmsReceivedEventDetails may be altered or unavailable for releases after Windows 10. Instead, use SmsMessageReceivedTriggerDetails.")]] SmsReceivedEventDetails;
 
 struct WINRT_EBO SmsSendMessageResult :
     Windows::Devices::Sms::ISmsSendMessageResult
@@ -184,7 +195,7 @@ struct WINRT_EBO SmsStatusMessage :
     SmsStatusMessage(std::nullptr_t) noexcept {}
 };
 
-struct [[deprecated("SmsTextMessage may be altered or unavailable for releases after Windows 10. Instead, use SmsTextMessage2.")]] WINRT_EBO SmsTextMessage :
+struct WINRT_EBO SmsTextMessage :
     Windows::Devices::Sms::ISmsTextMessage
 {
     SmsTextMessage(std::nullptr_t) noexcept {}
@@ -192,6 +203,7 @@ struct [[deprecated("SmsTextMessage may be altered or unavailable for releases a
     [[deprecated("ISmsTextMessageStatics may be altered or unavailable for releases after Windows 10.")]] static Windows::Devices::Sms::SmsTextMessage FromBinaryMessage(const Windows::Devices::Sms::SmsBinaryMessage & binaryMessage);
     [[deprecated("ISmsTextMessageStatics may be altered or unavailable for releases after Windows 10.")]] static Windows::Devices::Sms::SmsTextMessage FromBinaryData(Windows::Devices::Sms::SmsDataFormat format, array_view<const uint8_t> value);
 };
+struct [[deprecated("ISmsTextMessageStatics may be altered or unavailable for releases after Windows 10.")]] SmsTextMessage;
 
 struct WINRT_EBO SmsTextMessage2 :
     Windows::Devices::Sms::ISmsTextMessage2

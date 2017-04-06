@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -68,7 +68,7 @@ struct produce<D, Windows::Devices::Gpio::IGpioController> : produce_base<D, Win
         try
         {
             typename D::abi_guard guard(this->shim());
-            *succeeded = detach_abi(this->shim().TryOpenPin(pinNumber, sharingMode, *pin, *openStatus));
+            *succeeded = detach_abi(this->shim().TryOpenPin(pinNumber, sharingMode, *reinterpret_cast<Windows::Devices::Gpio::GpioPin *>(pin), *openStatus));
             return S_OK;
         }
         catch (...)

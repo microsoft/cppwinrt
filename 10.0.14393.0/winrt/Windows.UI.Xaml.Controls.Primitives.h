@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -384,7 +384,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory> :
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1092,7 +1092,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1374,7 +1374,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventAr
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1426,7 +1426,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFa
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1478,7 +1478,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -1833,7 +1833,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory> :
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -2667,7 +2667,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -4151,7 +4151,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -5374,7 +5374,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFact
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -5478,7 +5478,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFacto
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -6201,7 +6201,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory> : 
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -6998,7 +6998,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory>
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)
@@ -7643,7 +7643,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *inner));
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
             return S_OK;
         }
         catch (...)

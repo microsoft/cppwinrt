@@ -9,5 +9,8 @@
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
 #include "winrt/Windows.Graphics.Imaging.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4467)
 #include <robuffer.h>
+#pragma warning(pop)
 #include <future>

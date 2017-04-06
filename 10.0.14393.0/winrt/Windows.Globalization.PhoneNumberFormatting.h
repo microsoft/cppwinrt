@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -101,7 +101,7 @@ struct produce<D, Windows::Globalization::PhoneNumberFormatting::IPhoneNumberFor
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TryCreate(*reinterpret_cast<const hstring *>(&regionCode), *phoneNumber);
+            this->shim().TryCreate(*reinterpret_cast<const hstring *>(&regionCode), *reinterpret_cast<Windows::Globalization::PhoneNumberFormatting::PhoneNumberFormatter *>(phoneNumber));
             return S_OK;
         }
         catch (...)
@@ -302,7 +302,7 @@ struct produce<D, Windows::Globalization::PhoneNumberFormatting::IPhoneNumberInf
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *phoneNumber));
+            *result = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo *>(phoneNumber)));
             return S_OK;
         }
         catch (...)
@@ -317,7 +317,7 @@ struct produce<D, Windows::Globalization::PhoneNumberFormatting::IPhoneNumberInf
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<const hstring *>(&regionCode), *phoneNumber));
+            *result = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<const hstring *>(&regionCode), *reinterpret_cast<Windows::Globalization::PhoneNumberFormatting::PhoneNumberInfo *>(phoneNumber)));
             return S_OK;
         }
         catch (...)

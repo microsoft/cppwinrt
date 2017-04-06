@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -201,7 +201,7 @@ struct produce<D, Windows::Networking::NetworkOperators::IHotspotAuthenticationC
         try
         {
             typename D::abi_guard guard(this->shim());
-            *isValid = detach_abi(this->shim().TryGetAuthenticationContext(*reinterpret_cast<const hstring *>(&evenToken), *context));
+            *isValid = detach_abi(this->shim().TryGetAuthenticationContext(*reinterpret_cast<const hstring *>(&evenToken), *reinterpret_cast<Windows::Networking::NetworkOperators::HotspotAuthenticationContext *>(context)));
             return S_OK;
         }
         catch (...)

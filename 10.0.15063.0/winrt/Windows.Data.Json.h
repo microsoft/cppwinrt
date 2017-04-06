@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170331.7
+// C++ for the Windows Runtime v1.0.170406.6
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -114,7 +114,7 @@ struct produce<D, Windows::Data::Json::IJsonArrayStatics> : produce_base<D, Wind
         try
         {
             typename D::abi_guard guard(this->shim());
-            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *result));
+            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<Windows::Data::Json::JsonArray *>(result)));
             return S_OK;
         }
         catch (...)
@@ -272,7 +272,7 @@ struct produce<D, Windows::Data::Json::IJsonObjectStatics> : produce_base<D, Win
         try
         {
             typename D::abi_guard guard(this->shim());
-            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *result));
+            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<Windows::Data::Json::JsonObject *>(result)));
             return S_OK;
         }
         catch (...)
@@ -504,7 +504,7 @@ struct produce<D, Windows::Data::Json::IJsonValueStatics> : produce_base<D, Wind
         try
         {
             typename D::abi_guard guard(this->shim());
-            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *result));
+            *succeeded = detach_abi(this->shim().TryParse(*reinterpret_cast<const hstring *>(&input), *reinterpret_cast<Windows::Data::Json::JsonValue *>(result)));
             return S_OK;
         }
         catch (...)
