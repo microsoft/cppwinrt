@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -410,7 +410,7 @@ struct produce<D, Windows::Devices::Usb::IUsbConfigurationDescriptorStatics> : p
         try
         {
             typename D::abi_guard guard(this->shim());
-            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *parsed));
+            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *reinterpret_cast<Windows::Devices::Usb::UsbConfigurationDescriptor *>(parsed)));
             return S_OK;
         }
         catch (...)
@@ -1221,7 +1221,7 @@ struct produce<D, Windows::Devices::Usb::IUsbEndpointDescriptorStatics> : produc
         try
         {
             typename D::abi_guard guard(this->shim());
-            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *parsed));
+            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *reinterpret_cast<Windows::Devices::Usb::UsbEndpointDescriptor *>(parsed)));
             return S_OK;
         }
         catch (...)
@@ -1437,7 +1437,7 @@ struct produce<D, Windows::Devices::Usb::IUsbInterfaceDescriptorStatics> : produ
         try
         {
             typename D::abi_guard guard(this->shim());
-            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *parsed));
+            *success = detach_abi(this->shim().TryParse(*reinterpret_cast<const Windows::Devices::Usb::UsbDescriptor *>(&descriptor), *reinterpret_cast<Windows::Devices::Usb::UsbInterfaceDescriptor *>(parsed)));
             return S_OK;
         }
         catch (...)

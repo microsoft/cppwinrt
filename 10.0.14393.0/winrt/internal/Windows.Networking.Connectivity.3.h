@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -98,11 +98,12 @@ struct WINRT_EBO DataPlanUsage :
     DataPlanUsage(std::nullptr_t) noexcept {}
 };
 
-struct [[deprecated("DataUsage may be altered or unavailable for releases after Windows 8.1. Instead, use NetworkUsage.")]] WINRT_EBO DataUsage :
+struct WINRT_EBO DataUsage :
     Windows::Networking::Connectivity::IDataUsage
 {
     DataUsage(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("DataUsage may be altered or unavailable for releases after Windows 8.1. Instead, use NetworkUsage.")]] DataUsage;
 
 struct WINRT_EBO IPInformation :
     Windows::Networking::Connectivity::IIPInformation

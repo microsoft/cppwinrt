@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -25,6 +25,7 @@ struct WINRT_EBO FileOpenPicker :
     using impl_IFileOpenPickerWithOperationId::PickSingleFileAsync;
     [[deprecated("Instead, use PickSingleFileAsync")]] static Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> ResumePickSingleFileAsync();
 };
+struct [[deprecated("Instead, use PickSingleFileAsync")]] FileOpenPicker;
 
 struct WINRT_EBO FilePickerFileTypesOrderedMap :
     Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>>

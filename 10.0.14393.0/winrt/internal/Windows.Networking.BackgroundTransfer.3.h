@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -21,6 +21,7 @@ struct WINRT_EBO BackgroundDownloader :
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::DownloadOperation>> GetCurrentDownloadsForTransferGroupAsync(const Windows::Networking::BackgroundTransfer::BackgroundTransferGroup & group);
     [[deprecated("RequestUnconstrainedDownloadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedDownloadsAsync(iterable<Windows::Networking::BackgroundTransfer::DownloadOperation> operations);
 };
+struct [[deprecated("RequestUnconstrainedDownloadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] BackgroundDownloader;
 
 struct WINRT_EBO BackgroundTransferCompletionGroup :
     Windows::Networking::BackgroundTransfer::IBackgroundTransferCompletionGroup
@@ -69,6 +70,7 @@ struct WINRT_EBO BackgroundUploader :
     static Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::BackgroundTransfer::UploadOperation>> GetCurrentUploadsForTransferGroupAsync(const Windows::Networking::BackgroundTransfer::BackgroundTransferGroup & group);
     [[deprecated("RequestUnconstrainedUploadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] static Windows::Foundation::IAsyncOperation<Windows::Networking::BackgroundTransfer::UnconstrainedTransferRequestResult> RequestUnconstrainedUploadsAsync(iterable<Windows::Networking::BackgroundTransfer::UploadOperation> operations);
 };
+struct [[deprecated("RequestUnconstrainedUploadsAsync is deprecated and may not work on all platforms. For more info, see MSDN.")]] BackgroundUploader;
 
 struct ContentPrefetcher
 {
@@ -92,11 +94,12 @@ struct WINRT_EBO ResponseInformation :
     ResponseInformation(std::nullptr_t) noexcept {}
 };
 
-struct [[deprecated("UnconstrainedTransferRequestResult is deprecated and may not work on all platforms. For more info, see MSDN.")]] WINRT_EBO UnconstrainedTransferRequestResult :
+struct WINRT_EBO UnconstrainedTransferRequestResult :
     Windows::Networking::BackgroundTransfer::IUnconstrainedTransferRequestResult
 {
     UnconstrainedTransferRequestResult(std::nullptr_t) noexcept {}
 };
+struct [[deprecated("UnconstrainedTransferRequestResult is deprecated and may not work on all platforms. For more info, see MSDN.")]] UnconstrainedTransferRequestResult;
 
 struct WINRT_EBO UploadOperation :
     Windows::Networking::BackgroundTransfer::IUploadOperation,

@@ -1,4 +1,4 @@
-// C++ for the Windows Runtime v1.0.170303.6
+// C++ for the Windows Runtime v1.0.170406.8
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
@@ -2917,6 +2917,13 @@ template <typename D> Windows::ApplicationModel::Background::AlarmAccessStatus i
     return status;
 }
 
+template <typename D> Windows::ApplicationModel::Background::PhoneTrigger impl_IPhoneTriggerFactory<D>::Create(Windows::ApplicationModel::Calls::Background::PhoneTriggerType type, bool oneShot) const
+{
+    Windows::ApplicationModel::Background::PhoneTrigger result { nullptr };
+    check_hresult(WINRT_SHIM(IPhoneTriggerFactory)->abi_Create(type, oneShot, put_abi(result)));
+    return result;
+}
+
 template <typename D> bool impl_IPhoneTrigger<D>::OneShot() const
 {
     bool value {};
@@ -2928,13 +2935,6 @@ template <typename D> Windows::ApplicationModel::Calls::Background::PhoneTrigger
 {
     Windows::ApplicationModel::Calls::Background::PhoneTriggerType result {};
     check_hresult(WINRT_SHIM(IPhoneTrigger)->get_TriggerType(&result));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Background::PhoneTrigger impl_IPhoneTriggerFactory<D>::Create(Windows::ApplicationModel::Calls::Background::PhoneTriggerType type, bool oneShot) const
-{
-    Windows::ApplicationModel::Background::PhoneTrigger result { nullptr };
-    check_hresult(WINRT_SHIM(IPhoneTriggerFactory)->abi_Create(type, oneShot, put_abi(result)));
     return result;
 }
 
