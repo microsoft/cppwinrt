@@ -1,7 +1,7 @@
 # cppwinrt
 C++/WinRT is a standard C++ language projection for the Windows Runtime implemented solely in header files. It allows you to both author and consume Windows Runtime APIs using any standards-compliant C++ compiler. C++/WinRT is designed to provide C++ developers with first-class access to the modern Windows API.
 
-**Note:** This is a RTM release. This release contains the C++ header files that comprise the library for the WinRT APIs documented in Windows 10 Anniversary Update SDK. This includes all Universal WinRT APIs plus all WinRT APIs documented in the various Extension SDKs that also ship in the Anniversary Update SDK.
+**Note:** This is an RTM release. This release contains the C++ header files that comprise the library for the WinRT APIs documented in Windows 10 Anniversary Update SDK. This includes all Universal WinRT APIs plus all WinRT APIs documented in the various Extension SDKs that also ship in the Anniversary Update SDK.
 
 **Note:** This RTM release fully supports consuming Windows Runtime APIs. While you can use the current functionality to define a class that implements one or more existing WinRT interfaces (as shown by samples defining FrameworkView classes), the current release does not provide any infrastructure for implementing a module (DLL or EXE) that hosts activatable WinRT components. Future releases will provide this support.
 
