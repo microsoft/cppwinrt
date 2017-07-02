@@ -108,14 +108,14 @@ If you are not working in Visual Studio, set the **MinVersion** and
 Read the docs!
 ==============
 
-To learn how to use the C++/WinRT library, browse the [Docs] (./Docs) folder for topics of interest.
+To learn how to use the C++/WinRT library, browse the [Docs](./Docs) folder for topics of interest.
 
-The [Header File Design] (./Docs/Header File Design.md) document contains a great discussion of the architecture of and best practices for using the C++/WinRT header files.
+The [Header File Design](./Docs/Header File Design.md) document contains a great discussion of the architecture of and best practices for using the C++/WinRT header files.
 
-For a discussion of the naming conventions used in the C++/WinRT library, read [Naming Conventions] (./Docs/Naming Conventions.md).
+For a discussion of the naming conventions used in the C++/WinRT library, read [Naming Conventions](./Docs/Naming Conventions.md).
 
-Unlike C++/CX, with C++/WinRT you typically pass and receive familar C++ data types when calling WinRT APIs. More information is in [Using Standard C++ types with C++ WinRT] (./Docs/Using Standard C++ types with C++ WinRT.md).
+Unlike C++/CX, with C++/WinRT you typically pass and receive familar C++ data types when calling WinRT APIs. More information is in [Using Standard C++ types with C++ WinRT](./Docs/Using Standard C++ types with C++ WinRT.md).
 
-For information about how to migrate existing C++/CX code to C++/WinRT, read [Migrating C++ CX source code to C++ WinRT] (./Docs/Migrating C++ CX source code to C++ WinRT.md).
+For information about how to migrate existing C++/CX code to C++/WinRT, read [Migrating C++ CX source code to C++ WinRT](./Docs/Migrating C++ CX source code to C++ WinRT.md).
 
-When you need to write code that works directly with COM and WinRT interfaces, you'll find the necessary information in [Interoperability Helper Functions] (./Docs/Interoperability Helper Functions.md).
+When you need to write code that works directly with COM and WinRT interfaces, you'll find the necessary information in [Interoperability Helper Functions](./Docs/Interoperability Helper Functions.md).
