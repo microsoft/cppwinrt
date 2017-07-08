@@ -55,7 +55,7 @@ extern "C"
 #pragma comment(linker, "/alternatename:WINRT_SetRestrictedErrorInfo=SetRestrictedErrorInfo")
 #endif
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && !defined(NDEBUG)
 
 #include <assert.h>
 
