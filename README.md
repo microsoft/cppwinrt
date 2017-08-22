@@ -5,6 +5,17 @@ C++/WinRT is a standard C++ language projection for the Windows Runtime implemen
 
 **Note:** This RTM release fully supports consuming Windows Runtime APIs. While you can use the current functionality to define a class that implements one or more existing WinRT interfaces (as shown by samples defining FrameworkView classes), the current release does not provide any infrastructure for implementing a module (DLL or EXE) that hosts activatable WinRT components. Future releases will provide this support.
 
+**TIMELINE:** I wanted to provide some general guidance for the development plan for C++/WinRT. While I won't provide exact dates, as they are subject to change, here's the overview roadmap for upcoming releases, ordered from soonest to sometime later.
+
+* We will remove the 10.0.14393.0 headers. You can retrieve them, if needed, by syncing to a previous commit.
+* We will update the 10.0.15063.0 headers to our latest build. This build has full support for both consuming WinRT classes and implementing WinRT classes. One item of particular note is that the headers provide appropriate support for the generic WinRT types (e.g. IVector<MyStruct) obviating the need to determine the magic appropriate GUID value.
+  * As of this update, you must compile the C++/WinRT header files using the Visual Studio 2017 15.3 (or later) C++ compiler. Prior  compiler versions are not sufficiently standards compliant.
+  * Generally, C++/WinRT will stay abreast of C++ standards and require a modern and up-to-date compiler.
+  * For those developers needing to use VS2015, you can always retrieve the previous release by syncing to a previous commit.
+* The C++/WinRT headers *and the cppwinrt.exe compiler itself* ... &lt;waiting for the cheers to die down&gt; ... will ship in the Windows SDK. Expect to first see them in a Insider Preview build of the Windows SDK in late summer/early fall.
+* We are updating the XAML compiler to produce C++/WinRT code behind files.
+* We are adding C++/WinRT project support to Visual Studio 2017.
+
 # Documentation
 * [Getting Started](Getting%20Started.md)
 * [Breaking Changes](Breaking%20Changes.md)
